@@ -70,39 +70,7 @@ fun ResultView(
             }
         val praise = remember(result) { praisePool.random() }
 
-        // 정답/오답 배너 + 응원
-        Card(
-            colors =
-                CardDefaults.cardColors(
-                    containerColor = if (result.isCorrect) colors.secondaryContainer else colors.errorContainer,
-                    contentColor = if (result.isCorrect) colors.onSecondaryContainer else colors.onErrorContainer,
-                ),
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Icon(
-                        imageVector = if (result.isCorrect) Icons.Filled.CheckCircle else Icons.Filled.WarningAmber,
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = stringResource(if (result.isCorrect) R.string.result_correct else R.string.result_wrong),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-                Text(
-                    text = praise,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-        }
+        ResultBanner(isCorrect = result.isCorrect, praise = praise)
 
         val choices = result.problem.choices
         Text(
@@ -157,6 +125,47 @@ fun ResultView(
                 text = stringResource(R.string.result_next),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 6.dp),
+            )
+        }
+    }
+}
+
+/** 정답/오답 배너 + 과정 칭찬 응원 한 줄. */
+@Composable
+private fun ResultBanner(
+    isCorrect: Boolean,
+    praise: String,
+) {
+    val colors = MaterialTheme.colorScheme
+    Card(
+        colors =
+            CardDefaults.cardColors(
+                containerColor = if (isCorrect) colors.secondaryContainer else colors.errorContainer,
+                contentColor = if (isCorrect) colors.onSecondaryContainer else colors.onErrorContainer,
+            ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Icon(
+                    imageVector = if (isCorrect) Icons.Filled.CheckCircle else Icons.Filled.WarningAmber,
+                    contentDescription = null,
+                )
+                Text(
+                    text = stringResource(if (isCorrect) R.string.result_correct else R.string.result_wrong),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Text(
+                text = praise,
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }

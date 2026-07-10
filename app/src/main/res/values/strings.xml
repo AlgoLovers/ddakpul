@@ -47,9 +47,43 @@
     <string name="report_total_solved">총 푼 문제</string>
     <string name="report_accuracy">전체 정답률</string>
     <string name="report_current_level">현재 난이도</string>
+    <string name="report_streak">연속 학습</string>
+    <string name="report_unit_days">%1$d일</string>
     <string name="report_area_title">영역별 정답률</string>
     <string name="report_area_stat">%1$d/%2$d (%3$d%%)</string>
     <string name="report_empty">아직 푼 문제가 없어요.\n아이가 문제를 풀면 리포트가 채워집니다.</string>
+
+    <!-- 리포트 · 인사이트 (해석이 끝난 문장) -->
+    <string name="report_insights_title">이번 주 인사이트</string>
+    <string name="insight_goal_done">✅ 오늘 목표를 달성했어요. 스스로 정한 양을 지킨 게 최고의 습관이에요!</string>
+    <string name="insight_streak">🔥 %1$d일 연속 학습 중이에요. 꾸준함이 실력을 만들고 있어요.</string>
+    <string name="insight_accuracy_up">📈 정답률이 지난주보다 %1$d%%p 올랐어요. 지금 방식이 효과가 있어요!</string>
+    <string name="insight_accuracy_down">🌱 정답률이 지난주보다 %1$d%%p 내려갔어요. 더 어려운 문제에 도전 중이라는 뜻일 수 있어요.</string>
+    <string name="insight_error_recovery">💪 틀렸던 문제의 %1$d%%를 다시 풀어서 해결했어요. 오답이 실력이 되고 있어요.</string>
+    <string name="insight_weak_concept">🔍 \'%1$s\' 개념을 보강하면 좋아요 (정답률 %2$d%%). 이 개념 문제를 함께 풀어보세요.</string>
+
+    <!-- 리포트 · 차트 섹션 -->
+    <string name="report_daily_title">최근 2주 학습량</string>
+    <string name="report_trend_title">정답률 추이</string>
+    <string name="report_growth_title">난이도 성장 곡선</string>
+    <string name="report_growth_caption">문제를 풀 때마다 아이 수준에 맞춰 난이도(1~5)가 움직여요.</string>
+    <string name="report_concept_title">개념별 숙달도</string>
+    <string name="report_concept_stat">%1$d문제 · 정답률 %2$d%%</string>
+
+    <!-- 개념 숙달 단계 — 점수가 아니라 단계 라벨로 (성적처럼 읽히지 않게) -->
+    <string name="mastery_mastered">숙달</string>
+    <string name="mastery_practicing">연습 중</string>
+    <string name="mastery_weak">보강 필요</string>
+
+    <!-- 리포트 · 부모 가이드 (연구 기반, docs/PEDAGOGY.md) -->
+    <string name="report_parent_tips_title">부모님을 위한 팁</string>
+    <string-array name="parent_tips">
+        <item>"똑똑하네" 대신 "어떻게 풀었어?"라고 물어보세요 — 방법을 칭찬받은 아이가 어려운 문제에 더 오래 도전해요.</item>
+        <item>정답률보다 "시도한 문제 수"와 "다시 푼 문제"를 함께 봐 주세요 — 노력의 흔적을 알아봐 주는 게 최고의 보상이에요.</item>
+        <item>수학이 어려우셨더라도 아이 앞에서 "나도 수학 못했어"는 금물 — 수학에 대한 불안은 아이에게 옮아요.</item>
+        <item>틀린 문제엔 정답을 알려주기보다 "어디까지는 맞았을까?"부터 — 실수를 함께 뜯어보는 대화가 실력을 만들어요.</item>
+        <item>하루 10분, 아이가 스스로 정한 목표를 지켰는지만 확인하세요 — 작고 가까운 목표가 자신감과 흥미를 키워요.</item>
+    </string-array>
 
     <!-- 설정 -->
     <string name="settings_title">설정</string>
