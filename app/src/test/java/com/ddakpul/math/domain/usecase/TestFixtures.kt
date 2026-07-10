@@ -19,13 +19,14 @@ object TestFixtures {
         choices: List<String> = listOf("가", "나", "다", "라"),
         explanation: String? = null,
         mistakes: List<Mistake> = emptyList(),
+        concepts: List<String> = listOf("test"),
     ): Problem =
         Problem(
             id = id,
             grade = 4,
             semester = 2,
             area = area,
-            conceptTags = listOf("test"),
+            conceptTags = concepts,
             difficulty = difficulty,
             groupId = groupId,
             statement = "문제 $id",
@@ -53,7 +54,14 @@ object TestFixtures {
         problemId: String,
         isCorrect: Boolean,
         timestamp: Long = 0L,
-    ): Attempt = Attempt(problemId = problemId, isCorrect = isCorrect, timeSpentSec = 10, timestamp = timestamp)
+        timeSpentSec: Int = 10,
+    ): Attempt =
+        Attempt(
+            problemId = problemId,
+            isCorrect = isCorrect,
+            timeSpentSec = timeSpentSec,
+            timestamp = timestamp,
+        )
 
     /** 난이도 1~5 각각에 문제 3개를 담은 표준 그룹 목록. 문제 id는 "d{난이도}-{n}". */
     fun standardGroups(): List<ProblemGroup> =

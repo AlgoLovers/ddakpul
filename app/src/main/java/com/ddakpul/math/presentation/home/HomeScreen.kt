@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +28,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.Difficulty
-import com.ddakpul.math.domain.model.LearnerReport
+import com.ddakpul.math.domain.model.LearningStats
+import com.ddakpul.math.domain.model.SessionGoals
 import kotlin.math.roundToInt
 
 @Composable
@@ -35,12 +39,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    HomeContent(report = uiState.report, onStartLearning = onStartLearning, modifier = modifier)
+    HomeContent(stats = uiState.stats, onStartLearning = onStartLearning, modifier = modifier)
 }
 
 @Composable
 private fun HomeContent(
-    report: LearnerReport?,
+    stats: LearningStats?,
     onStartLearning: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -61,9 +65,16 @@ private fun HomeContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        val solved = report?.totalSolved ?: 0
-        val accuracyPercent = ((report?.accuracy ?: 0f) * 100).roundToInt()
-        val level = report?.currentDifficulty ?: Difficulty.DEFAULT
+        TodayGoalCard(
+            todaySolved = stats?.todaySolved ?: 0,
+            streakDays = stats?.streakDays ?: 0,
+            bestStreakDays = stats?.bestStreakDays ?: 0,
+            modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
+        )
+
+        val solved = stats?.totalSolved ?: 0
+        val accuracyPercent = ((stats?.accuracy ?: 0f) * 100).roundToInt()
+        val level = stats?.currentDifficulty ?: Difficulty.DEFAULT
         Row(
             modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -95,6 +106,78 @@ private fun HomeContent(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
             )
+        }
+    }
+}
+
+/**
+ * 오늘의 목표 진행 + 연속 학습일. 근접 목표(Bandura & Schunk)와 관대한 스트릭
+ * (어제까지 이어졌으면 유지) 설계 — 근거는 docs/PEDAGOGY.md.
+ */
+@Composable
+private fun TodayGoalCard(
+    todaySolved: Int,
+    streakDays: Int,
+    bestStreakDays: Int,
+    modifier: Modifier = Modifier,
+) {
+    val goal = SessionGoals.DAILY_GOAL_PROBLEMS
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = stringResource(R.string.home_goal_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+                Text(
+                    text =
+                        if (todaySolved >= goal) {
+                            stringResource(R.string.home_goal_done)
+                        } else {
+                            stringResource(R.string.home_goal_progress, todaySolved, goal)
+                        },
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+            }
+            LinearProgressIndicator(
+                progress = { (todaySolved.toFloat() / goal).coerceIn(0f, 1f) },
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text =
+                        if (streakDays > 0) {
+                            stringResource(R.string.home_streak, streakDays)
+                        } else {
+                            stringResource(R.string.home_streak_start)
+                        },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+                if (bestStreakDays > 1) {
+                    Text(
+                        text = stringResource(R.string.home_streak_best, bestStreakDays),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                }
+            }
         }
     }
 }
