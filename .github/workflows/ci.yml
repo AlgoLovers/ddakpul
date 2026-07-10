@@ -44,9 +44,10 @@ jobs:
           if-no-files-found: error
 
       # 텔레그램 시크릿이 설정된 경우에만 실행된다(미설정 저장소에서 CI가 붉어지지 않도록).
+      # main 푸시(릴리스 머지)에만 전송 — develop까지 보내면 같은 코드가 두 번씩 배달된다.
       # 전송 실패(예: 사용자가 봇을 아직 Start 안 함)는 빌드 실패가 아니므로 경고만 남긴다.
       - name: Send debug APK to Telegram
-        if: ${{ github.event_name == 'push' && env.TELEGRAM_BOT_TOKEN != '' }}
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' && env.TELEGRAM_BOT_TOKEN != '' }}
         run: |
           response=$(curl -sS \
             -F chat_id="${TELEGRAM_CHAT_ID}" \
