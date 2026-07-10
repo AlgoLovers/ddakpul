@@ -1,0 +1,1872 @@
+{
+ "version": 1,
+ "problems": [
+  {
+   "id": "gen-crypt-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-crypt-4",
+   "concepts": [
+    "복면산",
+    "자리값 사고"
+   ],
+   "statement": "두 자리 수 (가나)와 자리를 바꾼 수 (나가)를 더했더니 99이 되었어요. 가+나는 얼마일까요? (가, 나는 0이 아닌 한 자리 숫자)",
+   "choices": [
+    "9",
+    "12",
+    "10",
+    "8"
+   ],
+   "answerIndex": 0,
+   "explanation": "(가나)+(나가) = 11×(가+나)예요. 99÷11=9이니 가+나=9.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-crypt-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-crypt-4",
+   "concepts": [
+    "복면산",
+    "자리값 사고"
+   ],
+   "statement": "두 자리 수 (가나)와 자리를 바꾼 수 (나가)를 더했더니 132이 되었어요. 가+나는 얼마일까요? (가, 나는 0이 아닌 한 자리 숫자)",
+   "choices": [
+    "11",
+    "13",
+    "12",
+    "15"
+   ],
+   "answerIndex": 2,
+   "explanation": "(가나)+(나가) = 11×(가+나)예요. 132÷11=12이니 가+나=12.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "두 수의 합은 항상 11의 배수예요. 11로 나눠 보세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-crypt-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-crypt-4",
+   "concepts": [
+    "복면산",
+    "자리값 사고"
+   ],
+   "statement": "두 자리 수 (가나)와 자리를 바꾼 수 (나가)를 더했더니 154이 되었어요. 가+나는 얼마일까요? (가, 나는 0이 아닌 한 자리 숫자)",
+   "choices": [
+    "17",
+    "13",
+    "15",
+    "14"
+   ],
+   "answerIndex": 3,
+   "explanation": "(가나)+(나가) = 11×(가+나)예요. 154÷11=14이니 가+나=14.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "두 수의 합은 항상 11의 배수예요. 11로 나눠 보세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-crypt-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-crypt-4",
+   "concepts": [
+    "복면산",
+    "자리값 사고"
+   ],
+   "statement": "두 자리 수 (가나)와 자리를 바꾼 수 (나가)를 더했더니 176이 되었어요. 가+나는 얼마일까요? (가, 나는 0이 아닌 한 자리 숫자)",
+   "choices": [
+    "15",
+    "16",
+    "17",
+    "19"
+   ],
+   "answerIndex": 1,
+   "explanation": "(가나)+(나가) = 11×(가+나)예요. 176÷11=16이니 가+나=16.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "두 수의 합은 항상 11의 배수예요. 11로 나눠 보세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-legs-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "다리 세기",
+    "가정하여 풀기"
+   ],
+   "statement": "마당에 닭과 토끼가 모두 6마리 있어요. 다리를 세어 보니 16개였어요. 토끼는 몇 마리일까요?",
+   "choices": [
+    "1마리",
+    "2마리",
+    "4마리",
+    "3마리"
+   ],
+   "answerIndex": 1,
+   "explanation": "모두 닭이라면 다리는 12개. 실제보다 4개 많은 것은 토끼가 2개씩 더 갖기 때문 — 4÷2=2마리가 토끼예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-legs-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "다리 세기",
+    "가정하여 풀기"
+   ],
+   "statement": "마당에 닭과 토끼가 모두 8마리 있어요. 다리를 세어 보니 22개였어요. 토끼는 몇 마리일까요?",
+   "choices": [
+    "3마리",
+    "4마리",
+    "2마리",
+    "5마리"
+   ],
+   "answerIndex": 0,
+   "explanation": "모두 닭이라면 다리는 16개. 실제보다 6개 많은 것은 토끼가 2개씩 더 갖기 때문 — 6÷2=3마리가 토끼예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-legs-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "다리 세기",
+    "가정하여 풀기"
+   ],
+   "statement": "마당에 닭과 토끼가 모두 10마리 있어요. 다리를 세어 보니 28개였어요. 토끼는 몇 마리일까요?",
+   "choices": [
+    "4마리",
+    "5마리",
+    "6마리",
+    "3마리"
+   ],
+   "answerIndex": 0,
+   "explanation": "모두 닭이라면 다리는 20개. 실제보다 8개 많은 것은 토끼가 2개씩 더 갖기 때문 — 8÷2=4마리가 토끼예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-legs-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "다리 세기",
+    "가정하여 풀기"
+   ],
+   "statement": "마당에 닭과 토끼가 모두 12마리 있어요. 다리를 세어 보니 34개였어요. 토끼는 몇 마리일까요?",
+   "choices": [
+    "6마리",
+    "4마리",
+    "5마리",
+    "7마리"
+   ],
+   "answerIndex": 2,
+   "explanation": "모두 닭이라면 다리는 24개. 실제보다 10개 많은 것은 토끼가 2개씩 더 갖기 때문 — 10÷2=5마리가 토끼예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-excess-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-excess-4",
+   "concepts": [
+    "과부족",
+    "차이로 나누기"
+   ],
+   "statement": "서연이(가) 친구들에게 사과을(를) 나눠 줘요. 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 모자라요. 친구는 모두 몇 명일까요?",
+   "choices": [
+    "6명",
+    "8명",
+    "5명",
+    "4명"
+   ],
+   "answerIndex": 2,
+   "explanation": "한 명에게 1개씩 더 주려면 (남던 3개 + 모자란 2개) = 5개가 더 필요해요. 5÷1=5명.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-excess-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-excess-4",
+   "concepts": [
+    "과부족",
+    "차이로 나누기"
+   ],
+   "statement": "도윤이(가) 친구들에게 배을(를) 나눠 줘요. 한 명에게 3개씩 주면 4개가 남고, 5개씩 주면 8개가 모자라요. 친구는 모두 몇 명일까요?",
+   "choices": [
+    "5명",
+    "7명",
+    "12명",
+    "6명"
+   ],
+   "answerIndex": 3,
+   "explanation": "한 명에게 2개씩 더 주려면 (남던 4개 + 모자란 8개) = 12개가 더 필요해요. 12÷2=6명.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "12는 필요한 개수의 차이예요. 한 명당 차이 2개로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-excess-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-excess-4",
+   "concepts": [
+    "과부족",
+    "차이로 나누기"
+   ],
+   "statement": "지아이(가) 친구들에게 사과을(를) 나눠 줘요. 한 명에게 4개씩 주면 5개가 남고, 5개씩 주면 2개가 모자라요. 친구는 모두 몇 명일까요?",
+   "choices": [
+    "6명",
+    "10명",
+    "7명",
+    "8명"
+   ],
+   "answerIndex": 2,
+   "explanation": "한 명에게 1개씩 더 주려면 (남던 5개 + 모자란 2개) = 7개가 더 필요해요. 7÷1=7명.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-excess-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-excess-4",
+   "concepts": [
+    "과부족",
+    "차이로 나누기"
+   ],
+   "statement": "하은이(가) 친구들에게 사과을(를) 나눠 줘요. 한 명에게 5개씩 주면 6개가 남고, 7개씩 주면 10개가 모자라요. 친구는 모두 몇 명일까요?",
+   "choices": [
+    "9명",
+    "16명",
+    "7명",
+    "8명"
+   ],
+   "answerIndex": 3,
+   "explanation": "한 명에게 2개씩 더 주려면 (남던 6개 + 모자란 10개) = 16개가 더 필요해요. 16÷2=8명.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "16는 필요한 개수의 차이예요. 한 명당 차이 2개로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-age-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-age-4",
+   "concepts": [
+    "나이 문제",
+    "배 관계 변화"
+   ],
+   "statement": "지금 어머니 나이는 딸 나이의 4배예요. 3년 뒤에는 3배가 돼요. 지금 딸은 몇 살일까요?",
+   "choices": [
+    "8살",
+    "6살",
+    "24살",
+    "4살"
+   ],
+   "answerIndex": 1,
+   "explanation": "검산해 봐요: 딸 6살, 어머니 24살 → 3년 뒤 9살과 27살, 정확히 3배!",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그건 어머니의 지금 나이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-age-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-age-4",
+   "concepts": [
+    "나이 문제",
+    "배 관계 변화"
+   ],
+   "statement": "지금 어머니 나이는 딸 나이의 3배예요. 6년 뒤에는 2배가 돼요. 지금 딸은 몇 살일까요?",
+   "choices": [
+    "4살",
+    "8살",
+    "18살",
+    "6살"
+   ],
+   "answerIndex": 3,
+   "explanation": "검산해 봐요: 딸 6살, 어머니 18살 → 6년 뒤 12살과 24살, 정확히 2배!",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그건 어머니의 지금 나이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-age-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-age-4",
+   "concepts": [
+    "나이 문제",
+    "배 관계 변화"
+   ],
+   "statement": "지금 어머니 나이는 딸 나이의 5배예요. 6년 뒤에는 3배가 돼요. 지금 딸은 몇 살일까요?",
+   "choices": [
+    "6살",
+    "8살",
+    "4살",
+    "30살"
+   ],
+   "answerIndex": 0,
+   "explanation": "검산해 봐요: 딸 6살, 어머니 30살 → 6년 뒤 12살과 36살, 정확히 3배!",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 어머니의 지금 나이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-age-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-age-4",
+   "concepts": [
+    "나이 문제",
+    "배 관계 변화"
+   ],
+   "statement": "지금 어머니 나이는 딸 나이의 3배예요. 7년 뒤에는 2배가 돼요. 지금 딸은 몇 살일까요?",
+   "choices": [
+    "7살",
+    "21살",
+    "9살",
+    "5살"
+   ],
+   "answerIndex": 0,
+   "explanation": "검산해 봐요: 딸 7살, 어머니 21살 → 7년 뒤 14살과 28살, 정확히 2배!",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "그건 어머니의 지금 나이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tree-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "간격 문제",
+    "양 끝 포함"
+   ],
+   "statement": "길이 24m인 길 한쪽에 처음부터 끝까지 4m 간격으로 가로등을 세워요. 가로등은 몇 개 필요할까요?",
+   "choices": [
+    "8개",
+    "7개",
+    "6개",
+    "5개"
+   ],
+   "answerIndex": 1,
+   "explanation": "간격은 24÷4=6개지만 가로등은 양 끝에도 서니까 6+1=7개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tree-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "간격 문제",
+    "양 끝 포함"
+   ],
+   "statement": "길이 30m인 길 한쪽에 처음부터 끝까지 6m 간격으로 가로등을 세워요. 가로등은 몇 개 필요할까요?",
+   "choices": [
+    "7개",
+    "5개",
+    "6개",
+    "4개"
+   ],
+   "answerIndex": 2,
+   "explanation": "간격은 30÷6=5개지만 가로등은 양 끝에도 서니까 5+1=6개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tree-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "간격 문제",
+    "양 끝 포함"
+   ],
+   "statement": "길이 28m인 길 한쪽에 처음부터 끝까지 7m 간격으로 가로등을 세워요. 가로등은 몇 개 필요할까요?",
+   "choices": [
+    "6개",
+    "5개",
+    "4개",
+    "3개"
+   ],
+   "answerIndex": 1,
+   "explanation": "간격은 28÷7=4개지만 가로등은 양 끝에도 서니까 4+1=5개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tree-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "간격 문제",
+    "둘레는 다르다"
+   ],
+   "statement": "둘레가 36m인 원 모양 연못 둘레에 6m 간격으로 나무를 심어요. 나무는 몇 그루 필요할까요?",
+   "choices": [
+    "7그루",
+    "6그루",
+    "8그루",
+    "5그루"
+   ],
+   "answerIndex": 1,
+   "explanation": "빙 둘러 심으면 끝이 처음과 만나서 간격 수와 나무 수가 같아요. 36÷6=6그루.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "직선 길에서만 +1이에요. 원에서는 끝나무가 곧 첫나무!"
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-log-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "자르기 횟수",
+    "간격 사고"
+   ],
+   "statement": "긴 통나무를 6도막으로 자르려고 해요. 한 번 자르는 데 2분이 걸리면 모두 몇 분 걸릴까요?",
+   "choices": [
+    "10분",
+    "14분",
+    "8분",
+    "12분"
+   ],
+   "answerIndex": 0,
+   "explanation": "6도막을 만들려면 5번만 자르면 돼요. 5×2=10분.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-log-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "자르기 횟수",
+    "간격 사고"
+   ],
+   "statement": "긴 통나무를 7도막으로 자르려고 해요. 한 번 자르는 데 3분이 걸리면 모두 몇 분 걸릴까요?",
+   "choices": [
+    "18분",
+    "24분",
+    "15분",
+    "21분"
+   ],
+   "answerIndex": 0,
+   "explanation": "7도막을 만들려면 6번만 자르면 돼요. 6×3=18분.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-log-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "자르기 횟수",
+    "간격 사고"
+   ],
+   "statement": "긴 통나무를 8도막으로 자르려고 해요. 한 번 자르는 데 4분이 걸리면 모두 몇 분 걸릴까요?",
+   "choices": [
+    "24분",
+    "32분",
+    "28분",
+    "36분"
+   ],
+   "answerIndex": 2,
+   "explanation": "8도막을 만들려면 7번만 자르면 돼요. 7×4=28분.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-log-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "자르기 횟수",
+    "간격 사고"
+   ],
+   "statement": "긴 통나무를 9도막으로 자르려고 해요. 한 번 자르는 데 2분이 걸리면 모두 몇 분 걸릴까요?",
+   "choices": [
+    "20분",
+    "16분",
+    "14분",
+    "18분"
+   ],
+   "answerIndex": 1,
+   "explanation": "9도막을 만들려면 8번만 자르면 돼요. 8×2=16분.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-meet-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-meet-4",
+   "concepts": [
+    "만남 문제",
+    "속력의 합"
+   ],
+   "statement": "둘레 300m인 트랙의 같은 곳에서 예린와(과) 서연이(가) 서로 반대 방향으로 동시에 출발해요. 예린은(는) 1분에 40m, 서연은(는) 1분에 60m를 걸어요. 두 사람이 처음 만나는 건 몇 분 뒤일까요?",
+   "choices": [
+    "5분",
+    "3분",
+    "6분",
+    "4분"
+   ],
+   "answerIndex": 1,
+   "explanation": "반대 방향이면 1분에 두 사람 사이 거리가 40+60=100m씩 줄어요. 300÷100=3분.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "속력을 더하지 않고 한 사람 속력만 쓴 건 아닌지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-meet-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-meet-4",
+   "concepts": [
+    "만남 문제",
+    "속력의 합"
+   ],
+   "statement": "둘레 600m인 트랙의 같은 곳에서 하은와(과) 예린이(가) 서로 반대 방향으로 동시에 출발해요. 하은은(는) 1분에 70m, 예린은(는) 1분에 50m를 걸어요. 두 사람이 처음 만나는 건 몇 분 뒤일까요?",
+   "choices": [
+    "10분",
+    "5분",
+    "8분",
+    "6분"
+   ],
+   "answerIndex": 1,
+   "explanation": "반대 방향이면 1분에 두 사람 사이 거리가 70+50=120m씩 줄어요. 600÷120=5분.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "속력을 더하지 않고 한 사람 속력만 쓴 건 아닌지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-meet-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-meet-4",
+   "concepts": [
+    "만남 문제",
+    "속력의 합"
+   ],
+   "statement": "둘레 500m인 트랙의 같은 곳에서 지호와(과) 지아이(가) 서로 반대 방향으로 동시에 출발해요. 지호은(는) 1분에 60m, 지아은(는) 1분에 40m를 걸어요. 두 사람이 처음 만나는 건 몇 분 뒤일까요?",
+   "choices": [
+    "8분",
+    "5분",
+    "10분",
+    "6분"
+   ],
+   "answerIndex": 1,
+   "explanation": "반대 방향이면 1분에 두 사람 사이 거리가 60+40=100m씩 줄어요. 500÷100=5분.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "속력을 더하지 않고 한 사람 속력만 쓴 건 아닌지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-meet-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-meet-4",
+   "concepts": [
+    "만남 문제",
+    "속력의 합"
+   ],
+   "statement": "둘레 360m인 트랙의 같은 곳에서 하은와(과) 시우이(가) 서로 반대 방향으로 동시에 출발해요. 하은은(는) 1분에 50m, 시우은(는) 1분에 40m를 걸어요. 두 사람이 처음 만나는 건 몇 분 뒤일까요?",
+   "choices": [
+    "5분",
+    "7분",
+    "4분",
+    "8분"
+   ],
+   "answerIndex": 2,
+   "explanation": "반대 방향이면 1분에 두 사람 사이 거리가 50+40=90m씩 줄어요. 360÷90=4분.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "속력을 더하지 않고 한 사람 속력만 쓴 건 아닌지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-work-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-work-4",
+   "concepts": [
+    "일의 양",
+    "단위 시간 사고"
+   ],
+   "statement": "어떤 일을 혼자 하면 지아은(는) 4일, 다른 친구는 12일이 걸려요. 둘이 함께하면 며칠 만에 끝낼 수 있을까요?",
+   "choices": [
+    "3일",
+    "8일",
+    "5일",
+    "6일"
+   ],
+   "answerIndex": 0,
+   "explanation": "하루에 하는 일이 전체의 1/4과 1/12 — 합치면 1/3이에요. 그래서 3일!",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "평균이 아니에요. 함께하면 혼자 빠른 사람보다도 빨라져야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-work-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-work-4",
+   "concepts": [
+    "일의 양",
+    "단위 시간 사고"
+   ],
+   "statement": "어떤 일을 혼자 하면 민준은(는) 10일, 다른 친구는 15일이 걸려요. 둘이 함께하면 며칠 만에 끝낼 수 있을까요?",
+   "choices": [
+    "12일",
+    "8일",
+    "6일",
+    "5일"
+   ],
+   "answerIndex": 2,
+   "explanation": "하루에 하는 일이 전체의 1/10과 1/15 — 합치면 1/6이에요. 그래서 6일!",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "평균이 아니에요. 함께하면 혼자 빠른 사람보다도 빨라져야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-work-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-work-4",
+   "concepts": [
+    "일의 양",
+    "단위 시간 사고"
+   ],
+   "statement": "어떤 일을 혼자 하면 지아은(는) 12일, 다른 친구는 24일이 걸려요. 둘이 함께하면 며칠 만에 끝낼 수 있을까요?",
+   "choices": [
+    "8일",
+    "10일",
+    "18일",
+    "12일"
+   ],
+   "answerIndex": 0,
+   "explanation": "하루에 하는 일이 전체의 1/12과 1/24 — 합치면 1/8이에요. 그래서 8일!",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "평균이 아니에요. 함께하면 혼자 빠른 사람보다도 빨라져야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-work-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-work-4",
+   "concepts": [
+    "일의 양",
+    "단위 시간 사고"
+   ],
+   "statement": "어떤 일을 혼자 하면 민준은(는) 8일, 다른 친구는 24일이 걸려요. 둘이 함께하면 며칠 만에 끝낼 수 있을까요?",
+   "choices": [
+    "6일",
+    "8일",
+    "16일",
+    "9일"
+   ],
+   "answerIndex": 0,
+   "explanation": "하루에 하는 일이 전체의 1/8과 1/24 — 합치면 1/6이에요. 그래서 6일!",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "평균이 아니에요. 함께하면 혼자 빠른 사람보다도 빨라져야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-train-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-train-5",
+   "concepts": [
+    "기차 문제",
+    "숨은 거리"
+   ],
+   "statement": "길이 80m인 기차가 1초에 20m씩 달려요. 길이 220m인 터널을 완전히 통과하는 데(맨 앞이 들어가서 맨 뒤가 나올 때까지) 몇 초가 걸릴까요?",
+   "choices": [
+    "15초",
+    "20초",
+    "11초",
+    "4초"
+   ],
+   "answerIndex": 0,
+   "explanation": "맨 뒤까지 나오려면 터널 220m에 기차 길이 80m를 더한 300m를 가야 해요. ÷20=15초.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "기차 자신의 길이 80m를 잊었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-train-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-train-5",
+   "concepts": [
+    "기차 문제",
+    "숨은 거리"
+   ],
+   "statement": "길이 120m인 기차가 1초에 30m씩 달려요. 길이 480m인 터널을 완전히 통과하는 데(맨 앞이 들어가서 맨 뒤가 나올 때까지) 몇 초가 걸릴까요?",
+   "choices": [
+    "20초",
+    "16초",
+    "25초",
+    "4초"
+   ],
+   "answerIndex": 0,
+   "explanation": "맨 뒤까지 나오려면 터널 480m에 기차 길이 120m를 더한 600m를 가야 해요. ÷30=20초.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "기차 자신의 길이 120m를 잊었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-train-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-train-5",
+   "concepts": [
+    "기차 문제",
+    "숨은 거리"
+   ],
+   "statement": "길이 150m인 기차가 1초에 25m씩 달려요. 길이 450m인 터널을 완전히 통과하는 데(맨 앞이 들어가서 맨 뒤가 나올 때까지) 몇 초가 걸릴까요?",
+   "choices": [
+    "18초",
+    "24초",
+    "29초",
+    "6초"
+   ],
+   "answerIndex": 1,
+   "explanation": "맨 뒤까지 나오려면 터널 450m에 기차 길이 150m를 더한 600m를 가야 해요. ÷25=24초.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "기차 자신의 길이 150m를 잊었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-train-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-train-5",
+   "concepts": [
+    "기차 문제",
+    "숨은 거리"
+   ],
+   "statement": "길이 100m인 기차가 1초에 30m씩 달려요. 길이 500m인 터널을 완전히 통과하는 데(맨 앞이 들어가서 맨 뒤가 나올 때까지) 몇 초가 걸릴까요?",
+   "choices": [
+    "20초",
+    "16초",
+    "25초",
+    "17초"
+   ],
+   "answerIndex": 0,
+   "explanation": "맨 뒤까지 나오려면 터널 500m에 기차 길이 100m를 더한 600m를 가야 해요. ÷30=20초.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "기차 자신의 길이 100m를 잊었어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pyramid-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "수 피라미드",
+    "거꾸로 생각하기"
+   ],
+   "statement": "수 피라미드는 위 칸이 바로 아래 두 칸의 합이에요. 맨 아랫줄이 [3, □, 2]이고 꼭대기가 15일 때, □는 얼마일까요?",
+   "choices": [
+    "4",
+    "10",
+    "5",
+    "6"
+   ],
+   "answerIndex": 2,
+   "explanation": "가운데 줄은 (3+□)와 (□+2) — 꼭대기는 3+□+□+2예요. 15−3−2=10가 □ 두 개의 몫이니 □=5.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pyramid-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "수 피라미드",
+    "거꾸로 생각하기"
+   ],
+   "statement": "수 피라미드는 위 칸이 바로 아래 두 칸의 합이에요. 맨 아랫줄이 [4, □, 7]이고 꼭대기가 15일 때, □는 얼마일까요?",
+   "choices": [
+    "2",
+    "1",
+    "3",
+    "4"
+   ],
+   "answerIndex": 0,
+   "explanation": "가운데 줄은 (4+□)와 (□+7) — 꼭대기는 4+□+□+7예요. 15−4−7=4가 □ 두 개의 몫이니 □=2.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pyramid-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "수 피라미드",
+    "거꾸로 생각하기"
+   ],
+   "statement": "수 피라미드는 위 칸이 바로 아래 두 칸의 합이에요. 맨 아랫줄이 [6, □, 4]이고 꼭대기가 16일 때, □는 얼마일까요?",
+   "choices": [
+    "3",
+    "6",
+    "4",
+    "2"
+   ],
+   "answerIndex": 0,
+   "explanation": "가운데 줄은 (6+□)와 (□+4) — 꼭대기는 6+□+□+4예요. 16−6−4=6가 □ 두 개의 몫이니 □=3.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pyramid-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "수 피라미드",
+    "거꾸로 생각하기"
+   ],
+   "statement": "수 피라미드는 위 칸이 바로 아래 두 칸의 합이에요. 맨 아랫줄이 [2, □, 5]이고 꼭대기가 19일 때, □는 얼마일까요?",
+   "choices": [
+    "6",
+    "7",
+    "5",
+    "12"
+   ],
+   "answerIndex": 0,
+   "explanation": "가운데 줄은 (2+□)와 (□+5) — 꼭대기는 2+□+□+5예요. 19−2−5=12가 □ 두 개의 몫이니 □=6.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-stairs-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-stairs-5",
+   "concepts": [
+    "경우 나누어 세기",
+    "계단 문제"
+   ],
+   "statement": "한 번에 1칸 또는 2칸씩 오를 수 있는 5칸 계단이 있어요. 계단을 오르는 서로 다른 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "8가지",
+    "10가지",
+    "7가지",
+    "11가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "'5칸 방법 수 = 4칸 방법 수 + 3칸 방법 수'로 쌓아 올려요(마지막 걸음이 1칸이냐 2칸이냐). 1, 2, 3, 5, 8…처럼 커져서 8가지.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-stairs-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-stairs-5",
+   "concepts": [
+    "경우 나누어 세기",
+    "계단 문제"
+   ],
+   "statement": "한 번에 1칸 또는 2칸씩 오를 수 있는 6칸 계단이 있어요. 계단을 오르는 서로 다른 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "13가지",
+    "12가지",
+    "15가지",
+    "16가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "'6칸 방법 수 = 5칸 방법 수 + 4칸 방법 수'로 쌓아 올려요(마지막 걸음이 1칸이냐 2칸이냐). 1, 2, 3, 5, 8…처럼 커져서 13가지.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-stairs-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-stairs-5",
+   "concepts": [
+    "경우 나누어 세기",
+    "계단 문제"
+   ],
+   "statement": "한 번에 1칸 또는 2칸씩 오를 수 있는 7칸 계단이 있어요. 계단을 오르는 서로 다른 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "21가지",
+    "14가지",
+    "20가지",
+    "23가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "'7칸 방법 수 = 6칸 방법 수 + 5칸 방법 수'로 쌓아 올려요(마지막 걸음이 1칸이냐 2칸이냐). 1, 2, 3, 5, 8…처럼 커져서 21가지.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-grid-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-grid-4",
+   "concepts": [
+    "최단 경로",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 3칸, 세로 2칸의 바둑판 모양 길이 있어요. 왼쪽 아래에서 오른쪽 위까지 가장 짧게 가는 길은 모두 몇 가지일까요?",
+   "choices": [
+    "8가지",
+    "10가지",
+    "12가지",
+    "6가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "각 갈림길에 '거기까지 가는 방법 수'를 적으면 왼쪽과 아래 수의 합이 돼요. 끝까지 채우면 10가지.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "칸 수를 곱하는 게 아니에요. 갈림길마다 방법 수를 더해 가요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 2,
+     "mark": 1
+    }
+   }
+  },
+  {
+   "id": "gen-grid-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-grid-4",
+   "concepts": [
+    "최단 경로",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 3칸, 세로 3칸의 바둑판 모양 길이 있어요. 왼쪽 아래에서 오른쪽 위까지 가장 짧게 가는 길은 모두 몇 가지일까요?",
+   "choices": [
+    "20가지",
+    "9가지",
+    "18가지",
+    "22가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "각 갈림길에 '거기까지 가는 방법 수'를 적으면 왼쪽과 아래 수의 합이 돼요. 끝까지 채우면 20가지.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "칸 수를 곱하는 게 아니에요. 갈림길마다 방법 수를 더해 가요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 3,
+     "mark": 1
+    }
+   }
+  },
+  {
+   "id": "gen-grid-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-grid-4",
+   "concepts": [
+    "최단 경로",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 4칸, 세로 2칸의 바둑판 모양 길이 있어요. 왼쪽 아래에서 오른쪽 위까지 가장 짧게 가는 길은 모두 몇 가지일까요?",
+   "choices": [
+    "17가지",
+    "13가지",
+    "15가지",
+    "8가지"
+   ],
+   "answerIndex": 2,
+   "explanation": "각 갈림길에 '거기까지 가는 방법 수'를 적으면 왼쪽과 아래 수의 합이 돼요. 끝까지 채우면 15가지.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "칸 수를 곱하는 게 아니에요. 갈림길마다 방법 수를 더해 가요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 4,
+     "h": 2,
+     "mark": 1
+    }
+   }
+  },
+  {
+   "id": "gen-cycle-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 2,
+   "groupId": "g-gen-cycle-2",
+   "concepts": [
+    "반복 주기",
+    "나머지 사고"
+   ],
+   "statement": "빨간·노란·파란 구슬을 이 순서대로 계속 꿰어요. 50번째 구슬은 무슨 색일까요?",
+   "choices": [
+    "빨간색",
+    "노란색",
+    "파란색",
+    "알 수 없다"
+   ],
+   "answerIndex": 1,
+   "explanation": "3개씩 한 묶음이 반복돼요. 50=16묶음 + 2번째이니 노란색.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cycle-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 2,
+   "groupId": "g-gen-cycle-2",
+   "concepts": [
+    "반복 주기",
+    "나머지 사고"
+   ],
+   "statement": "초록·보라·주황 구슬을 이 순서대로 계속 꿰어요. 74번째 구슬은 무슨 색일까요?",
+   "choices": [
+    "알 수 없다",
+    "보라색",
+    "주황색",
+    "초록색"
+   ],
+   "answerIndex": 1,
+   "explanation": "3개씩 한 묶음이 반복돼요. 74=24묶음 + 2번째이니 보라색.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cycle-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 2,
+   "groupId": "g-gen-cycle-2",
+   "concepts": [
+    "반복 주기",
+    "나머지 사고"
+   ],
+   "statement": "빨간·노란·파란·초록 구슬을 이 순서대로 계속 꿰어요. 90번째 구슬은 무슨 색일까요?",
+   "choices": [
+    "알 수 없다",
+    "빨간색",
+    "파란색",
+    "노란색"
+   ],
+   "answerIndex": 3,
+   "explanation": "4개씩 한 묶음이 반복돼요. 90=22묶음 + 2번째이니 노란색.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cycle-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 2,
+   "groupId": "g-gen-cycle-2",
+   "concepts": [
+    "반복 주기",
+    "나머지 사고"
+   ],
+   "statement": "초록·보라·주황·분홍 구슬을 이 순서대로 계속 꿰어요. 66번째 구슬은 무슨 색일까요?",
+   "choices": [
+    "주황색",
+    "보라색",
+    "초록색",
+    "알 수 없다"
+   ],
+   "answerIndex": 1,
+   "explanation": "4개씩 한 묶음이 반복돼요. 66=16묶음 + 2번째이니 보라색.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-calweek-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "달력 구조",
+    "가운데 수 사고"
+   ],
+   "statement": "달력에서 위아래로 나란히 붙은 세 수를 골랐더니 합이 33였어요. 세 수 중 가운데 수는?",
+   "choices": [
+    "10",
+    "12",
+    "16",
+    "11"
+   ],
+   "answerIndex": 3,
+   "explanation": "세 수는 (가운데−7), 가운데, (가운데+7)이라 합이 가운데×3이에요. 33÷3=11.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-calweek-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "달력 구조",
+    "가운데 수 사고"
+   ],
+   "statement": "달력에서 위아래로 나란히 붙은 세 수를 골랐더니 합이 45였어요. 세 수 중 가운데 수는?",
+   "choices": [
+    "15",
+    "16",
+    "22",
+    "14"
+   ],
+   "answerIndex": 0,
+   "explanation": "세 수는 (가운데−7), 가운데, (가운데+7)이라 합이 가운데×3이에요. 45÷3=15.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-calweek-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "달력 구조",
+    "가운데 수 사고"
+   ],
+   "statement": "달력에서 위아래로 나란히 붙은 세 수를 골랐더니 합이 51였어요. 세 수 중 가운데 수는?",
+   "choices": [
+    "16",
+    "25",
+    "18",
+    "17"
+   ],
+   "answerIndex": 3,
+   "explanation": "세 수는 (가운데−7), 가운데, (가운데+7)이라 합이 가운데×3이에요. 51÷3=17.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-calweek-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "달력 구조",
+    "가운데 수 사고"
+   ],
+   "statement": "달력에서 위아래로 나란히 붙은 세 수를 골랐더니 합이 60였어요. 세 수 중 가운데 수는?",
+   "choices": [
+    "30",
+    "21",
+    "20",
+    "19"
+   ],
+   "answerIndex": 2,
+   "explanation": "세 수는 (가운데−7), 가운데, (가운데+7)이라 합이 가운데×3이에요. 60÷3=20.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-avgchg-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-avgchg-4",
+   "concepts": [
+    "평균 변화",
+    "합으로 비교"
+   ],
+   "statement": "4명의 평균 점수가 70점이었어요. 한 명이 더 들어오자 평균이 75점으로 올랐어요. 새로 들어온 사람의 점수는?",
+   "choices": [
+    "95점",
+    "80점",
+    "90점",
+    "75점"
+   ],
+   "answerIndex": 0,
+   "explanation": "5명의 총점 375점에서 원래 총점 280점을 빼면 95점.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-avgchg-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-avgchg-4",
+   "concepts": [
+    "평균 변화",
+    "합으로 비교"
+   ],
+   "statement": "5명의 평균 점수가 80점이었어요. 한 명이 더 들어오자 평균이 83점으로 올랐어요. 새로 들어온 사람의 점수는?",
+   "choices": [
+    "95점",
+    "86점",
+    "98점",
+    "83점"
+   ],
+   "answerIndex": 2,
+   "explanation": "6명의 총점 498점에서 원래 총점 400점을 빼면 98점.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-avgchg-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-avgchg-4",
+   "concepts": [
+    "평균 변화",
+    "합으로 비교"
+   ],
+   "statement": "4명의 평균 점수가 85점이었어요. 한 명이 더 들어오자 평균이 89점으로 올랐어요. 새로 들어온 사람의 점수는?",
+   "choices": [
+    "105점",
+    "89점",
+    "101점",
+    "93점"
+   ],
+   "answerIndex": 0,
+   "explanation": "5명의 총점 445점에서 원래 총점 340점을 빼면 105점.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-avgchg-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-avgchg-4",
+   "concepts": [
+    "평균 변화",
+    "합으로 비교"
+   ],
+   "statement": "5명의 평균 점수가 60점이었어요. 한 명이 더 들어오자 평균이 66점으로 올랐어요. 새로 들어온 사람의 점수는?",
+   "choices": [
+    "96점",
+    "90점",
+    "66점",
+    "72점"
+   ],
+   "answerIndex": 0,
+   "explanation": "6명의 총점 396점에서 원래 총점 300점을 빼면 96점.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-border-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "테두리 세기",
+    "꼭짓점 중복"
+   ],
+   "statement": "바둑돌을 그림처럼 속이 빈 정사각형 모양으로 한 변에 7개씩 놓으려고 해요. 바둑돌은 모두 몇 개 필요할까요?",
+   "choices": [
+    "24개",
+    "28개",
+    "22개",
+    "49개"
+   ],
+   "answerIndex": 0,
+   "explanation": "7×4에서 네 꼭짓점이 두 번씩 세어졌으니 4를 빼요: 24개.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "꼭짓점 돌 4개를 두 번 센 거예요."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "속이 꽉 찬 정사각형이 아니라 테두리만이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 7
+    }
+   }
+  },
+  {
+   "id": "gen-border-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "테두리 세기",
+    "꼭짓점 중복"
+   ],
+   "statement": "바둑돌을 그림처럼 속이 빈 정사각형 모양으로 한 변에 8개씩 놓으려고 해요. 바둑돌은 모두 몇 개 필요할까요?",
+   "choices": [
+    "28개",
+    "26개",
+    "32개",
+    "64개"
+   ],
+   "answerIndex": 0,
+   "explanation": "8×4에서 네 꼭짓점이 두 번씩 세어졌으니 4를 빼요: 28개.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "꼭짓점 돌 4개를 두 번 센 거예요."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "속이 꽉 찬 정사각형이 아니라 테두리만이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 8
+    }
+   }
+  },
+  {
+   "id": "gen-border-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "테두리 세기",
+    "꼭짓점 중복"
+   ],
+   "statement": "바둑돌을 그림처럼 속이 빈 정사각형 모양으로 한 변에 12개씩 놓으려고 해요. 바둑돌은 모두 몇 개 필요할까요?",
+   "choices": [
+    "44개",
+    "42개",
+    "48개",
+    "144개"
+   ],
+   "answerIndex": 0,
+   "explanation": "12×4에서 네 꼭짓점이 두 번씩 세어졌으니 4를 빼요: 44개.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "꼭짓점 돌 4개를 두 번 센 거예요."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "속이 꽉 찬 정사각형이 아니라 테두리만이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 12
+    }
+   }
+  },
+  {
+   "id": "gen-border-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "테두리 세기",
+    "꼭짓점 중복"
+   ],
+   "statement": "바둑돌을 그림처럼 속이 빈 정사각형 모양으로 한 변에 15개씩 놓으려고 해요. 바둑돌은 모두 몇 개 필요할까요?",
+   "choices": [
+    "54개",
+    "60개",
+    "225개",
+    "56개"
+   ],
+   "answerIndex": 3,
+   "explanation": "15×4에서 네 꼭짓점이 두 번씩 세어졌으니 4를 빼요: 56개.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "꼭짓점 돌 4개를 두 번 센 거예요."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "속이 꽉 찬 정사각형이 아니라 테두리만이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 12
+    }
+   }
+  },
+  {
+   "id": "gen-candle-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-candle-5",
+   "concepts": [
+    "따라잡기",
+    "차이 줄이기"
+   ],
+   "statement": "24cm 초는 1시간에 3cm씩, 16cm 초는 1시간에 2cm씩 타요. 동시에 불을 붙이면 몇 시간 뒤 두 초의 길이가 같아질까요?",
+   "choices": [
+    "8시간",
+    "6시간",
+    "10시간",
+    "11시간"
+   ],
+   "answerIndex": 0,
+   "explanation": "길이 차이 8cm가 1시간마다 1cm씩 줄어요. 8÷1=8시간. (그때 둘 다 0cm)",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-candle-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-candle-5",
+   "concepts": [
+    "따라잡기",
+    "차이 줄이기"
+   ],
+   "statement": "30cm 초는 1시간에 4cm씩, 18cm 초는 1시간에 2cm씩 타요. 동시에 불을 붙이면 몇 시간 뒤 두 초의 길이가 같아질까요?",
+   "choices": [
+    "12시간",
+    "8시간",
+    "6시간",
+    "4시간"
+   ],
+   "answerIndex": 2,
+   "explanation": "길이 차이 12cm가 1시간마다 2cm씩 줄어요. 12÷2=6시간. (그때 둘 다 6cm)",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "차이 12cm를 '1시간에 줄어드는 양 2cm'로 나눠야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-candle-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-candle-5",
+   "concepts": [
+    "따라잡기",
+    "차이 줄이기"
+   ],
+   "statement": "18cm 초는 1시간에 2cm씩, 12cm 초는 1시간에 1cm씩 타요. 동시에 불을 붙이면 몇 시간 뒤 두 초의 길이가 같아질까요?",
+   "choices": [
+    "9시간",
+    "6시간",
+    "8시간",
+    "4시간"
+   ],
+   "answerIndex": 1,
+   "explanation": "길이 차이 6cm가 1시간마다 1cm씩 줄어요. 6÷1=6시간. (그때 둘 다 6cm)",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-candle-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 5,
+   "groupId": "g-gen-candle-5",
+   "concepts": [
+    "따라잡기",
+    "차이 줄이기"
+   ],
+   "statement": "25cm 초는 1시간에 3cm씩, 13cm 초는 1시간에 1cm씩 타요. 동시에 불을 붙이면 몇 시간 뒤 두 초의 길이가 같아질까요?",
+   "choices": [
+    "12시간",
+    "8시간",
+    "6시간",
+    "4시간"
+   ],
+   "answerIndex": 2,
+   "explanation": "길이 차이 12cm가 1시간마다 2cm씩 줄어요. 12÷2=6시간. (그때 둘 다 7cm)",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "차이 12cm를 '1시간에 줄어드는 양 2cm'로 나눠야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-mirror-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "거울 사고",
+    "대칭"
+   ],
+   "statement": "그림은 거울에 비친 벽시계 모습이에요(10시 정각처럼 보여요). 실제 시각은 몇 시일까요?",
+   "choices": [
+    "8시",
+    "10시",
+    "11시",
+    "2시"
+   ],
+   "answerIndex": 3,
+   "explanation": "거울은 12-6 축을 기준으로 좌우를 뒤집어요. 12에서 10만큼 반대로 가면 2시.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "거울 속 그대로 읽었어요. 좌우가 뒤집혀 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 10,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-mirror-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "거울 사고",
+    "대칭"
+   ],
+   "statement": "그림은 거울에 비친 벽시계 모습이에요(8시 정각처럼 보여요). 실제 시각은 몇 시일까요?",
+   "choices": [
+    "9시",
+    "4시",
+    "8시",
+    "10시"
+   ],
+   "answerIndex": 1,
+   "explanation": "거울은 12-6 축을 기준으로 좌우를 뒤집어요. 12에서 8만큼 반대로 가면 4시.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "거울 속 그대로 읽었어요. 좌우가 뒤집혀 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 8,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-mirror-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "거울 사고",
+    "대칭"
+   ],
+   "statement": "그림은 거울에 비친 벽시계 모습이에요(7시 정각처럼 보여요). 실제 시각은 몇 시일까요?",
+   "choices": [
+    "8시",
+    "5시",
+    "11시",
+    "7시"
+   ],
+   "answerIndex": 1,
+   "explanation": "거울은 12-6 축을 기준으로 좌우를 뒤집어요. 12에서 7만큼 반대로 가면 5시.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "거울 속 그대로 읽었어요. 좌우가 뒤집혀 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 7,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-mirror-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "거울 사고",
+    "대칭"
+   ],
+   "statement": "그림은 거울에 비친 벽시계 모습이에요(5시 정각처럼 보여요). 실제 시각은 몇 시일까요?",
+   "choices": [
+    "6시",
+    "5시",
+    "1시",
+    "7시"
+   ],
+   "answerIndex": 3,
+   "explanation": "거울은 12-6 축을 기준으로 좌우를 뒤집어요. 12에서 5만큼 반대로 가면 7시.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "거울 속 그대로 읽었어요. 좌우가 뒤집혀 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 5,
+     "minute": 0
+    }
+   }
+  }
+ ]
+}

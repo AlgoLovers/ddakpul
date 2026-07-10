@@ -19,4 +19,5 @@ data class ProblemEntity(
     val correctChoiceIndex: Int,
     val explanation: String?,
     val mistakesJson: String,
+    val figureJson: String? = null,
 )
