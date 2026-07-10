@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
+import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,7 @@ class SolveViewModel
         private val getNextProblem: GetNextProblemUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
         observeStats: ObserveLearningStatsUseCase,
+        observeDailyGoal: ObserveDailyGoalUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
         val uiState: StateFlow<SolveUiState> = _uiState.asStateFlow()
@@ -46,6 +48,11 @@ class SolveViewModel
                             todayTimeSpentSec = stats.todayTimeSpentSec,
                         )
                     }
+                }
+            }
+            viewModelScope.launch {
+                observeDailyGoal().collect { goal ->
+                    _uiState.update { it.copy(dailyGoal = goal) }
                 }
             }
         }

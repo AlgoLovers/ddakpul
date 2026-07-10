@@ -116,6 +116,9 @@
 
     <!-- 설정 -->
     <string name="settings_title">설정</string>
+    <string name="settings_goal_title">하루 목표</string>
+    <string name="settings_goal_desc">아이가 스스로 목표를 정하면 더 오래, 즐겁게 공부해요.</string>
+    <string name="settings_goal_option">%1$d문제</string>
     <string name="settings_reset">학습 기록 초기화</string>
     <string name="settings_reset_desc">모든 풀이 기록과 난이도를 처음 상태로 되돌립니다.</string>
     <string name="settings_reset_confirm">초기화</string>

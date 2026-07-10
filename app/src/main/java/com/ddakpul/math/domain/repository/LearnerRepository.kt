@@ -21,6 +21,11 @@ interface LearnerRepository {
     /** 복습 스케줄 재생용 전체 시도(시간 오름차순). */
     suspend fun getAllAttempts(): List<Attempt>
 
-    /** 모든 풀이 기록과 난이도를 초기화한다. */
+    /** 아이가 스스로 정한 하루 목표 문항 수(미설정이면 기본값). */
+    fun observeDailyGoal(): Flow<Int>
+
+    suspend fun setDailyGoal(goal: Int)
+
+    /** 모든 풀이 기록과 난이도를 초기화한다(하루 목표는 유지). */
     suspend fun resetProgress()
 }

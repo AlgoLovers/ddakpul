@@ -6,6 +6,7 @@ import com.ddakpul.math.domain.model.LearnerState
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
+import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,7 @@ class FakeLearnerRepository(
     initialDifficulty: Int = Difficulty.DEFAULT,
 ) : LearnerRepository {
     private val attempts = MutableStateFlow<List<Attempt>>(emptyList())
+    private val dailyGoal = MutableStateFlow(SessionGoals.DAILY_GOAL_PROBLEMS)
 
     var currentDifficulty: Int = initialDifficulty
         private set
@@ -55,6 +57,12 @@ class FakeLearnerRepository(
     override fun observeAttempts(): Flow<List<Attempt>> = attempts.asStateFlow()
 
     override suspend fun getAllAttempts(): List<Attempt> = attempts.value
+
+    override fun observeDailyGoal(): Flow<Int> = dailyGoal.asStateFlow()
+
+    override suspend fun setDailyGoal(goal: Int) {
+        dailyGoal.value = goal
+    }
 
     override suspend fun resetProgress() {
         attempts.value = emptyList()

@@ -5,11 +5,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ddakpul.math.data.local.entity.LearnerProgressEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LearnerProgressDao {
     @Query("SELECT * FROM learner_progress WHERE id = ${LearnerProgressEntity.SINGLETON_ID}")
     suspend fun get(): LearnerProgressEntity?
+
+    @Query("SELECT * FROM learner_progress WHERE id = ${LearnerProgressEntity.SINGLETON_ID}")
+    fun observe(): Flow<LearnerProgressEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(entity: LearnerProgressEntity)
