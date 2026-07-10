@@ -49,6 +49,16 @@ jobs:
         run: |
           curl -sS -f \
             -F chat_id="${TELEGRAM_CHAT_ID}" \
-            -F caption="DdakPul debug APK — ${GITHUB_REF_NAME}@${GITHUB_SHA::7}" \
+            -F caption="🧮 DdakPul debug APK — ${GITHUB_REF_NAME}@${GITHUB_SHA::7}" \
             -F document=@app/build/outputs/apk/debug/app-debug.apk \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
+
+      # 장애 알림 — 어느 스텝이든 실패하면 텔레그램으로 즉시 알린다.
+      - name: Notify CI failure to Telegram
+        if: ${{ failure() && env.TELEGRAM_BOT_TOKEN != '' }}
+        run: |
+          curl -sS \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            --data-urlencode text="🔴 DdakPul CI 실패 — ${GITHUB_REF_NAME}@${GITHUB_SHA::7}
+          로그: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
