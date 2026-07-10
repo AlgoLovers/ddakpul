@@ -10,8 +10,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "problem")
 data class ProblemEntity(
     @PrimaryKey val id: String,
-    val grade: Int,
-    val semester: Int,
     val area: String,
     val conceptTagsJson: String,
     val difficulty: Int,

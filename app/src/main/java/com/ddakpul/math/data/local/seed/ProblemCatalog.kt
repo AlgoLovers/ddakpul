@@ -16,9 +16,6 @@ import com.ddakpul.math.domain.model.Problem
  */
 @Suppress("LargeClass")
 object ProblemCatalog {
-    private const val GRADE = 4
-    private const val SEMESTER = 2
-
     private fun mc(
         id: String,
         area: MathArea,
@@ -33,8 +30,6 @@ object ProblemCatalog {
     ): Problem =
         Problem(
             id = id,
-            grade = GRADE,
-            semester = SEMESTER,
             area = area,
             conceptTags = concepts,
             difficulty = difficulty,
@@ -1739,6 +1734,409 @@ object ProblemCatalog {
                     mistakes =
                         listOf(
                             Mistake(0, "톱니가 적은 바퀴가 더 많이 돌아요. A가 옮긴 톱니 20개 = B의 2바퀴."),
+                        ),
+                ),
+            )
+            // ═══════ 심화(5분급) — 연습장에 그리고 따져 봐야 풀리는 다단계 문제 ═══════
+
+            // ── 난이도 3 · 체계적으로 세기 심화 ──────────────────────────────────────
+            add(
+                mc(
+                    id = "deep3-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-deep-count-3",
+                    concepts = listOf("숫자 세기", "중복 조심"),
+                    statement = "1부터 100까지의 수 중에서 숫자 3이 한 번이라도 들어가는 수는 모두 몇 개일까요? (예: 3, 13, 35, 73…)",
+                    choices = listOf("10개", "18개", "19개", "20개"),
+                    answerIndex = 2,
+                    explanation = "일의 자리가 3인 수 10개(3, 13, …, 93)와 삼십대 10개(30~39)를 더하면 20개지만, 33이 두 번 세어졌으니 하나 빼서 19개예요.",
+                    mistakes =
+                        listOf(
+                            Mistake(3, "33을 두 번 세지 않았는지 확인해요. 두 묶음에 모두 들어 있어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep3-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-deep-count-3",
+                    concepts = listOf("숫자 세기", "자릿수 나누기"),
+                    statement = "1쪽부터 50쪽까지 책에 쪽수를 매기려면 숫자를 모두 몇 개 써야 할까요?",
+                    choices = listOf("82개", "90개", "91개", "100개"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "한 자리 쪽수(1~9)의 숫자 9개를 빠뜨렸어요. 9 + 41×2 = 91."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep3-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-deep-count-3",
+                    concepts = listOf("테두리 세기", "꼭짓점 중복"),
+                    statement = "바둑돌을 속이 빈 정사각형 모양으로 한 변에 10개씩 놓으려고 해요. 바둑돌은 모두 몇 개 필요할까요?",
+                    choices = listOf("40개", "36개", "38개", "32개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "10×4=40으로 하면 네 꼭짓점 돌을 두 번 센 거예요. 40−4=36."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep3-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-deep-count-3",
+                    concepts = listOf("달력 구조", "가운데 수 사고"),
+                    statement = "달력에서 위아래로 나란히 붙은 세 수를 골랐더니 합이 42였어요. 세 수 중 가운데 수는?",
+                    choices = listOf("12", "13", "14", "21"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "42÷2가 아니에요. 세 수는 (가운데−7), 가운데, (가운데+7)이라 합이 가운데×3이에요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 수 구성 심화 (복면산·카드·조건 찾기) ──────────────────────
+            add(
+                mc(
+                    id = "deep4n-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-deep-number-4",
+                    concepts = listOf("복면산", "자리값 사고"),
+                    statement = "두 자리 수 (AB)와 자리를 바꾼 수 (BA)를 더했더니 132가 되었어요. A+B는 얼마일까요? (A, B는 한 자리 숫자)",
+                    choices = listOf("10", "11", "12", "13"),
+                    answerIndex = 2,
+                    explanation = "(AB)+(BA) = (10A+B)+(10B+A) = 11×(A+B). 11×(A+B)=132이므로 A+B=12예요.",
+                    mistakes =
+                        listOf(
+                            Mistake(1, "132÷12가 아니라 132÷11이에요. 두 수의 합은 항상 11의 배수가 돼요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4n-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-deep-number-4",
+                    concepts = listOf("수 만들기", "경우 나누기"),
+                    statement = "숫자 카드 1, 2, 3, 4를 모두 한 번씩 써서 만든 네 자리 수 중 3200보다 큰 수는 모두 몇 개일까요?",
+                    choices = listOf("6개", "8개", "10개", "12개"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "31□□는 3200보다 작아요. 4□□□ 6개 + 34□□ 2개 + 32□□ 2개 = 10개."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4n-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-deep-number-4",
+                    concepts = listOf("조건으로 수 찾기"),
+                    statement = "세 자리 수가 있어요. 각 자리 숫자의 합은 14이고, 십의 자리는 5, 백의 자리는 일의 자리의 2배예요. 이 수는?",
+                    choices = listOf("653", "356", "554", "635"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "십의 자리가 5라는 조건을 다시 확인해요. 백+일=9이고 백=일×2이니 백6, 일3."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4n-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-deep-number-4",
+                    concepts = listOf("곱의 성질", "0의 개수"),
+                    statement = "1×2×3×…×10을 모두 곱한 수의 끝에는 0이 몇 개 붙어 있을까요?",
+                    choices = listOf("1개", "2개", "3개", "4개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "0은 2×5에서 생겨요. 5와 10(=2×5), 두 번 만들어지니 0도 2개."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 도형 사고 심화 (분할·둘레 보존·경로) ──────────────────────
+            add(
+                mc(
+                    id = "deep4g-01",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-deep-geo-4",
+                    concepts = listOf("둘레 보존", "발상 전환"),
+                    statement = "한 변이 10cm인 정사각형 종이의 한 모퉁이에서 한 변이 4cm인 정사각형을 잘라내 L자 모양을 만들었어요. L자 도형의 둘레는?",
+                    choices = listOf("32cm", "36cm", "40cm", "48cm"),
+                    answerIndex = 2,
+                    explanation = "잘라낸 자리의 파인 두 변은 밖으로 밀어내면 원래 변과 똑같이 맞춰져요. 그래서 둘레는 원래 정사각형과 같은 40cm!",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "잘라냈다고 둘레가 줄지 않아요. 파인 부분의 변을 밀어 붙여 보세요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4g-02",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-deep-geo-4",
+                    concepts = listOf("평면 분할", "규칙 찾기"),
+                    statement = "직선 4개를 그어 평면(종이)을 최대 몇 부분으로 나눌 수 있을까요? (직선 1개면 2부분, 2개면 4부분…)",
+                    choices = listOf("8부분", "9부분", "10부분", "11부분"),
+                    answerIndex = 3,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "8은 서로 평행하지 않게만 그은 게 아니에요. 새 직선이 기존 직선을 모두 가로지르면 1+1+2+3+4=11."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4g-03",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-deep-geo-4",
+                    concepts = listOf("접기와 구멍", "공간 사고"),
+                    statement = "정사각형 색종이를 반으로 접고 또 반으로 접은 뒤(총 2번), 구멍을 1개 뚫고 펼쳤어요. 구멍은 모두 몇 개일까요?",
+                    choices = listOf("1개", "2개", "4개", "8개"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "두 번 접으면 종이가 4겹이에요. 겹마다 구멍이 하나씩 뚫려요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4g-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-deep-geo-4",
+                    concepts = listOf("최단 경로", "체계적으로 세기"),
+                    statement = "가로 2칸, 세로 2칸의 바둑판 모양 길이 있어요. 왼쪽 아래에서 오른쪽 위까지 가장 짧게 가는 길은 모두 몇 가지일까요?",
+                    choices = listOf("4가지", "6가지", "8가지", "12가지"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "각 갈림길에 '거기까지 가는 방법 수'를 적어 가며 더해 보세요. 1,2,1 → 1,3,3 → 6."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 작업·속력·나이 사고 ───────────────────────────────────────
+            add(
+                mc(
+                    id = "deep4w-01",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-deep-work-4",
+                    concepts = listOf("일의 양", "단위 시간 사고"),
+                    statement = "물탱크를 A 수도만 틀면 6분, B 수도만 틀면 12분에 가득 채워요. 두 수도를 동시에 틀면 몇 분 만에 가득 찰까요?",
+                    choices = listOf("3분", "4분", "8분", "9분"),
+                    answerIndex = 1,
+                    explanation = "1분에 A는 전체의 1/6, B는 1/12을 채워요. 합치면 1분에 1/6+1/12=1/4 — 그래서 4분이면 가득!",
+                    mistakes =
+                        listOf(
+                            Mistake(3, "9분은 6과 12의 평균이에요. 같이 틀면 혼자보다 빨라져야 해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4w-02",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-deep-work-4",
+                    concepts = listOf("나이 문제", "배 관계 변화"),
+                    statement = "지금 아버지 나이는 아들의 4배예요. 5년 뒤에는 3배가 돼요. 지금 아들은 몇 살일까요?",
+                    choices = listOf("8살", "10살", "12살", "15살"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "검산해요: 아들 8이면 아버지 32, 5년 뒤 13과 37 — 3배가 아니에요. 아들 10이면 40→15와 45로 딱 3배."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4w-03",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-deep-work-4",
+                    concepts = listOf("자르기 횟수", "간격 사고"),
+                    statement = "긴 통나무를 5도막으로 자르려고 해요. 한 번 자르는 데 3분이 걸린다면 모두 몇 분이 걸릴까요?",
+                    choices = listOf("15분", "12분", "9분", "18분"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "5도막을 내는 데 필요한 건 4번 자르기예요. 도막 수와 자르는 횟수는 달라요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep4w-04",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-deep-work-4",
+                    concepts = listOf("만남 문제", "속력 합"),
+                    statement = "둘레 400m인 트랙의 같은 지점에서 두 사람이 서로 반대 방향으로 동시에 출발해요. 한 명은 1분에 60m, 다른 한 명은 1분에 40m를 걸어요. 두 사람은 몇 분 뒤 처음 만날까요?",
+                    choices = listOf("2분", "4분", "8분", "10분"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "반대 방향이면 두 사람이 좁히는 거리는 1분에 60+40=100m예요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 논리 전략 심화 (라벨·저울·계단·거울) ──────────────────────
+            add(
+                mc(
+                    id = "deep5l-01",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-deep-logic-5",
+                    concepts = listOf("논리 퍼즐", "라벨 추론"),
+                    statement = "세 상자에 각각 '사과', '귤', '사과와 귤'이라는 이름표가 붙어 있는데, 셋 다 잘못 붙어 있어요. '사과와 귤' 상자에서 하나를 꺼냈더니 사과가 나왔어요. 이 상자에 실제로 든 것은?",
+                    choices = listOf("사과만", "귤만", "사과와 귤", "알 수 없다"),
+                    answerIndex = 0,
+                    explanation = "이름표가 전부 틀렸으니 이 상자는 '사과와 귤'이 아니에요. 그런데 사과가 나왔으니 귤만도 아니죠. 남는 답은 사과만!",
+                    mistakes =
+                        listOf(
+                            Mistake(2, "이름표가 '전부' 잘못 붙었다는 조건을 놓쳤어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep5l-02",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-deep-logic-5",
+                    concepts = listOf("저울 전략", "3등분 사고"),
+                    statement = "겉모양이 똑같은 동전 9개 중 1개만 살짝 가벼운 가짜예요. 양팔저울을 최소 몇 번 써야 가짜를 확실히 찾을 수 있을까요?",
+                    choices = listOf("2번", "3번", "4번", "8번"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "3개씩 세 묶음으로 나누면 1번에 가짜가 든 묶음, 2번째에 가짜 동전을 찾아요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep5l-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-deep-logic-5",
+                    concepts = listOf("경우 나누어 세기", "계단 문제"),
+                    statement = "한 번에 1칸 또는 2칸씩 오를 수 있는 4칸 계단이 있어요. 계단을 오르는 서로 다른 방법은 모두 몇 가지일까요?",
+                    choices = listOf("4가지", "5가지", "6가지", "8가지"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "1111, 112, 121, 211, 22 — 순서가 다르면 다른 방법이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep5l-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-deep-logic-5",
+                    concepts = listOf("거울 사고", "대칭"),
+                    statement = "벽시계가 거울에 비쳐 9시 정각처럼 보여요. 실제 시각은 몇 시일까요?",
+                    choices = listOf("9시", "3시", "6시", "12시"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "거울은 좌우를 뒤집어요. 12를 기준으로 접었을 때 9시와 겹치는 시각을 찾아요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 비율·변화 심화 (기차·시계 바늘·양초) ──────────────────────
+            add(
+                mc(
+                    id = "deep5r-01",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-deep-rate-5",
+                    concepts = listOf("기차 문제", "숨은 거리"),
+                    statement = "길이 100m인 기차가 1초에 20m씩 달려요. 이 기차가 길이 400m인 다리를 완전히 건너는 데(맨 앞이 들어가서 맨 뒤가 나올 때까지) 몇 초가 걸릴까요?",
+                    choices = listOf("20초", "25초", "30초", "5초"),
+                    answerIndex = 1,
+                    explanation = "기차 맨 뒤까지 다리를 벗어나려면 다리 400m에 기차 길이 100m를 더한 500m를 가야 해요. 500÷20=25초.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "기차 자신의 길이 100m를 잊었어요. 가야 할 거리는 400+100=500m."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep5r-02",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-deep-rate-5",
+                    concepts = listOf("시계 바늘 사고"),
+                    statement = "2시와 3시 사이에 긴바늘과 짧은바늘이 정확히 겹치는 순간이 있어요. 대략 몇 시 몇 분일까요?",
+                    choices = listOf("2시 5분쯤", "2시 11분쯤", "2시 15분쯤", "2시 20분쯤"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "긴바늘이 2(10분 자리)에 도착하면 짧은바늘은 이미 조금 더 가 있어요. 따라잡는 지점은 10분보다 조금 뒤."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep5r-03",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-deep-rate-5",
+                    concepts = listOf("나이 문제", "배 관계 변화"),
+                    statement = "지금 어머니 나이는 딸의 3배예요. 12년 뒤에는 2배가 돼요. 지금 딸은 몇 살일까요?",
+                    choices = listOf("10살", "12살", "14살", "16살"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "검산: 딸 12살이면 어머니 36살, 12년 뒤 24살과 48살 — 딱 2배가 돼요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "deep5r-04",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-deep-rate-5",
+                    concepts = listOf("따라잡기", "차이 줄이기"),
+                    statement = "20cm짜리 초는 1시간에 2cm씩, 12cm짜리 초는 1시간에 1cm씩 타요. 동시에 불을 붙이면 몇 시간 뒤 두 초의 길이가 같아질까요?",
+                    choices = listOf("4시간", "6시간", "8시간", "10시간"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "길이 차이 8cm가 1시간에 1cm씩 줄어들어요. 8÷1=8시간."),
                         ),
                 ),
             )
