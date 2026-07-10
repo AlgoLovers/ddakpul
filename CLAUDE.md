@@ -67,7 +67,7 @@ data class Problem(
     val groupId: String,         // 유사 난이도·개념 묶음 (추천 단위)
     val statement: String,
     val answer: Answer,
-    val explanation: String?,    // 그룹 대표문제만 보유 가능
+    val explanation: String?,    // 모든 문제가 단계별 풀이 보유 (콘텐츠 규칙)
     val commonMistakes: List<Mistake>,
 )
 
