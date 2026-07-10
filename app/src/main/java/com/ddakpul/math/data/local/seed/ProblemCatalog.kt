@@ -49,98 +49,6 @@ object ProblemCatalog {
     val problems: List<Problem> =
         buildList {
             // ── 난이도 1 · 수와 연산(세 자리 덧셈·뺄셈, 몸풀기) ─────────────────────────
-            add(
-                mc(
-                    id = "num1-01",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 1,
-                    groupId = "g-num-add-1",
-                    concepts = listOf("세 자리 수 덧셈", "받아올림"),
-                    statement = "324 + 197 = ?",
-                    choices = listOf("511", "521", "515", "621"),
-                    answerIndex = 1,
-                    explanation = "일의 자리 4+7=11에서 1을 올리고, 십의 자리 2+9+1=12에서 다시 1을 올려 백의 자리 3+1+1=5. 답은 521이에요.",
-                    mistakes =
-                        listOf(
-                            Mistake(0, "받아올림 한 번을 빠뜨렸어요. 자리마다 올라간 1을 꼭 더해요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "num1-02",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 1,
-                    groupId = "g-num-add-1",
-                    concepts = listOf("세 자리 수 뺄셈", "받아내림"),
-                    statement = "705 − 268 = ?",
-                    choices = listOf("437", "447", "537", "443"),
-                    answerIndex = 0,
-                    mistakes =
-                        listOf(
-                            Mistake(2, "십의 자리에서 백의 자리 받아내림을 하지 않았어요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "num1-03",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 1,
-                    groupId = "g-num-add-1",
-                    concepts = listOf("세 자리 수 뺄셈", "0에서 받아내림"),
-                    statement = "1000 − 645 = ?",
-                    choices = listOf("355", "365", "455", "345"),
-                    answerIndex = 0,
-                ),
-            )
-
-            // ── 난이도 2 · 수와 연산(곱셈·나눗셈) ──────────────────────────────────────
-            add(
-                mc(
-                    id = "num2-01",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 2,
-                    groupId = "g-num-mul-2",
-                    concepts = listOf("두 자리 × 한 자리"),
-                    statement = "23 × 4 = ?",
-                    choices = listOf("82", "92", "86", "112"),
-                    answerIndex = 1,
-                    explanation = "20×4=80, 3×4=12를 더하면 92예요. 자리별로 곱한 뒤 합쳐요.",
-                    mistakes =
-                        listOf(
-                            Mistake(0, "3×4=12의 받아올림 1(십의 자리)을 더하지 않았어요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "num2-02",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 2,
-                    groupId = "g-num-mul-2",
-                    concepts = listOf("두 자리 ÷ 한 자리"),
-                    statement = "84 ÷ 6 = ?",
-                    choices = listOf("12", "14", "13", "16"),
-                    answerIndex = 1,
-                    mistakes =
-                        listOf(
-                            Mistake(0, "6×14=84예요. 6×12=72라서 12는 너무 작아요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "num2-03",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 2,
-                    groupId = "g-num-mul-2",
-                    concepts = listOf("두 자리 × 한 자리"),
-                    statement = "17 × 5 = ?",
-                    choices = listOf("75", "85", "95", "805"),
-                    answerIndex = 1,
-                ),
-            )
 
             // ── 난이도 2 · 도형과 측정(각도 기초) ─────────────────────────────────────
             add(
@@ -208,53 +116,6 @@ object ProblemCatalog {
                     concepts = listOf("자료 해석"),
                     statement = "학생 20명 중 축구 8명, 야구 5명, 농구 7명이 좋아해요. 가장 많이 좋아하는 운동은?",
                     choices = listOf("축구", "야구", "농구", "모두 같다"),
-                    answerIndex = 0,
-                ),
-            )
-
-            // ── 난이도 3 · 수와 연산(분수) ────────────────────────────────────────────
-            add(
-                mc(
-                    id = "frac3-01",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-frac-3",
-                    concepts = listOf("분수의 덧셈", "분모가 같은 분수"),
-                    statement = "1/5 + 2/5 = ?",
-                    choices = listOf("3/5", "3/10", "2/25", "1/2"),
-                    answerIndex = 0,
-                    explanation = "분모가 같으면 분자끼리만 더해요. 1+2=3이므로 3/5. 분모 5는 그대로 둬요.",
-                    mistakes =
-                        listOf(
-                            Mistake(1, "분모끼리도 더했어요(5+5=10). 분모가 같을 땐 분모는 그대로!"),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "frac3-02",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-frac-3",
-                    concepts = listOf("분수와 소수"),
-                    statement = "3/4 을 소수로 나타내면?",
-                    choices = listOf("0.34", "0.75", "0.4", "0.7"),
-                    answerIndex = 1,
-                    mistakes =
-                        listOf(
-                            Mistake(0, "분자·분모를 그대로 이어 쓴 게 아니에요. 3÷4=0.75로 계산해요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "frac3-03",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-frac-3",
-                    concepts = listOf("분수의 뺄셈", "1에서 빼기"),
-                    statement = "1 − 3/8 = ?",
-                    choices = listOf("5/8", "4/8", "3/8", "7/8"),
                     answerIndex = 0,
                 ),
             )
@@ -356,14 +217,14 @@ object ProblemCatalog {
                     area = MathArea.SHAPE_MEASUREMENT,
                     difficulty = 4,
                     groupId = "g-geo-area-4",
-                    concepts = listOf("직사각형의 넓이"),
-                    statement = "가로 6cm, 세로 4cm인 직사각형의 넓이는?",
-                    choices = listOf("10cm²", "24cm²", "20cm²", "12cm²"),
+                    concepts = listOf("넓이와 둘레", "비교 사고"),
+                    statement = "둘레가 24cm로 같은 정사각형과 직사각형(가로 8cm)이 있어요. 정사각형의 넓이는 직사각형보다 몇 cm² 더 넓을까요?",
+                    choices = listOf("0cm²", "4cm²", "8cm²", "16cm²"),
                     answerIndex = 1,
-                    explanation = "직사각형의 넓이는 가로 × 세로예요. 6 × 4 = 24cm².",
+                    explanation = "정사각형은 한 변 6cm라 넓이 36cm². 직사각형은 가로 8, 세로 4라 32cm². 둘레가 같아도 정사각형이 가장 넓어요.",
                     mistakes =
                         listOf(
-                            Mistake(0, "가로+세로(6+4)를 구했어요. 넓이는 더하기가 아니라 곱하기예요."),
+                            Mistake(0, "둘레가 같다고 넓이도 같은 건 아니에요. 직접 구해서 비교해요."),
                         ),
                 ),
             )
@@ -373,13 +234,13 @@ object ProblemCatalog {
                     area = MathArea.SHAPE_MEASUREMENT,
                     difficulty = 4,
                     groupId = "g-geo-area-4",
-                    concepts = listOf("정사각형의 둘레"),
-                    statement = "한 변이 5cm인 정사각형의 둘레는?",
-                    choices = listOf("10cm", "15cm", "20cm", "25cm"),
+                    concepts = listOf("넓이", "배 관계 사고"),
+                    statement = "정사각형 모양 밭의 각 변을 2배로 늘리면 넓이는 몇 배가 될까요?",
+                    choices = listOf("2배", "3배", "4배", "8배"),
                     answerIndex = 2,
                     mistakes =
                         listOf(
-                            Mistake(3, "5×5=25는 넓이예요. 둘레는 네 변의 합(5×4=20)이에요."),
+                            Mistake(0, "변이 2배면 가로도 2배, 세로도 2배 — 넓이는 2×2=4배예요."),
                         ),
                 ),
             )
@@ -389,13 +250,13 @@ object ProblemCatalog {
                     area = MathArea.SHAPE_MEASUREMENT,
                     difficulty = 4,
                     groupId = "g-geo-area-4",
-                    concepts = listOf("직사각형의 둘레"),
-                    statement = "가로 8cm, 세로 3cm인 직사각형의 둘레는?",
-                    choices = listOf("11cm", "22cm", "24cm", "16cm"),
+                    concepts = listOf("둘레", "비 사고"),
+                    statement = "가로와 세로의 비가 3:2인 직사각형의 둘레가 30cm예요. 가로는 몇 cm일까요?",
+                    choices = listOf("6cm", "9cm", "10cm", "12cm"),
                     answerIndex = 1,
                     mistakes =
                         listOf(
-                            Mistake(2, "8×3=24는 넓이예요. 둘레는 (8+3)×2=22cm."),
+                            Mistake(0, "6cm는 세로예요. 가로+세로=15를 3:2로 나누면 9와 6."),
                         ),
                 ),
             )
@@ -450,14 +311,14 @@ object ProblemCatalog {
                     area = MathArea.DATA_POSSIBILITY,
                     difficulty = 4,
                     groupId = "g-data-average-4",
-                    concepts = listOf("평균"),
-                    statement = "3, 5, 7의 평균은?",
-                    choices = listOf("5", "4", "6", "15"),
-                    answerIndex = 0,
-                    explanation = "평균은 (모두 더한 값) ÷ (개수)예요. (3+5+7) ÷ 3 = 15 ÷ 3 = 5.",
+                    concepts = listOf("평균", "거꾸로 생각하기"),
+                    statement = "세 번의 시험 평균이 80점이었어요. 네 번째 시험을 본 뒤 평균이 85점이 되었다면 네 번째 시험 점수는?",
+                    choices = listOf("85점", "90점", "95점", "100점"),
+                    answerIndex = 3,
+                    explanation = "네 번 합은 85×4=340, 세 번 합은 80×3=240. 차이 340−240=100점이 네 번째 점수예요.",
                     mistakes =
                         listOf(
-                            Mistake(3, "합(15)까지만 구했어요. 개수 3으로 나눠야 평균이에요."),
+                            Mistake(1, "평균이 5점 올랐다고 5점만 더 받은 게 아니에요. 합으로 비교해요."),
                         ),
                 ),
             )
@@ -467,10 +328,14 @@ object ProblemCatalog {
                     area = MathArea.DATA_POSSIBILITY,
                     difficulty = 4,
                     groupId = "g-data-average-4",
-                    concepts = listOf("평균"),
-                    statement = "네 번의 점수 80, 90, 70, 80의 평균은?",
-                    choices = listOf("80", "85", "75", "320"),
-                    answerIndex = 0,
+                    concepts = listOf("평균", "거꾸로 생각하기"),
+                    statement = "다섯 수의 평균이 20이에요. 이 중 하나를 뺐더니 남은 네 수의 평균이 18이 되었어요. 뺀 수는?",
+                    choices = listOf("20", "24", "28", "38"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "합으로 비교해요. 100−72=28."),
+                        ),
                 ),
             )
             add(
@@ -586,70 +451,6 @@ object ProblemCatalog {
 
             // ═══════════ 확충분 — 그룹당 문항 밀도 상향 (규칙5가 실제로 작동하도록) ═══════════
 
-            // ── 난이도 1 · 수와 연산 추가 ────────────────────────────────────────────
-            add(
-                mc(
-                    id = "num1-04",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 1,
-                    groupId = "g-num-add-1",
-                    concepts = listOf("세 자리 수 덧셈", "받아올림"),
-                    statement = "456 + 238 = ?",
-                    choices = listOf("684", "694", "794", "692"),
-                    answerIndex = 1,
-                    mistakes =
-                        listOf(
-                            Mistake(0, "일의 자리 6+8=14에서 올라간 1을 십의 자리에 더하지 않았어요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "num1-05",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 1,
-                    groupId = "g-num-add-1",
-                    concepts = listOf("세 자리 수 뺄셈", "받아내림"),
-                    statement = "823 − 457 = ?",
-                    choices = listOf("366", "434", "376", "466"),
-                    answerIndex = 0,
-                    mistakes =
-                        listOf(
-                            Mistake(1, "자리마다 무조건 큰 수에서 작은 수를 빼면 안 돼요. 받아내림을 해야 해요."),
-                        ),
-                ),
-            )
-
-            // ── 난이도 2 · 수와 연산 추가 ────────────────────────────────────────────
-            add(
-                mc(
-                    id = "num2-04",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 2,
-                    groupId = "g-num-mul-2",
-                    concepts = listOf("두 자리 × 한 자리"),
-                    statement = "45 × 6 = ?",
-                    choices = listOf("240", "270", "245", "300"),
-                    answerIndex = 1,
-                    mistakes =
-                        listOf(
-                            Mistake(0, "40×6=240까지만 계산했어요. 5×6=30도 더해야 해요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "num2-05",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 2,
-                    groupId = "g-num-mul-2",
-                    concepts = listOf("두 자리 ÷ 한 자리"),
-                    statement = "96 ÷ 8 = ?",
-                    choices = listOf("11", "12", "13", "14"),
-                    answerIndex = 1,
-                ),
-            )
-
             // ── 난이도 2 · 도형과 측정 추가 ──────────────────────────────────────────
             add(
                 mc(
@@ -699,91 +500,6 @@ object ProblemCatalog {
                     statement = "학생 30명 중 사과 12명, 배 8명, 포도 10명이 좋아해요. 두 번째로 많이 좋아하는 과일은?",
                     choices = listOf("사과", "배", "포도", "알 수 없다"),
                     answerIndex = 2,
-                ),
-            )
-
-            // ── 난이도 3 · 분수 추가 ─────────────────────────────────────────────────
-            add(
-                mc(
-                    id = "frac3-04",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-frac-3",
-                    concepts = listOf("분수의 뺄셈", "분모가 같은 분수"),
-                    statement = "5/7 − 2/7 = ?",
-                    choices = listOf("3/7", "3/14", "7/7", "2/7"),
-                    answerIndex = 0,
-                    mistakes =
-                        listOf(
-                            Mistake(1, "분모끼리도 계산했어요. 분모가 같을 땐 분자끼리만 빼요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "frac3-05",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-frac-3",
-                    concepts = listOf("대분수와 가분수"),
-                    statement = "대분수 1과 3/4을 가분수로 나타내면?",
-                    choices = listOf("4/4", "7/4", "13/4", "3/4"),
-                    answerIndex = 1,
-                    mistakes =
-                        listOf(
-                            Mistake(2, "1과 3을 그냥 이어 붙이면 안 돼요. 1 = 4/4이므로 4+3=7, 즉 7/4이에요."),
-                        ),
-                ),
-            )
-
-            // ── 난이도 3 · 소수의 덧셈과 뺄셈 (4-2 단원, 신규 그룹) ──────────────────
-            add(
-                mc(
-                    id = "dec3-01",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-dec-3",
-                    concepts = listOf("소수의 덧셈"),
-                    statement = "0.7 + 0.5 = ?",
-                    choices = listOf("0.12", "1.2", "1.1", "0.75"),
-                    answerIndex = 1,
-                    explanation = "0.1이 7개와 5개를 더하면 0.1이 12개 — 그래서 1.2예요. 소수도 자리끼리 더하고 10이 넘으면 올려요.",
-                    mistakes =
-                        listOf(
-                            Mistake(0, "7+5=12를 그대로 소수점 뒤에 붙였어요. 0.1이 12개면 1.2랍니다."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "dec3-02",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-dec-3",
-                    concepts = listOf("소수의 덧셈", "자릿수 정렬"),
-                    statement = "2.35 + 1.4 = ?",
-                    choices = listOf("2.49", "3.75", "3.39", "3.79"),
-                    answerIndex = 1,
-                    mistakes =
-                        listOf(
-                            Mistake(0, "소수점 위치를 맞추지 않고 끝자리끼리 더했어요. 소수점을 기준으로 줄을 맞춰요."),
-                        ),
-                ),
-            )
-            add(
-                mc(
-                    id = "dec3-03",
-                    area = MathArea.NUMBER_OPERATION,
-                    difficulty = 3,
-                    groupId = "g-num-dec-3",
-                    concepts = listOf("소수의 뺄셈", "받아내림"),
-                    statement = "5.2 − 3.8 = ?",
-                    choices = listOf("1.4", "2.6", "1.6", "2.4"),
-                    answerIndex = 0,
-                    mistakes =
-                        listOf(
-                            Mistake(1, "2에서 8을 못 뺀다고 자리를 바꿔 8−2를 하면 안 돼요. 받아내림을 해요."),
-                        ),
                 ),
             )
 
@@ -905,13 +621,13 @@ object ProblemCatalog {
                     area = MathArea.SHAPE_MEASUREMENT,
                     difficulty = 4,
                     groupId = "g-geo-area-4",
-                    concepts = listOf("정사각형의 넓이"),
-                    statement = "한 변이 7cm인 정사각형의 넓이는?",
-                    choices = listOf("14cm²", "28cm²", "49cm²", "21cm²"),
-                    answerIndex = 2,
+                    concepts = listOf("넓이", "거꾸로 생각하기"),
+                    statement = "넓이가 36cm²인 정사각형의 둘레는 몇 cm일까요?",
+                    choices = listOf("18cm", "24cm", "36cm", "144cm"),
+                    answerIndex = 1,
                     mistakes =
                         listOf(
-                            Mistake(1, "7×4=28은 둘레예요. 넓이는 7×7=49cm²."),
+                            Mistake(2, "넓이 36에서 먼저 한 변(6cm)을 찾고, 그다음 둘레(6×4)를 구해요."),
                         ),
                 ),
             )
@@ -992,13 +708,13 @@ object ProblemCatalog {
                     area = MathArea.DATA_POSSIBILITY,
                     difficulty = 4,
                     groupId = "g-data-average-4",
-                    concepts = listOf("평균"),
-                    statement = "2, 4, 6, 8의 평균은?",
-                    choices = listOf("5", "20", "4", "6"),
-                    answerIndex = 0,
+                    concepts = listOf("평균", "성질 사고"),
+                    statement = "네 수의 평균이 7이에요. 네 수에 각각 2씩 더하면 평균은 얼마가 될까요?",
+                    choices = listOf("7", "8", "9", "15"),
+                    answerIndex = 2,
                     mistakes =
                         listOf(
-                            Mistake(1, "합(20)까지만 구했어요. 개수 4로 나눠야 평균이에요."),
+                            Mistake(0, "모든 수가 2씩 커지면 평균도 그만큼 커져요."),
                         ),
                 ),
             )
@@ -1134,6 +850,895 @@ object ProblemCatalog {
                     mistakes =
                         listOf(
                             Mistake(3, "3×10=30이 아니에요. 이어 붙이면 변을 함께 쓰니 하나 늘 때마다 2개씩만 늘어요."),
+                        ),
+                ),
+            )
+            // ═══════════ 사고력 개편 — 연산 드릴 대신 퍼즐·추론·전략 문제 ═══════════
+
+            // ── 난이도 1 · 수 감각 퍼즐 ──────────────────────────────────────────────
+            add(
+                mc(
+                    id = "sense1-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 1,
+                    groupId = "g-num-sense-1",
+                    concepts = listOf("수 감각", "수 만들기"),
+                    statement = "1부터 9까지 숫자 카드가 한 장씩 있어요. 두 장을 골라 만들 수 있는 가장 큰 두 자리 수는?",
+                    choices = listOf("91", "98", "99", "89"),
+                    answerIndex = 1,
+                    explanation = "십의 자리에 가장 큰 9를, 일의 자리에 그다음으로 큰 8을 놓아요. 카드는 한 장씩뿐이라 99는 만들 수 없어요.",
+                    mistakes =
+                        listOf(
+                            Mistake(2, "9 카드는 한 장뿐이라 두 번 쓸 수 없어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "sense1-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 1,
+                    groupId = "g-num-sense-1",
+                    concepts = listOf("규칙 찾기", "홀수"),
+                    statement = "1, 3, 5, 7 … 규칙대로라면 다음 수는?",
+                    choices = listOf("8", "9", "10", "11"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "1씩이 아니라 2씩 커지는 규칙이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "sense1-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 1,
+                    groupId = "g-num-sense-1",
+                    concepts = listOf("합과 차", "수 감각"),
+                    statement = "두 수의 합이 10이고 차가 2예요. 두 수 중 큰 수는?",
+                    choices = listOf("4", "5", "6", "7"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "5와 5는 합이 10이지만 차가 0이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "sense1-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 1,
+                    groupId = "g-num-sense-1",
+                    concepts = listOf("배수", "조건 사고"),
+                    statement = "10보다 크고 20보다 작은 수 중에서 5의 배수는?",
+                    choices = listOf("10", "15", "20", "25"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "10은 '10보다 큰 수'가 아니에요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 1 · 공간·도형 감각 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "shape1-01",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 1,
+                    groupId = "g-shape-sense-1",
+                    concepts = listOf("주사위", "공간 감각"),
+                    statement = "주사위는 마주 보는 두 면의 눈을 더하면 항상 7이에요. 윗면이 3이면 바닥에 닿은 면의 눈은?",
+                    choices = listOf("3", "4", "5", "6"),
+                    answerIndex = 1,
+                    explanation = "바닥 면은 윗면과 마주 보는 면이니 7−3=4예요.",
+                ),
+            )
+            add(
+                mc(
+                    id = "shape1-02",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 1,
+                    groupId = "g-shape-sense-1",
+                    concepts = listOf("접기", "공간 감각"),
+                    statement = "정사각형 색종이를 반으로 한 번 접었을 때 나올 수 없는 모양은?",
+                    choices = listOf("직사각형", "삼각형", "원", "모두 나올 수 있다"),
+                    answerIndex = 2,
+                ),
+            )
+            add(
+                mc(
+                    id = "shape1-03",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 1,
+                    groupId = "g-shape-sense-1",
+                    concepts = listOf("자르기", "도형 분할"),
+                    statement = "정사각형 종이를 대각선을 따라 한 번 자르면 어떤 도형이 몇 개 생길까요?",
+                    choices = listOf("삼각형 2개", "사각형 2개", "삼각형 4개", "원 2개"),
+                    answerIndex = 0,
+                ),
+            )
+            add(
+                mc(
+                    id = "shape1-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 1,
+                    groupId = "g-shape-sense-1",
+                    concepts = listOf("시계", "시간 감각"),
+                    statement = "시계의 긴바늘이 한 바퀴를 다 돌면 시간이 얼마나 지난 걸까요?",
+                    choices = listOf("1분", "30분", "60분", "12시간"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "12시간은 짧은바늘이 한 바퀴 도는 시간이에요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 1 · 논리 기초 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "logic1-01",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 1,
+                    groupId = "g-logic-1",
+                    concepts = listOf("논리 추론"),
+                    statement = "가위바위보에서 철수는 가위를 냈고, 영희는 철수를 이겼어요. 영희가 낸 것은?",
+                    choices = listOf("가위", "바위", "보", "알 수 없다"),
+                    answerIndex = 1,
+                    explanation = "가위를 이기는 것은 바위예요. 조건에서 답이 하나로 정해져요.",
+                ),
+            )
+            add(
+                mc(
+                    id = "logic1-02",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 1,
+                    groupId = "g-logic-1",
+                    concepts = listOf("순서 추론"),
+                    statement = "가는 나보다 크고, 나는 다보다 커요. 키가 가장 작은 사람은?",
+                    choices = listOf("가", "나", "다", "알 수 없다"),
+                    answerIndex = 2,
+                ),
+            )
+            add(
+                mc(
+                    id = "logic1-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 1,
+                    groupId = "g-logic-1",
+                    concepts = listOf("요일 사고"),
+                    statement = "오늘이 수요일이면 3일 뒤는 무슨 요일일까요?",
+                    choices = listOf("금요일", "토요일", "일요일", "목요일"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "수요일에서 하나씩 세요: 목, 금, 토."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "logic1-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 1,
+                    groupId = "g-logic-1",
+                    concepts = listOf("경우의 수 기초"),
+                    statement = "동전 한 개를 던질 때 나올 수 있는 면은 모두 몇 가지일까요?",
+                    choices = listOf("1가지", "2가지", "3가지", "4가지"),
+                    answerIndex = 1,
+                ),
+            )
+
+            // ── 난이도 2 · 수 퍼즐 ───────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "puzzle2-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-puzzle-2",
+                    concepts = listOf("연속수", "수 감각"),
+                    statement = "연속한 두 자연수의 합이 15예요. 둘 중 큰 수는?",
+                    choices = listOf("7", "8", "9", "10"),
+                    answerIndex = 1,
+                    explanation = "15의 절반은 7.5 — 그 양옆의 7과 8이에요. 검산: 7+8=15.",
+                ),
+            )
+            add(
+                mc(
+                    id = "puzzle2-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-puzzle-2",
+                    concepts = listOf("수 만들기", "순서 사고"),
+                    statement = "숫자 카드 1, 2, 3을 모두 한 번씩 써서 만든 세 자리 수 중 둘째로 작은 수는?",
+                    choices = listOf("123", "132", "213", "231"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "123은 가장 작은 수예요. 문제는 '둘째로' 작은 수를 물었어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "puzzle2-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-puzzle-2",
+                    concepts = listOf("돈 계산", "고르기 전략"),
+                    statement = "10원, 50원, 100원 동전이 한 개씩 있어요. 이 중 두 개만 골라 만들 수 있는 가장 큰 금액은?",
+                    choices = listOf("60원", "110원", "150원", "160원"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "160원은 세 개를 모두 썼을 때예요. 두 개만 골라야 해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "puzzle2-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-puzzle-2",
+                    concepts = listOf("수의 성질", "홀짝"),
+                    statement = "홀수와 홀수를 더하면 항상 어떤 수가 될까요?",
+                    choices = listOf("홀수", "짝수", "알 수 없다", "0"),
+                    answerIndex = 1,
+                ),
+            )
+
+            // ── 난이도 2 · 경우의 수 기초 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "case2-01",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 2,
+                    groupId = "g-case-2",
+                    concepts = listOf("경우의 수"),
+                    statement = "티셔츠 2벌과 바지 2벌이 있어요. 티셔츠와 바지를 하나씩 골라 입는 방법은 모두 몇 가지일까요?",
+                    choices = listOf("2가지", "4가지", "6가지", "8가지"),
+                    answerIndex = 1,
+                    explanation = "티셔츠마다 바지를 2가지씩 짝지을 수 있어요. 2×2=4가지.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "티셔츠 수만 세면 안 돼요. 티셔츠마다 바지 조합을 세요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "case2-02",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 2,
+                    groupId = "g-case-2",
+                    concepts = listOf("경우의 수", "줄 세우기"),
+                    statement = "세 친구가 한 줄로 서요. 철수가 맨 앞에 서기로 했다면 줄을 서는 방법은 모두 몇 가지일까요?",
+                    choices = listOf("1가지", "2가지", "3가지", "6가지"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "6가지는 철수 자리가 정해지지 않았을 때예요. 남은 두 명만 순서를 바꿔요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "case2-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 2,
+                    groupId = "g-case-2",
+                    concepts = listOf("경우의 수"),
+                    statement = "서로 다른 동전 두 개를 동시에 던질 때 나올 수 있는 경우는 모두 몇 가지일까요?",
+                    choices = listOf("2가지", "3가지", "4가지", "6가지"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "(앞,뒤)와 (뒤,앞)은 서로 다른 경우예요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "case2-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 2,
+                    groupId = "g-case-2",
+                    concepts = listOf("경우의 수", "최댓값"),
+                    statement = "주사위 두 개를 던져 나온 눈의 합이 가장 클 때, 그 합은 얼마일까요?",
+                    choices = listOf("6", "10", "12", "36"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "36은 곱한 값이에요. 합은 6+6=12."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 3 · 수 사고 (다리 세기·연속수·나머지) ─────────────────────────
+            add(
+                mc(
+                    id = "think3-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-think-3",
+                    concepts = listOf("다리 세기", "가정하여 풀기"),
+                    statement = "오리와 강아지가 모두 5마리 있고 다리를 세어 보니 14개예요. 강아지는 몇 마리일까요?",
+                    choices = listOf("1마리", "2마리", "3마리", "4마리"),
+                    answerIndex = 1,
+                    explanation = "모두 오리라면 다리는 10개. 실제보다 4개 부족한데, 강아지는 오리보다 다리가 2개 많으니 4÷2=2마리가 강아지예요.",
+                    mistakes =
+                        listOf(
+                            Mistake(2, "강아지 3마리면 다리가 4×3+2×2=16개라 너무 많아요. 검산해 봐요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "think3-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-think-3",
+                    concepts = listOf("연속수", "짝수"),
+                    statement = "연속한 세 짝수의 합이 24예요. 가장 큰 수는?",
+                    choices = listOf("8", "10", "12", "14"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "8은 가운데 수예요(6, 8, 10). 가장 큰 수는 10."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "think3-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-think-3",
+                    concepts = listOf("나눗셈", "거꾸로 생각하기"),
+                    statement = "어떤 수를 4로 나눴더니 몫이 7이고 나머지가 2였어요. 어떤 수는?",
+                    choices = listOf("28", "30", "26", "32"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "나머지 2를 더하는 걸 잊었어요. 4×7+2=30."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "think3-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-think-3",
+                    concepts = listOf("숫자 세기", "빠짐없이 세기"),
+                    statement = "1부터 20까지 수를 차례로 쓸 때 숫자 '1'은 모두 몇 번 쓰게 될까요?",
+                    choices = listOf("11번", "12번", "13번", "10번"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "11에는 1이 두 번 들어가요. 1, 10, 11(두 번), 12~19까지 세어 봐요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 3 · 분수 사고 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "fracth3-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-frac-think-3",
+                    concepts = listOf("분수", "부분의 부분"),
+                    statement = "피자의 3/4이 남아 있었는데, 그중 절반을 먹었어요. 이제 남은 피자는 전체의 얼마일까요?",
+                    choices = listOf("1/4", "3/8", "1/2", "1/8"),
+                    answerIndex = 1,
+                    explanation = "남아 있던 3/4의 절반이 남았으니 3/4의 반 = 3/8이에요. 8조각으로 나눠 생각하면 6조각 중 3조각이 남은 셈.",
+                ),
+            )
+            add(
+                mc(
+                    id = "fracth3-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-frac-think-3",
+                    concepts = listOf("분수 비교"),
+                    statement = "1/2, 2/5, 3/10 중에서 가장 큰 수는?",
+                    choices = listOf("1/2", "2/5", "3/10", "모두 같다"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "분자가 크다고 큰 수가 아니에요. 10칸으로 나누면 5칸, 4칸, 3칸이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "fracth3-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-frac-think-3",
+                    concepts = listOf("분수", "거꾸로 생각하기"),
+                    statement = "물통에 물이 1/3만큼 차 있어요. 6L를 더 부었더니 2/3이 되었어요. 물통에 가득 담으면 몇 L일까요?",
+                    choices = listOf("12L", "18L", "9L", "6L"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "6L는 전체의 1/3(2/3−1/3)이에요. 전체는 6×3=18L."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "fracth3-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-frac-think-3",
+                    concepts = listOf("분수", "전체 구하기"),
+                    statement = "리본 전체의 1/4 길이가 5cm예요. 리본 전체 길이는?",
+                    choices = listOf("9cm", "20cm", "15cm", "25cm"),
+                    answerIndex = 1,
+                ),
+            )
+
+            // ── 난이도 3 · 도형 사고 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "geoth3-01",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 3,
+                    groupId = "g-geo-think-3",
+                    concepts = listOf("도형 세기", "빠짐없이 세기"),
+                    statement = "정사각형을 가로·세로 3칸씩 9칸으로 나눴어요. 이 그림에서 찾을 수 있는 크고 작은 정사각형은 모두 몇 개일까요?",
+                    choices = listOf("9개", "10개", "13개", "14개"),
+                    answerIndex = 3,
+                    explanation = "1칸짜리 9개, 4칸짜리(2×2) 4개, 9칸짜리(3×3) 1개 — 모두 14개예요. 크기별로 나눠 세면 빠뜨리지 않아요.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "가장 작은 정사각형만 셌어요. 2×2, 3×3짜리도 정사각형이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "geoth3-02",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 3,
+                    groupId = "g-geo-think-3",
+                    concepts = listOf("시계 각도"),
+                    statement = "시계가 3시 30분일 때 두 바늘이 이루는 작은 쪽 각도는?",
+                    choices = listOf("90도", "75도", "60도", "105도"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "짧은바늘은 3에 딱 있지 않아요. 30분이 지나 3과 4의 중간에 있어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "geoth3-03",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 3,
+                    groupId = "g-geo-think-3",
+                    concepts = listOf("둘레와 넓이", "두 단계 사고"),
+                    statement = "둘레가 20cm인 정사각형의 넓이는 몇 cm²일까요?",
+                    choices = listOf("20cm²", "25cm²", "16cm²", "100cm²"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "둘레 20을 한 변으로 착각했어요. 한 변은 20÷4=5cm."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "geoth3-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 3,
+                    groupId = "g-geo-think-3",
+                    concepts = listOf("삼각형 각의 합"),
+                    statement = "삼각형의 한 각은 90도, 다른 한 각은 30도예요. 나머지 한 각은?",
+                    choices = listOf("30도", "45도", "60도", "90도"),
+                    answerIndex = 2,
+                ),
+            )
+
+            // ── 난이도 3 · 관계 사고 (간격·달력·나이) ────────────────────────────────
+            add(
+                mc(
+                    id = "relth3-01",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 3,
+                    groupId = "g-rel-think-3",
+                    concepts = listOf("간격 문제"),
+                    statement = "길이 20m인 길 한쪽에 처음부터 끝까지 5m 간격으로 나무를 심어요. 나무는 몇 그루 필요할까요?",
+                    choices = listOf("4그루", "5그루", "6그루", "3그루"),
+                    answerIndex = 1,
+                    explanation = "간격은 20÷5=4개지만, 나무는 양쪽 끝에도 심으니 4+1=5그루예요.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "간격 수와 나무 수는 달라요. 처음 나무 1그루를 더해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "relth3-02",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 3,
+                    groupId = "g-rel-think-3",
+                    concepts = listOf("달력 사고"),
+                    statement = "어떤 달의 1일이 금요일이면 그달 15일은 무슨 요일일까요?",
+                    choices = listOf("목요일", "금요일", "토요일", "일요일"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "15일은 1일에서 딱 14일(2주) 뒤라 같은 요일이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "relth3-03",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 3,
+                    groupId = "g-rel-think-3",
+                    concepts = listOf("나이 문제", "합과 차"),
+                    statement = "형은 동생보다 4살 많고, 두 사람 나이의 합은 20살이에요. 형은 몇 살일까요?",
+                    choices = listOf("8살", "10살", "12살", "14살"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "10살은 합의 절반이에요. 형은 절반보다 차의 절반(2살)만큼 많아요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "relth3-04",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 3,
+                    groupId = "g-rel-think-3",
+                    concepts = listOf("변화율 사고"),
+                    statement = "길이 10cm인 양초가 1분에 2cm씩 타요. 3분 뒤 남은 길이는?",
+                    choices = listOf("6cm", "4cm", "8cm", "2cm"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "6cm는 '탄' 길이예요. 남은 길이는 10−6=4cm."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 수 사고 심화 ──────────────────────────────────────────────
+            add(
+                mc(
+                    id = "master4-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-num-master-4",
+                    concepts = listOf("수 만들기", "순서 전략"),
+                    statement = "숫자 카드 2, 5, 7, 8 중 세 장을 골라 만든 세 자리 수 중에서 둘째로 큰 수는?",
+                    choices = listOf("875", "872", "857", "852"),
+                    answerIndex = 1,
+                    explanation = "가장 큰 수는 875. 둘째로 큰 수는 앞 두 자리는 그대로 두고 일의 자리만 그다음 카드로 바꾼 872예요.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "875는 가장 큰 수예요. '둘째로' 큰 수를 물었어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "master4-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-num-master-4",
+                    concepts = listOf("나머지", "최댓값 사고"),
+                    statement = "어떤 수를 6으로 나눴더니 몫이 8이었어요. 나머지가 가장 클 때 어떤 수는?",
+                    choices = listOf("48", "53", "54", "50"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "나머지는 나누는 수 6보다 작아야 하니 최대 5예요. 6×8+5=53."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "master4-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-num-master-4",
+                    concepts = listOf("곱과 합", "수 찾기"),
+                    statement = "두 수의 곱이 36이고 합이 13이에요. 둘 중 큰 수는?",
+                    choices = listOf("6", "9", "12", "18"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "6×6은 곱이 36이지만 합이 12예요. 곱이 36인 짝을 차례로 검사해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "master4-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 4,
+                    groupId = "g-num-master-4",
+                    concepts = listOf("규칙적인 합", "거꾸로 생각하기"),
+                    statement = "1 + 2 + 3 + … + □ = 45. □에 들어갈 수는?",
+                    choices = listOf("8", "9", "10", "11"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "1부터 10까지 더하면 55예요. 45는 1부터 9까지의 합."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 경우·전략 사고 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "dmaster4-01",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 4,
+                    groupId = "g-data-master-4",
+                    concepts = listOf("토너먼트", "발상 전환"),
+                    statement = "8팀이 토너먼트(지면 바로 탈락)로 우승팀을 가려요. 우승팀이 나올 때까지 전체 경기 수는?",
+                    choices = listOf("6경기", "7경기", "8경기", "15경기"),
+                    answerIndex = 1,
+                    explanation = "한 경기마다 꼭 한 팀이 탈락해요. 우승팀 빼고 7팀이 탈락해야 하니 경기도 7번이에요.",
+                    mistakes =
+                        listOf(
+                            Mistake(2, "팀 수와 경기 수는 달라요. '탈락하는 팀 수'로 생각해 봐요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "dmaster4-02",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 4,
+                    groupId = "g-data-master-4",
+                    concepts = listOf("리그전", "중복 없이 세기"),
+                    statement = "4팀이 서로 한 번씩 빠짐없이 경기하는 리그전의 전체 경기 수는?",
+                    choices = listOf("4경기", "6경기", "8경기", "12경기"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "4×3=12는 같은 경기를 두 번 센 거예요. 반으로 나눠요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "dmaster4-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 4,
+                    groupId = "g-data-master-4",
+                    concepts = listOf("경우의 수"),
+                    statement = "서로 다른 주사위 두 개를 던져 눈의 합이 7이 되는 경우는 모두 몇 가지일까요?",
+                    choices = listOf("3가지", "5가지", "6가지", "7가지"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "(1,6)과 (6,1)은 다른 경우예요. 1+6부터 6+1까지 모두 세요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "dmaster4-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 4,
+                    groupId = "g-data-master-4",
+                    concepts = listOf("악수 문제", "중복 없이 세기"),
+                    statement = "5명이 서로 빠짐없이 한 번씩 악수하면 악수는 모두 몇 번 하게 될까요?",
+                    choices = listOf("5번", "10번", "20번", "25번"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "5×4=20은 같은 악수를 두 번 센 거예요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 공간 사고 심화 (페인트 정육면체·도형 세기) ────────────────
+            add(
+                mc(
+                    id = "ggen5-01",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 5,
+                    groupId = "g-geo-genius-5",
+                    concepts = listOf("페인트 정육면체", "공간 사고"),
+                    statement = "정육면체 겉면 전체에 페인트를 칠한 뒤, 가로·세로·높이를 3등분해 작은 정육면체 27개로 잘랐어요. 세 면에 페인트가 칠해진 조각은 몇 개일까요?",
+                    choices = listOf("6개", "8개", "12개", "27개"),
+                    answerIndex = 1,
+                    explanation = "세 면이 칠해진 조각은 꼭짓점 자리에 있어요. 정육면체의 꼭짓점은 8개니까 8개예요.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "6개는 면의 수예요. 세 면이 만나는 곳은 꼭짓점이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "ggen5-02",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 5,
+                    groupId = "g-geo-genius-5",
+                    concepts = listOf("페인트 정육면체", "공간 사고"),
+                    statement = "정육면체 겉면 전체에 페인트를 칠한 뒤 27개의 작은 정육면체로 잘랐을 때, 정확히 두 면에만 페인트가 칠해진 조각은 몇 개일까요?",
+                    choices = listOf("8개", "12개", "6개", "4개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "8개는 세 면이 칠해진 꼭짓점 조각이에요. 두 면짜리는 모서리 가운데 — 모서리는 12개."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "ggen5-03",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 5,
+                    groupId = "g-geo-genius-5",
+                    concepts = listOf("페인트 정육면체", "공간 사고"),
+                    statement = "정육면체 겉면 전체에 페인트를 칠한 뒤 27개의 작은 정육면체로 잘랐을 때, 한 면도 칠해지지 않은 조각은 몇 개일까요?",
+                    choices = listOf("0개", "1개", "3개", "6개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "한가운데 숨어 있는 조각 1개는 어느 면도 겉으로 드러나지 않았어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "ggen5-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 5,
+                    groupId = "g-geo-genius-5",
+                    concepts = listOf("도형 세기", "체계적으로 세기"),
+                    statement = "정사각형을 가로·세로 4칸씩 16칸으로 나눴어요. 이 그림에서 찾을 수 있는 크고 작은 정사각형은 모두 몇 개일까요?",
+                    choices = listOf("16개", "25개", "30개", "32개"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "1칸짜리만 셌어요. 16+9+4+1로 크기별로 더해요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 논리 추론 심화 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "lgen5-01",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-logic-genius-5",
+                    concepts = listOf("순서 추론"),
+                    statement = "달리기에서 가는 나보다 빨랐고, 다는 가보다 빨랐어요. 2등은 누구일까요?",
+                    choices = listOf("가", "나", "다", "알 수 없다"),
+                    answerIndex = 0,
+                    explanation = "빠른 순서대로 늘어놓으면 다 → 가 → 나. 그래서 2등은 가예요.",
+                ),
+            )
+            add(
+                mc(
+                    id = "lgen5-02",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-logic-genius-5",
+                    concepts = listOf("무게 비교", "단위 바꿔 생각하기"),
+                    statement = "사과 1개의 무게는 귤 2개와 같고, 귤 4개의 무게는 배 1개와 같아요. 배 1개는 사과 몇 개와 무게가 같을까요?",
+                    choices = listOf("1개", "2개", "4개", "8개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "배 1개=귤 4개이고, 귤 2개=사과 1개니까 귤 4개=사과 2개예요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "lgen5-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-logic-genius-5",
+                    concepts = listOf("달력 사고"),
+                    statement = "어느 해 3월 1일은 화요일이에요. 같은 해 3월 31일은 무슨 요일일까요?",
+                    choices = listOf("수요일", "목요일", "금요일", "화요일"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "28일(4주) 뒤인 29일이 화요일이고, 31일은 그보다 2일 뒤예요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "lgen5-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 5,
+                    groupId = "g-logic-genius-5",
+                    concepts = listOf("진실과 거짓", "경우 나누기"),
+                    statement = "유리창을 깬 사람은 가, 나, 다 중 한 명이에요. 가: '저는 안 깼어요', 나: '가가 깼어요', 다: '저는 안 깼어요'. 이 중 한 명만 진실을 말했다면 깬 사람은?",
+                    choices = listOf("가", "나", "다", "알 수 없다"),
+                    answerIndex = 2,
+                    explanation = "다가 깼다고 하면: 가의 말 진실, 나의 말 거짓, 다의 말 거짓 — 진실이 딱 한 명이라 조건에 맞아요. 다른 경우는 진실이 두 명이 돼요.",
+                ),
+            )
+
+            // ── 난이도 5 · 수 사고 확충 (마방진·약속 연산) ───────────────────────────
+            add(
+                mc(
+                    id = "num5-06",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 5,
+                    groupId = "g-num-logic-5",
+                    concepts = listOf("마방진"),
+                    statement = "1부터 9까지 수를 한 번씩 써서 가로·세로·대각선의 합이 모두 같게 만들면(마방진), 한 줄의 합은 얼마일까요?",
+                    choices = listOf("12", "15", "18", "20"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "1부터 9까지 합 45를 세 줄로 똑같이 나누면 45÷3=15예요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "num5-07",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 5,
+                    groupId = "g-num-logic-5",
+                    concepts = listOf("약속 연산", "규칙 적용"),
+                    statement = "새로운 기호 ◎를 '앞 수 × 뒤 수 − 앞 수'로 약속해요. 5◎3의 값은?",
+                    choices = listOf("10", "12", "15", "8"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "5×3=15에서 앞 수 5를 빼는 것까지가 약속이에요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 관계 사고 확충 (달팽이·톱니바퀴) ──────────────────────────
+            add(
+                mc(
+                    id = "rel4-06",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-rel-relation-4",
+                    concepts = listOf("규칙 사고", "함정 피하기"),
+                    statement = "달팽이가 10m 나무 기둥을 올라가요. 낮에는 3m 오르고 밤에는 2m 미끄러져요. 꼭대기에 처음 닿는 것은 며칠째 낮일까요?",
+                    choices = listOf("8일째", "9일째", "10일째", "7일째"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "하루 1m씩만 계산하면 안 돼요. 7일 밤까지 7m, 8일째 낮에 3m를 올라 10m에 먼저 닿아요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "rel4-07",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-rel-relation-4",
+                    concepts = listOf("톱니바퀴", "반비례 사고"),
+                    statement = "톱니가 20개인 톱니바퀴 A와 10개인 톱니바퀴 B가 맞물려 있어요. A가 1바퀴 돌면 B는 몇 바퀴 돌까요?",
+                    choices = listOf("반 바퀴", "1바퀴", "2바퀴", "4바퀴"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "톱니가 적은 바퀴가 더 많이 돌아요. A가 옮긴 톱니 20개 = B의 2바퀴."),
                         ),
                 ),
             )
