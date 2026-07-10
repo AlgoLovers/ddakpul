@@ -40,7 +40,12 @@ class SolveViewModel
                     zoneOffsetMillis = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong(),
                     nowMillis = { System.currentTimeMillis() },
                 ).collect { stats ->
-                    _uiState.update { it.copy(todaySolved = stats.todaySolved) }
+                    _uiState.update {
+                        it.copy(
+                            todaySolved = stats.todaySolved,
+                            todayTimeSpentSec = stats.todayTimeSpentSec,
+                        )
+                    }
                 }
             }
         }

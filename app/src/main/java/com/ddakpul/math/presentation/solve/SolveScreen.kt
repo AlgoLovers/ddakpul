@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.solve
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import com.ddakpul.math.presentation.result.ResultView
 
 @Composable
 fun SolveScreen(
+    onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SolveViewModel = hiltViewModel(),
 ) {
@@ -42,6 +44,7 @@ fun SolveScreen(
         onSelect = viewModel::selectChoice,
         onSubmit = viewModel::submit,
         onNext = viewModel::loadNext,
+        onGoHome = onGoHome,
         modifier = modifier,
     )
 }
@@ -52,6 +55,7 @@ private fun SolveContent(
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
     onNext: () -> Unit,
+    onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -77,7 +81,9 @@ private fun SolveContent(
                         result = result,
                         showExplanation = uiState.showExplanation,
                         sessionStreak = uiState.sessionStreak,
+                        softCutSuggested = uiState.softCutSuggested,
                         onNext = onNext,
+                        onFinishToday = onGoHome,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }
@@ -102,12 +108,22 @@ private fun SolvingBody(
         TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
 
         uiState.area?.let { area ->
-            Text(
-                text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold,
-            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (uiState.isReview) {
+                    Text(
+                        text = stringResource(R.string.solve_review_badge),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
         }
 
         Card(

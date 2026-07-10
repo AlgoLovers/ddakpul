@@ -26,6 +26,7 @@
     <!-- 문제 풀이 -->
     <string name="solve_today_progress">오늘 %1$d / %2$d 문제</string>
     <string name="solve_area_label">%1$s · 난이도 %2$d</string>
+    <string name="solve_review_badge">🔁 복습</string>
     <string name="solve_submit">채점하기</string>
     <string name="solve_choice_prefix">%1$s.</string>
     <string name="solve_loading">문제를 불러오는 중…</string>
@@ -40,6 +41,9 @@
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
     <string name="result_remediation_hint">기초 개념부터 차근차근 다시 풀어봐요.</string>
     <string name="result_next">다음 문제</string>
+    <string name="result_softcut_title">오늘은 여기까지도 충분해요 🌙</string>
+    <string name="result_softcut_body">열심히 한 만큼 쉬는 것도 공부예요. 더 풀고 싶으면 물론 계속해도 좋아요!</string>
+    <string name="result_softcut_stop">오늘은 여기까지</string>
 
     <!-- 리포트 (부모용) -->
     <string name="report_title">학습 리포트</string>

@@ -16,6 +16,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -41,7 +42,9 @@ fun ResultView(
     result: GradingResult,
     showExplanation: Boolean,
     sessionStreak: Int,
+    softCutSuggested: Boolean,
     onNext: () -> Unit,
+    onFinishToday: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -117,6 +120,11 @@ fun ResultView(
             )
         }
 
+        // 세션 소프트 컷 — 목표 달성/집중 한계 도달 시 부드러운 종료 제안(강제 아님).
+        if (softCutSuggested) {
+            SoftCutCard(onFinishToday = onFinishToday)
+        }
+
         Button(
             onClick = onNext,
             modifier = Modifier.fillMaxWidth(),
@@ -126,6 +134,37 @@ fun ResultView(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 6.dp),
             )
+        }
+    }
+}
+
+@Composable
+private fun SoftCutCard(onFinishToday: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    Card(
+        colors =
+            CardDefaults.cardColors(
+                containerColor = colors.tertiaryContainer,
+                contentColor = colors.onTertiaryContainer,
+            ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.result_softcut_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = stringResource(R.string.result_softcut_body),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            OutlinedButton(onClick = onFinishToday) {
+                Text(stringResource(R.string.result_softcut_stop))
+            }
         }
     }
 }

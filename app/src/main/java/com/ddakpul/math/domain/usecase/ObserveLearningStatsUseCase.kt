@@ -130,6 +130,7 @@ internal fun buildLearningStats(
         bestStreakDays = bestStreak,
         todaySolved = todayAttempts.size,
         todayCorrect = todayAttempts.count { it.isCorrect },
+        todayTimeSpentSec = todayAttempts.sumOf { it.timeSpentSec },
         avgTimeSecByDifficulty = avgTimeSecByDifficulty,
         recentAccuracy = recent.accuracyOrNull(),
         previousAccuracy = previous.accuracyOrNull(),

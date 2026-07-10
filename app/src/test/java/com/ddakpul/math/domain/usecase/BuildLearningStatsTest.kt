@@ -119,15 +119,17 @@ class BuildLearningStatsTest {
         val stats =
             build(
                 listOf(
-                    attempt("num1", true, timestamp = DAY * 99),
-                    attempt("num2", false, timestamp = DAY * 100 + HOUR),
-                    attempt("geo1", true, timestamp = DAY * 100 + HOUR),
+                    attempt("num1", true, timestamp = DAY * 99, timeSpentSec = 100),
+                    attempt("num2", false, timestamp = DAY * 100 + HOUR, timeSpentSec = 30),
+                    attempt("geo1", true, timestamp = DAY * 100 + HOUR, timeSpentSec = 45),
                 ),
                 nowMillis = now,
             )
 
         assertThat(stats.todaySolved).isEqualTo(2)
         assertThat(stats.todayCorrect).isEqualTo(1)
+        // 어제 쓴 100초는 빠지고 오늘 것만 합산된다.
+        assertThat(stats.todayTimeSpentSec).isEqualTo(75)
     }
 
     @Test
