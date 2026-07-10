@@ -18,22 +18,29 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.GradingResult
 
+/** 이만큼 연속 정답이면 "연속 정답" 칭찬 풀에서 뽑는다. */
+private const val STREAK_PRAISE_THRESHOLD = 3
+
 /**
- * 채점 결과 화면. 정답/오답 배너, 내가 고른 답과 정답, (있으면) 오개념 피드백과 해설을 보여준다.
+ * 채점 결과 화면. 정답/오답 배너와 과정 칭찬 응원, 내가 고른 답과 정답,
+ * (있으면) 오개념 피드백과 해설을 보여준다.
  * [showExplanation]이 true면(정체 감지) 기초부터 다시 하자는 안내를 강조한다.
  */
 @Composable
 fun ResultView(
     result: GradingResult,
     showExplanation: Boolean,
+    sessionStreak: Int,
     onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -42,7 +49,28 @@ fun ResultView(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        // 정답/오답 배너
+        // 응원 메시지 — 과정(전략·시도)을 짚는 문구 풀에서 상황에 맞게 뽑는다.
+        val praisePool =
+            when {
+                result.isCorrect && sessionStreak >= STREAK_PRAISE_THRESHOLD -> {
+                    stringArrayResource(R.array.praise_streak)
+                }
+
+                result.isCorrect -> {
+                    stringArrayResource(R.array.praise_correct)
+                }
+
+                showExplanation -> {
+                    stringArrayResource(R.array.praise_stuck)
+                }
+
+                else -> {
+                    stringArrayResource(R.array.praise_wrong)
+                }
+            }
+        val praise = remember(result) { praisePool.random() }
+
+        // 정답/오답 배너 + 응원
         Card(
             colors =
                 CardDefaults.cardColors(
@@ -51,19 +79,27 @@ fun ResultView(
                 ),
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth().padding(20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Icon(
-                    imageVector = if (result.isCorrect) Icons.Filled.CheckCircle else Icons.Filled.WarningAmber,
-                    contentDescription = null,
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Icon(
+                        imageVector = if (result.isCorrect) Icons.Filled.CheckCircle else Icons.Filled.WarningAmber,
+                        contentDescription = null,
+                    )
+                    Text(
+                        text = stringResource(if (result.isCorrect) R.string.result_correct else R.string.result_wrong),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
                 Text(
-                    text = stringResource(if (result.isCorrect) R.string.result_correct else R.string.result_wrong),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
+                    text = praise,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }

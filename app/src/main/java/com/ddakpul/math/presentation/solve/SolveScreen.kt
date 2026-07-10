@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -75,6 +76,7 @@ private fun SolveContent(
                     ResultView(
                         result = result,
                         showExplanation = uiState.showExplanation,
+                        sessionStreak = uiState.sessionStreak,
                         onNext = onNext,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
@@ -96,6 +98,9 @@ private fun SolvingBody(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다.
+        TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
+
         uiState.area?.let { area ->
             Text(
                 text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
@@ -137,6 +142,24 @@ private fun SolvingBody(
                 modifier = Modifier.padding(vertical = 6.dp),
             )
         }
+    }
+}
+
+@Composable
+private fun TodayProgressHeader(
+    todaySolved: Int,
+    dailyGoal: Int,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = stringResource(R.string.solve_today_progress, todaySolved, dailyGoal),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        LinearProgressIndicator(
+            progress = { (todaySolved.toFloat() / dailyGoal).coerceIn(0f, 1f) },
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
