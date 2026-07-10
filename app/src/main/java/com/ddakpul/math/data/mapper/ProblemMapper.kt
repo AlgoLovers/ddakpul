@@ -24,8 +24,6 @@ private val mistakeListSerializer = ListSerializer(MistakeDto.serializer())
 fun ProblemEntity.toDomain(): Problem =
     Problem(
         id = id,
-        grade = grade,
-        semester = semester,
         area = MathArea.valueOf(area),
         conceptTags = json.decodeFromString(stringListSerializer, conceptTagsJson),
         difficulty = difficulty,
@@ -43,8 +41,6 @@ fun ProblemEntity.toDomain(): Problem =
 fun Problem.toEntity(): ProblemEntity =
     ProblemEntity(
         id = id,
-        grade = grade,
-        semester = semester,
         area = area.name,
         conceptTagsJson = json.encodeToString(stringListSerializer, conceptTags),
         difficulty = difficulty,

@@ -14,3 +14,29 @@ val MIGRATION_1_2 =
             )
         }
     }
+
+/**
+ * v2 → v3: 학년(grade)·학기(semester) 컬럼 제거 — 난이도(1~5)가 유일한 수준 축.
+ * 문제 테이블은 내장 카탈로그에서 다시 시딩되므로 통째로 재생성해도 데이터 손실이 없다.
+ * (풀이 기록 attempt 테이블은 건드리지 않는다.)
+ */
+val MIGRATION_2_3 =
+    object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("DROP TABLE IF EXISTS problem")
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS problem (" +
+                    "id TEXT NOT NULL, " +
+                    "area TEXT NOT NULL, " +
+                    "conceptTagsJson TEXT NOT NULL, " +
+                    "difficulty INTEGER NOT NULL, " +
+                    "groupId TEXT NOT NULL, " +
+                    "statement TEXT NOT NULL, " +
+                    "choicesJson TEXT NOT NULL, " +
+                    "correctChoiceIndex INTEGER NOT NULL, " +
+                    "explanation TEXT, " +
+                    "mistakesJson TEXT NOT NULL, " +
+                    "PRIMARY KEY(id))",
+            )
+        }
+    }

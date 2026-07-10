@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.ddakpul.math.data.local.DdakPulDatabase
 import com.ddakpul.math.data.local.MIGRATION_1_2
+import com.ddakpul.math.data.local.MIGRATION_2_3
 import com.ddakpul.math.data.local.dao.AttemptDao
 import com.ddakpul.math.data.local.dao.LearnerProgressDao
 import com.ddakpul.math.data.local.dao.ProblemDao
@@ -26,7 +27,7 @@ object DatabaseModule {
     ): DdakPulDatabase =
         Room
             .databaseBuilder(context, DdakPulDatabase::class.java, DATABASE_NAME)
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
 
     @Provides

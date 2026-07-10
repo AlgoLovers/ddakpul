@@ -78,14 +78,6 @@ class ProblemCatalogTest {
     }
 
     @Test
-    fun gradeAndSemesterAreFixedTarget() {
-        problems.forEach { problem ->
-            assertThat(problem.grade).isEqualTo(4)
-            assertThat(problem.semester).isEqualTo(2)
-        }
-    }
-
-    @Test
     fun statementsAndChoicesAreNotBlank() {
         problems.forEach { problem ->
             assertThat(problem.statement).isNotEmpty()
