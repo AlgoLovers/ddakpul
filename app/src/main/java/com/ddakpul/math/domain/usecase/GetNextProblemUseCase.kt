@@ -8,8 +8,11 @@ import com.ddakpul.math.domain.repository.ProblemRepository
 import javax.inject.Inject
 
 /**
- * 저장소에서 문제은행과 학습자 상태를 읽어 [RecommendNextProblemUseCase]로 다음 문제를 정하고,
- * 난이도가 바뀌었으면 진행 상태에 반영한다. ViewModel은 이 UseCase만 호출한다.
+ * 저장소에서 문제은행·학습자 상태·복습 만기 목록을 모아 [RecommendNextProblemUseCase]로
+ * 다음 문제를 정하고, 난이도가 바뀌었으면 진행 상태에 반영한다. ViewModel은 이 UseCase만 호출한다.
+ *
+ * 시간([nowMillis]·[zoneOffsetMillis])과 오늘 푼 수([todaySolved])는 호출부가 주입해
+ * domain을 순수하게 유지한다.
  */
 class GetNextProblemUseCase
     @Inject
@@ -17,15 +20,31 @@ class GetNextProblemUseCase
         private val problemRepository: ProblemRepository,
         private val learnerRepository: LearnerRepository,
         private val recommend: RecommendNextProblemUseCase,
+        private val computeReviewQueue: ComputeReviewQueueUseCase,
     ) {
-        suspend operator fun invoke(): AppResult<Recommendation> {
+        suspend operator fun invoke(
+            todaySolved: Int,
+            zoneOffsetMillis: Long,
+            nowMillis: Long,
+        ): AppResult<Recommendation> {
             val groups = problemRepository.getAllGroups()
             if (groups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
             val state = learnerRepository.getLearnerState()
+            val reviewQueue =
+                computeReviewQueue(
+                    attempts = learnerRepository.getAllAttempts(),
+                    groups = groups,
+                    zoneOffsetMillis = zoneOffsetMillis,
+                    nowMillis = nowMillis,
+                )
             val recommendation =
-                recommend(state, groups)
-                    ?: return AppResult.Failure(AppError.NoProblemAvailable)
+                recommend(
+                    state = state,
+                    groups = groups,
+                    reviewDueGroupIds = reviewQueue,
+                    todaySolved = todaySolved,
+                ) ?: return AppResult.Failure(AppError.NoProblemAvailable)
 
             if (recommendation.targetDifficulty != state.currentDifficulty) {
                 learnerRepository.setCurrentDifficulty(recommendation.targetDifficulty)

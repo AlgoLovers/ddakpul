@@ -43,6 +43,8 @@ class LearnerRepositoryImpl
 
         override fun observeAttempts(): Flow<List<Attempt>> = attemptDao.observeAll().map { entities -> entities.map { it.toDomain() } }
 
+        override suspend fun getAllAttempts(): List<Attempt> = attemptDao.getAll().map { it.toDomain() }
+
         override suspend fun resetProgress() {
             attemptDao.deleteAll()
             progressDao.deleteAll()

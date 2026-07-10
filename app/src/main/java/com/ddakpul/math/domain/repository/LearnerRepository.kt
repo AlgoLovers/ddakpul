@@ -18,6 +18,9 @@ interface LearnerRepository {
     /** 리포트용 전체 시도 스트림(시간 오름차순). */
     fun observeAttempts(): Flow<List<Attempt>>
 
+    /** 복습 스케줄 재생용 전체 시도(시간 오름차순). */
+    suspend fun getAllAttempts(): List<Attempt>
+
     /** 모든 풀이 기록과 난이도를 초기화한다. */
     suspend fun resetProgress()
 }

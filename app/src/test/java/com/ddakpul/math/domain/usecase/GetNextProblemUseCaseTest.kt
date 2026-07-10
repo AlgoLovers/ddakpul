@@ -4,6 +4,7 @@ import com.ddakpul.math.core.common.AppError
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.data.FakeLearnerRepository
 import com.ddakpul.math.data.FakeProblemRepository
+import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.standardGroups
 import com.google.common.truth.Truth.assertThat
@@ -11,19 +12,22 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class GetNextProblemUseCaseTest {
-    private val recommend = RecommendNextProblemUseCase()
+    private fun useCase(
+        learner: FakeLearnerRepository,
+        problems: FakeProblemRepository = FakeProblemRepository(standardGroups()),
+    ) = GetNextProblemUseCase(
+        problemRepository = problems,
+        learnerRepository = learner,
+        recommend = RecommendNextProblemUseCase(),
+        computeReviewQueue = ComputeReviewQueueUseCase(),
+    )
 
     @Test
     fun emptyProblemBank_returnsFailure() =
         runTest {
-            val useCase =
-                GetNextProblemUseCase(
-                    problemRepository = FakeProblemRepository(emptyList()),
-                    learnerRepository = FakeLearnerRepository(),
-                    recommend = recommend,
-                )
+            val useCase = useCase(FakeLearnerRepository(), FakeProblemRepository(emptyList()))
 
-            val result = useCase()
+            val result = useCase(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
 
             assertThat(result).isInstanceOf(AppResult.Failure::class.java)
             assertThat((result as AppResult.Failure).error).isEqualTo(AppError.EmptyProblemBank)
@@ -33,14 +37,8 @@ class GetNextProblemUseCaseTest {
     fun noHistory_succeedsWithoutChangingDifficulty() =
         runTest {
             val learner = FakeLearnerRepository(initialDifficulty = 3)
-            val useCase =
-                GetNextProblemUseCase(
-                    problemRepository = FakeProblemRepository(standardGroups()),
-                    learnerRepository = learner,
-                    recommend = recommend,
-                )
 
-            val result = useCase()
+            val result = useCase(learner)(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
 
             assertThat(result).isInstanceOf(AppResult.Success::class.java)
             assertThat((result as AppResult.Success).data.targetDifficulty).isEqualTo(3)
@@ -56,17 +54,35 @@ class GetNextProblemUseCaseTest {
             learner.recordAttempt(attempt("d3-1", true))
             learner.recordAttempt(attempt("d3-2", true))
 
-            val useCase =
-                GetNextProblemUseCase(
-                    problemRepository = FakeProblemRepository(standardGroups()),
-                    learnerRepository = learner,
-                    recommend = recommend,
-                )
-
-            val result = useCase()
+            val result = useCase(learner)(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
 
             assertThat((result as AppResult.Success).data.targetDifficulty).isEqualTo(4)
             assertThat(learner.currentDifficulty).isEqualTo(4)
             assertThat(learner.setDifficultyCallCount).isEqualTo(1)
         }
+
+    @Test
+    fun reviewSlot_servesDueReview_withoutPersistingDifficulty() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 3)
+            // 10일차에 d2 그룹 숙달(연속 2정답) → 만기 11일차.
+            learner.recordAttempt(attempt("d2-1", true, timestamp = DAY * 10))
+            learner.recordAttempt(attempt("d2-2", true, timestamp = DAY * 10 + HOUR))
+
+            // 12일차, 오늘 이미 2문제 풀어 3번째가 복습 슬롯.
+            val result =
+                useCase(learner)(todaySolved = 2, zoneOffsetMillis = 0L, nowMillis = DAY * 12)
+
+            val recommendation = (result as AppResult.Success).data
+            assertThat(recommendation.reason).isEqualTo(RecommendationReason.REVIEW)
+            assertThat(recommendation.group.id).isEqualTo("g-2")
+            // 복습은 현재 난이도를 바꾸지 않는다.
+            assertThat(recommendation.targetDifficulty).isEqualTo(3)
+            assertThat(learner.setDifficultyCallCount).isEqualTo(0)
+        }
+
+    private companion object {
+        const val HOUR = 3_600_000L
+        const val DAY = 86_400_000L
+    }
 }

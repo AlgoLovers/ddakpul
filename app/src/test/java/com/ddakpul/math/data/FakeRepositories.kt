@@ -54,6 +54,8 @@ class FakeLearnerRepository(
 
     override fun observeAttempts(): Flow<List<Attempt>> = attempts.asStateFlow()
 
+    override suspend fun getAllAttempts(): List<Attempt> = attempts.value
+
     override suspend fun resetProgress() {
         attempts.value = emptyList()
         currentDifficulty = Difficulty.DEFAULT

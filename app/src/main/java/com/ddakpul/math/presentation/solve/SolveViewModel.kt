@@ -48,7 +48,14 @@ class SolveViewModel
         fun loadNext() {
             _uiState.update { it.copy(phase = SolvePhase.LOADING, selectedIndex = null, result = null) }
             viewModelScope.launch {
-                when (val result = getNextProblem()) {
+                val now = System.currentTimeMillis()
+                val result =
+                    getNextProblem(
+                        todaySolved = _uiState.value.todaySolved,
+                        zoneOffsetMillis = TimeZone.getDefault().getOffset(now).toLong(),
+                        nowMillis = now,
+                    )
+                when (result) {
                     is AppResult.Success -> {
                         val recommendation = result.data
                         questionStartMillis = System.currentTimeMillis()
@@ -57,7 +64,8 @@ class SolveViewModel
                                 phase = SolvePhase.SOLVING,
                                 problem = recommendation.problem,
                                 area = recommendation.problem.area,
-                                difficulty = recommendation.targetDifficulty,
+                                // 복습(REVIEW)은 현재 레벨과 다른 난이도일 수 있으니 문제 자체의 난이도를 보여준다.
+                                difficulty = recommendation.problem.difficulty,
                                 selectedIndex = null,
                                 result = null,
                                 showExplanation = recommendation.showExplanation,
