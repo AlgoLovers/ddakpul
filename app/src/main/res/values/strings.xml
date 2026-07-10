@@ -10,6 +10,12 @@
     <!-- 홈 -->
     <string name="home_greeting">오늘도 딱 맞는 문제를 풀어볼까요?</string>
     <string name="home_start">학습 시작</string>
+    <string name="home_goal_title">오늘의 목표</string>
+    <string name="home_goal_progress">%1$d / %2$d 문제</string>
+    <string name="home_goal_done">오늘 목표 달성! 🎉</string>
+    <string name="home_streak">🔥 %1$d일 연속 학습 중</string>
+    <string name="home_streak_best">최고 기록 %1$d일</string>
+    <string name="home_streak_start">오늘 한 문제 풀고 연속 학습을 시작해요</string>
     <string name="home_stat_solved">푼 문제</string>
     <string name="home_stat_accuracy">정답률</string>
     <string name="home_stat_difficulty">현재 난이도</string>
@@ -18,6 +24,7 @@
     <string name="home_unit_level">Lv.%1$d</string>
 
     <!-- 문제 풀이 -->
+    <string name="solve_today_progress">오늘 %1$d / %2$d 문제</string>
     <string name="solve_area_label">%1$s · 난이도 %2$d</string>
     <string name="solve_submit">채점하기</string>
     <string name="solve_choice_prefix">%1$s.</string>
@@ -40,9 +47,68 @@
     <string name="report_total_solved">총 푼 문제</string>
     <string name="report_accuracy">전체 정답률</string>
     <string name="report_current_level">현재 난이도</string>
+    <string name="report_streak">연속 학습</string>
+    <string name="report_unit_days">%1$d일</string>
     <string name="report_area_title">영역별 정답률</string>
     <string name="report_area_stat">%1$d/%2$d (%3$d%%)</string>
     <string name="report_empty">아직 푼 문제가 없어요.\n아이가 문제를 풀면 리포트가 채워집니다.</string>
+
+    <!-- 리포트 · 인사이트 (해석이 끝난 문장) -->
+    <string name="report_insights_title">이번 주 인사이트</string>
+    <string name="insight_goal_done">✅ 오늘 목표를 달성했어요. 스스로 정한 양을 지킨 게 최고의 습관이에요!</string>
+    <string name="insight_streak">🔥 %1$d일 연속 학습 중이에요. 꾸준함이 실력을 만들고 있어요.</string>
+    <string name="insight_accuracy_up">📈 정답률이 지난주보다 %1$d%%p 올랐어요. 지금 방식이 효과가 있어요!</string>
+    <string name="insight_accuracy_down">🌱 정답률이 지난주보다 %1$d%%p 내려갔어요. 더 어려운 문제에 도전 중이라는 뜻일 수 있어요.</string>
+    <string name="insight_error_recovery">💪 틀렸던 문제의 %1$d%%를 다시 풀어서 해결했어요. 오답이 실력이 되고 있어요.</string>
+    <string name="insight_weak_concept">🔍 \'%1$s\' 개념을 보강하면 좋아요 (정답률 %2$d%%). 이 개념 문제를 함께 풀어보세요.</string>
+
+    <!-- 리포트 · 차트 섹션 -->
+    <string name="report_daily_title">최근 2주 학습량</string>
+    <string name="report_trend_title">정답률 추이</string>
+    <string name="report_growth_title">난이도 성장 곡선</string>
+    <string name="report_growth_caption">문제를 풀 때마다 아이 수준에 맞춰 난이도(1~5)가 움직여요.</string>
+    <string name="report_concept_title">개념별 숙달도</string>
+    <string name="report_concept_stat">%1$d문제 · 정답률 %2$d%%</string>
+
+    <!-- 개념 숙달 단계 — 점수가 아니라 단계 라벨로 (성적처럼 읽히지 않게) -->
+    <string name="mastery_mastered">숙달</string>
+    <string name="mastery_practicing">연습 중</string>
+    <string name="mastery_weak">보강 필요</string>
+
+    <!-- 리포트 · 부모 가이드 (연구 기반, docs/PEDAGOGY.md) -->
+    <string name="report_parent_tips_title">부모님을 위한 팁</string>
+    <string-array name="parent_tips">
+        <item>"똑똑하네" 대신 "어떻게 풀었어?"라고 물어보세요 — 방법을 칭찬받은 아이가 어려운 문제에 더 오래 도전해요.</item>
+        <item>정답률보다 "시도한 문제 수"와 "다시 푼 문제"를 함께 봐 주세요 — 노력의 흔적을 알아봐 주는 게 최고의 보상이에요.</item>
+        <item>수학이 어려우셨더라도 아이 앞에서 "나도 수학 못했어"는 금물 — 수학에 대한 불안은 아이에게 옮아요.</item>
+        <item>틀린 문제엔 정답을 알려주기보다 "어디까지는 맞았을까?"부터 — 실수를 함께 뜯어보는 대화가 실력을 만들어요.</item>
+        <item>하루 10분, 아이가 스스로 정한 목표를 지켰는지만 확인하세요 — 작고 가까운 목표가 자신감과 흥미를 키워요.</item>
+    </string-array>
+
+    <!-- 인쇄 학습지 -->
+    <string name="print_title">학습지 인쇄</string>
+    <string name="print_subtitle">종이에 풀고 싶을 때 — 문제지와 정답·해설지를 인쇄하세요.</string>
+    <string name="print_back">뒤로</string>
+    <string name="print_count_label">문항 수</string>
+    <string name="print_count_option">%1$d문항</string>
+    <string name="print_source_label">출제 방식</string>
+    <string name="print_source_recommended">딱풀 추천</string>
+    <string name="print_source_wrong">오답 위주</string>
+    <string name="print_area_label">영역</string>
+    <string name="print_area_all">전체</string>
+    <string name="print_include_answers">정답·해설지 포함 (별지)</string>
+    <string name="print_action">인쇄하기</string>
+    <string name="print_job_name">딱풀 학습지</string>
+    <string name="print_empty">조건에 맞는 문제가 없어요. 옵션을 바꿔보세요.</string>
+    <string name="report_print_button">학습지 인쇄</string>
+
+    <!-- 학습지 PDF 문구 -->
+    <string name="worksheet_title">딱풀 학습지</string>
+    <string name="worksheet_name_line">이름: ______________</string>
+    <string name="worksheet_date_line">날짜: ____ 월 ____ 일</string>
+    <string name="worksheet_answer_title">정답과 해설</string>
+    <string name="worksheet_footer">딱풀 — 딱 맞는 문제를 풀다</string>
+    <string name="worksheet_solution_space">풀이</string>
 
     <!-- 설정 -->
     <string name="settings_title">설정</string>
@@ -53,6 +119,36 @@
     <string name="settings_reset_dialog_title">학습 기록을 초기화할까요?</string>
     <string name="settings_reset_dialog_body">되돌릴 수 없어요. 모든 풀이 기록이 삭제됩니다.</string>
     <string name="settings_about">딱풀 · 초등 사고력 수학 적응형 학습</string>
+
+    <!--
+        응원 메시지 — 성장 마인드셋 연구(Mueller & Dweck 1998, Gunderson 2013)의 "과정 칭찬" 원칙.
+        지능·재능이 아니라 전략·시도·개선을 짚는다. 오답은 "뇌가 크는 신호"로 재구성(Moser 2011).
+        근거 정리는 docs/PEDAGOGY.md 참고.
+    -->
+    <string-array name="praise_correct">
+        <item>풀이 순서를 차근차근 지켰네! 그 방법이 통했어.</item>
+        <item>배운 걸 여기에 써먹었구나. 연결하는 힘이 늘고 있어!</item>
+        <item>문제를 끝까지 읽고 푼 게 보여. 좋은 습관이야.</item>
+        <item>네가 고른 방법으로 풀어냈네! 어떻게 풀었는지 설명해 볼래?</item>
+        <item>연습한 만큼 실력이 늘고 있어. 어제의 너보다 한 걸음 앞섰다!</item>
+    </string-array>
+    <string-array name="praise_wrong">
+        <item>틀렸다는 건 뇌가 지금 열심히 크는 중이라는 신호야!</item>
+        <item>아깝다! 어디서 꼬였는지 같이 찾아보자. 찾으면 진짜 실력이 돼.</item>
+        <item>이 문제는 \'아직\' 못 푼 것뿐이야. \'아직\'이 중요해!</item>
+        <item>다른 방법으로 한 번 더 해볼까? 방법을 바꾸는 것도 실력이야.</item>
+        <item>어려운 문제에 도전했다는 게 멋져. 쉬운 것만 풀면 늘지 않거든.</item>
+    </string-array>
+    <string-array name="praise_streak">
+        <item>연속 정답! 네 풀이 방법이 점점 단단해지고 있어.</item>
+        <item>이제 이건 너한테 쉬워진 것 같은데? 더 어려운 문제로 가보자!</item>
+        <item>연속 정답 행진! 꾸준히 연습한 결과가 보인다.</item>
+    </string-array>
+    <string-array name="praise_stuck">
+        <item>어려운 데 온 거야. 여기가 원래 제일 힘든 구간이야. 해설 보고 딱 한 문제만 더 해보자.</item>
+        <item>오늘은 여기까지도 충분해. 내일 다시 보면 더 잘 보일 거야.</item>
+        <item>조금 전의 너보다 지금의 네가 더 많이 알아. 기초부터 다시 밟으면 금방이야.</item>
+    </string-array>
 
     <!-- 수학 영역 -->
     <string name="area_number_operation">수와 연산</string>

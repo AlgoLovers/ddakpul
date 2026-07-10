@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
+import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.TimeZone
 import javax.inject.Inject
 
 /**
@@ -23,6 +25,7 @@ class SolveViewModel
     constructor(
         private val getNextProblem: GetNextProblemUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
+        observeStats: ObserveLearningStatsUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
         val uiState: StateFlow<SolveUiState> = _uiState.asStateFlow()
@@ -31,6 +34,15 @@ class SolveViewModel
 
         init {
             loadNext()
+            // 오늘 푼 문제 수는 기록이 쌓일 때마다 자동 갱신된다(시도 저장 → Flow 재계산).
+            viewModelScope.launch {
+                observeStats(
+                    zoneOffsetMillis = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong(),
+                    nowMillis = { System.currentTimeMillis() },
+                ).collect { stats ->
+                    _uiState.update { it.copy(todaySolved = stats.todaySolved) }
+                }
+            }
         }
 
         fun loadNext() {
@@ -40,12 +52,14 @@ class SolveViewModel
                     is AppResult.Success -> {
                         val recommendation = result.data
                         questionStartMillis = System.currentTimeMillis()
-                        _uiState.update {
-                            SolveUiState(
+                        _uiState.update { current ->
+                            current.copy(
                                 phase = SolvePhase.SOLVING,
                                 problem = recommendation.problem,
                                 area = recommendation.problem.area,
                                 difficulty = recommendation.targetDifficulty,
+                                selectedIndex = null,
+                                result = null,
                                 showExplanation = recommendation.showExplanation,
                                 reason = recommendation.reason,
                             )
@@ -82,7 +96,13 @@ class SolveViewModel
                         timeSpentSec = elapsedSec,
                         timestamp = System.currentTimeMillis(),
                     )
-                _uiState.update { it.copy(phase = SolvePhase.GRADED, result = gradingResult) }
+                _uiState.update {
+                    it.copy(
+                        phase = SolvePhase.GRADED,
+                        result = gradingResult,
+                        sessionStreak = if (gradingResult.isCorrect) it.sessionStreak + 1 else 0,
+                    )
+                }
             }
         }
 

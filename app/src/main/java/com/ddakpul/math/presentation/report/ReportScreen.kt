@@ -7,36 +7,65 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Print
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
+import com.ddakpul.math.core.designsystem.component.BarEntry
+import com.ddakpul.math.core.designsystem.component.MiniBarChart
 import com.ddakpul.math.core.designsystem.component.SectionCard
 import com.ddakpul.math.core.designsystem.component.StatTile
+import com.ddakpul.math.core.designsystem.component.StepLineChart
+import com.ddakpul.math.core.designsystem.component.TrendLineChart
 import com.ddakpul.math.domain.model.AreaStat
-import com.ddakpul.math.domain.model.LearnerReport
+import com.ddakpul.math.domain.model.ConceptStat
+import com.ddakpul.math.domain.model.Difficulty
+import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.presentation.common.labelRes
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
+
+/** 숙달도 차트에 넣을 개념 수 상한 — 취약한 것부터 보여준다. */
+private const val MAX_CONCEPT_ROWS = 6
+
+/** 성장 곡선에 그릴 최근 시도 수 상한. */
+private const val MAX_GROWTH_POINTS = 60
+
+/** 숙달 판정: 이 정답률 이상 + 최소 풀이 수 충족. */
+private const val MASTERED_ACCURACY = 0.8f
+private const val WEAK_ACCURACY = 0.6f
+private const val MIN_SOLVED_FOR_MASTERY = 3
+
+private val dayFormatter = DateTimeFormatter.ofPattern("M/d")
 
 @Composable
 fun ReportScreen(
+    onPrintClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val report = uiState.report
-    if (report == null || report.isEmpty) {
+    val stats = uiState.stats
+    if (stats == null || stats.isEmpty) {
         Box(modifier = modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(
                 text = stringResource(R.string.report_empty),
@@ -46,53 +75,233 @@ fun ReportScreen(
         }
         return
     }
-    ReportContent(report = report, modifier = modifier)
+    ReportContent(
+        stats = stats,
+        dayCells = uiState.dayCells,
+        insights = uiState.insights,
+        onPrintClick = onPrintClick,
+        modifier = modifier,
+    )
 }
 
 @Composable
 private fun ReportContent(
-    report: LearnerReport,
+    stats: LearningStats,
+    dayCells: List<DayCell>,
+    insights: List<ReportInsight>,
+    onPrintClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Text(
-            text = stringResource(R.string.report_title),
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-        )
-        Text(
-            text = stringResource(R.string.report_subtitle),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 720.dp)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.report_title),
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.report_subtitle),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
+                FilledTonalButton(onClick = onPrintClick) {
+                    Icon(imageVector = Icons.Filled.Print, contentDescription = null)
+                    Text(
+                        text = stringResource(R.string.report_print_button),
+                        modifier = Modifier.padding(start = 6.dp),
+                    )
+                }
+            }
 
+            SummaryTiles(stats)
+
+            if (insights.isNotEmpty()) {
+                SectionCard(title = stringResource(R.string.report_insights_title)) {
+                    insights.forEach { insight ->
+                        Text(
+                            text = insight.toText(),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
+            }
+
+            SectionCard(title = stringResource(R.string.report_daily_title)) {
+                MiniBarChart(
+                    entries = dayCells.map { BarEntry(value = it.solved.toFloat(), emphasized = it.isToday) },
+                    startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
+                    endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
+                )
+            }
+
+            SectionCard(title = stringResource(R.string.report_trend_title)) {
+                TrendLineChart(
+                    values = dayCells.map { it.accuracy },
+                    startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
+                    endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
+                )
+            }
+
+            if (stats.difficultyProgress.size >= 2) {
+                SectionCard(title = stringResource(R.string.report_growth_title)) {
+                    StepLineChart(
+                        values = stats.difficultyProgress.takeLast(MAX_GROWTH_POINTS).map { it.difficulty },
+                        minValue = Difficulty.MIN,
+                        maxValue = Difficulty.MAX,
+                    )
+                    Text(
+                        text = stringResource(R.string.report_growth_caption),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            val concepts = stats.conceptStats.filter { it.solved >= 2 }.take(MAX_CONCEPT_ROWS)
+            if (concepts.isNotEmpty()) {
+                SectionCard(title = stringResource(R.string.report_concept_title)) {
+                    concepts.forEach { concept -> ConceptRow(concept) }
+                }
+            }
+
+            SectionCard(title = stringResource(R.string.report_area_title)) {
+                stats.areaStats.forEach { stat -> AreaRow(stat) }
+            }
+
+            SectionCard(title = stringResource(R.string.report_parent_tips_title)) {
+                stringArrayResource(R.array.parent_tips).forEach { tip ->
+                    Text(
+                        text = "• $tip",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SummaryTiles(stats: LearningStats) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        StatTile(
+            label = stringResource(R.string.report_total_solved),
+            value = stringResource(R.string.home_unit_count, stats.totalSolved),
+            modifier = Modifier.weight(1f),
+        )
+        StatTile(
+            label = stringResource(R.string.report_accuracy),
+            value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+            modifier = Modifier.weight(1f),
+        )
+        StatTile(
+            label = stringResource(R.string.report_current_level),
+            value = stringResource(R.string.home_unit_level, stats.currentDifficulty),
+            modifier = Modifier.weight(1f),
+        )
+        StatTile(
+            label = stringResource(R.string.report_streak),
+            value = stringResource(R.string.report_unit_days, stats.streakDays),
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun ReportInsight.toText(): String =
+    when (this) {
+        is ReportInsight.GoalDone -> stringResource(R.string.insight_goal_done)
+        is ReportInsight.Streak -> stringResource(R.string.insight_streak, days)
+        is ReportInsight.AccuracyUp -> stringResource(R.string.insight_accuracy_up, deltaPercentPoint)
+        is ReportInsight.AccuracyDown -> stringResource(R.string.insight_accuracy_down, deltaPercentPoint)
+        is ReportInsight.ErrorRecovery -> stringResource(R.string.insight_error_recovery, percent)
+        is ReportInsight.WeakConcept -> stringResource(R.string.insight_weak_concept, concept, percent)
+    }
+
+private fun DayCell.dateLabel(): String = LocalDate.ofEpochDay(epochDay).format(dayFormatter)
+
+/** 개념 숙달 단계 — 점수화 대신 단계 라벨(색 + 텍스트, 색만으로 구분하지 않음). */
+private enum class MasteryStage { MASTERED, PRACTICING, WEAK }
+
+private fun ConceptStat.stage(): MasteryStage =
+    when {
+        accuracy >= MASTERED_ACCURACY && solved >= MIN_SOLVED_FOR_MASTERY -> MasteryStage.MASTERED
+        accuracy < WEAK_ACCURACY -> MasteryStage.WEAK
+        else -> MasteryStage.PRACTICING
+    }
+
+@Composable
+private fun ConceptRow(concept: ConceptStat) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            StatTile(
-                label = stringResource(R.string.report_total_solved),
-                value = stringResource(R.string.home_unit_count, report.totalSolved),
-                modifier = Modifier.weight(1f),
-            )
-            StatTile(
-                label = stringResource(R.string.report_accuracy),
-                value = stringResource(R.string.home_unit_percent, (report.accuracy * 100).roundToInt()),
-                modifier = Modifier.weight(1f),
-            )
-            StatTile(
-                label = stringResource(R.string.report_current_level),
-                value = stringResource(R.string.home_unit_level, report.currentDifficulty),
-                modifier = Modifier.weight(1f),
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    text = concept.concept,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                )
+                MasteryChip(concept.stage())
+            }
+            Text(
+                text =
+                    stringResource(
+                        R.string.report_concept_stat,
+                        concept.solved,
+                        (concept.accuracy * 100).roundToInt(),
+                    ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+        LinearProgressIndicator(
+            progress = { concept.accuracy },
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
 
-        SectionCard(title = stringResource(R.string.report_area_title)) {
-            report.areaStats.forEach { stat -> AreaRow(stat) }
+@Composable
+private fun MasteryChip(stage: MasteryStage) {
+    val colors = MaterialTheme.colorScheme
+    val (container, content, labelRes) =
+        when (stage) {
+            MasteryStage.MASTERED -> Triple(colors.secondaryContainer, colors.onSecondaryContainer, R.string.mastery_mastered)
+            MasteryStage.PRACTICING -> Triple(colors.tertiaryContainer, colors.onTertiaryContainer, R.string.mastery_practicing)
+            MasteryStage.WEAK -> Triple(colors.errorContainer, colors.onErrorContainer, R.string.mastery_weak)
         }
+    Surface(color = container, contentColor = content, shape = MaterialTheme.shapes.small) {
+        Text(
+            text = stringResource(labelRes),
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+        )
     }
 }
 
