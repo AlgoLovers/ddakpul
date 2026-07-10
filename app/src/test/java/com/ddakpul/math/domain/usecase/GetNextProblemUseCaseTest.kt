@@ -3,6 +3,7 @@ package com.ddakpul.math.domain.usecase
 import com.ddakpul.math.core.common.AppError
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.data.FakeLearnerRepository
+import com.ddakpul.math.data.FakeProblemFeedbackRepository
 import com.ddakpul.math.data.FakeProblemRepository
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
@@ -15,8 +16,9 @@ class GetNextProblemUseCaseTest {
     private fun useCase(
         learner: FakeLearnerRepository,
         problems: FakeProblemRepository = FakeProblemRepository(standardGroups()),
+        feedback: FakeProblemFeedbackRepository = FakeProblemFeedbackRepository(),
     ) = GetNextProblemUseCase(
-        problemRepository = problems,
+        getActiveGroups = GetActiveProblemGroupsUseCase(problems, feedback),
         learnerRepository = learner,
         recommend = RecommendNextProblemUseCase(),
         computeReviewQueue = ComputeReviewQueueUseCase(),
@@ -79,6 +81,47 @@ class GetNextProblemUseCaseTest {
             // 복습은 현재 난이도를 바꾸지 않는다.
             assertThat(recommendation.targetDifficulty).isEqualTo(3)
             assertThat(learner.setDifficultyCallCount).isEqualTo(0)
+        }
+
+    @Test
+    fun excludedProblem_isNeverRecommended() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 3)
+            val feedback = FakeProblemFeedbackRepository()
+            // 난이도 3 그룹의 문제 3개 중 2개를 제외하면 남은 1개만 나올 수 있다.
+            feedback.exclude("d3-1", reason = null, timestampMillis = 0L)
+            feedback.exclude("d3-2", reason = null, timestampMillis = 1L)
+
+            repeat(20) {
+                val result =
+                    useCase(learner, feedback = feedback)(
+                        todaySolved = 0,
+                        zoneOffsetMillis = 0L,
+                        nowMillis = 0L,
+                    )
+                val recommended = (result as AppResult.Success).data.problem
+                assertThat(recommended.id).isEqualTo("d3-3")
+            }
+        }
+
+    @Test
+    fun allProblemsExcluded_returnsEmptyProblemBank() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 3)
+            val feedback = FakeProblemFeedbackRepository()
+            standardGroups().flatMap { it.problems }.forEachIndexed { index, problem ->
+                feedback.exclude(problem.id, reason = null, timestampMillis = index.toLong())
+            }
+
+            val result =
+                useCase(learner, feedback = feedback)(
+                    todaySolved = 0,
+                    zoneOffsetMillis = 0L,
+                    nowMillis = 0L,
+                )
+
+            assertThat(result).isInstanceOf(AppResult.Failure::class.java)
+            assertThat((result as AppResult.Failure).error).isEqualTo(AppError.EmptyProblemBank)
         }
 
     private companion object {

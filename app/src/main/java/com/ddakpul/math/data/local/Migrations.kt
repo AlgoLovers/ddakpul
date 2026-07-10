@@ -48,3 +48,17 @@ val MIGRATION_3_4 =
             db.execSQL("ALTER TABLE problem ADD COLUMN figureJson TEXT")
         }
     }
+
+/** v4 → v5: "별로예요" 제외 문제 테이블 — 제외한 문제는 추천·학습지에서 다시 나오지 않는다. */
+val MIGRATION_4_5 =
+    object : Migration(4, 5) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS excluded_problem (" +
+                    "problemId TEXT NOT NULL, " +
+                    "reason TEXT, " +
+                    "excludedAt INTEGER NOT NULL, " +
+                    "PRIMARY KEY(problemId))",
+            )
+        }
+    }

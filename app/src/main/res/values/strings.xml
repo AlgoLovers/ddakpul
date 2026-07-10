@@ -31,13 +31,18 @@
     <string name="solve_choice_prefix">%1$s.</string>
     <string name="solve_loading">문제를 불러오는 중…</string>
     <string name="solve_empty">풀 수 있는 문제가 없어요.</string>
+    <string name="solve_exclude_button">이 문제 별로예요</string>
+    <string name="solve_exclude_dialog_title">이 문제를 그만 볼까요?</string>
+    <string name="solve_exclude_dialog_body">별로라고 표시한 문제는 다시 나오지 않아요. 어려워서가 아니라 문제가 정말 이상할 때만 눌러 주세요!</string>
+    <string name="solve_exclude_dialog_confirm">그만 보기</string>
+    <string name="solve_exclude_dialog_cancel">계속 풀기</string>
 
     <!-- 결과 -->
     <string name="result_correct">정답이에요! 🎉</string>
     <string name="result_wrong">아쉬워요, 다시 볼까요?</string>
     <string name="result_your_answer">내가 고른 답: %1$s</string>
     <string name="result_correct_answer">정답: %1$s</string>
-    <string name="result_explanation_label">해설</string>
+    <string name="result_explanation_label">풀이</string>
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
     <string name="result_remediation_hint">기초 개념부터 차근차근 다시 풀어봐요.</string>
     <string name="result_next">다음 문제</string>
@@ -133,6 +138,10 @@
     <string name="settings_reset_cancel">취소</string>
     <string name="settings_reset_dialog_title">학습 기록을 초기화할까요?</string>
     <string name="settings_reset_dialog_body">되돌릴 수 없어요. 모든 풀이 기록이 삭제됩니다.</string>
+    <string name="settings_feedback_title">별로였던 문제</string>
+    <string name="settings_feedback_desc">\"이 문제 별로예요\"로 제외한 목록을 텔레그램 등으로 보내 주시면 다음 업데이트에서 문제은행을 개선해요.</string>
+    <string name="settings_feedback_share">제외한 문제 %1$d개 보내기</string>
+    <string name="settings_feedback_empty">아직 제외한 문제가 없어요.</string>
     <string name="settings_about">딱풀 · 초등 사고력 수학 적응형 학습</string>
 
     <!--
