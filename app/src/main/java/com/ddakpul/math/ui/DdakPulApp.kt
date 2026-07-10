@@ -30,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ddakpul.math.R
 import com.ddakpul.math.presentation.home.HomeScreen
+import com.ddakpul.math.presentation.print.PrintScreen
 import com.ddakpul.math.presentation.report.ReportScreen
 import com.ddakpul.math.presentation.settings.SettingsScreen
 import com.ddakpul.math.presentation.solve.SolveScreen
@@ -44,6 +45,9 @@ private enum class DdakPulDestination(
     REPORT("report", R.string.nav_report, Icons.Filled.BarChart),
     SETTINGS("settings", R.string.nav_settings, Icons.Filled.Settings),
 }
+
+/** 탭이 아닌 보조 화면 라우트. */
+private const val PRINT_ROUTE = "print"
 
 @Composable
 fun DdakPulApp(
@@ -83,8 +87,11 @@ private fun AppNavHost(
             HomeScreen(onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) })
         }
         composable(DdakPulDestination.SOLVE.route) { SolveScreen() }
-        composable(DdakPulDestination.REPORT.route) { ReportScreen() }
+        composable(DdakPulDestination.REPORT.route) {
+            ReportScreen(onPrintClick = { navController.navigate(PRINT_ROUTE) })
+        }
         composable(DdakPulDestination.SETTINGS.route) { SettingsScreen() }
+        composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
     }
 }
 

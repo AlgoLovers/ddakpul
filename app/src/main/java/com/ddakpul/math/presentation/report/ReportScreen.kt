@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Print
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -55,6 +59,7 @@ private val dayFormatter = DateTimeFormatter.ofPattern("M/d")
 
 @Composable
 fun ReportScreen(
+    onPrintClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
 ) {
@@ -74,6 +79,7 @@ fun ReportScreen(
         stats = stats,
         dayCells = uiState.dayCells,
         insights = uiState.insights,
+        onPrintClick = onPrintClick,
         modifier = modifier,
     )
 }
@@ -83,6 +89,7 @@ private fun ReportContent(
     stats: LearningStats,
     dayCells: List<DayCell>,
     insights: List<ReportInsight>,
+    onPrintClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -100,11 +107,25 @@ private fun ReportContent(
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
             )
-            Text(
-                text = stringResource(R.string.report_subtitle),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.report_subtitle),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
+                FilledTonalButton(onClick = onPrintClick) {
+                    Icon(imageVector = Icons.Filled.Print, contentDescription = null)
+                    Text(
+                        text = stringResource(R.string.report_print_button),
+                        modifier = Modifier.padding(start = 6.dp),
+                    )
+                }
+            }
 
             SummaryTiles(stats)
 

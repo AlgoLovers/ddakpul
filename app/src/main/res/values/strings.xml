@@ -85,6 +85,31 @@
         <item>하루 10분, 아이가 스스로 정한 목표를 지켰는지만 확인하세요 — 작고 가까운 목표가 자신감과 흥미를 키워요.</item>
     </string-array>
 
+    <!-- 인쇄 학습지 -->
+    <string name="print_title">학습지 인쇄</string>
+    <string name="print_subtitle">종이에 풀고 싶을 때 — 문제지와 정답·해설지를 인쇄하세요.</string>
+    <string name="print_back">뒤로</string>
+    <string name="print_count_label">문항 수</string>
+    <string name="print_count_option">%1$d문항</string>
+    <string name="print_source_label">출제 방식</string>
+    <string name="print_source_recommended">딱풀 추천</string>
+    <string name="print_source_wrong">오답 위주</string>
+    <string name="print_area_label">영역</string>
+    <string name="print_area_all">전체</string>
+    <string name="print_include_answers">정답·해설지 포함 (별지)</string>
+    <string name="print_action">인쇄하기</string>
+    <string name="print_job_name">딱풀 학습지</string>
+    <string name="print_empty">조건에 맞는 문제가 없어요. 옵션을 바꿔보세요.</string>
+    <string name="report_print_button">학습지 인쇄</string>
+
+    <!-- 학습지 PDF 문구 -->
+    <string name="worksheet_title">딱풀 학습지</string>
+    <string name="worksheet_name_line">이름: ______________</string>
+    <string name="worksheet_date_line">날짜: ____ 월 ____ 일</string>
+    <string name="worksheet_answer_title">정답과 해설</string>
+    <string name="worksheet_footer">딱풀 — 딱 맞는 문제를 풀다</string>
+    <string name="worksheet_solution_space">풀이</string>
+
     <!-- 설정 -->
     <string name="settings_title">설정</string>
     <string name="settings_reset">학습 기록 초기화</string>
