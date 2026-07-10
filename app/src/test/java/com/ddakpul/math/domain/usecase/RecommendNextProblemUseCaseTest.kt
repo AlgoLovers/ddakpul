@@ -89,12 +89,13 @@ class RecommendNextProblemUseCaseTest {
                         ),
                 ),
             )
-        // q1(정답)·q2(오답) 혼조 → 난이도 유지, 그리고 q1·q2는 "최근에 푼" 문제로 취급.
+        // q1(정답)·q2(오답) 혼조 → 난이도 유지. 직전 오답이므로 규칙7(재도전)이 같은 그룹에서
+        // 최근에 안 푼 q3를 낸다 — 규칙5(안 푼 문제 우선)와 규칙7이 함께 작동하는 경로.
         val attempts = listOf(attempt("q1", true), attempt("q2", false))
 
         val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), groups, seededRandom)
 
-        assertThat(result!!.reason).isEqualTo(RecommendationReason.STAY)
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.RETRY)
         assertThat(result.problem.id).isEqualTo("q3")
     }
 
@@ -135,5 +136,116 @@ class RecommendNextProblemUseCaseTest {
         val result = recommend(state(currentDifficulty = 3), emptyList(), seededRandom)
 
         assertThat(result).isNull()
+    }
+
+    // ── 규칙7 (v0.3): 오답 직후 같은 그룹 재도전 ─────────────────────────────────
+
+    @Test
+    fun rule7_lastWrong_retriesDifferentProblemFromSameGroup() {
+        val groups =
+            listOf(
+                group(difficulty = 3, problems = (1..3).map { problem("a$it", 3, groupId = "g-a") }, id = "g-a"),
+                group(difficulty = 3, problems = (1..3).map { problem("b$it", 3, groupId = "g-b") }, id = "g-b"),
+            )
+        // 혼조(정답 후 오답) — 직전 오답은 g-a 그룹의 a1.
+        val attempts = listOf(attempt("b1", true), attempt("a1", false))
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), groups, seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.RETRY)
+        assertThat(result.group.id).isEqualTo("g-a")
+        assertThat(result.problem.id).isNotEqualTo("a1")
+    }
+
+    @Test
+    fun rule7_notTriggered_whenLastAttemptCorrect() {
+        val attempts = listOf(attempt("d3-1", false), attempt("d3-2", true))
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), standardGroups(), seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.STAY)
+    }
+
+    @Test
+    fun rule7_doesNotOverrideDemotion() {
+        // 연속 2오답이면 재도전이 아니라 규칙2(하강)가 우선.
+        val attempts = listOf(attempt("d3-1", false), attempt("d3-2", false))
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), standardGroups(), seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.RETREATED)
+    }
+
+    // ── 규칙8 (v0.3): 복습 슬롯 배합 ─────────────────────────────────────────────
+
+    @Test
+    fun rule8_reviewSlot_servesDueGroupWithoutChangingDifficulty() {
+        // todaySolved=2 → 3번째 문제가 복습 슬롯(2 % 3 == 2).
+        val result =
+            recommend(
+                state(currentDifficulty = 4),
+                standardGroups(),
+                seededRandom,
+                reviewDueGroupIds = listOf("g-2"),
+                todaySolved = 2,
+            )
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.REVIEW)
+        assertThat(result.group.id).isEqualTo("g-2")
+        assertThat(result.problem.difficulty).isEqualTo(2)
+        // 복습은 현재 난이도를 건드리지 않는다.
+        assertThat(result.targetDifficulty).isEqualTo(4)
+    }
+
+    @Test
+    fun rule8_notReviewSlotPosition_normalFlow() {
+        val result =
+            recommend(
+                state(currentDifficulty = 4),
+                standardGroups(),
+                seededRandom,
+                reviewDueGroupIds = listOf("g-2"),
+                todaySolved = 1,
+            )
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.START)
+        assertThat(result.targetDifficulty).isEqualTo(4)
+    }
+
+    @Test
+    fun rule8_remediationTakesPriorityOverReview() {
+        // 현재 난이도에서 누적 오답 3회(정체)면 복습 슬롯이어도 처치가 우선.
+        val attempts =
+            listOf(
+                attempt("d3-1", false),
+                attempt("d3-2", true),
+                attempt("d3-3", false),
+                attempt("d3-1", false),
+            )
+
+        val result =
+            recommend(
+                state(currentDifficulty = 3, recentAttempts = attempts),
+                standardGroups(),
+                seededRandom,
+                reviewDueGroupIds = listOf("g-1"),
+                todaySolved = 2,
+            )
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.REMEDIATION)
+    }
+
+    @Test
+    fun rule8_emptyReviewQueue_normalFlowEvenOnSlot() {
+        val result =
+            recommend(
+                state(currentDifficulty = 3),
+                standardGroups(),
+                seededRandom,
+                reviewDueGroupIds = emptyList(),
+                todaySolved = 2,
+            )
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.START)
     }
 }

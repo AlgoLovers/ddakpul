@@ -48,15 +48,8 @@ class ObserveLearningStatsUseCase
             }
     }
 
-private const val MILLIS_PER_DAY = 86_400_000L
-
 /** 정답률 추이 비교 구간(최근 N일 vs 그 전 N일). */
 internal const val TREND_WINDOW_DAYS = 7
-
-private fun epochDay(
-    timestamp: Long,
-    zoneOffsetMillis: Long,
-): Long = Math.floorDiv(timestamp + zoneOffsetMillis, MILLIS_PER_DAY)
 
 /** 순수 집계 로직 — 단위 테스트로 검증한다. [attempts]는 시간 오름차순. */
 internal fun buildLearningStats(
@@ -137,6 +130,7 @@ internal fun buildLearningStats(
         bestStreakDays = bestStreak,
         todaySolved = todayAttempts.size,
         todayCorrect = todayAttempts.count { it.isCorrect },
+        todayTimeSpentSec = todayAttempts.sumOf { it.timeSpentSec },
         avgTimeSecByDifficulty = avgTimeSecByDifficulty,
         recentAccuracy = recent.accuracyOrNull(),
         previousAccuracy = previous.accuracyOrNull(),

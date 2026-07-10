@@ -39,12 +39,18 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    HomeContent(stats = uiState.stats, onStartLearning = onStartLearning, modifier = modifier)
+    HomeContent(
+        stats = uiState.stats,
+        dailyGoal = uiState.dailyGoal,
+        onStartLearning = onStartLearning,
+        modifier = modifier,
+    )
 }
 
 @Composable
 private fun HomeContent(
     stats: LearningStats?,
+    dailyGoal: Int,
     onStartLearning: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -67,6 +73,7 @@ private fun HomeContent(
 
         TodayGoalCard(
             todaySolved = stats?.todaySolved ?: 0,
+            goal = dailyGoal,
             streakDays = stats?.streakDays ?: 0,
             bestStreakDays = stats?.bestStreakDays ?: 0,
             modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
@@ -117,11 +124,11 @@ private fun HomeContent(
 @Composable
 private fun TodayGoalCard(
     todaySolved: Int,
+    goal: Int,
     streakDays: Int,
     bestStreakDays: Int,
     modifier: Modifier = Modifier,
 ) {
-    val goal = SessionGoals.DAILY_GOAL_PROBLEMS
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),

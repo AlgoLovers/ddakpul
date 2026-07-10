@@ -51,11 +51,23 @@ sealed interface ReportInsight {
     data object GoalDone : ReportInsight
 }
 
+/** 이번 주(최근 7일) 요약 — 학부모 소통의 최선 관행인 "주간 요약 문단"의 재료. */
+data class WeeklySummary(
+    val solved: Int,
+    val studyDays: Int,
+    val accuracyPercent: Int,
+    /** 지난주 대비 정답률 변화(%p). 비교 불가면 null. */
+    val deltaPercentPoint: Int?,
+    /** 보강 권장 개념. 없으면 null. */
+    val weakConcept: String?,
+)
+
 data class ReportUiState(
     val stats: LearningStats? = null,
     val isLoading: Boolean = true,
     val dayCells: List<DayCell> = emptyList(),
     val insights: List<ReportInsight> = emptyList(),
+    val weeklySummary: WeeklySummary? = null,
 )
 
 @HiltViewModel
@@ -74,6 +86,7 @@ class ReportViewModel
                     isLoading = false,
                     dayCells = buildDayCells(stats),
                     insights = buildInsights(stats),
+                    weeklySummary = buildWeeklySummary(stats),
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -121,12 +134,37 @@ class ReportViewModel
                     ?.let { add(ReportInsight.WeakConcept(it.concept, (it.accuracy * 100).roundToInt())) }
             }
 
+        private fun buildWeeklySummary(stats: LearningStats): WeeklySummary {
+            val today =
+                Math.floorDiv(System.currentTimeMillis() + zoneOffsetMillis(), MILLIS_PER_DAY)
+            val lastWeek = stats.dailyStats.filter { it.epochDay > today - DAYS_PER_WEEK }
+            val solved = lastWeek.sumOf { it.solved }
+            val correct = lastWeek.sumOf { it.correct }
+
+            val recent = stats.recentAccuracy
+            val previous = stats.previousAccuracy
+            val delta =
+                if (recent != null && previous != null) ((recent - previous) * 100).roundToInt() else null
+
+            return WeeklySummary(
+                solved = solved,
+                studyDays = lastWeek.count { it.solved > 0 },
+                accuracyPercent = if (solved > 0) correct * 100 / solved else 0,
+                deltaPercentPoint = delta,
+                weakConcept =
+                    stats.conceptStats
+                        .firstOrNull { it.solved >= MIN_SOLVED_FOR_CONCEPT && it.accuracy < WEAK_ACCURACY }
+                        ?.concept,
+            )
+        }
+
         private fun zoneOffsetMillis(): Long = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong()
 
         private companion object {
             const val STOP_TIMEOUT_MILLIS = 5_000L
             const val MILLIS_PER_DAY = 86_400_000L
             const val WINDOW_DAYS = 14L
+            const val DAYS_PER_WEEK = 7L
 
             /** 인사이트로 띄울 최소 연속 학습일. */
             const val MIN_STREAK_FOR_INSIGHT = 2
