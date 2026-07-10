@@ -5,7 +5,6 @@ import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
 import com.ddakpul.math.domain.repository.LearnerRepository
-import com.ddakpul.math.domain.repository.ProblemRepository
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.random.Random
@@ -29,18 +28,19 @@ data class WorksheetSpec(
 /**
  * 인쇄용 학습지에 담을 문제를 고른다. 선택 자체는 순수 함수
  * [selectWorksheetProblems]가 하고, 여기서는 저장소에서 입력만 모은다.
+ * "별로예요"로 제외한 문제는 학습지에도 실리지 않는다([GetActiveProblemGroupsUseCase]).
  */
 class BuildWorksheetUseCase
     @Inject
     constructor(
-        private val problemRepository: ProblemRepository,
+        private val getActiveGroups: GetActiveProblemGroupsUseCase,
         private val learnerRepository: LearnerRepository,
     ) {
         suspend operator fun invoke(
             spec: WorksheetSpec,
             random: Random = Random.Default,
         ): List<Problem> {
-            val groups = problemRepository.getAllGroups()
+            val groups = getActiveGroups()
             val state = learnerRepository.getLearnerState()
             return selectWorksheetProblems(
                 spec = spec,

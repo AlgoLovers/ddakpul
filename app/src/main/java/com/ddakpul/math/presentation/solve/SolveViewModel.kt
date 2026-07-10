@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.solve
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
+import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
@@ -26,6 +27,7 @@ class SolveViewModel
     constructor(
         private val getNextProblem: GetNextProblemUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
+        private val excludeProblem: ExcludeProblemUseCase,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
     ) : ViewModel() {
@@ -90,6 +92,21 @@ class SolveViewModel
                         _uiState.update { it.copy(phase = SolvePhase.EMPTY) }
                     }
                 }
+            }
+        }
+
+        /**
+         * 지금 화면의 문제를 "별로예요"로 제외하고 다음 문제로 넘어간다.
+         * 풀이 중이든 채점 후든 동작은 같다 — 제외한 문제는 다시 나오지 않는다.
+         */
+        fun excludeCurrent() {
+            val problem = _uiState.value.problem ?: return
+            viewModelScope.launch {
+                excludeProblem(
+                    problemId = problem.id,
+                    timestampMillis = System.currentTimeMillis(),
+                )
+                loadNext()
             }
         }
 
