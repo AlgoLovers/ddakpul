@@ -10,7 +10,11 @@ import com.ddakpul.math.domain.model.Problem
  *
  * 난이도 1~5가 모두 존재하도록 구성해 추천 알고리즘이 어느 난이도로 이동해도 그룹을 찾을 수 있게 한다.
  * 그룹(`groupId`)이 추천 단위이며, 해설(`explanation`)은 각 그룹 대표문제에만 둔다.
+ *
+ * LargeClass 억제: 로직 없는 선언적 콘텐츠 목록이라 크기가 복잡도를 뜻하지 않는다.
+ * 무결성은 ProblemCatalogTest가 지키고, 콘텐츠가 더 커지면 JSON 에셋으로 분리한다(ROADMAP).
  */
+@Suppress("LargeClass")
 object ProblemCatalog {
     private const val GRADE = 4
     private const val SEMESTER = 2
@@ -576,6 +580,560 @@ object ProblemCatalog {
                     mistakes =
                         listOf(
                             Mistake(3, "360도는 사각형 네 각의 합이에요. 삼각형은 180도."),
+                        ),
+                ),
+            )
+
+            // ═══════════ 확충분 — 그룹당 문항 밀도 상향 (규칙5가 실제로 작동하도록) ═══════════
+
+            // ── 난이도 1 · 수와 연산 추가 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "num1-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 1,
+                    groupId = "g-num-add-1",
+                    concepts = listOf("세 자리 수 덧셈", "받아올림"),
+                    statement = "456 + 238 = ?",
+                    choices = listOf("684", "694", "794", "692"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "일의 자리 6+8=14에서 올라간 1을 십의 자리에 더하지 않았어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "num1-05",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 1,
+                    groupId = "g-num-add-1",
+                    concepts = listOf("세 자리 수 뺄셈", "받아내림"),
+                    statement = "823 − 457 = ?",
+                    choices = listOf("366", "434", "376", "466"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "자리마다 무조건 큰 수에서 작은 수를 빼면 안 돼요. 받아내림을 해야 해요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 2 · 수와 연산 추가 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "num2-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-mul-2",
+                    concepts = listOf("두 자리 × 한 자리"),
+                    statement = "45 × 6 = ?",
+                    choices = listOf("240", "270", "245", "300"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "40×6=240까지만 계산했어요. 5×6=30도 더해야 해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "num2-05",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-mul-2",
+                    concepts = listOf("두 자리 ÷ 한 자리"),
+                    statement = "96 ÷ 8 = ?",
+                    choices = listOf("11", "12", "13", "14"),
+                    answerIndex = 1,
+                ),
+            )
+
+            // ── 난이도 2 · 도형과 측정 추가 ──────────────────────────────────────────
+            add(
+                mc(
+                    id = "geo2-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 2,
+                    groupId = "g-geo-angle-2",
+                    concepts = listOf("각도", "직각"),
+                    statement = "직각을 똑같이 반으로 나누면 한 각은 몇 도일까요?",
+                    choices = listOf("30도", "45도", "60도", "90도"),
+                    answerIndex = 1,
+                ),
+            )
+            add(
+                mc(
+                    id = "geo2-05",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 2,
+                    groupId = "g-geo-angle-2",
+                    concepts = listOf("각도", "시계"),
+                    statement = "시계가 정확히 6시를 가리킬 때, 두 바늘이 이루는 각은?",
+                    choices = listOf("90도", "120도", "180도", "360도"),
+                    answerIndex = 2,
+                ),
+            )
+
+            // ── 난이도 2 · 자료와 가능성 추가 ────────────────────────────────────────
+            add(
+                mc(
+                    id = "data2-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 2,
+                    groupId = "g-data-graph-2",
+                    concepts = listOf("막대그래프"),
+                    statement = "막대그래프에서 막대의 길이가 나타내는 것은 무엇일까요?",
+                    choices = listOf("항목의 순서", "수량의 크기", "항목의 색깔", "조사한 날짜"),
+                    answerIndex = 1,
+                ),
+            )
+            add(
+                mc(
+                    id = "data2-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 2,
+                    groupId = "g-data-graph-2",
+                    concepts = listOf("자료 해석"),
+                    statement = "학생 30명 중 사과 12명, 배 8명, 포도 10명이 좋아해요. 두 번째로 많이 좋아하는 과일은?",
+                    choices = listOf("사과", "배", "포도", "알 수 없다"),
+                    answerIndex = 2,
+                ),
+            )
+
+            // ── 난이도 3 · 분수 추가 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "frac3-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-frac-3",
+                    concepts = listOf("분수의 뺄셈", "분모가 같은 분수"),
+                    statement = "5/7 − 2/7 = ?",
+                    choices = listOf("3/7", "3/14", "7/7", "2/7"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "분모끼리도 계산했어요. 분모가 같을 땐 분자끼리만 빼요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "frac3-05",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-frac-3",
+                    concepts = listOf("대분수와 가분수"),
+                    statement = "대분수 1과 3/4을 가분수로 나타내면?",
+                    choices = listOf("4/4", "7/4", "13/4", "3/4"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "1과 3을 그냥 이어 붙이면 안 돼요. 1 = 4/4이므로 4+3=7, 즉 7/4이에요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 3 · 소수의 덧셈과 뺄셈 (4-2 단원, 신규 그룹) ──────────────────
+            add(
+                mc(
+                    id = "dec3-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-dec-3",
+                    concepts = listOf("소수의 덧셈"),
+                    statement = "0.7 + 0.5 = ?",
+                    choices = listOf("0.12", "1.2", "1.1", "0.75"),
+                    answerIndex = 1,
+                    explanation = "0.1이 7개와 5개를 더하면 0.1이 12개 — 그래서 1.2예요. 소수도 자리끼리 더하고 10이 넘으면 올려요.",
+                    mistakes =
+                        listOf(
+                            Mistake(0, "7+5=12를 그대로 소수점 뒤에 붙였어요. 0.1이 12개면 1.2랍니다."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "dec3-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-dec-3",
+                    concepts = listOf("소수의 덧셈", "자릿수 정렬"),
+                    statement = "2.35 + 1.4 = ?",
+                    choices = listOf("2.49", "3.75", "3.39", "3.79"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "소수점 위치를 맞추지 않고 끝자리끼리 더했어요. 소수점을 기준으로 줄을 맞춰요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "dec3-03",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 3,
+                    groupId = "g-num-dec-3",
+                    concepts = listOf("소수의 뺄셈", "받아내림"),
+                    statement = "5.2 − 3.8 = ?",
+                    choices = listOf("1.4", "2.6", "1.6", "2.4"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "2에서 8을 못 뺀다고 자리를 바꿔 8−2를 하면 안 돼요. 받아내림을 해요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 3 · 삼각형 추가 ───────────────────────────────────────────────
+            add(
+                mc(
+                    id = "geo3-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 3,
+                    groupId = "g-geo-triangle-3",
+                    concepts = listOf("이등변삼각형", "각"),
+                    statement = "이등변삼각형에서 크기가 서로 같은 것은?",
+                    choices = listOf("세 각 모두", "두 각", "세 변 모두", "같은 것이 없다"),
+                    answerIndex = 1,
+                ),
+            )
+            add(
+                mc(
+                    id = "geo3-05",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 3,
+                    groupId = "g-geo-triangle-3",
+                    concepts = listOf("삼각형의 종류", "직각"),
+                    statement = "한 각이 90도인 삼각형을 무엇이라고 할까요?",
+                    choices = listOf("예각삼각형", "직각삼각형", "둔각삼각형", "정삼각형"),
+                    answerIndex = 1,
+                ),
+            )
+
+            // ── 난이도 3 · 규칙 추가 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "rel3-04",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 3,
+                    groupId = "g-rel-pattern-3",
+                    concepts = listOf("규칙 찾기", "등차"),
+                    statement = "5, 10, 15, 20, … 다음에 올 수는?",
+                    choices = listOf("22", "25", "30", "24"),
+                    answerIndex = 1,
+                ),
+            )
+            add(
+                mc(
+                    id = "rel3-05",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 3,
+                    groupId = "g-rel-pattern-3",
+                    concepts = listOf("규칙 찾기", "나눗셈 규칙"),
+                    statement = "81, 27, 9, 3, … 다음에 올 수는?",
+                    choices = listOf("0", "1", "2", "3"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "일정하게 빼는 규칙이 아니라 3으로 나누는 규칙이에요. 3÷3=1."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 3 · 꺾은선그래프 (4-2 단원, 신규 그룹) ────────────────────────
+            add(
+                mc(
+                    id = "line3-01",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 3,
+                    groupId = "g-data-line-3",
+                    concepts = listOf("꺾은선그래프"),
+                    statement = "하루 동안의 기온처럼 시간에 따라 변하는 양을 나타내기 좋은 그래프는?",
+                    choices = listOf("막대그래프", "그림그래프", "꺾은선그래프", "원그래프"),
+                    answerIndex = 2,
+                    explanation = "변화하는 모습을 선의 기울기로 볼 수 있는 꺾은선그래프가 좋아요. 막대그래프는 크기 비교에 좋아요.",
+                ),
+            )
+            add(
+                mc(
+                    id = "line3-02",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 3,
+                    groupId = "g-data-line-3",
+                    concepts = listOf("꺾은선그래프", "자료 해석"),
+                    statement = "꺾은선그래프에서 선이 가장 가파르게 올라간 구간은 무엇을 뜻할까요?",
+                    choices = listOf("변화가 없다", "가장 많이 늘어났다", "가장 적게 늘어났다", "줄어들었다"),
+                    answerIndex = 1,
+                ),
+            )
+            add(
+                mc(
+                    id = "line3-03",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 3,
+                    groupId = "g-data-line-3",
+                    concepts = listOf("꺾은선그래프", "물결선"),
+                    statement = "꺾은선그래프에서 물결선(≈)을 사용하는 까닭은?",
+                    choices = listOf("예쁘게 꾸미려고", "필요 없는 부분을 줄여서 나타내려고", "선을 두껍게 그리려고", "눈금을 없애려고"),
+                    answerIndex = 1,
+                ),
+            )
+
+            // ── 난이도 4 · 넓이·둘레 추가 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "geo4-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-geo-area-4",
+                    concepts = listOf("정사각형의 둘레", "거꾸로 생각하기"),
+                    statement = "둘레가 24cm인 정사각형의 한 변은 몇 cm일까요?",
+                    choices = listOf("4cm", "6cm", "8cm", "12cm"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "24÷2=12로 풀었어요. 정사각형 변은 4개이니 24÷4=6이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "geo4-05",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-geo-area-4",
+                    concepts = listOf("정사각형의 넓이"),
+                    statement = "한 변이 7cm인 정사각형의 넓이는?",
+                    choices = listOf("14cm²", "28cm²", "49cm²", "21cm²"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "7×4=28은 둘레예요. 넓이는 7×7=49cm²."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 4 · 사각형 (4-2 단원, 신규 그룹) ──────────────────────────────
+            add(
+                mc(
+                    id = "quad4-01",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-geo-quad-4",
+                    concepts = listOf("사각형의 종류", "마름모"),
+                    statement = "네 변의 길이가 모두 같은 사각형을 무엇이라고 할까요?",
+                    choices = listOf("사다리꼴", "마름모", "직사각형", "평행사변형"),
+                    answerIndex = 1,
+                    explanation = "네 변이 모두 같으면 마름모예요. 네 각이 모두 직각이면 직사각형, 둘 다 만족하면 정사각형이랍니다.",
+                ),
+            )
+            add(
+                mc(
+                    id = "quad4-02",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-geo-quad-4",
+                    concepts = listOf("사각형의 종류", "직사각형"),
+                    statement = "네 각이 모두 직각인 사각형을 무엇이라고 할까요?",
+                    choices = listOf("마름모", "사다리꼴", "직사각형", "평행사변형"),
+                    answerIndex = 2,
+                ),
+            )
+            add(
+                mc(
+                    id = "quad4-03",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 4,
+                    groupId = "g-geo-quad-4",
+                    concepts = listOf("사각형의 종류", "사다리꼴"),
+                    statement = "평행한 변이 한 쌍이라도 있는 사각형을 무엇이라고 할까요?",
+                    choices = listOf("사다리꼴", "마름모", "오각형", "이등변삼각형"),
+                    answerIndex = 0,
+                ),
+            )
+
+            // ── 난이도 4 · 대응 관계 추가 ────────────────────────────────────────────
+            add(
+                mc(
+                    id = "rel4-04",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-rel-relation-4",
+                    concepts = listOf("대응 관계", "곱셈"),
+                    statement = "한 상자에 연필이 12자루씩 들어 있어요. 5상자에는 모두 몇 자루일까요?",
+                    choices = listOf("17자루", "50자루", "60자루", "55자루"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "12+5를 했어요. '한 상자에 12자루씩'이니 곱해야 해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "rel4-05",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 4,
+                    groupId = "g-rel-relation-4",
+                    concepts = listOf("대응 관계", "식으로 나타내기"),
+                    statement = "△ = □ × 4 의 관계일 때, □가 7이면 △는 얼마일까요?",
+                    choices = listOf("11", "24", "28", "32"),
+                    answerIndex = 2,
+                ),
+            )
+
+            // ── 난이도 4 · 평균 추가 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "data4-04",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 4,
+                    groupId = "g-data-average-4",
+                    concepts = listOf("평균"),
+                    statement = "2, 4, 6, 8의 평균은?",
+                    choices = listOf("5", "20", "4", "6"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "합(20)까지만 구했어요. 개수 4로 나눠야 평균이에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "data4-05",
+                    area = MathArea.DATA_POSSIBILITY,
+                    difficulty = 4,
+                    groupId = "g-data-average-4",
+                    concepts = listOf("평균", "거꾸로 생각하기"),
+                    statement = "세 수의 평균이 10이에요. 두 수가 8과 12라면 나머지 한 수는?",
+                    choices = listOf("10", "30", "9", "11"),
+                    answerIndex = 0,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "30은 세 수의 합이에요. 합 30에서 8과 12를 빼야 해요."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 사고력 추가 ───────────────────────────────────────────────
+            add(
+                mc(
+                    id = "num5-04",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 5,
+                    groupId = "g-num-logic-5",
+                    concepts = listOf("거꾸로 생각하기", "혼합 계산"),
+                    statement = "어떤 수에서 5를 뺀 뒤 4로 나눴더니 6이 되었어요. 어떤 수는?",
+                    choices = listOf("19", "24", "29", "34"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "거꾸로 풀 때는 나눈 것을 곱하고(6×4=24), 뺀 것을 다시 더해요(24+5=29)."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "num5-05",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 5,
+                    groupId = "g-num-logic-5",
+                    concepts = listOf("합과 차", "논리"),
+                    statement = "두 수의 합이 20이고 차가 4예요. 두 수 중 큰 수는?",
+                    choices = listOf("8", "10", "12", "16"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "8은 작은 수예요. 큰 수 = (합+차)÷2 = (20+4)÷2 = 12."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 입체 추가 ─────────────────────────────────────────────────
+            add(
+                mc(
+                    id = "geo5-04",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 5,
+                    groupId = "g-geo-solid-5",
+                    concepts = listOf("정육면체", "꼭짓점"),
+                    statement = "정육면체의 꼭짓점은 모두 몇 개일까요?",
+                    choices = listOf("6개", "8개", "12개", "4개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(2, "12개는 '모서리' 수예요. 꼭짓점은 8개랍니다."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "geo5-05",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    difficulty = 5,
+                    groupId = "g-geo-solid-5",
+                    concepts = listOf("사각형의 각의 합"),
+                    statement = "사각형 네 각의 크기를 모두 더하면?",
+                    choices = listOf("180도", "270도", "360도", "540도"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(0, "180도는 삼각형 세 각의 합이에요. 사각형은 삼각형 2개로 나뉘니 360도."),
+                        ),
+                ),
+            )
+
+            // ── 난이도 5 · 등호와 규칙 심화 (변화와 관계, 신규 그룹) ─────────────────
+            add(
+                mc(
+                    id = "eq5-01",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-rel-equal-5",
+                    concepts = listOf("등호와 동치", "식 세우기"),
+                    statement = "13 + □ = 20 − 2 일 때, □에 들어갈 수는?",
+                    choices = listOf("3", "5", "7", "9"),
+                    answerIndex = 1,
+                    explanation = "등호(=)는 양쪽이 같다는 뜻이에요. 오른쪽 20−2=18을 먼저 계산하고, 13+□=18에서 □=5.",
+                    mistakes =
+                        listOf(
+                            Mistake(2, "20−13=7로 풀었어요. 오른쪽 전체(20−2=18)를 먼저 계산해야 해요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "eq5-02",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-rel-equal-5",
+                    concepts = listOf("규칙 찾기", "증가 규칙"),
+                    statement = "1, 2, 4, 7, 11, … 다음에 올 수는?",
+                    choices = listOf("14", "15", "16", "18"),
+                    answerIndex = 2,
+                    mistakes =
+                        listOf(
+                            Mistake(1, "더하는 수가 1, 2, 3, 4로 매번 1씩 커져요. 다음은 11+5=16."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "eq5-03",
+                    area = MathArea.CHANGE_RELATION,
+                    difficulty = 5,
+                    groupId = "g-rel-equal-5",
+                    concepts = listOf("규칙 찾기", "도형 배열"),
+                    statement = "성냥개비로 삼각형을 이어 붙여요. 삼각형 1개는 3개, 2개는 5개, 3개는 7개가 필요해요. 삼각형 10개를 만들려면 성냥개비가 몇 개 필요할까요?",
+                    choices = listOf("20개", "21개", "23개", "30개"),
+                    answerIndex = 1,
+                    mistakes =
+                        listOf(
+                            Mistake(3, "3×10=30이 아니에요. 이어 붙이면 변을 함께 쓰니 하나 늘 때마다 2개씩만 늘어요."),
                         ),
                 ),
             )
