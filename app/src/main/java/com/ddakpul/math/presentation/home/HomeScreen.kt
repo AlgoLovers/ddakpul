@@ -25,7 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.Difficulty
-import com.ddakpul.math.domain.model.LearnerReport
+import com.ddakpul.math.domain.model.LearningStats
 import kotlin.math.roundToInt
 
 @Composable
@@ -35,12 +35,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    HomeContent(report = uiState.report, onStartLearning = onStartLearning, modifier = modifier)
+    HomeContent(stats = uiState.stats, onStartLearning = onStartLearning, modifier = modifier)
 }
 
 @Composable
 private fun HomeContent(
-    report: LearnerReport?,
+    stats: LearningStats?,
     onStartLearning: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -61,9 +61,9 @@ private fun HomeContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        val solved = report?.totalSolved ?: 0
-        val accuracyPercent = ((report?.accuracy ?: 0f) * 100).roundToInt()
-        val level = report?.currentDifficulty ?: Difficulty.DEFAULT
+        val solved = stats?.totalSolved ?: 0
+        val accuracyPercent = ((stats?.accuracy ?: 0f) * 100).roundToInt()
+        val level = stats?.currentDifficulty ?: Difficulty.DEFAULT
         Row(
             modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),

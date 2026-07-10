@@ -25,7 +25,7 @@ import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.SectionCard
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.AreaStat
-import com.ddakpul.math.domain.model.LearnerReport
+import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.presentation.common.labelRes
 import kotlin.math.roundToInt
 
@@ -35,8 +35,8 @@ fun ReportScreen(
     viewModel: ReportViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val report = uiState.report
-    if (report == null || report.isEmpty) {
+    val stats = uiState.stats
+    if (stats == null || stats.isEmpty) {
         Box(modifier = modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(
                 text = stringResource(R.string.report_empty),
@@ -46,12 +46,12 @@ fun ReportScreen(
         }
         return
     }
-    ReportContent(report = report, modifier = modifier)
+    ReportContent(stats = stats, modifier = modifier)
 }
 
 @Composable
 private fun ReportContent(
-    report: LearnerReport,
+    stats: LearningStats,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -75,23 +75,23 @@ private fun ReportContent(
         ) {
             StatTile(
                 label = stringResource(R.string.report_total_solved),
-                value = stringResource(R.string.home_unit_count, report.totalSolved),
+                value = stringResource(R.string.home_unit_count, stats.totalSolved),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
                 label = stringResource(R.string.report_accuracy),
-                value = stringResource(R.string.home_unit_percent, (report.accuracy * 100).roundToInt()),
+                value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
                 label = stringResource(R.string.report_current_level),
-                value = stringResource(R.string.home_unit_level, report.currentDifficulty),
+                value = stringResource(R.string.home_unit_level, stats.currentDifficulty),
                 modifier = Modifier.weight(1f),
             )
         }
 
         SectionCard(title = stringResource(R.string.report_area_title)) {
-            report.areaStats.forEach { stat -> AreaRow(stat) }
+            stats.areaStats.forEach { stat -> AreaRow(stat) }
         }
     }
 }
