@@ -27,7 +27,7 @@ data class Problem(
     val statement: String,
     val choices: List<String>,
     val answer: Answer,
-    val explanation: String?, // 그룹 대표문제만 보유할 수 있다
+    val explanation: String?, // 모든 문제가 단계별 풀이를 보유한다(콘텐츠 규칙, ProblemCatalogTest가 강제)
     val commonMistakes: List<Mistake>,
     val figure: ProblemFigure? = null,
 )

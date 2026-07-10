@@ -48,10 +48,10 @@ class ProblemCatalogTest {
     }
 
     @Test
-    fun everyGroupHasRepresentativeExplanation() {
-        groups.forEach { (groupId, inGroup) ->
-            val hasExplanation = inGroup.any { !it.explanation.isNullOrBlank() }
-            assertThat(hasExplanation).isTrue()
+    fun everyProblemHasExplanation() {
+        // 아이가 어떤 문제를 틀려도 풀이(생각의 경로)를 볼 수 있어야 한다 — 정답만 보여주는 문제 금지.
+        problems.forEach { problem ->
+            assertThat(problem.explanation.orEmpty().length).isAtLeast(MIN_EXPLANATION_LENGTH)
         }
     }
 
@@ -84,5 +84,10 @@ class ProblemCatalogTest {
             problem.choices.forEach { choice -> assertThat(choice).isNotEmpty() }
             assertThat(problem.conceptTags).isNotEmpty()
         }
+    }
+
+    private companion object {
+        /** 한 줄 스텁("정답은 X")이 풀이 행세를 못 하게 하는 최소 길이. */
+        const val MIN_EXPLANATION_LENGTH = 20
     }
 }

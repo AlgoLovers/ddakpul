@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,6 +37,7 @@ private const val STREAK_PRAISE_THRESHOLD = 3
  * 채점 결과 화면. 정답/오답 배너와 과정 칭찬 응원, 내가 고른 답과 정답,
  * (있으면) 오개념 피드백과 해설을 보여준다.
  * [showExplanation]이 true면(정체 감지) 기초부터 다시 하자는 안내를 강조한다.
+ * [onExcludeRequest]는 "이 문제 별로예요" — 문제 자체에 대한 피드백 탈출구다.
  */
 @Composable
 fun ResultView(
@@ -45,6 +47,7 @@ fun ResultView(
     softCutSuggested: Boolean,
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
+    onExcludeRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -133,6 +136,18 @@ fun ResultView(
                 text = stringResource(R.string.result_next),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 6.dp),
+            )
+        }
+
+        // 문제 자체가 이상하거나 별로일 때의 탈출구 — 눈에 덜 띄게 맨 아래 작은 버튼으로 둔다.
+        TextButton(
+            onClick = onExcludeRequest,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        ) {
+            Text(
+                text = stringResource(R.string.solve_exclude_button),
+                style = MaterialTheme.typography.bodySmall,
+                color = colors.onSurfaceVariant,
             )
         }
     }

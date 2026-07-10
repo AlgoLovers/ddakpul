@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -17,8 +18,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -45,6 +50,7 @@ fun SolveScreen(
         onSelect = viewModel::selectChoice,
         onSubmit = viewModel::submit,
         onNext = viewModel::loadNext,
+        onExclude = viewModel::excludeCurrent,
         onGoHome = onGoHome,
         modifier = modifier,
     )
@@ -56,9 +62,12 @@ private fun SolveContent(
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
     onNext: () -> Unit,
+    onExclude: () -> Unit,
     onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var showExcludeDialog by remember { mutableStateOf(false) }
+
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when (uiState.phase) {
             SolvePhase.LOADING -> {
@@ -73,7 +82,13 @@ private fun SolveContent(
 
             SolvePhase.SOLVING -> {
                 // 태블릿에서 한 줄이 지나치게 길어지지 않도록 콘텐츠 폭을 제한한다.
-                SolvingBody(uiState, onSelect, onSubmit, Modifier.widthIn(max = CONTENT_MAX_WIDTH))
+                SolvingBody(
+                    uiState = uiState,
+                    onSelect = onSelect,
+                    onSubmit = onSubmit,
+                    onExcludeRequest = { showExcludeDialog = true },
+                    modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                )
             }
 
             SolvePhase.GRADED -> {
@@ -85,12 +100,46 @@ private fun SolveContent(
                         softCutSuggested = uiState.softCutSuggested,
                         onNext = onNext,
                         onFinishToday = onGoHome,
+                        onExcludeRequest = { showExcludeDialog = true },
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }
             }
         }
     }
+
+    if (showExcludeDialog) {
+        ExcludeConfirmDialog(
+            onConfirm = {
+                showExcludeDialog = false
+                onExclude()
+            },
+            onDismiss = { showExcludeDialog = false },
+        )
+    }
+}
+
+/** 제외 확인 다이얼로그 — 어렵다고 피하는 게 아니라 정말 별로인 문제만 표시하도록 한 번 확인한다. */
+@Composable
+private fun ExcludeConfirmDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.solve_exclude_dialog_title)) },
+        text = { Text(stringResource(R.string.solve_exclude_dialog_body)) },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text(stringResource(R.string.solve_exclude_dialog_confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.solve_exclude_dialog_cancel))
+            }
+        },
+    )
 }
 
 @Composable
@@ -98,6 +147,7 @@ private fun SolvingBody(
     uiState: SolveUiState,
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
+    onExcludeRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
@@ -161,6 +211,18 @@ private fun SolvingBody(
                 text = stringResource(R.string.solve_submit),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 6.dp),
+            )
+        }
+
+        // 문제 자체가 이상하거나 별로일 때의 탈출구 — 눈에 덜 띄게 맨 아래 작은 버튼으로 둔다.
+        TextButton(
+            onClick = onExcludeRequest,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        ) {
+            Text(
+                text = stringResource(R.string.solve_exclude_button),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
