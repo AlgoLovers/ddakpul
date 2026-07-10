@@ -24,6 +24,18 @@ data class SolveUiState(
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
     /** 이번 세션에서 이어지고 있는 연속 정답 수 — 연속 정답 칭찬의 기준. */
     val sessionStreak: Int = 0,
+    /** 오늘 풀이에 쓴 총 시간(초). */
+    val todayTimeSpentSec: Int = 0,
 ) {
     val canSubmit: Boolean get() = phase == SolvePhase.SOLVING && selectedIndex != null
+
+    /** 복습 문제 여부 — 화면에 배지로 표시한다. */
+    val isReview: Boolean get() = reason == RecommendationReason.REVIEW
+
+    /**
+     * 세션 소프트 컷 — 목표를 채웠거나 집중 한계(20분)를 넘겼으면 부드러운 종료를 제안한다.
+     * 강제 종료가 아니라 제안이다(자율성 존중).
+     */
+    val softCutSuggested: Boolean
+        get() = todaySolved >= dailyGoal || todayTimeSpentSec >= SessionGoals.SESSION_SOFT_CUT_SEC
 }

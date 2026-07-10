@@ -7,6 +7,8 @@ enum class RecommendationReason {
     RETREATED, // 규칙2: 연속 오답 → 난이도 하강
     STAY, // 규칙3: 혼조 → 같은 난이도 유지
     REMEDIATION, // 규칙4: 정체 감지 → 해설 제공 + 선수 개념 복귀
+    RETRY, // 규칙7(v0.3): 오답 직후 같은 그룹 유사 문항 재도전 — 교정 후 즉시 성공 경험
+    REVIEW, // 규칙8(v0.3): Leitner 간격 복습 — 숙달한 그룹을 잊기 전에 재출제
 }
 
 /** 추천 결과 — 다음에 낼 문제와 그 근거. */

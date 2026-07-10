@@ -86,7 +86,9 @@ private fun AppNavHost(
         composable(DdakPulDestination.HOME.route) {
             HomeScreen(onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) })
         }
-        composable(DdakPulDestination.SOLVE.route) { SolveScreen() }
+        composable(DdakPulDestination.SOLVE.route) {
+            SolveScreen(onGoHome = { navController.switchTab(DdakPulDestination.HOME.route) })
+        }
         composable(DdakPulDestination.REPORT.route) {
             ReportScreen(onPrintClick = { navController.navigate(PRINT_ROUTE) })
         }

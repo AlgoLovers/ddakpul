@@ -57,6 +57,8 @@ data class LearningStats(
     val bestStreakDays: Int,
     val todaySolved: Int,
     val todayCorrect: Int,
+    /** 오늘 문제 풀이에 쓴 총 시간(초) — 세션 소프트 컷의 기준. */
+    val todayTimeSpentSec: Int,
     /** 난이도별 평균 풀이 시간(초). 시도가 없는 난이도는 키가 없다. */
     val avgTimeSecByDifficulty: Map<Int, Int>,
     /** 최근 7일 정답률. 해당 기간 시도가 없으면 null. */
@@ -77,4 +79,13 @@ data class LearningStats(
 object SessionGoals {
     /** 하루 권장 문항 수. 초4 집중 시간을 고려한 기본값(리서치 근거로 튜닝). */
     const val DAILY_GOAL_PROBLEMS = 10
+
+    /** 아이가 설정에서 고를 수 있는 하루 목표 선택지. */
+    val GOAL_OPTIONS = listOf(5, 10, 15)
+
+    /**
+     * 세션 소프트 컷 기준(초). 초4 스킬 연습의 집중 한계는 15~20분 — 이 시점을 넘기면
+     * 피로 오답이 난이도 하락 오판을 만들기 전에 "오늘은 여기까지"를 부드럽게 제안한다.
+     */
+    const val SESSION_SOFT_CUT_SEC = 20 * 60
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
+import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,7 @@ class SolveViewModel
         private val getNextProblem: GetNextProblemUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
         observeStats: ObserveLearningStatsUseCase,
+        observeDailyGoal: ObserveDailyGoalUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
         val uiState: StateFlow<SolveUiState> = _uiState.asStateFlow()
@@ -40,7 +42,17 @@ class SolveViewModel
                     zoneOffsetMillis = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong(),
                     nowMillis = { System.currentTimeMillis() },
                 ).collect { stats ->
-                    _uiState.update { it.copy(todaySolved = stats.todaySolved) }
+                    _uiState.update {
+                        it.copy(
+                            todaySolved = stats.todaySolved,
+                            todayTimeSpentSec = stats.todayTimeSpentSec,
+                        )
+                    }
+                }
+            }
+            viewModelScope.launch {
+                observeDailyGoal().collect { goal ->
+                    _uiState.update { it.copy(dailyGoal = goal) }
                 }
             }
         }
@@ -48,7 +60,14 @@ class SolveViewModel
         fun loadNext() {
             _uiState.update { it.copy(phase = SolvePhase.LOADING, selectedIndex = null, result = null) }
             viewModelScope.launch {
-                when (val result = getNextProblem()) {
+                val now = System.currentTimeMillis()
+                val result =
+                    getNextProblem(
+                        todaySolved = _uiState.value.todaySolved,
+                        zoneOffsetMillis = TimeZone.getDefault().getOffset(now).toLong(),
+                        nowMillis = now,
+                    )
+                when (result) {
                     is AppResult.Success -> {
                         val recommendation = result.data
                         questionStartMillis = System.currentTimeMillis()
@@ -57,7 +76,8 @@ class SolveViewModel
                                 phase = SolvePhase.SOLVING,
                                 problem = recommendation.problem,
                                 area = recommendation.problem.area,
-                                difficulty = recommendation.targetDifficulty,
+                                // 복습(REVIEW)은 현재 레벨과 다른 난이도일 수 있으니 문제 자체의 난이도를 보여준다.
+                                difficulty = recommendation.problem.difficulty,
                                 selectedIndex = null,
                                 result = null,
                                 showExplanation = recommendation.showExplanation,

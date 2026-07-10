@@ -18,6 +18,9 @@ interface AttemptDao {
     @Query("SELECT * FROM attempt ORDER BY timestamp ASC, id ASC")
     fun observeAll(): Flow<List<AttemptEntity>>
 
+    @Query("SELECT * FROM attempt ORDER BY timestamp ASC, id ASC")
+    suspend fun getAll(): List<AttemptEntity>
+
     @Query("DELETE FROM attempt")
     suspend fun deleteAll()
 }
