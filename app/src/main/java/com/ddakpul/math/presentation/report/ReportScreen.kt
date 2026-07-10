@@ -79,6 +79,7 @@ fun ReportScreen(
         stats = stats,
         dayCells = uiState.dayCells,
         insights = uiState.insights,
+        weeklySummary = uiState.weeklySummary,
         onPrintClick = onPrintClick,
         modifier = modifier,
     )
@@ -89,6 +90,7 @@ private fun ReportContent(
     stats: LearningStats,
     dayCells: List<DayCell>,
     insights: List<ReportInsight>,
+    weeklySummary: WeeklySummary?,
     onPrintClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -129,16 +131,7 @@ private fun ReportContent(
 
             SummaryTiles(stats)
 
-            if (insights.isNotEmpty()) {
-                SectionCard(title = stringResource(R.string.report_insights_title)) {
-                    insights.forEach { insight ->
-                        Text(
-                            text = insight.toText(),
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                    }
-                }
-            }
+            NarrativeSections(weeklySummary = weeklySummary, insights = insights)
 
             SectionCard(title = stringResource(R.string.report_daily_title)) {
                 MiniBarChart(
@@ -221,6 +214,57 @@ private fun SummaryTiles(stats: LearningStats) {
             value = stringResource(R.string.report_unit_days, stats.streakDays),
             modifier = Modifier.weight(1f),
         )
+    }
+}
+
+/** 해석이 끝난 "말" 섹션 — 주간 요약 문단과 인사이트 목록. */
+@Composable
+private fun NarrativeSections(
+    weeklySummary: WeeklySummary?,
+    insights: List<ReportInsight>,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        weeklySummary?.let { summary ->
+            SectionCard(title = stringResource(R.string.report_weekly_title)) {
+                Text(
+                    text = summary.toParagraph(),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
+        }
+
+        if (insights.isNotEmpty()) {
+            SectionCard(title = stringResource(R.string.report_insights_title)) {
+                insights.forEach { insight ->
+                    Text(
+                        text = insight.toText(),
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** 주간 요약을 자연스러운 한 문단으로 조립한다. */
+@Composable
+private fun WeeklySummary.toParagraph(): String {
+    if (solved == 0) return stringResource(R.string.weekly_none)
+    return buildString {
+        append(stringResource(R.string.weekly_base, studyDays, solved, accuracyPercent))
+        deltaPercentPoint?.let { delta ->
+            if (delta > 0) {
+                append(' ')
+                append(stringResource(R.string.weekly_delta_up, delta))
+            } else if (delta < 0) {
+                append(' ')
+                append(stringResource(R.string.weekly_delta_down, -delta))
+            }
+        }
+        weakConcept?.let { concept ->
+            append(' ')
+            append(stringResource(R.string.weekly_weak, concept))
+        }
     }
 }
 

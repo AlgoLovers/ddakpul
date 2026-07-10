@@ -66,6 +66,14 @@
     <string name="insight_error_recovery">💪 틀렸던 문제의 %1$d%%를 다시 풀어서 해결했어요. 오답이 실력이 되고 있어요.</string>
     <string name="insight_weak_concept">🔍 \'%1$s\' 개념을 보강하면 좋아요 (정답률 %2$d%%). 이 개념 문제를 함께 풀어보세요.</string>
 
+    <!-- 리포트 · 주간 요약 (자동 생성 문단) -->
+    <string name="report_weekly_title">이번 주 요약</string>
+    <string name="weekly_base">이번 주에는 %1$d일 동안 %2$d문제를 풀어 정답률 %3$d%%를 기록했어요.</string>
+    <string name="weekly_delta_up">지난주보다 %1$d%%p 올랐어요. 📈</string>
+    <string name="weekly_delta_down">지난주보다 %1$d%%p 내려갔어요 — 더 어려운 문제에 도전 중이라는 뜻일 수 있어요.</string>
+    <string name="weekly_weak">다음 주엔 \'%1$s\' 개념을 함께 보강해 보세요.</string>
+    <string name="weekly_none">이번 주에는 아직 푼 문제가 없어요. 오늘 한 문제부터 시작해 볼까요?</string>
+
     <!-- 리포트 · 차트 섹션 -->
     <string name="report_daily_title">최근 2주 학습량</string>
     <string name="report_trend_title">정답률 추이</string>
