@@ -23,8 +23,6 @@ object TestFixtures {
     ): Problem =
         Problem(
             id = id,
-            grade = 4,
-            semester = 2,
             area = area,
             conceptTags = concepts,
             difficulty = difficulty,
