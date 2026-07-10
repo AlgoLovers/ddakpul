@@ -8,6 +8,10 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      # 시크릿을 잡 레벨 env로 올려, 아래 텔레그램 스텝의 if 조건에서 존재 여부를 검사할 수 있게 한다.
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -39,11 +43,9 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
 
+      # 텔레그램 시크릿이 설정된 경우에만 실행된다(미설정 저장소에서 CI가 붉어지지 않도록).
       - name: Send debug APK to Telegram
-        if: github.event_name == 'push'
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        if: ${{ github.event_name == 'push' && env.TELEGRAM_BOT_TOKEN != '' }}
         run: |
           curl -sS -f \
             -F chat_id="${TELEGRAM_CHAT_ID}" \
