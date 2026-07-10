@@ -1,9 +1,11 @@
 package com.ddakpul.math.data.local.seed
 
 import com.ddakpul.math.domain.model.Answer
+import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Mistake
 import com.ddakpul.math.domain.model.Problem
+import com.ddakpul.math.domain.model.ProblemFigure
 
 /**
  * 앱에 내장되는 초등 4학년 2학기 사고력 수학 문제은행(사전 생성, 실시간 생성 금지).
@@ -27,6 +29,7 @@ object ProblemCatalog {
         answerIndex: Int,
         explanation: String? = null,
         mistakes: List<Mistake> = emptyList(),
+        figure: ProblemFigure? = null,
     ): Problem =
         Problem(
             id = id,
@@ -39,6 +42,7 @@ object ProblemCatalog {
             answer = Answer(answerIndex),
             explanation = explanation,
             commonMistakes = mistakes,
+            figure = figure,
         )
 
     val problems: List<Problem> =
@@ -1295,6 +1299,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "가장 작은 정사각형만 셌어요. 2×2, 3×3짜리도 정사각형이에요."),
                         ),
+                    figure = ProblemFigure(FigureType.GRID, mapOf("w" to 3, "h" to 3)),
                 ),
             )
             add(
@@ -1311,6 +1316,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "짧은바늘은 3에 딱 있지 않아요. 30분이 지나 3과 4의 중간에 있어요."),
                         ),
+                    figure = ProblemFigure(FigureType.CLOCK, mapOf("hour" to 3, "minute" to 30)),
                 ),
             )
             add(
@@ -1607,6 +1613,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "1칸짜리만 셌어요. 16+9+4+1로 크기별로 더해요."),
                         ),
+                    figure = ProblemFigure(FigureType.GRID, mapOf("w" to 4, "h" to 4)),
                 ),
             )
 
@@ -1787,6 +1794,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "10×4=40으로 하면 네 꼭짓점 돌을 두 번 센 거예요. 40−4=36."),
                         ),
+                    figure = ProblemFigure(FigureType.DOT_BORDER, mapOf("side" to 10)),
                 ),
             )
             add(
@@ -1889,6 +1897,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "잘라냈다고 둘레가 줄지 않아요. 파인 부분의 변을 밀어 붙여 보세요."),
                         ),
+                    figure = ProblemFigure(FigureType.L_SHAPE, mapOf("w" to 10, "h" to 10, "cutW" to 4, "cutH" to 4)),
                 ),
             )
             add(
@@ -1937,6 +1946,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "각 갈림길에 '거기까지 가는 방법 수'를 적어 가며 더해 보세요. 1,2,1 → 1,3,3 → 6."),
                         ),
+                    figure = ProblemFigure(FigureType.GRID, mapOf("w" to 2, "h" to 2, "mark" to 1)),
                 ),
             )
 
@@ -2071,6 +2081,7 @@ object ProblemCatalog {
                         listOf(
                             Mistake(0, "거울은 좌우를 뒤집어요. 12를 기준으로 접었을 때 9시와 겹치는 시각을 찾아요."),
                         ),
+                    figure = ProblemFigure(FigureType.CLOCK, mapOf("hour" to 9, "minute" to 0)),
                 ),
             )
 

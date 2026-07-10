@@ -29,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.ChoiceOption
 import com.ddakpul.math.core.designsystem.component.ChoiceState
+import com.ddakpul.math.core.designsystem.component.ProblemFigureView
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.result.ResultView
 
@@ -135,6 +136,10 @@ private fun SolvingBody(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.fillMaxWidth().padding(24.dp),
             )
+            // 도형 지시서가 있으면 그림으로도 보여준다 — 그림이 문제의 절반이다.
+            problem.figure?.let { figure ->
+                ProblemFigureView(figure = figure, modifier = Modifier.padding(bottom = 16.dp))
+            }
         }
 
         problem.choices.forEachIndexed { index, choice ->

@@ -1,6 +1,7 @@
 package com.ddakpul.math.data.repository
 
 import com.ddakpul.math.data.local.dao.ProblemDao
+import com.ddakpul.math.data.local.seed.AssetProblemSource
 import com.ddakpul.math.data.local.seed.ProblemCatalog
 import com.ddakpul.math.data.mapper.toDomain
 import com.ddakpul.math.data.mapper.toEntity
@@ -14,22 +15,26 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Room 기반 문제은행. 최초 접근 시 내장 [ProblemCatalog]를 한 번 시딩한다(오프라인 우선).
+ * Room 기반 문제은행. 손으로 만든 [ProblemCatalog]와 생성 파이프라인 산출물
+ * ([AssetProblemSource])을 합쳐 시딩한다(오프라인 우선). 앱 업데이트로 문항 수가
+ * 달라지면 은행 전체를 교체해 추가·삭제를 정확히 반영한다.
  */
 @Singleton
 class ProblemRepositoryImpl
     @Inject
     constructor(
         private val problemDao: ProblemDao,
+        private val assetProblemSource: AssetProblemSource,
     ) : ProblemRepository {
         private val seedMutex = Mutex()
 
         private suspend fun ensureSeeded() {
-            if (problemDao.count() > 0) return
+            val all = ProblemCatalog.problems + assetProblemSource.problems
+            if (problemDao.count() == all.size) return
             seedMutex.withLock {
                 // 락을 기다리는 사이 다른 코루틴이 이미 시딩했을 수 있으니 다시 확인한다.
-                if (problemDao.count() > 0) return
-                problemDao.insertAll(ProblemCatalog.problems.map { it.toEntity() })
+                if (problemDao.count() == all.size) return
+                problemDao.replaceAll(all.map { it.toEntity() })
             }
         }
 

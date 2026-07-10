@@ -2,9 +2,11 @@ package com.ddakpul.math.data.mapper
 
 import com.ddakpul.math.data.local.entity.ProblemEntity
 import com.ddakpul.math.domain.model.Answer
+import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Mistake
 import com.ddakpul.math.domain.model.Problem
+import com.ddakpul.math.domain.model.ProblemFigure
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
@@ -17,9 +19,20 @@ private data class MistakeDto(
     val misconception: String,
 )
 
+/** 도형 지시서 직렬화 DTO. type은 [FigureType] 이름. */
+@Serializable
+data class FigureDto(
+    val type: String,
+    val params: Map<String, Int> = emptyMap(),
+)
+
 private val json = Json { ignoreUnknownKeys = true }
 private val stringListSerializer = ListSerializer(String.serializer())
 private val mistakeListSerializer = ListSerializer(MistakeDto.serializer())
+
+internal fun FigureDto.toDomain(): ProblemFigure = ProblemFigure(FigureType.valueOf(type), params)
+
+private fun ProblemFigure.toDto(): FigureDto = FigureDto(type.name, params)
 
 fun ProblemEntity.toDomain(): Problem =
     Problem(
@@ -36,6 +49,7 @@ fun ProblemEntity.toDomain(): Problem =
             json
                 .decodeFromString(mistakeListSerializer, mistakesJson)
                 .map { Mistake(it.choiceIndex, it.misconception) },
+        figure = figureJson?.let { json.decodeFromString(FigureDto.serializer(), it).toDomain() },
     )
 
 fun Problem.toEntity(): ProblemEntity =
@@ -54,4 +68,5 @@ fun Problem.toEntity(): ProblemEntity =
                 mistakeListSerializer,
                 commonMistakes.map { MistakeDto(it.choiceIndex, it.misconception) },
             ),
+        figureJson = figure?.let { json.encodeToString(FigureDto.serializer(), it.toDto()) },
     )
