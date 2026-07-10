@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">딱풀</string>
+
+    <!-- 하단 내비게이션 -->
+    <string name="nav_home">홈</string>
+    <string name="nav_solve">문제풀기</string>
+    <string name="nav_report">리포트</string>
+    <string name="nav_settings">설정</string>
+
+    <!-- 홈 -->
+    <string name="home_greeting">오늘도 딱 맞는 문제를 풀어볼까요?</string>
+    <string name="home_start">학습 시작</string>
+    <string name="home_stat_solved">푼 문제</string>
+    <string name="home_stat_accuracy">정답률</string>
+    <string name="home_stat_difficulty">현재 난이도</string>
+    <string name="home_unit_count">%1$d문제</string>
+    <string name="home_unit_percent">%1$d%%</string>
+    <string name="home_unit_level">Lv.%1$d</string>
+
+    <!-- 문제 풀이 -->
+    <string name="solve_area_label">%1$s · 난이도 %2$d</string>
+    <string name="solve_submit">채점하기</string>
+    <string name="solve_choice_prefix">%1$s.</string>
+    <string name="solve_loading">문제를 불러오는 중…</string>
+    <string name="solve_empty">풀 수 있는 문제가 없어요.</string>
+
+    <!-- 결과 -->
+    <string name="result_correct">정답이에요! 🎉</string>
+    <string name="result_wrong">아쉬워요, 다시 볼까요?</string>
+    <string name="result_your_answer">내가 고른 답: %1$s</string>
+    <string name="result_correct_answer">정답: %1$s</string>
+    <string name="result_explanation_label">해설</string>
+    <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
+    <string name="result_remediation_hint">기초 개념부터 차근차근 다시 풀어봐요.</string>
+    <string name="result_next">다음 문제</string>
+
+    <!-- 리포트 (부모용) -->
+    <string name="report_title">학습 리포트</string>
+    <string name="report_subtitle">아이의 학습 현황을 한눈에 확인하세요.</string>
+    <string name="report_total_solved">총 푼 문제</string>
+    <string name="report_accuracy">전체 정답률</string>
+    <string name="report_current_level">현재 난이도</string>
+    <string name="report_area_title">영역별 정답률</string>
+    <string name="report_area_stat">%1$d/%2$d (%3$d%%)</string>
+    <string name="report_empty">아직 푼 문제가 없어요.\n아이가 문제를 풀면 리포트가 채워집니다.</string>
+
+    <!-- 설정 -->
+    <string name="settings_title">설정</string>
+    <string name="settings_reset">학습 기록 초기화</string>
+    <string name="settings_reset_desc">모든 풀이 기록과 난이도를 처음 상태로 되돌립니다.</string>
+    <string name="settings_reset_confirm">초기화</string>
+    <string name="settings_reset_cancel">취소</string>
+    <string name="settings_reset_dialog_title">학습 기록을 초기화할까요?</string>
+    <string name="settings_reset_dialog_body">되돌릴 수 없어요. 모든 풀이 기록이 삭제됩니다.</string>
+    <string name="settings_about">딱풀 · 초등 사고력 수학 적응형 학습</string>
+
+    <!-- 수학 영역 -->
+    <string name="area_number_operation">수와 연산</string>
+    <string name="area_change_relation">변화와 관계</string>
+    <string name="area_shape_measurement">도형과 측정</string>
+    <string name="area_data_possibility">자료와 가능성</string>
+</resources>

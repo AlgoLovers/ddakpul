@@ -1,0 +1,19 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+# 루트뿐 아니라 모든 모듈(app 등)의 build 디렉터리를 무시한다.
+**/build/
+.kotlin
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.claude/settings.local.json
