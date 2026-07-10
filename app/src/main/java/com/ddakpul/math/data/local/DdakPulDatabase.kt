@@ -15,7 +15,7 @@ import com.ddakpul.math.data.local.entity.ProblemEntity
         AttemptEntity::class,
         LearnerProgressEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = false,
 )
 abstract class DdakPulDatabase : RoomDatabase() {

@@ -40,3 +40,11 @@ val MIGRATION_2_3 =
             )
         }
     }
+
+/** v3 → v4: 도형 지시서(figureJson) 컬럼 추가 — 그림으로 설명하는 문제 지원. */
+val MIGRATION_3_4 =
+    object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE problem ADD COLUMN figureJson TEXT")
+        }
+    }

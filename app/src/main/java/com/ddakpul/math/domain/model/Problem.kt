@@ -29,4 +29,5 @@ data class Problem(
     val answer: Answer,
     val explanation: String?, // 그룹 대표문제만 보유할 수 있다
     val commonMistakes: List<Mistake>,
+    val figure: ProblemFigure? = null,
 )

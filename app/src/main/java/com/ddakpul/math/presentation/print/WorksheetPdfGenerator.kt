@@ -3,12 +3,18 @@ package com.ddakpul.math.presentation.print
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.pdf.PdfDocument
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
+import com.ddakpul.math.domain.model.ProblemFigure
+import kotlin.math.cos
+import kotlin.math.min
+import kotlin.math.sin
 
 /** PDF에 찍을 고정 문구 — 리소스 접근을 화면에서 끝내고 생성기는 순수 문자열만 받는다. */
 data class WorksheetTexts(
@@ -169,6 +175,7 @@ class WorksheetPdfGenerator(
     private fun measureProblemBlock(problem: Problem): Float {
         var height = tagPaint.textSize + 6f
         height += buildLayout(statementText(problem), bodyPaint).height.toFloat() + 8f
+        if (problem.figure != null) height += FIGURE_SIZE + 8f
         choiceLines(problem).forEach { line ->
             height += buildLayout(line, choicePaint, CONTENT_WIDTH - 12).height.toFloat() + 2f
         }
@@ -200,6 +207,12 @@ class WorksheetPdfGenerator(
         val statementLayout = buildLayout(statementText(problem), bodyPaint)
         canvas.withTranslate(MARGIN.toFloat(), y) { statementLayout.draw(this) }
         y += statementLayout.height + 8f
+
+        // 도형 지시서 — 화면과 같은 그림을 인쇄물에도 그린다.
+        problem.figure?.let { figure ->
+            drawFigure(canvas, figure, PAGE_WIDTH / 2f, y, FIGURE_SIZE)
+            y += FIGURE_SIZE + 8f
+        }
 
         // 보기 ①~④
         choiceLines(problem).forEach { line ->
@@ -259,6 +272,148 @@ class WorksheetPdfGenerator(
         }
         finishPage(doc, page)
     }
+}
+
+private const val FIGURE_SIZE = 110f
+
+/** 도형 지시서를 PDF 캔버스에 그린다 — 화면 렌더러(ProblemFigureView)와 같은 수식. */
+private fun drawFigure(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+) {
+    val ink =
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.STROKE
+            strokeWidth = 1.4f
+            isAntiAlias = true
+        }
+    val fill =
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+    when (figure.type) {
+        FigureType.CLOCK -> drawPdfClock(canvas, figure, centerX, top, size, ink, fill)
+        FigureType.DOT_BORDER -> drawPdfDotBorder(canvas, figure, centerX, top, size, fill)
+        FigureType.GRID -> drawPdfGrid(canvas, figure, centerX, top, size, ink, fill)
+        FigureType.L_SHAPE -> drawPdfLShape(canvas, figure, centerX, top, size, ink)
+    }
+}
+
+private fun drawPdfClock(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+    fill: Paint,
+) {
+    val hour = figure.params["hour"] ?: 12
+    val minute = figure.params["minute"] ?: 0
+    val cy = top + size / 2f
+    val radius = size / 2f
+    canvas.drawCircle(centerX, cy, radius, ink)
+    for (i in 0 until 12) {
+        val angle = Math.toRadians(i * 30.0 - 90)
+        val cosA = cos(angle).toFloat()
+        val sinA = sin(angle).toFloat()
+        canvas.drawLine(
+            centerX + cosA * radius * 0.82f,
+            cy + sinA * radius * 0.82f,
+            centerX + cosA * radius * 0.95f,
+            cy + sinA * radius * 0.95f,
+            ink,
+        )
+    }
+    val hourAngle = Math.toRadians((hour % 12) * 30 + minute * 0.5 - 90)
+    val minAngle = Math.toRadians(minute * 6.0 - 90)
+    val bold = Paint(ink).apply { strokeWidth = 3f }
+    canvas.drawLine(centerX, cy, centerX + cos(hourAngle).toFloat() * radius * 0.5f, cy + sin(hourAngle).toFloat() * radius * 0.5f, bold)
+    canvas.drawLine(centerX, cy, centerX + cos(minAngle).toFloat() * radius * 0.75f, cy + sin(minAngle).toFloat() * radius * 0.75f, ink)
+    canvas.drawCircle(centerX, cy, 2.5f, fill)
+}
+
+private fun drawPdfDotBorder(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    fill: Paint,
+) {
+    val n = (figure.params["side"] ?: 6).coerceIn(3, 20)
+    val left = centerX - size / 2f
+    val step = size / (n - 1)
+    val r = (step * 0.28f).coerceAtMost(4f)
+    for (row in 0 until n) {
+        for (col in 0 until n) {
+            val onEdge = row % (n - 1) == 0 || col % (n - 1) == 0
+            if (onEdge) canvas.drawCircle(left + col * step, top + row * step, r, fill)
+        }
+    }
+}
+
+private fun drawPdfGrid(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+    fill: Paint,
+) {
+    val w = (figure.params["w"] ?: 3).coerceIn(1, 8)
+    val h = (figure.params["h"] ?: 3).coerceIn(1, 8)
+    val cell = min(size / w, size / h)
+    val gl = centerX - cell * w / 2f
+    val gt = top + (size - cell * h) / 2f
+    for (i in 0..w) canvas.drawLine(gl + i * cell, gt, gl + i * cell, gt + h * cell, ink)
+    for (j in 0..h) canvas.drawLine(gl, gt + j * cell, gl + w * cell, gt + j * cell, ink)
+    if ((figure.params["mark"] ?: 0) == 1) {
+        canvas.drawCircle(gl, gt + h * cell, 4f, fill)
+        canvas.drawCircle(gl + w * cell, gt, 4f, ink)
+    }
+}
+
+private fun drawPdfLShape(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val w = (figure.params["w"] ?: 10).toFloat()
+    val cutW = (figure.params["cutW"] ?: 4).toFloat()
+    val cutH = (figure.params["cutH"] ?: 4).toFloat()
+    val left = centerX - size / 2f
+    val scale = size / w
+    val path =
+        Path().apply {
+            moveTo(left, top)
+            lineTo(left + (w - cutW) * scale, top)
+            lineTo(left + (w - cutW) * scale, top + cutH * scale)
+            lineTo(left + w * scale, top + cutH * scale)
+            lineTo(left + w * scale, top + w * scale)
+            lineTo(left, top + w * scale)
+            close()
+        }
+    canvas.drawPath(path, ink)
+    val labelPaint =
+        TextPaint().apply {
+            textSize = 8f
+            color = Color.DKGRAY
+            isAntiAlias = true
+        }
+    canvas.drawText("${w.toInt()}cm", left + w * scale / 2f - 8f, top + w * scale + 10f, labelPaint)
+    canvas.drawText("${cutW.toInt()}cm", left + (w - cutW / 2f) * scale - 8f, top + cutH * scale - 4f, labelPaint)
+    canvas.drawText("${cutH.toInt()}cm", left + (w - cutW) * scale - 24f, top + cutH * scale / 2f + 3f, labelPaint)
 }
 
 /** Canvas 이동을 안전하게 감싸는 헬퍼(save/restore 누락 방지). */
