@@ -58,8 +58,6 @@
     <string name="report_current_level">현재 난이도</string>
     <string name="report_streak">연속 학습</string>
     <string name="report_unit_days">%1$d일</string>
-    <string name="report_area_title">영역별 정답률</string>
-    <string name="report_area_stat">%1$d/%2$d (%3$d%%)</string>
     <string name="report_empty">아직 푼 문제가 없어요.\n아이가 문제를 풀면 리포트가 채워집니다.</string>
 
     <!-- 리포트 · 인사이트 (해석이 끝난 문장) -->
@@ -86,11 +84,14 @@
     <string name="report_growth_caption">문제를 풀 때마다 아이 수준에 맞춰 난이도(1~5)가 움직여요.</string>
     <string name="report_concept_title">개념별 숙달도</string>
     <string name="report_concept_stat">%1$d문제 · 정답률 %2$d%%</string>
+    <string name="report_matrix_title">난이도별 숙달 지도</string>
+    <string name="report_matrix_caption">칸의 숫자는 정답률이에요. 진한 색일수록 숙달, 굵은 테두리 열은 지금 아이가 도전 중인 난이도예요.</string>
 
-    <!-- 개념 숙달 단계 — 점수가 아니라 단계 라벨로 (성적처럼 읽히지 않게) -->
+    <!-- 숙달 단계 — 점수가 아니라 단계 라벨로 (성적처럼 읽히지 않게) -->
     <string name="mastery_mastered">숙달</string>
     <string name="mastery_practicing">연습 중</string>
     <string name="mastery_weak">보강 필요</string>
+    <string name="mastery_not_attempted">미시도</string>
 
     <!-- 리포트 · 부모 가이드 (연구 기반, docs/PEDAGOGY.md) -->
     <string name="report_parent_tips_title">부모님을 위한 팁</string>
