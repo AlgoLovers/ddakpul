@@ -125,7 +125,11 @@ class ReportViewModel
             }
         }
 
-        /** 영역×난이도 20칸을 전부 채운다 — 시도 없는 칸도 solved=0으로 그리드에 나타나야 한다. */
+        /**
+         * 영역×난이도 20칸을 전부 채운다 — 시도 없는 칸도 solved=0으로 그리드에 나타나야 한다.
+         * [stats.matrixCells]는 시도가 있는 칸만 담으므로(집계 로직상 solved=0인 칸은 만들어지지
+         * 않는다) `cell`이 있으면 항상 solved > 0이다.
+         */
         private fun buildMasteryGrid(stats: LearningStats): List<MasteryCellUi> {
             val byKey = stats.matrixCells.associateBy { it.area to it.difficulty }
             return MathArea.entries.flatMap { area ->
@@ -135,7 +139,7 @@ class ReportViewModel
                         area = area,
                         difficulty = difficulty,
                         solved = cell?.solved ?: 0,
-                        accuracy = cell?.takeIf { it.solved > 0 }?.accuracy,
+                        accuracy = cell?.accuracy,
                     )
                 }
             }
