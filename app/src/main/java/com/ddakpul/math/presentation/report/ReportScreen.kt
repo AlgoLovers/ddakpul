@@ -60,6 +60,7 @@ private val dayFormatter = DateTimeFormatter.ofPattern("M/d")
 @Composable
 fun ReportScreen(
     onPrintClick: () -> Unit,
+    onOpenPaywall: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
 ) {
@@ -81,7 +82,9 @@ fun ReportScreen(
         insights = uiState.insights,
         weeklySummary = uiState.weeklySummary,
         masteryGrid = uiState.masteryGrid,
+        isPremium = uiState.isPremium,
         onPrintClick = onPrintClick,
+        onOpenPaywall = onOpenPaywall,
         modifier = modifier,
     )
 }
@@ -93,7 +96,9 @@ private fun ReportContent(
     insights: List<ReportInsight>,
     weeklySummary: WeeklySummary?,
     masteryGrid: List<MasteryCellUi>,
+    isPremium: Boolean,
     onPrintClick: () -> Unit,
+    onOpenPaywall: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -135,46 +140,11 @@ private fun ReportContent(
 
             NarrativeSections(weeklySummary = weeklySummary, insights = insights)
 
-            SectionCard(title = stringResource(R.string.report_daily_title)) {
-                MiniBarChart(
-                    entries = dayCells.map { BarEntry(value = it.solved.toFloat(), emphasized = it.isToday) },
-                    startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
-                    endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
-                )
-            }
-
-            SectionCard(title = stringResource(R.string.report_trend_title)) {
-                TrendLineChart(
-                    values = dayCells.map { it.accuracy },
-                    startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
-                    endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
-                )
-            }
-
-            if (stats.difficultyProgress.size >= 2) {
-                SectionCard(title = stringResource(R.string.report_growth_title)) {
-                    StepLineChart(
-                        values = stats.difficultyProgress.takeLast(MAX_GROWTH_POINTS).map { it.difficulty },
-                        minValue = Difficulty.MIN,
-                        maxValue = Difficulty.MAX,
-                    )
-                    Text(
-                        text = stringResource(R.string.report_growth_caption),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-
-            val concepts = stats.conceptStats.filter { it.solved >= 2 }.take(MAX_CONCEPT_ROWS)
-            if (concepts.isNotEmpty()) {
-                SectionCard(title = stringResource(R.string.report_concept_title)) {
-                    concepts.forEach { concept -> ConceptRow(concept) }
-                }
-            }
-
-            SectionCard(title = stringResource(R.string.report_matrix_title)) {
-                MasteryMap(masteryGrid = masteryGrid, currentDifficulty = stats.currentDifficulty)
+            // 심화 분석(차트·숙달 지도)은 이용권 전용. 무료는 요약까지 보고 여기서 페이월로 안내.
+            if (isPremium) {
+                PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
+            } else {
+                PremiumLockedCard(onOpenPaywall = onOpenPaywall)
             }
 
             SectionCard(title = stringResource(R.string.report_parent_tips_title)) {
@@ -186,6 +156,69 @@ private fun ReportContent(
                     )
                 }
             }
+        }
+    }
+}
+
+/** 이용권 전용 심화 분석 — 학습량·정답률 추이·성장 곡선·개념 숙달도·난이도별 숙달 지도. */
+@Composable
+private fun PremiumAnalyticsSections(
+    stats: LearningStats,
+    dayCells: List<DayCell>,
+    masteryGrid: List<MasteryCellUi>,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        SectionCard(title = stringResource(R.string.report_daily_title)) {
+            MiniBarChart(
+                entries = dayCells.map { BarEntry(value = it.solved.toFloat(), emphasized = it.isToday) },
+                startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
+                endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
+            )
+        }
+        SectionCard(title = stringResource(R.string.report_trend_title)) {
+            TrendLineChart(
+                values = dayCells.map { it.accuracy },
+                startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
+                endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
+            )
+        }
+        if (stats.difficultyProgress.size >= 2) {
+            SectionCard(title = stringResource(R.string.report_growth_title)) {
+                StepLineChart(
+                    values = stats.difficultyProgress.takeLast(MAX_GROWTH_POINTS).map { it.difficulty },
+                    minValue = Difficulty.MIN,
+                    maxValue = Difficulty.MAX,
+                )
+                Text(
+                    text = stringResource(R.string.report_growth_caption),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        val concepts = stats.conceptStats.filter { it.solved >= 2 }.take(MAX_CONCEPT_ROWS)
+        if (concepts.isNotEmpty()) {
+            SectionCard(title = stringResource(R.string.report_concept_title)) {
+                concepts.forEach { concept -> ConceptRow(concept) }
+            }
+        }
+        SectionCard(title = stringResource(R.string.report_matrix_title)) {
+            MasteryMap(masteryGrid = masteryGrid, currentDifficulty = stats.currentDifficulty)
+        }
+    }
+}
+
+/** 무료 사용자에게 심화 리포트가 이용권 전용임을 알리고 페이월로 안내하는 카드. */
+@Composable
+private fun PremiumLockedCard(onOpenPaywall: () -> Unit) {
+    SectionCard(title = stringResource(R.string.report_premium_locked_title)) {
+        Text(
+            text = stringResource(R.string.report_premium_locked_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        FilledTonalButton(onClick = onOpenPaywall) {
+            Text(stringResource(R.string.report_premium_cta))
         }
     }
 }

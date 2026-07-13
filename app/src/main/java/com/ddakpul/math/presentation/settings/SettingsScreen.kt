@@ -33,6 +33,7 @@ import com.ddakpul.math.domain.model.SessionGoals
 
 @Composable
 fun SettingsScreen(
+    onOpenPaywall: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -63,6 +64,9 @@ fun SettingsScreen(
             fontWeight = FontWeight.Bold,
         )
 
+        // 이용권 — 난이도 4·5와 전체 리포트를 여는 진입점.
+        PremiumCard(onOpenPaywall = onOpenPaywall)
+
         // 하루 목표 — 아이가 스스로 정한다(자율성, SDT).
         DailyGoalCard(dailyGoal = uiState.dailyGoal, onSelect = viewModel::setDailyGoal)
 
@@ -89,6 +93,25 @@ fun SettingsScreen(
             },
             onDismiss = { showResetDialog = false },
         )
+    }
+}
+
+@Composable
+private fun PremiumCard(onOpenPaywall: () -> Unit) {
+    SettingsCard {
+        Text(
+            text = stringResource(R.string.settings_premium_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = stringResource(R.string.settings_premium_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        OutlinedButton(onClick = onOpenPaywall) {
+            Text(stringResource(R.string.settings_premium_open))
+        }
     }
 }
 

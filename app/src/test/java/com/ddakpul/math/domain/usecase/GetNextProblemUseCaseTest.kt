@@ -2,9 +2,11 @@ package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.core.common.AppError
 import com.ddakpul.math.core.common.AppResult
+import com.ddakpul.math.data.FakeEntitlementRepository
 import com.ddakpul.math.data.FakeLearnerRepository
 import com.ddakpul.math.data.FakeProblemFeedbackRepository
 import com.ddakpul.math.data.FakeProblemRepository
+import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.standardGroups
@@ -17,9 +19,11 @@ class GetNextProblemUseCaseTest {
         learner: FakeLearnerRepository,
         problems: FakeProblemRepository = FakeProblemRepository(standardGroups()),
         feedback: FakeProblemFeedbackRepository = FakeProblemFeedbackRepository(),
+        entitlement: FakeEntitlementRepository = FakeEntitlementRepository(),
     ) = GetNextProblemUseCase(
         getActiveGroups = GetActiveProblemGroupsUseCase(problems, feedback),
         learnerRepository = learner,
+        entitlementRepository = entitlement,
         recommend = RecommendNextProblemUseCase(),
         computeReviewQueue = ComputeReviewQueueUseCase(),
     )
@@ -122,6 +126,70 @@ class GetNextProblemUseCaseTest {
 
             assertThat(result).isInstanceOf(AppResult.Failure::class.java)
             assertThat((result as AppResult.Failure).error).isEqualTo(AppError.EmptyProblemBank)
+        }
+
+    @Test
+    fun freeUser_isCappedAtFreeMaxDifficulty_andSuggestsPremium() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 3)
+            // 난이도 3에서 2연속 정답 → 추천기는 4로 올리려 한다.
+            learner.recordAttempt(attempt("d3-1", true))
+            learner.recordAttempt(attempt("d3-2", true))
+
+            val result =
+                useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
+                    todaySolved = 0,
+                    zoneOffsetMillis = 0L,
+                    nowMillis = 0L,
+                )
+
+            val rec = (result as AppResult.Success).data
+            // 무료는 난이도 상한으로 고정되고, 승급 대신 페이월을 권한다.
+            assertThat(rec.targetDifficulty).isEqualTo(Monetization.FREE_MAX_DIFFICULTY)
+            assertThat(rec.premiumSuggested).isTrue()
+            assertThat(rec.problem.difficulty).isAtMost(Monetization.FREE_MAX_DIFFICULTY)
+            // 상한에 그대로 머무르므로 난이도 저장은 일어나지 않는다.
+            assertThat(learner.setDifficultyCallCount).isEqualTo(0)
+        }
+
+    @Test
+    fun premiumUser_promotesPastFreeCap() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 3)
+            learner.recordAttempt(attempt("d3-1", true))
+            learner.recordAttempt(attempt("d3-2", true))
+
+            val result =
+                useCase(learner, entitlement = FakeEntitlementRepository(premium = true))(
+                    todaySolved = 0,
+                    zoneOffsetMillis = 0L,
+                    nowMillis = 0L,
+                )
+
+            val rec = (result as AppResult.Success).data
+            assertThat(rec.targetDifficulty).isEqualTo(4)
+            assertThat(rec.premiumSuggested).isFalse()
+            assertThat(learner.currentDifficulty).isEqualTo(4)
+        }
+
+    @Test
+    fun freeUser_belowCap_isNotSuggestedPremium() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 2)
+            // 혼조(맞았다 틀렸다) → 난이도 2 유지, 상한 아래.
+            learner.recordAttempt(attempt("d2-1", true))
+            learner.recordAttempt(attempt("d2-2", false))
+
+            val result =
+                useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
+                    todaySolved = 0,
+                    zoneOffsetMillis = 0L,
+                    nowMillis = 0L,
+                )
+
+            val rec = (result as AppResult.Success).data
+            assertThat(rec.premiumSuggested).isFalse()
+            assertThat(rec.problem.difficulty).isAtMost(Monetization.FREE_MAX_DIFFICULTY)
         }
 
     private companion object {

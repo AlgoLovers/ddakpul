@@ -72,3 +72,13 @@ val MIGRATION_5_6 =
             )
         }
     }
+
+/** v6 → v7: 이용권 만료 시각(premiumUntilMillis) 컬럼 추가 — 기간제 프리미엄 이용권 상태 보관. */
+val MIGRATION_6_7 =
+    object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE learner_progress ADD COLUMN premiumUntilMillis INTEGER NOT NULL DEFAULT 0",
+            )
+        }
+    }

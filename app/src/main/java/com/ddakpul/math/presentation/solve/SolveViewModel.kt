@@ -84,6 +84,7 @@ class SolveViewModel
                                 result = null,
                                 showExplanation = recommendation.showExplanation,
                                 reason = recommendation.reason,
+                                premiumSuggested = recommendation.premiumSuggested,
                             )
                         }
                     }
