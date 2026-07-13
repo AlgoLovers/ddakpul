@@ -304,7 +304,55 @@ private fun drawFigure(
         FigureType.L_SHAPE -> drawPdfLShape(canvas, figure, centerX, top, size, ink)
         FigureType.POLYGON -> drawPdfPolygon(canvas, figure, centerX, top, size, ink)
         FigureType.CUBE_STACK -> drawPdfCubeStack(canvas, figure, centerX, top, size)
+        FigureType.GRID_POLYGON -> drawPdfGridPolygon(canvas, figure, centerX, top, size, ink)
     }
+}
+
+/** 격자 위 색칠 다각형(넓이 문제) — 흑백 인쇄용: 옅은 모눈 + 회색 채움 + 굵은 외곽선. */
+private fun drawPdfGridPolygon(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val pts = figure.heights
+    if (pts.size != n * 2) return
+    val cell = min(size / cols, size / rows)
+    val gl = centerX - cell * cols / 2f
+    val gt = top + (size - cell * rows) / 2f
+    val gridPaint =
+        Paint(ink).apply {
+            strokeWidth = 0.6f
+            color = Color.rgb(160, 160, 160)
+        }
+    for (i in 0..cols) canvas.drawLine(gl + i * cell, gt, gl + i * cell, gt + rows * cell, gridPaint)
+    for (j in 0..rows) canvas.drawLine(gl, gt + j * cell, gl + cols * cell, gt + j * cell, gridPaint)
+    val path =
+        Path().apply {
+            moveTo(gl + pts[0] * cell, gt + pts[1] * cell)
+            for (i in 1 until n) lineTo(gl + pts[i * 2] * cell, gt + pts[i * 2 + 1] * cell)
+            close()
+        }
+    canvas.drawPath(
+        path,
+        Paint().apply {
+            style = Paint.Style.FILL
+            color = Color.rgb(205, 205, 205)
+            isAntiAlias = true
+        },
+    )
+    canvas.drawPath(
+        path,
+        Paint(ink).apply {
+            strokeWidth = 1.8f
+            color = Color.BLACK
+        },
+    )
 }
 
 private fun drawPdfPolygon(

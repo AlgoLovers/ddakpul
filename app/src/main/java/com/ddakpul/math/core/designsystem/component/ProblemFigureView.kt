@@ -72,8 +72,46 @@ fun ProblemFigureView(
             FigureType.CUBE_STACK -> {
                 drawCubeStack(figure, ink, cubeFaces, left, top, side)
             }
+
+            FigureType.GRID_POLYGON -> {
+                drawGridPolygon(figure, ink, accent, left, top, side)
+            }
         }
     }
+}
+
+/** 격자 위 색칠 다각형(넓이 문제). 옅은 모눈 + 반투명 채움 + 외곽선. */
+private fun DrawScope.drawGridPolygon(
+    figure: ProblemFigure,
+    ink: Color,
+    accent: Color,
+    left: Float,
+    top: Float,
+    side: Float,
+) {
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val pts = figure.heights
+    if (pts.size != n * 2) return
+    val cell = min(side / cols, side / rows)
+    val gLeft = left + (side - cell * cols) / 2f
+    val gTop = top + (side - cell * rows) / 2f
+    val gridColor = ink.copy(alpha = 0.28f)
+    for (i in 0..cols) {
+        drawLine(gridColor, Offset(gLeft + i * cell, gTop), Offset(gLeft + i * cell, gTop + rows * cell), strokeWidth = 1.5f)
+    }
+    for (j in 0..rows) {
+        drawLine(gridColor, Offset(gLeft, gTop + j * cell), Offset(gLeft + cols * cell, gTop + j * cell), strokeWidth = 1.5f)
+    }
+    val poly =
+        Path().apply {
+            moveTo(gLeft + pts[0] * cell, gTop + pts[1] * cell)
+            for (i in 1 until n) lineTo(gLeft + pts[i * 2] * cell, gTop + pts[i * 2 + 1] * cell)
+            close()
+        }
+    drawPath(poly, color = accent.copy(alpha = 0.30f))
+    drawPath(poly, color = accent, style = Stroke(width = 4f))
 }
 
 /** 쌓기나무 등각 투영 좌표. */

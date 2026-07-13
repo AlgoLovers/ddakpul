@@ -121,7 +121,28 @@ def cube_stack(d, fig, box):
                 d.polygon([pr(c, r + 1, l + 1), pr(c + 1, r + 1, l + 1), pr(c + 1, r + 1, l), pr(c, r + 1, l)], fill=fills[2], outline=INK, width=2)
 
 
-RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack}
+def grid_polygon(d, fig, box):
+    cols = fig["params"].get("cols", 4)
+    rows = fig["params"].get("rows", 4)
+    n = fig["params"].get("n", 3)
+    hs = fig.get("heights", [])
+    if len(hs) != 2 * n:
+        return
+    x0, y0, x1, y1 = box
+    cell = min(x1 - x0, y1 - y0) * 0.82 / max(cols, rows)
+    gl = (x0 + x1) / 2 - cell * cols / 2
+    gt = (y0 + y1) / 2 - cell * rows / 2
+    for i in range(cols + 1):
+        d.line([(gl + i * cell, gt), (gl + i * cell, gt + rows * cell)], fill=(185, 185, 185), width=1)
+    for j in range(rows + 1):
+        d.line([(gl, gt + j * cell), (gl + cols * cell, gt + j * cell)], fill=(185, 185, 185), width=1)
+    pts = [(gl + hs[2 * i] * cell, gt + hs[2 * i + 1] * cell) for i in range(n)]
+    d.polygon(pts, fill=(185, 208, 246))
+    for i in range(n):
+        d.line([pts[i], pts[(i + 1) % n]], fill=ACCENT, width=3)
+
+
+RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon}
 TW, FH, LH = 300, 210, 96
 
 
@@ -154,7 +175,7 @@ def sheet(problems, name):
 def main():
     data = json.load(open(ROOT / "app/src/main/assets/problems_generated.json"))["problems"]
     figs = [p for p in data if "figure" in p]
-    order = {t: i for i, t in enumerate(["CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
+    order = {t: i for i, t in enumerate(["GRID_POLYGON", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
     figs.sort(key=lambda p: order.get(p["figure"]["type"], 99))
     sheet(figs, "figures_all.png")
 
