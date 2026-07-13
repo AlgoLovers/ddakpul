@@ -3318,6 +3318,422 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pigeon-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-pigeon-5",
+   "concepts": [
+    "비둘기집",
+    "최악의 경우"
+   ],
+   "statement": "서랍에 3가지 색(빨강, 파랑, 노랑) 양말이 잔뜩 섞여 있어요. 어두워서 색이 안 보일 때, 같은 색 한 켤레(2짝)를 확실히 꺼내려면 최소 몇 짝을 꺼내야 할까요?",
+   "choices": [
+    "6짝",
+    "4짝",
+    "5짝",
+    "3짝"
+   ],
+   "answerIndex": 1,
+   "explanation": "운이 가장 나쁠 때를 생각해요. 3짝을 꺼냈는데 공교롭게 색이 모두 다를 수도 있어요(3가지니까). 하지만 한 짝만 더 꺼내면(4짝) 반드시 이미 나온 색과 겹쳐 한 켤레가 완성돼요. 그래서 4짝이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "3짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pigeon-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-pigeon-5",
+   "concepts": [
+    "비둘기집",
+    "최악의 경우"
+   ],
+   "statement": "서랍에 4가지 색(빨강, 파랑, 노랑, 초록) 양말이 잔뜩 섞여 있어요. 어두워서 색이 안 보일 때, 같은 색 한 켤레(2짝)를 확실히 꺼내려면 최소 몇 짝을 꺼내야 할까요?",
+   "choices": [
+    "5짝",
+    "4짝",
+    "8짝",
+    "6짝"
+   ],
+   "answerIndex": 0,
+   "explanation": "운이 가장 나쁠 때를 생각해요. 4짝을 꺼냈는데 공교롭게 색이 모두 다를 수도 있어요(4가지니까). 하지만 한 짝만 더 꺼내면(5짝) 반드시 이미 나온 색과 겹쳐 한 켤레가 완성돼요. 그래서 5짝이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "4짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pigeon-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-pigeon-5",
+   "concepts": [
+    "비둘기집",
+    "최악의 경우"
+   ],
+   "statement": "서랍에 2가지 색(검정, 흰색) 양말이 잔뜩 섞여 있어요. 어두워서 색이 안 보일 때, 같은 색 한 켤레(2짝)를 확실히 꺼내려면 최소 몇 짝을 꺼내야 할까요?",
+   "choices": [
+    "3짝",
+    "6짝",
+    "4짝",
+    "2짝"
+   ],
+   "answerIndex": 0,
+   "explanation": "운이 가장 나쁠 때를 생각해요. 2짝을 꺼냈는데 공교롭게 색이 모두 다를 수도 있어요(2가지니까). 하지만 한 짝만 더 꺼내면(3짝) 반드시 이미 나온 색과 겹쳐 한 켤레가 완성돼요. 그래서 3짝이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "2짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-pigeon-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-pigeon-5",
+   "concepts": [
+    "비둘기집",
+    "최악의 경우"
+   ],
+   "statement": "서랍에 5가지 색(빨강, 주황, 노랑, 초록, 파랑) 양말이 잔뜩 섞여 있어요. 어두워서 색이 안 보일 때, 같은 색 한 켤레(2짝)를 확실히 꺼내려면 최소 몇 짝을 꺼내야 할까요?",
+   "choices": [
+    "7짝",
+    "10짝",
+    "5짝",
+    "6짝"
+   ],
+   "answerIndex": 3,
+   "explanation": "운이 가장 나쁠 때를 생각해요. 5짝을 꺼냈는데 공교롭게 색이 모두 다를 수도 있어요(5가지니까). 하지만 한 짝만 더 꺼내면(6짝) 반드시 이미 나온 색과 겹쳐 한 켤레가 완성돼요. 그래서 6짝이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "5짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cube-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cube-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 추론"
+   ],
+   "statement": "한 모서리가 3칸인 정육면체의 겉면을 모두 색칠한 뒤 1칸짜리 작은 정육면체로 잘랐어요. 정확히 두 면만 색칠된 작은 정육면체는 몇 개일까요?",
+   "choices": [
+    "12개",
+    "27개",
+    "18개",
+    "8개"
+   ],
+   "answerIndex": 0,
+   "explanation": "두 면이 칠해진 조각은 정육면체의 '모서리'에 있어요. 꼭짓점(세 면) 조각을 빼면 모서리마다 1개씩, 모서리는 12개예요. 12×1=12개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cube-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cube-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 추론"
+   ],
+   "statement": "한 모서리가 4칸인 정육면체의 겉면을 모두 색칠한 뒤 1칸짜리 작은 정육면체로 잘랐어요. 정확히 한 면만 색칠된 작은 정육면체는 몇 개일까요?",
+   "choices": [
+    "30개",
+    "20개",
+    "24개",
+    "64개"
+   ],
+   "answerIndex": 2,
+   "explanation": "한 면만 칠해진 조각은 각 면 안쪽에 모여 있어요. 한 면에 2×2=4개, 면은 6개예요. 6×4=24개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cube-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cube-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 추론"
+   ],
+   "statement": "한 모서리가 5칸인 정육면체의 겉면을 모두 색칠한 뒤 1칸짜리 작은 정육면체로 잘랐어요. 정확히 두 면만 색칠된 작은 정육면체는 몇 개일까요?",
+   "choices": [
+    "32개",
+    "42개",
+    "36개",
+    "125개"
+   ],
+   "answerIndex": 2,
+   "explanation": "두 면이 칠해진 조각은 정육면체의 '모서리'에 있어요. 꼭짓점(세 면) 조각을 빼면 모서리마다 3개씩, 모서리는 12개예요. 12×3=36개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cube-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cube-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 추론"
+   ],
+   "statement": "한 모서리가 4칸인 정육면체의 겉면을 모두 색칠한 뒤 1칸짜리 작은 정육면체로 잘랐어요. 어느 면도 색칠되지 않은 작은 정육면체는 몇 개일까요?",
+   "choices": [
+    "64개",
+    "8개",
+    "4개",
+    "14개"
+   ],
+   "answerIndex": 1,
+   "explanation": "어느 면도 안 칠해진 조각은 속에 숨은 덩어리예요. 2×2×2=8개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-divcount-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-divcount-4",
+   "concepts": [
+    "약수",
+    "짝지어 세기"
+   ],
+   "statement": "36의 약수는 모두 몇 개일까요?",
+   "choices": [
+    "9개",
+    "11개",
+    "7개",
+    "10개"
+   ],
+   "answerIndex": 0,
+   "explanation": "약수를 '작은 수 × 큰 수'로 짝지어 빠짐없이 찾아요. 1부터 순서대로 36을 나누어떨어지게 하는 수를 적으면 1, 2, 3, 4, 6, 9, 12, 18, 36 — 모두 9개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "약수를 하나 빠뜨리거나 중복해 세지 않았는지 짝지어 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-divcount-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-divcount-4",
+   "concepts": [
+    "약수",
+    "짝지어 세기"
+   ],
+   "statement": "48의 약수는 모두 몇 개일까요?",
+   "choices": [
+    "10개",
+    "11개",
+    "12개",
+    "8개"
+   ],
+   "answerIndex": 0,
+   "explanation": "약수를 '작은 수 × 큰 수'로 짝지어 빠짐없이 찾아요. 1부터 순서대로 48을 나누어떨어지게 하는 수를 적으면 1, 2, 3, 4, 6, 8, 12, 16, 24, 48 — 모두 10개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "약수를 하나 빠뜨리거나 중복해 세지 않았는지 짝지어 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-divcount-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-divcount-4",
+   "concepts": [
+    "약수",
+    "짝지어 세기"
+   ],
+   "statement": "60의 약수는 모두 몇 개일까요?",
+   "choices": [
+    "12개",
+    "14개",
+    "10개",
+    "13개"
+   ],
+   "answerIndex": 0,
+   "explanation": "약수를 '작은 수 × 큰 수'로 짝지어 빠짐없이 찾아요. 1부터 순서대로 60을 나누어떨어지게 하는 수를 적으면 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60 — 모두 12개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "약수를 하나 빠뜨리거나 중복해 세지 않았는지 짝지어 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-divcount-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-divcount-4",
+   "concepts": [
+    "약수",
+    "짝지어 세기"
+   ],
+   "statement": "72의 약수는 모두 몇 개일까요?",
+   "choices": [
+    "10개",
+    "14개",
+    "12개",
+    "13개"
+   ],
+   "answerIndex": 2,
+   "explanation": "약수를 '작은 수 × 큰 수'로 짝지어 빠짐없이 찾아요. 1부터 순서대로 72를 나누어떨어지게 하는 수를 적으면 1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72 — 모두 12개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "약수를 하나 빠뜨리거나 중복해 세지 않았는지 짝지어 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-riddle-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 5,
+   "groupId": "g-gen-riddle-5",
+   "concepts": [
+    "연립 추론",
+    "자리값"
+   ],
+   "statement": "어떤 두 자리 수가 있어요. 십의 자리 숫자와 일의 자리 숫자를 더하면 12, 그리고 십의 자리가 일의 자리보다 2 커요. 이 수는 무엇일까요?",
+   "choices": [
+    "75",
+    "74",
+    "57",
+    "76"
+   ],
+   "answerIndex": 0,
+   "explanation": "두 조건을 함께 써요. (십의 자리)+(일의 자리)=12, (십의 자리)−(일의 자리)=2. 두 식을 더하면 일의 자리끼리 지워져 십의 자리가 두 배가 되니, (12+2)÷2=7이 십의 자리예요. 일의 자리는 12−7=5이니 답은 75예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-riddle-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 5,
+   "groupId": "g-gen-riddle-5",
+   "concepts": [
+    "연립 추론",
+    "자리값"
+   ],
+   "statement": "어떤 두 자리 수가 있어요. 십의 자리 숫자와 일의 자리 숫자를 더하면 9, 그리고 십의 자리가 일의 자리보다 3 커요. 이 수는 무엇일까요?",
+   "choices": [
+    "64",
+    "36",
+    "63",
+    "62"
+   ],
+   "answerIndex": 2,
+   "explanation": "두 조건을 함께 써요. (십의 자리)+(일의 자리)=9, (십의 자리)−(일의 자리)=3. 두 식을 더하면 일의 자리끼리 지워져 십의 자리가 두 배가 되니, (9+3)÷2=6이 십의 자리예요. 일의 자리는 9−6=3이니 답은 63이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-riddle-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 5,
+   "groupId": "g-gen-riddle-5",
+   "concepts": [
+    "연립 추론",
+    "자리값"
+   ],
+   "statement": "어떤 두 자리 수가 있어요. 십의 자리 숫자와 일의 자리 숫자를 더하면 14, 그리고 십의 자리가 일의 자리보다 2 커요. 이 수는 무엇일까요?",
+   "choices": [
+    "85",
+    "68",
+    "87",
+    "86"
+   ],
+   "answerIndex": 3,
+   "explanation": "두 조건을 함께 써요. (십의 자리)+(일의 자리)=14, (십의 자리)−(일의 자리)=2. 두 식을 더하면 일의 자리끼리 지워져 십의 자리가 두 배가 되니, (14+2)÷2=8이 십의 자리예요. 일의 자리는 14−8=6이니 답은 86이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-riddle-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 5,
+   "groupId": "g-gen-riddle-5",
+   "concepts": [
+    "연립 추론",
+    "자리값"
+   ],
+   "statement": "어떤 두 자리 수가 있어요. 십의 자리 숫자와 일의 자리 숫자를 더하면 7, 그리고 십의 자리가 일의 자리보다 3 커요. 이 수는 무엇일까요?",
+   "choices": [
+    "52",
+    "25",
+    "53",
+    "51"
+   ],
+   "answerIndex": 0,
+   "explanation": "두 조건을 함께 써요. (십의 자리)+(일의 자리)=7, (십의 자리)−(일의 자리)=3. 두 식을 더하면 일의 자리끼리 지워져 십의 자리가 두 배가 되니, (7+3)÷2=5가 십의 자리예요. 일의 자리는 7−5=2이니 답은 52예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
   }
  ]
 }
