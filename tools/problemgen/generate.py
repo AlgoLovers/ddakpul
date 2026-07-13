@@ -801,6 +801,51 @@ def gen_number_riddle():
         )
 
 
+# ── 37. 시곗바늘 각도 (난4, 도형과측정) ─────────────────────────────────────
+def gen_clock_angle():
+    for h in [3, 5, 2, 4]:
+        ans = 30 * h  # 한 칸 30도, h≤6이라 작은 쪽 각도 = 30h
+        assert ans == min(30 * h, 360 - 30 * h), "시계 각도 검산 실패"
+        add(
+            "clockang", "SHAPE_MEASUREMENT", 4, ["각도", "시계 눈금"],
+            f"시계가 {h}시 정각을 가리켜요. 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
+            f"{ans}도", [f"{ans + 30}도", f"{max(0, ans - 30)}도", f"{ans + 60}도"],
+            f"시계 한 바퀴는 360도이고 숫자 칸은 12개니, 한 칸은 360÷12=30도예요. {h}시 정각이면 시침과 분침이 {h}칸 떨어져 있으니 {h}×30={ans}도예요.",
+            [(f"{ans + 30}도", "한 칸이 30도예요. 떨어진 칸 수를 정확히 세었는지 확인해요.")],
+            figure={"type": "CLOCK", "params": {"hour": h, "minute": 0}},
+        )
+
+
+# ── 38. 직사각형 개수 세기 (난4, 도형과측정) ────────────────────────────────
+def gen_rectangle_count():
+    for w, h in [(2, 2), (3, 2), (3, 3), (4, 2)]:
+        ans = comb(w + 1, 2) * comb(h + 1, 2)
+        add(
+            "rectcount", "SHAPE_MEASUREMENT", 4, ["직사각형 세기", "체계적으로 세기"],
+            f"가로 {w}칸, 세로 {h}칸으로 나뉜 직사각형 격자가 있어요. 이 격자 안에서 찾을 수 있는 크고 작은 직사각형은 모두 몇 개일까요?",
+            f"{ans}개", [f"{w * h}개", f"{ans - 3}개", f"{ans + 3}개"],
+            f"직사각형은 세로선 2개와 가로선 2개를 고르면 하나 정해져요. 세로선 {w + 1}개 중 2개 → {comb(w + 1, 2)}가지, 가로선 {h + 1}개 중 2개 → {comb(h + 1, 2)}가지. 곱하면 {comb(w + 1, 2)}×{comb(h + 1, 2)}={ans}개예요.",
+            [(f"{w * h}개", "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요.")],
+        )
+
+
+# ── 39. 등비수열 다음 수 (난4, 변화와관계) ──────────────────────────────────
+def gen_geometric_seq():
+    for seq in [[2, 6, 18, 54], [1, 3, 9, 27], [3, 6, 12, 24], [1, 4, 16, 64]]:
+        ratios = [seq[i + 1] // seq[i] for i in range(len(seq) - 1)]
+        assert len(set(ratios)) == 1 and all(seq[i] * ratios[0] == seq[i + 1] for i in range(len(seq) - 1)), "등비 검산 실패"
+        r = ratios[0]
+        nxt = seq[-1] * r
+        seqtxt = ", ".join(str(x) for x in seq)
+        add(
+            "geoseq", "CHANGE_RELATION", 4, ["등비 규칙", "곱해지는 수"],
+            f"규칙을 찾아보세요. {seqtxt}, □ — □에 들어갈 수는 얼마일까요?",
+            str(nxt), [str(seq[-1] + (seq[-1] - seq[-2])), str(nxt + r), str(nxt + seq[-1])],
+            f"이웃한 수가 몇 배로 커지는지 봐요. {seq[1]}÷{seq[0]}={r}, {seq[2]}÷{seq[1]}={r} — 매번 {r}배예요. 그러니 {seq[-1]} 다음은 {seq[-1]}×{r}={nxt}{_copula(nxt)}.",
+            [(str(seq[-1] + (seq[-1] - seq[-2])), "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비).")],
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -814,6 +859,8 @@ GENERATORS = [
     gen_consecutive_sum,
     # v3 확충 — 유료(난4·5) 깊이: 비둘기집·색칠정육면체·약수개수·수 추리
     gen_pigeonhole, gen_painted_cube, gen_divisor_count, gen_number_riddle,
+    # v3.1 확충 — 도형 난4 보강 + 등비 다양성
+    gen_clock_angle, gen_rectangle_count, gen_geometric_seq,
 ]
 
 for g in GENERATORS:
