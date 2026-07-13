@@ -2,12 +2,14 @@ package com.ddakpul.math.data
 
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Difficulty
+import com.ddakpul.math.domain.model.Entitlement
 import com.ddakpul.math.domain.model.ExcludedProblem
 import com.ddakpul.math.domain.model.LearnerState
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.domain.repository.EntitlementRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemFeedbackRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
@@ -94,5 +96,28 @@ class FakeLearnerRepository(
 
     private companion object {
         const val RECENT_WINDOW = 10
+    }
+}
+
+class FakeEntitlementRepository(
+    premium: Boolean = true,
+) : EntitlementRepository {
+    // premium=true면 사실상 무한 만료, false면 무료(0).
+    private val premiumUntil = MutableStateFlow(if (premium) Long.MAX_VALUE else 0L)
+
+    override fun observeEntitlement(): Flow<Entitlement> = premiumUntil.map { Entitlement(it) }
+
+    override suspend fun getEntitlement(): Entitlement = Entitlement(premiumUntil.value)
+
+    override suspend fun grantPass(
+        durationDays: Int,
+        nowMillis: Long,
+    ) {
+        val base = maxOf(nowMillis, premiumUntil.value)
+        premiumUntil.value = base + durationDays.toLong() * MILLIS_PER_DAY
+    }
+
+    private companion object {
+        const val MILLIS_PER_DAY = 86_400_000L
     }
 }

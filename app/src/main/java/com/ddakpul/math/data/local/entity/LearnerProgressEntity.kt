@@ -12,6 +12,8 @@ data class LearnerProgressEntity(
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
     /** 첫 실행 온보딩(소개·하루 목표·시작 난이도)을 마쳤는지. */
     val onboardingComplete: Boolean = false,
+    /** 프리미엄 이용권 만료 시각(epoch millis). 0이면 무료. */
+    val premiumUntilMillis: Long = 0L,
 ) {
     companion object {
         const val SINGLETON_ID = 0
