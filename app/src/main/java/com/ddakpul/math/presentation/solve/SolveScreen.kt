@@ -198,6 +198,11 @@ private fun SolvingBody(
             PremiumBanner(onUpgrade = onUpgrade)
         }
 
+        // 무료 상한 난이도에 머물 때 — 왜 더 안 올라가는지 상시 안내(헷갈림 방지).
+        if (uiState.showFreeCapHint) {
+            FreeCapHint(onUpgrade = onUpgrade)
+        }
+
         uiState.area?.let { area ->
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (uiState.isReview) {
@@ -310,6 +315,20 @@ private fun PremiumBanner(onUpgrade: () -> Unit) {
                 Text(stringResource(R.string.solve_premium_cta))
             }
         }
+    }
+}
+
+/** 무료 상한 난이도에서 늘 보이는 저강도 안내 — 왜 난이도가 안 올라가는지 알려주고 페이월로 안내. */
+@Composable
+private fun FreeCapHint(onUpgrade: () -> Unit) {
+    TextButton(
+        onClick = onUpgrade,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Text(
+            text = stringResource(R.string.solve_free_cap_hint),
+            style = MaterialTheme.typography.bodySmall,
+        )
     }
 }
 
