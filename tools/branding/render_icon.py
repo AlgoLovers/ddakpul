@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""딱풀 런처 아이콘 실제 에셋 생성 — '딱풀이' 마스코트(클레이).
+"""딱풀 런처 아이콘 실제 에셋 생성 — '아이디어 전구'(클레이).
 
 산출:
-  1) drawable-{d}/ic_launcher_foreground.png  — 마스코트(투명, 세이프존 안, 그림자 baked)
+  1) drawable-{d}/ic_launcher_foreground.png  — 전구(투명, 세이프존, 글로우/섀도 baked)
   2) mipmap-{d}/ic_launcher.webp / ic_launcher_round.webp — 레거시 폴백(합성/원형마스크)
   3) docs/store/icon-512.png — 플레이스토어 512 아이콘(합성)
 배경(radial 그라데이션)·monochrome 실루엣 벡터는 XML로 별도 작성.
-실행: venv/bin/python render_icon_assets.py
+실행: venv/bin/python render_icon.py
 """
 import os
+from pathlib import Path
+
 from PIL import Image, ImageDraw, ImageFilter
 
-from pathlib import Path
 REPO = str(Path(__file__).resolve().parents[2])
 RES = f"{REPO}/app/src/main/res"
 M = 1728                      # 마스터 해상도(108 * 16)
@@ -19,13 +20,14 @@ k = M / 108.0
 
 VIOLET_DK  = (72, 63, 200)
 VIOLET_LT  = (150, 143, 255)
-CREAM      = (255, 251, 243)
-CAP_MINT   = (54, 214, 178)
-CAP_MINT_D = (28, 150, 122)
-MINT       = (52, 210, 172)
-CHEEK      = (255, 158, 158)
-INK        = (66, 58, 128)
+AMBER      = (255, 194, 74)
+BASE       = (196, 186, 214)
+BASE_LN    = (150, 138, 175)
 WHITE      = (255, 255, 255)
+
+# 전구가 foreground 세이프존에서 차지할 지름 비율(=지름/108). 콘셉트(0.39)보다 약 +12%.
+FRAC = 0.44
+CY = 0.46                    # 전구 중심의 세로 위치(약간 위 — 아래 소켓 여유)
 
 
 def px(x):
@@ -64,30 +66,48 @@ def highlight(img, hl_fn, blur, alpha):
     img.alpha_composite(lay.filter(ImageFilter.GaussianBlur(px(blur))))
 
 
-def draw_mascot(img):
-    """render_icon_v2.concept_mascot과 동일 좌표(108-space)를 투명 캔버스에."""
-    sh, off = shadow(lambda d, c: rrect(d, (37, 40, 73, 88), 14, c), 7, 110, 5)
+def draw_bulb_core(img):
+    """전구 본체(그림자·소켓·유리·체크 필라멘트·광택). 글로우 제외 — 크기 기준."""
+    sh, off = shadow(lambda d, c: ellipse(d, 54, 48, 21, 21, c), 7, 90, 6)
     img.alpha_composite(sh, off)
     d = ImageDraw.Draw(img)
-    rrect(d, (48, 20, 62, 30), 5, (245, 238, 226))            # 글루 nib
-    rrect(d, (37, 27, 73, 46), 9, CAP_MINT)                   # 캡
-    d.line([(px(37), px(43)), (px(73), px(43))], fill=CAP_MINT_D, width=int(px(1.6)))
-    rrect(d, (37, 42, 73, 88), 14, CREAM)                     # 몸통
-    rrect(d, (37, 62, 73, 71), 0, (241, 234, 223))            # 라벨 밴드
-    ellipse(d, 47.5, 55, 3.5, 4.2, INK)                       # 눈
-    ellipse(d, 62.5, 55, 3.5, 4.2, INK)
-    ellipse(d, 48.9, 53.5, 1.2, 1.5, WHITE)
-    ellipse(d, 63.9, 53.5, 1.2, 1.5, WHITE)
-    ellipse(d, 42, 60, 2.8, 1.9, CHEEK)                       # 볼
-    ellipse(d, 68, 60, 2.8, 1.9, CHEEK)
-    d.arc([px(50), px(57.5), px(60), px(66)], 20, 160, fill=INK, width=int(px(2.0)))   # 입
-    highlight(img, lambda d, c: ellipse(d, 47, 33, 7, 3.2, c), 4, 150)
-    highlight(img, lambda d, c: rrect(d, (41, 46, 48, 84), 5, c), 5, 85)
-    sh2, o2 = shadow(lambda d, c: ellipse(d, 74, 77, 12, 12, c), 5, 90, 3)             # 배지 그림자
-    img.alpha_composite(sh2, o2)
-    d2 = ImageDraw.Draw(img)
-    ellipse(d2, 74, 77, 11, 11, MINT)                         # 정답 배지
-    check(d2, [(69, 77), (73, 82), (80, 72)], WHITE, 3)
+    rrect(d, (47, 64, 61, 78), 4, BASE)                       # 소켓
+    d.line([(px(47), px(69)), (px(61), px(69))], fill=BASE_LN, width=int(px(1.5)))
+    d.line([(px(47), px(73)), (px(61), px(73))], fill=BASE_LN, width=int(px(1.5)))
+    ellipse(d, 54, 47, 21, 21, AMBER)                         # 유리
+    check(d, [(45, 48), (52, 57), (65, 38)], WHITE, 4)        # 체크 필라멘트
+    highlight(img, lambda d, c: ellipse(d, 46, 39, 6, 9, c), 5, 170)   # 광택
+
+
+def draw_glow(img):
+    glow = L()
+    ellipse(ImageDraw.Draw(glow), 54, 47, 26, 26, AMBER + (150,))
+    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(px(12))))
+
+
+def bulb_sprites():
+    """(글로우 포함 스프라이트, 본체 폭, 유리 중심) — 본체 지름으로 사이즈 결정."""
+    core = L()
+    draw_bulb_core(core)
+    cb = core.getbbox()
+    full = L()
+    draw_glow(full)
+    draw_bulb_core(full)
+    fb = full.getbbox()
+    sprite = full.crop(fb)
+    gcx, gcy = px(54) - fb[0], px(47) - fb[1]                 # 유리중심 → 스프라이트 로컬
+    core_w = cb[2] - cb[0]
+    return sprite, core_w, (gcx, gcy)
+
+
+def place_bulb(target, sprite, core_w, gc):
+    """본체 폭이 target*FRAC 가 되도록 스케일, 유리중심을 (0.5, CY)에 정렬."""
+    out = Image.new("RGBA", (target, target), (0, 0, 0, 0))
+    scale = (FRAC * target) / core_w
+    s = sprite.resize((max(1, int(sprite.width * scale)), max(1, int(sprite.height * scale))), Image.LANCZOS)
+    cx, cy = gc[0] * scale, gc[1] * scale
+    out.alpha_composite(s, (int(target * 0.5 - cx), int(target * CY - cy)))
+    return out
 
 
 def radial_bg():
@@ -102,23 +122,6 @@ def radial_bg():
     return img.convert("RGBA")
 
 
-def sprite():
-    """마스코트만 그려 알파 bbox로 크롭한 스프라이트."""
-    canvas = L()
-    draw_mascot(canvas)
-    return canvas.crop(canvas.getbbox())
-
-
-def place(target_size, spr, frac, cy_frac=0.5):
-    """스프라이트를 target(정사각)에 frac 폭으로 중앙 배치(투명 배경)."""
-    out = Image.new("RGBA", (target_size, target_size), (0, 0, 0, 0))
-    w = int(target_size * frac)
-    h = int(spr.height * w / spr.width)
-    s = spr.resize((w, h), Image.LANCZOS)
-    out.alpha_composite(s, ((target_size - w) // 2, int(target_size * cy_frac) - h // 2))
-    return out
-
-
 def circle_mask(img):
     m = Image.new("L", img.size, 0)
     ImageDraw.Draw(m).ellipse([0, 0, img.size[0], img.size[1]], fill=255)
@@ -128,15 +131,13 @@ def circle_mask(img):
 
 
 def main():
-    spr = sprite()
-    FRAC = 0.60          # 세이프존(≈66/108) 안에 들도록
-    # 마스터 합성 아이콘(풀블리드)
-    full = radial_bg()
-    full.alpha_composite(place(M, spr, FRAC, 0.49))
+    sprite, core_w, gc = bulb_sprites()
+    fg_master = place_bulb(M, sprite, core_w, gc)             # foreground(투명)
+    full = radial_bg()                                        # 합성 아이콘(풀블리드)
+    full.alpha_composite(fg_master)
 
-    # 1) foreground PNG (drawable-{d}), 108dp 캔버스에 세이프존 배치
+    # 1) foreground PNG (drawable-{d})
     fg_dens = {"mdpi": 108, "hdpi": 162, "xhdpi": 216, "xxhdpi": 324, "xxxhdpi": 432}
-    fg_master = place(M, spr, FRAC, 0.49)
     for d, sz in fg_dens.items():
         p = f"{RES}/drawable-{d}"
         os.makedirs(p, exist_ok=True)
@@ -145,21 +146,19 @@ def main():
     # 2) 레거시 mipmap webp (square + round)
     mip_dens = {"mdpi": 48, "hdpi": 72, "xhdpi": 96, "xxhdpi": 144, "xxxhdpi": 192}
     for d, sz in mip_dens.items():
-        sq = full.resize((sz, sz), Image.LANCZOS).convert("RGB")
-        sq.save(f"{RES}/mipmap-{d}/ic_launcher.webp", "WEBP", quality=92)
-        rd = circle_mask(full.resize((sz, sz), Image.LANCZOS))
-        rd.save(f"{RES}/mipmap-{d}/ic_launcher_round.webp", "WEBP", quality=92)
+        full.resize((sz, sz), Image.LANCZOS).convert("RGB").save(f"{RES}/mipmap-{d}/ic_launcher.webp", "WEBP", quality=92)
+        circle_mask(full.resize((sz, sz), Image.LANCZOS)).save(f"{RES}/mipmap-{d}/ic_launcher_round.webp", "WEBP", quality=92)
 
     # 3) 스토어 512
     os.makedirs(f"{REPO}/docs/store", exist_ok=True)
     full.resize((512, 512), Image.LANCZOS).convert("RGB").save(f"{REPO}/docs/store/icon-512.png")
 
-    # 자기검증용 미리보기(원형 마스크 씌운 최종 모습)
+    # 자기검증용 미리보기(원형 마스크)
     prev = circle_mask(full.resize((360, 360), Image.LANCZOS))
     flat = Image.new("RGB", (360, 360), (247, 247, 250))
     flat.paste(prev, (0, 0), prev)
-    flat.save("/private/tmp/claude-501/-Users-na982-claude-DDAKPUL/77a69bb6-b868-4ead-9958-5b2c15ddbd10/scratchpad/icon_final_preview.png")
-    print("assets written. fg densities:", list(fg_dens), "| webp:", list(mip_dens))
+    flat.save(os.environ.get("ICON_PREVIEW", "/tmp/ddakpul-icon-preview.png"))
+    print("assets written. fg:", list(fg_dens), "| webp:", list(mip_dens), "| FRAC:", FRAC)
 
 
 if __name__ == "__main__":

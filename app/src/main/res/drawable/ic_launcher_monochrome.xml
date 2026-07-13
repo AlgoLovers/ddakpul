@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 딱풀 런처 아이콘 monochrome(테마 아이콘용) — 마스코트 실루엣(글루 nib+캡+몸통). 시스템이 tint. -->
+<!-- 딱풀 런처 아이콘 monochrome(테마 아이콘용) — 아이디어 전구 실루엣(유리+소켓). 시스템이 tint. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
@@ -7,11 +7,8 @@
     android:viewportHeight="108">
     <path
         android:fillColor="#1A1A1A"
-        android:pathData="M53,20 L57,20 Q62,20 62,25 L62,25 Q62,30 57,30 L53,30 Q48,30 48,25 L48,25 Q48,20 53,20 Z" />
+        android:pathData="M33,47 A21,21 0 1,1 75,47 A21,21 0 1,1 33,47 Z" />
     <path
         android:fillColor="#1A1A1A"
-        android:pathData="M46,27 L64,27 Q73,27 73,36 L73,37 Q73,46 64,46 L46,46 Q37,46 37,37 L37,36 Q37,27 46,27 Z" />
-    <path
-        android:fillColor="#1A1A1A"
-        android:pathData="M51,42 L59,42 Q73,42 73,56 L73,74 Q73,88 59,88 L51,88 Q37,88 37,74 L37,56 Q37,42 51,42 Z" />
+        android:pathData="M51,64 L57,64 Q61,64 61,68 L61,74 Q61,78 57,78 L51,78 Q47,78 47,74 L47,68 Q47,64 51,64 Z" />
 </vector>
