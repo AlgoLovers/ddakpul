@@ -98,6 +98,10 @@
     <string name="solve_premium_banner">🎉 3단계를 잘 풀고 있어요! 난이도 4·5는 이용권으로 열려요.</string>
     <string name="solve_premium_cta">이용권 보기</string>
 
+    <string name="report_premium_locked_title">더 자세한 분석은 이용권으로</string>
+    <string name="report_premium_locked_desc">정답률 추이·난이도 성장 곡선·개념별 숙달도·난이도별 숙달 지도는 이용권에서 볼 수 있어요.</string>
+    <string name="report_premium_cta">이용권 보기</string>
+
     <!-- 리포트 (부모용) -->
     <string name="report_title">학습 리포트</string>
     <string name="report_subtitle">아이의 학습 현황을 한눈에 확인하세요.</string>

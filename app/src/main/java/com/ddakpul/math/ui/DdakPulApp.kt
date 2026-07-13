@@ -95,7 +95,10 @@ private fun AppNavHost(
             )
         }
         composable(DdakPulDestination.REPORT.route) {
-            ReportScreen(onPrintClick = { navController.navigate(PRINT_ROUTE) })
+            ReportScreen(
+                onPrintClick = { navController.navigate(PRINT_ROUTE) },
+                onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) },
+            )
         }
         composable(DdakPulDestination.SETTINGS.route) {
             SettingsScreen(onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) })
