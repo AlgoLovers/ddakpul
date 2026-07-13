@@ -43,12 +43,37 @@
     <string name="result_your_answer">내가 고른 답: %1$s</string>
     <string name="result_correct_answer">정답: %1$s</string>
     <string name="result_explanation_label">풀이</string>
+    <string name="result_show_explanation">풀이 보기</string>
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
     <string name="result_remediation_hint">기초 개념부터 차근차근 다시 풀어봐요.</string>
     <string name="result_next">다음 문제</string>
     <string name="result_softcut_title">오늘은 여기까지도 충분해요 🌙</string>
     <string name="result_softcut_body">열심히 한 만큼 쉬는 것도 공부예요. 더 풀고 싶으면 물론 계속해도 좋아요!</string>
     <string name="result_softcut_stop">오늘은 여기까지</string>
+
+    <!-- 온보딩 (첫 실행) -->
+    <string name="onboarding_welcome_title">딱풀에 오신 걸 환영해요</string>
+    <string name="onboarding_welcome_subtitle">딱 맞는 문제로 생각하는 힘을 키워요.</string>
+    <string name="onboarding_value1_title">진짜 사고력 문제</string>
+    <string name="onboarding_value1_body">계산 문제가 아니라, 연습장 펴고 5분 고민하는 문제예요.</string>
+    <string name="onboarding_value2_title">광고 없이, 안전하게</string>
+    <string name="onboarding_value2_body">광고도 결제 유도도 없어요. 학습 기록은 이 기기 안에만 남아요.</string>
+    <string name="onboarding_value3_title">아이 스스로, 부모는 리포트로</string>
+    <string name="onboarding_value3_body">아이는 스스로 풀고, 부모님은 성장 리포트로 지켜봐요.</string>
+    <string name="onboarding_goal_title">하루에 몇 문제 풀까요?</string>
+    <string name="onboarding_goal_subtitle">언제든 설정에서 바꿀 수 있어요.</string>
+    <string name="onboarding_goal_chip">%1$d문제</string>
+    <string name="onboarding_level_title">아이에게 맞는 시작을 골라요</string>
+    <string name="onboarding_level_subtitle">풀다 보면 실력에 맞게 저절로 조절돼요.</string>
+    <string name="onboarding_level_easy_title">처음이에요</string>
+    <string name="onboarding_level_easy_body">기초부터 차근차근 시작해요.</string>
+    <string name="onboarding_level_mid_title">조금 해봤어요</string>
+    <string name="onboarding_level_mid_body">적당한 난이도로 시작해요.</string>
+    <string name="onboarding_level_hard_title">자신 있어요</string>
+    <string name="onboarding_level_hard_body">도전적인 문제부터 시작해요.</string>
+    <string name="onboarding_back">이전</string>
+    <string name="onboarding_next">다음</string>
+    <string name="onboarding_start">시작하기</string>
 
     <!-- 리포트 (부모용) -->
     <string name="report_title">학습 리포트</string>

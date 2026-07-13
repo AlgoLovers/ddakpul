@@ -20,7 +20,10 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
@@ -103,16 +106,8 @@ fun ResultView(
             )
         }
 
-        // 해설(대표문제에 있을 때)
-        result.explanation?.let { explanation ->
-            FeedbackCard(
-                icon = Icons.Filled.Lightbulb,
-                container = colors.surfaceContainerHigh,
-                content = colors.onSurface,
-                label = stringResource(R.string.result_explanation_label),
-                body = explanation,
-            )
-        }
+        // 단계별 풀이 — 오답이면 바로 펼쳐 교정 학습을 돕고, 정답이면 '풀이 보기'로 원할 때 펼친다.
+        ExplanationSection(result = result)
 
         if (showExplanation) {
             Text(
@@ -149,6 +144,32 @@ fun ResultView(
                 style = MaterialTheme.typography.bodySmall,
                 color = colors.onSurfaceVariant,
             )
+        }
+    }
+}
+
+/** 단계별 풀이. 오답이면 바로 펼치고(교정 학습), 정답이면 '풀이 보기'로 접어 둔다. */
+@Composable
+private fun ExplanationSection(result: GradingResult) {
+    val explanation = result.explanation ?: return
+    val colors = MaterialTheme.colorScheme
+    var expanded by remember(result) { mutableStateOf(!result.isCorrect) }
+    if (expanded) {
+        FeedbackCard(
+            icon = Icons.Filled.Lightbulb,
+            container = colors.surfaceContainerHigh,
+            content = colors.onSurface,
+            label = stringResource(R.string.result_explanation_label),
+            body = explanation,
+        )
+    } else {
+        OutlinedButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Filled.Lightbulb,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 8.dp),
+            )
+            Text(stringResource(R.string.result_show_explanation))
         }
     }
 }

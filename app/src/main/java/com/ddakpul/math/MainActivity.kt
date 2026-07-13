@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.ddakpul.math.core.designsystem.theme.DdakPulTheme
-import com.ddakpul.math.ui.DdakPulApp
+import com.ddakpul.math.ui.AppRoot
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DdakPulTheme {
                 val windowSizeClass = calculateWindowSizeClass(this)
-                DdakPulApp(windowSizeClass = windowSizeClass)
+                AppRoot(windowSizeClass = windowSizeClass)
             }
         }
     }

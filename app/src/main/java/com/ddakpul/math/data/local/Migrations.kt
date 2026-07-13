@@ -62,3 +62,13 @@ val MIGRATION_4_5 =
             )
         }
     }
+
+/** v5 → v6: 온보딩 완료 여부(onboardingComplete) 컬럼 추가 — 첫 실행 안내를 한 번만 보여주기 위해. */
+val MIGRATION_5_6 =
+    object : Migration(5, 6) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE learner_progress ADD COLUMN onboardingComplete INTEGER NOT NULL DEFAULT 0",
+            )
+        }
+    }
