@@ -5142,6 +5142,165 @@
      "n": 10
     }
    }
+  },
+  {
+   "id": "gen-cubestack-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cubestack-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (보이지 않는 뒤·아래 나무도 세어요)",
+   "choices": [
+    "7개",
+    "5개",
+    "4개",
+    "6개"
+   ],
+   "answerIndex": 3,
+   "explanation": "기둥마다 몇 층인지 세어 모두 더해요. 각 칸의 높이를 합하면 6개예요. 앞 나무에 가려 안 보여도 아래는 채워져 있다고 봐요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "앞이나 위에 가려 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 1
+    },
+    "heights": [
+     1,
+     2,
+     3
+    ]
+   }
+  },
+  {
+   "id": "gen-cubestack-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cubestack-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (보이지 않는 뒤·아래 나무도 세어요)",
+   "choices": [
+    "3개",
+    "4개",
+    "6개",
+    "5개"
+   ],
+   "answerIndex": 3,
+   "explanation": "기둥마다 몇 층인지 세어 모두 더해요. 각 칸의 높이를 합하면 5개예요. 앞 나무에 가려 안 보여도 아래는 채워져 있다고 봐요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "앞이나 위에 가려 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 2
+    },
+    "heights": [
+     1,
+     1,
+     1,
+     2
+    ]
+   }
+  },
+  {
+   "id": "gen-cubestack-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cubestack-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (보이지 않는 뒤·아래 나무도 세어요)",
+   "choices": [
+    "4개",
+    "6개",
+    "5개",
+    "7개"
+   ],
+   "answerIndex": 1,
+   "explanation": "기둥마다 몇 층인지 세어 모두 더해요. 각 칸의 높이를 합하면 6개예요. 앞 나무에 가려 안 보여도 아래는 채워져 있다고 봐요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "앞이나 위에 가려 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 3
+    },
+    "heights": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubestack-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-cubestack-5",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (보이지 않는 뒤·아래 나무도 세어요)",
+   "choices": [
+    "10개",
+    "8개",
+    "7개",
+    "9개"
+   ],
+   "answerIndex": 3,
+   "explanation": "기둥마다 몇 층인지 세어 모두 더해요. 각 칸의 높이를 합하면 9개예요. 앞 나무에 가려 안 보여도 아래는 채워져 있다고 봐요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "앞이나 위에 가려 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 2
+    },
+    "heights": [
+     1,
+     2,
+     1,
+     2,
+     1,
+     2
+    ]
+   }
   }
  ]
 }
