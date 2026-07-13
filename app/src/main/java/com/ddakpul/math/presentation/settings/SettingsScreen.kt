@@ -65,8 +65,12 @@ fun SettingsScreen(
             fontWeight = FontWeight.Bold,
         )
 
-        // 이용권 — 난이도 4·5와 전체 리포트를 여는 진입점.
-        PremiumCard(onOpenPaywall = onOpenPaywall)
+        // 이용권 — 난이도 4~7과 전체 리포트를 여는 진입점. 현재 상태(무료/이용중)도 보여준다.
+        PremiumCard(
+            isPremium = uiState.isPremium,
+            daysLeft = uiState.premiumDaysLeft,
+            onOpenPaywall = onOpenPaywall,
+        )
 
         // 하루 목표 — 아이가 스스로 정한다(자율성, SDT).
         DailyGoalCard(dailyGoal = uiState.dailyGoal, onSelect = viewModel::setDailyGoal)
@@ -101,7 +105,11 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun PremiumCard(onOpenPaywall: () -> Unit) {
+private fun PremiumCard(
+    isPremium: Boolean,
+    daysLeft: Int,
+    onOpenPaywall: () -> Unit,
+) {
     SettingsCard {
         Text(
             text = stringResource(R.string.settings_premium_title),
@@ -109,12 +117,17 @@ private fun PremiumCard(onOpenPaywall: () -> Unit) {
             fontWeight = FontWeight.Bold,
         )
         Text(
-            text = stringResource(R.string.settings_premium_desc),
+            text =
+                if (isPremium) {
+                    stringResource(R.string.settings_premium_active, daysLeft)
+                } else {
+                    stringResource(R.string.settings_premium_desc)
+                },
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (isPremium) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
         )
         OutlinedButton(onClick = onOpenPaywall) {
-            Text(stringResource(R.string.settings_premium_open))
+            Text(stringResource(if (isPremium) R.string.settings_premium_manage else R.string.settings_premium_open))
         }
     }
 }
