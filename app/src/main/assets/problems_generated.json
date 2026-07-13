@@ -1867,6 +1867,937 @@
      "minute": 0
     }
    }
+  },
+  {
+   "id": "gen-cards-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "자리값",
+    "가장 큰 수 만들기"
+   ],
+   "statement": "숫자 카드 3, 7, 5 를 한 번씩 모두 써서 세 자리 수를 만들려고 해요. 만들 수 있는 가장 큰 수는 얼마일까요?",
+   "choices": [
+    "357",
+    "375",
+    "753",
+    "735"
+   ],
+   "answerIndex": 2,
+   "explanation": "가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 7, 십의 자리에 5, 일의 자리에 3을(를) 놓으면 753이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cards-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "자리값",
+    "가장 큰 수 만들기"
+   ],
+   "statement": "숫자 카드 2, 8, 4 를 한 번씩 모두 써서 세 자리 수를 만들려고 해요. 만들 수 있는 가장 큰 수는 얼마일까요?",
+   "choices": [
+    "824",
+    "842",
+    "284",
+    "248"
+   ],
+   "answerIndex": 1,
+   "explanation": "가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 8, 십의 자리에 4, 일의 자리에 2을(를) 놓으면 842이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cards-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "자리값",
+    "가장 큰 수 만들기"
+   ],
+   "statement": "숫자 카드 6, 1, 9 를 한 번씩 모두 써서 세 자리 수를 만들려고 해요. 만들 수 있는 가장 큰 수는 얼마일까요?",
+   "choices": [
+    "961",
+    "169",
+    "619",
+    "916"
+   ],
+   "answerIndex": 0,
+   "explanation": "가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 9, 십의 자리에 6, 일의 자리에 1을(를) 놓으면 961이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cards-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "자리값",
+    "가장 큰 수 만들기"
+   ],
+   "statement": "숫자 카드 4, 7, 2 를 한 번씩 모두 써서 세 자리 수를 만들려고 해요. 만들 수 있는 가장 큰 수는 얼마일까요?",
+   "choices": [
+    "247",
+    "472",
+    "742",
+    "724"
+   ],
+   "answerIndex": 2,
+   "explanation": "가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 7, 십의 자리에 4, 일의 자리에 2을(를) 놓으면 742이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq1-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 2, 5, 8, 11, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "14",
+    "11",
+    "15",
+    "17"
+   ],
+   "answerIndex": 0,
+   "explanation": "이웃한 수의 차이를 살펴봐요. 매번 3씩 커지고 있어요. 그러니 11 다음은 11+3=14이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq1-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 3, 7, 11, 15, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "23",
+    "20",
+    "15",
+    "19"
+   ],
+   "answerIndex": 3,
+   "explanation": "이웃한 수의 차이를 살펴봐요. 매번 4씩 커지고 있어요. 그러니 15 다음은 15+4=19이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq1-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 30, 26, 22, 18, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "14",
+    "10",
+    "18",
+    "15"
+   ],
+   "answerIndex": 0,
+   "explanation": "이웃한 수의 차이를 살펴봐요. 매번 4씩 작아지고 있어요. 그러니 18 다음은 18−4=14이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq1-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 1, 4, 7, 10, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "14",
+    "10",
+    "16",
+    "13"
+   ],
+   "answerIndex": 3,
+   "explanation": "이웃한 수의 차이를 살펴봐요. 매번 3씩 커지고 있어요. 그러니 10 다음은 10+3=13이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-match-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정사각형을 한 줄로 이어 붙여 3개 만들려고 해요. 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "9개",
+    "10개",
+    "11개",
+    "12개"
+   ],
+   "answerIndex": 1,
+   "explanation": "정사각형 1개는 성냥 4개가 필요해요. 오른쪽에 하나씩 더 붙일 때는 왼쪽 변을 이미 쓰고 있어서 3개만 더 있으면 돼요. 그래서 3개면 4+3×2=10개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "정사각형마다 4개씩 세면 이웃끼리 붙은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-match-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정사각형을 한 줄로 이어 붙여 4개 만들려고 해요. 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "15개",
+    "13개",
+    "12개",
+    "16개"
+   ],
+   "answerIndex": 1,
+   "explanation": "정사각형 1개는 성냥 4개가 필요해요. 오른쪽에 하나씩 더 붙일 때는 왼쪽 변을 이미 쓰고 있어서 3개만 더 있으면 돼요. 그래서 4개면 4+3×3=13개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "정사각형마다 4개씩 세면 이웃끼리 붙은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-match-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정사각형을 한 줄로 이어 붙여 5개 만들려고 해요. 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "16개",
+    "15개",
+    "20개",
+    "19개"
+   ],
+   "answerIndex": 0,
+   "explanation": "정사각형 1개는 성냥 4개가 필요해요. 오른쪽에 하나씩 더 붙일 때는 왼쪽 변을 이미 쓰고 있어서 3개만 더 있으면 돼요. 그래서 5개면 4+3×4=16개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "정사각형마다 4개씩 세면 이웃끼리 붙은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-match-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정사각형을 한 줄로 이어 붙여 6개 만들려고 해요. 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "19개",
+    "18개",
+    "23개",
+    "24개"
+   ],
+   "answerIndex": 0,
+   "explanation": "정사각형 1개는 성냥 4개가 필요해요. 오른쪽에 하나씩 더 붙일 때는 왼쪽 변을 이미 쓰고 있어서 3개만 더 있으면 돼요. 그래서 6개면 4+3×5=19개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "정사각형마다 4개씩 세면 이웃끼리 붙은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-outfit-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "윗옷 3가지(빨강, 파랑, 노랑)와 아래옷 2가지(청바지, 검정바지)가 있어요. 윗옷과 아래옷을 하나씩 골라 입는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "7가지",
+    "6가지",
+    "9가지",
+    "5가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "윗옷 하나를 고를 때마다 아래옷을 2가지로 짝지을 수 있어요. 윗옷이 3가지니까 3×2=6가지예요. 표를 그려 하나씩 짝지어도 6가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-outfit-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "윗옷 2가지(티셔츠, 셔츠)와 아래옷 3가지(반바지, 긴바지, 치마)가 있어요. 윗옷과 아래옷을 하나씩 골라 입는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "6가지",
+    "5가지",
+    "7가지",
+    "9가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "윗옷 하나를 고를 때마다 아래옷을 3가지로 짝지을 수 있어요. 윗옷이 2가지니까 2×3=6가지예요. 표를 그려 하나씩 짝지어도 6가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-outfit-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "윗옷 2가지(흰색, 회색)와 아래옷 2가지(운동화, 구두)가 있어요. 윗옷과 아래옷을 하나씩 골라 입는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "4가지",
+    "5가지",
+    "3가지",
+    "7가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "윗옷 하나를 고를 때마다 아래옷을 2가지로 짝지을 수 있어요. 윗옷이 2가지니까 2×2=4가지예요. 표를 그려 하나씩 짝지어도 4가지가 나와요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-outfit-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "윗옷 3가지(노랑, 초록, 분홍)와 아래옷 3가지(긴치마, 짧은치마, 바지)가 있어요. 윗옷과 아래옷을 하나씩 골라 입는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "9가지",
+    "8가지",
+    "10가지",
+    "6가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "윗옷 하나를 고를 때마다 아래옷을 3가지로 짝지을 수 있어요. 윗옷이 3가지니까 3×3=9가지예요. 표를 그려 하나씩 짝지어도 9가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-brokensum-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 2,
+   "groupId": "g-gen-brokensum-2",
+   "concepts": [
+    "벌레먹은셈",
+    "자리값 거꾸로"
+   ],
+   "statement": "□7 + 25 = 62 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "choices": [
+    "4",
+    "2",
+    "6",
+    "3"
+   ],
+   "answerIndex": 3,
+   "explanation": "□7는 62에서 25를 뺀 수예요. 62−25=37이니 십의 자리 □는 3이에요. 일의 자리 7도 딱 맞죠.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-brokensum-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 2,
+   "groupId": "g-gen-brokensum-2",
+   "concepts": [
+    "벌레먹은셈",
+    "자리값 거꾸로"
+   ],
+   "statement": "□2 + 36 = 88 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "choices": [
+    "4",
+    "5",
+    "6",
+    "8"
+   ],
+   "answerIndex": 1,
+   "explanation": "□2는 88에서 36를 뺀 수예요. 88−36=52이니 십의 자리 □는 5이에요. 일의 자리 2도 딱 맞죠.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-brokensum-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 2,
+   "groupId": "g-gen-brokensum-2",
+   "concepts": [
+    "벌레먹은셈",
+    "자리값 거꾸로"
+   ],
+   "statement": "□8 + 13 = 61 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "choices": [
+    "4",
+    "6",
+    "3",
+    "5"
+   ],
+   "answerIndex": 0,
+   "explanation": "□8는 61에서 13를 뺀 수예요. 61−13=48이니 십의 자리 □는 4이에요. 일의 자리 8도 딱 맞죠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-brokensum-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 2,
+   "groupId": "g-gen-brokensum-2",
+   "concepts": [
+    "벌레먹은셈",
+    "자리값 거꾸로"
+   ],
+   "statement": "□4 + 19 = 83 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "choices": [
+    "5",
+    "7",
+    "6",
+    "8"
+   ],
+   "answerIndex": 2,
+   "explanation": "□4는 83에서 19를 뺀 수예요. 83−19=64이니 십의 자리 □는 6이에요. 일의 자리 4도 딱 맞죠.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cases-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 2,
+   "groupId": "g-gen-cases-2",
+   "concepts": [
+    "경우의 수",
+    "곱의 원리"
+   ],
+   "statement": "동전 3개를 동시에 던질 때 나오는 경우(앞·뒤를 구별해요)는 모두 몇 가지일까요?",
+   "choices": [
+    "7가지",
+    "8가지",
+    "6가지",
+    "10가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "각 단계에서 갈라지는 경우의 수를 곱해요. 2 × 2 × 2 = 8가지예요. 빠짐없이 하나씩 나열해도 8가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "더하는 게 아니라 곱해요. 첫 경우마다 다음 경우가 다시 갈라져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cases-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 2,
+   "groupId": "g-gen-cases-2",
+   "concepts": [
+    "경우의 수",
+    "곱의 원리"
+   ],
+   "statement": "주사위 1개와 동전 1개를 함께 던질 때 나오는 경우는 모두 몇 가지일까요?",
+   "choices": [
+    "8가지",
+    "14가지",
+    "11가지",
+    "12가지"
+   ],
+   "answerIndex": 3,
+   "explanation": "각 단계에서 갈라지는 경우의 수를 곱해요. 6 × 2 = 12가지예요. 빠짐없이 하나씩 나열해도 12가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "더하는 게 아니라 곱해요. 첫 경우마다 다음 경우가 다시 갈라져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cases-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 2,
+   "groupId": "g-gen-cases-2",
+   "concepts": [
+    "경우의 수",
+    "곱의 원리"
+   ],
+   "statement": "두 사람이 가위바위보를 한 판 할 때 나오는 경우(누가 무엇을 냈는지 구별해요)는 모두 몇 가지일까요?",
+   "choices": [
+    "6가지",
+    "9가지",
+    "8가지",
+    "11가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "각 단계에서 갈라지는 경우의 수를 곱해요. 3 × 3 = 9가지예요. 빠짐없이 하나씩 나열해도 9가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "더하는 게 아니라 곱해요. 첫 경우마다 다음 경우가 다시 갈라져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-cases-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 2,
+   "groupId": "g-gen-cases-2",
+   "concepts": [
+    "경우의 수",
+    "곱의 원리"
+   ],
+   "statement": "김밥 3종류와 음료 2종류 중 하나씩 고르는 경우는 모두 몇 가지일까요?",
+   "choices": [
+    "5가지",
+    "9가지",
+    "6가지",
+    "8가지"
+   ],
+   "answerIndex": 2,
+   "explanation": "각 단계에서 갈라지는 경우의 수를 곱해요. 3 × 2 = 6가지예요. 빠짐없이 하나씩 나열해도 6가지가 나와요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "더하는 게 아니라 곱해요. 첫 경우마다 다음 경우가 다시 갈라져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-promise-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "약속 연산",
+    "규칙 이해와 적용"
+   ],
+   "statement": "새로운 약속을 정했어요. 가★나 = 가×나 − 나 예를 들어 2★3 = 3예요. 그러면 5★3는 얼마일까요?",
+   "choices": [
+    "10",
+    "15",
+    "17",
+    "12"
+   ],
+   "answerIndex": 3,
+   "explanation": "약속한 규칙에 가=5, 나=3를 그대로 넣어 계산하면 12이에요. 예시(2★3=3)와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "가×나까지만 하고 약속의 나머지 부분을 빠뜨렸어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-promise-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "약속 연산",
+    "규칙 이해와 적용"
+   ],
+   "statement": "새로운 약속을 정했어요. 가◆나 = 가×나 + 가 예를 들어 2◆3 = 8예요. 그러면 4◆6는 얼마일까요?",
+   "choices": [
+    "34",
+    "28",
+    "24",
+    "26"
+   ],
+   "answerIndex": 1,
+   "explanation": "약속한 규칙에 가=4, 나=6를 그대로 넣어 계산하면 28이에요. 예시(2◆3=8)와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "가×나까지만 하고 약속의 나머지 부분을 빠뜨렸어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-promise-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "약속 연산",
+    "규칙 이해와 적용"
+   ],
+   "statement": "새로운 약속을 정했어요. 가♥나 = 가 + 나×2 예를 들어 2♥3 = 8예요. 그러면 3♥5는 얼마일까요?",
+   "choices": [
+    "11",
+    "13",
+    "15",
+    "18"
+   ],
+   "answerIndex": 1,
+   "explanation": "약속한 규칙에 가=3, 나=5를 그대로 넣어 계산하면 13이에요. 예시(2♥3=8)와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "가×나까지만 하고 약속의 나머지 부분을 빠뜨렸어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-promise-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "약속 연산",
+    "규칙 이해와 적용"
+   ],
+   "statement": "새로운 약속을 정했어요. 가▲나 = 가×가 − 나 예를 들어 2▲3 = 1예요. 그러면 6▲4는 얼마일까요?",
+   "choices": [
+    "36",
+    "30",
+    "24",
+    "32"
+   ],
+   "answerIndex": 3,
+   "explanation": "약속한 규칙에 가=6, 나=4를 그대로 넣어 계산하면 32이에요. 예시(2▲3=1)와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "가×나까지만 하고 약속의 나머지 부분을 빠뜨렸어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq2-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "계차 수열",
+    "차이의 규칙"
+   ],
+   "statement": "규칙을 찾아보세요. 1, 2, 4, 7, 11, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "17",
+    "11",
+    "16",
+    "15"
+   ],
+   "answerIndex": 2,
+   "explanation": "이웃한 수의 차이를 적어 보면 1, 2, 3, 4로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 5이고, 11+5=16이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq2-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "계차 수열",
+    "차이의 규칙"
+   ],
+   "statement": "규칙을 찾아보세요. 2, 3, 5, 8, 12, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "18",
+    "16",
+    "17",
+    "12"
+   ],
+   "answerIndex": 2,
+   "explanation": "이웃한 수의 차이를 적어 보면 1, 2, 3, 4로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 5이고, 12+5=17이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq2-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "계차 수열",
+    "차이의 규칙"
+   ],
+   "statement": "규칙을 찾아보세요. 1, 3, 6, 10, 15, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "20",
+    "21",
+    "22",
+    "15"
+   ],
+   "answerIndex": 1,
+   "explanation": "이웃한 수의 차이를 적어 보면 2, 3, 4, 5로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 6이고, 15+6=21이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-seq2-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "계차 수열",
+    "차이의 규칙"
+   ],
+   "statement": "규칙을 찾아보세요. 3, 4, 6, 9, 13, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "13",
+    "18",
+    "17",
+    "19"
+   ],
+   "answerIndex": 1,
+   "explanation": "이웃한 수의 차이를 적어 보면 1, 2, 3, 4로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 5이고, 13+5=18이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-truthone-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-truthone-4",
+   "concepts": [
+    "진실과 거짓",
+    "경우 따져보기"
+   ],
+   "statement": "꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. 민준: \"나는 안 깼어.\" / 서연: \"민준이(가) 깼어.\" / 지호: \"나는 안 깼어.\" 꽃병을 깬 사람은 누구일까요?",
+   "choices": [
+    "알 수 없다",
+    "민준",
+    "서연",
+    "지호"
+   ],
+   "answerIndex": 3,
+   "explanation": "한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 지호이(가) 범인일 때뿐이에요. 그래서 답은 지호이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-truthone-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-truthone-4",
+   "concepts": [
+    "진실과 거짓",
+    "경우 따져보기"
+   ],
+   "statement": "꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. 민준: \"서연이(가) 깼어.\" / 서연: \"나는 안 깼어.\" / 지호: \"나는 안 깼어.\" 꽃병을 깬 사람은 누구일까요?",
+   "choices": [
+    "지호",
+    "민준",
+    "서연",
+    "알 수 없다"
+   ],
+   "answerIndex": 0,
+   "explanation": "한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 지호이(가) 범인일 때뿐이에요. 그래서 답은 지호이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-truthone-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-truthone-4",
+   "concepts": [
+    "진실과 거짓",
+    "경우 따져보기"
+   ],
+   "statement": "꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. 민준: \"나는 안 깼어.\" / 서연: \"나는 안 깼어.\" / 지호: \"민준이(가) 깼어.\" 꽃병을 깬 사람은 누구일까요?",
+   "choices": [
+    "민준",
+    "지호",
+    "알 수 없다",
+    "서연"
+   ],
+   "answerIndex": 3,
+   "explanation": "한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 서연이(가) 범인일 때뿐이에요. 그래서 답은 서연이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-truthone-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-truthone-4",
+   "concepts": [
+    "진실과 거짓",
+    "경우 따져보기"
+   ],
+   "statement": "꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. 민준: \"나는 안 깼어.\" / 서연: \"지호이(가) 깼어.\" / 지호: \"나는 안 깼어.\" 꽃병을 깬 사람은 누구일까요?",
+   "choices": [
+    "서연",
+    "지호",
+    "민준",
+    "알 수 없다"
+   ],
+   "answerIndex": 2,
+   "explanation": "한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 민준이(가) 범인일 때뿐이에요. 그래서 답은 민준이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
   }
  ]
 }
