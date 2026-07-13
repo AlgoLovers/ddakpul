@@ -76,8 +76,40 @@ fun ProblemFigureView(
             FigureType.GRID_POLYGON -> {
                 drawGridPolygon(figure, ink, accent, left, top, side)
             }
+
+            FigureType.TRIANGLE_FAN -> {
+                drawTriangleFan(figure, ink, accent, left, top, side)
+            }
         }
     }
+}
+
+/** 삼각형 개수 세기 부채꼴 — 큰 삼각형 + 꼭짓점에서 밑변으로 그은 k개의 선. */
+private fun DrawScope.drawTriangleFan(
+    figure: ProblemFigure,
+    ink: Color,
+    accent: Color,
+    left: Float,
+    top: Float,
+    side: Float,
+) {
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val apex = Offset(left + side / 2f, top + side * 0.06f)
+    val baseY = top + side * 0.94f
+    val blX = left + side * 0.06f
+    val brX = left + side * 0.94f
+    for (i in 1..k) {
+        val footX = blX + (brX - blX) * i / (k + 1)
+        drawLine(accent, apex, Offset(footX, baseY), strokeWidth = 2f)
+    }
+    val outline =
+        Path().apply {
+            moveTo(apex.x, apex.y)
+            lineTo(blX, baseY)
+            lineTo(brX, baseY)
+            close()
+        }
+    drawPath(outline, color = ink, style = Stroke(width = 4f))
 }
 
 /** 격자 위 색칠 다각형(넓이 문제). 옅은 모눈 + 반투명 채움 + 외곽선. */
