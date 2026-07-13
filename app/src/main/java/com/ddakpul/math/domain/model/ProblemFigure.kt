@@ -16,6 +16,9 @@ enum class FigureType {
 
     /** L자 도형(모퉁이 잘린 정사각형). params: w, h(전체 변), cutW, cutH(잘린 변). 단위는 cm 라벨. */
     L_SHAPE,
+
+    /** 정다각형. params: n(변 수 3~12), diagonals(1이면 대각선도 그린다). */
+    POLYGON,
 }
 
 data class ProblemFigure(

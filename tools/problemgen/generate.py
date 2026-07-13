@@ -826,6 +826,7 @@ def gen_rectangle_count():
             f"{ans}개", [f"{w * h}개", f"{ans - 3}개", f"{ans + 3}개"],
             f"직사각형은 세로선 2개와 가로선 2개를 고르면 하나 정해져요. 세로선 {w + 1}개 중 2개 → {comb(w + 1, 2)}가지, 가로선 {h + 1}개 중 2개 → {comb(h + 1, 2)}가지. 곱하면 {comb(w + 1, 2)}×{comb(h + 1, 2)}={ans}개예요.",
             [(f"{w * h}개", "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요.")],
+            figure={"type": "GRID", "params": {"w": w, "h": h}},
         )
 
 
@@ -918,6 +919,7 @@ def gen_polygon_angle():
             f"{ans}도", [f"{360 // n}도", f"{total}도", f"{180 - ans}도"],
             f"{n}각형의 내각의 합은 ({n}−2)×180={total}도예요. 정다각형은 내각이 모두 같으니 {n}{_euro(n)} 나눠요. {total}÷{n}={ans}도예요.",
             [(f"{360 // n}도", "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요.")],
+            figure={"type": "POLYGON", "params": {"n": n}},
         )
 
 
@@ -931,6 +933,7 @@ def gen_polygon_diagonals():
             f"{ans}개", [f"{n * (n - 3)}개", f"{n - 3}개", f"{n * (n - 1) // 2}개"],
             f"한 꼭짓점에서는 자기 자신과 양옆 두 꼭짓점(변)을 뺀 {n}−3={n - 3}개로 대각선을 그어요. 꼭짓점이 {n}개니 {n}×{n - 3}인데, 대각선 하나를 양쪽에서 두 번 셌으니 2로 나눠요. {n}×{n - 3}÷2={ans}개예요.",
             [(f"{n * (n - 3)}개", "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요.")],
+            figure={"type": "POLYGON", "params": {"n": n, "diagonals": 1}},
         )
 
 
@@ -980,6 +983,21 @@ def gen_cube_surface():
         )
 
 
+# ── 48. 정다각형 한 외각 (난4, 도형과측정) ──────────────────────────────────
+def gen_polygon_exterior():
+    for n in [5, 6, 8, 10]:
+        assert 360 % n == 0
+        ans = 360 // n
+        add(
+            "polyext", "SHAPE_MEASUREMENT", 4, ["외각", "정다각형"],
+            f"정{n}각형의 한 외각의 크기는 몇 도일까요?",
+            f"{ans}도", [f"{(n - 2) * 180 // n}도", "360도", f"{ans * 2}도"],
+            f"정다각형의 외각을 모두 더하면 어떤 다각형이든 360도예요. 정{n}각형은 외각이 모두 같으니 360÷{n}={ans}도예요.",
+            [(f"{(n - 2) * 180 // n}도", "그건 한 내각이에요. 외각은 360을 꼭짓점 수로 나눈 값이에요.")],
+            figure={"type": "POLYGON", "params": {"n": n}},
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -999,6 +1017,8 @@ GENERATORS = [
     gen_parity_invariant, gen_inclusion_exclusion, gen_nim,
     gen_polygon_angle, gen_polygon_diagonals, gen_clock_minutes,
     gen_rect_area_max, gen_cube_surface,
+    # v4.1 확충 — 도형 그림(POLYGON) 부착 + 외각
+    gen_polygon_exterior,
 ]
 
 for g in GENERATORS:
