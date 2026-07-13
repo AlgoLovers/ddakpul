@@ -724,6 +724,83 @@ def gen_consecutive_sum():
         )
 
 
+# ── 33. 비둘기집 — 같은 색 한 켤레 보장 (난5, 자료와가능성) ─────────────────
+def gen_pigeonhole():
+    for colors in [["빨강", "파랑", "노랑"], ["빨강", "파랑", "노랑", "초록"],
+                   ["검정", "흰색"], ["빨강", "주황", "노랑", "초록", "파랑"]]:
+        c = len(colors)
+        ans = c + 1  # 최악의 경우 색마다 1짝(c짝)까지 다 다를 수 있으니 한 짝 더
+        add(
+            "pigeon", "DATA_POSSIBILITY", 5, ["비둘기집", "최악의 경우"],
+            f"서랍에 {c}가지 색({', '.join(colors)}) 양말이 잔뜩 섞여 있어요. 어두워서 색이 안 보일 때, 같은 색 한 켤레(2짝)를 확실히 꺼내려면 최소 몇 짝을 꺼내야 할까요?",
+            f"{ans}짝", [f"{c}짝", f"{c * 2}짝", f"{ans + 1}짝"],
+            f"운이 가장 나쁠 때를 생각해요. {c}짝을 꺼냈는데 공교롭게 색이 모두 다를 수도 있어요({c}가지니까). 하지만 한 짝만 더 꺼내면({ans}짝) 반드시 이미 나온 색과 겹쳐 한 켤레가 완성돼요. 그래서 {ans}짝이에요.",
+            [(f"{c}짝", f"{c}짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요.")],
+        )
+
+
+# ── 34. 색칠한 정육면체 자르기 (난5, 도형과측정) ─────────────────────────────
+def gen_painted_cube():
+    from itertools import product
+
+    def count_faces(n, k):
+        return sum(
+            1 for x, y, z in product(range(n), repeat=3)
+            if sum(1 for v in (x, y, z) if v in (0, n - 1)) == k
+        )
+
+    for n, k, label in [(3, 2, "정확히 두 면만 색칠된"), (4, 1, "정확히 한 면만 색칠된"),
+                        (5, 2, "정확히 두 면만 색칠된"), (4, 0, "어느 면도 색칠되지 않은")]:
+        ans = count_faces(n, k)
+        if k == 2:
+            assert ans == 12 * (n - 2), "색칠정육면체 검산 실패"
+            expl = f"두 면이 칠해진 조각은 정육면체의 '모서리'에 있어요. 꼭짓점(세 면) 조각을 빼면 모서리마다 {n - 2}개씩, 모서리는 12개예요. 12×{n - 2}={ans}개예요."
+        elif k == 1:
+            assert ans == 6 * (n - 2) ** 2, "색칠정육면체 검산 실패"
+            expl = f"한 면만 칠해진 조각은 각 면 안쪽에 모여 있어요. 한 면에 {n - 2}×{n - 2}={(n - 2) ** 2}개, 면은 6개예요. 6×{(n - 2) ** 2}={ans}개예요."
+        else:
+            assert ans == (n - 2) ** 3, "색칠정육면체 검산 실패"
+            expl = f"어느 면도 안 칠해진 조각은 속에 숨은 덩어리예요. {n - 2}×{n - 2}×{n - 2}={ans}개예요."
+        add(
+            "cube", "SHAPE_MEASUREMENT", 5, ["쌓기나무", "공간 추론"],
+            f"한 모서리가 {n}칸인 정육면체의 겉면을 모두 색칠한 뒤 1칸짜리 작은 정육면체로 잘랐어요. {label} 작은 정육면체는 몇 개일까요?",
+            f"{ans}개", [f"{ans + 6}개", f"{n ** 3}개", f"{max(1, ans - 4)}개"],
+            expl,
+            [(f"{n ** 3}개", "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요.")],
+        )
+
+
+# ── 35. 약수의 개수 (난4, 수와연산) ─────────────────────────────────────────
+def gen_divisor_count():
+    for num in [36, 48, 60, 72]:
+        divisors = [d for d in range(1, num + 1) if num % d == 0]
+        ans = len(divisors)
+        add(
+            "divcount", "NUMBER_OPERATION", 4, ["약수", "짝지어 세기"],
+            f"{num}의 약수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{ans - 2}개", f"{ans + 2}개", f"{ans + 1}개"],
+            f"약수를 '작은 수 × 큰 수'로 짝지어 빠짐없이 찾아요. 1부터 순서대로 {num}{_eul(num)} 나누어떨어지게 하는 수를 적으면 {', '.join(map(str, divisors))} — 모두 {ans}개예요.",
+            [(f"{ans + 1}개", "약수를 하나 빠뜨리거나 중복해 세지 않았는지 짝지어 확인해요.")],
+        )
+
+
+# ── 36. 두 자리 수 추리 — 두 조건 함께 (난5, 수와연산) ───────────────────────
+def gen_number_riddle():
+    for s, d in [(12, 2), (9, 3), (14, 2), (7, 3)]:
+        sols = [10 * t + o for t in range(1, 10) for o in range(0, 10) if t + o == s and t - o == d]
+        assert len(sols) == 1, "수 추리 유일성 실패"
+        ans = sols[0]
+        tens, ones = ans // 10, ans % 10
+        reversed_num = 10 * ones + tens
+        add(
+            "riddle", "NUMBER_OPERATION", 5, ["연립 추론", "자리값"],
+            f"어떤 두 자리 수가 있어요. 십의 자리 숫자와 일의 자리 숫자를 더하면 {s}, 그리고 십의 자리가 일의 자리보다 {d} 커요. 이 수는 무엇일까요?",
+            str(ans), [str(reversed_num), str(ans + 1), str(ans - 1)],
+            f"두 조건을 함께 써요. (십의 자리)+(일의 자리)={s}, (십의 자리)−(일의 자리)={d}. 두 식을 더하면 일의 자리끼리 지워져 십의 자리가 두 배가 되니, ({s}+{d})÷2={tens}{_iga(tens)} 십의 자리예요. 일의 자리는 {s}−{tens}={ones}이니 답은 {ans}{_copula(ans)}.",
+            [(str(reversed_num), "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요.")],
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -735,6 +812,8 @@ GENERATORS = [
     # v2.1 확충 — 도형 난2·자료 난3 빈칸 + 수 감각 다양성
     gen_triangles_match, gen_handshake, gen_dice_sum, gen_remainder,
     gen_consecutive_sum,
+    # v3 확충 — 유료(난4·5) 깊이: 비둘기집·색칠정육면체·약수개수·수 추리
+    gen_pigeonhole, gen_painted_cube, gen_divisor_count, gen_number_riddle,
 ]
 
 for g in GENERATORS:
