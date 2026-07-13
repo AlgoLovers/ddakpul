@@ -57,6 +57,53 @@ fun ProblemFigureView(
                     drawText(measured, topLeft = Offset(x - measured.size.width / 2f, y - measured.size.height / 2f))
                 }
             }
+
+            FigureType.POLYGON -> {
+                drawPolygon(figure, ink, accent, left, top, side)
+            }
+        }
+    }
+}
+
+/** 정n각형을 원에 내접시켜 그린다. diagonals=1이면 대각선도 함께 그린다. */
+private fun DrawScope.drawPolygon(
+    figure: ProblemFigure,
+    ink: Color,
+    accent: Color,
+    left: Float,
+    top: Float,
+    side: Float,
+) {
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val center = Offset(left + side / 2f, top + side / 2f)
+    val radius = side * 0.42f
+    val pts =
+        (0 until n).map { i ->
+            val a = Math.toRadians(-90.0 + i * 360.0 / n).toFloat()
+            center + Offset(cos(a) * radius, sin(a) * radius)
+        }
+    val path =
+        Path().apply {
+            moveTo(pts[0].x, pts[0].y)
+            for (i in 1 until n) lineTo(pts[i].x, pts[i].y)
+            close()
+        }
+    drawPath(path, color = ink, style = Stroke(width = 4f))
+    if ((figure.params["diagonals"] ?: 0) == 1) {
+        drawPolygonDiagonals(pts, accent)
+    }
+}
+
+/** 정다각형의 모든 대각선(변은 제외)을 그린다. */
+private fun DrawScope.drawPolygonDiagonals(
+    pts: List<Offset>,
+    accent: Color,
+) {
+    val n = pts.size
+    for (i in 0 until n) {
+        for (j in i + 2 until n) {
+            if (i == 0 && j == n - 1) continue // 첫·끝 꼭짓점은 변이라 제외
+            drawLine(accent, pts[i], pts[j], strokeWidth = 2f)
         }
     }
 }

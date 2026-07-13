@@ -302,6 +302,48 @@ private fun drawFigure(
         FigureType.DOT_BORDER -> drawPdfDotBorder(canvas, figure, centerX, top, size, fill)
         FigureType.GRID -> drawPdfGrid(canvas, figure, centerX, top, size, ink, fill)
         FigureType.L_SHAPE -> drawPdfLShape(canvas, figure, centerX, top, size, ink)
+        FigureType.POLYGON -> drawPdfPolygon(canvas, figure, centerX, top, size, ink)
+    }
+}
+
+private fun drawPdfPolygon(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val cy = top + size / 2f
+    val radius = size * 0.42f
+    val xs = FloatArray(n)
+    val ys = FloatArray(n)
+    for (i in 0 until n) {
+        val a = Math.toRadians(-90.0 + i * 360.0 / n)
+        xs[i] = centerX + cos(a).toFloat() * radius
+        ys[i] = cy + sin(a).toFloat() * radius
+    }
+    for (i in 0 until n) {
+        canvas.drawLine(xs[i], ys[i], xs[(i + 1) % n], ys[(i + 1) % n], ink)
+    }
+    if ((figure.params["diagonals"] ?: 0) == 1) {
+        drawPdfPolygonDiagonals(canvas, xs, ys, Paint(ink).apply { strokeWidth = 0.8f })
+    }
+}
+
+private fun drawPdfPolygonDiagonals(
+    canvas: Canvas,
+    xs: FloatArray,
+    ys: FloatArray,
+    paint: Paint,
+) {
+    val n = xs.size
+    for (i in 0 until n) {
+        for (j in i + 2 until n) {
+            if (i == 0 && j == n - 1) continue // 첫·끝 꼭짓점은 변이라 제외
+            canvas.drawLine(xs[i], ys[i], xs[j], ys[j], paint)
+        }
     }
 }
 

@@ -3891,7 +3891,14 @@
      "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 2,
+     "h": 2
+    }
+   }
   },
   {
    "id": "gen-rectcount-2",
@@ -3917,7 +3924,14 @@
      "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 2
+    }
+   }
   },
   {
    "id": "gen-rectcount-3",
@@ -3943,7 +3957,14 @@
      "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 3
+    }
+   }
   },
   {
    "id": "gen-rectcount-4",
@@ -3969,7 +3990,14 @@
      "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 4,
+     "h": 2
+    }
+   }
   },
   {
    "id": "gen-geoseq-1",
@@ -4411,7 +4439,13 @@
      "misconception": "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 5
+    }
+   }
   },
   {
    "id": "gen-polyang-2",
@@ -4437,7 +4471,13 @@
      "misconception": "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 6
+    }
+   }
   },
   {
    "id": "gen-polyang-3",
@@ -4463,7 +4503,13 @@
      "misconception": "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 8
+    }
+   }
   },
   {
    "id": "gen-polyang-4",
@@ -4489,7 +4535,13 @@
      "misconception": "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 10
+    }
+   }
   },
   {
    "id": "gen-polydiag-1",
@@ -4515,7 +4567,14 @@
      "misconception": "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 5,
+     "diagonals": 1
+    }
+   }
   },
   {
    "id": "gen-polydiag-2",
@@ -4541,7 +4600,14 @@
      "misconception": "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 6,
+     "diagonals": 1
+    }
+   }
   },
   {
    "id": "gen-polydiag-3",
@@ -4567,7 +4633,14 @@
      "misconception": "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 8,
+     "diagonals": 1
+    }
+   }
   },
   {
    "id": "gen-polydiag-4",
@@ -4593,7 +4666,14 @@
      "misconception": "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 10,
+     "diagonals": 1
+    }
+   }
   },
   {
    "id": "gen-clockmin-1",
@@ -4934,6 +5014,134 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-polyext-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-polyext-4",
+   "concepts": [
+    "외각",
+    "정다각형"
+   ],
+   "statement": "정5각형의 한 외각의 크기는 몇 도일까요?",
+   "choices": [
+    "108도",
+    "360도",
+    "144도",
+    "72도"
+   ],
+   "answerIndex": 3,
+   "explanation": "정다각형의 외각을 모두 더하면 어떤 다각형이든 360도예요. 정5각형은 외각이 모두 같으니 360÷5=72도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그건 한 내각이에요. 외각은 360을 꼭짓점 수로 나눈 값이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 5
+    }
+   }
+  },
+  {
+   "id": "gen-polyext-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-polyext-4",
+   "concepts": [
+    "외각",
+    "정다각형"
+   ],
+   "statement": "정6각형의 한 외각의 크기는 몇 도일까요?",
+   "choices": [
+    "63도",
+    "360도",
+    "60도",
+    "120도"
+   ],
+   "answerIndex": 2,
+   "explanation": "정다각형의 외각을 모두 더하면 어떤 다각형이든 360도예요. 정6각형은 외각이 모두 같으니 360÷6=60도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 한 내각이에요. 외각은 360을 꼭짓점 수로 나눈 값이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 6
+    }
+   }
+  },
+  {
+   "id": "gen-polyext-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-polyext-4",
+   "concepts": [
+    "외각",
+    "정다각형"
+   ],
+   "statement": "정8각형의 한 외각의 크기는 몇 도일까요?",
+   "choices": [
+    "45도",
+    "360도",
+    "135도",
+    "90도"
+   ],
+   "answerIndex": 0,
+   "explanation": "정다각형의 외각을 모두 더하면 어떤 다각형이든 360도예요. 정8각형은 외각이 모두 같으니 360÷8=45도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그건 한 내각이에요. 외각은 360을 꼭짓점 수로 나눈 값이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 8
+    }
+   }
+  },
+  {
+   "id": "gen-polyext-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-polyext-4",
+   "concepts": [
+    "외각",
+    "정다각형"
+   ],
+   "statement": "정10각형의 한 외각의 크기는 몇 도일까요?",
+   "choices": [
+    "144도",
+    "36도",
+    "360도",
+    "72도"
+   ],
+   "answerIndex": 1,
+   "explanation": "정다각형의 외각을 모두 더하면 어떤 다각형이든 360도예요. 정10각형은 외각이 모두 같으니 360÷10=36도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그건 한 내각이에요. 외각은 360을 꼭짓점 수로 나눈 값이에요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 10
+    }
+   }
   }
  ]
 }
