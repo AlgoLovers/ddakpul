@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 딱풀 런처 아이콘 배경 — 브랜드 바이올렛-블루 세로 그라데이션(Violet30→Violet40). -->
+<!-- 딱풀 런처 아이콘 배경 — 브랜드 바이올렛 방사형 그라데이션(밝은 중심 → 진한 가장자리, 클레이 돔). -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
@@ -9,13 +9,13 @@
     <path android:pathData="M0,0h108v108h-108z">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:startX="54"
-                android:startY="0"
-                android:endX="54"
-                android:endY="108"
-                android:type="linear">
-                <item android:color="#FF343399" android:offset="0.0" />
-                <item android:color="#FF4A49C4" android:offset="1.0" />
+                android:type="radial"
+                android:centerX="45"
+                android:centerY="39"
+                android:gradientRadius="106">
+                <item android:color="#FF968FFF" android:offset="0.0" />
+                <item android:color="#FF6C63FF" android:offset="0.55" />
+                <item android:color="#FF483FC8" android:offset="1.0" />
             </gradient>
         </aapt:attr>
     </path>
