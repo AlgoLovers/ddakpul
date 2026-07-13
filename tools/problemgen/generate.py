@@ -36,6 +36,51 @@ def _bump_number(text, delta):
     return text[: m.start()] + str(n) + text[m.end():]
 
 
+def _has_batchim(word):
+    """단어 끝소리에 받침이 있는지. 숫자는 한국어 읽기 기준(2·4·5·9로 끝나면 받침 없음)."""
+    last = str(word)[-1]
+    if last.isdigit():
+        return int(last) not in (2, 4, 5, 9)
+    if "가" <= last <= "힣":
+        return (ord(last) - 0xAC00) % 28 != 0
+    return True
+
+
+def _is_rieul(word):
+    """끝소리 받침이 ㄹ인지(일·칠·팔). '으로/로' 판단용."""
+    last = str(word)[-1]
+    if last.isdigit():
+        return int(last) in (1, 7, 8)
+    if "가" <= last <= "힣":
+        return (ord(last) - 0xAC00) % 28 == 8
+    return False
+
+
+def _iga(w):
+    return "이" if _has_batchim(w) else "가"
+
+
+def _eul(w):
+    return "을" if _has_batchim(w) else "를"
+
+
+def _eun(w):
+    return "은" if _has_batchim(w) else "는"
+
+
+def _gwa(w):
+    return "과" if _has_batchim(w) else "와"
+
+
+def _euro(w):
+    return "으로" if (_has_batchim(w) and not _is_rieul(w)) else "로"
+
+
+def _copula(w):
+    """서술격 조사 '예요/이에요'를 받침에 맞춰 고른다."""
+    return "이에요" if _has_batchim(w) else "예요"
+
+
 def add(family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes=None, figure=None):
     """정답 1 + 오답 3을 섞어 4지선다로 만든다. 겹치는 오답은 숫자를 밀어 자동 대체."""
     unique = []
@@ -400,10 +445,296 @@ def gen_mirror():
         )
 
 
+# ── 19. 숫자 카드로 가장 큰 수 (난1, 수와연산) ───────────────────────────────
+def gen_digit_cards():
+    from itertools import permutations
+    for cards in [[3, 7, 5], [2, 8, 4], [6, 1, 9], [4, 7, 2]]:
+        nums = [int("".join(map(str, p))) for p in permutations(cards)]
+        biggest = max(nums)
+        # 검산: 서로 다른 숫자라 최대는 유일, 그리고 내림차순 배열과 같아야 함
+        assert nums.count(biggest) == 1, "숫자카드 최대 유일성 실패"
+        desc = sorted(cards, reverse=True)
+        assert biggest == int("".join(map(str, desc))), "숫자카드 검산 실패"
+        smallest = int("".join(map(str, sorted(cards))))
+        asgiven = int("".join(map(str, cards)))
+        s = str(biggest)
+        swapped = int(s[0] + s[2] + s[1])
+        cardtxt = ", ".join(str(c) for c in cards)
+        add(
+            "cards", "NUMBER_OPERATION", 1, ["자리값", "가장 큰 수 만들기"],
+            f"숫자 카드 {cardtxt} 를 한 번씩 모두 써서 세 자리 수를 만들려고 해요. 만들 수 있는 가장 큰 수는 얼마일까요?",
+            str(biggest), [str(smallest), str(asgiven), str(swapped)],
+            f"가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 {desc[0]}, 십의 자리에 {desc[1]}, 일의 자리에 {desc[2]}을(를) 놓으면 {biggest}{_copula(biggest)}.",
+            [(str(smallest), "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요.")],
+        )
+
+
+# ── 20. 커지는·줄어드는 규칙 다음 수 (난1, 변화와관계) ← 빈칸 셀 채우기 ────────
+def gen_sequence_simple():
+    for seq in [[2, 5, 8, 11], [3, 7, 11, 15], [30, 26, 22, 18], [1, 4, 7, 10]]:
+        diffs = [seq[i + 1] - seq[i] for i in range(len(seq) - 1)]
+        assert len(set(diffs)) == 1, "등차 검산 실패"
+        d = diffs[0]
+        nxt = seq[-1] + d
+        seqtxt = ", ".join(str(x) for x in seq)
+        grow = "커지고" if d > 0 else "작아지고"
+        sign = "+" if d > 0 else "−"
+        add(
+            "seq1", "CHANGE_RELATION", 1, ["규칙 찾기", "일정하게 커지는 수"],
+            f"규칙을 찾아보세요. {seqtxt}, □ — □에 들어갈 수는 얼마일까요?",
+            str(nxt), [str(nxt + d), str(seq[-1]), str(nxt + 1)],
+            f"이웃한 수의 차이를 살펴봐요. 매번 {abs(d)}씩 {grow} 있어요. 그러니 {seq[-1]} 다음은 {seq[-1]}{sign}{abs(d)}={nxt}{_copula(nxt)}.",
+            [(str(seq[-1]), "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요.")],
+        )
+
+
+# ── 21. 성냥개비 정사각형 잇기 (난1, 도형과측정) ─────────────────────────────
+def gen_matchsticks():
+    for n in [3, 4, 5, 6]:
+        matches = 4
+        for _ in range(n - 1):
+            matches += 3  # 오른쪽에 하나 더 붙이면 왼쪽 변은 공유 → 3개만 추가
+        assert matches == 3 * n + 1, "성냥개비 검산 실패"
+        add(
+            "match", "SHAPE_MEASUREMENT", 1, ["변 공유", "규칙 찾기"],
+            f"성냥개비로 크기가 같은 정사각형을 한 줄로 이어 붙여 {n}개 만들려고 해요. 성냥개비는 모두 몇 개 필요할까요?",
+            f"{matches}개", [f"{4 * n}개", f"{3 * n}개", f"{4 * n - 1}개"],
+            f"정사각형 1개는 성냥 4개가 필요해요. 오른쪽에 하나씩 더 붙일 때는 왼쪽 변을 이미 쓰고 있어서 3개만 더 있으면 돼요. 그래서 {n}개면 4+3×{n - 1}={matches}개예요.",
+            [(f"{4 * n}개", "정사각형마다 4개씩 세면 이웃끼리 붙은 변을 두 번 세게 돼요.")],
+        )
+
+
+# ── 22. 옷 짝짓기 경우의 수 (난1, 자료와가능성) ──────────────────────────────
+def gen_outfits():
+    from itertools import product
+    for tops, bottoms in [(["빨강", "파랑", "노랑"], ["청바지", "검정바지"]),
+                          (["티셔츠", "셔츠"], ["반바지", "긴바지", "치마"]),
+                          (["흰색", "회색"], ["운동화", "구두"]),
+                          (["노랑", "초록", "분홍"], ["긴치마", "짧은치마", "바지"])]:
+        cnt = sum(1 for _ in product(tops, bottoms))
+        n = len(tops) * len(bottoms)
+        assert cnt == n, "옷 짝짓기 검산 실패"
+        add(
+            "outfit", "DATA_POSSIBILITY", 1, ["경우의 수", "빠짐없이 짝짓기"],
+            f"윗옷 {len(tops)}가지({', '.join(tops)})와 아래옷 {len(bottoms)}가지({', '.join(bottoms)})가 있어요. 윗옷과 아래옷을 하나씩 골라 입는 방법은 모두 몇 가지일까요?",
+            f"{n}가지", [f"{len(tops) + len(bottoms)}가지", f"{n - 1}가지", f"{n + 1}가지"],
+            f"윗옷 하나를 고를 때마다 아래옷을 {len(bottoms)}가지로 짝지을 수 있어요. 윗옷이 {len(tops)}가지니까 {len(tops)}×{len(bottoms)}={n}가지예요. 표를 그려 하나씩 짝지어도 {n}가지가 나와요.",
+            [(f"{len(tops) + len(bottoms)}가지", "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요.")],
+        )
+
+
+# ── 23. 벌레먹은셈 — 빠진 숫자 찾기 (난2, 수와연산) ──────────────────────────
+def gen_broken_arithmetic():
+    for tens, ones, addend in [(3, 7, 25), (5, 2, 36), (4, 8, 13), (6, 4, 19)]:
+        unknown = 10 * tens + ones
+        result = unknown + addend
+        # 검산: □∈0~9 중 (10□+ones)+addend==result 를 만족하는 것이 유일하게 tens
+        sols = [d for d in range(10) if (10 * d + ones) + addend == result]
+        assert sols == [tens], "벌레먹은셈 검산 실패"
+        add(
+            "brokensum", "NUMBER_OPERATION", 2, ["벌레먹은셈", "자리값 거꾸로"],
+            f"□{ones} + {addend} = {result}{_copula(result)}. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+            str(tens), [str((tens + 1) % 10), str(result // 10), str(max(0, tens - 1))],
+            f"□{ones}{_eun(ones)} {result}에서 {addend}를 뺀 수예요. {result}−{addend}={unknown}이니 십의 자리 □는 {tens}{_copula(tens)}. 일의 자리 {ones}도 딱 맞죠.",
+            [(str(result // 10), "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요.")],
+        )
+
+
+# ── 24. 경우의 수 세기 — 곱의 원리 (난2, 자료와가능성) ───────────────────────
+def gen_cases():
+    from itertools import product
+    scenarios = [
+        ("동전 3개를 동시에 던질 때 나오는 경우(앞·뒤를 구별해요)", [["앞", "뒤"]] * 3),
+        ("주사위 1개와 동전 1개를 함께 던질 때 나오는 경우", [[1, 2, 3, 4, 5, 6], ["앞", "뒤"]]),
+        ("두 사람이 가위바위보를 한 판 할 때 나오는 경우(누가 무엇을 냈는지 구별해요)", [["가위", "바위", "보"]] * 2),
+        ("김밥 3종류와 음료 2종류 중 하나씩 고르는 경우", [["김밥1", "김밥2", "김밥3"], ["음료1", "음료2"]]),
+    ]
+    for desc, spaces in scenarios:
+        n = 1
+        for s in spaces:
+            n *= len(s)
+        cnt = sum(1 for _ in product(*spaces))
+        assert cnt == n, "경우의 수 검산 실패"
+        wrong_sum = sum(len(s) for s in spaces)
+        add(
+            "cases", "DATA_POSSIBILITY", 2, ["경우의 수", "곱의 원리"],
+            f"{desc}는 모두 몇 가지일까요?",
+            f"{n}가지", [f"{wrong_sum}가지", f"{n - 1}가지", f"{n + 2}가지"],
+            f"각 단계에서 갈라지는 경우의 수를 곱해요. {' × '.join(str(len(s)) for s in spaces)} = {n}가지예요. 빠짐없이 하나씩 나열해도 {n}가지가 나와요.",
+            [(f"{wrong_sum}가지", "더하는 게 아니라 곱해요. 첫 경우마다 다음 경우가 다시 갈라져요.")],
+        )
+
+
+# ── 25. 약속 연산 — 새 기호 규칙 적용 (난3, 수와연산) ────────────────────────
+def gen_custom_op():
+    rules = [
+        ("★", "가★나 = 가×나 − 나", lambda a, b: a * b - b, 5, 3),
+        ("◆", "가◆나 = 가×나 + 가", lambda a, b: a * b + a, 4, 6),
+        ("♥", "가♥나 = 가 + 나×2", lambda a, b: a + b * 2, 3, 5),
+        ("▲", "가▲나 = 가×가 − 나", lambda a, b: a * a - b, 6, 4),
+    ]
+    for sym, desc, fn, qa, qb in rules:
+        ea, eb = 2, 3  # 예시는 질문과 다른 수로
+        ev = fn(ea, eb)
+        ans = fn(qa, qb)
+        assert ans > 0 and ev > 0, "약속연산 검산 실패"
+        add(
+            "promise", "NUMBER_OPERATION", 3, ["약속 연산", "규칙 이해와 적용"],
+            f"새로운 약속을 정했어요. {desc} 예를 들어 {ea}{sym}{eb} = {ev}{_copula(ev)}. 그러면 {qa}{sym}{qb}{_eun(qb)} 얼마일까요?",
+            str(ans), [str(qa * qb), str(ans + qb), str(ans - 2)],
+            f"약속한 규칙에 가={qa}, 나={qb}를 그대로 넣어 계산하면 {ans}{_copula(ans)}. 예시({ea}{sym}{eb}={ev})와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
+            [(str(qa * qb), "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요.")],
+        )
+
+
+# ── 26. 계차 수열 — 차이가 커지는 규칙 (난3, 변화와관계) ─────────────────────
+def gen_sequence_advanced():
+    for seq in [[1, 2, 4, 7, 11], [2, 3, 5, 8, 12], [1, 3, 6, 10, 15], [3, 4, 6, 9, 13]]:
+        diffs = [seq[i + 1] - seq[i] for i in range(len(seq) - 1)]
+        second = [diffs[i + 1] - diffs[i] for i in range(len(diffs) - 1)]
+        assert len(set(second)) == 1 and second[0] == 1, "계차 검산 실패"
+        nxt_diff = diffs[-1] + 1
+        nxt = seq[-1] + nxt_diff
+        seqtxt = ", ".join(str(x) for x in seq)
+        difftxt = ", ".join(str(x) for x in diffs)
+        add(
+            "seq2", "CHANGE_RELATION", 3, ["계차 수열", "차이의 규칙"],
+            f"규칙을 찾아보세요. {seqtxt}, □ — □에 들어갈 수는 얼마일까요?",
+            str(nxt), [str(seq[-1] + diffs[-1]), str(nxt + 1), str(seq[-1])],
+            f"이웃한 수의 차이를 적어 보면 {difftxt}로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 {nxt_diff}이고, {seq[-1]}+{nxt_diff}={nxt}{_copula(nxt)}.",
+            [(str(seq[-1] + diffs[-1]), "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요.")],
+        )
+
+
+# ── 27. 진실과 거짓 — 한 명만 참말 (난4, 자료와가능성) ───────────────────────
+def gen_true_false():
+    people = ["민준", "서연", "지호"]
+    # 진술: "innocent"="나는 안 깼어" / ("accuse", j)="{people[j]}가 깼어"
+    configs = [
+        ["innocent", ("accuse", 0), "innocent"],
+        [("accuse", 1), "innocent", "innocent"],
+        ["innocent", "innocent", ("accuse", 0)],
+        ["innocent", ("accuse", 2), "innocent"],
+    ]
+
+    def is_true(stmt, speaker, culprit):
+        if stmt == "innocent":
+            return culprit != speaker
+        return culprit == stmt[1]
+
+    for cfg in configs:
+        good = [c for c in range(3) if sum(is_true(st, i, c) for i, st in enumerate(cfg)) == 1]
+        if len(good) != 1:  # 참말하는 사람이 정확히 한 명이 되는 범인이 유일해야 함
+            stats["rejected"] += 1
+            continue
+        culprit = good[0]
+        texts = []
+        for i, st in enumerate(cfg):
+            if st == "innocent":
+                texts.append(f'{people[i]}: "나는 안 깼어."')
+            else:
+                texts.append(f'{people[i]}: "{people[st[1]]}이(가) 깼어."')
+        body = " / ".join(texts)
+        add(
+            "truthone", "DATA_POSSIBILITY", 4, ["진실과 거짓", "경우 따져보기"],
+            f"꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. {body} 꽃병을 깬 사람은 누구일까요?",
+            people[culprit], [people[(culprit + 1) % 3], people[(culprit + 2) % 3], "알 수 없다"],
+            f"한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 {people[culprit]}이(가) 범인일 때뿐이에요. 그래서 답은 {people[culprit]}{_copula(people[culprit])}.",
+            [("알 수 없다", "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요.")],
+        )
+
+
+# ── 28. 성냥개비 정삼각형 잇기 (난2, 도형과측정) ─────────────────────────────
+def gen_triangles_match():
+    for n in [3, 4, 5, 6]:
+        matches = 3
+        for _ in range(n - 1):
+            matches += 2  # 위아래로 번갈아 붙이면 맞닿은 한 변을 공유 → 2개만 추가
+        assert matches == 2 * n + 1, "삼각형 성냥 검산 실패"
+        add(
+            "tri", "SHAPE_MEASUREMENT", 2, ["변 공유", "규칙 찾기"],
+            f"성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 {n}개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
+            f"{matches}개", [f"{3 * n}개", f"{2 * n}개", f"{3 * n - 1}개"],
+            f"정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 {n}개면 3+2×{n - 1}={matches}개예요.",
+            [(f"{3 * n}개", "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요.")],
+        )
+
+
+# ── 29. 악수(리그전) 경우의 수 (난3, 자료와가능성) ───────────────────────────
+def gen_handshake():
+    from itertools import combinations
+    for n in [4, 5, 6, 7]:
+        cnt = sum(1 for _ in combinations(range(n), 2))
+        assert cnt == n * (n - 1) // 2, "악수 검산 실패"
+        add(
+            "shake", "DATA_POSSIBILITY", 3, ["조합", "중복 없이 세기"],
+            f"모임에 {n}명이 모였어요. 모두가 서로 한 번씩 빠짐없이 악수를 하면 악수는 모두 몇 번 일어날까요?",
+            f"{cnt}번", [f"{n * (n - 1)}번", f"{n * n}번", f"{n}번"],
+            f"한 사람은 자기를 뺀 {n - 1}명과 악수해요. {n}명이 각각 {n - 1}번이면 {n}×{n - 1}={n * (n - 1)}번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눈 {cnt}번이 정답이에요.",
+            [(f"{n * (n - 1)}번", "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요.")],
+        )
+
+
+# ── 30. 주사위 두 개 눈의 합 경우의 수 (난3, 자료와가능성) ────────────────────
+def gen_dice_sum():
+    from itertools import product
+    for k in [5, 7, 9, 8]:
+        cnt = sum(1 for a, b in product(range(1, 7), repeat=2) if a + b == k)
+        unordered = sum(1 for a in range(1, 7) for b in range(a, 7) if a + b == k)
+        ex_a = max(1, k - 6)
+        ex_b = k - ex_a
+        add(
+            "dicesum", "DATA_POSSIBILITY", 3, ["경우의 수", "순서 구별하기"],
+            f"주사위 2개를 동시에 던져요. 나온 두 눈의 합이 {k}{_iga(k)} 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
+            f"{cnt}가지", [f"{unordered}가지", f"{cnt - 1}가지", f"{cnt + 1}가지"],
+            f"작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 {ex_a}, 둘째 {ex_b}){_gwa(ex_b)} (첫째 {ex_b}, 둘째 {ex_a})처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 {cnt}가지예요.",
+            [(f"{unordered}가지", f"순서를 구별하지 않고 세었어요. (첫째 {ex_a}, 둘째 {ex_b}){_gwa(ex_b)} (첫째 {ex_b}, 둘째 {ex_a}){_eun(ex_a)} 서로 다른 경우예요.")],
+        )
+
+
+# ── 31. 나머지 조건을 함께 만족하는 수 (난4, 수와연산) ───────────────────────
+def gen_remainder():
+    for a, ra, b, rb in [(3, 2, 4, 1), (3, 1, 5, 2), (4, 3, 6, 1), (5, 2, 7, 3)]:
+        sols = [x for x in range(10, 100) if x % a == ra and x % b == rb]
+        assert sols, "나머지 조건 해 없음"
+        ans = sols[0]  # 가장 작은 두 자리 수 (유일)
+        step = a * b // gcd(a, b)
+        nxt = ans + step
+        add(
+            "remain", "NUMBER_OPERATION", 4, ["나머지", "조건 함께 만족하기"],
+            f"어떤 수를 {a}{_euro(a)} 나누면 {ra}{_iga(ra)} 남고, {b}{_euro(b)} 나누면 {rb}{_iga(rb)} 남아요. 이런 수 중에서 가장 작은 두 자리 수는 무엇일까요?",
+            str(ans), [str(nxt), str(ans + 1), str(max(10, ans - 1))],
+            f"두 조건을 동시에 만족해야 해요. {b}{_euro(b)} 나눈 나머지가 {rb}인 수를 작은 것부터 적으며 {a}{_euro(a)} 나눈 나머지가 {ra}인지 확인하면, 두 자리 수 중 처음 맞는 수가 {ans}{_copula(ans)}. ({ans}{_eul(ans)} {a}{_euro(a)} 나누면 나머지가 {ra}, {b}{_euro(b)} 나누면 나머지가 {rb}{_copula(rb)})",
+            [(str(nxt), "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요.")],
+        )
+
+
+# ── 32. 연속한 다섯 수의 합 (난3, 수와연산) ──────────────────────────────────
+def gen_consecutive_sum():
+    for s in [35, 60, 45, 80]:
+        assert s % 5 == 0 and sum(range(s // 5 - 2, s // 5 + 3)) == s, "연속합 검산 실패"
+        mid = s // 5
+        largest = mid + 2
+        add(
+            "consec", "NUMBER_OPERATION", 3, ["연속하는 수", "가운데 수로 묶기"],
+            f"연속한 다섯 개의 자연수를 더했더니 {s}{_iga(s)} 되었어요. 이 다섯 수 중에서 가장 큰 수는 무엇일까요?",
+            str(largest), [str(mid), str(mid + 1), str(mid + 3)],
+            f"연속한 다섯 수는 가운데 수를 중심으로 −2, −1, 0, +1, +2만큼 떨어져 있어요. 다 더하면 −와 +가 서로 지워져 가운데 수의 5배가 돼요. {s}÷5={mid}{_iga(mid)} 가운데 수이고, 가장 큰 수는 {mid}+2={largest}{_copula(largest)}.",
+            [(str(mid), "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요.")],
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
+    # v2 확충 — 난이도1 바닥 + 신규 아이디어(다양성)
+    gen_digit_cards, gen_sequence_simple, gen_matchsticks, gen_outfits,
+    gen_broken_arithmetic, gen_cases, gen_custom_op, gen_sequence_advanced,
+    gen_true_false,
+    # v2.1 확충 — 도형 난2·자료 난3 빈칸 + 수 감각 다양성
+    gen_triangles_match, gen_handshake, gen_dice_sum, gen_remainder,
+    gen_consecutive_sum,
 ]
 
 for g in GENERATORS:
