@@ -1,5 +1,6 @@
 package com.ddakpul.math.presentation.report
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,15 +30,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.BarEntry
+import com.ddakpul.math.core.designsystem.component.MasteryChip
+import com.ddakpul.math.core.designsystem.component.MasteryMatrix
+import com.ddakpul.math.core.designsystem.component.MasteryStage
+import com.ddakpul.math.core.designsystem.component.MatrixEntry
 import com.ddakpul.math.core.designsystem.component.MiniBarChart
 import com.ddakpul.math.core.designsystem.component.SectionCard
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
 import com.ddakpul.math.core.designsystem.component.TrendLineChart
-import com.ddakpul.math.domain.model.AreaStat
+import com.ddakpul.math.core.designsystem.component.masteryStageOf
 import com.ddakpul.math.domain.model.ConceptStat
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
+import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.presentation.common.labelRes
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -49,11 +54,6 @@ private const val MAX_CONCEPT_ROWS = 6
 
 /** 성장 곡선에 그릴 최근 시도 수 상한. */
 private const val MAX_GROWTH_POINTS = 60
-
-/** 숙달 판정: 이 정답률 이상 + 최소 풀이 수 충족. */
-private const val MASTERED_ACCURACY = 0.8f
-private const val WEAK_ACCURACY = 0.6f
-private const val MIN_SOLVED_FOR_MASTERY = 3
 
 private val dayFormatter = DateTimeFormatter.ofPattern("M/d")
 
@@ -80,6 +80,7 @@ fun ReportScreen(
         dayCells = uiState.dayCells,
         insights = uiState.insights,
         weeklySummary = uiState.weeklySummary,
+        masteryGrid = uiState.masteryGrid,
         onPrintClick = onPrintClick,
         modifier = modifier,
     )
@@ -91,6 +92,7 @@ private fun ReportContent(
     dayCells: List<DayCell>,
     insights: List<ReportInsight>,
     weeklySummary: WeeklySummary?,
+    masteryGrid: List<MasteryCellUi>,
     onPrintClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -171,8 +173,8 @@ private fun ReportContent(
                 }
             }
 
-            SectionCard(title = stringResource(R.string.report_area_title)) {
-                stats.areaStats.forEach { stat -> AreaRow(stat) }
+            SectionCard(title = stringResource(R.string.report_matrix_title)) {
+                MasteryMap(masteryGrid = masteryGrid, currentDifficulty = stats.currentDifficulty)
             }
 
             SectionCard(title = stringResource(R.string.report_parent_tips_title)) {
@@ -281,16 +283,6 @@ private fun ReportInsight.toText(): String =
 
 private fun DayCell.dateLabel(): String = LocalDate.ofEpochDay(epochDay).format(dayFormatter)
 
-/** 개념 숙달 단계 — 점수화 대신 단계 라벨(색 + 텍스트, 색만으로 구분하지 않음). */
-private enum class MasteryStage { MASTERED, PRACTICING, WEAK }
-
-private fun ConceptStat.stage(): MasteryStage =
-    when {
-        accuracy >= MASTERED_ACCURACY && solved >= MIN_SOLVED_FOR_MASTERY -> MasteryStage.MASTERED
-        accuracy < WEAK_ACCURACY -> MasteryStage.WEAK
-        else -> MasteryStage.PRACTICING
-    }
-
 @Composable
 private fun ConceptRow(concept: ConceptStat) {
     Column(
@@ -311,7 +303,7 @@ private fun ConceptRow(concept: ConceptStat) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                 )
-                MasteryChip(concept.stage())
+                MasteryChip(masteryStageOf(concept.solved, concept.accuracy))
             }
             Text(
                 text =
@@ -331,54 +323,38 @@ private fun ConceptRow(concept: ConceptStat) {
     }
 }
 
+/**
+ * 영역(행)×난이도(열) 숙달 지도. 학년 개념이 없는 이 앱에서 "어디까지 왔는지"를 보여주는
+ * 유일한 좌표계라, 캡션으로 읽는 법을 먼저 짚고 범례로 색의 의미를 텍스트로도 밝힌다.
+ */
 @Composable
-private fun MasteryChip(stage: MasteryStage) {
-    val colors = MaterialTheme.colorScheme
-    val (container, content, labelRes) =
-        when (stage) {
-            MasteryStage.MASTERED -> Triple(colors.secondaryContainer, colors.onSecondaryContainer, R.string.mastery_mastered)
-            MasteryStage.PRACTICING -> Triple(colors.tertiaryContainer, colors.onTertiaryContainer, R.string.mastery_practicing)
-            MasteryStage.WEAK -> Triple(colors.errorContainer, colors.onErrorContainer, R.string.mastery_weak)
-        }
-    Surface(color = container, contentColor = content, shape = MaterialTheme.shapes.small) {
+private fun MasteryMap(
+    masteryGrid: List<MasteryCellUi>,
+    currentDifficulty: Int,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(
-            text = stringResource(labelRes),
-            style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+            text = stringResource(R.string.report_matrix_caption),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-    }
-}
-
-@Composable
-private fun AreaRow(stat: AreaStat) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
+        MasteryMatrix(
+            rowLabels = MathArea.entries.map { stringResource(it.labelRes()) },
+            columnLabels = (Difficulty.MIN..Difficulty.MAX).map { it.toString() },
+            cells =
+                masteryGrid.map { cell ->
+                    MatrixEntry(
+                        solved = cell.solved,
+                        accuracy = cell.accuracy,
+                        emphasized = cell.difficulty == currentDifficulty,
+                    )
+                },
+        )
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            Text(
-                text = stringResource(stat.area.labelRes()),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text =
-                    stringResource(
-                        R.string.report_area_stat,
-                        stat.correct,
-                        stat.solved,
-                        (stat.accuracy * 100).roundToInt(),
-                    ),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            MasteryStage.entries.forEach { stage -> MasteryChip(stage) }
         }
-        LinearProgressIndicator(
-            progress = { stat.accuracy },
-            modifier = Modifier.fillMaxWidth(),
-        )
     }
 }
