@@ -36,17 +36,49 @@ def _bump_number(text, delta):
     return text[: m.start()] + str(n) + text[m.end():]
 
 
-def _copula(word):
-    """단어 끝소리(받침 유무)에 맞춰 서술격 조사 '예요/이에요'를 고른다.
-    숫자는 한국어 읽기 기준(2·4·5·9로 끝나면 받침 없음), 한글은 종성으로 판단."""
+def _has_batchim(word):
+    """단어 끝소리에 받침이 있는지. 숫자는 한국어 읽기 기준(2·4·5·9로 끝나면 받침 없음)."""
     last = str(word)[-1]
     if last.isdigit():
-        has_final = int(last) not in (2, 4, 5, 9)
-    elif "가" <= last <= "힣":
-        has_final = (ord(last) - 0xAC00) % 28 != 0
-    else:
-        has_final = True
-    return "이에요" if has_final else "예요"
+        return int(last) not in (2, 4, 5, 9)
+    if "가" <= last <= "힣":
+        return (ord(last) - 0xAC00) % 28 != 0
+    return True
+
+
+def _is_rieul(word):
+    """끝소리 받침이 ㄹ인지(일·칠·팔). '으로/로' 판단용."""
+    last = str(word)[-1]
+    if last.isdigit():
+        return int(last) in (1, 7, 8)
+    if "가" <= last <= "힣":
+        return (ord(last) - 0xAC00) % 28 == 8
+    return False
+
+
+def _iga(w):
+    return "이" if _has_batchim(w) else "가"
+
+
+def _eul(w):
+    return "을" if _has_batchim(w) else "를"
+
+
+def _eun(w):
+    return "은" if _has_batchim(w) else "는"
+
+
+def _gwa(w):
+    return "과" if _has_batchim(w) else "와"
+
+
+def _euro(w):
+    return "으로" if (_has_batchim(w) and not _is_rieul(w)) else "로"
+
+
+def _copula(w):
+    """서술격 조사 '예요/이에요'를 받침에 맞춰 고른다."""
+    return "이에요" if _has_batchim(w) else "예요"
 
 
 def add(family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes=None, figure=None):
@@ -501,9 +533,9 @@ def gen_broken_arithmetic():
         assert sols == [tens], "벌레먹은셈 검산 실패"
         add(
             "brokensum", "NUMBER_OPERATION", 2, ["벌레먹은셈", "자리값 거꾸로"],
-            f"□{ones} + {addend} = {result} 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+            f"□{ones} + {addend} = {result}{_copula(result)}. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
             str(tens), [str((tens + 1) % 10), str(result // 10), str(max(0, tens - 1))],
-            f"□{ones}는 {result}에서 {addend}를 뺀 수예요. {result}−{addend}={unknown}이니 십의 자리 □는 {tens}{_copula(tens)}. 일의 자리 {ones}도 딱 맞죠.",
+            f"□{ones}{_eun(ones)} {result}에서 {addend}를 뺀 수예요. {result}−{addend}={unknown}이니 십의 자리 □는 {tens}{_copula(tens)}. 일의 자리 {ones}도 딱 맞죠.",
             [(str(result // 10), "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요.")],
         )
 
@@ -548,7 +580,7 @@ def gen_custom_op():
         assert ans > 0 and ev > 0, "약속연산 검산 실패"
         add(
             "promise", "NUMBER_OPERATION", 3, ["약속 연산", "규칙 이해와 적용"],
-            f"새로운 약속을 정했어요. {desc} 예를 들어 {ea}{sym}{eb} = {ev}예요. 그러면 {qa}{sym}{qb}는 얼마일까요?",
+            f"새로운 약속을 정했어요. {desc} 예를 들어 {ea}{sym}{eb} = {ev}{_copula(ev)}. 그러면 {qa}{sym}{qb}{_eun(qb)} 얼마일까요?",
             str(ans), [str(qa * qb), str(ans + qb), str(ans - 2)],
             f"약속한 규칙에 가={qa}, 나={qb}를 그대로 넣어 계산하면 {ans}{_copula(ans)}. 예시({ea}{sym}{eb}={ev})와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
             [(str(qa * qb), "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요.")],
@@ -612,6 +644,86 @@ def gen_true_false():
         )
 
 
+# ── 28. 성냥개비 정삼각형 잇기 (난2, 도형과측정) ─────────────────────────────
+def gen_triangles_match():
+    for n in [3, 4, 5, 6]:
+        matches = 3
+        for _ in range(n - 1):
+            matches += 2  # 위아래로 번갈아 붙이면 맞닿은 한 변을 공유 → 2개만 추가
+        assert matches == 2 * n + 1, "삼각형 성냥 검산 실패"
+        add(
+            "tri", "SHAPE_MEASUREMENT", 2, ["변 공유", "규칙 찾기"],
+            f"성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 {n}개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
+            f"{matches}개", [f"{3 * n}개", f"{2 * n}개", f"{3 * n - 1}개"],
+            f"정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 {n}개면 3+2×{n - 1}={matches}개예요.",
+            [(f"{3 * n}개", "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요.")],
+        )
+
+
+# ── 29. 악수(리그전) 경우의 수 (난3, 자료와가능성) ───────────────────────────
+def gen_handshake():
+    from itertools import combinations
+    for n in [4, 5, 6, 7]:
+        cnt = sum(1 for _ in combinations(range(n), 2))
+        assert cnt == n * (n - 1) // 2, "악수 검산 실패"
+        add(
+            "shake", "DATA_POSSIBILITY", 3, ["조합", "중복 없이 세기"],
+            f"모임에 {n}명이 모였어요. 모두가 서로 한 번씩 빠짐없이 악수를 하면 악수는 모두 몇 번 일어날까요?",
+            f"{cnt}번", [f"{n * (n - 1)}번", f"{n * n}번", f"{n}번"],
+            f"한 사람은 자기를 뺀 {n - 1}명과 악수해요. {n}명이 각각 {n - 1}번이면 {n}×{n - 1}={n * (n - 1)}번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눈 {cnt}번이 정답이에요.",
+            [(f"{n * (n - 1)}번", "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요.")],
+        )
+
+
+# ── 30. 주사위 두 개 눈의 합 경우의 수 (난3, 자료와가능성) ────────────────────
+def gen_dice_sum():
+    from itertools import product
+    for k in [5, 7, 9, 8]:
+        cnt = sum(1 for a, b in product(range(1, 7), repeat=2) if a + b == k)
+        unordered = sum(1 for a in range(1, 7) for b in range(a, 7) if a + b == k)
+        ex_a = max(1, k - 6)
+        ex_b = k - ex_a
+        add(
+            "dicesum", "DATA_POSSIBILITY", 3, ["경우의 수", "순서 구별하기"],
+            f"주사위 2개를 동시에 던져요. 나온 두 눈의 합이 {k}{_iga(k)} 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
+            f"{cnt}가지", [f"{unordered}가지", f"{cnt - 1}가지", f"{cnt + 1}가지"],
+            f"작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 {ex_a}, 둘째 {ex_b}){_gwa(ex_b)} (첫째 {ex_b}, 둘째 {ex_a})처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 {cnt}가지예요.",
+            [(f"{unordered}가지", f"순서를 구별하지 않고 세었어요. (첫째 {ex_a}, 둘째 {ex_b}){_gwa(ex_b)} (첫째 {ex_b}, 둘째 {ex_a}){_eun(ex_a)} 서로 다른 경우예요.")],
+        )
+
+
+# ── 31. 나머지 조건을 함께 만족하는 수 (난4, 수와연산) ───────────────────────
+def gen_remainder():
+    for a, ra, b, rb in [(3, 2, 4, 1), (3, 1, 5, 2), (4, 3, 6, 1), (5, 2, 7, 3)]:
+        sols = [x for x in range(10, 100) if x % a == ra and x % b == rb]
+        assert sols, "나머지 조건 해 없음"
+        ans = sols[0]  # 가장 작은 두 자리 수 (유일)
+        step = a * b // gcd(a, b)
+        nxt = ans + step
+        add(
+            "remain", "NUMBER_OPERATION", 4, ["나머지", "조건 함께 만족하기"],
+            f"어떤 수를 {a}{_euro(a)} 나누면 {ra}{_iga(ra)} 남고, {b}{_euro(b)} 나누면 {rb}{_iga(rb)} 남아요. 이런 수 중에서 가장 작은 두 자리 수는 무엇일까요?",
+            str(ans), [str(nxt), str(ans + 1), str(max(10, ans - 1))],
+            f"두 조건을 동시에 만족해야 해요. {b}{_euro(b)} 나눈 나머지가 {rb}인 수를 작은 것부터 적으며 {a}{_euro(a)} 나눈 나머지가 {ra}인지 확인하면, 두 자리 수 중 처음 맞는 수가 {ans}{_copula(ans)}. ({ans}{_eul(ans)} {a}{_euro(a)} 나누면 나머지가 {ra}, {b}{_euro(b)} 나누면 나머지가 {rb}{_copula(rb)})",
+            [(str(nxt), "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요.")],
+        )
+
+
+# ── 32. 연속한 다섯 수의 합 (난3, 수와연산) ──────────────────────────────────
+def gen_consecutive_sum():
+    for s in [35, 60, 45, 80]:
+        assert s % 5 == 0 and sum(range(s // 5 - 2, s // 5 + 3)) == s, "연속합 검산 실패"
+        mid = s // 5
+        largest = mid + 2
+        add(
+            "consec", "NUMBER_OPERATION", 3, ["연속하는 수", "가운데 수로 묶기"],
+            f"연속한 다섯 개의 자연수를 더했더니 {s}{_iga(s)} 되었어요. 이 다섯 수 중에서 가장 큰 수는 무엇일까요?",
+            str(largest), [str(mid), str(mid + 1), str(mid + 3)],
+            f"연속한 다섯 수는 가운데 수를 중심으로 −2, −1, 0, +1, +2만큼 떨어져 있어요. 다 더하면 −와 +가 서로 지워져 가운데 수의 5배가 돼요. {s}÷5={mid}{_iga(mid)} 가운데 수이고, 가장 큰 수는 {mid}+2={largest}{_copula(largest)}.",
+            [(str(mid), "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요.")],
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -620,6 +732,9 @@ GENERATORS = [
     gen_digit_cards, gen_sequence_simple, gen_matchsticks, gen_outfits,
     gen_broken_arithmetic, gen_cases, gen_custom_op, gen_sequence_advanced,
     gen_true_false,
+    # v2.1 확충 — 도형 난2·자료 난3 빈칸 + 수 감각 다양성
+    gen_triangles_match, gen_handshake, gen_dice_sum, gen_remainder,
+    gen_consecutive_sum,
 ]
 
 for g in GENERATORS:

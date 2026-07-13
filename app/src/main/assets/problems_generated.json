@@ -2288,7 +2288,7 @@
     "벌레먹은셈",
     "자리값 거꾸로"
    ],
-   "statement": "□7 + 25 = 62 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "statement": "□7 + 25 = 62예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
    "choices": [
     "4",
     "2",
@@ -2296,7 +2296,7 @@
     "3"
    ],
    "answerIndex": 3,
-   "explanation": "□7는 62에서 25를 뺀 수예요. 62−25=37이니 십의 자리 □는 3이에요. 일의 자리 7도 딱 맞죠.",
+   "explanation": "□7은 62에서 25를 뺀 수예요. 62−25=37이니 십의 자리 □는 3이에요. 일의 자리 7도 딱 맞죠.",
    "mistakes": [
     {
      "choiceIndex": 2,
@@ -2314,7 +2314,7 @@
     "벌레먹은셈",
     "자리값 거꾸로"
    ],
-   "statement": "□2 + 36 = 88 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "statement": "□2 + 36 = 88이에요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
    "choices": [
     "4",
     "5",
@@ -2340,7 +2340,7 @@
     "벌레먹은셈",
     "자리값 거꾸로"
    ],
-   "statement": "□8 + 13 = 61 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "statement": "□8 + 13 = 61이에요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
    "choices": [
     "4",
     "6",
@@ -2348,7 +2348,7 @@
     "5"
    ],
    "answerIndex": 0,
-   "explanation": "□8는 61에서 13를 뺀 수예요. 61−13=48이니 십의 자리 □는 4예요. 일의 자리 8도 딱 맞죠.",
+   "explanation": "□8은 61에서 13를 뺀 수예요. 61−13=48이니 십의 자리 □는 4예요. 일의 자리 8도 딱 맞죠.",
    "mistakes": [
     {
      "choiceIndex": 1,
@@ -2366,7 +2366,7 @@
     "벌레먹은셈",
     "자리값 거꾸로"
    ],
-   "statement": "□4 + 19 = 83 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
+   "statement": "□4 + 19 = 83이에요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
    "choices": [
     "5",
     "7",
@@ -2496,7 +2496,7 @@
     "약속 연산",
     "규칙 이해와 적용"
    ],
-   "statement": "새로운 약속을 정했어요. 가★나 = 가×나 − 나 예를 들어 2★3 = 3예요. 그러면 5★3는 얼마일까요?",
+   "statement": "새로운 약속을 정했어요. 가★나 = 가×나 − 나 예를 들어 2★3 = 3이에요. 그러면 5★3은 얼마일까요?",
    "choices": [
     "10",
     "15",
@@ -2522,7 +2522,7 @@
     "약속 연산",
     "규칙 이해와 적용"
    ],
-   "statement": "새로운 약속을 정했어요. 가◆나 = 가×나 + 가 예를 들어 2◆3 = 8예요. 그러면 4◆6는 얼마일까요?",
+   "statement": "새로운 약속을 정했어요. 가◆나 = 가×나 + 가 예를 들어 2◆3 = 8이에요. 그러면 4◆6은 얼마일까요?",
    "choices": [
     "34",
     "28",
@@ -2548,7 +2548,7 @@
     "약속 연산",
     "규칙 이해와 적용"
    ],
-   "statement": "새로운 약속을 정했어요. 가♥나 = 가 + 나×2 예를 들어 2♥3 = 8예요. 그러면 3♥5는 얼마일까요?",
+   "statement": "새로운 약속을 정했어요. 가♥나 = 가 + 나×2 예를 들어 2♥3 = 8이에요. 그러면 3♥5는 얼마일까요?",
    "choices": [
     "11",
     "13",
@@ -2574,7 +2574,7 @@
     "약속 연산",
     "규칙 이해와 적용"
    ],
-   "statement": "새로운 약속을 정했어요. 가▲나 = 가×가 − 나 예를 들어 2▲3 = 1예요. 그러면 6▲4는 얼마일까요?",
+   "statement": "새로운 약속을 정했어요. 가▲나 = 가×가 − 나 예를 들어 2▲3 = 1이에요. 그러면 6▲4는 얼마일까요?",
    "choices": [
     "36",
     "30",
@@ -2795,6 +2795,526 @@
     {
      "choiceIndex": 3,
      "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tri-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-tri-2",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 3개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "7개",
+    "8개",
+    "6개",
+    "9개"
+   ],
+   "answerIndex": 0,
+   "explanation": "정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 3개면 3+2×2=7개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tri-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-tri-2",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 4개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "8개",
+    "12개",
+    "9개",
+    "11개"
+   ],
+   "answerIndex": 2,
+   "explanation": "정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 4개면 3+2×3=9개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tri-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-tri-2",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 5개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "14개",
+    "15개",
+    "10개",
+    "11개"
+   ],
+   "answerIndex": 3,
+   "explanation": "정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 5개면 3+2×4=11개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-tri-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-tri-2",
+   "concepts": [
+    "변 공유",
+    "규칙 찾기"
+   ],
+   "statement": "성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 6개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
+   "choices": [
+    "18개",
+    "12개",
+    "13개",
+    "17개"
+   ],
+   "answerIndex": 2,
+   "explanation": "정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 6개면 3+2×5=13개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-shake-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-shake-3",
+   "concepts": [
+    "조합",
+    "중복 없이 세기"
+   ],
+   "statement": "모임에 4명이 모였어요. 모두가 서로 한 번씩 빠짐없이 악수를 하면 악수는 모두 몇 번 일어날까요?",
+   "choices": [
+    "4번",
+    "16번",
+    "12번",
+    "6번"
+   ],
+   "answerIndex": 3,
+   "explanation": "한 사람은 자기를 뺀 3명과 악수해요. 4명이 각각 3번이면 4×3=12번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눈 6번이 정답이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-shake-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-shake-3",
+   "concepts": [
+    "조합",
+    "중복 없이 세기"
+   ],
+   "statement": "모임에 5명이 모였어요. 모두가 서로 한 번씩 빠짐없이 악수를 하면 악수는 모두 몇 번 일어날까요?",
+   "choices": [
+    "5번",
+    "25번",
+    "10번",
+    "20번"
+   ],
+   "answerIndex": 2,
+   "explanation": "한 사람은 자기를 뺀 4명과 악수해요. 5명이 각각 4번이면 5×4=20번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눈 10번이 정답이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-shake-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-shake-3",
+   "concepts": [
+    "조합",
+    "중복 없이 세기"
+   ],
+   "statement": "모임에 6명이 모였어요. 모두가 서로 한 번씩 빠짐없이 악수를 하면 악수는 모두 몇 번 일어날까요?",
+   "choices": [
+    "15번",
+    "30번",
+    "6번",
+    "36번"
+   ],
+   "answerIndex": 0,
+   "explanation": "한 사람은 자기를 뺀 5명과 악수해요. 6명이 각각 5번이면 6×5=30번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눈 15번이 정답이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-shake-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-shake-3",
+   "concepts": [
+    "조합",
+    "중복 없이 세기"
+   ],
+   "statement": "모임에 7명이 모였어요. 모두가 서로 한 번씩 빠짐없이 악수를 하면 악수는 모두 몇 번 일어날까요?",
+   "choices": [
+    "42번",
+    "49번",
+    "21번",
+    "7번"
+   ],
+   "answerIndex": 2,
+   "explanation": "한 사람은 자기를 뺀 6명과 악수해요. 7명이 각각 6번이면 7×6=42번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눈 21번이 정답이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-dicesum-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "경우의 수",
+    "순서 구별하기"
+   ],
+   "statement": "주사위 2개를 동시에 던져요. 나온 두 눈의 합이 5가 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
+   "choices": [
+    "5가지",
+    "3가지",
+    "2가지",
+    "4가지"
+   ],
+   "answerIndex": 3,
+   "explanation": "작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 1, 둘째 4)와 (첫째 4, 둘째 1)처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 4가지예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "순서를 구별하지 않고 세었어요. (첫째 1, 둘째 4)와 (첫째 4, 둘째 1)은 서로 다른 경우예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-dicesum-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "경우의 수",
+    "순서 구별하기"
+   ],
+   "statement": "주사위 2개를 동시에 던져요. 나온 두 눈의 합이 7이 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
+   "choices": [
+    "3가지",
+    "6가지",
+    "5가지",
+    "7가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 1, 둘째 6)과 (첫째 6, 둘째 1)처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 6가지예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "순서를 구별하지 않고 세었어요. (첫째 1, 둘째 6)과 (첫째 6, 둘째 1)은 서로 다른 경우예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-dicesum-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "경우의 수",
+    "순서 구별하기"
+   ],
+   "statement": "주사위 2개를 동시에 던져요. 나온 두 눈의 합이 9가 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
+   "choices": [
+    "3가지",
+    "4가지",
+    "2가지",
+    "5가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 3, 둘째 6)과 (첫째 6, 둘째 3)처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 4가지예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "순서를 구별하지 않고 세었어요. (첫째 3, 둘째 6)과 (첫째 6, 둘째 3)은 서로 다른 경우예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-dicesum-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "경우의 수",
+    "순서 구별하기"
+   ],
+   "statement": "주사위 2개를 동시에 던져요. 나온 두 눈의 합이 8이 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
+   "choices": [
+    "4가지",
+    "6가지",
+    "3가지",
+    "5가지"
+   ],
+   "answerIndex": 3,
+   "explanation": "작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 2, 둘째 6)과 (첫째 6, 둘째 2)처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 5가지예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "순서를 구별하지 않고 세었어요. (첫째 2, 둘째 6)과 (첫째 6, 둘째 2)는 서로 다른 경우예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-remain-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-remain-4",
+   "concepts": [
+    "나머지",
+    "조건 함께 만족하기"
+   ],
+   "statement": "어떤 수를 3으로 나누면 2가 남고, 4로 나누면 1이 남아요. 이런 수 중에서 가장 작은 두 자리 수는 무엇일까요?",
+   "choices": [
+    "17",
+    "18",
+    "16",
+    "29"
+   ],
+   "answerIndex": 0,
+   "explanation": "두 조건을 동시에 만족해야 해요. 4로 나눈 나머지가 1인 수를 작은 것부터 적으며 3으로 나눈 나머지가 2인지 확인하면, 두 자리 수 중 처음 맞는 수가 17이에요. (17을 3으로 나누면 나머지가 2, 4로 나누면 나머지가 1이에요)",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-remain-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-remain-4",
+   "concepts": [
+    "나머지",
+    "조건 함께 만족하기"
+   ],
+   "statement": "어떤 수를 3으로 나누면 1이 남고, 5로 나누면 2가 남아요. 이런 수 중에서 가장 작은 두 자리 수는 무엇일까요?",
+   "choices": [
+    "37",
+    "21",
+    "22",
+    "23"
+   ],
+   "answerIndex": 2,
+   "explanation": "두 조건을 동시에 만족해야 해요. 5로 나눈 나머지가 2인 수를 작은 것부터 적으며 3으로 나눈 나머지가 1인지 확인하면, 두 자리 수 중 처음 맞는 수가 22예요. (22를 3으로 나누면 나머지가 1, 5로 나누면 나머지가 2예요)",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-remain-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-remain-4",
+   "concepts": [
+    "나머지",
+    "조건 함께 만족하기"
+   ],
+   "statement": "어떤 수를 4로 나누면 3이 남고, 6으로 나누면 1이 남아요. 이런 수 중에서 가장 작은 두 자리 수는 무엇일까요?",
+   "choices": [
+    "19",
+    "20",
+    "18",
+    "31"
+   ],
+   "answerIndex": 0,
+   "explanation": "두 조건을 동시에 만족해야 해요. 6으로 나눈 나머지가 1인 수를 작은 것부터 적으며 4로 나눈 나머지가 3인지 확인하면, 두 자리 수 중 처음 맞는 수가 19예요. (19를 4로 나누면 나머지가 3, 6으로 나누면 나머지가 1이에요)",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-remain-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 4,
+   "groupId": "g-gen-remain-4",
+   "concepts": [
+    "나머지",
+    "조건 함께 만족하기"
+   ],
+   "statement": "어떤 수를 5로 나누면 2가 남고, 7로 나누면 3이 남아요. 이런 수 중에서 가장 작은 두 자리 수는 무엇일까요?",
+   "choices": [
+    "18",
+    "16",
+    "52",
+    "17"
+   ],
+   "answerIndex": 3,
+   "explanation": "두 조건을 동시에 만족해야 해요. 7로 나눈 나머지가 3인 수를 작은 것부터 적으며 5로 나눈 나머지가 2인지 확인하면, 두 자리 수 중 처음 맞는 수가 17이에요. (17을 5로 나누면 나머지가 2, 7로 나누면 나머지가 3이에요)",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-consec-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "연속하는 수",
+    "가운데 수로 묶기"
+   ],
+   "statement": "연속한 다섯 개의 자연수를 더했더니 35가 되었어요. 이 다섯 수 중에서 가장 큰 수는 무엇일까요?",
+   "choices": [
+    "8",
+    "7",
+    "9",
+    "10"
+   ],
+   "answerIndex": 2,
+   "explanation": "연속한 다섯 수는 가운데 수를 중심으로 −2, −1, 0, +1, +2만큼 떨어져 있어요. 다 더하면 −와 +가 서로 지워져 가운데 수의 5배가 돼요. 35÷5=7이 가운데 수이고, 가장 큰 수는 7+2=9예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-consec-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "연속하는 수",
+    "가운데 수로 묶기"
+   ],
+   "statement": "연속한 다섯 개의 자연수를 더했더니 60이 되었어요. 이 다섯 수 중에서 가장 큰 수는 무엇일까요?",
+   "choices": [
+    "12",
+    "13",
+    "15",
+    "14"
+   ],
+   "answerIndex": 3,
+   "explanation": "연속한 다섯 수는 가운데 수를 중심으로 −2, −1, 0, +1, +2만큼 떨어져 있어요. 다 더하면 −와 +가 서로 지워져 가운데 수의 5배가 돼요. 60÷5=12가 가운데 수이고, 가장 큰 수는 12+2=14예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-consec-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "연속하는 수",
+    "가운데 수로 묶기"
+   ],
+   "statement": "연속한 다섯 개의 자연수를 더했더니 45가 되었어요. 이 다섯 수 중에서 가장 큰 수는 무엇일까요?",
+   "choices": [
+    "11",
+    "12",
+    "9",
+    "10"
+   ],
+   "answerIndex": 0,
+   "explanation": "연속한 다섯 수는 가운데 수를 중심으로 −2, −1, 0, +1, +2만큼 떨어져 있어요. 다 더하면 −와 +가 서로 지워져 가운데 수의 5배가 돼요. 45÷5=9가 가운데 수이고, 가장 큰 수는 9+2=11이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-consec-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "연속하는 수",
+    "가운데 수로 묶기"
+   ],
+   "statement": "연속한 다섯 개의 자연수를 더했더니 80이 되었어요. 이 다섯 수 중에서 가장 큰 수는 무엇일까요?",
+   "choices": [
+    "17",
+    "19",
+    "18",
+    "16"
+   ],
+   "answerIndex": 2,
+   "explanation": "연속한 다섯 수는 가운데 수를 중심으로 −2, −1, 0, +1, +2만큼 떨어져 있어요. 다 더하면 −와 +가 서로 지워져 가운데 수의 5배가 돼요. 80÷5=16이 가운데 수이고, 가장 큰 수는 16+2=18이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
     }
    ],
    "source": "generated:v1(template+brute-force-verified)"
