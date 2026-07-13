@@ -5301,6 +5301,791 @@
      2
     ]
    }
+  },
+  {
+   "id": "gen-gridrect-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-gridrect-3",
+   "concepts": [
+    "넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "14㎠",
+    "10㎠",
+    "12㎠",
+    "16㎠"
+   ],
+   "answerIndex": 2,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 큰 4×4 정사각형(16㎠)에서 빈 2×2(4㎠)를 빼요 → 12㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 4,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     4,
+     0,
+     4,
+     2,
+     2,
+     2,
+     2,
+     4,
+     0,
+     4
+    ]
+   }
+  },
+  {
+   "id": "gen-gridrect-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-gridrect-3",
+   "concepts": [
+    "넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "18㎠",
+    "16㎠",
+    "20㎠",
+    "14㎠"
+   ],
+   "answerIndex": 1,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 큰 5×4 직사각형(20㎠)에서 빈 2×2(4㎠)를 빼요 → 16㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 5,
+     "rows": 4,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     5,
+     0,
+     5,
+     2,
+     3,
+     2,
+     3,
+     4,
+     0,
+     4
+    ]
+   }
+  },
+  {
+   "id": "gen-gridrect-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-gridrect-3",
+   "concepts": [
+    "넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "17㎠",
+    "15㎠",
+    "13㎠",
+    "11㎠"
+   ],
+   "answerIndex": 2,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 너비 3칸 부분(3×3=9㎠)과 너비 2칸 부분(2×2=4㎠)으로 나눠 더해요 → 13㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 3,
+     "rows": 5,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     3,
+     0,
+     3,
+     3,
+     2,
+     3,
+     2,
+     5,
+     0,
+     5
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtri-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-gridtri-4",
+   "concepts": [
+    "삼각형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "12㎠",
+    "20㎠",
+    "8㎠",
+    "10㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "밑변 5칸, 높이 4칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 5×4÷2 = 10㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 5,
+     "rows": 4,
+     "n": 3
+    },
+    "heights": [
+     0,
+     4,
+     5,
+     4,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtri-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-gridtri-4",
+   "concepts": [
+    "삼각형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "7㎠",
+    "9㎠",
+    "18㎠",
+    "11㎠"
+   ],
+   "answerIndex": 1,
+   "explanation": "밑변 6칸, 높이 3칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 6×3÷2 = 9㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 3,
+     "n": 3
+    },
+    "heights": [
+     0,
+     3,
+     6,
+     3,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtri-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-gridtri-4",
+   "concepts": [
+    "삼각형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "16㎠",
+    "10㎠",
+    "6㎠",
+    "8㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "밑변 4칸, 높이 4칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 4×4÷2 = 8㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 4,
+     "n": 3
+    },
+    "heights": [
+     4,
+     4,
+     4,
+     0,
+     0,
+     4
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtri-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-gridtri-4",
+   "concepts": [
+    "삼각형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "14㎠",
+    "24㎠",
+    "12㎠",
+    "10㎠"
+   ],
+   "answerIndex": 2,
+   "explanation": "밑변 6칸, 높이 4칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 6×4÷2 = 12㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 4,
+     "n": 3
+    },
+    "heights": [
+     0,
+     4,
+     6,
+     4,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridpara-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridpara-5",
+   "concepts": [
+    "평행사변형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "24㎠",
+    "14㎠",
+    "19㎠",
+    "16㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 4칸, 높이(수직) 4칸 → 4×4 = 16㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "둘러싼 직사각형(6×4)이 아니라, 밑변×수직높이로 구해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 4,
+     "n": 4
+    },
+    "heights": [
+     0,
+     4,
+     4,
+     4,
+     6,
+     0,
+     2,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridpara-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridpara-5",
+   "concepts": [
+    "평행사변형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "20㎠",
+    "18㎠",
+    "13㎠",
+    "15㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 5칸, 높이(수직) 3칸 → 5×3 = 15㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "둘러싼 직사각형(6×3)이 아니라, 밑변×수직높이로 구해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 3,
+     "n": 4
+    },
+    "heights": [
+     0,
+     3,
+     5,
+     3,
+     6,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridpara-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridpara-5",
+   "concepts": [
+    "평행사변형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "15㎠",
+    "10㎠",
+    "20㎠",
+    "12㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 3칸, 높이(수직) 4칸 → 3×4 = 12㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "둘러싼 직사각형(5×4)이 아니라, 밑변×수직높이로 구해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 4,
+     "n": 4
+    },
+    "heights": [
+     1,
+     4,
+     4,
+     4,
+     6,
+     0,
+     3,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridpara-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridpara-5",
+   "concepts": [
+    "평행사변형 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "10㎠",
+    "15㎠",
+    "18㎠",
+    "12㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 4칸, 높이(수직) 3칸 → 4×3 = 12㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "둘러싼 직사각형(6×3)이 아니라, 밑변×수직높이로 구해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 3,
+     "n": 4
+    },
+    "heights": [
+     0,
+     3,
+     4,
+     3,
+     6,
+     0,
+     2,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtrap-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridtrap-5",
+   "concepts": [
+    "사다리꼴 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "30㎠",
+    "18㎠",
+    "13㎠",
+    "15㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = (4+6)×3÷2 = 15㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 6,
+     "rows": 3,
+     "n": 4
+    },
+    "heights": [
+     0,
+     3,
+     6,
+     3,
+     5,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtrap-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridtrap-5",
+   "concepts": [
+    "사다리꼴 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "12㎠",
+    "24㎠",
+    "10㎠",
+    "15㎠"
+   ],
+   "answerIndex": 0,
+   "explanation": "사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = (2+4)×4÷2 = 12㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 4,
+     "n": 4
+    },
+    "heights": [
+     0,
+     4,
+     4,
+     4,
+     3,
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtrap-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gridtrap-5",
+   "concepts": [
+    "사다리꼴 넓이",
+    "모눈"
+   ],
+   "statement": "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "14㎠",
+    "12㎠",
+    "17㎠",
+    "28㎠"
+   ],
+   "answerIndex": 0,
+   "explanation": "사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = (2+5)×4÷2 = 14㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 5,
+     "rows": 4,
+     "n": 4
+    },
+    "heights": [
+     0,
+     4,
+     5,
+     4,
+     4,
+     0,
+     2,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtilt-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridtilt-6",
+   "concepts": [
+    "넓이",
+    "둘러싸기",
+    "모눈"
+   ],
+   "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "25㎠",
+    "13㎠",
+    "11㎠",
+    "15㎠"
+   ],
+   "answerIndex": 1,
+   "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 5×5=25㎠에서, 남는 네 모서리 직각삼각형 넓이 합 12㎠를 빼요. 25−12=13㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 5,
+     "rows": 5,
+     "n": 4
+    },
+    "heights": [
+     2,
+     0,
+     5,
+     2,
+     3,
+     5,
+     0,
+     3
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtilt-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridtilt-6",
+   "concepts": [
+    "넓이",
+    "둘러싸기",
+    "모눈"
+   ],
+   "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "10㎠",
+    "16㎠",
+    "12㎠",
+    "8㎠"
+   ],
+   "answerIndex": 0,
+   "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 4×4=16㎠에서, 남는 네 모서리 직각삼각형 넓이 합 6㎠를 빼요. 16−6=10㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 4,
+     "n": 4
+    },
+    "heights": [
+     1,
+     0,
+     4,
+     1,
+     3,
+     4,
+     0,
+     3
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtilt-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridtilt-6",
+   "concepts": [
+    "넓이",
+    "둘러싸기",
+    "모눈"
+   ],
+   "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "15㎠",
+    "25㎠",
+    "13㎠",
+    "11㎠"
+   ],
+   "answerIndex": 2,
+   "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 5×5=25㎠에서, 남는 네 모서리 직각삼각형 넓이 합 12㎠를 빼요. 25−12=13㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 5,
+     "rows": 5,
+     "n": 4
+    },
+    "heights": [
+     3,
+     0,
+     5,
+     3,
+     2,
+     5,
+     0,
+     2
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtilt-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridtilt-6",
+   "concepts": [
+    "넓이",
+    "둘러싸기",
+    "모눈"
+   ],
+   "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "16㎠",
+    "10㎠",
+    "6㎠",
+    "8㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 4×4=16㎠에서, 남는 네 모서리 직각삼각형 넓이 합 8㎠를 빼요. 16−8=8㎠.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 4,
+     "n": 4
+    },
+    "heights": [
+     2,
+     0,
+     4,
+     2,
+     2,
+     4,
+     0,
+     2
+    ]
+   }
   }
  ]
 }

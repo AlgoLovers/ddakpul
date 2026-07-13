@@ -22,6 +22,12 @@ enum class FigureType {
 
     /** 쌓기나무(입체 등각도). params: w(가로 칸), d(세로 칸). heights: 칸별 높이(row-major, 길이 w*d). */
     CUBE_STACK,
+
+    /**
+     * 격자 위 색칠 다각형(넓이 구하기). params: cols, rows(격자 칸 수), n(꼭짓점 수).
+     * heights: 꼭짓점 좌표를 [x0,y0,x1,y1,…]로 평탄화(길이 2n, 격자점 0..cols/0..rows).
+     */
+    GRID_POLYGON,
 }
 
 data class ProblemFigure(

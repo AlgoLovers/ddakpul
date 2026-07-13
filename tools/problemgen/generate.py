@@ -1018,6 +1018,118 @@ def gen_cube_stack():
         )
 
 
+# ── 50. 격자 넓이 (도형과측정) — 그림 필수(GRID_POLYGON) ──────────────────────
+def _shoelace2(pts):
+    """다각형 넓이의 2배(정수)를 신발끈 공식으로. 좌표 오타 검산용."""
+    s = 0
+    for i in range(len(pts)):
+        x1, y1 = pts[i]
+        x2, y2 = pts[(i + 1) % len(pts)]
+        s += x1 * y2 - x2 * y1
+    return abs(s)
+
+
+def _grid_fig(pts):
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    flat = []
+    for x, y in pts:
+        flat += [x, y]
+    return {"type": "GRID_POLYGON", "params": {"cols": max(xs), "rows": max(ys), "n": len(pts)}, "heights": flat}
+
+
+def gen_grid_area():
+    # (a) 난3·무료 — 직각 다각형(ㄱ자·계단): 칸 세기/직사각형 빼기
+    for pts, detail in [
+        ([(0, 0), (4, 0), (4, 2), (2, 2), (2, 4), (0, 4)], "큰 4×4 정사각형(16㎠)에서 빈 2×2(4㎠)를 빼요"),
+        ([(0, 0), (5, 0), (5, 2), (3, 2), (3, 4), (0, 4)], "큰 5×4 직사각형(20㎠)에서 빈 2×2(4㎠)를 빼요"),
+        ([(0, 0), (3, 0), (3, 3), (2, 3), (2, 5), (0, 5)], "너비 3칸 부분(3×3=9㎠)과 너비 2칸 부분(2×2=4㎠)으로 나눠 더해요"),
+    ]:
+        assert _shoelace2(pts) % 2 == 0
+        area = _shoelace2(pts) // 2
+        add(
+            "gridrect", "SHAPE_MEASUREMENT", 3, ["넓이", "모눈"],
+            "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{area + 2}㎠", f"{area - 2}㎠", f"{area + 4}㎠"],
+            f"칸을 세거나 직사각형으로 나눠 구해요. {detail} → {area}㎠.",
+            figure=_grid_fig(pts),
+        )
+    # (b) 난4 — 직각삼각형: 밑변×높이÷2
+    for b, h, pts in [
+        (5, 4, [(0, 4), (5, 4), (0, 0)]),
+        (6, 3, [(0, 3), (6, 3), (0, 0)]),
+        (4, 4, [(4, 4), (4, 0), (0, 4)]),
+        (6, 4, [(0, 4), (6, 4), (0, 0)]),
+    ]:
+        assert _shoelace2(pts) == b * h and (b * h) % 2 == 0
+        area = b * h // 2
+        add(
+            "gridtri", "SHAPE_MEASUREMENT", 4, ["삼각형 넓이", "모눈"],
+            "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{b * h}㎠", f"{area + 2}㎠", f"{area - 2}㎠"],
+            f"밑변 {b}칸, 높이 {h}칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = {b}×{h}÷2 = {area}㎠.",
+            [(f"{b * h}㎠", "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요.")],
+            figure=_grid_fig(pts),
+        )
+    # (c) 난5 — 평행사변형: 밑변×수직높이(기울어져도 동일)
+    for base, height, pts in [
+        (4, 4, [(0, 4), (4, 4), (6, 0), (2, 0)]),
+        (5, 3, [(0, 3), (5, 3), (6, 0), (1, 0)]),
+        (3, 4, [(1, 4), (4, 4), (6, 0), (3, 0)]),
+        (4, 3, [(0, 3), (4, 3), (6, 0), (2, 0)]),
+    ]:
+        assert _shoelace2(pts) == 2 * base * height
+        area = base * height
+        xs = [p[0] for p in pts]
+        boxw = max(xs) - min(xs)
+        add(
+            "gridpara", "SHAPE_MEASUREMENT", 5, ["평행사변형 넓이", "모눈"],
+            "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{boxw * height}㎠", f"{area + 3}㎠", f"{area - 2}㎠"],
+            f"평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 {base}칸, 높이(수직) {height}칸 → {base}×{height} = {area}㎠.",
+            [(f"{boxw * height}㎠", f"둘러싼 직사각형({boxw}×{height})이 아니라, 밑변×수직높이로 구해요.")],
+            figure=_grid_fig(pts),
+        )
+    # (d) 난5 — 사다리꼴: (윗변+아랫변)×높이÷2
+    # a=윗변(화면 위·작은 y쪽), bb=아랫변 — 렌더가 y-down이라 그림과 일치하도록 맞춤
+    for a, bb, h, pts in [
+        (4, 6, 3, [(0, 3), (6, 3), (5, 0), (1, 0)]),
+        (2, 4, 4, [(0, 4), (4, 4), (3, 0), (1, 0)]),
+        (2, 5, 4, [(0, 4), (5, 4), (4, 0), (2, 0)]),
+    ]:
+        assert _shoelace2(pts) == (a + bb) * h
+        area = (a + bb) * h // 2
+        add(
+            "gridtrap", "SHAPE_MEASUREMENT", 5, ["사다리꼴 넓이", "모눈"],
+            "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{(a + bb) * h}㎠", f"{area + 3}㎠", f"{area - 2}㎠"],
+            f"사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = ({a}+{bb})×{h}÷2 = {area}㎠.",
+            [(f"{(a + bb) * h}㎠", "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요.")],
+            figure=_grid_fig(pts),
+        )
+    # (e) 난6 — 기울어진 도형: 둘러싼 직사각형 − 모서리 삼각형
+    for pts in [
+        [(2, 0), (5, 2), (3, 5), (0, 3)],
+        [(1, 0), (4, 1), (3, 4), (0, 3)],
+        [(3, 0), (5, 3), (2, 5), (0, 2)],
+        [(2, 0), (4, 2), (2, 4), (0, 2)],
+    ]:
+        assert _shoelace2(pts) % 2 == 0
+        area = _shoelace2(pts) // 2
+        cols = max(p[0] for p in pts)
+        rows = max(p[1] for p in pts)
+        box = cols * rows
+        tri = box - area
+        add(
+            "gridtilt", "SHAPE_MEASUREMENT", 6, ["넓이", "둘러싸기", "모눈"],
+            "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{box}㎠", f"{area + 2}㎠", f"{area - 2}㎠"],
+            f"칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 {cols}×{rows}={box}㎠에서, 남는 네 모서리 직각삼각형 넓이 합 {tri}㎠를 빼요. {box}−{tri}={area}㎠.",
+            [(f"{box}㎠", "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요.")],
+            figure=_grid_fig(pts),
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1041,6 +1153,8 @@ GENERATORS = [
     gen_polygon_exterior,
     # v4.2 확충 — 쌓기나무(CUBE_STACK 입체 그림, 그림 필수)
     gen_cube_stack,
+    # v4.3 확충 — 격자 넓이(GRID_POLYGON 그림 필수): 삼각형·평행사변형·사다리꼴·기울어진 도형
+    gen_grid_area,
 ]
 
 for g in GENERATORS:
