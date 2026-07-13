@@ -51,6 +51,7 @@ fun ResultView(
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
     onExcludeRequest: () -> Unit,
+    onReportAnswer: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -131,6 +132,18 @@ fun ResultView(
                 text = stringResource(R.string.result_next),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 6.dp),
+            )
+        }
+
+        // 정답이 이상하다고 느끼면 개발자에게 바로 신고(문제 정보 자동 첨부) — 나도 틀릴 수 있으니.
+        TextButton(
+            onClick = onReportAnswer,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        ) {
+            Text(
+                text = stringResource(R.string.report_answer_button),
+                style = MaterialTheme.typography.bodySmall,
+                color = colors.onSurfaceVariant,
             )
         }
 
