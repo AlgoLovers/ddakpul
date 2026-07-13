@@ -36,6 +36,19 @@ def _bump_number(text, delta):
     return text[: m.start()] + str(n) + text[m.end():]
 
 
+def _copula(word):
+    """단어 끝소리(받침 유무)에 맞춰 서술격 조사 '예요/이에요'를 고른다.
+    숫자는 한국어 읽기 기준(2·4·5·9로 끝나면 받침 없음), 한글은 종성으로 판단."""
+    last = str(word)[-1]
+    if last.isdigit():
+        has_final = int(last) not in (2, 4, 5, 9)
+    elif "가" <= last <= "힣":
+        has_final = (ord(last) - 0xAC00) % 28 != 0
+    else:
+        has_final = True
+    return "이에요" if has_final else "예요"
+
+
 def add(family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes=None, figure=None):
     """정답 1 + 오답 3을 섞어 4지선다로 만든다. 겹치는 오답은 숫자를 밀어 자동 대체."""
     unique = []
@@ -419,7 +432,7 @@ def gen_digit_cards():
             "cards", "NUMBER_OPERATION", 1, ["자리값", "가장 큰 수 만들기"],
             f"숫자 카드 {cardtxt} 를 한 번씩 모두 써서 세 자리 수를 만들려고 해요. 만들 수 있는 가장 큰 수는 얼마일까요?",
             str(biggest), [str(smallest), str(asgiven), str(swapped)],
-            f"가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 {desc[0]}, 십의 자리에 {desc[1]}, 일의 자리에 {desc[2]}을(를) 놓으면 {biggest}이에요.",
+            f"가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 {desc[0]}, 십의 자리에 {desc[1]}, 일의 자리에 {desc[2]}을(를) 놓으면 {biggest}{_copula(biggest)}.",
             [(str(smallest), "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요.")],
         )
 
@@ -438,7 +451,7 @@ def gen_sequence_simple():
             "seq1", "CHANGE_RELATION", 1, ["규칙 찾기", "일정하게 커지는 수"],
             f"규칙을 찾아보세요. {seqtxt}, □ — □에 들어갈 수는 얼마일까요?",
             str(nxt), [str(nxt + d), str(seq[-1]), str(nxt + 1)],
-            f"이웃한 수의 차이를 살펴봐요. 매번 {abs(d)}씩 {grow} 있어요. 그러니 {seq[-1]} 다음은 {seq[-1]}{sign}{abs(d)}={nxt}이에요.",
+            f"이웃한 수의 차이를 살펴봐요. 매번 {abs(d)}씩 {grow} 있어요. 그러니 {seq[-1]} 다음은 {seq[-1]}{sign}{abs(d)}={nxt}{_copula(nxt)}.",
             [(str(seq[-1]), "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요.")],
         )
 
@@ -490,7 +503,7 @@ def gen_broken_arithmetic():
             "brokensum", "NUMBER_OPERATION", 2, ["벌레먹은셈", "자리값 거꾸로"],
             f"□{ones} + {addend} = {result} 예요. □ 안에 들어갈 숫자는 무엇일까요? (□는 한 자리 숫자)",
             str(tens), [str((tens + 1) % 10), str(result // 10), str(max(0, tens - 1))],
-            f"□{ones}는 {result}에서 {addend}를 뺀 수예요. {result}−{addend}={unknown}이니 십의 자리 □는 {tens}이에요. 일의 자리 {ones}도 딱 맞죠.",
+            f"□{ones}는 {result}에서 {addend}를 뺀 수예요. {result}−{addend}={unknown}이니 십의 자리 □는 {tens}{_copula(tens)}. 일의 자리 {ones}도 딱 맞죠.",
             [(str(result // 10), "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요.")],
         )
 
@@ -537,8 +550,8 @@ def gen_custom_op():
             "promise", "NUMBER_OPERATION", 3, ["약속 연산", "규칙 이해와 적용"],
             f"새로운 약속을 정했어요. {desc} 예를 들어 {ea}{sym}{eb} = {ev}예요. 그러면 {qa}{sym}{qb}는 얼마일까요?",
             str(ans), [str(qa * qb), str(ans + qb), str(ans - 2)],
-            f"약속한 규칙에 가={qa}, 나={qb}를 그대로 넣어 계산하면 {ans}이에요. 예시({ea}{sym}{eb}={ev})와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
-            [(str(qa * qb), "가×나까지만 하고 약속의 나머지 부분을 빠뜨렸어요.")],
+            f"약속한 규칙에 가={qa}, 나={qb}를 그대로 넣어 계산하면 {ans}{_copula(ans)}. 예시({ea}{sym}{eb}={ev})와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
+            [(str(qa * qb), "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요.")],
         )
 
 
@@ -556,7 +569,7 @@ def gen_sequence_advanced():
             "seq2", "CHANGE_RELATION", 3, ["계차 수열", "차이의 규칙"],
             f"규칙을 찾아보세요. {seqtxt}, □ — □에 들어갈 수는 얼마일까요?",
             str(nxt), [str(seq[-1] + diffs[-1]), str(nxt + 1), str(seq[-1])],
-            f"이웃한 수의 차이를 적어 보면 {difftxt}로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 {nxt_diff}이고, {seq[-1]}+{nxt_diff}={nxt}이에요.",
+            f"이웃한 수의 차이를 적어 보면 {difftxt}로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 {nxt_diff}이고, {seq[-1]}+{nxt_diff}={nxt}{_copula(nxt)}.",
             [(str(seq[-1] + diffs[-1]), "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요.")],
         )
 
@@ -594,7 +607,7 @@ def gen_true_false():
             "truthone", "DATA_POSSIBILITY", 4, ["진실과 거짓", "경우 따져보기"],
             f"꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. {body} 꽃병을 깬 사람은 누구일까요?",
             people[culprit], [people[(culprit + 1) % 3], people[(culprit + 2) % 3], "알 수 없다"],
-            f"한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 {people[culprit]}이(가) 범인일 때뿐이에요. 그래서 답은 {people[culprit]}이에요.",
+            f"한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 {people[culprit]}이(가) 범인일 때뿐이에요. 그래서 답은 {people[culprit]}{_copula(people[culprit])}.",
             [("알 수 없다", "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요.")],
         )
 
