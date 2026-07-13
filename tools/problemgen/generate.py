@@ -998,6 +998,26 @@ def gen_polygon_exterior():
         )
 
 
+# ── 49. 쌓기나무 개수 세기 (난5, 도형과측정) — 그림 필수 ─────────────────────
+def gen_cube_stack():
+    for w, d, heights in [
+        (3, 1, [1, 2, 3]),
+        (2, 2, [1, 1, 1, 2]),
+        (2, 3, [1, 1, 1, 1, 1, 1]),
+        (3, 2, [1, 2, 1, 2, 1, 2]),
+    ]:
+        assert len(heights) == w * d
+        ans = sum(heights)
+        add(
+            "cubestack", "SHAPE_MEASUREMENT", 5, ["쌓기나무", "공간 지각"],
+            "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (보이지 않는 뒤·아래 나무도 세어요)",
+            f"{ans}개", [f"{ans - 1}개", f"{ans + 1}개", f"{max(1, ans - 2)}개"],
+            f"기둥마다 몇 층인지 세어 모두 더해요. 각 칸의 높이를 합하면 {ans}개예요. 앞 나무에 가려 안 보여도 아래는 채워져 있다고 봐요.",
+            [(f"{max(1, ans - 2)}개", "앞이나 위에 가려 안 보이는 나무도 빠짐없이 세어요.")],
+            figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1019,6 +1039,8 @@ GENERATORS = [
     gen_rect_area_max, gen_cube_surface,
     # v4.1 확충 — 도형 그림(POLYGON) 부착 + 외각
     gen_polygon_exterior,
+    # v4.2 확충 — 쌓기나무(CUBE_STACK 입체 그림, 그림 필수)
+    gen_cube_stack,
 ]
 
 for g in GENERATORS:

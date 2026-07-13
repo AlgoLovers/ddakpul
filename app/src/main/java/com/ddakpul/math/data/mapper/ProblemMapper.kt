@@ -24,15 +24,16 @@ private data class MistakeDto(
 data class FigureDto(
     val type: String,
     val params: Map<String, Int> = emptyMap(),
+    val heights: List<Int> = emptyList(),
 )
 
 private val json = Json { ignoreUnknownKeys = true }
 private val stringListSerializer = ListSerializer(String.serializer())
 private val mistakeListSerializer = ListSerializer(MistakeDto.serializer())
 
-internal fun FigureDto.toDomain(): ProblemFigure = ProblemFigure(FigureType.valueOf(type), params)
+internal fun FigureDto.toDomain(): ProblemFigure = ProblemFigure(FigureType.valueOf(type), params, heights)
 
-private fun ProblemFigure.toDto(): FigureDto = FigureDto(type.name, params)
+private fun ProblemFigure.toDto(): FigureDto = FigureDto(type.name, params, heights)
 
 fun ProblemEntity.toDomain(): Problem =
     Problem(

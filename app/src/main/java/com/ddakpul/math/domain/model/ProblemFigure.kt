@@ -19,9 +19,14 @@ enum class FigureType {
 
     /** 정다각형. params: n(변 수 3~12), diagonals(1이면 대각선도 그린다). */
     POLYGON,
+
+    /** 쌓기나무(입체 등각도). params: w(가로 칸), d(세로 칸). heights: 칸별 높이(row-major, 길이 w*d). */
+    CUBE_STACK,
 }
 
 data class ProblemFigure(
     val type: FigureType,
-    val params: Map<String, Int>,
+    val params: Map<String, Int> = emptyMap(),
+    /** 목록형 데이터(쌓기나무의 칸별 높이 등). 단순 도형은 비어 있다. */
+    val heights: List<Int> = emptyList(),
 )

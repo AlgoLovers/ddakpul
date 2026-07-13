@@ -303,6 +303,7 @@ private fun drawFigure(
         FigureType.GRID -> drawPdfGrid(canvas, figure, centerX, top, size, ink, fill)
         FigureType.L_SHAPE -> drawPdfLShape(canvas, figure, centerX, top, size, ink)
         FigureType.POLYGON -> drawPdfPolygon(canvas, figure, centerX, top, size, ink)
+        FigureType.CUBE_STACK -> drawPdfCubeStack(canvas, figure, centerX, top, size)
     }
 }
 
@@ -343,6 +344,90 @@ private fun drawPdfPolygonDiagonals(
         for (j in i + 2 until n) {
             if (i == 0 && j == n - 1) continue // 첫·끝 꼭짓점은 변이라 제외
             canvas.drawLine(xs[i], ys[i], xs[j], ys[j], paint)
+        }
+    }
+}
+
+private class PdfIso(
+    val ox: Float,
+    val oy: Float,
+    val hw: Float,
+    val hh: Float,
+    val ch: Float,
+) {
+    fun px(
+        gx: Float,
+        gy: Float,
+        gz: Float,
+    ) = floatArrayOf(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+}
+
+private fun drawPdfIsoFace(
+    canvas: Canvas,
+    pts: List<FloatArray>,
+    fill: Paint,
+    outline: Paint,
+) {
+    val path =
+        Path().apply {
+            moveTo(pts[0][0], pts[0][1])
+            for (k in 1 until pts.size) lineTo(pts[k][0], pts[k][1])
+            close()
+        }
+    canvas.drawPath(path, fill)
+    canvas.drawPath(path, outline)
+}
+
+private fun drawPdfStackCube(
+    canvas: Canvas,
+    view: PdfIso,
+    c: Float,
+    r: Float,
+    l: Float,
+    fills: List<Paint>,
+    outline: Paint,
+) {
+    drawPdfIsoFace(canvas, listOf(view.px(c, r, l + 1), view.px(c + 1, r, l + 1), view.px(c + 1, r + 1, l + 1), view.px(c, r + 1, l + 1)), fills[0], outline)
+    drawPdfIsoFace(canvas, listOf(view.px(c + 1, r, l + 1), view.px(c + 1, r + 1, l + 1), view.px(c + 1, r + 1, l), view.px(c + 1, r, l)), fills[1], outline)
+    drawPdfIsoFace(canvas, listOf(view.px(c, r + 1, l + 1), view.px(c + 1, r + 1, l + 1), view.px(c + 1, r + 1, l), view.px(c, r + 1, l)), fills[2], outline)
+}
+
+private fun drawPdfCubeStack(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+) {
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val heights = figure.heights
+    if (heights.size != w * d) return
+    val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
+    val u = size * 0.9f / maxOf((w + d).toFloat(), (w + d) / 2f + maxH)
+    val ox = centerX - size / 2f + (size - (w + d) * u) / 2f + d * u
+    val oy = top + (size - ((w + d) * u / 2f + maxH * u)) / 2f + maxH * u
+    val view = PdfIso(ox, oy, u, u / 2f, u)
+    val outline =
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.STROKE
+            strokeWidth = 1.2f
+            isAntiAlias = true
+        }
+    val fills =
+        listOf(255, 228, 205).map { g ->
+            Paint().apply {
+                color = Color.rgb(g, g, g)
+                style = Paint.Style.FILL
+                isAntiAlias = true
+            }
+        }
+    for (t in 0..(w + d - 2)) {
+        for (c in 0 until w) {
+            val r = t - c
+            if (r < 0 || r >= d) continue
+            for (l in 0 until heights[r * w + c]) drawPdfStackCube(canvas, view, c.toFloat(), r.toFloat(), l.toFloat(), fills, outline)
         }
     }
 }

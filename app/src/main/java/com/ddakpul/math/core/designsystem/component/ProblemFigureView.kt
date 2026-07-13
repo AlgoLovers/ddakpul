@@ -31,6 +31,13 @@ fun ProblemFigureView(
 ) {
     val ink = MaterialTheme.colorScheme.onSurface
     val accent = MaterialTheme.colorScheme.primary
+    // 쌓기나무 세 면(윗면·오른면·왼면)을 밝기 차로 입체감 있게.
+    val cubeFaces =
+        listOf(
+            MaterialTheme.colorScheme.surfaceContainerHighest,
+            MaterialTheme.colorScheme.surfaceContainerHigh,
+            MaterialTheme.colorScheme.surfaceContainer,
+        )
     val textMeasurer = rememberTextMeasurer()
     val labelStyle = TextStyle(fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
@@ -61,6 +68,81 @@ fun ProblemFigureView(
             FigureType.POLYGON -> {
                 drawPolygon(figure, ink, accent, left, top, side)
             }
+
+            FigureType.CUBE_STACK -> {
+                drawCubeStack(figure, ink, cubeFaces, left, top, side)
+            }
+        }
+    }
+}
+
+/** 쌓기나무 등각 투영 좌표. */
+private data class IsoView(
+    val ox: Float,
+    val oy: Float,
+    val hw: Float,
+    val hh: Float,
+    val ch: Float,
+) {
+    fun proj(
+        gx: Float,
+        gy: Float,
+        gz: Float,
+    ) = Offset(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+}
+
+private fun DrawScope.drawIsoFace(
+    pts: List<Offset>,
+    fill: Color,
+    ink: Color,
+) {
+    val path =
+        Path().apply {
+            moveTo(pts[0].x, pts[0].y)
+            for (k in 1 until pts.size) lineTo(pts[k].x, pts[k].y)
+            close()
+        }
+    drawPath(path, color = fill)
+    drawPath(path, color = ink, style = Stroke(width = 2.5f))
+}
+
+/** 큐브 하나의 보이는 세 면(윗·오른·왼)을 그린다. */
+private fun DrawScope.drawStackCube(
+    view: IsoView,
+    c: Float,
+    r: Float,
+    l: Float,
+    faceColors: List<Color>,
+    ink: Color,
+) {
+    drawIsoFace(listOf(view.proj(c, r, l + 1), view.proj(c + 1, r, l + 1), view.proj(c + 1, r + 1, l + 1), view.proj(c, r + 1, l + 1)), faceColors[0], ink)
+    drawIsoFace(listOf(view.proj(c + 1, r, l + 1), view.proj(c + 1, r + 1, l + 1), view.proj(c + 1, r + 1, l), view.proj(c + 1, r, l)), faceColors[1], ink)
+    drawIsoFace(listOf(view.proj(c, r + 1, l + 1), view.proj(c + 1, r + 1, l + 1), view.proj(c + 1, r + 1, l), view.proj(c, r + 1, l)), faceColors[2], ink)
+}
+
+/** 쌓기나무를 등각 투영으로 그린다. 뒤→앞·아래→위 순으로 채워 앞 큐브가 뒤를 가린다. */
+private fun DrawScope.drawCubeStack(
+    figure: ProblemFigure,
+    ink: Color,
+    faceColors: List<Color>,
+    left: Float,
+    top: Float,
+    side: Float,
+) {
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val heights = figure.heights
+    if (heights.size != w * d) return
+    val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
+    val u = side * 0.9f / maxOf((w + d).toFloat(), (w + d) / 2f + maxH)
+    val ox = left + (side - (w + d) * u) / 2f + d * u
+    val oy = top + (side - ((w + d) * u / 2f + maxH * u)) / 2f + maxH * u
+    val view = IsoView(ox, oy, u, u / 2f, u)
+    for (t in 0..(w + d - 2)) {
+        for (c in 0 until w) {
+            val r = t - c
+            if (r < 0 || r >= d) continue
+            for (l in 0 until heights[r * w + c]) drawStackCube(view, c.toFloat(), r.toFloat(), l.toFloat(), faceColors, ink)
         }
     }
 }
