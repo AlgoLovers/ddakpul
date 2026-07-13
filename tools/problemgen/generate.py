@@ -1130,6 +1130,25 @@ def gen_grid_area():
         )
 
 
+# ── 51. 삼각형 개수 세기 (도형과측정) — 그림 필수(TRIANGLE_FAN) ────────────────
+def gen_shape_count():
+    # family를 난이도별로 분리(id는 family+idx라 한 family가 여러 난이도에 걸치면 id가 충돌)
+    for diff, ks, fam in [(4, [2, 3, 4], "trianglefan"), (6, [5, 6, 7], "trianglefanx")]:
+        for k in ks:
+            lines = k + 2                       # 밑변으로 가는 선(양옆 2 + 내부 k)
+            ans = lines * (lines - 1) // 2       # 선 2개를 고를 때마다 삼각형 1개
+            small = k + 1                        # 가장 작은 삼각형 개수
+            add(
+                fam, "SHAPE_MEASUREMENT", diff, ["삼각형 개수", "체계적 세기"],
+                "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
+                f"{ans}개", [f"{small}개", f"{ans - 2}개", f"{ans + 3}개"],
+                f"꼭짓점에서 밑변으로 그은 선이 모두 {lines}개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. "
+                f"{lines}개에서 2개 고르기 = {lines}×{lines - 1}÷2 = {ans}개. (가장 작은 삼각형 {small}개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
+                [(f"{small}개", "가장 작은 삼각형만 세지 말고, 여러 개를 합친 큰 삼각형도 빠짐없이 세어요.")],
+                figure={"type": "TRIANGLE_FAN", "params": {"cevians": k}},
+            )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1155,6 +1174,8 @@ GENERATORS = [
     gen_cube_stack,
     # v4.3 확충 — 격자 넓이(GRID_POLYGON 그림 필수): 삼각형·평행사변형·사다리꼴·기울어진 도형
     gen_grid_area,
+    # v4.4 확충 — 삼각형 개수 세기(TRIANGLE_FAN 그림 필수): 체계적 세기
+    gen_shape_count,
 ]
 
 for g in GENERATORS:

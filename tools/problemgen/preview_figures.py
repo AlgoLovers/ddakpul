@@ -142,7 +142,25 @@ def grid_polygon(d, fig, box):
         d.line([pts[i], pts[(i + 1) % n]], fill=ACCENT, width=3)
 
 
-RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon}
+def triangle_fan(d, fig, box):
+    k = fig["params"].get("cevians", 2)
+    x0, y0, x1, y1 = box
+    s = min(x1 - x0, y1 - y0)
+    cx = (x0 + x1) / 2
+    ty = (y0 + y1) / 2 - s / 2
+    apex = (cx, ty + s * 0.06)
+    base_y = ty + s * 0.94
+    bl_x = cx - s * 0.44
+    br_x = cx + s * 0.44
+    for i in range(1, k + 1):
+        fx = bl_x + (br_x - bl_x) * i / (k + 1)
+        d.line([apex, (fx, base_y)], fill=ACCENT, width=2)
+    d.line([apex, (bl_x, base_y)], fill=INK, width=3)
+    d.line([apex, (br_x, base_y)], fill=INK, width=3)
+    d.line([(bl_x, base_y), (br_x, base_y)], fill=INK, width=3)
+
+
+RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan}
 TW, FH, LH = 300, 210, 96
 
 
@@ -175,7 +193,7 @@ def sheet(problems, name):
 def main():
     data = json.load(open(ROOT / "app/src/main/assets/problems_generated.json"))["problems"]
     figs = [p for p in data if "figure" in p]
-    order = {t: i for i, t in enumerate(["GRID_POLYGON", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
+    order = {t: i for i, t in enumerate(["GRID_POLYGON", "TRIANGLE_FAN", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
     figs.sort(key=lambda p: order.get(p["figure"]["type"], 99))
     sheet(figs, "figures_all.png")
 

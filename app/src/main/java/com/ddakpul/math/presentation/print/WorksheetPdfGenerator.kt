@@ -305,7 +305,33 @@ private fun drawFigure(
         FigureType.POLYGON -> drawPdfPolygon(canvas, figure, centerX, top, size, ink)
         FigureType.CUBE_STACK -> drawPdfCubeStack(canvas, figure, centerX, top, size)
         FigureType.GRID_POLYGON -> drawPdfGridPolygon(canvas, figure, centerX, top, size, ink)
+        FigureType.TRIANGLE_FAN -> drawPdfTriangleFan(canvas, figure, centerX, top, size, ink)
     }
+}
+
+/** 삼각형 개수 세기 부채꼴 — 큰 삼각형 + 꼭짓점에서 밑변으로 그은 k개의 선. */
+private fun drawPdfTriangleFan(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val apexX = centerX
+    val apexY = top + size * 0.06f
+    val baseY = top + size * 0.94f
+    val blX = centerX - size * 0.44f
+    val brX = centerX + size * 0.44f
+    val thin = Paint(ink).apply { strokeWidth = 0.8f }
+    for (i in 1..k) {
+        val footX = blX + (brX - blX) * i / (k + 1)
+        canvas.drawLine(apexX, apexY, footX, baseY, thin)
+    }
+    canvas.drawLine(apexX, apexY, blX, baseY, ink)
+    canvas.drawLine(apexX, apexY, brX, baseY, ink)
+    canvas.drawLine(blX, baseY, brX, baseY, ink)
 }
 
 /** 격자 위 색칠 다각형(넓이 문제) — 흑백 인쇄용: 옅은 모눈 + 회색 채움 + 굵은 외곽선. */

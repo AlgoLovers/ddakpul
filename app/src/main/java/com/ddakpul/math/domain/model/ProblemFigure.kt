@@ -28,6 +28,12 @@ enum class FigureType {
      * heights: 꼭짓점 좌표를 [x0,y0,x1,y1,…]로 평탄화(길이 2n, 격자점 0..cols/0..rows).
      */
     GRID_POLYGON,
+
+    /**
+     * 삼각형 개수 세기 부채꼴. 한 꼭짓점에서 밑변으로 cevians개의 선을 그어 삼각형을 겹쳐 만든다.
+     * params: cevians(내부 선 개수 k → 밑변으로 가는 선은 총 k+2개, 삼각형 (k+2)(k+1)/2개).
+     */
+    TRIANGLE_FAN,
 }
 
 data class ProblemFigure(
