@@ -7,6 +7,7 @@ import com.ddakpul.math.domain.model.DailyStat
 import com.ddakpul.math.domain.model.DifficultyPoint
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
+import com.ddakpul.math.domain.model.MatrixCell
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
@@ -99,6 +100,19 @@ internal fun buildLearningStats(
             problemsById[attempt.problemId]?.let { DifficultyPoint(attempt.timestamp, it.difficulty) }
         }
 
+    val matrixCells =
+        attempts
+            .mapNotNull { attempt -> problemsById[attempt.problemId]?.let { it to attempt } }
+            .groupBy({ (problem, _) -> problem.area to problem.difficulty }, { (_, attempt) -> attempt })
+            .map { (key, inCell) ->
+                MatrixCell(
+                    area = key.first,
+                    difficulty = key.second,
+                    solved = inCell.size,
+                    correct = inCell.count { it.isCorrect },
+                )
+            }
+
     val studyDays = dailyStats.mapTo(sortedSetOf()) { it.epochDay }
     val (streak, bestStreak) = computeStreaks(studyDays, today)
 
@@ -126,6 +140,7 @@ internal fun buildLearningStats(
         dailyStats = dailyStats,
         conceptStats = conceptStats,
         difficultyProgress = difficultyProgress,
+        matrixCells = matrixCells,
         streakDays = streak,
         bestStreakDays = bestStreak,
         todaySolved = todayAttempts.size,

@@ -2,7 +2,9 @@ package com.ddakpul.math.presentation.report
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
+import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,17 @@ data class DayCell(
     val solved: Int,
     val accuracy: Float?,
     val isToday: Boolean,
+)
+
+/**
+ * 숙달 지도의 한 칸(영역×난이도). [stats.matrixCells]는 시도가 있는 칸만 담으므로,
+ * 시도 없는 칸도 solved=0으로 채워 4×5 그리드를 항상 완성한다.
+ */
+data class MasteryCellUi(
+    val area: MathArea,
+    val difficulty: Int,
+    val solved: Int,
+    val accuracy: Float?,
 )
 
 /**
@@ -68,6 +81,7 @@ data class ReportUiState(
     val dayCells: List<DayCell> = emptyList(),
     val insights: List<ReportInsight> = emptyList(),
     val weeklySummary: WeeklySummary? = null,
+    val masteryGrid: List<MasteryCellUi> = emptyList(),
 )
 
 @HiltViewModel
@@ -87,6 +101,7 @@ class ReportViewModel
                     dayCells = buildDayCells(stats),
                     insights = buildInsights(stats),
                     weeklySummary = buildWeeklySummary(stats),
+                    masteryGrid = buildMasteryGrid(stats),
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -107,6 +122,26 @@ class ReportViewModel
                     accuracy = stat?.let { if (it.solved > 0) it.accuracy else null },
                     isToday = day == today,
                 )
+            }
+        }
+
+        /**
+         * 영역×난이도 20칸을 전부 채운다 — 시도 없는 칸도 solved=0으로 그리드에 나타나야 한다.
+         * [stats.matrixCells]는 시도가 있는 칸만 담으므로(집계 로직상 solved=0인 칸은 만들어지지
+         * 않는다) `cell`이 있으면 항상 solved > 0이다.
+         */
+        private fun buildMasteryGrid(stats: LearningStats): List<MasteryCellUi> {
+            val byKey = stats.matrixCells.associateBy { it.area to it.difficulty }
+            return MathArea.entries.flatMap { area ->
+                (Difficulty.MIN..Difficulty.MAX).map { difficulty ->
+                    val cell = byKey[area to difficulty]
+                    MasteryCellUi(
+                        area = area,
+                        difficulty = difficulty,
+                        solved = cell?.solved ?: 0,
+                        accuracy = cell?.accuracy,
+                    )
+                }
             }
         }
 

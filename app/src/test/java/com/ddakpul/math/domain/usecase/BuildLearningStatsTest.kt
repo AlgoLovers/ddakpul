@@ -231,6 +231,30 @@ class BuildLearningStatsTest {
     }
 
     @Test
+    fun matrixCells_aggregatePerAreaAndDifficulty() {
+        val stats =
+            build(
+                listOf(
+                    // 수와연산: 난2(num1) 1문제 정답, 난3(num2) 1문제 오답
+                    attempt("num1", true, timestamp = DAY * 100),
+                    attempt("num2", false, timestamp = DAY * 100),
+                    // 도형: 난2(geo1) 2문제 중 1정답
+                    attempt("geo1", true, timestamp = DAY * 100),
+                    attempt("geo1", false, timestamp = DAY * 100 + HOUR),
+                ),
+            )
+
+        val byKey = stats.matrixCells.associateBy { it.area to it.difficulty }
+        assertThat(byKey[MathArea.NUMBER_OPERATION to 2]?.solved).isEqualTo(1)
+        assertThat(byKey[MathArea.NUMBER_OPERATION to 2]?.correct).isEqualTo(1)
+        assertThat(byKey[MathArea.NUMBER_OPERATION to 3]?.correct).isEqualTo(0)
+        assertThat(byKey[MathArea.SHAPE_MEASUREMENT to 2]?.solved).isEqualTo(2)
+        assertThat(byKey[MathArea.SHAPE_MEASUREMENT to 2]?.accuracy).isWithin(TOLERANCE).of(0.5f)
+        // 시도 없는 칸은 없다
+        assertThat(byKey.containsKey(MathArea.DATA_POSSIBILITY to 1)).isFalse()
+    }
+
+    @Test
     fun emptyAttempts_yieldEmptyStats() {
         val stats = build(emptyList())
 
