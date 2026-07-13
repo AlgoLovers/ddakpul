@@ -41,6 +41,7 @@ import com.ddakpul.math.presentation.result.ResultView
 @Composable
 fun SolveScreen(
     onGoHome: () -> Unit,
+    onUpgrade: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SolveViewModel = hiltViewModel(),
 ) {
@@ -52,6 +53,7 @@ fun SolveScreen(
         onNext = viewModel::loadNext,
         onExclude = viewModel::excludeCurrent,
         onGoHome = onGoHome,
+        onUpgrade = onUpgrade,
         modifier = modifier,
     )
 }
@@ -64,6 +66,7 @@ private fun SolveContent(
     onNext: () -> Unit,
     onExclude: () -> Unit,
     onGoHome: () -> Unit,
+    onUpgrade: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showExcludeDialog by remember { mutableStateOf(false) }
@@ -87,6 +90,7 @@ private fun SolveContent(
                     onSelect = onSelect,
                     onSubmit = onSubmit,
                     onExcludeRequest = { showExcludeDialog = true },
+                    onUpgrade = onUpgrade,
                     modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                 )
             }
@@ -148,6 +152,7 @@ private fun SolvingBody(
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
     onExcludeRequest: () -> Unit,
+    onUpgrade: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
@@ -157,6 +162,11 @@ private fun SolvingBody(
     ) {
         // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다.
         TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
+
+        // 무료 상한을 넘어 승급 준비가 됐으면 이용권을 권한다(계속 풀 수는 있다).
+        if (uiState.premiumSuggested) {
+            PremiumBanner(onUpgrade = onUpgrade)
+        }
 
         uiState.area?.let { area ->
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -243,6 +253,33 @@ private fun TodayProgressHeader(
             progress = { (todaySolved.toFloat() / dailyGoal).coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth(),
         )
+    }
+}
+
+/** 무료 상한을 넘어 승급 준비가 됐을 때의 이용권 배너 — 막지 않고 권유만 한다. */
+@Composable
+private fun PremiumBanner(onUpgrade: () -> Unit) {
+    Card(
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.solve_premium_banner),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            Button(onClick = onUpgrade) {
+                Text(stringResource(R.string.solve_premium_cta))
+            }
+        }
     }
 }
 

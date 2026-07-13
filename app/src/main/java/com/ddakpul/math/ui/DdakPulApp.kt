@@ -30,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ddakpul.math.R
 import com.ddakpul.math.presentation.home.HomeScreen
+import com.ddakpul.math.presentation.paywall.PaywallScreen
 import com.ddakpul.math.presentation.print.PrintScreen
 import com.ddakpul.math.presentation.report.ReportScreen
 import com.ddakpul.math.presentation.settings.SettingsScreen
@@ -48,6 +49,7 @@ private enum class DdakPulDestination(
 
 /** 탭이 아닌 보조 화면 라우트. */
 private const val PRINT_ROUTE = "print"
+private const val PAYWALL_ROUTE = "paywall"
 
 @Composable
 fun DdakPulApp(
@@ -87,13 +89,19 @@ private fun AppNavHost(
             HomeScreen(onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) })
         }
         composable(DdakPulDestination.SOLVE.route) {
-            SolveScreen(onGoHome = { navController.switchTab(DdakPulDestination.HOME.route) })
+            SolveScreen(
+                onGoHome = { navController.switchTab(DdakPulDestination.HOME.route) },
+                onUpgrade = { navController.navigate(PAYWALL_ROUTE) },
+            )
         }
         composable(DdakPulDestination.REPORT.route) {
             ReportScreen(onPrintClick = { navController.navigate(PRINT_ROUTE) })
         }
-        composable(DdakPulDestination.SETTINGS.route) { SettingsScreen() }
+        composable(DdakPulDestination.SETTINGS.route) {
+            SettingsScreen(onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) })
+        }
         composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
+        composable(PAYWALL_ROUTE) { PaywallScreen(onClose = { navController.popBackStack() }) }
     }
 }
 

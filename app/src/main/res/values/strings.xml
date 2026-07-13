@@ -75,6 +75,29 @@
     <string name="onboarding_next">다음</string>
     <string name="onboarding_start">시작하기</string>
 
+    <!-- 이용권 (수익화 / 페이월) -->
+    <string name="paywall_title">딱풀 이용권</string>
+    <string name="paywall_close">닫기</string>
+    <string name="paywall_active_status">이용권 이용 중 · %1$d일 남음</string>
+    <string name="paywall_active_extend">이용권을 더 구매하면 남은 기간에 이어져요.</string>
+    <string name="paywall_benefits_title">이용권으로 열려요</string>
+    <string name="paywall_benefit1">난이도 4·5 도전 문제 (사고력의 정수)</string>
+    <string name="paywall_benefit2">전체 성장 리포트와 난이도별 숙달 지도</string>
+    <string name="paywall_benefit3">잊을 때쯤 다시 꺼내주는 간격 복습</string>
+    <string name="paywall_pass_6m_title">6개월 이용권</string>
+    <string name="paywall_pass_1y_title">1년 이용권</string>
+    <string name="paywall_pass_1y_badge">가장 이득</string>
+    <string name="paywall_activate">이용권 시작하기</string>
+    <string name="paywall_no_autorenew">자동 갱신 없어요. 기간이 끝나면 그냥 멈춰요. 광고도, 추가 결제 유도도 없어요.</string>
+    <string name="paywall_test_note">(지금은 테스트용으로 바로 활성화됩니다 — 실제 스토어 결제는 연동 예정)</string>
+
+    <string name="settings_premium_title">이용권</string>
+    <string name="settings_premium_desc">난이도 4·5와 전체 리포트를 여는 이용권이에요.</string>
+    <string name="settings_premium_open">이용권 보기</string>
+
+    <string name="solve_premium_banner">🎉 3단계를 잘 풀고 있어요! 난이도 4·5는 이용권으로 열려요.</string>
+    <string name="solve_premium_cta">이용권 보기</string>
+
     <!-- 리포트 (부모용) -->
     <string name="report_title">학습 리포트</string>
     <string name="report_subtitle">아이의 학습 현황을 한눈에 확인하세요.</string>

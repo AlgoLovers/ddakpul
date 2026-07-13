@@ -19,6 +19,8 @@ data class SolveUiState(
     val result: GradingResult? = null,
     val showExplanation: Boolean = false,
     val reason: RecommendationReason? = null,
+    /** 무료 상한을 넘어 승급하려는 순간 — 페이월 배너를 띄운다(막지는 않음). */
+    val premiumSuggested: Boolean = false,
     /** 오늘 푼 문제 수 — 오늘의 목표 진행바에 쓴다. */
     val todaySolved: Int = 0,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
