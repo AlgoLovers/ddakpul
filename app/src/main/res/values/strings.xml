@@ -43,6 +43,7 @@
     <string name="result_your_answer">내가 고른 답: %1$s</string>
     <string name="result_correct_answer">정답: %1$s</string>
     <string name="result_explanation_label">풀이</string>
+    <string name="result_show_explanation">풀이 보기</string>
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
     <string name="result_remediation_hint">기초 개념부터 차근차근 다시 풀어봐요.</string>
     <string name="result_next">다음 문제</string>
