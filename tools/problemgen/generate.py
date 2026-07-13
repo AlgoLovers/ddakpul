@@ -846,6 +846,140 @@ def gen_geometric_seq():
         )
 
 
+# ── 40. 불변량 — 합의 홀짝 보존 (난7, 자료와가능성) ─────────────────────────
+def gen_parity_invariant():
+    for n in [10, 7, 8, 5]:
+        total = n * (n + 1) // 2
+        parity = "홀수" if total % 2 == 1 else "짝수"
+        other = "짝수" if total % 2 == 1 else "홀수"
+        # 검산: 임의의 지우기 순서를 여러 번 시뮬레이션 → 마지막 수의 홀짝이 항상 합의 홀짝과 같음
+        sim = random.Random(n)
+        for _ in range(30):
+            nums = list(range(1, n + 1))
+            while len(nums) > 1:
+                i, j = sim.sample(range(len(nums)), 2)
+                a, b = nums[i], nums[j]
+                for idx in sorted((i, j), reverse=True):
+                    nums.pop(idx)
+                nums.append(abs(a - b))
+            assert nums[0] % 2 == total % 2, "불변량 검산 실패"
+        add(
+            "parity", "DATA_POSSIBILITY", 7, ["불변량", "홀짝 보존"],
+            f"칠판에 1부터 {n}까지의 수가 적혀 있어요. 매번 두 수를 지우고 대신 두 수의 차를 적어요. 이걸 계속 반복하면 마지막에 수 하나만 남아요. 이 수는 홀수일까요, 짝수일까요?",
+            parity, [other, "지우는 순서에 따라 달라져요", "항상 0이에요"],
+            f"두 수 a, b를 지우고 |a−b|를 적으면 전체 합은 (a+b)−|a−b|, 즉 작은 수의 2배만큼 줄어요 — 항상 짝수만큼! 그래서 '전체 합의 홀짝'은 절대 변하지 않아요(불변량). 1부터 {n}까지의 합은 {total}({parity})이니 마지막 한 수도 {parity}예요.",
+            [("지우는 순서에 따라 달라져요", "신기하게도 순서와 상관없이 항상 같아요 — 처음 합의 홀짝으로 정해지는 불변량이에요.")],
+        )
+
+
+# ── 41. 포함배제 — 둘 다 아닌 수 (난6, 수와연산) ─────────────────────────────
+def gen_inclusion_exclusion():
+    for total_n, a, b in [(100, 3, 4), (100, 2, 5), (60, 4, 6), (50, 3, 5)]:
+        lcm = a * b // gcd(a, b)
+        cnt_a, cnt_b, cnt_lcm = total_n // a, total_n // b, total_n // lcm
+        ans = total_n - cnt_a - cnt_b + cnt_lcm
+        brute = sum(1 for x in range(1, total_n + 1) if x % a != 0 and x % b != 0)
+        assert brute == ans, "포함배제 검산 실패"
+        add(
+            "incexc", "NUMBER_OPERATION", 6, ["포함배제", "중복 빼기"],
+            f"1부터 {total_n}까지의 자연수 중에서 {a}{_euro(a)}도 {b}{_euro(b)}도 나누어떨어지지 않는 수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{total_n - cnt_a - cnt_b}개", f"{cnt_a + cnt_b}개", f"{ans + 2}개"],
+            f"먼저 {a}의 배수 {cnt_a}개와 {b}의 배수 {cnt_b}개를 빼요. 그런데 {lcm}의 배수({cnt_lcm}개)는 양쪽에서 두 번 빠졌으니 한 번 도로 더해요. {total_n}−{cnt_a}−{cnt_b}+{cnt_lcm}={ans}개예요.",
+            [(f"{total_n - cnt_a - cnt_b}개", f"{lcm}의 배수를 두 번 뺐어요 — 한 번 도로 더해야 해요(포함배제).")],
+        )
+
+
+# ── 42. 님 게임 — 배수 남기기 필승 (난7, 변화와관계) ─────────────────────────
+def gen_nim():
+    for total_stones, k in [(10, 3), (18, 4), (22, 5), (23, 4)]:
+        win = [False] * (total_stones + 1)
+        for s in range(1, total_stones + 1):
+            win[s] = any(not win[s - t] for t in range(1, min(k, s) + 1))
+        ans = total_stones % (k + 1)
+        assert win[total_stones] and ans != 0 and not win[total_stones - ans], "님게임 검산 실패"
+        add(
+            "nim", "CHANGE_RELATION", 7, ["필승 전략", "배수 남기기"],
+            f"바둑돌 {total_stones}개가 있어요. 두 사람이 번갈아 한 번에 1개~{k}개까지 가져가고, 마지막 돌을 가져가는 사람이 이겨요. 먼저 시작하는 사람이 반드시 이기려면 처음에 몇 개를 가져가야 할까요?",
+            f"{ans}개", [f"{k}개", f"{ans - 1}개", f"{ans + 2}개"],
+            f"핵심은 상대에게 '{k + 1}의 배수'를 남기는 거예요. 그러면 상대가 1~{k}개 중 몇 개를 가져가든 내가 합쳐서 {k + 1}개를 맞춰 다시 {k + 1}의 배수를 남길 수 있어요. {total_stones}÷{k + 1}의 나머지가 {ans}이니, 처음에 {ans}개를 가져가 {total_stones - ans}개({k + 1}의 배수)를 남기면 반드시 이겨요.",
+            [(f"{k}개", "무작정 최대로 가져가면 안 돼요. 상대에게 '배수'를 남기는 게 핵심이에요.")],
+        )
+
+
+# ── 43. 정다각형 한 내각 (난4, 도형과측정) ──────────────────────────────────
+def gen_polygon_angle():
+    for n in [5, 6, 8, 10]:
+        total = (n - 2) * 180
+        assert total % n == 0
+        ans = total // n
+        add(
+            "polyang", "SHAPE_MEASUREMENT", 4, ["다각형 내각", "정다각형"],
+            f"정{n}각형의 한 내각의 크기는 몇 도일까요?",
+            f"{ans}도", [f"{360 // n}도", f"{total}도", f"{180 - ans}도"],
+            f"{n}각형의 내각의 합은 ({n}−2)×180={total}도예요. 정다각형은 내각이 모두 같으니 {n}{_euro(n)} 나눠요. {total}÷{n}={ans}도예요.",
+            [(f"{360 // n}도", "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요.")],
+        )
+
+
+# ── 44. 정다각형 대각선 개수 (난5, 도형과측정) ──────────────────────────────
+def gen_polygon_diagonals():
+    for n in [5, 6, 8, 10]:
+        ans = n * (n - 3) // 2
+        add(
+            "polydiag", "SHAPE_MEASUREMENT", 5, ["대각선", "중복 없이 세기"],
+            f"정{n}각형에 그을 수 있는 대각선은 모두 몇 개일까요?",
+            f"{ans}개", [f"{n * (n - 3)}개", f"{n - 3}개", f"{n * (n - 1) // 2}개"],
+            f"한 꼭짓점에서는 자기 자신과 양옆 두 꼭짓점(변)을 뺀 {n}−3={n - 3}개로 대각선을 그어요. 꼭짓점이 {n}개니 {n}×{n - 3}인데, 대각선 하나를 양쪽에서 두 번 셌으니 2로 나눠요. {n}×{n - 3}÷2={ans}개예요.",
+            [(f"{n * (n - 3)}개", "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요.")],
+        )
+
+
+# ── 45. 시곗바늘 각도 — 분까지 (난5, 도형과측정) ────────────────────────────
+def gen_clock_minutes():
+    for h, m in [(3, 30), (5, 30), (2, 30), (1, 30)]:
+        hour_pos = 30 * h + m // 2
+        diff = abs(hour_pos - 6 * m)
+        ans = min(diff, 360 - diff)
+        add(
+            "clockmin", "SHAPE_MEASUREMENT", 5, ["각도", "시침의 이동"],
+            f"{h}시 {m}분에 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
+            f"{ans}도", [f"{ans + 15}도", f"{ans + 30}도", f"{ans + 45}도"],
+            f"분침은 {m}분에 숫자 6, 즉 180도 위치예요. 시침은 {h}시에서 {m}분이 더 지나 {30 * h}+{m // 2}={hour_pos}도에 있어요. 두 위치의 차 |{hour_pos}−180|={ans}도가 사이 각이에요.",
+            [(f"{ans + 15}도", "분침이 움직인 만큼 시침도 조금 움직였다는 걸 빠뜨리지 않았는지 확인해요.")],
+            figure={"type": "CLOCK", "params": {"hour": h, "minute": m}},
+        )
+
+
+# ── 46. 둘레 고정, 넓이 최대 (난5, 도형과측정) ──────────────────────────────
+def gen_rect_area_max():
+    for p in [20, 24, 16, 28]:
+        half = p // 2
+        best = max(a * (half - a) for a in range(1, half))
+        assert p % 4 == 0 and best == (p // 4) ** 2
+        side = p // 4
+        add(
+            "areamax", "SHAPE_MEASUREMENT", 5, ["둘레와 넓이", "합이 같을 때 곱 최대"],
+            f"둘레가 {p}cm인 직사각형 중에서 넓이가 가장 클 때, 그 넓이는 몇 ㎠일까요? (가로·세로는 자연수)",
+            f"{best}㎠", [f"{half}㎠", f"{best + side}㎠", f"{best - side}㎠"],
+            f"둘레가 {p}면 가로+세로={p}÷2={half}{_euro(half)} 고정돼요. 두 수의 합이 일정할 때는 두 수가 같을수록 곱(넓이)이 커져요. 가로=세로={half}÷2={side}일 때 최대라, 넓이는 {side}×{side}={best}㎠예요.",
+            [(f"{half}㎠", "가로+세로 값이 아니라 가로×세로(넓이)를 구해야 해요.")],
+        )
+
+
+# ── 47. 직육면체 겉넓이 (난6, 도형과측정) ───────────────────────────────────
+def gen_cube_surface():
+    for a, b, c in [(2, 3, 4), (3, 3, 3), (2, 2, 5), (1, 3, 4)]:
+        ans = 2 * (a * b + b * c + a * c)
+        volume = a * b * c
+        add(
+            "cubesurf", "SHAPE_MEASUREMENT", 6, ["겉넓이", "마주 보는 세 쌍"],
+            f"1cm짜리 작은 정육면체를 빈틈없이 쌓아 가로 {a}칸, 세로 {b}칸, 높이 {c}칸인 직육면체를 만들었어요. 이 직육면체의 겉넓이는 몇 ㎠일까요?",
+            f"{ans}㎠", [f"{volume}㎠", f"{a * b + b * c + a * c}㎠", f"{ans + 4}㎠"],
+            f"직육면체는 마주 보는 면이 세 쌍이에요. 세 종류 면의 넓이는 {a}×{b}={a * b}, {b}×{c}={b * c}, {a}×{c}={a * c}. 각각 두 개씩이니 2×({a * b}+{b * c}+{a * c})={ans}㎠예요.",
+            [(f"{volume}㎠", "그건 부피(쌓은 정육면체 개수)예요. 겉넓이는 바깥 면들의 넓이 합이에요.")],
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -861,6 +995,10 @@ GENERATORS = [
     gen_pigeonhole, gen_painted_cube, gen_divisor_count, gen_number_riddle,
     # v3.1 확충 — 도형 난4 보강 + 등비 다양성
     gen_clock_angle, gen_rectangle_count, gen_geometric_seq,
+    # v4 확충 — 경시급 난6·7(불변량·포함배제·님게임) + 도형 대량
+    gen_parity_invariant, gen_inclusion_exclusion, gen_nim,
+    gen_polygon_angle, gen_polygon_diagonals, gen_clock_minutes,
+    gen_rect_area_max, gen_cube_surface,
 ]
 
 for g in GENERATORS:

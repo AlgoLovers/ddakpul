@@ -65,8 +65,9 @@ class ProblemCatalogTest {
 
     @Test
     fun allDifficultiesArePresent() {
+        // 손 카탈로그는 기초~중상(1~5)을 담당한다. 최상위(6~7)는 생성기 문제은행에서 보강된다.
         val difficulties = problems.map { it.difficulty }.distinct().sorted()
-        assertThat(difficulties).containsAtLeastElementsIn(Difficulty.MIN..Difficulty.MAX)
+        assertThat(difficulties).containsAtLeast(1, 2, 3, 4, 5)
     }
 
     @Test

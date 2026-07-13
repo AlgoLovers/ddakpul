@@ -1,5 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.group
@@ -115,10 +116,10 @@ class RecommendNextProblemUseCaseTest {
     fun rule6_promotionIsClampedAtMax() {
         val attempts = listOf(attempt("d5-1", true), attempt("d5-2", true))
 
-        val result = recommend(state(currentDifficulty = 5, recentAttempts = attempts), standardGroups(), seededRandom)
+        val result = recommend(state(currentDifficulty = Difficulty.MAX, recentAttempts = attempts), standardGroups(), seededRandom)
 
         assertThat(result!!.reason).isEqualTo(RecommendationReason.ADVANCED)
-        assertThat(result.targetDifficulty).isEqualTo(5)
+        assertThat(result.targetDifficulty).isEqualTo(Difficulty.MAX)
     }
 
     @Test
