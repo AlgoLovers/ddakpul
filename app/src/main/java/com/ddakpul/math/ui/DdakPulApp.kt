@@ -32,6 +32,7 @@ import com.ddakpul.math.R
 import com.ddakpul.math.presentation.home.HomeScreen
 import com.ddakpul.math.presentation.paywall.PaywallScreen
 import com.ddakpul.math.presentation.print.PrintScreen
+import com.ddakpul.math.presentation.privacy.PrivacyScreen
 import com.ddakpul.math.presentation.report.ReportScreen
 import com.ddakpul.math.presentation.settings.SettingsScreen
 import com.ddakpul.math.presentation.solve.SolveScreen
@@ -50,6 +51,7 @@ private enum class DdakPulDestination(
 /** 탭이 아닌 보조 화면 라우트. */
 private const val PRINT_ROUTE = "print"
 private const val PAYWALL_ROUTE = "paywall"
+private const val PRIVACY_ROUTE = "privacy"
 
 @Composable
 fun DdakPulApp(
@@ -101,10 +103,14 @@ private fun AppNavHost(
             )
         }
         composable(DdakPulDestination.SETTINGS.route) {
-            SettingsScreen(onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) })
+            SettingsScreen(
+                onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) },
+                onOpenPrivacy = { navController.navigate(PRIVACY_ROUTE) },
+            )
         }
         composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
         composable(PAYWALL_ROUTE) { PaywallScreen(onClose = { navController.popBackStack() }) }
+        composable(PRIVACY_ROUTE) { PrivacyScreen(onBack = { navController.popBackStack() }) }
     }
 }
 
