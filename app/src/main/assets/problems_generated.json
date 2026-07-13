@@ -3734,6 +3734,346 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-clockang-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-clockang-4",
+   "concepts": [
+    "각도",
+    "시계 눈금"
+   ],
+   "statement": "시계가 3시 정각을 가리켜요. 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
+   "choices": [
+    "60도",
+    "120도",
+    "150도",
+    "90도"
+   ],
+   "answerIndex": 3,
+   "explanation": "시계 한 바퀴는 360도이고 숫자 칸은 12개니, 한 칸은 360÷12=30도예요. 3시 정각이면 시침과 분침이 3칸 떨어져 있으니 3×30=90도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "한 칸이 30도예요. 떨어진 칸 수를 정확히 세었는지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 3,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-clockang-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-clockang-4",
+   "concepts": [
+    "각도",
+    "시계 눈금"
+   ],
+   "statement": "시계가 5시 정각을 가리켜요. 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
+   "choices": [
+    "180도",
+    "150도",
+    "210도",
+    "120도"
+   ],
+   "answerIndex": 1,
+   "explanation": "시계 한 바퀴는 360도이고 숫자 칸은 12개니, 한 칸은 360÷12=30도예요. 5시 정각이면 시침과 분침이 5칸 떨어져 있으니 5×30=150도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "한 칸이 30도예요. 떨어진 칸 수를 정확히 세었는지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 5,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-clockang-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-clockang-4",
+   "concepts": [
+    "각도",
+    "시계 눈금"
+   ],
+   "statement": "시계가 2시 정각을 가리켜요. 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
+   "choices": [
+    "120도",
+    "30도",
+    "90도",
+    "60도"
+   ],
+   "answerIndex": 3,
+   "explanation": "시계 한 바퀴는 360도이고 숫자 칸은 12개니, 한 칸은 360÷12=30도예요. 2시 정각이면 시침과 분침이 2칸 떨어져 있으니 2×30=60도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "한 칸이 30도예요. 떨어진 칸 수를 정확히 세었는지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 2,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-clockang-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-clockang-4",
+   "concepts": [
+    "각도",
+    "시계 눈금"
+   ],
+   "statement": "시계가 4시 정각을 가리켜요. 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
+   "choices": [
+    "90도",
+    "150도",
+    "180도",
+    "120도"
+   ],
+   "answerIndex": 3,
+   "explanation": "시계 한 바퀴는 360도이고 숫자 칸은 12개니, 한 칸은 360÷12=30도예요. 4시 정각이면 시침과 분침이 4칸 떨어져 있으니 4×30=120도예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "한 칸이 30도예요. 떨어진 칸 수를 정확히 세었는지 확인해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 4,
+     "minute": 0
+    }
+   }
+  },
+  {
+   "id": "gen-rectcount-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-rectcount-4",
+   "concepts": [
+    "직사각형 세기",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 2칸, 세로 2칸으로 나뉜 직사각형 격자가 있어요. 이 격자 안에서 찾을 수 있는 크고 작은 직사각형은 모두 몇 개일까요?",
+   "choices": [
+    "6개",
+    "9개",
+    "4개",
+    "12개"
+   ],
+   "answerIndex": 1,
+   "explanation": "직사각형은 세로선 2개와 가로선 2개를 고르면 하나 정해져요. 세로선 3개 중 2개 → 3가지, 가로선 3개 중 2개 → 3가지. 곱하면 3×3=9개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-rectcount-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-rectcount-4",
+   "concepts": [
+    "직사각형 세기",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 3칸, 세로 2칸으로 나뉜 직사각형 격자가 있어요. 이 격자 안에서 찾을 수 있는 크고 작은 직사각형은 모두 몇 개일까요?",
+   "choices": [
+    "21개",
+    "15개",
+    "18개",
+    "6개"
+   ],
+   "answerIndex": 2,
+   "explanation": "직사각형은 세로선 2개와 가로선 2개를 고르면 하나 정해져요. 세로선 4개 중 2개 → 6가지, 가로선 3개 중 2개 → 3가지. 곱하면 6×3=18개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-rectcount-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-rectcount-4",
+   "concepts": [
+    "직사각형 세기",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 3칸, 세로 3칸으로 나뉜 직사각형 격자가 있어요. 이 격자 안에서 찾을 수 있는 크고 작은 직사각형은 모두 몇 개일까요?",
+   "choices": [
+    "39개",
+    "9개",
+    "33개",
+    "36개"
+   ],
+   "answerIndex": 3,
+   "explanation": "직사각형은 세로선 2개와 가로선 2개를 고르면 하나 정해져요. 세로선 4개 중 2개 → 6가지, 가로선 4개 중 2개 → 6가지. 곱하면 6×6=36개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-rectcount-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-gen-rectcount-4",
+   "concepts": [
+    "직사각형 세기",
+    "체계적으로 세기"
+   ],
+   "statement": "가로 4칸, 세로 2칸으로 나뉜 직사각형 격자가 있어요. 이 격자 안에서 찾을 수 있는 크고 작은 직사각형은 모두 몇 개일까요?",
+   "choices": [
+    "27개",
+    "30개",
+    "8개",
+    "33개"
+   ],
+   "answerIndex": 1,
+   "explanation": "직사각형은 세로선 2개와 가로선 2개를 고르면 하나 정해져요. 세로선 5개 중 2개 → 10가지, 가로선 3개 중 2개 → 3가지. 곱하면 10×3=30개예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-geoseq-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-geoseq-4",
+   "concepts": [
+    "등비 규칙",
+    "곱해지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 2, 6, 18, 54, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "90",
+    "216",
+    "165",
+    "162"
+   ],
+   "answerIndex": 3,
+   "explanation": "이웃한 수가 몇 배로 커지는지 봐요. 6÷2=3, 18÷6=3 — 매번 3배예요. 그러니 54 다음은 54×3=162예요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-geoseq-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-geoseq-4",
+   "concepts": [
+    "등비 규칙",
+    "곱해지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 1, 3, 9, 27, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "84",
+    "81",
+    "45",
+    "108"
+   ],
+   "answerIndex": 1,
+   "explanation": "이웃한 수가 몇 배로 커지는지 봐요. 3÷1=3, 9÷3=3 — 매번 3배예요. 그러니 27 다음은 27×3=81이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-geoseq-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-geoseq-4",
+   "concepts": [
+    "등비 규칙",
+    "곱해지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 3, 6, 12, 24, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "50",
+    "36",
+    "72",
+    "48"
+   ],
+   "answerIndex": 3,
+   "explanation": "이웃한 수가 몇 배로 커지는지 봐요. 6÷3=2, 12÷6=2 — 매번 2배예요. 그러니 24 다음은 24×2=48이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
+  },
+  {
+   "id": "gen-geoseq-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 4,
+   "groupId": "g-gen-geoseq-4",
+   "concepts": [
+    "등비 규칙",
+    "곱해지는 수"
+   ],
+   "statement": "규칙을 찾아보세요. 1, 4, 16, 64, □ — □에 들어갈 수는 얼마일까요?",
+   "choices": [
+    "112",
+    "256",
+    "320",
+    "260"
+   ],
+   "answerIndex": 1,
+   "explanation": "이웃한 수가 몇 배로 커지는지 봐요. 4÷1=4, 16÷4=4 — 매번 4배예요. 그러니 64 다음은 64×4=256이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)"
   }
  ]
 }
