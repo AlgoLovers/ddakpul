@@ -34,6 +34,7 @@ import com.ddakpul.math.domain.model.SessionGoals
 @Composable
 fun SettingsScreen(
     onOpenPaywall: () -> Unit,
+    onOpenPrivacy: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -78,6 +79,9 @@ fun SettingsScreen(
 
         ResetCard(onResetRequest = { showResetDialog = true })
 
+        // 개인정보·데이터 안전 — 스토어 요건이자 신뢰 메시지.
+        PrivacyCard(onOpenPrivacy = onOpenPrivacy)
+
         Text(
             text = stringResource(R.string.settings_about),
             style = MaterialTheme.typography.bodyMedium,
@@ -111,6 +115,25 @@ private fun PremiumCard(onOpenPaywall: () -> Unit) {
         )
         OutlinedButton(onClick = onOpenPaywall) {
             Text(stringResource(R.string.settings_premium_open))
+        }
+    }
+}
+
+@Composable
+private fun PrivacyCard(onOpenPrivacy: () -> Unit) {
+    SettingsCard {
+        Text(
+            text = stringResource(R.string.settings_privacy_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = stringResource(R.string.settings_privacy_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        OutlinedButton(onClick = onOpenPrivacy) {
+            Text(stringResource(R.string.settings_privacy_open))
         }
     }
 }

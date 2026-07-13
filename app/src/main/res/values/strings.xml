@@ -102,6 +102,25 @@
     <string name="report_premium_locked_desc">정답률 추이·난이도 성장 곡선·개념별 숙달도·난이도별 숙달 지도는 이용권에서 볼 수 있어요.</string>
     <string name="report_premium_cta">이용권 보기</string>
 
+    <!-- 개인정보 · 데이터 안전 -->
+    <string name="privacy_title">개인정보 · 데이터 안전</string>
+    <string name="privacy_back">닫기</string>
+    <string name="privacy_intro">딱풀은 아이가 안심하고 쓰도록 만들었어요. 무엇을 지키는지 있는 그대로 알려드려요.</string>
+    <string name="privacy_item1_title">개인정보를 수집하지 않아요</string>
+    <string name="privacy_item1_body">이름·생일·연락처 같은 어떤 개인정보도 묻지도, 저장하지도 않아요.</string>
+    <string name="privacy_item2_title">데이터는 이 기기 안에만</string>
+    <string name="privacy_item2_body">학습 기록은 전부 이 기기에만 저장돼요. 서버로 보내지 않아요 — 보낼 서버가 아예 없어요.</string>
+    <string name="privacy_item3_title">광고가 없어요</string>
+    <string name="privacy_item3_body">광고도, 외부 추적(애널리틱스)도 넣지 않았어요.</string>
+    <string name="privacy_item4_title">계정도 로그인도 없어요</string>
+    <string name="privacy_item4_body">가입 없이 앱을 켜면 바로 시작해요.</string>
+    <string name="privacy_item5_title">인터넷 없이 동작해요</string>
+    <string name="privacy_item5_body">오프라인에서 모든 기능이 그대로 동작해요.</string>
+    <string name="privacy_footer">만 14세 미만 아동의 개인정보를 수집하지 않습니다 (개인정보보호법 준수).</string>
+    <string name="settings_privacy_title">개인정보 · 데이터 안전</string>
+    <string name="settings_privacy_desc">딱풀이 무엇을 지키는지 확인하세요 — 광고 없음, 데이터는 기기 안에만.</string>
+    <string name="settings_privacy_open">자세히 보기</string>
+
     <!-- 리포트 (부모용) -->
     <string name="report_title">학습 리포트</string>
     <string name="report_subtitle">아이의 학습 현황을 한눈에 확인하세요.</string>
