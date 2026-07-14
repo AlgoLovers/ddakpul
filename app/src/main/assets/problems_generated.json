@@ -124,7 +124,8 @@
      "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'식 세우기'로도 풀 수 있어요. 토끼를 □마리라 하면 닭은 6−□마리, 다리는 4×□ + 2×(6−□) = 16. 정리하면 2×□ = 16−12, 그래서 □ = 2. '전부 닭이라 가정하기'와 '식 세우기'는 같은 계산을 다르게 적은 것뿐이에요. 나중에 배우는 연립방정식도 바로 이 생각이랍니다."
   },
   {
    "id": "gen-legs-2",
@@ -150,7 +151,8 @@
      "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'식 세우기'로도 풀 수 있어요. 토끼를 □마리라 하면 닭은 8−□마리, 다리는 4×□ + 2×(8−□) = 22. 정리하면 2×□ = 22−16, 그래서 □ = 3. '전부 닭이라 가정하기'와 '식 세우기'는 같은 계산을 다르게 적은 것뿐이에요. 나중에 배우는 연립방정식도 바로 이 생각이랍니다."
   },
   {
    "id": "gen-legs-3",
@@ -176,7 +178,8 @@
      "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'식 세우기'로도 풀 수 있어요. 토끼를 □마리라 하면 닭은 10−□마리, 다리는 4×□ + 2×(10−□) = 28. 정리하면 2×□ = 28−20, 그래서 □ = 4. '전부 닭이라 가정하기'와 '식 세우기'는 같은 계산을 다르게 적은 것뿐이에요. 나중에 배우는 연립방정식도 바로 이 생각이랍니다."
   },
   {
    "id": "gen-legs-4",
@@ -202,7 +205,8 @@
      "misconception": "그건 닭의 수예요. 문제는 토끼를 물었어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'식 세우기'로도 풀 수 있어요. 토끼를 □마리라 하면 닭은 12−□마리, 다리는 4×□ + 2×(12−□) = 34. 정리하면 2×□ = 34−24, 그래서 □ = 5. '전부 닭이라 가정하기'와 '식 세우기'는 같은 계산을 다르게 적은 것뿐이에요. 나중에 배우는 연립방정식도 바로 이 생각이랍니다."
   },
   {
    "id": "gen-excess-1",
@@ -426,7 +430,8 @@
      "misconception": "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "간격 문제는 '끝을 세는지'가 열쇠예요. ①양 끝 다 심기 → 개수=간격+1 ②한쪽 끝만 → 개수=간격 ③양 끝 다 빼기 → 개수=간격−1 ④원(둘레) → 개수=간격(끝이 곧 처음). 공식을 외우기보다 작은 그림을 그려 '끝을 어떻게 세나'만 확인하면 어떤 간격 문제든 풀려요."
   },
   {
    "id": "gen-tree-2",
@@ -452,7 +457,8 @@
      "misconception": "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "간격 문제는 '끝을 세는지'가 열쇠예요. ①양 끝 다 심기 → 개수=간격+1 ②한쪽 끝만 → 개수=간격 ③양 끝 다 빼기 → 개수=간격−1 ④원(둘레) → 개수=간격(끝이 곧 처음). 공식을 외우기보다 작은 그림을 그려 '끝을 어떻게 세나'만 확인하면 어떤 간격 문제든 풀려요."
   },
   {
    "id": "gen-tree-3",
@@ -478,7 +484,8 @@
      "misconception": "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "간격 문제는 '끝을 세는지'가 열쇠예요. ①양 끝 다 심기 → 개수=간격+1 ②한쪽 끝만 → 개수=간격 ③양 끝 다 빼기 → 개수=간격−1 ④원(둘레) → 개수=간격(끝이 곧 처음). 공식을 외우기보다 작은 그림을 그려 '끝을 어떻게 세나'만 확인하면 어떤 간격 문제든 풀려요."
   },
   {
    "id": "gen-tree-4",
@@ -504,7 +511,8 @@
      "misconception": "직선 길에서만 +1이에요. 원에서는 끝나무가 곧 첫나무!"
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "간격 문제는 '끝을 세는지'가 열쇠예요. ①양 끝 다 심기 → 개수=간격+1 ②한쪽 끝만 → 개수=간격 ③양 끝 다 빼기 → 개수=간격−1 ④원(둘레) → 개수=간격(끝이 곧 처음). 상황을 그림으로 그려 '끝을 어떻게 세나'만 확인하면 직선이든 원이든 헷갈리지 않아요."
   },
   {
    "id": "gen-log-1",
@@ -2927,7 +2935,8 @@
      "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '4명 중 2명 고르기'(조합)와 똑같아요 — 그래서 항상 n×(n−1)÷2. 신기하게도 같은 계산이 '점 4개로 그을 수 있는 선분의 수', '팀 4개 리그전 경기 수'에도 그대로 쓰여요. '서로 다른 둘을 한 번씩 짝짓기'는 모두 이 공식이라, 문제가 달라 보여도 같은 뼈대라는 걸 알아채는 게 중요해요."
   },
   {
    "id": "gen-shake-2",
@@ -2953,7 +2962,8 @@
      "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '5명 중 2명 고르기'(조합)와 똑같아요 — 그래서 항상 n×(n−1)÷2. 신기하게도 같은 계산이 '점 5개로 그을 수 있는 선분의 수', '팀 5개 리그전 경기 수'에도 그대로 쓰여요. '서로 다른 둘을 한 번씩 짝짓기'는 모두 이 공식이라, 문제가 달라 보여도 같은 뼈대라는 걸 알아채는 게 중요해요."
   },
   {
    "id": "gen-shake-3",
@@ -2979,7 +2989,8 @@
      "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '6명 중 2명 고르기'(조합)와 똑같아요 — 그래서 항상 n×(n−1)÷2. 신기하게도 같은 계산이 '점 6개로 그을 수 있는 선분의 수', '팀 6개 리그전 경기 수'에도 그대로 쓰여요. '서로 다른 둘을 한 번씩 짝짓기'는 모두 이 공식이라, 문제가 달라 보여도 같은 뼈대라는 걸 알아채는 게 중요해요."
   },
   {
    "id": "gen-shake-4",
@@ -3005,7 +3016,8 @@
      "misconception": "A가 B와 한 악수와 B가 A와 한 악수는 같은 한 번이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '7명 중 2명 고르기'(조합)와 똑같아요 — 그래서 항상 n×(n−1)÷2. 신기하게도 같은 계산이 '점 7개로 그을 수 있는 선분의 수', '팀 7개 리그전 경기 수'에도 그대로 쓰여요. '서로 다른 둘을 한 번씩 짝짓기'는 모두 이 공식이라, 문제가 달라 보여도 같은 뼈대라는 걸 알아채는 게 중요해요."
   },
   {
    "id": "gen-dicesum-1",
@@ -3343,7 +3355,8 @@
      "misconception": "3짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이게 바로 '비둘기집 원리'예요: 서랍(색)이 3칸인데 3+1=4짝을 넣으면 반드시 한 칸에 2짝이 겹쳐요. 규칙을 바꿔 '같은 색 3짝'을 원하면, 색마다 2짝까지 다를 수 있으니 2×3+1짝이 필요해요. 항상 '가장 운 나쁜 경우를 먼저 그린 뒤 +1'로 생각하면 이런 '확실히 보장' 문제는 다 풀려요."
   },
   {
    "id": "gen-pigeon-2",
@@ -3369,7 +3382,8 @@
      "misconception": "4짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이게 바로 '비둘기집 원리'예요: 서랍(색)이 4칸인데 4+1=5짝을 넣으면 반드시 한 칸에 2짝이 겹쳐요. 규칙을 바꿔 '같은 색 3짝'을 원하면, 색마다 2짝까지 다를 수 있으니 2×4+1짝이 필요해요. 항상 '가장 운 나쁜 경우를 먼저 그린 뒤 +1'로 생각하면 이런 '확실히 보장' 문제는 다 풀려요."
   },
   {
    "id": "gen-pigeon-3",
@@ -3395,7 +3409,8 @@
      "misconception": "2짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이게 바로 '비둘기집 원리'예요: 서랍(색)이 2칸인데 2+1=3짝을 넣으면 반드시 한 칸에 2짝이 겹쳐요. 규칙을 바꿔 '같은 색 3짝'을 원하면, 색마다 2짝까지 다를 수 있으니 2×2+1짝이 필요해요. 항상 '가장 운 나쁜 경우를 먼저 그린 뒤 +1'로 생각하면 이런 '확실히 보장' 문제는 다 풀려요."
   },
   {
    "id": "gen-pigeon-4",
@@ -3421,7 +3436,8 @@
      "misconception": "5짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이게 바로 '비둘기집 원리'예요: 서랍(색)이 5칸인데 5+1=6짝을 넣으면 반드시 한 칸에 2짝이 겹쳐요. 규칙을 바꿔 '같은 색 3짝'을 원하면, 색마다 2짝까지 다를 수 있으니 2×5+1짝이 필요해요. 항상 '가장 운 나쁜 경우를 먼저 그린 뒤 +1'로 생각하면 이런 '확실히 보장' 문제는 다 풀려요."
   },
   {
    "id": "gen-cube-1",
@@ -4335,7 +4351,8 @@
      "misconception": "무작정 최대로 가져가면 안 돼요. 상대에게 '배수'를 남기는 게 핵심이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "왜 '4의 배수 남기기'가 필승일까요? 내가 그 배수를 남기면, 상대가 t개(1~3) 가져갈 때 나는 4−t개를 가져와 매 라운드 정확히 4개씩 지울 수 있어요. 그러면 배수→배수→…→0이 되어 마지막 돌은 늘 내 차지! 반대로 처음부터 돌 수가 4의 배수면(나머지 0) 먼저 두는 사람이 져요. 이렇게 '상대 수를 되받아 합을 일정하게 맞추는' 방법을 대칭 전략이라고 해요."
   },
   {
    "id": "gen-nim-2",
@@ -4361,7 +4378,8 @@
      "misconception": "무작정 최대로 가져가면 안 돼요. 상대에게 '배수'를 남기는 게 핵심이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "왜 '5의 배수 남기기'가 필승일까요? 내가 그 배수를 남기면, 상대가 t개(1~4) 가져갈 때 나는 5−t개를 가져와 매 라운드 정확히 5개씩 지울 수 있어요. 그러면 배수→배수→…→0이 되어 마지막 돌은 늘 내 차지! 반대로 처음부터 돌 수가 5의 배수면(나머지 0) 먼저 두는 사람이 져요. 이렇게 '상대 수를 되받아 합을 일정하게 맞추는' 방법을 대칭 전략이라고 해요."
   },
   {
    "id": "gen-nim-3",
@@ -4387,7 +4405,8 @@
      "misconception": "무작정 최대로 가져가면 안 돼요. 상대에게 '배수'를 남기는 게 핵심이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "왜 '6의 배수 남기기'가 필승일까요? 내가 그 배수를 남기면, 상대가 t개(1~5) 가져갈 때 나는 6−t개를 가져와 매 라운드 정확히 6개씩 지울 수 있어요. 그러면 배수→배수→…→0이 되어 마지막 돌은 늘 내 차지! 반대로 처음부터 돌 수가 6의 배수면(나머지 0) 먼저 두는 사람이 져요. 이렇게 '상대 수를 되받아 합을 일정하게 맞추는' 방법을 대칭 전략이라고 해요."
   },
   {
    "id": "gen-nim-4",
@@ -4413,7 +4432,8 @@
      "misconception": "무작정 최대로 가져가면 안 돼요. 상대에게 '배수'를 남기는 게 핵심이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "왜 '5의 배수 남기기'가 필승일까요? 내가 그 배수를 남기면, 상대가 t개(1~4) 가져갈 때 나는 5−t개를 가져와 매 라운드 정확히 5개씩 지울 수 있어요. 그러면 배수→배수→…→0이 되어 마지막 돌은 늘 내 차지! 반대로 처음부터 돌 수가 5의 배수면(나머지 0) 먼저 두는 사람이 져요. 이렇게 '상대 수를 되받아 합을 일정하게 맞추는' 방법을 대칭 전략이라고 해요."
   },
   {
    "id": "gen-polyang-1",
