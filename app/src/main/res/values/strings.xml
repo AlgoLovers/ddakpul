@@ -100,9 +100,8 @@
 
     <!-- 부모 확인 게이트(구매·초기화 전 어린이 차단) -->
     <string name="parent_gate_title">부모님 확인</string>
-    <string name="parent_gate_body">이 동작은 어른이 진행해요. 아래 계산의 답을 눌러 주세요.</string>
-    <string name="parent_gate_question">%1$d × %2$d = ?</string>
-    <string name="parent_gate_retry">답이 달라요. 다시 눌러 주세요.</string>
+    <string name="parent_gate_body">이 동작은 어른이 진행해요. 다음 숫자를 순서대로 눌러 주세요.</string>
+    <string name="parent_gate_retry">순서가 달라요. 처음부터 다시 눌러 주세요.</string>
     <string name="parent_gate_cancel">취소</string>
 
     <!-- 출시 기념 전면 무료 프로모션 -->
