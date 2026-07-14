@@ -978,7 +978,8 @@
      "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "꼭대기는 아래 두 칸의 합이니 15 = (왼쪽 3+□) + (오른쪽 □+2) = 3+2+2×□. 여기서 거꾸로 되짚으면 □ = (꼭대기 − 양 끝의 합) ÷ 2 = (15−3−2)÷2 = 5. 결과에서 출발해 원인을 되짚는 '거꾸로 생각하기'는 미로·퍼즐에서 특히 강력해요."
   },
   {
    "id": "gen-pyramid-2",
@@ -1004,7 +1005,8 @@
      "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "꼭대기는 아래 두 칸의 합이니 15 = (왼쪽 4+□) + (오른쪽 □+7) = 4+7+2×□. 여기서 거꾸로 되짚으면 □ = (꼭대기 − 양 끝의 합) ÷ 2 = (15−4−7)÷2 = 2. 결과에서 출발해 원인을 되짚는 '거꾸로 생각하기'는 미로·퍼즐에서 특히 강력해요."
   },
   {
    "id": "gen-pyramid-3",
@@ -1030,7 +1032,8 @@
      "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "꼭대기는 아래 두 칸의 합이니 16 = (왼쪽 6+□) + (오른쪽 □+4) = 6+4+2×□. 여기서 거꾸로 되짚으면 □ = (꼭대기 − 양 끝의 합) ÷ 2 = (16−6−4)÷2 = 3. 결과에서 출발해 원인을 되짚는 '거꾸로 생각하기'는 미로·퍼즐에서 특히 강력해요."
   },
   {
    "id": "gen-pyramid-4",
@@ -1056,7 +1059,8 @@
      "misconception": "그건 □ 두 개의 합이에요. 2로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "꼭대기는 아래 두 칸의 합이니 19 = (왼쪽 2+□) + (오른쪽 □+5) = 2+5+2×□. 여기서 거꾸로 되짚으면 □ = (꼭대기 − 양 끝의 합) ÷ 2 = (19−2−5)÷2 = 6. 결과에서 출발해 원인을 되짚는 '거꾸로 생각하기'는 미로·퍼즐에서 특히 강력해요."
   },
   {
    "id": "gen-stairs-1",
@@ -1450,7 +1454,8 @@
      "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "평균 문제는 '합'으로 바꿔 생각해요. 처음 4명의 합은 4×70=280점. 새 평균 75점이 되려면 5명의 합이 5×75=375점이어야 하니, 새 사람 점수 = 그 차이 = 95점. 새 사람은 자기 몫 75점에 더해 나머지 4명을 각각 5점씩 끌어올릴 몫까지 가져와야 해서 훨씬 높아요."
   },
   {
    "id": "gen-avgchg-2",
@@ -1476,7 +1481,8 @@
      "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "평균 문제는 '합'으로 바꿔 생각해요. 처음 5명의 합은 5×80=400점. 새 평균 83점이 되려면 6명의 합이 6×83=498점이어야 하니, 새 사람 점수 = 그 차이 = 98점. 새 사람은 자기 몫 83점에 더해 나머지 5명을 각각 3점씩 끌어올릴 몫까지 가져와야 해서 훨씬 높아요."
   },
   {
    "id": "gen-avgchg-3",
@@ -1502,7 +1508,8 @@
      "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "평균 문제는 '합'으로 바꿔 생각해요. 처음 4명의 합은 4×85=340점. 새 평균 89점이 되려면 5명의 합이 5×89=445점이어야 하니, 새 사람 점수 = 그 차이 = 105점. 새 사람은 자기 몫 89점에 더해 나머지 4명을 각각 4점씩 끌어올릴 몫까지 가져와야 해서 훨씬 높아요."
   },
   {
    "id": "gen-avgchg-4",
@@ -1528,7 +1535,8 @@
      "misconception": "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "평균 문제는 '합'으로 바꿔 생각해요. 처음 5명의 합은 5×60=300점. 새 평균 66점이 되려면 6명의 합이 6×66=396점이어야 하니, 새 사람 점수 = 그 차이 = 96점. 새 사람은 자기 몫 66점에 더해 나머지 5명을 각각 6점씩 끌어올릴 몫까지 가져와야 해서 훨씬 높아요."
   },
   {
    "id": "gen-border-1",
@@ -1799,7 +1807,8 @@
      "hour": 10,
      "minute": 0
     }
-   }
+   },
+   "detailedExplanation": "거울은 좌우를 뒤집어요. 12시 방향(위)을 축으로 시계가 뒤집히면 시각은 '12 빼기 실제 시각'으로 보여요. 그래서 거울 속 10시 → 실제 2시(12−10=2). 거꾸로 실제에서 거울 모습을 알 때도 똑같이 12에서 빼면 돼요. 대칭은 '축을 기준으로 되짚기'라고 기억하면 헷갈리지 않아요."
   },
   {
    "id": "gen-mirror-2",
@@ -1832,7 +1841,8 @@
      "hour": 8,
      "minute": 0
     }
-   }
+   },
+   "detailedExplanation": "거울은 좌우를 뒤집어요. 12시 방향(위)을 축으로 시계가 뒤집히면 시각은 '12 빼기 실제 시각'으로 보여요. 그래서 거울 속 8시 → 실제 4시(12−8=4). 거꾸로 실제에서 거울 모습을 알 때도 똑같이 12에서 빼면 돼요. 대칭은 '축을 기준으로 되짚기'라고 기억하면 헷갈리지 않아요."
   },
   {
    "id": "gen-mirror-3",
@@ -1865,7 +1875,8 @@
      "hour": 7,
      "minute": 0
     }
-   }
+   },
+   "detailedExplanation": "거울은 좌우를 뒤집어요. 12시 방향(위)을 축으로 시계가 뒤집히면 시각은 '12 빼기 실제 시각'으로 보여요. 그래서 거울 속 7시 → 실제 5시(12−7=5). 거꾸로 실제에서 거울 모습을 알 때도 똑같이 12에서 빼면 돼요. 대칭은 '축을 기준으로 되짚기'라고 기억하면 헷갈리지 않아요."
   },
   {
    "id": "gen-mirror-4",
@@ -1898,7 +1909,8 @@
      "hour": 5,
      "minute": 0
     }
-   }
+   },
+   "detailedExplanation": "거울은 좌우를 뒤집어요. 12시 방향(위)을 축으로 시계가 뒤집히면 시각은 '12 빼기 실제 시각'으로 보여요. 그래서 거울 속 5시 → 실제 7시(12−5=7). 거꾸로 실제에서 거울 모습을 알 때도 똑같이 12에서 빼면 돼요. 대칭은 '축을 기준으로 되짚기'라고 기억하면 헷갈리지 않아요."
   },
   {
    "id": "gen-cards-1",
@@ -2763,7 +2775,8 @@
      "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'한 명만 진실'이 열쇠예요. 범인을 한 사람씩 가정하고, 그때 각자의 말이 참인지 세어 보세요. 진실을 말한 사람이 '정확히 한 명'이 되는 가정만 정답이에요. 이렇게 모든 경우를 표로 만들어 '조건에 맞는 하나'만 남기는 게 논리 퍼즐의 정석이에요."
   },
   {
    "id": "gen-truthone-2",
@@ -2789,7 +2802,8 @@
      "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'한 명만 진실'이 열쇠예요. 범인을 한 사람씩 가정하고, 그때 각자의 말이 참인지 세어 보세요. 진실을 말한 사람이 '정확히 한 명'이 되는 가정만 정답이에요. 이렇게 모든 경우를 표로 만들어 '조건에 맞는 하나'만 남기는 게 논리 퍼즐의 정석이에요."
   },
   {
    "id": "gen-truthone-3",
@@ -2815,7 +2829,8 @@
      "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'한 명만 진실'이 열쇠예요. 범인을 한 사람씩 가정하고, 그때 각자의 말이 참인지 세어 보세요. 진실을 말한 사람이 '정확히 한 명'이 되는 가정만 정답이에요. 이렇게 모든 경우를 표로 만들어 '조건에 맞는 하나'만 남기는 게 논리 퍼즐의 정석이에요."
   },
   {
    "id": "gen-truthone-4",
@@ -2841,7 +2856,8 @@
      "misconception": "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'한 명만 진실'이 열쇠예요. 범인을 한 사람씩 가정하고, 그때 각자의 말이 참인지 세어 보세요. 진실을 말한 사람이 '정확히 한 명'이 되는 가정만 정답이에요. 이렇게 모든 경우를 표로 만들어 '조건에 맞는 하나'만 남기는 게 논리 퍼즐의 정석이에요."
   },
   {
    "id": "gen-tri-1",
@@ -4203,7 +4219,8 @@
      "misconception": "신기하게도 순서와 상관없이 항상 같아요 — 처음 합의 홀짝으로 정해지는 불변량이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 수 a, b를 지우고 |a−b|를 적어도 전체 합의 '홀짝'은 안 변해요(a+b와 |a−b|는 홀짝이 같으니까). 그래서 마지막 수의 홀짝은 처음 1부터 10까지 합의 홀짝으로 이미 정해져 있어요. 이렇게 '과정이 변해도 안 변하는 값(불변량)'을 찾으면, 모든 경우를 따라가지 않고도 결과를 알 수 있어요 — 고학년 수학의 강력한 무기예요."
   },
   {
    "id": "gen-parity-2",
@@ -4229,7 +4246,8 @@
      "misconception": "신기하게도 순서와 상관없이 항상 같아요 — 처음 합의 홀짝으로 정해지는 불변량이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 수 a, b를 지우고 |a−b|를 적어도 전체 합의 '홀짝'은 안 변해요(a+b와 |a−b|는 홀짝이 같으니까). 그래서 마지막 수의 홀짝은 처음 1부터 7까지 합의 홀짝으로 이미 정해져 있어요. 이렇게 '과정이 변해도 안 변하는 값(불변량)'을 찾으면, 모든 경우를 따라가지 않고도 결과를 알 수 있어요 — 고학년 수학의 강력한 무기예요."
   },
   {
    "id": "gen-parity-3",
@@ -4255,7 +4273,8 @@
      "misconception": "신기하게도 순서와 상관없이 항상 같아요 — 처음 합의 홀짝으로 정해지는 불변량이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 수 a, b를 지우고 |a−b|를 적어도 전체 합의 '홀짝'은 안 변해요(a+b와 |a−b|는 홀짝이 같으니까). 그래서 마지막 수의 홀짝은 처음 1부터 8까지 합의 홀짝으로 이미 정해져 있어요. 이렇게 '과정이 변해도 안 변하는 값(불변량)'을 찾으면, 모든 경우를 따라가지 않고도 결과를 알 수 있어요 — 고학년 수학의 강력한 무기예요."
   },
   {
    "id": "gen-parity-4",
@@ -4281,7 +4300,8 @@
      "misconception": "신기하게도 순서와 상관없이 항상 같아요 — 처음 합의 홀짝으로 정해지는 불변량이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 수 a, b를 지우고 |a−b|를 적어도 전체 합의 '홀짝'은 안 변해요(a+b와 |a−b|는 홀짝이 같으니까). 그래서 마지막 수의 홀짝은 처음 1부터 5까지 합의 홀짝으로 이미 정해져 있어요. 이렇게 '과정이 변해도 안 변하는 값(불변량)'을 찾으면, 모든 경우를 따라가지 않고도 결과를 알 수 있어요 — 고학년 수학의 강력한 무기예요."
   },
   {
    "id": "gen-incexc-1",
@@ -4307,7 +4327,8 @@
      "misconception": "12의 배수를 두 번 뺐어요 — 한 번 도로 더해야 해요(포함배제)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "3의 배수를 빼고 4의 배수도 빼면, 둘 다의 배수(12의 배수)는 두 번 빠져요. 그래서 한 번 도로 더해요: 100−33−25+8=50. 이 '겹친 건 도로 더한다'가 포함배제의 핵심이고, 벤 다이어그램으로 그리면 왜 그런지 눈에 보여요."
   },
   {
    "id": "gen-incexc-2",
@@ -4333,7 +4354,8 @@
      "misconception": "10의 배수를 두 번 뺐어요 — 한 번 도로 더해야 해요(포함배제)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "2의 배수를 빼고 5의 배수도 빼면, 둘 다의 배수(10의 배수)는 두 번 빠져요. 그래서 한 번 도로 더해요: 100−50−20+10=40. 이 '겹친 건 도로 더한다'가 포함배제의 핵심이고, 벤 다이어그램으로 그리면 왜 그런지 눈에 보여요."
   },
   {
    "id": "gen-incexc-3",
@@ -4359,7 +4381,8 @@
      "misconception": "12의 배수를 두 번 뺐어요 — 한 번 도로 더해야 해요(포함배제)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "4의 배수를 빼고 6의 배수도 빼면, 둘 다의 배수(12의 배수)는 두 번 빠져요. 그래서 한 번 도로 더해요: 60−15−10+5=40. 이 '겹친 건 도로 더한다'가 포함배제의 핵심이고, 벤 다이어그램으로 그리면 왜 그런지 눈에 보여요."
   },
   {
    "id": "gen-incexc-4",
@@ -4385,7 +4408,8 @@
      "misconception": "15의 배수를 두 번 뺐어요 — 한 번 도로 더해야 해요(포함배제)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "3의 배수를 빼고 5의 배수도 빼면, 둘 다의 배수(15의 배수)는 두 번 빠져요. 그래서 한 번 도로 더해요: 50−16−10+3=27. 이 '겹친 건 도로 더한다'가 포함배제의 핵심이고, 벤 다이어그램으로 그리면 왜 그런지 눈에 보여요."
   },
   {
    "id": "gen-nim-1",
