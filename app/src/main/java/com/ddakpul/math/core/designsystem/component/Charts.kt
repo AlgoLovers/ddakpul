@@ -224,7 +224,7 @@ fun TrendLineChart(
     }
 }
 
-/** 난이도 성장 곡선 — 시도 순서에 따른 난이도(1~5)를 계단선으로 그린다. */
+/** 난이도 성장 곡선 — 시도 순서에 따른 난이도(1~7)를 계단선으로 그린다. */
 @Composable
 fun StepLineChart(
     values: List<Int>,
