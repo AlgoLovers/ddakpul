@@ -1437,6 +1437,59 @@ def gen_grid_blocked():
         )
 
 
+# ── 58. 저울 치환 — 단위 바꾸기 (난3, 변화와관계) ──────────────────────────────
+def gen_balance_substitution():
+    for a_name, b_name, c_name, k1, k2 in [
+        ("사과", "귤", "감", 2, 3),
+        ("공", "구슬", "알사탕", 3, 2),
+        ("상자", "봉지", "낱개", 2, 4),
+    ]:
+        ans = k1 * k2
+        add(
+            "subst", "CHANGE_RELATION", 3, ["치환", "단위 바꾸기"],
+            f"{a_name} 1개는 {b_name} {k1}개와 같고, {b_name} 1개는 {c_name} {k2}개와 같아요. 그러면 {a_name} 1개는 {c_name} 몇 개와 같을까요?",
+            f"{ans}개", [f"{k1 + k2}개", f"{ans - 1}개", f"{ans + 2}개"],
+            f"{a_name} 1개 = {b_name} {k1}개인데, 그 {b_name} 하나하나가 다시 {c_name} {k2}개예요. 그래서 {a_name} 1개 = {c_name} {k1}×{k2}={ans}개. 단위를 한 단계씩 바꿀 때마다 곱해 가면 돼요.",
+            [(f"{k1 + k2}개", "더하는 게 아니라, 한 단계 바꿀 때마다 곱해야 해요.")],
+            detail=f"'단위 바꾸기(치환)'는 곱으로 이어져요: {a_name}→{b_name}는 ×{k1}, {b_name}→{c_name}는 ×{k2}이니 {a_name}→{c_name}는 ×({k1}×{k2}). 환율이나 단위 변환(1시간=60분, 1분=60초 → 1시간=3600초)도 똑같은 원리예요.",
+        )
+
+
+# ── 59. 동전 조합 가짓수 (난4, 자료와가능성) — 체계적으로 세기 ──────────────────
+def gen_coin_combinations():
+    for amount, coins in [(1000, [500, 100]), (500, [100, 50]), (900, [500, 100]), (600, [100, 50])]:
+        ways = [0] * (amount + 1)
+        ways[0] = 1
+        for c in coins:
+            for m in range(c, amount + 1):
+                ways[m] += ways[m - c]
+        ans = ways[amount]
+        assert ans >= 2
+        add(
+            "coincomb", "DATA_POSSIBILITY", 4, ["경우의 수", "동전 조합"],
+            f"{coins[0]}원과 {coins[1]}원짜리 동전으로 {amount}원을 만들려고 해요. (동전은 얼마든지 써도 되고 안 써도 돼요.) 만드는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{ans - 1}가지", f"{ans + 1}가지", f"{ans + 2}가지"],
+            f"큰 동전({coins[0]}원)을 0개, 1개, 2개… 넣어 보고 나머지를 작은 동전({coins[1]}원)으로 딱 채울 수 있는지 세어요. 빠짐없이·겹치지 않게 세면 {ans}가지예요.",
+            detail=f"{coins[0]}원을 몇 개 쓸지 정하면 나머지는 자동으로 정해져요. 그러니 {coins[0]}원 개수만 0,1,2…로 늘려 가며 {coins[1]}원으로 딱 떨어지는 경우만 세면 빠짐도 겹침도 없죠. '한 가지를 고정하고 나머지를 따지기'는 경우의 수의 기본기예요.",
+        )
+
+
+# ── 60. 최대 정사각형 타일 = 최대공약수 (난5, 도형과측정) — 그림 필수 ────────────
+def gen_gcd_tiles():
+    for a, b in [(6, 4), (9, 6), (8, 6), (10, 4)]:
+        g = gcd(a, b)
+        assert g > 1
+        add(
+            "gcdtile", "SHAPE_MEASUREMENT", 5, ["최대공약수", "타일 깔기"],
+            f"가로 {a}칸, 세로 {b}칸인 직사각형 바닥에 똑같은 정사각형 타일을 빈틈·겹침 없이 깔려고 해요. 쓸 수 있는 '가장 큰' 정사각형 타일의 한 변은 몇 칸일까요?",
+            f"{g}칸", [f"{min(a, b)}칸", f"{g - 1}칸", f"{g + 1}칸"],
+            f"타일 한 변이 가로도 세로도 딱 나눠떨어져야 빈틈이 안 생겨요. 그런 수 중 가장 큰 것이 최대공약수예요. {a}와 {b}의 최대공약수는 {g}이니 가장 큰 타일은 한 변 {g}칸이에요.",
+            [(f"{min(a, b)}칸", "짧은 변으로는 긴 변이 딱 안 나눠질 수 있어요. 두 변을 모두 나눠야 해요.")],
+            figure={"type": "GRID", "params": {"w": a, "h": b}},
+            detail=f"'두 수를 모두 나누는 가장 큰 수'가 최대공약수(GCD)예요. 이 타일이면 가로 {a}÷{g}={a // g}개, 세로 {b}÷{g}={b // g}개, 모두 {a // g * (b // g)}개가 필요해요. 거꾸로 '두 길이를 겹쳐 만드는 가장 작은 정사각형'은 최소공배수랍니다.",
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1474,6 +1527,8 @@ GENERATORS = [
     gen_coin_balance, gen_circular_perm, gen_factorial_zeros,
     # v4.9 확충 — 격자 최단경로 장애물 회피(GRID 그림 필수, 난6): DP 검산
     gen_grid_blocked,
+    # v5.0 확충 — 콘텐츠 볼륨: 저울 치환·동전 조합·최대공약수 타일(그림)
+    gen_balance_substitution, gen_coin_combinations, gen_gcd_tiles,
 ]
 
 for g in GENERATORS:
