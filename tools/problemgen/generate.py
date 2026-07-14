@@ -2295,6 +2295,96 @@ def gen_hanoi():
         )
 
 
+# ── 118. 소금물 섞기 = 가중평균 (난7, 변화와관계) ───────────────────────────
+def gen_mixture():
+    for w1, c1, w2, c2 in [(200, 10, 300, 20), (100, 20, 400, 10), (300, 10, 200, 20), (100, 8, 300, 16)]:
+        salt = w1 * c1 // 100 + w2 * c2 // 100
+        total = w1 + w2
+        assert (salt * 100) % total == 0
+        ans = salt * 100 // total
+        add(
+            "mixture", "CHANGE_RELATION", 7, ["농도", "섞기"],
+            f"농도 {c1}%인 소금물 {w1}g과 농도 {c2}%인 소금물 {w2}g을 섞었어요. 섞은 소금물의 농도는 몇 %일까요?",
+            f"{ans}%", [f"{(c1 + c2) // 2}%", f"{c1 + c2}%", f"{ans + 2}%"],
+            f"섞을 때 변하지 않는 건 '소금의 양'이에요. 첫 소금물의 소금은 {w1}×{c1}÷100={w1 * c1 // 100}g, 둘째는 {w2}×{c2}÷100={w2 * c2 // 100}g. 합치면 소금 {salt}g, 전체 {total}g이니 농도 = {salt}÷{total}×100 = {ans}%예요.",
+            [(f"{(c1 + c2) // 2}%", "두 농도의 평균이 아니에요 — 양이 다르면 많은 쪽으로 치우쳐요(가중평균).")],
+            detail="섞기 문제의 열쇠는 '녹아 있는 양(소금·알코올)은 섞어도 총량이 그대로'라는 거예요. 각각의 양을 구해 더하고 전체로 다시 나누면 끝. 결국 농도의 '가중평균'이라 양이 많은 쪽 농도에 더 가까워져요.",
+        )
+
+
+# ── 119. 등차수열 n번째 항 (난4, 변화와관계) ────────────────────────────────
+def gen_arithmetic_nth():
+    for first, diff, n in [(3, 4, 10), (5, 3, 8), (2, 5, 12), (10, 7, 6)]:
+        ans = first + diff * (n - 1)
+        add(
+            "arithnth", "CHANGE_RELATION", 4, ["등차수열", "n번째 항"],
+            f"규칙적으로 커지는 수예요: {first}, {first + diff}, {first + 2 * diff}, {first + 3 * diff}, … 이렇게 계속될 때 {n}번째 수는 얼마일까요?",
+            str(ans), [str(first + diff * n), str(ans - diff), str(first * n)],
+            f"이웃한 수의 차이가 항상 {diff}인 등차수열이에요. 첫 수 {first}에서 {diff}씩 더하는데, {n}번째까지는 {diff}를 {n}−1={n - 1}번 더해요. 그래서 {first}+{diff}×{n - 1}={ans}이에요.",
+            [(str(first + diff * n), f"{diff}를 {n}번이 아니라 {n}−1번 더해요(첫 수엔 안 더함).")],
+            detail="등차수열의 n번째 항 = (첫 항) + (n−1)×(공차)예요. 함정은 '몇 번 더하나' — n번째면 n−1번. 하나씩 안 세고 공식으로 100번째, 1000번째도 바로 구해요. 컵 쌓기·계단·나무 심기가 다 같은 '간격' 구조예요.",
+        )
+
+
+# ── 120. 등비수열 n번째 항 (난5, 변화와관계) ────────────────────────────────
+def gen_geometric_nth():
+    for first, ratio, n in [(2, 2, 6), (1, 3, 5), (3, 2, 5), (1, 2, 8)]:
+        ans = first * ratio ** (n - 1)
+        add(
+            "geonth", "CHANGE_RELATION", 5, ["등비수열", "n번째 항"],
+            f"매번 {ratio}배로 커지는 수예요: {first}, {first * ratio}, {first * ratio * ratio}, … 이렇게 계속될 때 {n}번째 수는 얼마일까요?",
+            str(ans), [str(first * ratio * n), str(ans * ratio), str(ans // ratio)],
+            f"이웃한 수가 {ratio}배씩 커지는 등비수열이에요. 첫 수 {first}에 {ratio}를 {n}−1={n - 1}번 곱해요. {first}×{ratio}를 {n - 1}번 = {ans}이에요.",
+            [(str(ans // ratio), f"한 번 덜 곱했어요 — {n}번째는 {ratio}를 {n}−1번 곱해요.")],
+            detail="등비수열의 n번째 항 = (첫 항)×(공비)^(n−1)이에요. 등차가 '일정하게 더하기'라면 등비는 '일정하게 곱하기' — 곱이라 훨씬 빨리 커져요(2,4,8,16…). 세균 번식·복리·종이접기가 다 등비예요.",
+        )
+
+
+# ── 121. 하루에 빨라지는 시계 = 누적 비례 (난6, 변화와관계) ──────────────────
+def gen_clock_gain():
+    for gain, days in [(3, 10), (2, 15), (5, 8), (4, 12)]:
+        ans = gain * days
+        add(
+            "clockgain", "CHANGE_RELATION", 6, ["비례", "누적"],
+            f"어떤 시계는 하루에 {gain}분씩 빨라져요. 정확한 시각에 맞춰 둔 뒤 {days}일이 지나면, 이 시계는 실제 시각보다 몇 분 빨라져 있을까요?",
+            f"{ans}분", [f"{gain + days}분", f"{gain * days // 2}분", f"{ans + gain}분"],
+            f"하루에 {gain}분씩 '쌓여요'. {days}일이면 {gain}×{days}={ans}분 빨라져요. 매일 같은 양이 더해지니 곱셈으로 한 번에 구해요.",
+            [(f"{gain + days}분", "더하는 게 아니라, 매일 쌓이는 양이라 곱해요.")],
+            detail=f"'매일 일정하게 쌓이는' 문제는 (하루치)×(날수)로 구해요 — 비례 관계죠. 반대로 '며칠 뒤 정확히 60분 빨라질까?'는 60÷{gain}로 거꾸로 구하면 돼요.",
+        )
+
+
+# ── 122. 책 읽고 남은 쪽 (난4, 수와연산) ─────────────────────────────────────
+def gen_book_reading():
+    for total, perday, days in [(300, 25, 8), (240, 30, 6), (500, 40, 10), (180, 20, 7)]:
+        read = perday * days
+        ans = total - read
+        assert ans > 0
+        add(
+            "bookread", "NUMBER_OPERATION", 4, ["곱셈과 뺄셈", "남은 양"],
+            f"{total}쪽짜리 책을 매일 {perday}쪽씩 읽어요. {days}일 동안 읽으면 몇 쪽이 남을까요?",
+            f"{ans}쪽", [f"{read}쪽", f"{total - perday}쪽", f"{ans - perday}쪽"],
+            f"먼저 {days}일 동안 읽은 양을 구해요: {perday}×{days}={read}쪽. 전체 {total}쪽에서 읽은 {read}쪽을 빼면 {total}−{read}={ans}쪽이 남아요.",
+            [(f"{read}쪽", "그건 '읽은' 양이에요. 전체에서 빼야 '남은' 양이 나와요.")],
+            detail="'매일 같은 양 × 날수'로 읽은 양을 구하고 전체에서 빼면 남은 양이에요(곱셈 다음 뺄셈). 거꾸로 '며칠이면 다 읽을까?'는 전체 ÷ 하루치로 구하고, 딱 안 나눠떨어지면 마지막 날을 하나 더해요.",
+        )
+
+
+# ── 123. 기차가 사람을 지나가기 = 숨은 길이 (난5, 변화와관계) ────────────────
+def gen_train_pass_person():
+    for length, speed in [(120, 20), (150, 15), (200, 25), (100, 10)]:
+        assert length % speed == 0
+        ans = length // speed
+        add(
+            "trainperson", "CHANGE_RELATION", 5, ["거속시", "숨은 길이"],
+            f"길이 {length}m인 기차가 초속 {speed}m로 달려요. 선로 옆에 서 있는 사람 한 명을 완전히 지나치는 데 몇 초가 걸릴까요?",
+            f"{ans}초", [f"{length}초", f"{ans * 2}초", f"{ans - 1}초"],
+            f"사람은 크기가 거의 없으니, 기차가 '자기 길이만큼' 지나가면 사람을 완전히 지나친 거예요. 그러니 기차는 {length}m를 가야 하고, 초속 {speed}m이니 {length}÷{speed}={ans}초 걸려요.",
+            [(f"{length}초", f"{length}는 거리(m)예요. 시간은 거리÷속력이에요.")],
+            detail="'기차가 무언가를 지나가는' 문제는 '실제로 이동한 거리'를 정확히 잡는 게 전부예요. 점 같은 사람은 기차 길이만큼, 다리·터널은 (기차 길이 + 다리 길이)만큼. 시간 = 거리 ÷ 속력. 무엇을 지나가느냐에 따라 '거리'만 달라져요.",
+        )
+
+
 # ── 111. 중앙값 (난4, 자료와가능성) ─────────────────────────────────────────
 def gen_median():
     for nums in [[2, 8, 3, 9, 4], [12, 7, 20, 5, 9], [4, 1, 10, 2, 7, 8, 6], [30, 10, 45, 15, 20]]:
@@ -2447,6 +2537,8 @@ GENERATORS = [
     gen_grid_area_hard,
     gen_median, gen_gcd_bags, gen_lcm_square, gen_collatz,
     gen_fibonacci, gen_prime_pick, gen_gcd_lcm_product,
+    gen_mixture, gen_arithmetic_nth, gen_geometric_nth,
+    gen_clock_gain, gen_book_reading, gen_train_pass_person,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
