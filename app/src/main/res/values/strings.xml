@@ -166,6 +166,12 @@
     <string name="report_caption_delta_down">지난주 대비 −%1$d%%p</string>
     <string name="report_caption_delta_same">지난주와 비슷해요</string>
 
+    <!-- 리포트 · 영역별 성취 -->
+    <string name="report_area_title">영역별 성취</string>
+    <string name="report_area_subtitle">네 영역 중 어디가 강하고 어디를 더 볼지 한눈에 확인하세요.</string>
+    <string name="report_area_stat">%1$d문제 · %2$d%%</string>
+    <string name="report_area_none">아직 안 풀었어요</string>
+
     <!-- 리포트 · 난이도별 평균 시간 -->
     <string name="report_avgtime_title">난이도별 평균 시간</string>
     <string name="report_avgtime_caption">어려운 문제일수록 오래 고민한다면 좋은 신호예요 — 시간은 사고의 흔적이에요.</string>
