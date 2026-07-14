@@ -40,6 +40,7 @@ import com.ddakpul.math.core.designsystem.component.ChoiceState
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
 import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.presentation.common.labelRes
+import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.result.ResultView
 
 @Composable
@@ -188,6 +189,7 @@ private fun SolvingBody(
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
+    val speak = rememberSpeaker()
     Column(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -206,21 +208,34 @@ private fun SolvingBody(
         }
 
         uiState.area?.let { area ->
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (uiState.isReview) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (uiState.isReview) {
+                        Text(
+                            text = stringResource(R.string.solve_review_badge),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.tertiary,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                     Text(
-                        text = stringResource(R.string.solve_review_badge),
+                        text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold,
                     )
                 }
-                Text(
-                    text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold,
-                )
+                // 읽어주기 — 아직 글이 서툰 아이도 '생각'에 집중하도록.
+                TextButton(onClick = { speak(problem.statement) }) {
+                    Text(text = stringResource(R.string.solve_read_aloud))
+                }
             }
         }
 
