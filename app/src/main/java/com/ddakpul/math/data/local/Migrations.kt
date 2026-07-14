@@ -82,3 +82,12 @@ val MIGRATION_6_7 =
             )
         }
     }
+
+val MIGRATION_7_8 =
+    object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE problems ADD COLUMN detailedExplanation TEXT")
+            // problems는 순수 시드 데이터 — 비워서 다음 접근 때 최신 콘텐츠(2차 풀이 포함)로 강제 재시딩.
+            db.execSQL("DELETE FROM problems")
+        }
+    }

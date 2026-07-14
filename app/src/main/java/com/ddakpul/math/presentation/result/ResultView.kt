@@ -48,10 +48,12 @@ fun ResultView(
     showExplanation: Boolean,
     sessionStreak: Int,
     softCutSuggested: Boolean,
+    isPremium: Boolean,
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
     onExcludeRequest: () -> Unit,
     onReportAnswer: () -> Unit,
+    onUpgrade: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -107,8 +109,11 @@ fun ResultView(
             )
         }
 
-        // 단계별 풀이 — 오답이면 바로 펼쳐 교정 학습을 돕고, 정답이면 '풀이 보기'로 원할 때 펼친다.
+        // 1차 풀이 — 오답이면 바로 펼쳐 교정 학습을 돕고, 정답이면 '풀이 보기'로 원할 때 펼친다.
         ExplanationSection(result = result)
+
+        // 2차(심화) 풀이 — 이용권 전용. 무료는 잠긴 티저로 안내.
+        DetailedExplanationSection(result = result, isPremium = isPremium, onUpgrade = onUpgrade)
 
         if (showExplanation) {
             Text(
@@ -183,6 +188,65 @@ private fun ExplanationSection(result: GradingResult) {
                 modifier = Modifier.padding(end = 8.dp),
             )
             Text(stringResource(R.string.result_show_explanation))
+        }
+    }
+}
+
+/** 2차(심화) 풀이. 이용권 회원은 '심화 풀이 보기'로 펼치고, 무료 회원은 잠긴 티저 + 이용권 유도. */
+@Composable
+private fun DetailedExplanationSection(
+    result: GradingResult,
+    isPremium: Boolean,
+    onUpgrade: () -> Unit,
+) {
+    val detailed = result.detailedExplanation ?: return
+    val colors = MaterialTheme.colorScheme
+    if (isPremium) {
+        var expanded by remember(result) { mutableStateOf(false) }
+        if (expanded) {
+            FeedbackCard(
+                icon = Icons.Filled.Lightbulb,
+                container = colors.primaryContainer,
+                content = colors.onPrimaryContainer,
+                label = stringResource(R.string.result_detailed_label),
+                body = detailed,
+            )
+        } else {
+            OutlinedButton(onClick = { expanded = true }) {
+                Icon(
+                    imageVector = Icons.Filled.Lightbulb,
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp),
+                )
+                Text(stringResource(R.string.result_detailed_show))
+            }
+        }
+    } else {
+        Card(
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = colors.primaryContainer,
+                    contentColor = colors.onPrimaryContainer,
+                ),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.result_detailed_locked_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = stringResource(R.string.result_detailed_locked_body),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                OutlinedButton(onClick = onUpgrade) {
+                    Text(stringResource(R.string.result_detailed_cta))
+                }
+            }
         }
     }
 }

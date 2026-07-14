@@ -44,6 +44,11 @@
     <string name="result_correct_answer">정답: %1$s</string>
     <string name="result_explanation_label">풀이</string>
     <string name="result_show_explanation">풀이 보기</string>
+    <string name="result_detailed_label">🔍 심화 풀이</string>
+    <string name="result_detailed_show">심화 풀이 보기</string>
+    <string name="result_detailed_locked_title">🔍 심화 풀이는 이용권으로</string>
+    <string name="result_detailed_locked_body">이 문제의 더 깊은 개념·다른 풀이법을 이용권에서 볼 수 있어요.</string>
+    <string name="result_detailed_cta">이용권 보기</string>
     <string name="report_answer_button">정답이 이상해요</string>
     <string name="report_answer_feedback">[딱풀 정답 문의]\n문제ID: %1$s\n문제: %2$s\n보기: %3$s\n앱 정답: %4$s\n내가 고른 답: %5$s\n\n(내 생각을 여기 적어 보내 주세요)</string>
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>

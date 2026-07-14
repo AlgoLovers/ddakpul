@@ -30,6 +30,7 @@ class GradeAttemptUseCase
                 isCorrect = isCorrect,
                 mistake = mistake,
                 explanation = problem.explanation,
+                detailedExplanation = problem.detailedExplanation,
             )
         }
     }

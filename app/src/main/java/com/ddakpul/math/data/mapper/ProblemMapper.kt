@@ -51,6 +51,7 @@ fun ProblemEntity.toDomain(): Problem =
                 .decodeFromString(mistakeListSerializer, mistakesJson)
                 .map { Mistake(it.choiceIndex, it.misconception) },
         figure = figureJson?.let { json.decodeFromString(FigureDto.serializer(), it).toDomain() },
+        detailedExplanation = detailedExplanation,
     )
 
 fun Problem.toEntity(): ProblemEntity =
@@ -70,4 +71,5 @@ fun Problem.toEntity(): ProblemEntity =
                 commonMistakes.map { MistakeDto(it.choiceIndex, it.misconception) },
             ),
         figureJson = figure?.let { json.encodeToString(FigureDto.serializer(), it.toDto()) },
+        detailedExplanation = detailedExplanation,
     )

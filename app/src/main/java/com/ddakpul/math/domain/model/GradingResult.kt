@@ -8,4 +8,6 @@ data class GradingResult(
     val isCorrect: Boolean,
     val mistake: Mistake?,
     val explanation: String?,
+    /** 2차(심화) 풀이 — 이용권 전용. 결과 화면이 무료/유료에 맞게 노출한다. */
+    val detailedExplanation: String? = null,
 )
