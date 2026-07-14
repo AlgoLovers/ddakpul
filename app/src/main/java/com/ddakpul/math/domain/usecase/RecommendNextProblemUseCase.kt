@@ -71,7 +71,12 @@ class RecommendNextProblemUseCase
                     ?.let { return it }
             }
 
-            val group = selectGroup(groups, decision.difficulty, random) ?: return null
+            // 직전 문제의 그룹(유형)을 알아내 연속 반복을 피한다(변별력 있는 다양성).
+            val lastGroupId =
+                state.recentAttempts.lastOrNull()?.let { last ->
+                    groups.firstOrNull { group -> group.problems.any { it.id == last.problemId } }?.id
+                }
+            val group = selectGroup(groups, decision.difficulty, random, lastGroupId) ?: return null
             val problem = selectProblem(group, state.recentAttempts, random) ?: return null
             return Recommendation(
                 problem = problem,
@@ -174,17 +179,23 @@ class RecommendNextProblemUseCase
         }
 
         // 규칙6: 목표 난이도 그룹을 고르되, 해당 난이도가 비어 있으면 난이도 차가 가장 작은 그룹으로 폴백.
+        // [lastGroupId]와 같은 그룹은 다른 후보가 있으면 제외해 같은 유형이 연달아 나오지 않게 한다.
         private fun selectGroup(
             groups: List<ProblemGroup>,
             difficulty: Int,
             random: Random,
+            lastGroupId: String?,
         ): ProblemGroup? {
             val nonEmpty = groups.filter { it.problems.isNotEmpty() }
             if (nonEmpty.isEmpty()) return null
             val exact = nonEmpty.filter { it.difficulty == difficulty }
-            if (exact.isNotEmpty()) return exact.random(random)
-            val nearestDelta = nonEmpty.minOf { abs(it.difficulty - difficulty) }
-            return nonEmpty.filter { abs(it.difficulty - difficulty) == nearestDelta }.random(random)
+            val pool =
+                exact.ifEmpty {
+                    val nearestDelta = nonEmpty.minOf { abs(it.difficulty - difficulty) }
+                    nonEmpty.filter { abs(it.difficulty - difficulty) == nearestDelta }
+                }
+            val varied = pool.filterNot { it.id == lastGroupId }
+            return varied.ifEmpty { pool }.random(random)
         }
 
         // 규칙5: 그룹 내 최근에 풀지 않은 문제 중 랜덤. 모두 최근에 풀었다면 그룹 전체에서 랜덤.

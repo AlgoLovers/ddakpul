@@ -168,6 +168,23 @@ class RecommendNextProblemUseCaseTest {
     }
 
     @Test
+    fun stay_avoidsRepeatingSameGroupTypeConsecutively() {
+        val groups =
+            listOf(
+                group(difficulty = 3, problems = (1..3).map { problem("a$it", 3, groupId = "g-a") }, id = "g-a"),
+                group(difficulty = 3, problems = (1..3).map { problem("b$it", 3, groupId = "g-b") }, id = "g-b"),
+            )
+        // 혼조 유지(STAY) + 직전이 정답이라 재도전 아님 — 직전 문제 a1은 g-a 소속.
+        val attempts = listOf(attempt("b1", false), attempt("a1", true))
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), groups, seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.STAY)
+        // 같은 유형(g-a)이 연달아 나오지 않고 다른 그룹(g-b)에서 출제된다.
+        assertThat(result.group.id).isEqualTo("g-b")
+    }
+
+    @Test
     fun rule7_doesNotOverrideDemotion() {
         // 연속 2오답이면 재도전이 아니라 규칙2(하강)가 우선.
         val attempts = listOf(attempt("d3-1", false), attempt("d3-2", false))
