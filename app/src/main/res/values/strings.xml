@@ -217,6 +217,19 @@
     <string name="print_empty">조건에 맞는 문제가 없어요. 옵션을 바꿔보세요.</string>
     <string name="report_print_button">학습지 인쇄</string>
 
+    <!-- 리포트 PDF 내보내기(부모용 한 장 요약) -->
+    <string name="report_export_button">이 리포트 PDF로 저장</string>
+    <string name="report_export_job">딱풀 학습 리포트</string>
+    <string name="report_export_title">딱풀 학습 리포트</string>
+    <string name="report_export_generated">%s 기준</string>
+    <string name="report_export_section_area">영역별 성취</string>
+    <string name="report_export_section_weak">더 살펴볼 개념</string>
+    <string name="report_export_section_mistake">최근 오답</string>
+    <string name="report_export_weak_empty">아직 특별히 짚을 약점이 없어요 — 잘하고 있어요!</string>
+    <string name="report_export_mistake_empty">최근 오답이 없어요 — 훌륭해요!</string>
+    <string name="report_export_recovery">틀렸다가 다시 맞힌 문제 %d%% — 복습이 잘 되고 있어요.</string>
+    <string name="report_export_footer">딱풀 · 딱 맞는 문제를 풀다</string>
+
     <!-- 학습지 PDF 문구 -->
     <string name="worksheet_title">딱풀 학습지</string>
     <string name="worksheet_name_line">이름: ______________</string>

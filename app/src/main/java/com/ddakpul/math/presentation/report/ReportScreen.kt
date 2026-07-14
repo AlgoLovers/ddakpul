@@ -1,5 +1,8 @@
 package com.ddakpul.math.presentation.report
 
+import android.content.Context
+import android.print.PrintAttributes
+import android.print.PrintManager
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,11 +21,14 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +54,9 @@ import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.presentation.common.labelRes
+import com.ddakpul.math.presentation.print.ReportPdfGenerator
+import com.ddakpul.math.presentation.print.ReportTexts
+import com.ddakpul.math.presentation.print.WorksheetPrintAdapter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -59,6 +68,9 @@ private const val MAX_CONCEPT_ROWS = 6
 private const val MAX_GROWTH_POINTS = 60
 
 private val dayFormatter = DateTimeFormatter.ofPattern("M/d")
+
+/** 리포트 PDF 상단의 '기준일' 표기. */
+private val exportDateFormatter = DateTimeFormatter.ofPattern("yyyy. M. d.")
 
 @Composable
 fun ReportScreen(
@@ -104,6 +116,9 @@ private fun ReportContent(
     onOpenPaywall: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val reportTexts = rememberReportTexts(stats)
+    val exportJobName = stringResource(R.string.report_export_job)
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(
             modifier =
@@ -165,8 +180,71 @@ private fun ReportContent(
                     )
                 }
             }
+
+            // 이 리포트 자체를 한 장 PDF로 — 시스템 인쇄 대화상자의 'PDF로 저장'으로 보관/전달.
+            OutlinedButton(
+                onClick = { printReport(context, stats, reportTexts, exportJobName) },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Icon(imageVector = Icons.Filled.Print, contentDescription = null)
+                Text(
+                    text = stringResource(R.string.report_export_button),
+                    modifier = Modifier.padding(start = 6.dp),
+                )
+            }
         }
     }
+}
+
+/** 화면의 리소스 문자열을 모아 순수 [ReportTexts]로 만든다(생성기는 리소스에 접근하지 않는다). */
+@Composable
+private fun rememberReportTexts(stats: LearningStats): ReportTexts {
+    val areaLabels = MathArea.entries.associateWith { stringResource(it.labelRes()) }
+    val generatedOn = remember { LocalDate.now().format(exportDateFormatter) }
+    // 오답 해소율이 실제로 있을 때만 격려 문구를 넣는다(0%인데 "잘 되고 있어요"는 모순).
+    val recoveryLine =
+        stats.errorRecoveryRate?.takeIf { it > 0f }?.let {
+            stringResource(R.string.report_export_recovery, (it * 100).roundToInt())
+        }
+    return ReportTexts(
+        title = stringResource(R.string.report_export_title),
+        generatedOn = stringResource(R.string.report_export_generated, generatedOn),
+        summary =
+            listOf(
+                stringResource(R.string.report_total_solved) to stringResource(R.string.home_unit_count, stats.totalSolved),
+                stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                stringResource(R.string.report_current_level) to stringResource(R.string.home_unit_level, stats.currentDifficulty),
+                stringResource(R.string.report_streak) to stringResource(R.string.report_unit_days, stats.streakDays),
+            ),
+        sectionAreaTitle = stringResource(R.string.report_export_section_area),
+        sectionWeakTitle = stringResource(R.string.report_export_section_weak),
+        sectionMistakeTitle = stringResource(R.string.report_export_section_mistake),
+        weakEmpty = stringResource(R.string.report_export_weak_empty),
+        mistakeEmpty = stringResource(R.string.report_export_mistake_empty),
+        recoveryLine = recoveryLine,
+        areaLabels = areaLabels,
+        footer = stringResource(R.string.report_export_footer),
+    )
+}
+
+/** 리포트 PDF를 안드로이드 인쇄 프레임워크로 흘려보낸다(대화상자에서 'PDF로 저장' 선택 가능). */
+private fun printReport(
+    context: Context,
+    stats: LearningStats,
+    texts: ReportTexts,
+    jobName: String,
+) {
+    val printManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
+    val adapter =
+        WorksheetPrintAdapter(fileName = "ddakpul-report.pdf") {
+            ReportPdfGenerator(stats, texts).generate()
+        }
+    val attributes =
+        PrintAttributes
+            .Builder()
+            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+            .build()
+    printManager.print(jobName, adapter, attributes)
 }
 
 /** 이용권 전용 심화 분석 — 학습량·정답률 추이·성장 곡선·개념 숙달도·난이도별 숙달 지도. */
