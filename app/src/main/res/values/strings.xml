@@ -98,6 +98,13 @@
     <string name="paywall_no_autorenew">자동 갱신 없어요. 기간이 끝나면 그냥 멈춰요. 광고도, 추가 결제 유도도 없어요.</string>
     <string name="paywall_test_note">(지금은 테스트용으로 바로 활성화됩니다 — 실제 스토어 결제는 연동 예정)</string>
 
+    <!-- 부모 확인 게이트(구매·초기화 전 어린이 차단) -->
+    <string name="parent_gate_title">부모님 확인</string>
+    <string name="parent_gate_body">이 동작은 어른이 진행해요. 아래 계산의 답을 눌러 주세요.</string>
+    <string name="parent_gate_question">%1$d × %2$d = ?</string>
+    <string name="parent_gate_retry">답이 달라요. 다시 눌러 주세요.</string>
+    <string name="parent_gate_cancel">취소</string>
+
     <!-- 출시 기념 전면 무료 프로모션 -->
     <string name="home_launch_free_title">🎉 출시 기념 · %1$s까지 전체 무료</string>
     <string name="home_launch_free_desc">지금은 난이도 4~7과 전체 리포트까지 모두 무료예요. 마감일 이후에는 이용권이 필요해요.</string>
