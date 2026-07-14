@@ -7555,6 +7555,14 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 6,
+     "h": 4,
+     "diag": 1
+    }
+   },
    "detailedExplanation": "m×n 격자의 대각선이 지나는 칸 수 = m + n − gcd(m,n)이에요. 대각선은 세로선을 넘고 가로선을 넘으며 칸을 하나씩 늘리는데, 격자 점(두 선이 겹치는 곳)을 지날 땐 한꺼번에 넘어 한 칸만 늘어요. 그 겹치는 횟수 때문에 gcd를 빼요."
   },
   {
@@ -7582,6 +7590,14 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 5,
+     "h": 3,
+     "diag": 1
+    }
+   },
    "detailedExplanation": "m×n 격자의 대각선이 지나는 칸 수 = m + n − gcd(m,n)이에요. 대각선은 세로선을 넘고 가로선을 넘으며 칸을 하나씩 늘리는데, 격자 점(두 선이 겹치는 곳)을 지날 땐 한꺼번에 넘어 한 칸만 늘어요. 그 겹치는 횟수 때문에 gcd를 빼요."
   },
   {
@@ -7609,6 +7625,14 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 8,
+     "h": 6,
+     "diag": 1
+    }
+   },
    "detailedExplanation": "m×n 격자의 대각선이 지나는 칸 수 = m + n − gcd(m,n)이에요. 대각선은 세로선을 넘고 가로선을 넘으며 칸을 하나씩 늘리는데, 격자 점(두 선이 겹치는 곳)을 지날 땐 한꺼번에 넘어 한 칸만 늘어요. 그 겹치는 횟수 때문에 gcd를 빼요."
   },
   {
@@ -7636,6 +7660,14 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 4,
+     "h": 2,
+     "diag": 1
+    }
+   },
    "detailedExplanation": "m×n 격자의 대각선이 지나는 칸 수 = m + n − gcd(m,n)이에요. 대각선은 세로선을 넘고 가로선을 넘으며 칸을 하나씩 늘리는데, 격자 점(두 선이 겹치는 곳)을 지날 땐 한꺼번에 넘어 한 칸만 늘어요. 그 겹치는 횟수 때문에 gcd를 빼요."
   },
   {
@@ -8311,6 +8343,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 2,
+     "h": 2
+    }
+   },
    "detailedExplanation": "n×n 격자 속 정사각형 개수 = 1²+2²+…+n²이에요(크기 s×s는 (n−s+1)²자리). 이 '제곱수의 합'엔 n(n+1)(2n+1)÷6 공식도 있어요. 직사각형까지 세면 또 달라지죠 — '무엇을 세는가'를 정확히 하는 게 세기의 핵심이에요."
   },
   {
@@ -8338,6 +8377,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 3
+    }
+   },
    "detailedExplanation": "n×n 격자 속 정사각형 개수 = 1²+2²+…+n²이에요(크기 s×s는 (n−s+1)²자리). 이 '제곱수의 합'엔 n(n+1)(2n+1)÷6 공식도 있어요. 직사각형까지 세면 또 달라지죠 — '무엇을 세는가'를 정확히 하는 게 세기의 핵심이에요."
   },
   {
@@ -8365,6 +8411,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 4,
+     "h": 4
+    }
+   },
    "detailedExplanation": "n×n 격자 속 정사각형 개수 = 1²+2²+…+n²이에요(크기 s×s는 (n−s+1)²자리). 이 '제곱수의 합'엔 n(n+1)(2n+1)÷6 공식도 있어요. 직사각형까지 세면 또 달라지죠 — '무엇을 세는가'를 정확히 하는 게 세기의 핵심이에요."
   },
   {
@@ -8392,6 +8445,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 5,
+     "h": 5
+    }
+   },
    "detailedExplanation": "n×n 격자 속 정사각형 개수 = 1²+2²+…+n²이에요(크기 s×s는 (n−s+1)²자리). 이 '제곱수의 합'엔 n(n+1)(2n+1)÷6 공식도 있어요. 직사각형까지 세면 또 달라지죠 — '무엇을 세는가'를 정확히 하는 게 세기의 핵심이에요."
   },
   {
