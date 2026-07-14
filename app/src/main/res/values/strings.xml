@@ -157,6 +157,8 @@
 
     <!-- 리포트 · 인사이트 (해석이 끝난 문장) -->
     <string name="report_insights_title">이번 주 인사이트</string>
+    <string name="report_mistakes_title">오답 노트 · 최근 틀린 문제</string>
+    <string name="report_mistakes_desc">아이가 최근 틀린 문제예요. 함께 풀이를 보며 이야기해 보면 오답이 실력이 돼요.</string>
     <string name="insight_goal_done">✅ 오늘 목표를 달성했어요. 스스로 정한 양을 지킨 게 최고의 습관이에요!</string>
     <string name="insight_streak">🔥 %1$d일 연속 학습 중이에요. 꾸준함이 실력을 만들고 있어요.</string>
     <string name="insight_accuracy_up">📈 정답률이 지난주보다 %1$d%%p 올랐어요. 지금 방식이 효과가 있어요!</string>

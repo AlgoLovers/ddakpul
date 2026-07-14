@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,7 @@ import com.ddakpul.math.core.designsystem.component.MasteryMatrix
 import com.ddakpul.math.core.designsystem.component.MasteryStage
 import com.ddakpul.math.core.designsystem.component.MatrixEntry
 import com.ddakpul.math.core.designsystem.component.MiniBarChart
+import com.ddakpul.math.core.designsystem.component.ProblemFigureView
 import com.ddakpul.math.core.designsystem.component.SectionCard
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
@@ -44,6 +46,7 @@ import com.ddakpul.math.domain.model.ConceptStat
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
+import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.presentation.common.labelRes
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -140,6 +143,11 @@ private fun ReportContent(
             SummaryTiles(stats)
 
             NarrativeSections(weeklySummary = weeklySummary, insights = insights)
+
+            // 오답 노트 — 최근 틀린 문제 + 풀이. 무료 포함 모두에게(오답 복습은 학습의 핵심).
+            if (stats.recentMistakes.isNotEmpty()) {
+                MistakeNoteSection(mistakes = stats.recentMistakes)
+            }
 
             // 심화 분석(차트·숙달 지도)은 이용권 전용. 무료는 요약까지 보고 여기서 페이월로 안내.
             if (isPremium) {
@@ -318,6 +326,43 @@ private fun ReportInsight.toText(): String =
     }
 
 private fun DayCell.dateLabel(): String = LocalDate.ofEpochDay(epochDay).format(dayFormatter)
+
+@Composable
+private fun MistakeNoteSection(mistakes: List<Problem>) {
+    SectionCard(title = stringResource(R.string.report_mistakes_title)) {
+        Text(
+            text = stringResource(R.string.report_mistakes_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        mistakes.forEachIndexed { index, problem ->
+            if (index > 0) HorizontalDivider()
+            MistakeItem(problem)
+        }
+    }
+}
+
+/** 오답 노트 한 문제 — 문제·(그림)·정답·풀이. 도형 문제는 그림이 없으면 뜻이 통하지 않으므로 함께 그린다. */
+@Composable
+private fun MistakeItem(problem: Problem) {
+    val colors = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(text = problem.statement, style = MaterialTheme.typography.bodyMedium)
+        problem.figure?.let { ProblemFigureView(figure = it, modifier = Modifier.fillMaxWidth()) }
+        Text(
+            text = stringResource(R.string.result_correct_answer, problem.choices[problem.answer.correctChoiceIndex]),
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            color = colors.primary,
+        )
+        problem.explanation?.let {
+            Text(text = it, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
+        }
+    }
+}
 
 @Composable
 private fun ConceptRow(concept: ConceptStat) {
