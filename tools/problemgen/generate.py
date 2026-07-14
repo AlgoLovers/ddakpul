@@ -2295,6 +2295,28 @@ def gen_hanoi():
         )
 
 
+# ── 110. 비스듬한 격자 도형 넓이 (난7·그림, 도형과측정) — 경시급, 도형측정×난7 빈칸 채움 ─
+def gen_grid_area_hard():
+    # 기울어진 정사각형들(변 벡터 (a,b) → 넓이 a²+b²). 둘러싼 정사각형 − 네 모서리 삼각형.
+    for pts in [
+        [(1, 0), (4, 1), (3, 4), (0, 3)],  # (3,1) → 넓이 10
+        [(2, 0), (5, 2), (3, 5), (0, 3)],  # (3,2) → 넓이 13
+        [(1, 0), (5, 1), (4, 5), (0, 4)],  # (4,1) → 넓이 17
+        [(0, 3), (3, 0), (6, 3), (3, 6)],  # 마름모 → 넓이 18
+    ]:
+        assert _shoelace2(pts) % 2 == 0
+        area = _shoelace2(pts) // 2
+        add(
+            "gridhard", "SHAPE_MEASUREMENT", 7, ["넓이", "둘러싸고 빼기"],
+            "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{area + 2}㎠", f"{area - 2}㎠", f"{area + 4}㎠"],
+            f"비스듬한 도형은 '딱 둘러싼 정사각형'을 그린 뒤 바깥으로 남는 직각삼각형들을 빼면 정확해요. 둘러싼 정사각형에서 네 모서리 삼각형(각각 밑변×높이÷2)을 빼면 {area}㎠. (격자점을 잇는 도형이라 아래 심화의 '피크의 정리'로도 구할 수 있어요.)",
+            [(f"{area + 2}㎠", "비스듬한 변의 칸을 대충 세면 안 돼요 — 둘러싼 정사각형에서 모서리 직각삼각형을 정확히 빼요.")],
+            figure=_grid_fig(pts),
+            detail="비스듬히 놓인 도형의 넓이는 '둘러싼 직사각형 − 모서리 직각삼각형들'로 정확히 구해요. 격자점을 잇는 도형이라면 '피크의 정리'가 강력해요: 넓이 = (도형 안쪽 격자점 수) + (경계 위 격자점 수)÷2 − 1. 점만 세면 넓이가 나오죠. 두 방법으로 각각 구해 답이 같은지 확인하면 실수가 없어요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
@@ -2309,6 +2331,7 @@ GENERATORS = [
     gen_ratio_three, gen_marble_transfer, gen_least_to_share, gen_tank_fill_drain,
     gen_leap_year_count, gen_average_needed, gen_stacking_cups, gen_number_line_jump,
     gen_double_discount, gen_max_product, gen_gift_exchange, gen_hanoi,
+    gen_grid_area_hard,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
