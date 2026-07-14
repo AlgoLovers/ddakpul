@@ -81,6 +81,11 @@ def grid(d, fig, box):
     if mark:
         d.ellipse([gl - 6, gt + h * cell - 6, gl + 6, gt + h * cell + 6], fill=ACCENT)
         d.ellipse([gl + w * cell - 6, gt - 6, gl + w * cell + 6, gt + 6], outline=ACCENT, width=3)
+    bx, by = fig["params"].get("blockX"), fig["params"].get("blockY")
+    if bx is not None and by is not None:
+        cx, cy, r = gl + bx * cell, gt + by * cell, cell * 0.22
+        d.line([(cx - r, cy - r), (cx + r, cy + r)], fill=(200, 40, 40), width=3)
+        d.line([(cx - r, cy + r), (cx + r, cy - r)], fill=(200, 40, 40), width=3)
 
 
 def dot_border(d, fig, box):

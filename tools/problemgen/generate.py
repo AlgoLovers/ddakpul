@@ -1402,6 +1402,41 @@ def gen_factorial_zeros():
         )
 
 
+# ── 57. 격자 최단경로 — 장애물 회피 (난6, 도형과측정) — 그림 필수 ────────────────
+def _grid_paths_avoiding(w, h, bx, by):
+    # 격자점 (col 0..w, 화면행 0..h). 출발 (0,h) 왼쪽아래 → 도착 (w,0) 오른쪽위, 오른쪽·위로만.
+    dp = [[0] * (h + 1) for _ in range(w + 1)]
+    dp[0][h] = 1
+    for c in range(w + 1):
+        for r in range(h, -1, -1):
+            if c == 0 and r == h:
+                continue
+            if (c, r) == (bx, by):
+                dp[c][r] = 0
+                continue
+            left = dp[c - 1][r] if c > 0 else 0
+            below = dp[c][r + 1] if r < h else 0
+            dp[c][r] = left + below
+    return dp[w][0]
+
+
+def gen_grid_blocked():
+    for w, h, bx, by in [(3, 3, 1, 1), (4, 2, 2, 1), (3, 2, 1, 1), (4, 3, 2, 1)]:
+        assert (bx, by) not in [(0, h), (w, 0)]      # 출발·도착은 막지 않음
+        total = comb(w + h, w)
+        ans = _grid_paths_avoiding(w, h, bx, by)
+        assert 0 < ans < total
+        add(
+            "gridblock", "SHAPE_MEASUREMENT", 6, ["최단 경로", "장애물", "경우의 수"],
+            f"가로 {w}칸, 세로 {h}칸 바둑판 길에서 왼쪽 아래(●)에서 오른쪽 위(◯)까지 오른쪽·위로만 가요. 그런데 ✕ 표시된 교차점은 공사 중이라 지날 수 없어요. 갈 수 있는 가장 짧은 길은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{total}가지", f"{ans - 1}가지", f"{ans + 2}가지"],
+            f"막힌 곳이 없다면 최단 경로는 {total}가지예요. 각 교차점에 (왼쪽 점 수)+(아래 점 수)를 차례로 더해 가되, ✕ 교차점만 0으로 두고 지나가지 않게 하면 도착점이 {ans}가지가 돼요.",
+            [(f"{total}가지", "그건 막힌 곳이 없을 때 수예요. ✕를 지나는 길을 빼야 해요.")],
+            figure={"type": "GRID", "params": {"w": w, "h": h, "mark": 1, "blockX": bx, "blockY": by}},
+            detail=f"두 방법으로 풀려요. ①전체({total}) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요.",
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1437,6 +1472,8 @@ GENERATORS = [
     gen_cube_net,
     # v4.8 확충 — 경시급(난6~7): 저울 3진탐색·원순열·팩토리얼 끝자리 0
     gen_coin_balance, gen_circular_perm, gen_factorial_zeros,
+    # v4.9 확충 — 격자 최단경로 장애물 회피(GRID 그림 필수, 난6): DP 검산
+    gen_grid_blocked,
 ]
 
 for g in GENERATORS:

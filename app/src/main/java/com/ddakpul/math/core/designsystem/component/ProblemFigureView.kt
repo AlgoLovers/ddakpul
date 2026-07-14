@@ -379,6 +379,16 @@ private fun DrawScope.drawGrid(
         drawCircle(accent, radius = 9f, center = Offset(gridLeft, gridTop + h * cell))
         drawCircle(accent, radius = 9f, center = Offset(gridLeft + w * cell, gridTop), style = Stroke(width = 5f))
     }
+    // 지날 수 없는 교차점 — X로 표시(격자 최단경로 장애물 문제).
+    val blockX = figure.params["blockX"]
+    val blockY = figure.params["blockY"]
+    if (blockX != null && blockY != null) {
+        val cx = gridLeft + blockX.coerceIn(0, w) * cell
+        val cy = gridTop + blockY.coerceIn(0, h) * cell
+        val r = cell * 0.22f
+        drawLine(ink, Offset(cx - r, cy - r), Offset(cx + r, cy + r), strokeWidth = 6f)
+        drawLine(ink, Offset(cx - r, cy + r), Offset(cx + r, cy - r), strokeWidth = 6f)
+    }
 }
 
 private fun DrawScope.drawLShape(

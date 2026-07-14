@@ -628,6 +628,16 @@ private fun drawPdfGrid(
         canvas.drawCircle(gl, gt + h * cell, 4f, fill)
         canvas.drawCircle(gl + w * cell, gt, 4f, ink)
     }
+    val blockX = figure.params["blockX"]
+    val blockY = figure.params["blockY"]
+    if (blockX != null && blockY != null) {
+        val cx = gl + blockX.coerceIn(0, w) * cell
+        val cy = gt + blockY.coerceIn(0, h) * cell
+        val r = cell * 0.22f
+        val x = Paint(ink).apply { strokeWidth = 2.4f }
+        canvas.drawLine(cx - r, cy - r, cx + r, cy + r, x)
+        canvas.drawLine(cx - r, cy + r, cx + r, cy - r, x)
+    }
 }
 
 private fun drawPdfLShape(
