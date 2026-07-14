@@ -111,21 +111,17 @@ private fun ReportContent(
                     .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(
-                text = stringResource(R.string.report_title),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-            )
+            // 제목과 인쇄 버튼을 한 줄에(짧은 제목 옆이라 폰에서도 버튼이 안 눌린다), 부제는 아래 전체폭.
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.report_subtitle),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1f),
+                    text = stringResource(R.string.report_title),
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f, fill = false),
                 )
                 FilledTonalButton(onClick = onPrintClick) {
                     Icon(imageVector = Icons.Filled.Print, contentDescription = null)
@@ -135,6 +131,11 @@ private fun ReportContent(
                     )
                 }
             }
+            Text(
+                text = stringResource(R.string.report_subtitle),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
 
             SummaryTiles(stats)
 
@@ -225,30 +226,32 @@ private fun PremiumLockedCard(onOpenPaywall: () -> Unit) {
 
 @Composable
 private fun SummaryTiles(stats: LearningStats) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        StatTile(
-            label = stringResource(R.string.report_total_solved),
-            value = stringResource(R.string.home_unit_count, stats.totalSolved),
-            modifier = Modifier.weight(1f),
-        )
-        StatTile(
-            label = stringResource(R.string.report_accuracy),
-            value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
-            modifier = Modifier.weight(1f),
-        )
-        StatTile(
-            label = stringResource(R.string.report_current_level),
-            value = stringResource(R.string.home_unit_level, stats.currentDifficulty),
-            modifier = Modifier.weight(1f),
-        )
-        StatTile(
-            label = stringResource(R.string.report_streak),
-            value = stringResource(R.string.report_unit_days, stats.streakDays),
-            modifier = Modifier.weight(1f),
-        )
+    // 2×2 격자 — 폰에서 4칸을 한 줄에 넣으면 값·라벨이 글자 중간에서 줄바꿈된다(태블릿은 720dp 상한).
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            StatTile(
+                label = stringResource(R.string.report_total_solved),
+                value = stringResource(R.string.home_unit_count, stats.totalSolved),
+                modifier = Modifier.weight(1f),
+            )
+            StatTile(
+                label = stringResource(R.string.report_accuracy),
+                value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                modifier = Modifier.weight(1f),
+            )
+        }
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            StatTile(
+                label = stringResource(R.string.report_current_level),
+                value = stringResource(R.string.home_unit_level, stats.currentDifficulty),
+                modifier = Modifier.weight(1f),
+            )
+            StatTile(
+                label = stringResource(R.string.report_streak),
+                value = stringResource(R.string.report_unit_days, stats.streakDays),
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
 }
 
