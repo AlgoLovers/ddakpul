@@ -19,7 +19,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Print
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -62,6 +64,7 @@ import com.ddakpul.math.domain.model.ConceptStat
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
+import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.print.ReportPdfGenerator
@@ -86,6 +89,7 @@ private val exportDateFormatter = DateTimeFormatter.ofPattern("yyyy. M. d.")
 fun ReportScreen(
     onPrintClick: () -> Unit,
     onOpenPaywall: () -> Unit,
+    onStartSolving: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
 ) {
@@ -113,9 +117,11 @@ fun ReportScreen(
         insights = uiState.insights,
         weeklySummary = uiState.weeklySummary,
         masteryGrid = uiState.masteryGrid,
+        nextStep = uiState.nextStep,
         isPremium = uiState.isPremium,
         onPrintClick = onPrintClick,
         onOpenPaywall = onOpenPaywall,
+        onStartSolving = onStartSolving,
         modifier = modifier,
     )
 }
@@ -127,9 +133,11 @@ private fun ReportContent(
     insights: List<ReportInsight>,
     weeklySummary: WeeklySummary?,
     masteryGrid: List<MasteryCellUi>,
+    nextStep: NextStep?,
     isPremium: Boolean,
     onPrintClick: () -> Unit,
     onOpenPaywall: () -> Unit,
+    onStartSolving: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -172,6 +180,8 @@ private fun ReportContent(
             )
 
             HeroCard(stats)
+
+            nextStep?.let { NextStepCard(it, onStartSolving) }
 
             KeyStatTiles(stats)
 
@@ -346,6 +356,71 @@ private fun PremiumLockedCard(onOpenPaywall: () -> Unit) {
         }
     }
 }
+
+/**
+ * '다음 한 걸음' 카드 — 통계를 실행 가능한 코칭 한 줄로(딱풀 핵심 축: 피드백).
+ * 민트(앱의 '진행' 강조색) 카드로 눈에 띄게, 필요하면 '지금 풀기'로 바로 이어 준다.
+ */
+@Composable
+private fun NextStepCard(
+    nextStep: NextStep,
+    onStartSolving: () -> Unit,
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.report_nextstep_label),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+            Text(
+                text = nextStepText(nextStep),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+            if (nextStep.canSolveNow) {
+                Button(onClick = onStartSolving) {
+                    Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null)
+                    Text(
+                        text = stringResource(R.string.report_nextstep_solve),
+                        modifier = Modifier.padding(start = 6.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun nextStepText(nextStep: NextStep): String =
+    when (nextStep) {
+        NextStep.StartToday -> {
+            stringResource(R.string.report_nextstep_start_today)
+        }
+
+        is NextStep.FocusArea -> {
+            stringResource(R.string.report_nextstep_focus_area, stringResource(nextStep.area.labelRes()))
+        }
+
+        NextStep.ReadyForHarder -> {
+            stringResource(R.string.report_nextstep_ready)
+        }
+
+        is NextStep.KeepStreak -> {
+            stringResource(R.string.report_nextstep_streak, nextStep.days)
+        }
+
+        NextStep.Encourage -> {
+            stringResource(R.string.report_nextstep_encourage)
+        }
+    }
 
 /**
  * 히어로 카드 — 이 앱의 성장은 '난이도 등반'이라(학년 개념 없음) 정답률보다 현재 난이도를

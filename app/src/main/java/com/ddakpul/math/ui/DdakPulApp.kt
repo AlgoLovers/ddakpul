@@ -100,6 +100,7 @@ private fun AppNavHost(
             ReportScreen(
                 onPrintClick = { navController.navigate(PRINT_ROUTE) },
                 onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) },
+                onStartSolving = { navController.switchTab(DdakPulDestination.SOLVE.route) },
             )
         }
         composable(DdakPulDestination.SETTINGS.route) {
