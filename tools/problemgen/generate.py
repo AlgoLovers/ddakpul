@@ -1935,6 +1935,125 @@ def gen_triangular():
         )
 
 
+# ── 86. 2배씩 커지기 = 거듭제곱 (난6, 변화와관계) ────────────────────────────
+def gen_power_of_two():
+    for n in [5, 8, 10, 6]:
+        ans = 2 ** n
+        add(
+            "pow2", "CHANGE_RELATION", 6, ["거듭제곱", "2배씩 커지기"],
+            f"종이를 반으로 접으면 두께가 2겹, 또 접으면 4겹, 또 접으면 8겹… 이렇게 {n}번 접으면 몇 겹이 될까요?",
+            f"{ans}겹", [f"{2 * n}겹", f"{ans // 2}겹", f"{ans + 2}겹"],
+            f"한 번 접을 때마다 겹이 '2배'가 돼요. 1번에 2겹, 2번에 4겹, 3번에 8겹… {n}번이면 2를 {n}번 곱한 값 = {ans}겹이에요.",
+            [(f"{2 * n}겹", "2씩 더하는 게 아니라 2씩 곱해요. 접을 때마다 두 배!")],
+            detail=f"'매번 2배'는 폭발적으로 커져요(2,4,8,16,32…). 겨우 {n}번 접었는데 {ans}겹! 실제로 종이를 7~8번 이상 접기 어려운 이유죠. 이 '2배씩(지수) 성장'은 세균 번식·소문 퍼지기·복리 이자에도 똑같이 나타나요.",
+        )
+
+
+# ── 87. 범위 안 배수 개수 (난4, 수와연산) ────────────────────────────────────
+def gen_multiples_in_range():
+    for limit, div in [(100, 7), (100, 3), (50, 4), (200, 9)]:
+        ans = limit // div
+        add(
+            "multrange", "NUMBER_OPERATION", 4, ["배수", "개수 세기"],
+            f"1부터 {limit}까지의 자연수 중에서 {div}의 배수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{ans + 1}개", f"{ans - 1}개", f"{ans + div}개"],
+            f"{div}의 배수는 {div}×1, {div}×2, {div}×3, …이에요. {limit}을 넘지 않는 가장 큰 배수는 {div}×{ans}={div * ans}이니 {div}×1부터 {div}×{ans}까지 모두 {ans}개. 즉 {limit}÷{div}의 몫이에요.",
+            [(f"{ans + 1}개", f"{div}×{ans + 1}={div * (ans + 1)}은 {limit}을 넘어요. 몫까지만 세요.")],
+            detail=f"'범위 안 배수 개수'는 나눗셈의 몫이에요: {limit}÷{div}={ans}. 배수는 일정 간격({div})으로 놓이니 개수는 곧 '몇 칸 들어가나'죠. 시작이 1이 아니면 '큰 쪽 몫 − 작은 쪽 몫'으로 빼서 구하면 돼요.",
+        )
+
+
+# ── 88. 범위 안 공배수 개수 (난5, 수와연산) ──────────────────────────────────
+def gen_common_mult_range():
+    for limit, a, b in [(100, 3, 4), (100, 2, 5), (60, 3, 4), (200, 4, 6)]:
+        lcm = a * b // gcd(a, b)
+        ans = limit // lcm
+        add(
+            "commrange", "NUMBER_OPERATION", 5, ["공배수", "최소공배수"],
+            f"1부터 {limit}까지의 자연수 중에서 {a}, {b} 두 수로 모두 나누어떨어지는 수는 몇 개일까요?",
+            f"{ans}개", [f"{limit // a}개", f"{limit // b}개", f"{ans + 1}개"],
+            f"{a}, {b} 두 수로 모두 나누어떨어지려면 두 수의 '공배수'여야 해요. 공배수는 최소공배수 {lcm}의 배수들이니, {limit}까지 {lcm}의 배수 개수 = {limit}÷{lcm}={ans}개예요.",
+            [(f"{limit // a}개", f"그건 {a}의 배수 개수예요. 둘 다 나누어떨어지려면 공배수(최소공배수의 배수)를 세야 해요.")],
+            detail=f"'A로도 B로도 나누어떨어짐' = A와 B의 공배수 = 최소공배수 {lcm}의 배수예요. 그래서 {limit}÷{lcm}만 세면 돼요. '적어도 하나로 나누어떨어짐'을 물으면 그땐 {a}의 배수 + {b}의 배수 − 공배수(포함배제)로 구하고요.",
+        )
+
+
+# ── 89. 가중 평균 (난5, 자료와가능성) ────────────────────────────────────────
+def gen_weighted_average():
+    for n1, avg1, n2, avg2 in [(20, 80, 10, 89), (3, 70, 2, 95), (4, 85, 6, 75), (6, 90, 4, 70)]:
+        total = n1 * avg1 + n2 * avg2
+        assert total % (n1 + n2) == 0
+        ans = total // (n1 + n2)
+        add(
+            "wavg", "DATA_POSSIBILITY", 5, ["평균", "가중 평균"],
+            f"남학생 {n1}명의 평균이 {avg1}점, 여학생 {n2}명의 평균이 {avg2}점이에요. 반 전체({n1 + n2}명)의 평균은 몇 점일까요?",
+            f"{ans}점", [f"{(avg1 + avg2) // 2}점", f"{ans + 3}점", f"{ans - 3}점"],
+            f"두 평균을 그냥 더해 반으로 나누면 안 돼요(사람 수가 다르니까). '총점'으로 돌아가요: 남학생 {n1}×{avg1}={n1 * avg1}점, 여학생 {n2}×{avg2}={n2 * avg2}점. 전체 총점 {total}점을 전체 인원 {n1 + n2}명으로 나누면 {ans}점이에요.",
+            [(f"{(avg1 + avg2) // 2}점", "두 평균의 평균이 아니에요 — 인원이 다르면 많은 쪽으로 치우쳐요.")],
+            detail="여러 그룹의 전체 평균은 '가중 평균'이라 인원이 많은 쪽 평균에 더 가까워요. 늘 '총합 ÷ 전체 개수'로 돌아가면 안전해요. 두 그룹 인원이 같을 때만 단순 평균과 일치하고요. 타율·평점·물가지수가 다 가중 평균이에요.",
+        )
+
+
+# ── 90. 동전 여러 번 던지기 = 2^n (난4, 자료와가능성) ────────────────────────
+def gen_coin_flips():
+    for n in [3, 4, 5, 6]:
+        ans = 2 ** n
+        add(
+            "coinflip", "DATA_POSSIBILITY", 4, ["경우의 수", "곱의 원리"],
+            f"동전 하나를 {n}번 던져요. 나올 수 있는 앞뒤 결과(예: 앞-뒤-앞…)는 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{2 * n}가지", f"{ans - 1}가지", f"{ans + 1}가지"],
+            f"한 번 던질 때마다 '앞' 또는 '뒤' 2가지예요. 던질 때마다 경우가 2배로 갈라지니 {n}번이면 2를 {n}번 곱한 {ans}가지예요.",
+            [(f"{2 * n}가지", "2씩 더하는 게 아니라 매번 2배로 갈라져요(곱의 원리).")],
+            detail=f"각 던지기가 서로 영향을 안 주니 2를 {n}번 곱해요(곱의 원리). '갈림길마다 몇 갈래인지 곱하기'는 경우의 수의 기본이에요. '앞면이 딱 2번' 같은 조건이면 그 안에서 자리를 고르는 조합으로 또 세면 되고요.",
+        )
+
+
+# ── 91. 주사위 두 개의 곱 (난5, 자료와가능성) ────────────────────────────────
+def gen_dice_product():
+    for target in [12, 6, 8, 24]:
+        pairs = [(a, b) for a in range(1, 7) for b in range(1, 7) if a * b == target]
+        cnt = len(pairs)
+        add(
+            "diceprod", "DATA_POSSIBILITY", 5, ["경우의 수", "곱"],
+            f"주사위 두 개를 던져 나온 두 눈을 곱했더니 {target}이 됐어요. 이렇게 될 수 있는 경우(첫째 주사위, 둘째 주사위)는 모두 몇 가지일까요?",
+            f"{cnt}가지", [f"{cnt - 1}가지", f"{cnt + 1}가지", f"{cnt + 2}가지"],
+            f"두 주사위는 구별되니 순서가 다르면 다른 경우예요. 곱이 {target}이 되는 짝을 빠짐없이 찾으면 {', '.join(f'({a},{b})' for a, b in pairs)} — 모두 {cnt}가지예요.",
+            [(f"{cnt - 1}가지", "순서가 다른 짝(예: (2,6)과 (6,2))을 빠뜨리지 않았는지 봐요.")],
+            detail=f"두 주사위 문제는 6×6=36칸 표를 떠올리면 빠짐없이 셀 수 있어요. 곱이 {target}인 칸을 찾는 거죠. (a,b)와 (b,a)는 주사위를 구별하니 서로 다른 경우예요(단, a=b면 하나뿐). 곱셈표 감각이 있으면 약수 짝을 빠르게 찾아요.",
+        )
+
+
+# ── 92. 소금물 농도 (난6, 변화와관계) ────────────────────────────────────────
+def gen_salt_concentration():
+    for water, salt in [(90, 10), (80, 20), (150, 50), (85, 15)]:
+        total = water + salt
+        assert (salt * 100) % total == 0
+        ans = salt * 100 // total
+        add(
+            "concn", "CHANGE_RELATION", 6, ["농도", "비율"],
+            f"물 {water}g에 소금 {salt}g을 완전히 녹였어요. 이 소금물의 농도(진하기)는 몇 %일까요?",
+            f"{ans}%", [f"{salt * 100 // water}%", f"{ans + 3}%", f"{ans - 3}%"],
+            f"농도는 '소금물 전체 중 소금이 차지하는 비율'이에요. 소금물 전체는 물+소금 = {water}+{salt}={total}g. 그중 소금이 {salt}g이니 농도 = {salt}÷{total}×100 = {ans}%예요.",
+            [(f"{salt * 100 // water}%", "물 무게가 아니라 '소금물 전체(물+소금)'로 나눠야 해요.")],
+            detail="농도 = 소금 ÷ 소금물(물+소금) × 100. 분모가 '전체'라는 게 핵심이에요(물만 넣으면 틀려요). 물을 더 부으면 소금 양은 그대로인데 전체가 커져 농도가 낮아지고, 증발시키면 진해져요 — 소금 양을 고정해 두고 생각하면 쉬워요.",
+        )
+
+
+# ── 93. 백분율 — 전체의 일부 (난4, 수와연산) ────────────────────────────────
+def gen_percent_of():
+    for whole, pct in [(200, 15), (50, 30), (400, 25), (80, 60)]:
+        assert (whole * pct) % 100 == 0
+        ans = whole * pct // 100
+        add(
+            "percentof", "NUMBER_OPERATION", 4, ["백분율", "전체의 일부"],
+            f"어느 학교 학생 {whole}명 중 {pct}%가 안경을 썼어요. 안경 쓴 학생은 몇 명일까요?",
+            f"{ans}명", [f"{pct}명", f"{whole - ans}명", f"{ans + pct}명"],
+            f"{pct}%는 '전체를 100으로 봤을 때 {pct}만큼'이라는 뜻이에요. 그러니 {whole}명의 {pct}% = {whole}×{pct}÷100 = {ans}명이에요. (또는 1%가 {whole}÷100={whole // 100 if whole % 100 == 0 else whole / 100:g}명이니 {pct}배 해도 {ans}.)",
+            [(f"{pct}명", f"{pct}는 퍼센트(비율)예요. 전체 {whole}명에 곱해서 실제 인원을 구해요.")],
+            detail=f"백분율은 '100분의 몇'이라는 비율이에요. 전체의 {pct}%는 전체를 100등분한 것 중 {pct}조각. 반대로 '{ans}명은 전체의 몇 %인가?'는 {ans}÷{whole}×100으로 거꾸로 구해요. 할인·이자·통계가 다 백분율 위에 있어요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
@@ -1943,6 +2062,8 @@ GENERATORS = [
     gen_tournament, gen_change_coins, gen_recipe_ratio, gen_square_area,
     gen_day_of_week, gen_frog_well, gen_odd_sum_square, gen_permutation,
     gen_reverse_diff, gen_leftover_crt, gen_square_numbers, gen_triangular,
+    gen_power_of_two, gen_multiples_in_range, gen_common_mult_range, gen_weighted_average,
+    gen_coin_flips, gen_dice_product, gen_salt_concentration, gen_percent_of,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
