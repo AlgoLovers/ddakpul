@@ -86,6 +86,8 @@ def grid(d, fig, box):
         cx, cy, r = gl + bx * cell, gt + by * cell, cell * 0.22
         d.line([(cx - r, cy - r), (cx + r, cy + r)], fill=(200, 40, 40), width=3)
         d.line([(cx - r, cy + r), (cx + r, cy - r)], fill=(200, 40, 40), width=3)
+    if fig["params"].get("diag", 0) == 1:
+        d.line([(gl, gt), (gl + w * cell, gt + h * cell)], fill=ACCENT, width=3)
 
 
 def dot_border(d, fig, box):

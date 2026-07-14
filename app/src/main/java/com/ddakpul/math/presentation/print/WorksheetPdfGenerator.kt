@@ -638,6 +638,10 @@ private fun drawPdfGrid(
         canvas.drawLine(cx - r, cy - r, cx + r, cy + r, x)
         canvas.drawLine(cx - r, cy + r, cx + r, cy - r, x)
     }
+    if ((figure.params["diag"] ?: 0) == 1) {
+        val diag = Paint(ink).apply { strokeWidth = 2.4f }
+        canvas.drawLine(gl, gt, gl + w * cell, gt + h * cell, diag)
+    }
 }
 
 private fun drawPdfLShape(

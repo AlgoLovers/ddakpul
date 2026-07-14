@@ -389,6 +389,15 @@ private fun DrawScope.drawGrid(
         drawLine(ink, Offset(cx - r, cy - r), Offset(cx + r, cy + r), strokeWidth = 6f)
         drawLine(ink, Offset(cx - r, cy + r), Offset(cx + r, cy - r), strokeWidth = 6f)
     }
+    // 한 꼭짓점에서 대각선 반대편 꼭짓점까지 그은 대각선(격자 대각선 문제) — 칸은 세지 않게 색칠 없이 선만.
+    if ((figure.params["diag"] ?: 0) == 1) {
+        drawLine(
+            accent,
+            Offset(gridLeft, gridTop),
+            Offset(gridLeft + w * cell, gridTop + h * cell),
+            strokeWidth = 5f,
+        )
+    }
 }
 
 private fun DrawScope.drawLShape(
