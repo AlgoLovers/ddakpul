@@ -2623,10 +2623,11 @@ GENERATORS = [
     gen_broken_arithmetic, gen_cases, gen_custom_op, gen_sequence_advanced,
     gen_true_false,
     # v2.1 확충 — 도형 난2·자료 난3 빈칸 + 수 감각 다양성
-    gen_triangles_match, gen_handshake, gen_dice_sum, gen_remainder,
-    gen_consecutive_sum,
-    # v3 확충 — 유료(난4·5) 깊이: 비둘기집·색칠정육면체·약수개수·수 추리
-    gen_pigeonhole, gen_painted_cube, gen_divisor_count, gen_number_riddle,
+    # (gen_handshake·gen_consecutive_sum·gen_pigeonhole는 v5 신규판이 같은 이름으로 재정의 →
+    #  중복 등록 제거. 여기선 등록하지 않고 아래 v5 블록의 등록 하나만 남긴다.)
+    gen_triangles_match, gen_dice_sum, gen_remainder,
+    # v3 확충 — 유료(난4·5) 깊이: 색칠정육면체·약수개수·수 추리
+    gen_painted_cube, gen_divisor_count, gen_number_riddle,
     # v3.1 확충 — 도형 난4 보강 + 등비 다양성
     gen_clock_angle, gen_rectangle_count, gen_geometric_seq,
     # v4 확충 — 경시급 난6·7(불변량·포함배제·님게임) + 도형 대량
