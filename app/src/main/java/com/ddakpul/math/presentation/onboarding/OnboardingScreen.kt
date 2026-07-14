@@ -68,8 +68,8 @@ fun OnboardingScreen(
             modifier =
                 Modifier
                     .weight(1f)
-                    .fillMaxWidth()
                     .widthIn(max = CONTENT_MAX_WIDTH)
+                    .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
                     .padding(vertical = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -81,7 +81,7 @@ fun OnboardingScreen(
             }
         }
         Row(
-            modifier = Modifier.fillMaxWidth().widthIn(max = CONTENT_MAX_WIDTH),
+            modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH).fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

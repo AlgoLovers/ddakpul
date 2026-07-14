@@ -77,7 +77,7 @@ private fun HomeContent(
         if (launchFreeUntilMillis > 0L) {
             LaunchFreeBanner(
                 untilMillis = launchFreeUntilMillis,
-                modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
+                modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
             )
         }
 
@@ -86,14 +86,14 @@ private fun HomeContent(
             goal = dailyGoal,
             streakDays = stats?.streakDays ?: 0,
             bestStreakDays = stats?.bestStreakDays ?: 0,
-            modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
+            modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
         )
 
         val solved = stats?.totalSolved ?: 0
         val accuracyPercent = ((stats?.accuracy ?: 0f) * 100).roundToInt()
         val level = stats?.currentDifficulty ?: Difficulty.DEFAULT
         Row(
-            modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
+            modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             StatTile(
@@ -115,7 +115,7 @@ private fun HomeContent(
 
         Button(
             onClick = onStartLearning,
-            modifier = Modifier.fillMaxWidth().widthIn(max = 400.dp),
+            modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth(),
         ) {
             Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null)
             Text(
