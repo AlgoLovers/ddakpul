@@ -12,7 +12,7 @@ docs/CONTENT_SOURCING.md 3단계(템플릿+생성+솔버 검증)의 1차 구현.
 """
 import json
 import random
-from math import comb, gcd
+from math import comb, factorial, gcd
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[2] / "app/src/main/assets/problems_generated.json"
@@ -1345,6 +1345,63 @@ def gen_cube_stack_mid():
         )
 
 
+# ── 54. 저울로 가짜 동전 찾기 (난6, 자료와가능성) — 3진 탐색 ────────────────────
+def gen_coin_balance():
+    for n in [8, 9, 12, 27]:
+        k = 0
+        while 3 ** k < n:
+            k += 1
+        # 검산: k번이면 3^k가지 구분 가능(≥n), k-1번이면 부족(<n).
+        assert 3 ** k >= n and 3 ** (k - 1) < n
+        add(
+            "balance", "DATA_POSSIBILITY", 6, ["최소 횟수", "경우의 수", "저울"],
+            f"똑같이 생긴 동전 {n}개 중 하나가 조금 가벼운 가짜예요. 양팔 저울만으로 가짜를 반드시 찾으려면 최소 몇 번 재야 할까요?",
+            f"{k}번", [f"{k - 1}번", f"{k + 1}번", f"{n - 1}번"],
+            f"저울 한 번의 결과는 '왼쪽이 무겁다·오른쪽이 무겁다·평형' 세 가지예요. 그래서 {k}번 재면 3×3×…={3 ** k}가지까지 구분할 수 있어요. 동전을 세 무더기로 나눠 두 무더기를 저울에 올리는 식으로 후보를 매번 1/3로 줄이면, {n}개는 {k}번이면 충분해요(한 번 덜 재면 {3 ** (k - 1)}가지뿐이라 부족).",
+            [(f"{n - 1}번", "한 개씩 다 재 볼 필요는 없어요. 세 무더기로 나누면 훨씬 빨라요.")],
+            detail=f"핵심은 '한 번의 정보량'이에요. 저울은 결과가 3가지라 3진법 탐색이 되고, k번이면 3^k가지를 가릴 수 있어요. 그래서 필요한 횟수는 3^k ≥ {n}을 만족하는 가장 작은 k. 만약 '가벼운지 무거운지도 모르는 가짜'라면 정보가 더 필요해 횟수가 늘어요. 이분탐색(2가지)보다 저울(3가지)이 더 빠른 이유죠.",
+        )
+
+
+# ── 55. 원순열 (난6, 자료와가능성) — 한 명 고정 ────────────────────────────────
+def gen_circular_perm():
+    for n in [4, 5, 6]:
+        ans = factorial(n - 1)
+        assert ans == factorial(n) // n
+        add(
+            "circperm", "DATA_POSSIBILITY", 6, ["원순열", "기준 고정"],
+            f"{n}명이 둥근 탁자에 둘러앉는 방법은 모두 몇 가지일까요? (돌려서 같아지면 한 가지로 봐요)",
+            f"{ans}가지", [f"{factorial(n)}가지", f"{ans * 2}가지", f"{ans - 1}가지"],
+            f"둥근 탁자는 '돌리면 같은' 자리라서 한 명을 기준으로 콱 고정해요. 그러면 나머지 {n - 1}명을 한 줄로 세우는 것과 똑같아져 ({n}−1)! = {n - 1}×…×1 = {ans}가지예요. 한 줄({factorial(n)}가지)로 세면 {n}가지 회전을 중복으로 세게 돼요.",
+            [(f"{factorial(n)}가지", "그건 한 줄로 세운 수예요. 원탁은 회전이 같으니 자리 수로 나눠요.")],
+            detail=f"직선으로 세우면 {n}! = {factorial(n)}가지지만, 원탁에선 {n}가지 회전이 모두 '같은 배치'라 {n}으로 나눠 {factorial(n)}÷{n} = {ans}가지. 이렇게 '중복으로 센 만큼 나누기'는 경우의 수의 핵심 도구예요(목걸이처럼 뒤집기까지 같다고 보면 2로 한 번 더 나눠요).",
+        )
+
+
+# ── 56. 곱의 끝자리 0의 개수 (난7, 수와연산) — 5의 개수 ─────────────────────────
+def gen_factorial_zeros():
+    for n in [25, 30, 50, 100]:
+        z, p = 0, 5
+        while p <= n:
+            z += n // p
+            p *= 5
+        # 검산: 실제 n!의 끝자리 0 개수와 일치.
+        f = factorial(n)
+        real = 0
+        while f % 10 == 0:
+            real += 1
+            f //= 10
+        assert real == z
+        add(
+            "factzero", "NUMBER_OPERATION", 7, ["끝자리 0", "소인수 5"],
+            f"1부터 {n}까지 모든 수를 곱한 값의 끝에는 0이 몇 개 붙어 있을까요?",
+            f"{z}개", [f"{n // 5}개", f"{z + 1}개", f"{z - 1}개"],
+            f"끝자리 0은 10=2×5에서 생겨요. 곱에는 2가 5보다 훨씬 많으니 '5가 몇 번 곱해졌나'가 0의 개수를 정해요. 5의 배수마다 5가 하나씩({n}÷5={n // 5}개), 25의 배수는 5가 하나 더, … 이렇게 더하면 {z}개예요.",
+            [(f"{n // 5}개", "5의 배수만 세면 부족해요. 25·125의 배수는 5를 더 품고 있어요.")],
+            detail=f"정확히는 (5의 배수 수)+(25의 배수 수)+(125의 배수 수)+… = ⌊{n}/5⌋+⌊{n}/25⌋+… = {z}. 25=5×5는 5를 두 개 품으니 한 번 더 세는 거예요. '2와 5의 쌍이 10을 만드는데 5가 병목'이라는 생각은, 자릿수·약수 문제에서 두루 쓰이는 강력한 도구랍니다.",
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1378,6 +1435,8 @@ GENERATORS = [
     gen_shape_count,
     # v4.5 확충 — 주사위 전개도 마주 보는 면(CUBE_NET 그림 필수): 접기 시뮬로 검산
     gen_cube_net,
+    # v4.8 확충 — 경시급(난6~7): 저울 3진탐색·원순열·팩토리얼 끝자리 0
+    gen_coin_balance, gen_circular_perm, gen_factorial_zeros,
 ]
 
 for g in GENERATORS:
