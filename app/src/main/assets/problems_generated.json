@@ -227,7 +227,8 @@
    "answerIndex": 2,
    "explanation": "4개씩 줄 때는 3개가 남고, 5개씩 줄 때는 2개가 모자라요 — 방법을 바꾸면 필요한 사과이 3+2=5개 차이 나는 거예요. 한 명당 1개씩 더 주기 때문이니, 친구 수는 5÷1=5명이에요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "과부족 문제의 핵심은 '남는 양 + 모자란 양 = 나눠 주는 방법의 차이 총합'이에요. 한 명당 5−4=1개씩 더 주면, 전체로는 3(남던 것)+2(모자란 것)=5개가 더 필요해지죠. 그래서 명수 = (남음+모자람)÷(한 명당 차이). 식으로 쓰면 4×명수+3 = 5×명수−2 — 같은 이야기를 저울처럼 맞춘 거예요."
   },
   {
    "id": "gen-excess-2",
@@ -253,7 +254,8 @@
      "misconception": "12는 필요한 개수의 차이예요. 한 명당 차이 2개로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "과부족 문제의 핵심은 '남는 양 + 모자란 양 = 나눠 주는 방법의 차이 총합'이에요. 한 명당 5−3=2개씩 더 주면, 전체로는 4(남던 것)+8(모자란 것)=12개가 더 필요해지죠. 그래서 명수 = (남음+모자람)÷(한 명당 차이). 식으로 쓰면 3×명수+4 = 5×명수−8 — 같은 이야기를 저울처럼 맞춘 거예요."
   },
   {
    "id": "gen-excess-3",
@@ -274,7 +276,8 @@
    "answerIndex": 2,
    "explanation": "4개씩 줄 때는 5개가 남고, 5개씩 줄 때는 2개가 모자라요 — 방법을 바꾸면 필요한 사과이 5+2=7개 차이 나는 거예요. 한 명당 1개씩 더 주기 때문이니, 친구 수는 7÷1=7명이에요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "과부족 문제의 핵심은 '남는 양 + 모자란 양 = 나눠 주는 방법의 차이 총합'이에요. 한 명당 5−4=1개씩 더 주면, 전체로는 5(남던 것)+2(모자란 것)=7개가 더 필요해지죠. 그래서 명수 = (남음+모자람)÷(한 명당 차이). 식으로 쓰면 4×명수+5 = 5×명수−2 — 같은 이야기를 저울처럼 맞춘 거예요."
   },
   {
    "id": "gen-excess-4",
@@ -300,7 +303,8 @@
      "misconception": "16는 필요한 개수의 차이예요. 한 명당 차이 2개로 나눠요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "과부족 문제의 핵심은 '남는 양 + 모자란 양 = 나눠 주는 방법의 차이 총합'이에요. 한 명당 7−5=2개씩 더 주면, 전체로는 6(남던 것)+10(모자란 것)=16개가 더 필요해지죠. 그래서 명수 = (남음+모자람)÷(한 명당 차이). 식으로 쓰면 5×명수+6 = 7×명수−10 — 같은 이야기를 저울처럼 맞춘 거예요."
   },
   {
    "id": "gen-age-1",
@@ -2519,7 +2523,8 @@
      "misconception": "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "낯선 기호는 '정의된 계산 순서를 그대로 따르기'가 전부예요. 예시(2★3=3)로 규칙을 확인한 뒤 숫자만 바꿔 넣으면 되죠. 중·고등학교에서 배우는 '함수'도 바로 이 생각 — 넣으면 정해진 규칙대로 값이 나오는 상자예요. 새 기호에 겁먹지 말고 정의대로 따라가면 어떤 약속 연산도 풀려요."
   },
   {
    "id": "gen-promise-2",
@@ -2545,7 +2550,8 @@
      "misconception": "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "낯선 기호는 '정의된 계산 순서를 그대로 따르기'가 전부예요. 예시(2◆3=8)로 규칙을 확인한 뒤 숫자만 바꿔 넣으면 되죠. 중·고등학교에서 배우는 '함수'도 바로 이 생각 — 넣으면 정해진 규칙대로 값이 나오는 상자예요. 새 기호에 겁먹지 말고 정의대로 따라가면 어떤 약속 연산도 풀려요."
   },
   {
    "id": "gen-promise-3",
@@ -2571,7 +2577,8 @@
      "misconception": "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "낯선 기호는 '정의된 계산 순서를 그대로 따르기'가 전부예요. 예시(2♥3=8)로 규칙을 확인한 뒤 숫자만 바꿔 넣으면 되죠. 중·고등학교에서 배우는 '함수'도 바로 이 생각 — 넣으면 정해진 규칙대로 값이 나오는 상자예요. 새 기호에 겁먹지 말고 정의대로 따라가면 어떤 약속 연산도 풀려요."
   },
   {
    "id": "gen-promise-4",
@@ -2597,7 +2604,8 @@
      "misconception": "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "낯선 기호는 '정의된 계산 순서를 그대로 따르기'가 전부예요. 예시(2▲3=1)로 규칙을 확인한 뒤 숫자만 바꿔 넣으면 되죠. 중·고등학교에서 배우는 '함수'도 바로 이 생각 — 넣으면 정해진 규칙대로 값이 나오는 상자예요. 새 기호에 겁먹지 말고 정의대로 따라가면 어떤 약속 연산도 풀려요."
   },
   {
    "id": "gen-seq2-1",
@@ -3147,7 +3155,8 @@
      "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 나눗셈 조건을 동시에 만족하는 수는 3와 4의 최소공배수(12)마다 규칙적으로 반복돼요. 그래서 답을 하나 찾으면, 거기에 12를 계속 더한 수들이 모두 답이에요. 이게 옛 중국 수학책에도 나오는 '중국인의 나머지 정리'의 기초 생각이랍니다."
   },
   {
    "id": "gen-remain-2",
@@ -3173,7 +3182,8 @@
      "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 나눗셈 조건을 동시에 만족하는 수는 3와 5의 최소공배수(15)마다 규칙적으로 반복돼요. 그래서 답을 하나 찾으면, 거기에 15를 계속 더한 수들이 모두 답이에요. 이게 옛 중국 수학책에도 나오는 '중국인의 나머지 정리'의 기초 생각이랍니다."
   },
   {
    "id": "gen-remain-3",
@@ -3199,7 +3209,8 @@
      "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 나눗셈 조건을 동시에 만족하는 수는 4와 6의 최소공배수(12)마다 규칙적으로 반복돼요. 그래서 답을 하나 찾으면, 거기에 12를 계속 더한 수들이 모두 답이에요. 이게 옛 중국 수학책에도 나오는 '중국인의 나머지 정리'의 기초 생각이랍니다."
   },
   {
    "id": "gen-remain-4",
@@ -3225,7 +3236,8 @@
      "misconception": "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "두 나눗셈 조건을 동시에 만족하는 수는 5와 7의 최소공배수(35)마다 규칙적으로 반복돼요. 그래서 답을 하나 찾으면, 거기에 35를 계속 더한 수들이 모두 답이에요. 이게 옛 중국 수학책에도 나오는 '중국인의 나머지 정리'의 기초 생각이랍니다."
   },
   {
    "id": "gen-consec-1",
@@ -3251,7 +3263,8 @@
      "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "연속한 수의 합엔 예쁜 규칙이 있어요. 홀수 개(여기선 5개)면 합 = 가운데 수 × 개수. 그래서 합을 개수로 나누면 가운데(=평균)가 바로 나오죠 — 가운데 기준 −2,−1,0,+1,+2가 서로 지워지니까요. 짝수 개일 땐 가운데 두 수의 평균을 쓰면 돼요. 이 '대칭으로 묶기'가 연속수 문제의 열쇠예요."
   },
   {
    "id": "gen-consec-2",
@@ -3277,7 +3290,8 @@
      "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "연속한 수의 합엔 예쁜 규칙이 있어요. 홀수 개(여기선 5개)면 합 = 가운데 수 × 개수. 그래서 합을 개수로 나누면 가운데(=평균)가 바로 나오죠 — 가운데 기준 −2,−1,0,+1,+2가 서로 지워지니까요. 짝수 개일 땐 가운데 두 수의 평균을 쓰면 돼요. 이 '대칭으로 묶기'가 연속수 문제의 열쇠예요."
   },
   {
    "id": "gen-consec-3",
@@ -3303,7 +3317,8 @@
      "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "연속한 수의 합엔 예쁜 규칙이 있어요. 홀수 개(여기선 5개)면 합 = 가운데 수 × 개수. 그래서 합을 개수로 나누면 가운데(=평균)가 바로 나오죠 — 가운데 기준 −2,−1,0,+1,+2가 서로 지워지니까요. 짝수 개일 땐 가운데 두 수의 평균을 쓰면 돼요. 이 '대칭으로 묶기'가 연속수 문제의 열쇠예요."
   },
   {
    "id": "gen-consec-4",
@@ -3329,7 +3344,8 @@
      "misconception": "그건 가운데 수예요. 가장 큰 수는 가운데보다 2 커요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "연속한 수의 합엔 예쁜 규칙이 있어요. 홀수 개(여기선 5개)면 합 = 가운데 수 × 개수. 그래서 합을 개수로 나누면 가운데(=평균)가 바로 나오죠 — 가운데 기준 −2,−1,0,+1,+2가 서로 지워지니까요. 짝수 개일 땐 가운데 두 수의 평균을 쓰면 돼요. 이 '대칭으로 묶기'가 연속수 문제의 열쇠예요."
   },
   {
    "id": "gen-pigeon-1",
