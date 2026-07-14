@@ -550,7 +550,8 @@
      "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '나무 심기'와 같은 간격 문제예요. 자르는 '횟수'는 생기는 '도막'보다 언제나 1 작아요(양 끝은 자를 필요가 없으니까). 울타리 기둥과 칸, 계단과 층처럼 '사이'를 세는 문제는 늘 이 1 차이를 조심해요. 그래서 6도막엔 5번, 5×2=10분."
   },
   {
    "id": "gen-log-2",
@@ -576,7 +577,8 @@
      "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '나무 심기'와 같은 간격 문제예요. 자르는 '횟수'는 생기는 '도막'보다 언제나 1 작아요(양 끝은 자를 필요가 없으니까). 울타리 기둥과 칸, 계단과 층처럼 '사이'를 세는 문제는 늘 이 1 차이를 조심해요. 그래서 7도막엔 6번, 6×3=18분."
   },
   {
    "id": "gen-log-3",
@@ -602,7 +604,8 @@
      "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '나무 심기'와 같은 간격 문제예요. 자르는 '횟수'는 생기는 '도막'보다 언제나 1 작아요(양 끝은 자를 필요가 없으니까). 울타리 기둥과 칸, 계단과 층처럼 '사이'를 세는 문제는 늘 이 1 차이를 조심해요. 그래서 8도막엔 7번, 7×4=28분."
   },
   {
    "id": "gen-log-4",
@@ -628,7 +631,8 @@
      "misconception": "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 '나무 심기'와 같은 간격 문제예요. 자르는 '횟수'는 생기는 '도막'보다 언제나 1 작아요(양 끝은 자를 필요가 없으니까). 울타리 기둥과 칸, 계단과 층처럼 '사이'를 세는 문제는 늘 이 1 차이를 조심해요. 그래서 9도막엔 8번, 8×2=16분."
   },
   {
    "id": "gen-meet-1",
@@ -1175,7 +1179,8 @@
      "h": 2,
      "mark": 1
     }
-   }
+   },
+   "detailedExplanation": "각 점의 방법 수 = 왼쪽 점 + 아래 점 — 이렇게 더해 나간 표가 바로 파스칼의 삼각형이에요. 사실 오른쪽으로 3번, 위로 2번 가는 순서를 정하는 문제라 C(3+2, 3)로 한 번에도 구할 수 있어요. '격자 최단 경로 = 조합'이라는 걸 알면 큰 격자도 겁나지 않아요."
   },
   {
    "id": "gen-grid-2",
@@ -1209,7 +1214,8 @@
      "h": 3,
      "mark": 1
     }
-   }
+   },
+   "detailedExplanation": "각 점의 방법 수 = 왼쪽 점 + 아래 점 — 이렇게 더해 나간 표가 바로 파스칼의 삼각형이에요. 사실 오른쪽으로 3번, 위로 3번 가는 순서를 정하는 문제라 C(3+3, 3)로 한 번에도 구할 수 있어요. '격자 최단 경로 = 조합'이라는 걸 알면 큰 격자도 겁나지 않아요."
   },
   {
    "id": "gen-grid-3",
@@ -1243,7 +1249,8 @@
      "h": 2,
      "mark": 1
     }
-   }
+   },
+   "detailedExplanation": "각 점의 방법 수 = 왼쪽 점 + 아래 점 — 이렇게 더해 나간 표가 바로 파스칼의 삼각형이에요. 사실 오른쪽으로 4번, 위로 2번 가는 순서를 정하는 문제라 C(4+2, 4)로 한 번에도 구할 수 있어요. '격자 최단 경로 = 조합'이라는 걸 알면 큰 격자도 겁나지 않아요."
   },
   {
    "id": "gen-cycle-1",
@@ -1264,7 +1271,8 @@
    "answerIndex": 1,
    "explanation": "3개가 한 묶음으로 계속 반복되니 50을 3로 나누는 게 열쇠예요. 50÷3를 하면 몫이 16이고 나머지가 2이니, 완전한 묶음 뒤 2번째 구슬 차례예요. 묶음의 2번째는 노란색이에요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "반복되는 문제는 '나머지'가 열쇠예요. 3개가 한 묶음이니 50번째가 묶음 안 어디인지는 50÷3의 나머지로 정해져요(나머지가 0이면 묶음의 맨 끝 3번째). 요일(7일), 시계(12시간), 달력이 모두 이 '나머지 세계'로 돌아가요 — 큰 수도 나머지만 보면 돼요."
   },
   {
    "id": "gen-cycle-2",
@@ -1285,7 +1293,8 @@
    "answerIndex": 1,
    "explanation": "3개가 한 묶음으로 계속 반복되니 74을 3로 나누는 게 열쇠예요. 74÷3를 하면 몫이 24이고 나머지가 2이니, 완전한 묶음 뒤 2번째 구슬 차례예요. 묶음의 2번째는 보라색이에요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "반복되는 문제는 '나머지'가 열쇠예요. 3개가 한 묶음이니 74번째가 묶음 안 어디인지는 74÷3의 나머지로 정해져요(나머지가 0이면 묶음의 맨 끝 3번째). 요일(7일), 시계(12시간), 달력이 모두 이 '나머지 세계'로 돌아가요 — 큰 수도 나머지만 보면 돼요."
   },
   {
    "id": "gen-cycle-3",
@@ -1306,7 +1315,8 @@
    "answerIndex": 3,
    "explanation": "4개가 한 묶음으로 계속 반복되니 90을 4로 나누는 게 열쇠예요. 90÷4를 하면 몫이 22이고 나머지가 2이니, 완전한 묶음 뒤 2번째 구슬 차례예요. 묶음의 2번째는 노란색이에요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "반복되는 문제는 '나머지'가 열쇠예요. 4개가 한 묶음이니 90번째가 묶음 안 어디인지는 90÷4의 나머지로 정해져요(나머지가 0이면 묶음의 맨 끝 4번째). 요일(7일), 시계(12시간), 달력이 모두 이 '나머지 세계'로 돌아가요 — 큰 수도 나머지만 보면 돼요."
   },
   {
    "id": "gen-cycle-4",
@@ -1327,7 +1337,8 @@
    "answerIndex": 1,
    "explanation": "4개가 한 묶음으로 계속 반복되니 66을 4로 나누는 게 열쇠예요. 66÷4를 하면 몫이 16이고 나머지가 2이니, 완전한 묶음 뒤 2번째 구슬 차례예요. 묶음의 2번째는 보라색이에요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "반복되는 문제는 '나머지'가 열쇠예요. 4개가 한 묶음이니 66번째가 묶음 안 어디인지는 66÷4의 나머지로 정해져요(나머지가 0이면 묶음의 맨 끝 4번째). 요일(7일), 시계(12시간), 달력이 모두 이 '나머지 세계'로 돌아가요 — 큰 수도 나머지만 보면 돼요."
   },
   {
    "id": "gen-calweek-1",
@@ -1353,7 +1364,8 @@
      "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가운데 수를 기준으로 잡는 게 비결이에요. 위·아래가 각각 −7, +7이라 서로 상쇄돼 합=가운데×3이 돼요. 이렇게 '가운데를 기준으로' 놓으면 대칭인 항이 지워져 계산이 확 줄죠. 가로로 나란한 세 수(−1, +1)나 연속한 홀수도 똑같이 가운데×3이에요."
   },
   {
    "id": "gen-calweek-2",
@@ -1379,7 +1391,8 @@
      "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가운데 수를 기준으로 잡는 게 비결이에요. 위·아래가 각각 −7, +7이라 서로 상쇄돼 합=가운데×3이 돼요. 이렇게 '가운데를 기준으로' 놓으면 대칭인 항이 지워져 계산이 확 줄죠. 가로로 나란한 세 수(−1, +1)나 연속한 홀수도 똑같이 가운데×3이에요."
   },
   {
    "id": "gen-calweek-3",
@@ -1405,7 +1418,8 @@
      "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가운데 수를 기준으로 잡는 게 비결이에요. 위·아래가 각각 −7, +7이라 서로 상쇄돼 합=가운데×3이 돼요. 이렇게 '가운데를 기준으로' 놓으면 대칭인 항이 지워져 계산이 확 줄죠. 가로로 나란한 세 수(−1, +1)나 연속한 홀수도 똑같이 가운데×3이에요."
   },
   {
    "id": "gen-calweek-4",
@@ -1431,7 +1445,8 @@
      "misconception": "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가운데 수를 기준으로 잡는 게 비결이에요. 위·아래가 각각 −7, +7이라 서로 상쇄돼 합=가운데×3이 돼요. 이렇게 '가운데를 기준으로' 놓으면 대칭인 항이 지워져 계산이 확 줄죠. 가로로 나란한 세 수(−1, +1)나 연속한 홀수도 똑같이 가운데×3이에요."
   },
   {
    "id": "gen-avgchg-1",
@@ -1708,7 +1723,8 @@
    "answerIndex": 0,
    "explanation": "두 초의 길이 차이에 집중해 봐요. 처음 차이는 24−16=8cm인데, 1시간마다 긴 초가 1cm씩 더 타서 차이가 그만큼 줄어요. 8÷1=8시간 뒤에 차이가 0이 되고, 그때 두 초 모두 0cm예요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'차이'만 따로 떼어 보는 게 핵심이에요. 두 초의 길이 차는 매시간 (빨리 타는 속도 − 느리게 타는 속도)만큼 줄어요. 그래서 같아지는 시간 = 처음 차이 ÷ 속도 차. 이건 '따라잡기(만나기)'와 완전히 같은 구조예요 — 거리를 길이로, 속력을 타는 속도로 바꿨을 뿐이죠."
   },
   {
    "id": "gen-candle-2",
@@ -1734,7 +1750,8 @@
      "misconception": "차이 12cm를 '1시간에 줄어드는 양 2cm'로 나눠야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'차이'만 따로 떼어 보는 게 핵심이에요. 두 초의 길이 차는 매시간 (빨리 타는 속도 − 느리게 타는 속도)만큼 줄어요. 그래서 같아지는 시간 = 처음 차이 ÷ 속도 차. 이건 '따라잡기(만나기)'와 완전히 같은 구조예요 — 거리를 길이로, 속력을 타는 속도로 바꿨을 뿐이죠."
   },
   {
    "id": "gen-candle-3",
@@ -1755,7 +1772,8 @@
    "answerIndex": 1,
    "explanation": "두 초의 길이 차이에 집중해 봐요. 처음 차이는 18−12=6cm인데, 1시간마다 긴 초가 1cm씩 더 타서 차이가 그만큼 줄어요. 6÷1=6시간 뒤에 차이가 0이 되고, 그때 두 초 모두 6cm예요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'차이'만 따로 떼어 보는 게 핵심이에요. 두 초의 길이 차는 매시간 (빨리 타는 속도 − 느리게 타는 속도)만큼 줄어요. 그래서 같아지는 시간 = 처음 차이 ÷ 속도 차. 이건 '따라잡기(만나기)'와 완전히 같은 구조예요 — 거리를 길이로, 속력을 타는 속도로 바꿨을 뿐이죠."
   },
   {
    "id": "gen-candle-4",
@@ -1781,7 +1799,8 @@
      "misconception": "차이 12cm를 '1시간에 줄어드는 양 2cm'로 나눠야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'차이'만 따로 떼어 보는 게 핵심이에요. 두 초의 길이 차는 매시간 (빨리 타는 속도 − 느리게 타는 속도)만큼 줄어요. 그래서 같아지는 시간 = 처음 차이 ÷ 속도 차. 이건 '따라잡기(만나기)'와 완전히 같은 구조예요 — 거리를 길이로, 속력을 타는 속도로 바꿨을 뿐이죠."
   },
   {
    "id": "gen-mirror-1",
@@ -1943,7 +1962,8 @@
      "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가장 큰 수는 '큰 숫자를 높은 자리에' 놓으면 돼요. 백의 자리 1은 십의 자리 10, 일의 자리 100만큼의 값이라, 큰 숫자일수록 높은 자리에 있어야 이득이 커요. 가장 작은 수는 반대로 하면 되고요. 이렇게 '가장 좋은 걸 먼저 배치'하는 방법을 욕심쟁이(그리디) 방법이라고 해요."
   },
   {
    "id": "gen-cards-2",
@@ -1969,7 +1989,8 @@
      "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가장 큰 수는 '큰 숫자를 높은 자리에' 놓으면 돼요. 백의 자리 1은 십의 자리 10, 일의 자리 100만큼의 값이라, 큰 숫자일수록 높은 자리에 있어야 이득이 커요. 가장 작은 수는 반대로 하면 되고요. 이렇게 '가장 좋은 걸 먼저 배치'하는 방법을 욕심쟁이(그리디) 방법이라고 해요."
   },
   {
    "id": "gen-cards-3",
@@ -1995,7 +2016,8 @@
      "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가장 큰 수는 '큰 숫자를 높은 자리에' 놓으면 돼요. 백의 자리 1은 십의 자리 10, 일의 자리 100만큼의 값이라, 큰 숫자일수록 높은 자리에 있어야 이득이 커요. 가장 작은 수는 반대로 하면 되고요. 이렇게 '가장 좋은 걸 먼저 배치'하는 방법을 욕심쟁이(그리디) 방법이라고 해요."
   },
   {
    "id": "gen-cards-4",
@@ -2021,7 +2043,8 @@
      "misconception": "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "가장 큰 수는 '큰 숫자를 높은 자리에' 놓으면 돼요. 백의 자리 1은 십의 자리 10, 일의 자리 100만큼의 값이라, 큰 숫자일수록 높은 자리에 있어야 이득이 커요. 가장 작은 수는 반대로 하면 되고요. 이렇게 '가장 좋은 걸 먼저 배치'하는 방법을 욕심쟁이(그리디) 방법이라고 해요."
   },
   {
    "id": "gen-seq1-1",
@@ -2047,7 +2070,8 @@
      "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이웃한 수의 '차이'가 일정하면 등차예요. 규칙을 찾을 땐 늘 먼저 이웃 차이부터 적어 보세요 — 차이가 일정하면 등차, 차이가 '몇 배'면 등비, 차이의 차이가 일정하면 그 다음 단계 규칙이에요. n번째 수는 (첫 수)+(n−1)×(차이)로 한 번에 구할 수도 있어요."
   },
   {
    "id": "gen-seq1-2",
@@ -2073,7 +2097,8 @@
      "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이웃한 수의 '차이'가 일정하면 등차예요. 규칙을 찾을 땐 늘 먼저 이웃 차이부터 적어 보세요 — 차이가 일정하면 등차, 차이가 '몇 배'면 등비, 차이의 차이가 일정하면 그 다음 단계 규칙이에요. n번째 수는 (첫 수)+(n−1)×(차이)로 한 번에 구할 수도 있어요."
   },
   {
    "id": "gen-seq1-3",
@@ -2099,7 +2124,8 @@
      "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이웃한 수의 '차이'가 일정하면 등차예요. 규칙을 찾을 땐 늘 먼저 이웃 차이부터 적어 보세요 — 차이가 일정하면 등차, 차이가 '몇 배'면 등비, 차이의 차이가 일정하면 그 다음 단계 규칙이에요. n번째 수는 (첫 수)+(n−1)×(차이)로 한 번에 구할 수도 있어요."
   },
   {
    "id": "gen-seq1-4",
@@ -2125,7 +2151,8 @@
      "misconception": "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이웃한 수의 '차이'가 일정하면 등차예요. 규칙을 찾을 땐 늘 먼저 이웃 차이부터 적어 보세요 — 차이가 일정하면 등차, 차이가 '몇 배'면 등비, 차이의 차이가 일정하면 그 다음 단계 규칙이에요. n번째 수는 (첫 수)+(n−1)×(차이)로 한 번에 구할 수도 있어요."
   },
   {
    "id": "gen-match-1",
@@ -2259,7 +2286,8 @@
      "misconception": "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "윗옷을 정하는 '단계'와 아래옷을 정하는 '단계'가 서로 영향을 안 주니 곱해요(곱의 원리). 윗옷 하나마다 아래옷 전부가 다시 가능하거든요. 만약 '윗옷 또는 아래옷 하나만' 고르는 거였다면 더했겠죠(합의 원리). 곱이냐 합이냐는 늘 '그리고냐 또는이냐'로 판단해요."
   },
   {
    "id": "gen-outfit-2",
@@ -2285,7 +2313,8 @@
      "misconception": "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "윗옷을 정하는 '단계'와 아래옷을 정하는 '단계'가 서로 영향을 안 주니 곱해요(곱의 원리). 윗옷 하나마다 아래옷 전부가 다시 가능하거든요. 만약 '윗옷 또는 아래옷 하나만' 고르는 거였다면 더했겠죠(합의 원리). 곱이냐 합이냐는 늘 '그리고냐 또는이냐'로 판단해요."
   },
   {
    "id": "gen-outfit-3",
@@ -2306,7 +2335,8 @@
    "answerIndex": 0,
    "explanation": "윗옷 하나를 고를 때마다 아래옷을 2가지로 짝지을 수 있어요. 윗옷이 2가지니까 2×2=4가지예요. 표를 그려 하나씩 짝지어도 4가지가 나와요.",
    "mistakes": [],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "윗옷을 정하는 '단계'와 아래옷을 정하는 '단계'가 서로 영향을 안 주니 곱해요(곱의 원리). 윗옷 하나마다 아래옷 전부가 다시 가능하거든요. 만약 '윗옷 또는 아래옷 하나만' 고르는 거였다면 더했겠죠(합의 원리). 곱이냐 합이냐는 늘 '그리고냐 또는이냐'로 판단해요."
   },
   {
    "id": "gen-outfit-4",
@@ -2332,7 +2362,8 @@
      "misconception": "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "윗옷을 정하는 '단계'와 아래옷을 정하는 '단계'가 서로 영향을 안 주니 곱해요(곱의 원리). 윗옷 하나마다 아래옷 전부가 다시 가능하거든요. 만약 '윗옷 또는 아래옷 하나만' 고르는 거였다면 더했겠죠(합의 원리). 곱이냐 합이냐는 늘 '그리고냐 또는이냐'로 판단해요."
   },
   {
    "id": "gen-brokensum-1",
@@ -2358,7 +2389,8 @@
      "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "덧셈의 빈칸은 뺄셈으로 되돌리면 바로 보여요. □7는 결과 62에서 25를 뺀 37. 이렇게 '거꾸로 셈(역연산)'으로 미지수를 드러내는 건 방정식의 씨앗이에요. 자리마다 올림이 있었는지도 함께 확인하면 더 큰 벌레먹은셈도 풀 수 있어요."
   },
   {
    "id": "gen-brokensum-2",
@@ -2384,7 +2416,8 @@
      "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "덧셈의 빈칸은 뺄셈으로 되돌리면 바로 보여요. □2는 결과 88에서 36를 뺀 52. 이렇게 '거꾸로 셈(역연산)'으로 미지수를 드러내는 건 방정식의 씨앗이에요. 자리마다 올림이 있었는지도 함께 확인하면 더 큰 벌레먹은셈도 풀 수 있어요."
   },
   {
    "id": "gen-brokensum-3",
@@ -2410,7 +2443,8 @@
      "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "덧셈의 빈칸은 뺄셈으로 되돌리면 바로 보여요. □8는 결과 61에서 13를 뺀 48. 이렇게 '거꾸로 셈(역연산)'으로 미지수를 드러내는 건 방정식의 씨앗이에요. 자리마다 올림이 있었는지도 함께 확인하면 더 큰 벌레먹은셈도 풀 수 있어요."
   },
   {
    "id": "gen-brokensum-4",
@@ -2436,7 +2470,8 @@
      "misconception": "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "덧셈의 빈칸은 뺄셈으로 되돌리면 바로 보여요. □4는 결과 83에서 19를 뺀 64. 이렇게 '거꾸로 셈(역연산)'으로 미지수를 드러내는 건 방정식의 씨앗이에요. 자리마다 올림이 있었는지도 함께 확인하면 더 큰 벌레먹은셈도 풀 수 있어요."
   },
   {
    "id": "gen-cases-1",
@@ -2678,7 +2713,8 @@
      "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "차이가 일정하지 않을 땐 '차이의 차이'를 봐요. 여기선 차이가 1씩 커지죠(계차수열). 이런 수는 삼각수(1,3,6,10…)처럼 도형이 한 줄씩 커지는 상황에서 자주 나와요. 한 단계 더 파고들어 '변화의 변화'를 보는 눈이 어려운 규칙을 뚫는 열쇠예요."
   },
   {
    "id": "gen-seq2-2",
@@ -2704,7 +2740,8 @@
      "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "차이가 일정하지 않을 땐 '차이의 차이'를 봐요. 여기선 차이가 1씩 커지죠(계차수열). 이런 수는 삼각수(1,3,6,10…)처럼 도형이 한 줄씩 커지는 상황에서 자주 나와요. 한 단계 더 파고들어 '변화의 변화'를 보는 눈이 어려운 규칙을 뚫는 열쇠예요."
   },
   {
    "id": "gen-seq2-3",
@@ -2730,7 +2767,8 @@
      "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "차이가 일정하지 않을 땐 '차이의 차이'를 봐요. 여기선 차이가 1씩 커지죠(계차수열). 이런 수는 삼각수(1,3,6,10…)처럼 도형이 한 줄씩 커지는 상황에서 자주 나와요. 한 단계 더 파고들어 '변화의 변화'를 보는 눈이 어려운 규칙을 뚫는 열쇠예요."
   },
   {
    "id": "gen-seq2-4",
@@ -2756,7 +2794,8 @@
      "misconception": "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "차이가 일정하지 않을 땐 '차이의 차이'를 봐요. 여기선 차이가 1씩 커지죠(계차수열). 이런 수는 삼각수(1,3,6,10…)처럼 도형이 한 줄씩 커지는 상황에서 자주 나와요. 한 단계 더 파고들어 '변화의 변화'를 보는 눈이 어려운 규칙을 뚫는 열쇠예요."
   },
   {
    "id": "gen-truthone-1",
@@ -2890,7 +2929,8 @@
      "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(3−1)=7개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
    "id": "gen-tri-2",
@@ -2916,7 +2956,8 @@
      "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(4−1)=9개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
    "id": "gen-tri-3",
@@ -2942,7 +2983,8 @@
      "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(5−1)=11개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
    "id": "gen-tri-4",
@@ -2968,7 +3010,8 @@
      "misconception": "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(6−1)=13개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
    "id": "gen-shake-1",
@@ -3750,7 +3793,8 @@
      "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합과 차를 알 때는 '두 식을 더하거나 빼기'가 지름길이에요. 합＋차를 하면 작은 쪽이 지워져 큰 쪽의 2배가 나와요: (12+2)÷2=7가 십의 자리. 이 '합차 방법'은 나이·개수·거리처럼 두 미지수가 얽힌 문제에 두루 통하는 강력한 도구예요."
   },
   {
    "id": "gen-riddle-2",
@@ -3776,7 +3820,8 @@
      "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합과 차를 알 때는 '두 식을 더하거나 빼기'가 지름길이에요. 합＋차를 하면 작은 쪽이 지워져 큰 쪽의 2배가 나와요: (9+3)÷2=6가 십의 자리. 이 '합차 방법'은 나이·개수·거리처럼 두 미지수가 얽힌 문제에 두루 통하는 강력한 도구예요."
   },
   {
    "id": "gen-riddle-3",
@@ -3802,7 +3847,8 @@
      "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합과 차를 알 때는 '두 식을 더하거나 빼기'가 지름길이에요. 합＋차를 하면 작은 쪽이 지워져 큰 쪽의 2배가 나와요: (14+2)÷2=8가 십의 자리. 이 '합차 방법'은 나이·개수·거리처럼 두 미지수가 얽힌 문제에 두루 통하는 강력한 도구예요."
   },
   {
    "id": "gen-riddle-4",
@@ -3828,7 +3874,8 @@
      "misconception": "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합과 차를 알 때는 '두 식을 더하거나 빼기'가 지름길이에요. 합＋차를 하면 작은 쪽이 지워져 큰 쪽의 2배가 나와요: (7+3)÷2=5가 십의 자리. 이 '합차 방법'은 나이·개수·거리처럼 두 미지수가 얽힌 문제에 두루 통하는 강력한 도구예요."
   },
   {
    "id": "gen-clockang-1",
@@ -4833,7 +4880,8 @@
      "hour": 3,
      "minute": 30
     }
-   }
+   },
+   "detailedExplanation": "핵심은 '시침도 분마다 움직인다'예요. 시침은 60분에 30도, 즉 1분에 0.5도씩 나아가요. 그래서 3시 30분 시침은 90+30×0.5=105도. 분침은 1분에 6도라 30분엔 180도. 두 각의 차가 사이 각이에요. 두 바늘의 '속도'를 알면 어떤 시각의 각도도 계산할 수 있어요."
   },
   {
    "id": "gen-clockmin-2",
@@ -4866,7 +4914,8 @@
      "hour": 5,
      "minute": 30
     }
-   }
+   },
+   "detailedExplanation": "핵심은 '시침도 분마다 움직인다'예요. 시침은 60분에 30도, 즉 1분에 0.5도씩 나아가요. 그래서 5시 30분 시침은 150+30×0.5=165도. 분침은 1분에 6도라 30분엔 180도. 두 각의 차가 사이 각이에요. 두 바늘의 '속도'를 알면 어떤 시각의 각도도 계산할 수 있어요."
   },
   {
    "id": "gen-clockmin-3",
@@ -4899,7 +4948,8 @@
      "hour": 2,
      "minute": 30
     }
-   }
+   },
+   "detailedExplanation": "핵심은 '시침도 분마다 움직인다'예요. 시침은 60분에 30도, 즉 1분에 0.5도씩 나아가요. 그래서 2시 30분 시침은 60+30×0.5=75도. 분침은 1분에 6도라 30분엔 180도. 두 각의 차가 사이 각이에요. 두 바늘의 '속도'를 알면 어떤 시각의 각도도 계산할 수 있어요."
   },
   {
    "id": "gen-clockmin-4",
@@ -4932,7 +4982,8 @@
      "hour": 1,
      "minute": 30
     }
-   }
+   },
+   "detailedExplanation": "핵심은 '시침도 분마다 움직인다'예요. 시침은 60분에 30도, 즉 1분에 0.5도씩 나아가요. 그래서 1시 30분 시침은 30+30×0.5=45도. 분침은 1분에 6도라 30분엔 180도. 두 각의 차가 사이 각이에요. 두 바늘의 '속도'를 알면 어떤 시각의 각도도 계산할 수 있어요."
   },
   {
    "id": "gen-areamax-1",
@@ -5066,7 +5117,8 @@
      "misconception": "그건 부피(쌓은 정육면체 개수)예요. 겉넓이는 바깥 면들의 넓이 합이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "겉넓이는 '마주 보는 세 쌍'으로 봐요: 앞뒤(3×4), 좌우(2×4), 위아래(2×3) 각 2개씩이라 2×(6+12+8)=52㎠. 부피(속을 채우는 칸 수)와 겉넓이(겉을 감싸는 넓이)를 헷갈리지 않는 게 중요해요 — 상자를 포장하는 종이가 겉넓이랍니다."
   },
   {
    "id": "gen-cubesurf-2",
@@ -5092,7 +5144,8 @@
      "misconception": "그건 부피(쌓은 정육면체 개수)예요. 겉넓이는 바깥 면들의 넓이 합이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "겉넓이는 '마주 보는 세 쌍'으로 봐요: 앞뒤(3×3), 좌우(3×3), 위아래(3×3) 각 2개씩이라 2×(9+9+9)=54㎠. 부피(속을 채우는 칸 수)와 겉넓이(겉을 감싸는 넓이)를 헷갈리지 않는 게 중요해요 — 상자를 포장하는 종이가 겉넓이랍니다."
   },
   {
    "id": "gen-cubesurf-3",
@@ -5118,7 +5171,8 @@
      "misconception": "그건 부피(쌓은 정육면체 개수)예요. 겉넓이는 바깥 면들의 넓이 합이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "겉넓이는 '마주 보는 세 쌍'으로 봐요: 앞뒤(2×5), 좌우(2×5), 위아래(2×2) 각 2개씩이라 2×(4+10+10)=48㎠. 부피(속을 채우는 칸 수)와 겉넓이(겉을 감싸는 넓이)를 헷갈리지 않는 게 중요해요 — 상자를 포장하는 종이가 겉넓이랍니다."
   },
   {
    "id": "gen-cubesurf-4",
@@ -5144,7 +5198,8 @@
      "misconception": "그건 부피(쌓은 정육면체 개수)예요. 겉넓이는 바깥 면들의 넓이 합이에요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "겉넓이는 '마주 보는 세 쌍'으로 봐요: 앞뒤(3×4), 좌우(1×4), 위아래(1×3) 각 2개씩이라 2×(3+12+4)=38㎠. 부피(속을 채우는 칸 수)와 겉넓이(겉을 감싸는 넓이)를 헷갈리지 않는 게 중요해요 — 상자를 포장하는 종이가 겉넓이랍니다."
   },
   {
    "id": "gen-polyext-1",
@@ -5176,7 +5231,8 @@
     "params": {
      "n": 5
     }
-   }
+   },
+   "detailedExplanation": "정다각형이든 아니든 외각을 모두 더하면 항상 360도예요 — 다각형을 한 바퀴 도는 동안 방향이 총 한 바퀴(360도) 꺾이거든요. 그래서 정5각형은 360÷5=72도. 내각+외각=180이라 내각도 바로 나와요. '한 바퀴는 360'이라는 이 사실이 외각 문제의 전부예요."
   },
   {
    "id": "gen-polyext-2",
@@ -5208,7 +5264,8 @@
     "params": {
      "n": 6
     }
-   }
+   },
+   "detailedExplanation": "정다각형이든 아니든 외각을 모두 더하면 항상 360도예요 — 다각형을 한 바퀴 도는 동안 방향이 총 한 바퀴(360도) 꺾이거든요. 그래서 정6각형은 360÷6=60도. 내각+외각=180이라 내각도 바로 나와요. '한 바퀴는 360'이라는 이 사실이 외각 문제의 전부예요."
   },
   {
    "id": "gen-polyext-3",
@@ -5240,7 +5297,8 @@
     "params": {
      "n": 8
     }
-   }
+   },
+   "detailedExplanation": "정다각형이든 아니든 외각을 모두 더하면 항상 360도예요 — 다각형을 한 바퀴 도는 동안 방향이 총 한 바퀴(360도) 꺾이거든요. 그래서 정8각형은 360÷8=45도. 내각+외각=180이라 내각도 바로 나와요. '한 바퀴는 360'이라는 이 사실이 외각 문제의 전부예요."
   },
   {
    "id": "gen-polyext-4",
@@ -5272,7 +5330,8 @@
     "params": {
      "n": 10
     }
-   }
+   },
+   "detailedExplanation": "정다각형이든 아니든 외각을 모두 더하면 항상 360도예요 — 다각형을 한 바퀴 도는 동안 방향이 총 한 바퀴(360도) 꺾이거든요. 그래서 정10각형은 360÷10=36도. 내각+외각=180이라 내각도 바로 나와요. '한 바퀴는 360'이라는 이 사실이 외각 문제의 전부예요."
   },
   {
    "id": "gen-cubestack-1",
