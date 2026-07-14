@@ -2054,6 +2054,130 @@ def gen_percent_of():
         )
 
 
+# ── 94. 톱니바퀴 = 반비례 (난5, 변화와관계) ─────────────────────────────────
+def gen_gear_ratio():
+    for t1, turns1, t2 in [(8, 3, 12), (10, 6, 15), (12, 5, 20), (9, 8, 6)]:
+        assert (t1 * turns1) % t2 == 0
+        turns2 = t1 * turns1 // t2
+        add(
+            "gear", "CHANGE_RELATION", 5, ["톱니바퀴", "반비례"],
+            f"톱니 {t1}개인 바퀴와 톱니 {t2}개인 바퀴가 맞물려 돌아가요. 톱니 {t1}개 바퀴가 {turns1}바퀴 도는 동안, 톱니 {t2}개 바퀴는 몇 바퀴 돌까요?",
+            f"{turns2}바퀴", [f"{turns1}바퀴", f"{turns1 * t2 // t1}바퀴", f"{turns2 - 1}바퀴"],
+            f"맞물린 두 바퀴는 '지나간 톱니 수'가 똑같아요. 톱니 {t1}개 바퀴가 {turns1}바퀴 돌면 {t1}×{turns1}={t1 * turns1}개의 톱니가 지나가요. 상대 바퀴도 같은 {t1 * turns1}개가 지나가야 하니 {t1 * turns1}÷{t2}={turns2}바퀴. 톱니가 많은 바퀴는 천천히 돌죠.",
+            [(f"{turns1}바퀴", "톱니 수가 다르면 회전수도 달라요. 지나간 톱니 수가 같다는 걸 이용해요.")],
+            detail="맞물린 톱니바퀴는 '톱니수 × 회전수'가 일정해요(반비례). 톱니가 2배면 회전은 절반. 자전거 기어·시계 톱니가 다 이 원리예요. 반비례는 '두 양의 곱이 일정'으로 보면 늘 쉬워져요(속력×시간=거리 일정도 같은 결).",
+        )
+
+
+# ── 95. 시소 균형 = 모멘트 (난5, 변화와관계) ────────────────────────────────
+def gen_seesaw():
+    for w1, d1, w2 in [(30, 2, 20), (40, 3, 24), (20, 6, 30), (35, 4, 28)]:
+        assert (w1 * d1) % w2 == 0
+        d2 = w1 * d1 // w2
+        add(
+            "seesaw", "CHANGE_RELATION", 5, ["시소", "지렛대(반비례)"],
+            f"시소의 받침점에서 {d1}m 떨어진 곳에 몸무게 {w1}kg인 형이 앉았어요. 몸무게 {w2}kg인 동생은 받침점에서 몇 m 떨어진 곳에 앉아야 시소가 수평이 될까요?",
+            f"{d2}m", [f"{d1}m", f"{w2 * d1 // w1}m", f"{d2 + 1}m"],
+            f"시소는 '무게 × 받침점까지의 거리'가 양쪽이 같을 때 균형을 이뤄요. 형 쪽은 {w1}×{d1}={w1 * d1}. 동생 쪽도 {w1 * d1}이 되어야 하니 {w1 * d1}÷{w2}={d2}m. 가벼운 사람이 더 멀리 앉아야 하죠.",
+            [(f"{d1}m", "같은 거리에 앉으면 무거운 쪽으로 기울어요. 가벼우면 더 멀리 앉아요.")],
+            detail="시소 균형의 비밀은 '무게 × 거리(모멘트)'가 양쪽 같아야 한다는 거예요. 그래서 무게와 거리는 반비례 — 몸무게가 절반이면 두 배 멀리. 지레·저울·병따개가 다 이 지렛대 원리예요.",
+        )
+
+
+# ── 96. 약수의 합 (난5, 수와연산) ────────────────────────────────────────────
+def gen_divisor_sum():
+    for num in [12, 18, 28, 24]:
+        divs = [x for x in range(1, num + 1) if num % x == 0]
+        ans = sum(divs)
+        add(
+            "divsum", "NUMBER_OPERATION", 5, ["약수", "약수의 합"],
+            f"{num}의 약수를 모두 찾아 더하면 얼마일까요?",
+            f"{ans}", [str(ans - num), str(ans + num), str(ans + 3)],
+            f"약수를 '작은 수 × 큰 수' 짝으로 빠짐없이 찾아요: {num}의 약수는 {', '.join(map(str, divs))}. 모두 더하면 {' + '.join(map(str, divs))} = {ans}이에요.",
+            [(str(ans - num), f"자기 자신({num})도 약수예요 — 빠뜨리지 마세요.")],
+            detail=f"약수는 짝을 지어 찾으면 빠짐이 없어요(1×{num}, 2×…). 자기 자신을 뺀 약수의 합이 자신과 같으면 '완전수'(6=1+2+3), 자신보다 크면 '과잉수'라고 불러요. {num}이 어디에 속하는지 따져 보는 것도 재미있어요.",
+        )
+
+
+# ── 97. 시계 종소리 = 간격 함정 (난4, 변화와관계) ───────────────────────────
+def gen_clock_strikes():
+    for h1, sec1, h2 in [(4, 6, 7), (3, 4, 9), (5, 8, 11), (7, 12, 10)]:
+        assert sec1 % (h1 - 1) == 0
+        gap = sec1 // (h1 - 1)
+        ans = (h2 - 1) * gap
+        add(
+            "clockstrike", "CHANGE_RELATION", 4, ["간격 사고", "시계 종"],
+            f"벽시계가 {h1}시에 '{h1}번' 치는 데 {sec1}초가 걸려요. 그렇다면 {h2}시에 '{h2}번' 치는 데는 몇 초가 걸릴까요?",
+            f"{ans}초", [f"{gap * h2}초", f"{ans - gap}초", f"{sec1}초"],
+            f"함정은 '치는 횟수'가 아니라 '소리 사이 간격 수'예요. {h1}번 치면 사이 간격은 {h1}−1={h1 - 1}개. 그 {h1 - 1}개에 {sec1}초가 걸리니 간격 하나는 {sec1}÷{h1 - 1}={gap}초. {h2}번 치면 간격이 {h2}−1={h2 - 1}개니 {h2 - 1}×{gap}={ans}초예요.",
+            [(f"{gap * h2}초", "횟수에 그대로 비례하지 않아요 — '사이 간격'의 수로 따져야 해요.")],
+            detail="'종을 n번 친다'와 '간격이 n−1개다'의 차이가 핵심이에요(나무 심기·자르기와 같은 간격 함정). 첫 소리엔 시간이 안 걸리고, 소리와 소리 '사이'에만 시간이 흘러요. 이 1 차이를 놓치면 답이 어긋나요.",
+        )
+
+
+# ── 98. 세 항의 비 (난5, 변화와관계) ─────────────────────────────────────────
+def gen_ratio_three():
+    for total, ra, rb, rc in [(60, 2, 3, 5), (48, 1, 2, 3), (70, 3, 4, 7), (36, 2, 2, 5)]:
+        s = ra + rb + rc
+        assert total % s == 0
+        unit = total // s
+        ans = unit * rc
+        add(
+            "ratio3", "CHANGE_RELATION", 5, ["비", "세 몫으로 나누기"],
+            f"사탕 {total}개를 세 사람 A, B, C가 {ra}:{rb}:{rc}로 나눠 가져요. C가 갖는 사탕은 몇 개일까요?",
+            f"{ans}개", [f"{rc}개", f"{unit * ra}개", f"{total // 3}개"],
+            f"비 {ra}:{rb}:{rc}는 전체를 똑같은 묶음 {ra}+{rb}+{rc}={s}묶음으로 나눈 거예요. 한 묶음은 {total}÷{s}={unit}개. C는 {rc}묶음이니 {unit}×{rc}={ans}개예요.",
+            [(f"{total // 3}개", "셋이 똑같이 나누는 게 아니에요. 비가 다르니 묶음 수로 나눠요.")],
+            detail="세 항의 비도 방법은 같아요 — '한 묶음(단위량) = 전체 ÷ 비의 합'을 먼저 구하고 각자 몫만큼 곱하면 끝. 항이 몇 개든 통해요. 비는 '전체를 몇 조각으로, 각자 몇 조각'의 그림으로 보면 늘 쉬워요.",
+        )
+
+
+# ── 99. 주고받기 = 차이 사고 (난5, 변화와관계) ──────────────────────────────
+def gen_marble_transfer():
+    for give, ctx in [(3, "구슬"), (5, "사탕"), (4, "딱지"), (2, "스티커")]:
+        ans = 2 * give
+        add(
+            "transfer", "CHANGE_RELATION", 5, ["차이 사고", "주고받기"],
+            f"형과 동생이 {ctx}{_eul(ctx)} 가지고 있어요. 형이 동생에게 {ctx} {give}개를 주면 둘의 개수가 똑같아진대요. 원래 형은 동생보다 {ctx}{_eul(ctx)} 몇 개 더 가지고 있었을까요?",
+            f"{ans}개", [f"{give}개", f"{give * 3}개", f"{ans - 1}개"],
+            f"형이 {give}개를 주면 형은 {give} 줄고 동생은 {give} 늘어요. 그러면 둘 사이 차이는 한 번에 {give}+{give}={ans}만큼 줄어요. 주고 나서 '같아졌다'(차이 0)니 원래 차이는 딱 그만큼인 {ans}개였어요.",
+            [(f"{give}개", f"준 개수 그대로가 아니에요 — 주는 쪽은 줄고 받는 쪽은 늘어 차이는 {give}의 두 배만큼 줄어요.")],
+            detail="주고받기는 '차이가 어떻게 변하나'를 보면 쉬워요. 한 명이 상대에게 k개를 주면 차이는 2k만큼 줄어요(주는 쪽 −k, 받는 쪽 +k). 반대로 '얼마를 줘야 같아질까?'는 차이의 절반을 주면 되고요. 전체 합은 주고받아도 안 변한다는 것도 함께 기억하면 든든해요.",
+        )
+
+
+# ── 100. 똑같이 나누려면 최소 보충 (난4, 수와연산) ──────────────────────────
+def gen_least_to_share():
+    for candy, kids in [(20, 6), (30, 7), (15, 4), (50, 8)]:
+        r = candy % kids
+        ans = (kids - r) % kids
+        assert 0 < ans < kids
+        add(
+            "leasttoshare", "NUMBER_OPERATION", 4, ["나머지", "최소 보충"],
+            f"사탕 {candy}개를 친구 {kids}명에게 '똑같이' 나눠주려고 해요. 남거나 모자라지 않게 나누려면 사탕이 '최소' 몇 개 더 있어야 할까요?",
+            f"{ans}개", [f"{r}개", f"{kids}개", f"{ans + kids}개"],
+            f"{candy}÷{kids}를 하면 한 명당 {candy // kids}개씩, {r}개가 남아요. 남은 {r}개로는 {kids}명에게 하나씩 더 못 주니 {kids}개를 채워야 다 같이 하나씩 더 받아요. 그래서 {kids}−{r}={ans}개가 더 필요해요.",
+            [(f"{r}개", f"그건 남는 개수예요. 모두에게 하나씩 더 주려면 {kids}−{r}만큼 채워야 해요.")],
+            detail=f"'똑같이 나누기'는 나머지가 열쇠예요. 나머지가 {r}이면 다음 배수까지 {kids}−{r}={ans}만큼만 더하면 딱 떨어져요(모두 한 개씩 더). 반대로 '최소 몇 개 빼면 딱 떨어질까?'는 나머지 {r}개를 빼면 되고요. 배수와 나머지를 오가는 감각이에요.",
+        )
+
+
+# ── 101. 물탱크 채우기와 새기 = 순 일률 (난6, 변화와관계) ────────────────────
+def gen_tank_fill_drain():
+    for cap, fill, drain in [(60, 16, 4), (100, 25, 5), (48, 10, 4), (90, 21, 6)]:
+        net = fill - drain
+        assert cap % net == 0
+        ans = cap // net
+        add(
+            "tank", "CHANGE_RELATION", 6, ["일률", "채우기와 빼기"],
+            f"빈 물탱크(용량 {cap}L)에 물을 넣는 관은 1분에 {fill}L를 채우고, 동시에 새는 구멍으로 1분에 {drain}L가 빠져나가요. 탱크가 가득 차는 데 몇 분이 걸릴까요?",
+            f"{ans}분", [f"{cap // fill}분", f"{cap // drain}분", f"{ans + 2}분"],
+            f"채우기와 빼기가 동시에 일어나니 '1분에 실제로 늘어나는 양'을 봐요: {fill}−{drain}={net}L씩 늘어요. 용량 {cap}L를 이 속도로 채우니 {cap}÷{net}={ans}분이 걸려요.",
+            [(f"{cap // fill}분", "새는 물을 빼먹었어요. 실제로 늘어나는 양은 (넣는 양 − 새는 양)이에요.")],
+            detail="'동시에 반대로 작용'하는 문제는 순수 증가량(넣기 − 빼기)으로 바꾸면 간단해져요. 새는 양이 넣는 양보다 크면 영영 못 채우고, 같으면 그대로예요. 일 문제(하나는 만들고 하나는 부수는)도 똑같은 '순 일률'로 풀려요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
@@ -2064,6 +2188,8 @@ GENERATORS = [
     gen_reverse_diff, gen_leftover_crt, gen_square_numbers, gen_triangular,
     gen_power_of_two, gen_multiples_in_range, gen_common_mult_range, gen_weighted_average,
     gen_coin_flips, gen_dice_product, gen_salt_concentration, gen_percent_of,
+    gen_gear_ratio, gen_seesaw, gen_divisor_sum, gen_clock_strikes,
+    gen_ratio_three, gen_marble_transfer, gen_least_to_share, gen_tank_fill_drain,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
