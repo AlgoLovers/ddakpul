@@ -2295,6 +2295,80 @@ def gen_hanoi():
         )
 
 
+# ── 124. 거꾸로 연산 (난4, 수와연산) ─────────────────────────────────────────
+def gen_reverse_operation():
+    for mul, add_n, result in [(3, 5, 26), (4, 2, 30), (2, 7, 19), (5, 3, 43)]:
+        start = (result - add_n) // mul
+        assert start * mul + add_n == result and start > 1
+        add(
+            "reverseop", "NUMBER_OPERATION", 4, ["거꾸로 풀기", "역연산"],
+            f"어떤 수에 {mul}을 곱하고 {add_n}을 더했더니 {result}가 됐어요. 처음 수는 얼마일까요?",
+            str(start), [str(result - add_n), str(start + 2), str(start - 1)],
+            f"거꾸로 되짚어요. 마지막에 {add_n}을 더했으니 먼저 {add_n}을 빼면 {result}−{add_n}={result - add_n}. 그 전에 {mul}을 곱했으니 {mul}로 나누면 {result - add_n}÷{mul}={start}이에요. (검산: {start}×{mul}+{add_n}={result}.)",
+            [(str(result - add_n), "빼기까지만 하고 멈췄어요 — 곱한 것도 거꾸로 나눠야 해요.")],
+            detail=f"'거꾸로' 풀 땐 연산 순서를 뒤집고 반대 연산을 써요: 더하기↔빼기, 곱하기↔나누기. 마지막 연산부터 반대로 풀면 처음 수가 나와요. 이건 방정식({mul}×□+{add_n}={result})을 푸는 것과 똑같아요.",
+        )
+
+
+# ── 125. 닮음 넓이비 (난7, 도형과측정) ──────────────────────────────────────
+def gen_similar_area_ratio():
+    for r1, r2, area1 in [(2, 3, 8), (1, 2, 5), (3, 4, 18), (2, 5, 12)]:
+        assert (area1 * r2 * r2) % (r1 * r1) == 0
+        area2 = area1 * r2 * r2 // (r1 * r1)
+        add(
+            "simarea", "SHAPE_MEASUREMENT", 7, ["닮음", "넓이비"],
+            f"두 도형이 서로 닮았고 닮음비(대응 변의 길이 비)가 {r1}:{r2}예요. 작은 도형의 넓이가 {area1}㎠일 때, 큰 도형의 넓이는 몇 ㎠일까요?",
+            f"{area2}㎠", [f"{area1 * r2 // r1}㎠", f"{area1 * (r2 - r1)}㎠", f"{area2 + area1}㎠"],
+            f"길이가 {r1}:{r2}로 닮으면 넓이는 그 '제곱'인 {r1}²:{r2}² = {r1 * r1}:{r2 * r2}로 커져요(가로도 세로도 늘어나니까). 작은 넓이 {area1}에 {r2 * r2}/{r1 * r1}을 곱하면 {area2}㎠예요.",
+            [(f"{area1 * r2 // r1}㎠", f"넓이는 길이 비({r1}:{r2}) 그대로가 아니라 '제곱' 비로 커져요.")],
+            detail="닮음에서 길이가 k배면 넓이는 k²배, 부피는 k³배예요(차원마다 하나씩 곱해지니까). 지도 축척이 2배면 넓이는 4배, 인형이 3배 크면 무게(부피)는 27배. 이 '차원의 제곱·세제곱'은 실생활에서 자주 헷갈리는 부분이에요.",
+        )
+
+
+# ── 126. 악수 수로 사람 수 역산 (난6, 자료와가능성) ─────────────────────────
+def gen_handshake_reverse():
+    for n in [10, 6, 8, 12]:
+        total = n * (n - 1) // 2
+        add(
+            "handrev", "DATA_POSSIBILITY", 6, ["역산", "경우의 수"],
+            f"어떤 모임에서 사람들이 서로 한 번씩 빠짐없이 악수했더니 악수가 모두 {total}번 일어났어요. 이 모임에는 몇 명이 있었을까요?",
+            f"{n}명", [f"{total // 2}명", f"{n + 2}명", f"{n - 1}명"],
+            f"n명이 악수하면 n×(n−1)÷2번이에요. 거꾸로 '몇 명이면 {total}번일까?'를 찾아요. 곱해서 {total * 2}(={total}×2)가 되는 연이은 두 수(n과 n−1)를 찾으면 {n}×{n - 1}={n * (n - 1)}이니 {n}명이에요.",
+            [(f"{total // 2}명", "악수 수를 2로 나눈 게 사람 수가 아니에요 — n×(n−1)÷2 꼴을 거꾸로 풀어야 해요.")],
+            detail=f"'결과에서 사람 수를 역산'하는 문제예요. n×(n−1)=2×(악수 수)를 만족하는 '연이은 두 자연수'를 찾으면 돼요({total}번이면 n×(n−1)={total * 2}). 곱이 그 값이 되는 이웃한 두 수를 어림해 찾는 감각이 핵심이에요.",
+        )
+
+
+# ── 127. 나머지로 나누는 수 찾기 (난5, 수와연산) ────────────────────────────
+def gen_divisor_from_remainder():
+    for num, rem in [(100, 4), (58, 3), (86, 2), (75, 3)]:
+        target = num - rem
+        divs = [d for d in range(1, target + 1) if target % d == 0 and d > rem]
+        cnt = len(divs)
+        add(
+            "divrem", "NUMBER_OPERATION", 5, ["나머지", "약수 추론"],
+            f"{num}을 어떤 수로 나누었더니 나머지가 {rem}이었어요. 나누는 수가 될 수 있는 수는 모두 몇 가지일까요? (나누는 수는 나머지 {rem}보다 커야 해요.)",
+            f"{cnt}가지", [f"{cnt + 1}가지", f"{cnt - 1}가지", f"{cnt + 2}가지"],
+            f"'{num}을 나눠 {rem} 남는다'는 건 {num}−{rem}={target}이 그 수로 딱 나누어떨어진다는 뜻이에요. 그러니 나누는 수는 {target}의 약수 중 나머지 {rem}보다 큰 수들: {', '.join(map(str, divs))} — 모두 {cnt}가지예요.",
+            [(f"{cnt + 1}가지", f"나누는 수는 나머지 {rem}보다 커야 해요. 조건에 맞는 약수만 세요.")],
+            detail=f"'나눠서 나머지가 r'이면 (원래 수 − r)이 그 수로 나누어떨어져요 — 나누는 수는 (원래 수 − r)의 약수예요. 단 나머지는 나누는 수보다 작아야 하니 나누는 수 > r. 이 두 조건(약수 + r보다 큼)으로 거르는 게 핵심이에요.",
+        )
+
+
+# ── 128. 격자 대각선이 지나는 칸 = m+n−gcd (난7, 도형과측정) ─────────────────
+def gen_diagonal_cells():
+    for m, n in [(6, 4), (5, 3), (8, 6), (4, 2)]:
+        ans = m + n - gcd(m, n)
+        add(
+            "diagcells", "SHAPE_MEASUREMENT", 7, ["격자", "최대공약수"],
+            f"가로 {m}칸, 세로 {n}칸인 직사각형 모눈이 있어요. 한 꼭짓점에서 대각선 반대편 꼭짓점까지 곧게 선을 그으면, 이 선이 지나가는 모눈 칸은 모두 몇 칸일까요?",
+            f"{ans}칸", [f"{m + n}칸", f"{m * n}칸", f"{ans - 1}칸"],
+            f"대각선이 지나는 칸 수엔 공식이 있어요: 가로 + 세로 − (가로와 세로의 최대공약수) = {m}+{n}−{gcd(m, n)}={ans}칸. 최대공약수를 빼는 건, 대각선이 격자의 '점'을 지날 때 두 칸을 한 번에 건너뛰기 때문이에요.",
+            [(f"{m + n}칸", f"대각선이 격자 점을 지나며 칸을 건너뛰어요 — 최대공약수({gcd(m, n)})만큼 빼야 해요.")],
+            detail="m×n 격자의 대각선이 지나는 칸 수 = m + n − gcd(m,n)이에요. 대각선은 세로선을 넘고 가로선을 넘으며 칸을 하나씩 늘리는데, 격자 점(두 선이 겹치는 곳)을 지날 땐 한꺼번에 넘어 한 칸만 늘어요. 그 겹치는 횟수 때문에 gcd를 빼요.",
+        )
+
+
 # ── 118. 소금물 섞기 = 가중평균 (난7, 변화와관계) ───────────────────────────
 def gen_mixture():
     for w1, c1, w2, c2 in [(200, 10, 300, 20), (100, 20, 400, 10), (300, 10, 200, 20), (100, 8, 300, 16)]:
@@ -2539,6 +2613,8 @@ GENERATORS = [
     gen_fibonacci, gen_prime_pick, gen_gcd_lcm_product,
     gen_mixture, gen_arithmetic_nth, gen_geometric_nth,
     gen_clock_gain, gen_book_reading, gen_train_pass_person,
+    gen_reverse_operation, gen_similar_area_ratio, gen_handshake_reverse,
+    gen_divisor_from_remainder, gen_diagonal_cells,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
