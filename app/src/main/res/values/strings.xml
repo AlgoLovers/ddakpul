@@ -166,6 +166,15 @@
     <string name="report_caption_delta_down">지난주 대비 −%1$d%%p</string>
     <string name="report_caption_delta_same">지난주와 비슷해요</string>
 
+    <!-- 리포트 · 다음 한 걸음(실행 가능한 피드백) -->
+    <string name="report_nextstep_label">👉 다음 한 걸음</string>
+    <string name="report_nextstep_solve">지금 풀기</string>
+    <string name="report_nextstep_start_today">오늘은 아직 한 문제도 안 풀었어요. 짧게 한 문제라도 이어가면 흐름이 살아나요.</string>
+    <string name="report_nextstep_focus_area">요즘 \'%1$s\'이(가) 조금 버거워 보여요. 이 영역 문제를 함께 골라 풀어보면 좋아요.</string>
+    <string name="report_nextstep_ready">요즘 정답이 술술 나와요 — 곧 더 어려운 난이도로 올라갈 준비가 됐어요. 도전을 이어가요!</string>
+    <string name="report_nextstep_streak">🔥 %1$d일째 이어가는 중! 오늘도 한 문제로 흐름을 지켜요.</string>
+    <string name="report_nextstep_encourage">오늘도 한 문제씩. 정답보다 \'어떻게 풀었어?\'를 물어봐 주면 생각이 자라요.</string>
+
     <!-- 리포트 · 영역별 성취 -->
     <string name="report_area_title">영역별 성취</string>
     <string name="report_area_subtitle">네 영역 중 어디가 강하고 어디를 더 볼지 한눈에 확인하세요.</string>
