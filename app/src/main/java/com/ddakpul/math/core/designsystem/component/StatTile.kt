@@ -14,12 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-/** 라벨 + 큰 값 한 쌍을 보여주는 통계 타일(홈·리포트 공용). */
+/**
+ * 라벨 + 큰 값 한 쌍을 보여주는 통계 타일(홈·리포트 공용).
+ * [icon]은 값 위 이모지, [caption]은 라벨 아래 보조 수치(둘 다 선택).
+ */
 @Composable
 fun StatTile(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
+    icon: String? = null,
+    caption: String? = null,
 ) {
     Card(
         modifier = modifier,
@@ -28,8 +33,11 @@ fun StatTile(
         Column(
             modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp, horizontal = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
+            if (icon != null) {
+                Text(text = icon, style = MaterialTheme.typography.titleMedium)
+            }
             Text(
                 text = value,
                 style = MaterialTheme.typography.headlineMedium,
@@ -41,6 +49,13 @@ fun StatTile(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            if (caption != null) {
+                Text(
+                    text = caption,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }

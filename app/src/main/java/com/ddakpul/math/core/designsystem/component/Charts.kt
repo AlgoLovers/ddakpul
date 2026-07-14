@@ -1,15 +1,19 @@
 package com.ddakpul.math.core.designsystem.component
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
@@ -25,6 +29,43 @@ import androidx.compose.ui.unit.sp
 
 // 리포트용 미니 차트 모음. 전부 단일 시리즈라 범례 없이 직접 라벨만 쓰고,
 // 그리드·축은 희미하게(outlineVariant), 데이터 마크는 가늘게 그린다.
+
+/**
+ * 난이도 [min]~[max] 진행 트랙. 지나온 단계는 옅게, 현재 단계는 진하게, 남은 단계는 비워
+ * '어디까지 왔는지'를 한눈에 보여준다(이 앱의 성장 = 난이도 등반, 학년 개념 없음).
+ */
+@Composable
+fun LevelTrack(
+    current: Int,
+    min: Int,
+    max: Int,
+    modifier: Modifier = Modifier,
+) {
+    val primary = MaterialTheme.colorScheme.primary
+    val past = primary.copy(alpha = 0.4f)
+    val future = MaterialTheme.colorScheme.surfaceVariant
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        for (level in min..max) {
+            val color =
+                when {
+                    level < current -> past
+                    level == current -> primary
+                    else -> future
+                }
+            Box(
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .height(10.dp)
+                        .clip(RoundedCornerShape(5.dp))
+                        .background(color),
+            )
+        }
+    }
+}
 
 /** 일별 학습량 막대 차트. 값 라벨은 최대값과 강조 칸에만 붙인다(라벨 과다 방지). */
 @Composable
