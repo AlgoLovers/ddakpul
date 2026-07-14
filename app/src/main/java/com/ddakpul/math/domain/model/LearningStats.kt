@@ -85,6 +85,8 @@ data class LearningStats(
      * 복습 루프가 작동한다는 증거이자 "틀림 = 나쁨이 아님" 메시지. 틀린 문제가 없으면 null.
      */
     val errorRecoveryRate: Float?,
+    /** 최근 틀린 문제(각 문제의 '가장 최근 시도'가 오답인 것) — 오답 노트용. 최신순. */
+    val recentMistakes: List<Problem> = emptyList(),
 ) {
     val accuracy: Float get() = if (totalSolved == 0) 0f else correctCount.toFloat() / totalSolved
     val isEmpty: Boolean get() = totalSolved == 0

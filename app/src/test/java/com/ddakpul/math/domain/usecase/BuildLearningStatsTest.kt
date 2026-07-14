@@ -44,6 +44,23 @@ class BuildLearningStatsTest {
     }
 
     @Test
+    fun recentMistakes_onlyLatestWrongPerProblem_newestFirst() {
+        val stats =
+            build(
+                listOf(
+                    attempt("num1", false, timestamp = DAY * 100), // num1 틀림
+                    attempt("num1", true, timestamp = DAY * 101), // 나중에 맞힘 → 오답 노트 제외
+                    attempt("num2", true, timestamp = DAY * 102),
+                    attempt("num2", false, timestamp = DAY * 103), // 최근 시도가 오답 → 포함
+                    attempt("geo1", false, timestamp = DAY * 104), // 최근 오답 → 포함
+                ),
+            )
+
+        // 최신순으로 geo1(104) → num2(103). 다시 맞힌 num1은 빠진다.
+        assertThat(stats.recentMistakes.map { it.id }).containsExactly("geo1", "num2").inOrder()
+    }
+
+    @Test
     fun dailyStats_groupByLocalDay_respectingZoneOffset() {
         // UTC 기준 23:30과 다음날 00:30 — 오프셋 +1h를 주면 같은 날(자정 넘김)로 묶이지 않고
         // 23:30+1h=다음날 00:30, 00:30+1h=다음날 01:30으로 둘 다 "다음날"이 된다.
