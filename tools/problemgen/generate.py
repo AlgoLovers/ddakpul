@@ -1563,8 +1563,122 @@ def gen_height_order():
         )
 
 
+# ── 63. 최소공배수 — 동시 출발 (난4, 변화와관계) ─────────────────────────────
+def gen_lcm_together():
+    for a, b in [(4, 6), (6, 8), (9, 12), (10, 15)]:
+        lcm = a * b // gcd(a, b)
+        add(
+            "lcmbus", "CHANGE_RELATION", 4, ["최소공배수", "주기"],
+            f"버스 두 대가 같은 정류장에서 동시에 출발했어요. 파란 버스는 {a}분마다, 빨간 버스는 {b}분마다 출발해요. 다음에 두 버스가 '다시 동시에' 출발하는 건 몇 분 뒤일까요?",
+            f"{lcm}분", [f"{a + b}분", f"{lcm // 2}분", f"{lcm + a}분"],
+            f"파란 버스가 출발하는 시각은 {a}, {a * 2}, {a * 3}…분처럼 {a}의 배수예요. 빨간 버스는 {b}, {b * 2}…분처럼 {b}의 배수고요. 두 버스가 함께 출발하려면 두 배수가 겹쳐야 하니 '공배수'를 찾고, 그중 가장 이른 시각이 '최소공배수'예요. {a}와 {b}의 최소공배수는 {lcm}이라 {lcm}분 뒤에 처음으로 다시 만나요.",
+            [(f"{a + b}분", "두 시간을 더하는 게 아니라, 공통으로 겹치는 배수(최소공배수)를 찾아야 해요.")],
+            detail=f"최소공배수는 두 수의 곱을 최대공약수로 나눠 빠르게 구해요: {a}×{b}÷{gcd(a, b)}={lcm}. 소인수분해로 '각 소수를 더 많이 나온 쪽만큼' 곱해도 같아요. 신호등·톱니바퀴·행성의 주기가 겹치는 순간이 모두 이 최소공배수예요.",
+        )
+
+
+# ── 64. 연속한 수의 합 (난3, 수와연산) ───────────────────────────────────────
+def gen_consecutive_sum():
+    for count, mid in [(3, 8), (5, 12), (3, 20), (5, 30)]:
+        total = count * mid
+        pattern = "□−1, □, □+1" if count == 3 else "□−2, □−1, □, □+1, □+2"
+        add(
+            "consec", "NUMBER_OPERATION", 3, ["연속한 수", "가운데 기준"],
+            f"연속한 자연수 {count}개를 더했더니 {total}이 됐어요. 이 {count}개 중 '가운데' 수는 얼마일까요?",
+            str(mid), [str(total // 2), str(mid - 1), str(mid + count)],
+            f"연속한 수는 가운데를 기준으로 양쪽이 대칭이에요. 가운데를 □라 하면 {pattern}처럼 되죠. 그러면 −와 +가 서로 지워져서 합이 '가운데 × 개수'가 돼요. 그러니 가운데 = {total} ÷ {count} = {mid}이에요.",
+            [(str(total // 2), f"2로 나누는 게 아니라, 개수({count})로 나눠야 가운데가 나와요.")],
+            detail=f"'가운데 기준으로 대칭 상쇄'는 개수가 홀수일 때 특히 깔끔해요(가운데가 딱 하나). 짝수 개면 가운데가 두 수 사이라 합은 '가운데 두 수의 평균 × 개수'가 되고요. 이 눈은 1부터 100까지 더하기(가우스의 방법)로도 이어져요.",
+        )
+
+
+# ── 65. 비둘기집 원리 (난5, 자료와가능성) ────────────────────────────────────
+def gen_pigeonhole():
+    for names in [["빨강", "파랑", "노랑"], ["검정", "흰색"], ["빨강", "파랑", "노랑", "초록"], ["빨강", "노랑", "초록"]]:
+        colors = len(names)
+        ans = colors + 1
+        colortxt = "·".join(names)
+        add(
+            "pigeon", "DATA_POSSIBILITY", 5, ["비둘기집 원리", "최악의 경우"],
+            f"서랍 안에 {colortxt} 양말이 마구 섞여 있어요(각 색이 넉넉히 있어요). 불을 끄고 색을 안 보고 꺼낼 때, '같은 색 2짝'을 반드시 갖게 되려면 최소 몇 짝을 꺼내야 할까요?",
+            f"{ans}짝", [f"{colors}짝", f"{ans + 1}짝", f"{ans + 2}짝"],
+            f"'반드시'를 물으니 가장 운이 나쁜 경우를 생각해요. 최악이면 색깔마다 딱 한 짝씩 뽑혀 {colors}짝까진 전부 다른 색일 수 있어요. 하지만 한 짝을 '더' 꺼내면 이미 나온 {colors}가지 색 중 하나와 반드시 겹쳐요. 그래서 {colors}+1={ans}짝이면 같은 색 2짝이 확실해요.",
+            [(f"{colors}짝", "그 수까진 모두 다른 색일 수 있어요. '반드시'가 되려면 한 짝 더 필요해요.")],
+            detail=f"이게 '비둘기집 원리'예요: 비둘기(꺼낸 양말)가 집({colors}가지 색)보다 많으면 어느 한 집엔 둘 이상이 들어가요. '최악의 경우를 먼저 그리고 거기서 하나 더'가 핵심 기술이에요. 반에서 생일이 같은 달인 친구 찾기도 같은 원리예요.",
+        )
+
+
+# ── 66. 빠진 점수 — 평균 역산 (난3, 자료와가능성) ────────────────────────────
+def gen_missing_score():
+    for subjects, avg, known in [(4, 85, [80, 90, 88]), (5, 80, [75, 82, 78, 90]), (4, 90, [92, 88, 95]), (3, 70, [65, 72])]:
+        total = subjects * avg
+        missing = total - sum(known)
+        add(
+            "missscore", "DATA_POSSIBILITY", 3, ["평균", "합으로 역산"],
+            f"{subjects}과목 시험의 평균이 {avg}점이에요. {len(known)}과목 점수는 {', '.join(map(str, known))}점이에요. 나머지 한 과목은 몇 점일까요?",
+            f"{missing}점", [f"{avg}점", f"{missing - 5}점", f"{missing + 5}점"],
+            f"평균을 '합'으로 바꿔 생각해요. {subjects}과목 평균이 {avg}점이면 총점은 {subjects}×{avg}={total}점이어야 해요. 이미 아는 {len(known)}과목 합이 {sum(known)}점이니, 나머지 한 과목 = {total}−{sum(known)}={missing}점이에요.",
+            [(f"{avg}점", "평균 점수를 그대로 답하면 안 돼요. 총점에서 아는 점수를 빼야 해요.")],
+            detail="평균 문제의 열쇠는 '평균 = 총합 ÷ 개수'를 거꾸로 쓰는 거예요. 총합 = 평균 × 개수. 총합만 손에 쥐면 빠진 값은 뺄셈 한 번이에요. '몇 점 더 받아야 평균이 X가 될까?'도 전부 이 총합 사고로 풀려요.",
+        )
+
+
+# ── 67. 거듭제곱의 일의 자리 (난6, 수와연산) ─────────────────────────────────
+def gen_units_cycle():
+    for base, exp in [(3, 100), (7, 50), (2, 40), (8, 33)]:
+        ans = pow(base, exp, 10)
+        cycle = []
+        x = base % 10
+        while x not in cycle:
+            cycle.append(x)
+            x = x * base % 10
+        period = len(cycle)
+        distractors = [str(d) for d in cycle if d != ans][:3]
+        add(
+            "unitcycle", "NUMBER_OPERATION", 6, ["일의 자리", "주기"],
+            f"{base}을(를) {exp}번 곱한 수의 '일의 자리 숫자'는 무엇일까요?",
+            str(ans), distractors,
+            f"큰 수를 다 계산할 필요 없이 '일의 자리'만 따라가면 돼요. {base}의 거듭제곱은 일의 자리가 {', '.join(map(str, cycle))} 이렇게 {period}개씩 반복돼요(주기 {period}). {exp}번째가 주기 안 어디인지는 {exp}÷{period}의 나머지로 정해지고(나머지가 0이면 맨 끝), 그 자리 숫자가 {ans}예요.",
+            [(distractors[0], "그 자리 숫자는 '몇 번째로 곱했나'에 따라 달라져요. 주기 안 위치를 정확히 세었는지 봐요.")],
+            detail="거듭제곱의 일의 자리는 반드시 '주기'를 이뤄요(일의 자리는 0~9뿐이라 언젠가 반복). 그래서 지수를 주기로 나눈 '나머지'만 보면 끝이에요. 이 '주기+나머지'(modular) 사고는 요일·시계·달력 계산과 완전히 같은 도구예요.",
+        )
+
+
+# ── 68. 집합 — 둘 다 하는 사람 (난5, 자료와가능성) ───────────────────────────
+def gen_set_both():
+    for total, a, b, neither in [(30, 18, 15, 3), (40, 25, 20, 5), (25, 15, 14, 2), (35, 20, 22, 6)]:
+        both = a + b - (total - neither)
+        assert 0 < both <= min(a, b)
+        add(
+            "setboth", "DATA_POSSIBILITY", 5, ["집합", "포함배제"],
+            f"어느 반 {total}명에게 물었어요. 축구를 좋아하는 사람 {a}명, 농구를 좋아하는 사람 {b}명, 둘 다 안 좋아하는 사람 {neither}명이에요. 축구와 농구를 '둘 다' 좋아하는 사람은 몇 명일까요?",
+            f"{both}명", [f"{both - neither}명", f"{both + neither}명", f"{total - neither}명"],
+            f"둘 다 안 하는 {neither}명을 빼면, 적어도 하나는 좋아하는 사람이 {total}−{neither}={total - neither}명이에요. 그런데 축구({a}) + 농구({b}) = {a + b}명으로 세면 '둘 다' 좋아하는 사람을 두 번 센 셈이에요. 그래서 두 번 센 만큼이 겹치는 사람: {a + b}−{total - neither}={both}명이에요.",
+            [(f"{both - neither}명", "'둘 다 안 하는 사람'을 도로 반영하는 걸 빠뜨렸어요."), (f"{total - neither}명", "그건 '적어도 하나'를 좋아하는 사람 수예요.")],
+            detail="이게 포함배제의 기본 그림이에요: (A 또는 B) = A + B − (A 그리고 B). 여기서 'A 또는 B'는 전체에서 '아무것도 안 함'을 뺀 수고요. 벤 다이어그램 두 원을 그려 '겹치는 부분을 두 번 세었으니 한 번 뺀다'만 기억하면 어떤 두 집합 문제도 풀려요.",
+        )
+
+
+# ── 69. 왕복 평균 속력 (난6, 변화와관계) ─────────────────────────────────────
+def gen_round_trip():
+    for va, vb in [(30, 60), (40, 60), (20, 30), (48, 16)]:
+        avg = 2 * va * vb // (va + vb)
+        assert 2 * va * vb % (va + vb) == 0
+        dist = va * vb // gcd(va, vb)  # 편도 거리를 lcm으로 두면 시간이 정수로 딱 떨어짐
+        add(
+            "roundtrip", "CHANGE_RELATION", 6, ["평균 속력", "조화평균"],
+            f"집에서 학교까지 갈 때는 시속 {va}km, 올 때는 시속 {vb}km로 갔어요. 왕복 '평균 속력'은 시속 몇 km일까요?",
+            f"{avg}km", [f"{(va + vb) // 2}km", f"{va + vb}km", f"{avg - 5}km"],
+            f"평균 속력은 '(전체 거리) ÷ (전체 시간)'이지, 두 속력의 산술평균이 아니에요. 편도 거리를 {dist}km라 두면 갈 때 {dist}÷{va}={dist // va}시간, 올 때 {dist}÷{vb}={dist // vb}시간. 왕복 거리 {2 * dist}km ÷ 전체 시간 {dist // va + dist // vb}시간 = {avg}km/h예요. 느린 쪽에 시간을 더 쓰니 단순 평균보다 낮아져요.",
+            [(f"{(va + vb) // 2}km", "두 속력을 그냥 더해 반으로 나누면 안 돼요 — 느린 구간에 시간이 더 걸리거든요.")],
+            detail="같은 '거리'를 다른 속력으로 갈 때의 평균은 산술평균이 아니라 조화평균(2ab/(a+b))이에요. 직관과 달리 늘 느린 쪽에 더 끌려가요. 반대로 같은 '시간'을 다른 속력으로 가면 그땐 산술평균이 맞고요 — '무엇이 같은가(거리냐 시간이냐)'를 먼저 보는 게 핵심이에요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
+    gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
+    gen_units_cycle, gen_set_both, gen_round_trip,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
