@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.Entitlement
 import com.ddakpul.math.domain.model.PremiumPass
+import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import kotlin.math.ceil
 
 private const val MILLIS_PER_DAY = 86_400_000L
@@ -63,6 +64,10 @@ fun PaywallScreen(
                 TextButton(onClick = onClose) { Text(stringResource(R.string.paywall_close)) }
             }
 
+            if (viewModel.launchFreeUntilMillis > 0L && !entitlement.isPremium(now)) {
+                LaunchFreeNoteCard(untilMillis = viewModel.launchFreeUntilMillis)
+            }
+
             if (entitlement.isPremium(now)) {
                 ActiveStatusCard(entitlement = entitlement, now = now)
             }
@@ -91,6 +96,32 @@ fun PaywallScreen(
                 text = stringResource(R.string.paywall_test_note),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+/** 출시 기념 무료 기간 안내 — 지금은 결제하지 않아도 다 열려 있음을 정직하게 알린다. */
+@Composable
+private fun LaunchFreeNoteCard(untilMillis: Long) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.paywall_launch_free_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+            )
+            Text(
+                text = stringResource(R.string.paywall_launch_free_desc, launchFreeDeadlineText(untilMillis)),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
             )
         }
     }
