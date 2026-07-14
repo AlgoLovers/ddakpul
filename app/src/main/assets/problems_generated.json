@@ -7778,6 +7778,311 @@
     }
    },
    "detailedExplanation": "두 방법으로 풀려요. ①전체(35) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요."
+  },
+  {
+   "id": "gen-subst-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-subst-3",
+   "concepts": [
+    "치환",
+    "단위 바꾸기"
+   ],
+   "statement": "사과 1개는 귤 2개와 같고, 귤 1개는 감 3개와 같아요. 그러면 사과 1개는 감 몇 개와 같을까요?",
+   "choices": [
+    "6개",
+    "8개",
+    "9개",
+    "5개"
+   ],
+   "answerIndex": 0,
+   "explanation": "사과 1개 = 귤 2개인데, 그 귤 하나하나가 다시 감 3개예요. 그래서 사과 1개 = 감 2×3=6개. 단위를 한 단계씩 바꿀 때마다 곱해 가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "더하는 게 아니라, 한 단계 바꿀 때마다 곱해야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'단위 바꾸기(치환)'는 곱으로 이어져요: 사과→귤는 ×2, 귤→감는 ×3이니 사과→감는 ×(2×3). 환율이나 단위 변환(1시간=60분, 1분=60초 → 1시간=3600초)도 똑같은 원리예요."
+  },
+  {
+   "id": "gen-subst-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-subst-3",
+   "concepts": [
+    "치환",
+    "단위 바꾸기"
+   ],
+   "statement": "공 1개는 구슬 3개와 같고, 구슬 1개는 알사탕 2개와 같아요. 그러면 공 1개는 알사탕 몇 개와 같을까요?",
+   "choices": [
+    "6개",
+    "5개",
+    "9개",
+    "8개"
+   ],
+   "answerIndex": 0,
+   "explanation": "공 1개 = 구슬 3개인데, 그 구슬 하나하나가 다시 알사탕 2개예요. 그래서 공 1개 = 알사탕 3×2=6개. 단위를 한 단계씩 바꿀 때마다 곱해 가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "더하는 게 아니라, 한 단계 바꿀 때마다 곱해야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'단위 바꾸기(치환)'는 곱으로 이어져요: 공→구슬는 ×3, 구슬→알사탕는 ×2이니 공→알사탕는 ×(3×2). 환율이나 단위 변환(1시간=60분, 1분=60초 → 1시간=3600초)도 똑같은 원리예요."
+  },
+  {
+   "id": "gen-subst-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-subst-3",
+   "concepts": [
+    "치환",
+    "단위 바꾸기"
+   ],
+   "statement": "상자 1개는 봉지 2개와 같고, 봉지 1개는 낱개 4개와 같아요. 그러면 상자 1개는 낱개 몇 개와 같을까요?",
+   "choices": [
+    "7개",
+    "10개",
+    "6개",
+    "8개"
+   ],
+   "answerIndex": 3,
+   "explanation": "상자 1개 = 봉지 2개인데, 그 봉지 하나하나가 다시 낱개 4개예요. 그래서 상자 1개 = 낱개 2×4=8개. 단위를 한 단계씩 바꿀 때마다 곱해 가면 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "더하는 게 아니라, 한 단계 바꿀 때마다 곱해야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'단위 바꾸기(치환)'는 곱으로 이어져요: 상자→봉지는 ×2, 봉지→낱개는 ×4이니 상자→낱개는 ×(2×4). 환율이나 단위 변환(1시간=60분, 1분=60초 → 1시간=3600초)도 똑같은 원리예요."
+  },
+  {
+   "id": "gen-coincomb-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-coincomb-4",
+   "concepts": [
+    "경우의 수",
+    "동전 조합"
+   ],
+   "statement": "500원과 100원짜리 동전으로 1000원을 만들려고 해요. (동전은 얼마든지 써도 되고 안 써도 돼요.) 만드는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "5가지",
+    "4가지",
+    "3가지",
+    "2가지"
+   ],
+   "answerIndex": 2,
+   "explanation": "큰 동전(500원)을 0개, 1개, 2개… 넣어 보고 나머지를 작은 동전(100원)으로 딱 채울 수 있는지 세어요. 빠짐없이·겹치지 않게 세면 3가지예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "500원을 몇 개 쓸지 정하면 나머지는 자동으로 정해져요. 그러니 500원 개수만 0,1,2…로 늘려 가며 100원으로 딱 떨어지는 경우만 세면 빠짐도 겹침도 없죠. '한 가지를 고정하고 나머지를 따지기'는 경우의 수의 기본기예요."
+  },
+  {
+   "id": "gen-coincomb-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-coincomb-4",
+   "concepts": [
+    "경우의 수",
+    "동전 조합"
+   ],
+   "statement": "100원과 50원짜리 동전으로 500원을 만들려고 해요. (동전은 얼마든지 써도 되고 안 써도 돼요.) 만드는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "8가지",
+    "5가지",
+    "6가지",
+    "7가지"
+   ],
+   "answerIndex": 2,
+   "explanation": "큰 동전(100원)을 0개, 1개, 2개… 넣어 보고 나머지를 작은 동전(50원)으로 딱 채울 수 있는지 세어요. 빠짐없이·겹치지 않게 세면 6가지예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "100원을 몇 개 쓸지 정하면 나머지는 자동으로 정해져요. 그러니 100원 개수만 0,1,2…로 늘려 가며 50원으로 딱 떨어지는 경우만 세면 빠짐도 겹침도 없죠. '한 가지를 고정하고 나머지를 따지기'는 경우의 수의 기본기예요."
+  },
+  {
+   "id": "gen-coincomb-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-coincomb-4",
+   "concepts": [
+    "경우의 수",
+    "동전 조합"
+   ],
+   "statement": "500원과 100원짜리 동전으로 900원을 만들려고 해요. (동전은 얼마든지 써도 되고 안 써도 돼요.) 만드는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "3가지",
+    "1가지",
+    "4가지",
+    "2가지"
+   ],
+   "answerIndex": 3,
+   "explanation": "큰 동전(500원)을 0개, 1개, 2개… 넣어 보고 나머지를 작은 동전(100원)으로 딱 채울 수 있는지 세어요. 빠짐없이·겹치지 않게 세면 2가지예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "500원을 몇 개 쓸지 정하면 나머지는 자동으로 정해져요. 그러니 500원 개수만 0,1,2…로 늘려 가며 100원으로 딱 떨어지는 경우만 세면 빠짐도 겹침도 없죠. '한 가지를 고정하고 나머지를 따지기'는 경우의 수의 기본기예요."
+  },
+  {
+   "id": "gen-coincomb-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 4,
+   "groupId": "g-gen-coincomb-4",
+   "concepts": [
+    "경우의 수",
+    "동전 조합"
+   ],
+   "statement": "100원과 50원짜리 동전으로 600원을 만들려고 해요. (동전은 얼마든지 써도 되고 안 써도 돼요.) 만드는 방법은 모두 몇 가지일까요?",
+   "choices": [
+    "6가지",
+    "9가지",
+    "8가지",
+    "7가지"
+   ],
+   "answerIndex": 3,
+   "explanation": "큰 동전(100원)을 0개, 1개, 2개… 넣어 보고 나머지를 작은 동전(50원)으로 딱 채울 수 있는지 세어요. 빠짐없이·겹치지 않게 세면 7가지예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "100원을 몇 개 쓸지 정하면 나머지는 자동으로 정해져요. 그러니 100원 개수만 0,1,2…로 늘려 가며 50원으로 딱 떨어지는 경우만 세면 빠짐도 겹침도 없죠. '한 가지를 고정하고 나머지를 따지기'는 경우의 수의 기본기예요."
+  },
+  {
+   "id": "gen-gcdtile-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gcdtile-5",
+   "concepts": [
+    "최대공약수",
+    "타일 깔기"
+   ],
+   "statement": "가로 6칸, 세로 4칸인 직사각형 바닥에 똑같은 정사각형 타일을 빈틈·겹침 없이 깔려고 해요. 쓸 수 있는 '가장 큰' 정사각형 타일의 한 변은 몇 칸일까요?",
+   "choices": [
+    "4칸",
+    "2칸",
+    "1칸",
+    "3칸"
+   ],
+   "answerIndex": 1,
+   "explanation": "타일 한 변이 가로도 세로도 딱 나눠떨어져야 빈틈이 안 생겨요. 그런 수 중 가장 큰 것이 최대공약수예요. 6와 4의 최대공약수는 2이니 가장 큰 타일은 한 변 2칸이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "짧은 변으로는 긴 변이 딱 안 나눠질 수 있어요. 두 변을 모두 나눠야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 6,
+     "h": 4
+    }
+   },
+   "detailedExplanation": "'두 수를 모두 나누는 가장 큰 수'가 최대공약수(GCD)예요. 이 타일이면 가로 6÷2=3개, 세로 4÷2=2개, 모두 6개가 필요해요. 거꾸로 '두 길이를 겹쳐 만드는 가장 작은 정사각형'은 최소공배수랍니다."
+  },
+  {
+   "id": "gen-gcdtile-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gcdtile-5",
+   "concepts": [
+    "최대공약수",
+    "타일 깔기"
+   ],
+   "statement": "가로 9칸, 세로 6칸인 직사각형 바닥에 똑같은 정사각형 타일을 빈틈·겹침 없이 깔려고 해요. 쓸 수 있는 '가장 큰' 정사각형 타일의 한 변은 몇 칸일까요?",
+   "choices": [
+    "2칸",
+    "6칸",
+    "3칸",
+    "4칸"
+   ],
+   "answerIndex": 2,
+   "explanation": "타일 한 변이 가로도 세로도 딱 나눠떨어져야 빈틈이 안 생겨요. 그런 수 중 가장 큰 것이 최대공약수예요. 9와 6의 최대공약수는 3이니 가장 큰 타일은 한 변 3칸이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "짧은 변으로는 긴 변이 딱 안 나눠질 수 있어요. 두 변을 모두 나눠야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 9,
+     "h": 6
+    }
+   },
+   "detailedExplanation": "'두 수를 모두 나누는 가장 큰 수'가 최대공약수(GCD)예요. 이 타일이면 가로 9÷3=3개, 세로 6÷3=2개, 모두 6개가 필요해요. 거꾸로 '두 길이를 겹쳐 만드는 가장 작은 정사각형'은 최소공배수랍니다."
+  },
+  {
+   "id": "gen-gcdtile-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gcdtile-5",
+   "concepts": [
+    "최대공약수",
+    "타일 깔기"
+   ],
+   "statement": "가로 8칸, 세로 6칸인 직사각형 바닥에 똑같은 정사각형 타일을 빈틈·겹침 없이 깔려고 해요. 쓸 수 있는 '가장 큰' 정사각형 타일의 한 변은 몇 칸일까요?",
+   "choices": [
+    "2칸",
+    "6칸",
+    "1칸",
+    "3칸"
+   ],
+   "answerIndex": 0,
+   "explanation": "타일 한 변이 가로도 세로도 딱 나눠떨어져야 빈틈이 안 생겨요. 그런 수 중 가장 큰 것이 최대공약수예요. 8와 6의 최대공약수는 2이니 가장 큰 타일은 한 변 2칸이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "짧은 변으로는 긴 변이 딱 안 나눠질 수 있어요. 두 변을 모두 나눠야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 8,
+     "h": 6
+    }
+   },
+   "detailedExplanation": "'두 수를 모두 나누는 가장 큰 수'가 최대공약수(GCD)예요. 이 타일이면 가로 8÷2=4개, 세로 6÷2=3개, 모두 12개가 필요해요. 거꾸로 '두 길이를 겹쳐 만드는 가장 작은 정사각형'은 최소공배수랍니다."
+  },
+  {
+   "id": "gen-gcdtile-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-gen-gcdtile-5",
+   "concepts": [
+    "최대공약수",
+    "타일 깔기"
+   ],
+   "statement": "가로 10칸, 세로 4칸인 직사각형 바닥에 똑같은 정사각형 타일을 빈틈·겹침 없이 깔려고 해요. 쓸 수 있는 '가장 큰' 정사각형 타일의 한 변은 몇 칸일까요?",
+   "choices": [
+    "1칸",
+    "4칸",
+    "3칸",
+    "2칸"
+   ],
+   "answerIndex": 3,
+   "explanation": "타일 한 변이 가로도 세로도 딱 나눠떨어져야 빈틈이 안 생겨요. 그런 수 중 가장 큰 것이 최대공약수예요. 10와 4의 최대공약수는 2이니 가장 큰 타일은 한 변 2칸이에요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "짧은 변으로는 긴 변이 딱 안 나눠질 수 있어요. 두 변을 모두 나눠야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 10,
+     "h": 4
+    }
+   },
+   "detailedExplanation": "'두 수를 모두 나누는 가장 큰 수'가 최대공약수(GCD)예요. 이 타일이면 가로 10÷2=5개, 세로 4÷2=2개, 모두 10개가 필요해요. 거꾸로 '두 길이를 겹쳐 만드는 가장 작은 정사각형'은 최소공배수랍니다."
   }
  ]
 }
