@@ -5456,6 +5456,597 @@
    }
   },
   {
+   "id": "gen-cubetiny-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "그림처럼 놓인 쌓기나무는 모두 몇 개일까요?",
+   "choices": [
+    "4개",
+    "2개",
+    "1개",
+    "3개"
+   ],
+   "answerIndex": 1,
+   "explanation": "블록을 하나씩 세어 보면 모두 2개예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 1
+    },
+    "heights": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubetiny-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "그림처럼 놓인 쌓기나무는 모두 몇 개일까요?",
+   "choices": [
+    "2개",
+    "4개",
+    "5개",
+    "3개"
+   ],
+   "answerIndex": 3,
+   "explanation": "블록을 하나씩 세어 보면 모두 3개예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 1
+    },
+    "heights": [
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubetiny-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "그림처럼 놓인 쌓기나무는 모두 몇 개일까요?",
+   "choices": [
+    "4개",
+    "2개",
+    "3개",
+    "5개"
+   ],
+   "answerIndex": 2,
+   "explanation": "블록을 하나씩 세어 보면 모두 3개예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 1
+    },
+    "heights": [
+     2,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubetiny-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "그림처럼 놓인 쌓기나무는 모두 몇 개일까요?",
+   "choices": [
+    "3개",
+    "6개",
+    "5개",
+    "4개"
+   ],
+   "answerIndex": 3,
+   "explanation": "블록을 하나씩 세어 보면 모두 4개예요.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 1
+    },
+    "heights": [
+     1,
+     2,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtiny-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-gridtiny-1",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형은 모눈 몇 칸일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "5㎠",
+    "2㎠",
+    "4㎠",
+    "3㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "칸을 하나씩 세어요. 2×2에서 빈 1칸을 빼면 3칸 → 3㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 2,
+     "rows": 2,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     2,
+     0,
+     2,
+     1,
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtiny-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-gridtiny-1",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형은 모눈 몇 칸일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "5㎠",
+    "6㎠",
+    "3㎠",
+    "4㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "칸을 하나씩 세어요. 아래 3칸과 위 1칸을 더하면 4칸 → 4㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 3,
+     "rows": 2,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     3,
+     0,
+     3,
+     1,
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
+    ]
+   }
+  },
+  {
+   "id": "gen-gridtiny-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-gridtiny-1",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형은 모눈 몇 칸일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "7㎠",
+    "6㎠",
+    "4㎠",
+    "5㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "칸을 하나씩 세어요. 아래 2×2(4칸)와 위 1칸을 더하면 5칸 → 5㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 2,
+     "rows": 3,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     2,
+     0,
+     2,
+     2,
+     1,
+     2,
+     1,
+     3,
+     0,
+     3
+    ]
+   }
+  },
+  {
+   "id": "gen-grideasy-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-grideasy-2",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "4㎠",
+    "6㎠",
+    "7㎠",
+    "5㎠"
+   ],
+   "answerIndex": 3,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 아래 4칸과 위 1칸을 더하면 5칸 → 5㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 2,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     4,
+     0,
+     4,
+     1,
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
+    ]
+   }
+  },
+  {
+   "id": "gen-grideasy-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-grideasy-2",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "5㎠",
+    "4㎠",
+    "7㎠",
+    "6㎠"
+   ],
+   "answerIndex": 0,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 큰 부분과 세로 기둥으로 나눠 세어요 → 5㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 3,
+     "rows": 3,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     3,
+     0,
+     3,
+     3,
+     2,
+     3,
+     2,
+     1,
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-grideasy-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-grideasy-2",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "8㎠",
+    "10㎠",
+    "9㎠",
+    "7㎠"
+   ],
+   "answerIndex": 0,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 3×3(9칸)에서 오른쪽 위 빈 1칸을 빼면 8칸 → 8㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 3,
+     "rows": 3,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     3,
+     0,
+     3,
+     2,
+     2,
+     2,
+     2,
+     3,
+     0,
+     3
+    ]
+   }
+  },
+  {
+   "id": "gen-grideasy-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-gen-grideasy-2",
+   "concepts": [
+    "넓이",
+    "칸 세기"
+   ],
+   "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+   "choices": [
+    "4㎠",
+    "5㎠",
+    "7㎠",
+    "6㎠"
+   ],
+   "answerIndex": 1,
+   "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 아래 4칸과 오른쪽 위 1칸 → 5㎠.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 2,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     4,
+     0,
+     4,
+     2,
+     3,
+     2,
+     3,
+     1,
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubemid-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (뒤·아래 안 보이는 나무도 세어요)",
+   "choices": [
+    "6개",
+    "5개",
+    "7개",
+    "4개"
+   ],
+   "answerIndex": 0,
+   "explanation": "기둥마다 층수를 세어 모두 더하면 6개예요. 앞·위에 가려도 아래는 채워져 있어요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "가려서 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 2
+    },
+    "heights": [
+     1,
+     2,
+     1,
+     2
+    ]
+   }
+  },
+  {
+   "id": "gen-cubemid-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (뒤·아래 안 보이는 나무도 세어요)",
+   "choices": [
+    "7개",
+    "5개",
+    "6개",
+    "4개"
+   ],
+   "answerIndex": 2,
+   "explanation": "기둥마다 층수를 세어 모두 더하면 6개예요. 앞·위에 가려도 아래는 채워져 있어요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "가려서 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 2
+    },
+    "heights": [
+     2,
+     2,
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubemid-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (뒤·아래 안 보이는 나무도 세어요)",
+   "choices": [
+    "6개",
+    "8개",
+    "5개",
+    "7개"
+   ],
+   "answerIndex": 3,
+   "explanation": "기둥마다 층수를 세어 모두 더하면 7개예요. 앞·위에 가려도 아래는 채워져 있어요.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "가려서 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 3
+    },
+    "heights": [
+     1,
+     1,
+     2,
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "gen-cubemid-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "쌓기나무",
+    "공간 지각"
+   ],
+   "statement": "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (뒤·아래 안 보이는 나무도 세어요)",
+   "choices": [
+    "6개",
+    "7개",
+    "8개",
+    "5개"
+   ],
+   "answerIndex": 1,
+   "explanation": "기둥마다 층수를 세어 모두 더하면 7개예요. 앞·위에 가려도 아래는 채워져 있어요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "가려서 안 보이는 나무도 빠짐없이 세어요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 2
+    },
+    "heights": [
+     1,
+     1,
+     1,
+     2,
+     1,
+     1
+    ]
+   }
+  },
+  {
    "id": "gen-gridrect-1",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
@@ -5467,11 +6058,11 @@
    "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
     "16㎠",
+    "10㎠",
     "12㎠",
-    "14㎠",
-    "10㎠"
+    "14㎠"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 큰 4×4 정사각형(16㎠)에서 빈 2×2(4㎠)를 빼요 → 12㎠.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -5509,12 +6100,12 @@
    ],
    "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
+    "16㎠",
     "18㎠",
     "14㎠",
-    "20㎠",
-    "16㎠"
+    "20㎠"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 큰 5×4 직사각형(20㎠)에서 빈 2×2(4㎠)를 빼요 → 16㎠.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -5552,12 +6143,12 @@
    ],
    "statement": "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "11㎠",
-    "15㎠",
     "13㎠",
-    "17㎠"
+    "11㎠",
+    "17㎠",
+    "15㎠"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "칸을 세거나 직사각형으로 나눠 구해요. 너비 3칸 부분(3×3=9㎠)과 너비 2칸 부분(2×2=4㎠)으로 나눠 더해요 → 13㎠.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -5596,11 +6187,11 @@
    "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
     "20㎠",
-    "8㎠",
+    "10㎠",
     "12㎠",
-    "10㎠"
+    "8㎠"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "밑변 5칸, 높이 4칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 5×4÷2 = 10㎠.",
    "mistakes": [
     {
@@ -5637,16 +6228,16 @@
    ],
    "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "7㎠",
-    "18㎠",
     "11㎠",
-    "9㎠"
+    "9㎠",
+    "7㎠",
+    "18㎠"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "밑변 6칸, 높이 3칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 6×3÷2 = 9㎠.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
     }
    ],
@@ -5679,16 +6270,16 @@
    ],
    "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "10㎠",
-    "6㎠",
     "16㎠",
-    "8㎠"
+    "8㎠",
+    "6㎠",
+    "10㎠"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "밑변 4칸, 높이 4칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 4×4÷2 = 8㎠.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
     }
    ],
@@ -5722,15 +6313,15 @@
    "statement": "색칠한 삼각형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
     "10㎠",
-    "14㎠",
     "24㎠",
+    "14㎠",
     "12㎠"
    ],
    "answerIndex": 3,
    "explanation": "밑변 6칸, 높이 4칸인 직각삼각형이에요. 삼각형 넓이 = 밑변×높이÷2 = 6×4÷2 = 12㎠.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요."
     }
    ],
@@ -5763,16 +6354,16 @@
    ],
    "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
+    "16㎠",
     "24㎠",
-    "19㎠",
     "14㎠",
-    "16㎠"
+    "19㎠"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 4칸, 높이(수직) 4칸 → 4×4 = 16㎠.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "둘러싼 직사각형(6×4)이 아니라, 밑변×수직높이로 구해요."
     }
    ],
@@ -5807,16 +6398,16 @@
    ],
    "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
+    "20㎠",
     "15㎠",
     "18㎠",
-    "20㎠",
     "13㎠"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 5칸, 높이(수직) 3칸 → 5×3 = 15㎠.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "둘러싼 직사각형(6×3)이 아니라, 밑변×수직높이로 구해요."
     }
    ],
@@ -5851,16 +6442,16 @@
    ],
    "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "12㎠",
     "10㎠",
-    "15㎠",
-    "20㎠"
+    "12㎠",
+    "20㎠",
+    "15㎠"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 3칸, 높이(수직) 4칸 → 3×4 = 12㎠.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "둘러싼 직사각형(5×4)이 아니라, 밑변×수직높이로 구해요."
     }
    ],
@@ -5895,16 +6486,16 @@
    ],
    "statement": "색칠한 평행사변형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "18㎠",
-    "12㎠",
+    "15㎠",
     "10㎠",
-    "15㎠"
+    "12㎠",
+    "18㎠"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "평행사변형은 기울어져 있어도 넓이 = 밑변×높이예요. 밑변 4칸, 높이(수직) 3칸 → 4×3 = 12㎠.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "둘러싼 직사각형(6×3)이 아니라, 밑변×수직높이로 구해요."
     }
    ],
@@ -5939,16 +6530,16 @@
    ],
    "statement": "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
+    "13㎠",
     "15㎠",
-    "30㎠",
     "18㎠",
-    "13㎠"
+    "30㎠"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = (4+6)×3÷2 = 15㎠.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요."
     }
    ],
@@ -5984,15 +6575,15 @@
    "statement": "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
     "15㎠",
+    "10㎠",
     "24㎠",
-    "12㎠",
-    "10㎠"
+    "12㎠"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = (2+4)×4÷2 = 12㎠.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요."
     }
    ],
@@ -6027,16 +6618,16 @@
    ],
    "statement": "색칠한 사다리꼴의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "28㎠",
     "17㎠",
-    "12㎠",
-    "14㎠"
+    "14㎠",
+    "28㎠",
+    "12㎠"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "사다리꼴 넓이 = (윗변+아랫변)×높이÷2 = (2+5)×4÷2 = 14㎠.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 2,
      "misconception": "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요."
     }
    ],
@@ -6073,11 +6664,11 @@
    "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
     "25㎠",
-    "13㎠",
+    "11㎠",
     "15㎠",
-    "11㎠"
+    "13㎠"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 5×5=25㎠에서, 남는 네 모서리 직각삼각형 넓이 합 12㎠를 빼요. 25−12=13㎠.",
    "mistakes": [
     {
@@ -6117,16 +6708,16 @@
    ],
    "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "8㎠",
     "12㎠",
+    "16㎠",
     "10㎠",
-    "16㎠"
+    "8㎠"
    ],
    "answerIndex": 2,
    "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 4×4=16㎠에서, 남는 네 모서리 직각삼각형 넓이 합 6㎠를 빼요. 16−6=10㎠.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 1,
      "misconception": "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요."
     }
    ],
@@ -6162,16 +6753,16 @@
    ],
    "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "13㎠",
-    "25㎠",
+    "11㎠",
     "15㎠",
-    "11㎠"
+    "25㎠",
+    "13㎠"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 5×5=25㎠에서, 남는 네 모서리 직각삼각형 넓이 합 12㎠를 빼요. 25−12=13㎠.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요."
     }
    ],
@@ -6207,12 +6798,12 @@
    ],
    "statement": "격자 위 기울어진 도형이에요. 색칠한 부분의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
    "choices": [
-    "8㎠",
-    "10㎠",
     "6㎠",
+    "10㎠",
+    "8㎠",
     "16㎠"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "칸에 딱 안 맞는 기울어진 도형은 '둘러싸기'로 풀어요. 감싸는 직사각형 4×4=16㎠에서, 남는 네 모서리 직각삼각형 넓이 합 8㎠를 빼요. 16−8=8㎠.",
    "mistakes": [
     {
@@ -6251,16 +6842,16 @@
    ],
    "statement": "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
    "choices": [
-    "3개",
-    "6개",
     "4개",
-    "9개"
+    "9개",
+    "6개",
+    "3개"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "꼭짓점에서 밑변으로 그은 선이 모두 4개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. 4개에서 2개 고르기 = 4×3÷2 = 6개. (가장 작은 삼각형 3개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "가장 작은 삼각형만 세지 말고, 여러 개를 합친 큰 삼각형도 빠짐없이 세어요."
     }
    ],
@@ -6283,12 +6874,12 @@
    ],
    "statement": "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
    "choices": [
+    "13개",
     "8개",
     "10개",
-    "13개",
     "4개"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "꼭짓점에서 밑변으로 그은 선이 모두 5개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. 5개에서 2개 고르기 = 5×4÷2 = 10개. (가장 작은 삼각형 4개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
    "mistakes": [
     {
@@ -6315,16 +6906,16 @@
    ],
    "statement": "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
    "choices": [
-    "5개",
-    "15개",
     "18개",
-    "13개"
+    "5개",
+    "13개",
+    "15개"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "꼭짓점에서 밑변으로 그은 선이 모두 6개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. 6개에서 2개 고르기 = 6×5÷2 = 15개. (가장 작은 삼각형 5개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "가장 작은 삼각형만 세지 말고, 여러 개를 합친 큰 삼각형도 빠짐없이 세어요."
     }
    ],
@@ -6347,12 +6938,12 @@
    ],
    "statement": "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
    "choices": [
-    "24개",
-    "6개",
     "19개",
-    "21개"
+    "6개",
+    "21개",
+    "24개"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "꼭짓점에서 밑변으로 그은 선이 모두 7개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. 7개에서 2개 고르기 = 7×6÷2 = 21개. (가장 작은 삼각형 6개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
    "mistakes": [
     {
@@ -6380,15 +6971,15 @@
    "statement": "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
    "choices": [
     "28개",
-    "7개",
     "31개",
+    "7개",
     "26개"
    ],
    "answerIndex": 0,
    "explanation": "꼭짓점에서 밑변으로 그은 선이 모두 8개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. 8개에서 2개 고르기 = 8×7÷2 = 28개. (가장 작은 삼각형 7개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "가장 작은 삼각형만 세지 말고, 여러 개를 합친 큰 삼각형도 빠짐없이 세어요."
     }
    ],
@@ -6411,16 +7002,16 @@
    ],
    "statement": "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
    "choices": [
-    "39개",
-    "36개",
+    "34개",
     "8개",
-    "34개"
+    "39개",
+    "36개"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "꼭짓점에서 밑변으로 그은 선이 모두 9개예요. 이 선들 중 2개를 고르면 그 사이에 삼각형이 하나씩 생겨요. 9개에서 2개 고르기 = 9×8÷2 = 36개. (가장 작은 삼각형 8개부터 둘씩·셋씩 합친 것까지 빠짐없이.)",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "가장 작은 삼각형만 세지 말고, 여러 개를 합친 큰 삼각형도 빠짐없이 세어요."
     }
    ],
@@ -6443,16 +7034,16 @@
    ],
    "statement": "정육면체(주사위 모양) 상자의 전개도예요. 접어서 상자를 만들면, 색칠한 면과 마주 보는 면의 눈은 몇 개일까요?",
    "choices": [
-    "4",
     "5",
     "1",
+    "4",
     "2"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "전개도를 머릿속으로 접어 보면, 색칠한 면(눈 3개)과 마주 보는 면은 눈 5개예요. 색칠한 면과 변을 맞대고 붙어 있는 면(1, 2, 4, 6)은 접으면 옆면이 되어 마주 보지 않아요.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "전개도에서 바로 붙어 있는 면은 접으면 옆면이에요 — 마주 보는 면이 아니에요."
     }
    ],
@@ -6551,16 +7142,16 @@
    ],
    "statement": "정육면체(주사위 모양) 상자의 전개도예요. 접어서 상자를 만들면, 색칠한 면과 마주 보는 면의 눈은 몇 개일까요?",
    "choices": [
-    "1",
+    "2",
     "5",
-    "4",
-    "2"
+    "1",
+    "4"
    ],
    "answerIndex": 1,
    "explanation": "전개도를 머릿속으로 접어 보면, 색칠한 면(눈 3개)과 마주 보는 면은 눈 5개예요. 색칠한 면과 변을 맞대고 붙어 있는 면(2, 4)은 접으면 옆면이 되어 마주 보지 않아요.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "전개도에서 바로 붙어 있는 면은 접으면 옆면이에요 — 마주 보는 면이 아니에요."
     }
    ],
@@ -6605,16 +7196,16 @@
    ],
    "statement": "정육면체(주사위 모양) 상자의 전개도예요. 접어서 상자를 만들면, 색칠한 면과 마주 보는 면의 눈은 몇 개일까요?",
    "choices": [
+    "1",
     "2",
     "4",
-    "1",
     "6"
    ],
    "answerIndex": 3,
    "explanation": "전개도를 머릿속으로 접어 보면, 색칠한 면(눈 3개)과 마주 보는 면은 눈 6개예요. 색칠한 면과 변을 맞대고 붙어 있는 면(1, 2, 4, 5)은 접으면 옆면이 되어 마주 보지 않아요.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "전개도에서 바로 붙어 있는 면은 접으면 옆면이에요 — 마주 보는 면이 아니에요."
     }
    ],
