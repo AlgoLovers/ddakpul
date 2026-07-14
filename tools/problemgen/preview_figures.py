@@ -160,7 +160,40 @@ def triangle_fan(d, fig, box):
     d.line([(bl_x, base_y), (br_x, base_y)], fill=INK, width=3)
 
 
-RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan}
+_PIPS = {
+    1: [(0.5, 0.5)],
+    2: [(0.3, 0.3), (0.7, 0.7)],
+    3: [(0.28, 0.28), (0.5, 0.5), (0.72, 0.72)],
+    4: [(0.3, 0.3), (0.7, 0.3), (0.3, 0.7), (0.7, 0.7)],
+    5: [(0.28, 0.28), (0.72, 0.28), (0.5, 0.5), (0.28, 0.72), (0.72, 0.72)],
+    6: [(0.3, 0.28), (0.3, 0.5), (0.3, 0.72), (0.7, 0.28), (0.7, 0.5), (0.7, 0.72)],
+}
+
+
+def cube_net(d, fig, box):
+    cols = fig["params"].get("cols", 4)
+    rows = fig["params"].get("rows", 4)
+    query = fig["params"].get("query", -1)
+    hs = fig.get("heights", [])
+    if len(hs) != 18:
+        return
+    x0, y0, x1, y1 = box
+    cell = min(x1 - x0, y1 - y0) * 0.82 / max(cols, rows)
+    gl = (x0 + x1) / 2 - cell * cols / 2
+    gt = (y0 + y1) / 2 - cell * rows / 2
+    pr = max(2, cell * 0.07)
+    for i in range(6):
+        c, r, v = hs[i * 3], hs[i * 3 + 1], hs[i * 3 + 2]
+        x, y = gl + c * cell, gt + r * cell
+        if v == query:
+            d.rectangle([x, y, x + cell, y + cell], fill=(200, 214, 240))
+        d.rectangle([x, y, x + cell, y + cell], outline=INK, width=2)
+        for fx, fy in _PIPS.get(v, []):
+            cx, cy = x + fx * cell, y + fy * cell
+            d.ellipse([cx - pr, cy - pr, cx + pr, cy + pr], fill=INK)
+
+
+RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan, "CUBE_NET": cube_net}
 TW, FH, LH = 300, 210, 96
 
 
@@ -193,7 +226,7 @@ def sheet(problems, name):
 def main():
     data = json.load(open(ROOT / "app/src/main/assets/problems_generated.json"))["problems"]
     figs = [p for p in data if "figure" in p]
-    order = {t: i for i, t in enumerate(["GRID_POLYGON", "TRIANGLE_FAN", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
+    order = {t: i for i, t in enumerate(["CUBE_NET", "GRID_POLYGON", "TRIANGLE_FAN", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
     figs.sort(key=lambda p: order.get(p["figure"]["type"], 99))
     sheet(figs, "figures_all.png")
 

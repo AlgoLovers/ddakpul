@@ -306,6 +306,54 @@ private fun drawFigure(
         FigureType.CUBE_STACK -> drawPdfCubeStack(canvas, figure, centerX, top, size)
         FigureType.GRID_POLYGON -> drawPdfGridPolygon(canvas, figure, centerX, top, size, ink)
         FigureType.TRIANGLE_FAN -> drawPdfTriangleFan(canvas, figure, centerX, top, size, ink)
+        FigureType.CUBE_NET -> drawPdfCubeNet(canvas, figure, centerX, top, size, ink, fill)
+    }
+}
+
+/** 주사위 눈(1~6) 위치를 면 내부 비율 좌표(0~1)로. */
+private fun pdfPips(v: Int): List<Pair<Float, Float>> =
+    when (v) {
+        1 -> listOf(0.5f to 0.5f)
+        2 -> listOf(0.3f to 0.3f, 0.7f to 0.7f)
+        3 -> listOf(0.28f to 0.28f, 0.5f to 0.5f, 0.72f to 0.72f)
+        4 -> listOf(0.3f to 0.3f, 0.7f to 0.3f, 0.3f to 0.7f, 0.7f to 0.7f)
+        5 -> listOf(0.28f to 0.28f, 0.72f to 0.28f, 0.5f to 0.5f, 0.28f to 0.72f, 0.72f to 0.72f)
+        6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
+        else -> emptyList()
+    }
+
+/** 정육면체(주사위) 전개도 — 흑백 인쇄용: 격자에 면·눈을 찍고 색칠 면은 회색으로 강조. */
+private fun drawPdfCubeNet(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+    fill: Paint,
+) {
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val query = figure.params["query"] ?: -1
+    val hs = figure.heights
+    if (hs.size != 18) return
+    val cell = min(size / cols, size / rows)
+    val gl = centerX - cell * cols / 2f
+    val gt = top + (size - cell * rows) / 2f
+    val pipR = cell * 0.07f
+    val shade =
+        Paint().apply {
+            style = Paint.Style.FILL
+            color = Color.rgb(220, 220, 220)
+            isAntiAlias = true
+        }
+    for (i in 0 until 6) {
+        val x = gl + hs[i * 3] * cell
+        val y = gt + hs[i * 3 + 1] * cell
+        val v = hs[i * 3 + 2]
+        if (v == query) canvas.drawRect(x, y, x + cell, y + cell, shade)
+        canvas.drawRect(x, y, x + cell, y + cell, ink)
+        for ((fx, fy) in pdfPips(v)) canvas.drawCircle(x + fx * cell, y + fy * cell, pipR, fill)
     }
 }
 
