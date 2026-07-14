@@ -2178,6 +2178,123 @@ def gen_tank_fill_drain():
         )
 
 
+# ── 102. 윤년 개수 (난5, 수와연산) ───────────────────────────────────────────
+def gen_leap_year_count():
+    for y1, y2 in [(2001, 2020), (1997, 2016), (2004, 2024), (2010, 2040)]:
+        cnt = sum(1 for y in range(y1, y2 + 1) if (y % 4 == 0 and y % 100 != 0) or y % 400 == 0)
+        add(
+            "leapyear", "NUMBER_OPERATION", 5, ["배수", "윤년 규칙"],
+            f"{y1}년부터 {y2}년까지 중에서 윤년(2월이 29일까지 있는 해)은 모두 몇 번일까요? 윤년은 4로 나누어떨어지는 해예요(단, 100으로 나누어떨어지면 제외, 400으로 나누어떨어지면 다시 윤년).",
+            f"{cnt}번", [f"{cnt + 1}번", f"{cnt - 1}번", f"{cnt + 2}번"],
+            f"윤년은 기본적으로 4의 배수 해예요. {y1}~{y2} 사이에서 4의 배수 해를 세면 {cnt}번이에요(이 구간엔 100·400 예외로 달라지는 해가 없어요).",
+            [(f"{cnt + 1}번", "4의 배수를 셀 때 시작·끝 해를 잘못 포함했을 수 있어요.")],
+            detail="윤년 규칙은 '4의 배수 → 윤년, 단 100의 배수는 제외, 400의 배수는 다시 윤년'이에요(2000년은 윤년, 1900년은 아님). 지구가 태양을 도는 데 정확히 365일이 아니라 약 365.25일이라, 4년마다 하루를 더해 맞추는 거예요. 이런 '배수 규칙'은 나머지로 판정해요.",
+        )
+
+
+# ── 103. 목표 평균에 필요한 점수 (난4, 자료와가능성) ─────────────────────────
+def gen_average_needed():
+    for done, cur_avg, target_avg in [(3, 80, 85), (4, 75, 80), (2, 90, 88), (4, 82, 85)]:
+        n = done + 1
+        needed = n * target_avg - done * cur_avg
+        add(
+            "avgneed", "DATA_POSSIBILITY", 4, ["평균", "총합 사고"],
+            f"지금까지 {done}과목 시험을 봐서 평균이 {cur_avg}점이에요. 한 과목을 더 봐서 {n}과목 평균을 {target_avg}점으로 만들려면, 다음 과목에서 몇 점을 받아야 할까요?",
+            f"{needed}점", [f"{target_avg}점", f"{needed - 5}점", f"{needed + 5}점"],
+            f"평균을 '총합'으로 바꿔요. {n}과목 평균 {target_avg}점이 되려면 총점이 {n}×{target_avg}={n * target_avg}점이어야 해요. 지금까지 {done}과목 총점은 {done}×{cur_avg}={done * cur_avg}점이니, 다음 과목은 {n * target_avg}−{done * cur_avg}={needed}점 받아야 해요.",
+            [(f"{target_avg}점", f"목표 평균({target_avg}점)만 받아선 평균이 안 올라가요 — 지난 과목들 몫까지 끌어올려야 해요.")],
+            detail="'목표 평균을 위해 필요한 값'은 (목표 총합) − (지금 총합)이에요. 목표보다 지금 평균이 낮으면 목표보다 더 높은 점수가 필요하고, 이미 높으면 목표보다 낮아도 돼요. 평균 문제는 늘 '총합'으로 돌아가면 안전해요.",
+        )
+
+
+# ── 104. 컵 쌓기 = 등차 (난4, 변화와관계) ────────────────────────────────────
+def gen_stacking_cups():
+    for base, add_each, n in [(10, 3, 5), (12, 4, 6), (8, 2, 10), (15, 5, 4)]:
+        ans = base + add_each * (n - 1)
+        add(
+            "cups", "CHANGE_RELATION", 4, ["등차", "규칙 세우기"],
+            f"컵 하나의 높이는 {base}cm예요. 똑같은 컵을 하나씩 포개면 겹치는 만큼 빼고 {add_each}cm씩만 높아져요. 컵 {n}개를 포개면 전체 높이는 몇 cm일까요?",
+            f"{ans}cm", [f"{base * n}cm", f"{base + add_each * n}cm", f"{ans - add_each}cm"],
+            f"첫 컵은 {base}cm. 두 번째부터는 {add_each}cm씩만 더해져요. 컵이 {n}개면 처음 {base}에 {add_each}씩 {n}−1={n - 1}번 더하니 {base}+{add_each}×{n - 1}={ans}cm예요.",
+            [(f"{base * n}cm", f"컵마다 {base}cm씩 곱하면 안 돼요 — 겹치니까 두 번째부터는 {add_each}cm씩만 늘어요.")],
+            detail=f"'처음 값 + 일정하게 더하기'가 등차수열이에요. n번째 = 첫 값 + (n−1)×(매번 더하는 양). 함정은 '몇 번 더하나' — {n}개면 {n}−1번만 더해요(첫 컵엔 안 더함). 계단·나무 심기와 같은 '간격' 감각이에요.",
+        )
+
+
+# ── 105. 수직선 뛰기 = 순 변화량 (난4, 변화와관계) ──────────────────────────
+def gen_number_line_jump():
+    for start, fwd, back, rounds in [(0, 5, 2, 4), (0, 4, 1, 6), (10, 3, 5, 3), (0, 6, 2, 5)]:
+        ans = start + (fwd - back) * rounds
+        add(
+            "numline", "CHANGE_RELATION", 4, ["규칙", "반복 변화"],
+            f"수직선의 {start}에서 개구리가 뛰어요. 앞으로 {fwd}칸 갔다가 뒤로 {back}칸 오는 걸 한 번으로 쳐서, 이걸 {rounds}번 반복하면 개구리는 어디에 있을까요?",
+            str(ans), [str(start + fwd * rounds), str(ans + fwd), str(start + (fwd - back) * (rounds - 1))],
+            f"한 번 반복하면 실제로는 앞으로 {fwd}−{back}={fwd - back}칸씩 나아가요. {rounds}번 반복하면 {fwd - back}×{rounds}={(fwd - back) * rounds}칸 나아가니, {start}에서 출발해 {ans}에 도착해요.",
+            [(str(start + fwd * rounds), "뒤로 오는 것도 세어야 해요 — 한 번에 순수하게 나아가는 건 (앞−뒤)칸이에요.")],
+            detail="'앞으로 갔다 뒤로'를 반복하면 한 번당 순 이동은 (앞−뒤)예요. 이 순이동에 횟수를 곱하면 끝. 뒤로가 앞으로보다 크면 오히려 뒷걸음질치고요. 우물 개구리·따라잡기와 같은 '순 변화량' 사고예요.",
+        )
+
+
+# ── 106. 연속 할인 = 곱셈 (난6, 변화와관계) ─────────────────────────────────
+def gen_double_discount():
+    for price, d1, d2 in [(10000, 20, 10), (20000, 30, 20), (5000, 10, 10), (8000, 25, 20)]:
+        after1 = price * (100 - d1) // 100
+        ans = after1 * (100 - d2) // 100
+        naive = price * (100 - d1 - d2) // 100
+        add(
+            "dblsale", "CHANGE_RELATION", 6, ["백분율", "연속 할인"],
+            f"{price}원짜리 물건을 {d1}% 할인한 뒤, 그 가격에서 다시 {d2}%를 더 할인했어요. 최종 가격은 얼마일까요?",
+            f"{ans}원", [f"{naive}원", f"{after1}원", f"{ans - 500}원"],
+            f"할인은 '남은 가격에' 차례로 적용돼요. 먼저 {d1}% 할인하면 {100 - d1}%가 남아 {price}×{100 - d1}÷100={after1}원. 여기서 다시 {d2}% 할인하면 {after1}×{100 - d2}÷100={ans}원이에요.",
+            [(f"{naive}원", f"두 할인율을 더해서({d1}+{d2}={d1 + d2}%) 한 번에 빼면 안 돼요 — 두 번째 할인은 '이미 깎인 가격'에 적용돼요.")],
+            detail=f"연속 할인은 '더하기'가 아니라 '곱하기'예요. {d1}% 뒤 {d2}%는 {100 - d1}%의 {100 - d2}%라, {d1}+{d2}%를 한 번에 빼는 것보다 덜 깎여요(그래서 {naive}원이 아니라 {ans}원). 이자·인구 증가율을 연속으로 적용할 때도 똑같이 곱셈으로 이어져요.",
+        )
+
+
+# ── 107. 합이 일정할 때 곱 최대 (난5, 수와연산) ─────────────────────────────
+def gen_max_product():
+    for s in [10, 14, 20, 16]:
+        a = s // 2
+        b = s - a
+        ans = a * b
+        add(
+            "maxprod", "NUMBER_OPERATION", 5, ["합이 일정", "곱 최대"],
+            f"두 자연수를 더하면 {s}가 돼요. 이 두 수의 '곱'이 가장 클 때, 그 곱은 얼마일까요?",
+            f"{ans}", [str(s - 1), str(ans - 1), str(a * b + a)],
+            f"합이 정해진 두 수는 서로 '가까울수록' 곱이 커져요. {s}를 최대한 똑같이 둘로 나누면 {a}와 {b}. 그때 곱이 최대인 {a}×{b}={ans}예요. (1×{s - 1}={s - 1}처럼 벌어지면 곱이 작아져요.)",
+            [(str(s - 1), "양 끝(1과 큰 수)으로 벌리면 곱이 가장 작아요. 가운데로 모아야 최대예요.")],
+            detail="'합이 일정할 때 곱은 두 수가 같을 때 최대'예요 — 같은 둘레에서 정사각형이 넓이가 최대인 것과 똑같은 원리(가로+세로 일정 → 정사각형이 최대 넓이). 반대로 '곱이 일정할 때 합은 두 수가 같을 때 최소'고요. 자연·경제 곳곳의 '균형이 최적' 현상이에요.",
+        )
+
+
+# ── 108. 선물 교환 = 방향 있는 짝 (난5, 자료와가능성) ───────────────────────
+def gen_gift_exchange():
+    for n in [4, 5, 6, 8]:
+        ans = n * (n - 1)
+        add(
+            "gift", "DATA_POSSIBILITY", 5, ["경우의 수", "순서 있는 짝"],
+            f"{n}명이 서로에게 선물을 하나씩 보내요(자기 자신에겐 안 보내요). 오가는 선물은 모두 몇 개일까요?",
+            f"{ans}개", [f"{n * (n - 1) // 2}개", f"{n}개", f"{ans + n}개"],
+            f"한 사람은 자기를 뺀 {n - 1}명에게 선물을 보내요. {n}명이 각자 {n - 1}개씩 보내니 {n}×{n - 1}={ans}개예요. 악수와 달리 '주는 것'과 '받는 것'은 방향이 달라서 두 번 세지 않고 그대로 곱해요.",
+            [(f"{n * (n - 1) // 2}개", "이건 악수(한 번)가 아니라 '보내는 방향'이 있는 선물이에요 — 2로 나누지 않아요.")],
+            detail=f"방향이 있으면(A→B와 B→A가 다르면) {n}×({n}−1)로 그대로, 방향이 없으면(악수처럼 A-B 한 번) ÷2 해요. '순서(방향)를 구별하나?'가 세기의 갈림길이고, 이 차이가 곧 순열과 조합의 차이예요.",
+        )
+
+
+# ── 109. 하노이탑 = 점화식 (난7, 자료와가능성) ──────────────────────────────
+def gen_hanoi():
+    for n in [3, 4, 5, 6]:
+        ans = 2 ** n - 1
+        add(
+            "hanoi", "DATA_POSSIBILITY", 7, ["점화식", "최소 이동"],
+            f"하노이탑: 크기가 다른 원반 {n}개가 기둥에 큰 것부터 쌓여 있어요. 한 번에 한 개씩, 큰 원반을 작은 원반 위에 놓지 않으면서 전부 옆 기둥으로 옮기려면 '최소' 몇 번 움직여야 할까요?",
+            f"{ans}번", [f"{2 * n}번", f"{2 ** n}번", f"{ans - 2}번"],
+            f"원반 {n}개를 옮기려면 먼저 위 {n - 1}개를 옆 기둥에 옮기고, 맨 아래 큰 원반 1개를 목표 기둥에 옮긴 뒤, 다시 {n - 1}개를 그 위에 얹어야 해요. 그래서 (n개) = 2×(n−1개) + 1. 1개는 1번, 2개는 3번, 3개는 7번… {n}개는 {ans}번이에요.",
+            [(f"{2 ** n}번", "마지막에 1을 빼요 — 2를 {n}번 곱한 수에서 1 작은 값이에요.".replace("{n}", str(n)))],
+            detail=f"하노이탑은 '큰 문제를 한 단계 작은 문제로 쪼개는(점화식)' 대표 예예요: T(n)=2·T(n−1)+1. 원반이 하나 늘 때마다 두 배+1로 폭발해서, 64개(전설의 탑)면 우주 나이보다 오래 걸려요. 재귀·분할정복 사고의 출발점이에요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
@@ -2190,6 +2307,8 @@ GENERATORS = [
     gen_coin_flips, gen_dice_product, gen_salt_concentration, gen_percent_of,
     gen_gear_ratio, gen_seesaw, gen_divisor_sum, gen_clock_strikes,
     gen_ratio_three, gen_marble_transfer, gen_least_to_share, gen_tank_fill_drain,
+    gen_leap_year_count, gen_average_needed, gen_stacking_cups, gen_number_line_jump,
+    gen_double_discount, gen_max_product, gen_gift_exchange, gen_hanoi,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
