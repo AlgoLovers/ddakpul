@@ -56,6 +56,7 @@ import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
 import com.ddakpul.math.core.designsystem.component.TrendLineChart
 import com.ddakpul.math.core.designsystem.component.masteryStageOf
+import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.ConceptStat
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
@@ -166,6 +167,16 @@ private fun ReportContent(
             HeroCard(stats)
 
             KeyStatTiles(stats)
+
+            if (stats.areaStats.any { it.solved > 0 }) {
+                SectionCard(
+                    title = stringResource(R.string.report_area_title),
+                    icon = "🧭",
+                    subtitle = stringResource(R.string.report_area_subtitle),
+                ) {
+                    AreaBreakdown(stats.areaStats)
+                }
+            }
 
             NarrativeSections(weeklySummary = weeklySummary, insights = insights)
 
@@ -469,6 +480,63 @@ private fun durationText(sec: Int): String =
     } else {
         stringResource(R.string.report_avgtime_sec, sec)
     }
+
+/** 네 영역별 성취 — 어디가 강하고 어디를 보강할지 한눈에(기본 지표). 시도 없는 영역은 빈 막대로. */
+@Composable
+private fun AreaBreakdown(areaStats: List<AreaStat>) {
+    val byArea = areaStats.associateBy { it.area }
+    val barBg = MaterialTheme.colorScheme.surfaceVariant
+    val barFg = MaterialTheme.colorScheme.primary
+    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        MathArea.entries.forEach { area ->
+            val stat = byArea[area]
+            val solved = stat?.solved ?: 0
+            val accuracy = stat?.accuracy ?: 0f
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(area.labelRes()),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text =
+                            if (solved == 0) {
+                                stringResource(R.string.report_area_none)
+                            } else {
+                                stringResource(R.string.report_area_stat, solved, (accuracy * 100).roundToInt())
+                            },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(12.dp)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(barBg),
+                ) {
+                    if (solved > 0 && accuracy > 0f) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(accuracy)
+                                    .height(12.dp)
+                                    .clip(RoundedCornerShape(6.dp))
+                                    .background(barFg),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 /** 해석이 끝난 "말" 섹션 — 주간 요약 문단과 인사이트 목록. */
 @Composable
