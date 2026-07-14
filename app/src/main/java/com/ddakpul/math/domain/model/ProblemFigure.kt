@@ -34,6 +34,13 @@ enum class FigureType {
      * params: cevians(내부 선 개수 k → 밑변으로 가는 선은 총 k+2개, 삼각형 (k+2)(k+1)/2개).
      */
     TRIANGLE_FAN,
+
+    /**
+     * 정육면체(주사위) 전개도. 6개 면을 격자에 펼치고 각 면에 눈(1~6)을 찍는다. 접었을 때
+     * 마주 보는 면 찾기용. params: cols, rows, query(색칠해 물어볼 면의 눈 수).
+     * heights: 면마다 [col,row,눈] 3개씩 평탄화(길이 18).
+     */
+    CUBE_NET,
 }
 
 data class ProblemFigure(

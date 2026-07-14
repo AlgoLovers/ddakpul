@@ -80,6 +80,54 @@ fun ProblemFigureView(
             FigureType.TRIANGLE_FAN -> {
                 drawTriangleFan(figure, ink, accent, left, top, side)
             }
+
+            FigureType.CUBE_NET -> {
+                drawCubeNet(figure, ink, accent, left, top, side)
+            }
+        }
+    }
+}
+
+/** 주사위 눈(1~6) 위치를 면 내부 비율 좌표(0~1)로. */
+private fun pipsFor(v: Int): List<Pair<Float, Float>> =
+    when (v) {
+        1 -> listOf(0.5f to 0.5f)
+        2 -> listOf(0.3f to 0.3f, 0.7f to 0.7f)
+        3 -> listOf(0.28f to 0.28f, 0.5f to 0.5f, 0.72f to 0.72f)
+        4 -> listOf(0.3f to 0.3f, 0.7f to 0.3f, 0.3f to 0.7f, 0.7f to 0.7f)
+        5 -> listOf(0.28f to 0.28f, 0.72f to 0.28f, 0.5f to 0.5f, 0.28f to 0.72f, 0.72f to 0.72f)
+        6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
+        else -> emptyList()
+    }
+
+/** 정육면체(주사위) 전개도 — 6개 면을 격자에 그리고 눈을 찍는다. 색칠 면(query)은 강조. */
+private fun DrawScope.drawCubeNet(
+    figure: ProblemFigure,
+    ink: Color,
+    accent: Color,
+    left: Float,
+    top: Float,
+    side: Float,
+) {
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val query = figure.params["query"] ?: -1
+    val hs = figure.heights
+    if (hs.size != 18) return
+    val cell = min(side / cols, side / rows)
+    val gLeft = left + (side - cell * cols) / 2f
+    val gTop = top + (side - cell * rows) / 2f
+    val pipR = cell * 0.07f
+    for (i in 0 until 6) {
+        val x = gLeft + hs[i * 3] * cell
+        val y = gTop + hs[i * 3 + 1] * cell
+        val v = hs[i * 3 + 2]
+        if (v == query) {
+            drawRect(accent.copy(alpha = 0.35f), topLeft = Offset(x, y), size = Size(cell, cell))
+        }
+        drawRect(ink, topLeft = Offset(x, y), size = Size(cell, cell), style = Stroke(width = 3f))
+        for ((fx, fy) in pipsFor(v)) {
+            drawCircle(ink, radius = pipR, center = Offset(x + fx * cell, y + fy * cell))
         }
     }
 }

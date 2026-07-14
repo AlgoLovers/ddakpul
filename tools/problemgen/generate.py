@@ -1149,6 +1149,80 @@ def gen_shape_count():
             )
 
 
+# ── 52. 주사위(정육면체) 전개도 마주 보는 면 (도형과측정) — 그림 필수(CUBE_NET) ──
+def _fold_normals(cells):
+    """전개도 6칸을 실제로 접어 각 면의 바깥 법선벡터를 구한다(BFS 굴리기).
+    유효한 전개도면 6개 법선이 ±x,±y,±z로 모두 다르다. cells: iterable of (c,r)."""
+    from collections import deque
+    cellset = set(cells)
+
+    def neg(v):
+        return (-v[0], -v[1], -v[2])
+
+    start = next(iter(cellset))
+    frames = {start: ((0, 0, 1), (1, 0, 0), (0, 1, 0))}  # (법선 n, 2D오른쪽→3D, 2D아래→3D)
+    dq = deque([start])
+    while dq:
+        c, r = dq.popleft()
+        n, er, ed = frames[(c, r)]
+        for dc, dr, kind in [(1, 0, "R"), (-1, 0, "L"), (0, 1, "D"), (0, -1, "U")]:
+            nb = (c + dc, r + dr)
+            if nb in cellset and nb not in frames:
+                if kind == "R":
+                    frames[nb] = (er, neg(n), ed)
+                elif kind == "L":
+                    frames[nb] = (neg(er), n, ed)
+                elif kind == "D":
+                    frames[nb] = (ed, er, neg(n))
+                else:
+                    frames[nb] = (neg(ed), er, n)
+                dq.append(nb)
+    return {cell: f[0] for cell, f in frames.items()}
+
+
+def gen_cube_net():
+    # 후보 전개도 — 접기 시뮬로 유효성(법선 6개 모두 다름) 검증 후 사용
+    candidates = [
+        [(1, 0), (0, 1), (1, 1), (2, 1), (3, 1), (1, 2)],   # 십자
+        [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2), (3, 2)],   # 계단(지그재그)
+        [(0, 0), (0, 1), (1, 1), (2, 1), (3, 1), (3, 2)],   # 1-4-1 어긋난 T
+        [(1, 0), (0, 1), (1, 1), (2, 1), (1, 2), (1, 3)],   # 세로 십자 변형
+    ]
+    idx = 0
+    for layout in candidates:
+        normals = _fold_normals(layout)
+        if len(set(normals.values())) != 6:
+            continue                                        # 유효한 전개도가 아니면 건너뜀
+        idx += 1
+        vals = {cell: i + 1 for i, cell in enumerate(layout)}   # 순서대로 눈 1..6
+        qcell = layout[2]                                   # 물어볼 면(색칠)
+        qn = normals[qcell]
+        opp_cell = next(c for c, n in normals.items() if n == tuple(-x for x in qn))
+        ans = vals[opp_cell]
+        q = vals[qcell]
+        adj = [vals[c] for c in layout if c != qcell and (abs(c[0] - qcell[0]) + abs(c[1] - qcell[1])) == 1]
+        # 오답은 전부 실제 면 눈(1~6): 붙은 면(옆면) 우선, 모자라면 다른 면으로 채움
+        pool = []
+        for v in adj + [vals[c] for c in layout]:
+            if v != ans and str(v) not in pool:
+                pool.append(str(v))
+        cols = max(c for c, _ in layout) + 1
+        rows = max(r for _, r in layout) + 1
+        flat = []
+        for c, r in layout:
+            flat += [c, r, vals[(c, r)]]
+        add(
+            "cubenet", "SHAPE_MEASUREMENT", 5, ["전개도", "공간 지각"],
+            "정육면체(주사위 모양) 상자의 전개도예요. 접어서 상자를 만들면, 색칠한 면과 마주 보는 면의 눈은 몇 개일까요?",
+            f"{ans}", pool[:3],
+            f"전개도를 머릿속으로 접어 보면, 색칠한 면(눈 {q}개)과 마주 보는 면은 눈 {ans}개예요. "
+            f"색칠한 면과 변을 맞대고 붙어 있는 면({', '.join(str(a) for a in adj)})은 접으면 옆면이 되어 마주 보지 않아요.",
+            [(f"{adj[0]}", "전개도에서 바로 붙어 있는 면은 접으면 옆면이에요 — 마주 보는 면이 아니에요.")],
+            figure={"type": "CUBE_NET", "params": {"cols": cols, "rows": rows, "query": q}, "heights": flat},
+        )
+    assert idx >= 3, f"유효 전개도 부족({idx})"
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1176,6 +1250,8 @@ GENERATORS = [
     gen_grid_area,
     # v4.4 확충 — 삼각형 개수 세기(TRIANGLE_FAN 그림 필수): 체계적 세기
     gen_shape_count,
+    # v4.5 확충 — 주사위 전개도 마주 보는 면(CUBE_NET 그림 필수): 접기 시뮬로 검산
+    gen_cube_net,
 ]
 
 for g in GENERATORS:
