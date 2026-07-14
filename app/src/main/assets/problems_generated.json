@@ -10740,6 +10740,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 3
+    }
+   },
    "detailedExplanation": "정사각형 하나는 변 4개지만, 옆에 붙이면 맞닿은 변 1개를 '공유'해요. 그래서 첫 칸은 4개, 다음부터는 3개씩만 늘어 총 10=3×3+1개. '공유하는 부분은 한 번만 센다'는 생각은 둘레·격자 세기에서 계속 쓰여요."
   },
   {
@@ -10767,6 +10773,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 4
+    }
+   },
    "detailedExplanation": "정사각형 하나는 변 4개지만, 옆에 붙이면 맞닿은 변 1개를 '공유'해요. 그래서 첫 칸은 4개, 다음부터는 3개씩만 늘어 총 13=3×4+1개. '공유하는 부분은 한 번만 센다'는 생각은 둘레·격자 세기에서 계속 쓰여요."
   },
   {
@@ -10794,6 +10806,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 5
+    }
+   },
    "detailedExplanation": "정사각형 하나는 변 4개지만, 옆에 붙이면 맞닿은 변 1개를 '공유'해요. 그래서 첫 칸은 4개, 다음부터는 3개씩만 늘어 총 16=3×5+1개. '공유하는 부분은 한 번만 센다'는 생각은 둘레·격자 세기에서 계속 쓰여요."
   },
   {
@@ -10821,6 +10839,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 6
+    }
+   },
    "detailedExplanation": "정사각형 하나는 변 4개지만, 옆에 붙이면 맞닿은 변 1개를 '공유'해요. 그래서 첫 칸은 4개, 다음부터는 3개씩만 늘어 총 19=3×6+1개. '공유하는 부분은 한 번만 센다'는 생각은 둘레·격자 세기에서 계속 쓰여요."
   },
   {
@@ -11491,6 +11515,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 3,
+     "tri": 1
+    }
+   },
    "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(3−1)=7개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
@@ -11518,6 +11549,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 4,
+     "tri": 1
+    }
+   },
    "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(4−1)=9개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
@@ -11545,6 +11583,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 5,
+     "tri": 1
+    }
+   },
    "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(5−1)=11개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {
@@ -11572,6 +11617,13 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 6,
+     "tri": 1
+    }
+   },
    "detailedExplanation": "정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×(6−1)=13개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요."
   },
   {

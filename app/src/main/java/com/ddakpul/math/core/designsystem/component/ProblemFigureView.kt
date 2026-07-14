@@ -10,6 +10,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
@@ -84,6 +85,55 @@ fun ProblemFigureView(
             FigureType.CUBE_NET -> {
                 drawCubeNet(figure, ink, accent, left, top, side)
             }
+
+            FigureType.MATCHSTICK -> {
+                drawMatchstick(figure, ink, left, top, side)
+            }
+        }
+    }
+}
+
+/** 성냥개비로 한 줄로 이어 붙인 정사각형(기본) 또는 정삼각형(tri=1, 위아래 번갈아). */
+private fun DrawScope.drawMatchstick(
+    figure: ProblemFigure,
+    ink: Color,
+    left: Float,
+    top: Float,
+    side: Float,
+) {
+    val n = (figure.params["n"] ?: 3).coerceIn(1, 8)
+    val isTri = (figure.params["tri"] ?: 0) == 1
+    val stroke = 7f
+
+    fun stick(
+        a: Offset,
+        b: Offset,
+    ) = drawLine(ink, a, b, strokeWidth = stroke, cap = StrokeCap.Round)
+    if (!isTri) {
+        val s = min(side / n, side * 0.5f)
+        val gLeft = left + (side - s * n) / 2f
+        val gTop = top + (side - s) / 2f
+        stick(Offset(gLeft, gTop), Offset(gLeft + s * n, gTop))
+        stick(Offset(gLeft, gTop + s), Offset(gLeft + s * n, gTop + s))
+        for (i in 0..n) stick(Offset(gLeft + i * s, gTop), Offset(gLeft + i * s, gTop + s))
+    } else {
+        val s = min(side * 2f / (n + 1), side * 0.5f)
+        val hgt = s * 0.87f
+        val totalW = s * (n + 1) / 2f
+        val gLeft = left + (side - totalW) / 2f
+        val baseY = top + (side + hgt) / 2f
+        val topY = baseY - hgt
+
+        fun px(k: Int) = gLeft + k * (s / 2f)
+
+        fun py(k: Int) = if (k % 2 == 0) baseY else topY
+        for (i in 0 until n) {
+            val a = Offset(px(i), py(i))
+            val b = Offset(px(i + 1), py(i + 1))
+            val c = Offset(px(i + 2), py(i + 2))
+            stick(a, b)
+            stick(b, c)
+            stick(c, a)
         }
     }
 }

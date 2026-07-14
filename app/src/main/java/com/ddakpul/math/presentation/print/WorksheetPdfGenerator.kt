@@ -307,6 +307,49 @@ private fun drawFigure(
         FigureType.GRID_POLYGON -> drawPdfGridPolygon(canvas, figure, centerX, top, size, ink)
         FigureType.TRIANGLE_FAN -> drawPdfTriangleFan(canvas, figure, centerX, top, size, ink)
         FigureType.CUBE_NET -> drawPdfCubeNet(canvas, figure, centerX, top, size, ink, fill)
+        FigureType.MATCHSTICK -> drawPdfMatchstick(canvas, figure, centerX, top, size, ink)
+    }
+}
+
+/** 성냥개비로 이어 붙인 정사각형(기본)/정삼각형(tri=1) 한 줄. */
+private fun drawPdfMatchstick(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val n = (figure.params["n"] ?: 3).coerceIn(1, 8)
+    val isTri = (figure.params["tri"] ?: 0) == 1
+    val stick =
+        Paint(ink).apply {
+            strokeWidth = 3f
+            strokeCap = Paint.Cap.ROUND
+        }
+    if (!isTri) {
+        val s = min(size / n, size * 0.5f)
+        val gl = centerX - s * n / 2f
+        val gt = top + (size - s) / 2f
+        canvas.drawLine(gl, gt, gl + s * n, gt, stick)
+        canvas.drawLine(gl, gt + s, gl + s * n, gt + s, stick)
+        for (i in 0..n) canvas.drawLine(gl + i * s, gt, gl + i * s, gt + s, stick)
+    } else {
+        val s = min(size * 2f / (n + 1), size * 0.5f)
+        val hgt = s * 0.87f
+        val totalW = s * (n + 1) / 2f
+        val gl = centerX - totalW / 2f
+        val baseY = top + (size + hgt) / 2f
+        val topY = baseY - hgt
+
+        fun px(k: Int) = gl + k * (s / 2f)
+
+        fun py(k: Int) = if (k % 2 == 0) baseY else topY
+        for (i in 0 until n) {
+            canvas.drawLine(px(i), py(i), px(i + 1), py(i + 1), stick)
+            canvas.drawLine(px(i + 1), py(i + 1), px(i + 2), py(i + 2), stick)
+            canvas.drawLine(px(i + 2), py(i + 2), px(i), py(i), stick)
+        }
     }
 }
 
