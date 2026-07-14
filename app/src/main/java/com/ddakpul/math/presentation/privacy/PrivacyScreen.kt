@@ -36,7 +36,7 @@ fun PrivacyScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().widthIn(max = CONTENT_MAX_WIDTH),
+            modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Row(
