@@ -1675,10 +1675,143 @@ def gen_round_trip():
         )
 
 
+# ── 70. 악수/리그전 = C(n,2) (난5, 자료와가능성) ─────────────────────────────
+def gen_handshake():
+    for n in [5, 6, 8, 10]:
+        ans = n * (n - 1) // 2
+        add(
+            "handshake", "DATA_POSSIBILITY", 5, ["경우의 수", "두 번 세고 나누기"],
+            f"{n}명이 모여 서로 한 번씩 빠짐없이 악수를 해요. 악수는 모두 몇 번 일어날까요?",
+            f"{ans}번", [f"{n * (n - 1)}번", f"{n * n}번", f"{ans - n + 1}번"],
+            f"한 사람은 자기를 뺀 {n - 1}명과 악수해요. {n}명이 각자 {n - 1}번이면 {n}×{n - 1}={n * (n - 1)}번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눠요: {n * (n - 1)}÷2={ans}번.",
+            [(f"{n * (n - 1)}번", "같은 악수를 두 사람이 각각 세서 두 번씩 세었어요. 2로 나눠야 해요.")],
+            detail=f"이건 '{n}명 중 2명을 뽑는' 경우의 수 C({n},2)와 똑같아요. 두 개를 짝짓는 모든 문제(악수·리그전 경기·점끼리 잇는 선분·삼각형 개수)가 여기에 해당해요. '두 번 세고 2로 나누기'는 세기의 단골 기술이에요.",
+        )
+
+
+# ── 71. 1부터 N까지의 합 — 가우스 (난4, 수와연산) ────────────────────────────
+def gen_gauss_sum():
+    for n in [10, 20, 50, 100]:
+        ans = n * (n + 1) // 2
+        add(
+            "gauss", "NUMBER_OPERATION", 4, ["연속 자연수 합", "짝지어 더하기"],
+            f"1부터 {n}까지 모든 자연수를 더하면 얼마일까요?",
+            str(ans), [str(n * n), str(ans + n), str(ans - n)],
+            f"양 끝에서 짝을 지어 더해 봐요: 1+{n}={n + 1}, 2+{n - 1}={n + 1}, … 모든 짝의 합이 {n + 1}로 똑같아요. 짝은 모두 {n}÷2={n // 2}쌍이니 {n + 1}×{n // 2}={ans}이에요.",
+            [(str(n * n), "제곱이 아니라, 양 끝을 짝지어 더한 값이에요.")],
+            detail=f"어린 가우스가 찾았다는 방법이에요: 1+2+…+n = n×(n+1)÷2. 수를 거꾸로도 써서 위아래로 더하면 왜 그런지 한눈에 보여요(세로 합이 모두 n+1). 등차수열의 합은 전부 '(첫+끝)×개수÷2'로 통해요.",
+        )
+
+
+# ── 72. 비로 나누기 (난5, 변화와관계) ────────────────────────────────────────
+def gen_ratio_share():
+    for total, r1, r2 in [(20, 3, 2), (35, 4, 3), (24, 5, 1), (40, 3, 5)]:
+        assert total % (r1 + r2) == 0
+        unit = total // (r1 + r2)
+        part = unit * r1
+        add(
+            "ratioshare", "CHANGE_RELATION", 5, ["비", "단위량 먼저"],
+            f"구슬 {total}개를 형과 동생이 {r1}:{r2}로 나눠 가져요. 형이 갖는 구슬은 몇 개일까요?",
+            f"{part}개", [f"{r1}개", f"{total // 2}개", f"{total - part}개"],
+            f"비 {r1}:{r2}는 전체를 똑같은 묶음 {r1}+{r2}={r1 + r2}묶음으로 나눈 거예요. 한 묶음은 {total}÷{r1 + r2}={unit}개. 형은 그중 {r1}묶음을 가지니 {unit}×{r1}={part}개예요.",
+            [(f"{total - part}개", "그건 동생 몫이에요."), (f"{total // 2}개", "비가 같지 않으면 절반이 아니에요. 묶음 수로 나눠요.")],
+            detail="비 문제의 핵심은 '한 묶음(단위량)'을 먼저 구하는 거예요. 전체를 (비의 합)으로 나누면 한 묶음이 나오고, 각자는 자기 몫만큼 곱하면 끝. 이 '단위량 먼저' 사고는 축척·농도·환율에도 똑같이 통해요.",
+        )
+
+
+# ── 73. 분수로 전체 구하기 (난3, 수와연산) ───────────────────────────────────
+def gen_fraction_whole():
+    for part, num, den in [(12, 2, 5), (18, 3, 4), (20, 2, 5), (21, 3, 7)]:
+        assert part % num == 0
+        whole = part * den // num
+        add(
+            "fracwhole", "NUMBER_OPERATION", 3, ["분수", "부분과 전체"],
+            f"어떤 통에 든 구슬의 {num}/{den}이 {part}개예요. 통에 든 구슬은 모두 몇 개일까요?",
+            f"{whole}개", [f"{part * den}개", f"{part + den}개", f"{whole - part}개"],
+            f"전체를 똑같이 {den}조각으로 나눈 것 중 {num}조각이 {part}개라는 뜻이에요. 그럼 1조각은 {part}÷{num}={part // num}개. 전체는 {den}조각이니 {part // num}×{den}={whole}개예요.",
+            [(f"{part * den}개", "분모만 곱하면 안 돼요. 먼저 한 조각(÷분자)을 구해요.")],
+            detail=f"부분·전체 문제는 '1조각(단위분수)'을 먼저 구하는 게 열쇠예요. {num}/{den}이 {part}면 1/{den}은 {part}÷{num}, 전체(={den}/{den})는 거기에 {den}배. 반대로 '전체의 {num}/{den}은?'은 전체를 {den}으로 나눠 {num}배 하면 돼요.",
+        )
+
+
+# ── 74. 토너먼트 경기 수 (난5, 자료와가능성) ─────────────────────────────────
+def gen_tournament():
+    for n in [8, 16, 32, 10]:
+        ans = n - 1
+        add(
+            "tourney", "DATA_POSSIBILITY", 5, ["토너먼트", "사라지는 양 세기"],
+            f"{n}명이 토너먼트(진 사람은 바로 탈락)로 경기해서 우승자 한 명을 가려요. 우승자가 정해질 때까지 경기는 모두 몇 번 열릴까요?",
+            f"{ans}번", [f"{n}번", f"{n // 2}번", f"{ans - 1}번"],
+            f"경기 수를 하나하나 세는 대신 '탈락자'에 주목해요. 한 경기가 열릴 때마다 딱 한 명이 탈락해요. 우승자 1명만 남기려면 나머지 {n}−1={ans}명이 전부 탈락해야 하니, 경기도 정확히 {ans}번이에요.",
+            [(f"{n // 2}번", "1라운드 경기 수만 센 거예요. 모든 라운드를 합쳐야 해요.")],
+            detail=f"'무엇이 하나씩 사라지는가'를 보면 복잡한 대진표를 안 그려도 돼요 — 경기 1번 = 탈락 1명이니 우승자 빼고 모두 탈락 = {n}−1번. 이 '변하는 양을 세는' 관점은 대진 방식이 바뀌어도 그대로 통해요.",
+        )
+
+
+# ── 75. 거스름돈 최소 동전 (난3, 수와연산) ───────────────────────────────────
+def gen_change_coins():
+    coins = [500, 100, 50, 10]
+    for amount in [780, 640, 970, 850]:
+        cnt = 0
+        rem = amount
+        breakdown = []
+        for c in coins:
+            k = rem // c
+            if k:
+                breakdown.append(f"{c}원 {k}개")
+            cnt += k
+            rem %= c
+        add(
+            "mincoin", "NUMBER_OPERATION", 3, ["거스름돈", "욕심쟁이 방법"],
+            f"거스름돈 {amount}원을 500·100·50·10원 동전으로 거슬러 줄 때, 동전 개수를 '가장 적게' 하려면 모두 몇 개가 필요할까요?",
+            f"{cnt}개", [f"{cnt + 1}개", f"{cnt - 1}개", f"{cnt + 2}개"],
+            f"동전을 적게 쓰려면 '큰 동전부터' 최대한 많이 써요. {' + '.join(breakdown)} = 모두 {cnt}개예요.",
+            [(f"{cnt + 1}개", "큰 동전부터 최대한 쓰면 개수를 더 줄일 수 있어요.")],
+            detail="'큰 단위부터 최대한'이 욕심쟁이(그리디) 방법이에요. 우리 동전(500·100·50·10)은 이 방법이 늘 최소를 보장해요. 하지만 모든 체계가 그렇진 않아요 — 1·3·4원짜리라면 6원은 4+1+1(3개)보다 3+3(2개)이 적어, 큰 것부터가 최선이 아닐 수 있어요.",
+        )
+
+
+# ── 76. 비례식 — 레시피 (난4, 변화와관계) ────────────────────────────────────
+def gen_recipe_ratio():
+    for item, base_qty, base_ing, ing, unit, new_qty in [
+        ("쿠키", 12, 3, "설탕", "스푼", 20),
+        ("팬케이크", 4, 2, "우유", "컵", 10),
+        ("주스", 2, 5, "오렌지", "개", 8),
+        ("빵", 6, 4, "버터", "스푼", 15),
+    ]:
+        assert new_qty * base_ing % base_qty == 0
+        ans = new_qty * base_ing // base_qty
+        add(
+            "recipe", "CHANGE_RELATION", 4, ["비례", "단위량"],
+            f"{item} {base_qty}개를 만들려면 {ing} {base_ing}{unit}{_iga(unit)} 필요해요. 같은 맛으로 {item} {new_qty}개를 만들려면 {ing}{_eun(ing)} 몇 {unit} 필요할까요?",
+            f"{ans}{unit}", [f"{base_ing + (new_qty - base_qty)}{unit}", f"{new_qty}{unit}", f"{ans + base_ing}{unit}"],
+            f"먼저 {item} 1개당 {ing}이 얼마인지 봐요: {base_ing}÷{base_qty}. {item} {new_qty}개면 그 {new_qty}배니 {base_ing}×{new_qty}÷{base_qty}={ans}{unit}이에요. (비례식 {base_qty}:{base_ing}={new_qty}:□로 풀어도 □={ans}.)",
+            [(f"{base_ing + (new_qty - base_qty)}{unit}", "개수 차이만큼 '더하는' 게 아니라, 몇 배인지(비율)로 늘려야 해요.")],
+            detail="비례는 '한 개당 얼마(단위량)'를 구하면 다 풀려요. 또는 비례식 a:b=c:□에서 '바깥끼리 곱 = 안끼리 곱'(교차곱)으로 □를 구해도 돼요. 요리·지도 축척·환율·농도가 전부 이 비례 위에 있어요.",
+        )
+
+
+# ── 77. 정사각형 둘레 ↔ 넓이 (난3, 도형과측정) ──────────────────────────────
+def gen_square_area():
+    for side in [6, 8, 5, 9]:
+        perim = side * 4
+        area = side * side
+        add(
+            "sqarea", "SHAPE_MEASUREMENT", 3, ["정사각형", "둘레와 넓이"],
+            f"둘레가 {perim}cm인 정사각형이 있어요. 이 정사각형의 넓이는 몇 ㎠일까요?",
+            f"{area}㎠", [f"{perim}㎠", f"{side * 2}㎠", f"{area + side}㎠"],
+            f"정사각형은 네 변이 모두 같아요. 둘레가 {perim}cm면 한 변은 {perim}÷4={side}cm. 넓이는 한 변을 두 번 곱하니 {side}×{side}={area}㎠예요.",
+            [(f"{perim}㎠", "둘레와 넓이는 달라요. 먼저 한 변(÷4)을 구한 뒤 곱해요.")],
+            detail=f"둘레는 '가장자리 길이(1차원)', 넓이는 '채운 칸(2차원)'이라 단위도 cm와 ㎠로 달라요. 둘레→한 변(÷4)→넓이(제곱) 순서가 핵심. 반대로 넓이 {area}에서 한 변은 곱해서 {area}가 되는 수({side})를 찾으면 돼요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
+    gen_handshake, gen_gauss_sum, gen_ratio_share, gen_fraction_whole,
+    gen_tournament, gen_change_coins, gen_recipe_ratio, gen_square_area,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
