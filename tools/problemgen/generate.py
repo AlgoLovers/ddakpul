@@ -1243,6 +1243,83 @@ def gen_cube_net():
     assert idx >= 3, f"유효 전개도 부족({idx})"
 
 
+# ── 53. 저난도 그림 보강 — 그림 문제가 초반부터 자주 나오도록(난1~3 도형 밀도↑) ─────
+def gen_cube_stack_tiny():
+    # 난1: 1줄(뒤 가림 없음) 아주 쉬운 개수 세기
+    for w, d, heights in [
+        (2, 1, [1, 1]),
+        (3, 1, [1, 1, 1]),
+        (2, 1, [2, 1]),
+        (3, 1, [1, 2, 1]),
+    ]:
+        assert len(heights) == w * d
+        ans = sum(heights)
+        add(
+            "cubetiny", "SHAPE_MEASUREMENT", 1, ["쌓기나무", "수 세기"],
+            "그림처럼 놓인 쌓기나무는 모두 몇 개일까요?",
+            f"{ans}개", [f"{ans - 1}개", f"{ans + 1}개", f"{ans + 2}개"],
+            f"블록을 하나씩 세어 보면 모두 {ans}개예요.",
+            figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
+        )
+
+
+def gen_grid_tiny():
+    # 난1: 아주 작은 도형의 칸 세기
+    for pts, detail in [
+        ([(0, 0), (2, 0), (2, 1), (1, 1), (1, 2), (0, 2)], "2×2에서 빈 1칸을 빼면 3칸"),
+        ([(0, 0), (3, 0), (3, 1), (1, 1), (1, 2), (0, 2)], "아래 3칸과 위 1칸을 더하면 4칸"),
+        ([(0, 0), (2, 0), (2, 2), (1, 2), (1, 3), (0, 3)], "아래 2×2(4칸)와 위 1칸을 더하면 5칸"),
+    ]:
+        assert _shoelace2(pts) % 2 == 0
+        area = _shoelace2(pts) // 2
+        add(
+            "gridtiny", "SHAPE_MEASUREMENT", 1, ["넓이", "칸 세기"],
+            "색칠한 도형은 모눈 몇 칸일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{area - 1}㎠", f"{area + 1}㎠", f"{area + 2}㎠"],
+            f"칸을 하나씩 세어요. {detail} → {area}㎠.",
+            figure=_grid_fig(pts),
+        )
+
+
+def gen_grid_area_easy():
+    # 난2: 조금 큰 ㄱ자 넓이(칸 세기/직사각형 빼기)
+    for pts, detail in [
+        ([(0, 0), (4, 0), (4, 1), (1, 1), (1, 2), (0, 2)], "아래 4칸과 위 1칸을 더하면 5칸"),
+        ([(0, 0), (3, 0), (3, 3), (2, 3), (2, 1), (0, 1)], "큰 부분과 세로 기둥으로 나눠 세어요"),
+        ([(0, 0), (3, 0), (3, 2), (2, 2), (2, 3), (0, 3)], "3×3(9칸)에서 오른쪽 위 빈 1칸을 빼면 8칸"),
+        ([(0, 0), (4, 0), (4, 2), (3, 2), (3, 1), (0, 1)], "아래 4칸과 오른쪽 위 1칸"),
+    ]:
+        assert _shoelace2(pts) % 2 == 0
+        area = _shoelace2(pts) // 2
+        add(
+            "grideasy", "SHAPE_MEASUREMENT", 2, ["넓이", "칸 세기"],
+            "색칠한 도형의 넓이는 몇 ㎠일까요? (모눈 한 칸은 1㎠예요)",
+            f"{area}㎠", [f"{area - 1}㎠", f"{area + 1}㎠", f"{area + 2}㎠"],
+            f"칸을 세거나 직사각형으로 나눠 구해요. {detail} → {area}㎠.",
+            figure=_grid_fig(pts),
+        )
+
+
+def gen_cube_stack_mid():
+    # 난3: 2×2/2×3 바닥 + 층 — 뒤·아래 가림이 있어 공간 지각 필요
+    for w, d, heights in [
+        (2, 2, [1, 2, 1, 2]),
+        (2, 2, [2, 2, 1, 1]),
+        (2, 3, [1, 1, 2, 1, 1, 1]),
+        (3, 2, [1, 1, 1, 2, 1, 1]),
+    ]:
+        assert len(heights) == w * d
+        ans = sum(heights)
+        add(
+            "cubemid", "SHAPE_MEASUREMENT", 3, ["쌓기나무", "공간 지각"],
+            "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (뒤·아래 안 보이는 나무도 세어요)",
+            f"{ans}개", [f"{ans - 1}개", f"{ans + 1}개", f"{max(1, ans - 2)}개"],
+            f"기둥마다 층수를 세어 모두 더하면 {ans}개예요. 앞·위에 가려도 아래는 채워져 있어요.",
+            [(f"{max(1, ans - 2)}개", "가려서 안 보이는 나무도 빠짐없이 세어요.")],
+            figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
+        )
+
+
 GENERATORS = [
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
@@ -1268,6 +1345,8 @@ GENERATORS = [
     gen_cube_stack,
     # v4.6 확충 — 무료(난2) 작은 쌓기나무: 첫 경험용 그림 문제(무료 체험 비주얼 강화)
     gen_cube_stack_easy,
+    # v4.7 확충 — 저난도 그림 밀도↑(난1~3): 그림 문제가 초반부터 자주 나오게
+    gen_cube_stack_tiny, gen_grid_tiny, gen_grid_area_easy, gen_cube_stack_mid,
     # v4.3 확충 — 격자 넓이(GRID_POLYGON 그림 필수): 삼각형·평행사변형·사다리꼴·기울어진 도형
     gen_grid_area,
     # v4.4 확충 — 삼각형 개수 세기(TRIANGLE_FAN 그림 필수): 체계적 세기
