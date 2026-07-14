@@ -1806,12 +1806,143 @@ def gen_square_area():
         )
 
 
+# ── 78. N일 뒤 요일 — 나머지 (난4, 변화와관계) ───────────────────────────────
+def gen_day_of_week():
+    days = ["일", "월", "화", "수", "목", "금", "토"]
+    for start, ahead in [(1, 100), (3, 50), (5, 30), (2, 365)]:
+        end = (start + ahead) % 7
+        add(
+            "dow", "CHANGE_RELATION", 4, ["요일", "나머지"],
+            f"오늘은 {days[start]}요일이에요. 오늘부터 {ahead}일 뒤는 무슨 요일일까요?",
+            f"{days[end]}요일", [f"{days[(end + 1) % 7]}요일", f"{days[(end + 2) % 7]}요일", f"{days[(end + 4) % 7]}요일"],
+            f"요일은 7일마다 똑같이 반복돼요. 그러니 {ahead}일 중 '7의 배수'만큼은 제자리로 돌아오고, {ahead}÷7의 나머지인 {ahead % 7}일만 더 가면 돼요. {days[start]}요일에서 {ahead % 7}일 뒤는 {days[end]}요일이에요.",
+            [(f"{days[(end + 1) % 7]}요일", f"하루 차이로 어긋났어요. {ahead}÷7의 나머지({ahead % 7}일)를 정확히 세었는지 봐요.")],
+            detail=f"'주기 7 + 나머지'는 요일 계산의 전부예요. {ahead}일 = 7×{ahead // 7} + {ahead % 7}이니, 7의 배수 부분은 무시하고 나머지 {ahead % 7}만 세면 끝. 1000일 뒤 같은 큰 수도 나머지만 보면 되고, 이 modular 사고는 시계·달력·거듭제곱 끝자리와 똑같아요.",
+        )
+
+
+# ── 79. 우물 안 개구리 — 마지막 날 함정 (난5, 변화와관계) ─────────────────────
+def gen_frog_well():
+    for depth, up, down in [(12, 4, 2), (15, 5, 2), (20, 6, 4), (9, 4, 1)]:
+        net = up - down
+        days = 0
+        pos = 0
+        while True:
+            days += 1
+            pos += up
+            if pos >= depth:
+                break
+            pos -= down
+        ans = days
+        add(
+            "frog", "CHANGE_RELATION", 5, ["따라잡기", "마지막 날 함정"],
+            f"깊이 {depth}m 우물 바닥에 개구리가 있어요. 낮에는 {up}m 올라가고 밤에는 {down}m 미끄러져요. 개구리가 우물 밖으로 처음 나오는 건 며칠째 낮일까요?",
+            f"{ans}일째", [f"{ans + 1}일째", f"{ans - 1}일째", f"{ans + 2}일째"],
+            f"하루가 지나면 실제로는 {up}−{down}={net}m씩 오르지만, '밖으로 나오는 낮'에는 미끄러지지 않아요. 그래서 마지막 도약({up}m) 전까지, 즉 {depth - up}m까지만 {net}m씩 오르면 되죠. 하루하루 따라가 보면 {ans}일째 낮에 {up}m를 올라 {depth}m를 넘어서 탈출해요.",
+            [(f"{ans + 1}일째", f"마지막 날 낮엔 미끄러지지 않아요 — 순증가({net}m)로만 계산하면 하루 더 걸리는 것처럼 보여요.")],
+            detail="'며칠에 목표 도달'류는 마지막 한 걸음이 늘 예외예요. 순증가로 쭉 세다가 '처음 닿는 순간'은 미끄러지기 전이라는 걸 놓치면 하루가 어긋나요. 안전한 방법: 마지막 도약분을 먼저 빼고 남은 거리를 순증가로 나눈 뒤 1일을 더해요.",
+        )
+
+
+# ── 80. 홀수의 합 = 제곱수 (난5, 수와연산) ───────────────────────────────────
+def gen_odd_sum_square():
+    for n in [5, 7, 10, 8]:
+        last = 2 * n - 1
+        ans = n * n
+        add(
+            "oddsum", "NUMBER_OPERATION", 5, ["홀수의 합", "제곱수"],
+            f"1부터 시작하는 홀수 {n}개(1, 3, 5, …, {last})를 모두 더하면 얼마일까요?",
+            str(ans), [str((n - 1) * (n - 1)), str(last * n), str(ans + n)],
+            f"신기하게도 1부터 홀수를 차례로 더하면 항상 '제곱수'가 돼요: 1=1×1, 1+3=4=2×2, 1+3+5=9=3×3… 홀수 {n}개를 더하면 {n}×{n}={ans}이에요.",
+            [(str(last * n), "가장 큰 홀수에 개수를 곱하는 게 아니라, 개수를 제곱해요.")],
+            detail="왜 제곱이 될까요? 점을 ㄱ자로 하나씩 덧대 정사각형을 키워 보면 보여요 — 한 변이 늘 때마다 홀수 개(3,5,7…)씩 점이 늘어 언제나 정사각형(제곱수)을 이뤄요. '그림으로 왜 그런지'를 보면 공식이 살아 있는 지식이 돼요.",
+        )
+
+
+# ── 81. 순열 — 한 줄로 세우기 = n! (난5, 자료와가능성) ───────────────────────
+def gen_permutation():
+    for n, ctx in [(4, "책"), (5, "인형"), (6, "색연필"), (4, "컵")]:
+        ans = factorial(n)
+        add(
+            "perm", "DATA_POSSIBILITY", 5, ["경우의 수", "순서 정하기"],
+            f"서로 다른 {ctx} {n}개를 한 줄로 나란히 놓는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{n * n}가지", f"{2 * n}가지", f"{ans + n}가지"],
+            f"첫 자리에 올 수 있는 건 {n}가지. 그걸 정하면 둘째 자리는 남은 {n - 1}가지, 셋째는 {n - 2}가지… 자리마다 줄어드는 가짓수를 모두 곱해요: {'×'.join(str(k) for k in range(n, 0, -1))} = {ans}가지.",
+            [(f"{n * n}가지", "n×n이 아니라, 자리마다 하나씩 줄어드는 가짓수를 1까지 곱해요.")],
+            detail=f"이걸 '{n}의 계승({n}!)'이라 하고 {n}!={ans}예요. 순서를 정하는(줄 세우기·순위 매기기) 문제의 기본이에요. 몇 개만 골라 세우면 {n}부터 그 개수만큼만 곱하고요. '자리마다 남은 선택지를 곱한다'가 핵심 그림이에요.",
+        )
+
+
+# ── 82. 숫자 뒤집기 차 = 9의 배수 (난5, 수와연산) ────────────────────────────
+def gen_reverse_diff():
+    for tens, ones in [(7, 2), (8, 3), (5, 1), (9, 4)]:
+        num = tens * 10 + ones
+        rev = ones * 10 + tens
+        ans = num - rev
+        add(
+            "revdiff", "NUMBER_OPERATION", 5, ["자리값", "불변의 규칙"],
+            f"두 자리 수 {num}에서, 십의 자리와 일의 자리 숫자를 바꾼 수({rev})를 빼면 얼마일까요?",
+            str(ans), [str(tens - ones), str(ans + 9), str(ans - 9)],
+            f"자리값으로 풀어 봐요. {num} = {tens}×10 + {ones}, 바꾼 수 {rev} = {ones}×10 + {tens}. 빼면 (10−1)×({tens}−{ones}) = 9×{tens - ones} = {ans}이에요.",
+            [(str(tens - ones), "두 숫자의 차만 답하면 안 돼요 — 그 차의 9배예요.")],
+            detail="두 자리 수와 숫자를 바꾼 수의 차는 '항상 9의 배수'예요(정확히는 9×(두 숫자의 차)). 세 자리 수라면 처음·끝을 바꾼 차가 99의 배수고요. 자리값(10, 100…)의 차이가 만드는 이런 규칙은 마술 같은 숫자 퍼즐의 비밀이에요.",
+        )
+
+
+# ── 83. 나머지 조건 맞추기 (난6, 수와연산) ───────────────────────────────────
+def gen_leftover_crt():
+    for d1, r1, d2, r2 in [(3, 2, 5, 3), (4, 3, 5, 2), (3, 1, 4, 3), (5, 4, 6, 5)]:
+        n = 1
+        while not (n % d1 == r1 and n % d2 == r2):
+            n += 1
+        ans = n
+        period = d1 * d2 // gcd(d1, d2)
+        add(
+            "leftover", "NUMBER_OPERATION", 6, ["나머지", "조건 맞추기"],
+            f"어떤 수를 {d1}씩 묶으면 {r1}개가 남고, {d2}씩 묶으면 {r2}개가 남아요. 이런 수 중에서 가장 작은 자연수는 무엇일까요?",
+            str(ans), [str(ans + period), str(r1 + r2), str(ans - 1)],
+            f"한 조건씩 좁혀 가요. {d2}씩 묶어 {r2}개 남는 수는 {r2}, {r2 + d2}, {r2 + 2 * d2}, …예요. 이 중 {d1}씩 묶어 {r1}개 남는 것을 찾으면 {ans}이에요.",
+            [(str(r1 + r2), "두 나머지를 더하는 게 아니에요. 두 조건을 '동시에' 만족하는 수를 찾아요.")],
+            detail=f"'여러 나머지 조건을 동시에'는 한 조건의 후보(등차수열)를 쭉 적고 다른 조건으로 거르는 게 기본이에요. 큰 수 쪽 조건부터 후보를 만들면 더 빨라요. 답들은 {d1}, {d2}의 최소공배수 {period}마다 반복돼서, 다음 답은 {ans}+{period}={ans + period}이에요.",
+        )
+
+
+# ── 84. 사각수 (난4, 변화와관계) ─────────────────────────────────────────────
+def gen_square_numbers():
+    for k in [5, 6, 7, 8]:
+        ans = k * k
+        add(
+            "squarenum", "CHANGE_RELATION", 4, ["규칙", "사각수"],
+            f"바둑돌을 정사각형 모양으로 놓아요. 1번째는 1개(1×1), 2번째는 4개(2×2), 3번째는 9개(3×3)… {k}번째 그림의 바둑돌은 몇 개일까요?",
+            f"{ans}개", [f"{k * 2}개", f"{(k - 1) * (k - 1)}개", f"{ans + k}개"],
+            f"규칙을 보면 n번째는 한 변이 n개인 정사각형이라 n×n개예요. 그러니 {k}번째는 {k}×{k}={ans}개예요.",
+            [(f"{k * 2}개", "2배가 아니라, 한 변을 두 번 곱해요(정사각형이니까).")],
+            detail="이런 수(1,4,9,16,25…)를 '사각수(제곱수)'라 해요. 이웃한 사각수의 차는 3,5,7,9…처럼 홀수로 늘어나요(정사각형을 ㄱ자로 키울 때 덧대는 점의 수). 그래서 '홀수를 차례로 더하면 제곱수'와도 이어져요. 점을 그림으로 배열하면 규칙이 눈에 보여요.",
+        )
+
+
+# ── 85. 삼각수 (난4, 변화와관계) ─────────────────────────────────────────────
+def gen_triangular():
+    for k in [5, 6, 8, 10]:
+        ans = k * (k + 1) // 2
+        add(
+            "trinum", "CHANGE_RELATION", 4, ["규칙", "삼각수"],
+            f"공을 삼각형으로 쌓아요. 1층은 1개, 2층까지는 1+2=3개, 3층까지는 1+2+3=6개… {k}층까지 쌓으면 공은 모두 몇 개일까요?",
+            f"{ans}개", [f"{k * k}개", f"{ans - k}개", f"{k * (k + 1)}개"],
+            f"{k}층까지면 1+2+3+…+{k}를 더하는 거예요. 양 끝을 짝지으면 (1+{k}), (2+{k - 1})…처럼 합이 {k + 1}인 짝이 생겨, {k}×({k}+1)÷2={ans}개예요.",
+            [(f"{k * (k + 1)}개", "짝지어 더한 다음 ÷2 하는 걸 빠뜨렸어요.")],
+            detail="이런 수(1,3,6,10,15…)를 '삼각수'라 해요. n번째 삼각수 = n×(n+1)÷2로 1부터 n까지의 합과 똑같아요(가우스의 방법). 삼각수 두 개를 이어 붙이면 직사각형이 되는 걸 그림으로 보면 왜 ÷2인지 보여요. 볼링핀·당구공 배열이 삼각수예요.",
+        )
+
+
 GENERATORS = [
     gen_number_split, gen_height_order,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
     gen_handshake, gen_gauss_sum, gen_ratio_share, gen_fraction_whole,
     gen_tournament, gen_change_coins, gen_recipe_ratio, gen_square_area,
+    gen_day_of_week, gen_frog_well, gen_odd_sum_square, gen_permutation,
+    gen_reverse_diff, gen_leftover_crt, gen_square_numbers, gen_triangular,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
