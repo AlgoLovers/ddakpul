@@ -1086,7 +1086,8 @@
      "misconception": "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 그 유명한 '피보나치'예요. 마지막 걸음이 1칸이었다면 그 전엔 4칸을, 2칸이었다면 3칸을 오른 거예요. 두 경우가 겹치지 않으니 더해요: (n칸)=(n−1칸)+(n−2칸). 그래서 1,2,3,5,8,13…처럼 앞의 두 수를 더해 나가면 5칸은 8가지. 큰 문제를 '한 걸음 작은 문제들'로 쪼개 푸는 이 방법을 점화식이라고 해요."
   },
   {
    "id": "gen-stairs-2",
@@ -1112,7 +1113,8 @@
      "misconception": "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 그 유명한 '피보나치'예요. 마지막 걸음이 1칸이었다면 그 전엔 5칸을, 2칸이었다면 4칸을 오른 거예요. 두 경우가 겹치지 않으니 더해요: (n칸)=(n−1칸)+(n−2칸). 그래서 1,2,3,5,8,13…처럼 앞의 두 수를 더해 나가면 6칸은 13가지. 큰 문제를 '한 걸음 작은 문제들'로 쪼개 푸는 이 방법을 점화식이라고 해요."
   },
   {
    "id": "gen-stairs-3",
@@ -1138,7 +1140,8 @@
      "misconception": "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "이건 그 유명한 '피보나치'예요. 마지막 걸음이 1칸이었다면 그 전엔 6칸을, 2칸이었다면 5칸을 오른 거예요. 두 경우가 겹치지 않으니 더해요: (n칸)=(n−1칸)+(n−2칸). 그래서 1,2,3,5,8,13…처럼 앞의 두 수를 더해 나가면 7칸은 21가지. 큰 문제를 '한 걸음 작은 문제들'로 쪼개 푸는 이 방법을 점화식이라고 해요."
   },
   {
    "id": "gen-grid-1",
@@ -1572,7 +1575,8 @@
     "params": {
      "side": 7
     }
-   }
+   },
+   "detailedExplanation": "'테두리 세기'는 겹치는 부분을 어떻게 처리하느냐가 전부예요. 다르게도 셀 수 있어요: 위·아래 줄에 7개씩(7×2=14), 남은 양옆은 꼭짓점을 뺀 5개씩(합 10). 더하면 14+10=24개로 똑같죠. 겹침을 '빼거나' 아예 '겹치지 않게 나누거나' — 두 길의 답이 같은지 보면 든든해요."
   },
   {
    "id": "gen-border-2",
@@ -1608,7 +1612,8 @@
     "params": {
      "side": 8
     }
-   }
+   },
+   "detailedExplanation": "'테두리 세기'는 겹치는 부분을 어떻게 처리하느냐가 전부예요. 다르게도 셀 수 있어요: 위·아래 줄에 8개씩(8×2=16), 남은 양옆은 꼭짓점을 뺀 6개씩(합 12). 더하면 16+12=28개로 똑같죠. 겹침을 '빼거나' 아예 '겹치지 않게 나누거나' — 두 길의 답이 같은지 보면 든든해요."
   },
   {
    "id": "gen-border-3",
@@ -1644,7 +1649,8 @@
     "params": {
      "side": 12
     }
-   }
+   },
+   "detailedExplanation": "'테두리 세기'는 겹치는 부분을 어떻게 처리하느냐가 전부예요. 다르게도 셀 수 있어요: 위·아래 줄에 12개씩(12×2=24), 남은 양옆은 꼭짓점을 뺀 10개씩(합 20). 더하면 24+20=44개로 똑같죠. 겹침을 '빼거나' 아예 '겹치지 않게 나누거나' — 두 길의 답이 같은지 보면 든든해요."
   },
   {
    "id": "gen-border-4",
@@ -1680,7 +1686,8 @@
     "params": {
      "side": 12
     }
-   }
+   },
+   "detailedExplanation": "'테두리 세기'는 겹치는 부분을 어떻게 처리하느냐가 전부예요. 다르게도 셀 수 있어요: 위·아래 줄에 15개씩(15×2=30), 남은 양옆은 꼭짓점을 뺀 13개씩(합 26). 더하면 30+26=56개로 똑같죠. 겹침을 '빼거나' 아예 '겹치지 않게 나누거나' — 두 길의 답이 같은지 보면 든든해요."
   },
   {
    "id": "gen-candle-1",
@@ -3527,7 +3534,8 @@
      "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "작은 조각은 '위치'로 종류가 갈려요: 꼭짓점(3면 칠해짐) 8개, 모서리(2면) 각 1개씩 12줄, 면 안쪽(1면) 각 1개씩 6면, 속(0면) 1개. 위치별로 나눠 세면 어떤 조건이 와도 빠짐없이 셀 수 있어요. 3D를 '겉·모서리·꼭짓점·속'으로 분해하는 눈이 공간 감각의 핵심이에요."
   },
   {
    "id": "gen-cube-2",
@@ -3553,7 +3561,8 @@
      "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "작은 조각은 '위치'로 종류가 갈려요: 꼭짓점(3면 칠해짐) 8개, 모서리(2면) 각 2개씩 12줄, 면 안쪽(1면) 각 4개씩 6면, 속(0면) 8개. 위치별로 나눠 세면 어떤 조건이 와도 빠짐없이 셀 수 있어요. 3D를 '겉·모서리·꼭짓점·속'으로 분해하는 눈이 공간 감각의 핵심이에요."
   },
   {
    "id": "gen-cube-3",
@@ -3579,7 +3588,8 @@
      "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "작은 조각은 '위치'로 종류가 갈려요: 꼭짓점(3면 칠해짐) 8개, 모서리(2면) 각 3개씩 12줄, 면 안쪽(1면) 각 9개씩 6면, 속(0면) 27개. 위치별로 나눠 세면 어떤 조건이 와도 빠짐없이 셀 수 있어요. 3D를 '겉·모서리·꼭짓점·속'으로 분해하는 눈이 공간 감각의 핵심이에요."
   },
   {
    "id": "gen-cube-4",
@@ -3605,7 +3615,8 @@
      "misconception": "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "작은 조각은 '위치'로 종류가 갈려요: 꼭짓점(3면 칠해짐) 8개, 모서리(2면) 각 2개씩 12줄, 면 안쪽(1면) 각 4개씩 6면, 속(0면) 8개. 위치별로 나눠 세면 어떤 조건이 와도 빠짐없이 셀 수 있어요. 3D를 '겉·모서리·꼭짓점·속'으로 분해하는 눈이 공간 감각의 핵심이에요."
   },
   {
    "id": "gen-divcount-1",
@@ -4115,7 +4126,8 @@
      "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "등차(일정하게 더하기)와 등비(일정하게 곱하기)를 구별하는 게 핵심이에요. 여기선 매번 ×3이니 등비죠. 등비는 처음엔 등차와 비슷해 보여도 곧 폭발적으로 커져요(2,4,8,16…). 접는 종이 두께나 소문 퍼지기처럼, '곱해지는 변화'는 우리 직관보다 훨씬 빨라요."
   },
   {
    "id": "gen-geoseq-2",
@@ -4141,7 +4153,8 @@
      "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "등차(일정하게 더하기)와 등비(일정하게 곱하기)를 구별하는 게 핵심이에요. 여기선 매번 ×3이니 등비죠. 등비는 처음엔 등차와 비슷해 보여도 곧 폭발적으로 커져요(2,4,8,16…). 접는 종이 두께나 소문 퍼지기처럼, '곱해지는 변화'는 우리 직관보다 훨씬 빨라요."
   },
   {
    "id": "gen-geoseq-3",
@@ -4167,7 +4180,8 @@
      "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "등차(일정하게 더하기)와 등비(일정하게 곱하기)를 구별하는 게 핵심이에요. 여기선 매번 ×2이니 등비죠. 등비는 처음엔 등차와 비슷해 보여도 곧 폭발적으로 커져요(2,4,8,16…). 접는 종이 두께나 소문 퍼지기처럼, '곱해지는 변화'는 우리 직관보다 훨씬 빨라요."
   },
   {
    "id": "gen-geoseq-4",
@@ -4193,7 +4207,8 @@
      "misconception": "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비)."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "등차(일정하게 더하기)와 등비(일정하게 곱하기)를 구별하는 게 핵심이에요. 여기선 매번 ×4이니 등비죠. 등비는 처음엔 등차와 비슷해 보여도 곧 폭발적으로 커져요(2,4,8,16…). 접는 종이 두께나 소문 퍼지기처럼, '곱해지는 변화'는 우리 직관보다 훨씬 빨라요."
   },
   {
    "id": "gen-parity-1",
@@ -4682,7 +4697,8 @@
      "n": 5,
      "diagonals": 1
     }
-   }
+   },
+   "detailedExplanation": "대각선은 '두 꼭짓점을 잇는 선분 중 변이 아닌 것'이에요. 5개 꼭짓점에서 2개를 고르는 방법은 C(5,2)=10가지, 그중 변 5개를 빼면 10−5=5개. 앞의 '한 꼭짓점 2개씩 세고 2로 나누기'와 답이 같죠 — 세는 길이 달라도 같은 답이 나오는지 확인하는 습관이 실수를 줄여요."
   },
   {
    "id": "gen-polydiag-2",
@@ -4715,7 +4731,8 @@
      "n": 6,
      "diagonals": 1
     }
-   }
+   },
+   "detailedExplanation": "대각선은 '두 꼭짓점을 잇는 선분 중 변이 아닌 것'이에요. 6개 꼭짓점에서 2개를 고르는 방법은 C(6,2)=15가지, 그중 변 6개를 빼면 15−6=9개. 앞의 '한 꼭짓점 3개씩 세고 2로 나누기'와 답이 같죠 — 세는 길이 달라도 같은 답이 나오는지 확인하는 습관이 실수를 줄여요."
   },
   {
    "id": "gen-polydiag-3",
@@ -4748,7 +4765,8 @@
      "n": 8,
      "diagonals": 1
     }
-   }
+   },
+   "detailedExplanation": "대각선은 '두 꼭짓점을 잇는 선분 중 변이 아닌 것'이에요. 8개 꼭짓점에서 2개를 고르는 방법은 C(8,2)=28가지, 그중 변 8개를 빼면 28−8=20개. 앞의 '한 꼭짓점 5개씩 세고 2로 나누기'와 답이 같죠 — 세는 길이 달라도 같은 답이 나오는지 확인하는 습관이 실수를 줄여요."
   },
   {
    "id": "gen-polydiag-4",
@@ -4781,7 +4799,8 @@
      "n": 10,
      "diagonals": 1
     }
-   }
+   },
+   "detailedExplanation": "대각선은 '두 꼭짓점을 잇는 선분 중 변이 아닌 것'이에요. 10개 꼭짓점에서 2개를 고르는 방법은 C(10,2)=45가지, 그중 변 10개를 빼면 45−10=35개. 앞의 '한 꼭짓점 7개씩 세고 2로 나누기'와 답이 같죠 — 세는 길이 달라도 같은 답이 나오는지 확인하는 습관이 실수를 줄여요."
   },
   {
    "id": "gen-clockmin-1",
@@ -4939,7 +4958,8 @@
      "misconception": "가로+세로 값이 아니라 가로×세로(넓이)를 구해야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합이 정해진 두 수는 서로 가까울수록 곱이 커지고, 같을 때 최대예요(정사각형!). 가로+세로=10로 고정이니 10÷2=5씩 똑같이 나눈 정사각형이 넓이 최대 25㎠. 반대로 넓이가 정해졌을 땐 정사각형일 때 둘레가 최소예요. 이 '같을 때 극단'은 자연·경제 곳곳에 나타나는 원리랍니다."
   },
   {
    "id": "gen-areamax-2",
@@ -4965,7 +4985,8 @@
      "misconception": "가로+세로 값이 아니라 가로×세로(넓이)를 구해야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합이 정해진 두 수는 서로 가까울수록 곱이 커지고, 같을 때 최대예요(정사각형!). 가로+세로=12로 고정이니 12÷2=6씩 똑같이 나눈 정사각형이 넓이 최대 36㎠. 반대로 넓이가 정해졌을 땐 정사각형일 때 둘레가 최소예요. 이 '같을 때 극단'은 자연·경제 곳곳에 나타나는 원리랍니다."
   },
   {
    "id": "gen-areamax-3",
@@ -4991,7 +5012,8 @@
      "misconception": "가로+세로 값이 아니라 가로×세로(넓이)를 구해야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합이 정해진 두 수는 서로 가까울수록 곱이 커지고, 같을 때 최대예요(정사각형!). 가로+세로=8로 고정이니 8÷2=4씩 똑같이 나눈 정사각형이 넓이 최대 16㎠. 반대로 넓이가 정해졌을 땐 정사각형일 때 둘레가 최소예요. 이 '같을 때 극단'은 자연·경제 곳곳에 나타나는 원리랍니다."
   },
   {
    "id": "gen-areamax-4",
@@ -5017,7 +5039,8 @@
      "misconception": "가로+세로 값이 아니라 가로×세로(넓이)를 구해야 해요."
     }
    ],
-   "source": "generated:v1(template+brute-force-verified)"
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "합이 정해진 두 수는 서로 가까울수록 곱이 커지고, 같을 때 최대예요(정사각형!). 가로+세로=14로 고정이니 14÷2=7씩 똑같이 나눈 정사각형이 넓이 최대 49㎠. 반대로 넓이가 정해졌을 땐 정사각형일 때 둘레가 최소예요. 이 '같을 때 극단'은 자연·경제 곳곳에 나타나는 원리랍니다."
   },
   {
    "id": "gen-cubesurf-1",
