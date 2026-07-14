@@ -30,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 
 @Composable
@@ -40,6 +41,7 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     var showResetDialog by remember { mutableStateOf(false) }
+    var showResetGate by remember { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val pendingShareText by viewModel.pendingShareText.collectAsStateWithLifecycle()
 
@@ -97,11 +99,21 @@ fun SettingsScreen(
 
     if (showResetDialog) {
         ResetConfirmDialog(
+            // 초기화는 되돌릴 수 없는 파괴적 동작 — 설명 후 부모 확인 게이트를 거친다.
             onConfirm = {
-                viewModel.resetProgress()
                 showResetDialog = false
+                showResetGate = true
             },
             onDismiss = { showResetDialog = false },
+        )
+    }
+    if (showResetGate) {
+        ParentGateDialog(
+            onVerified = {
+                viewModel.resetProgress()
+                showResetGate = false
+            },
+            onDismiss = { showResetGate = false },
         )
     }
 }

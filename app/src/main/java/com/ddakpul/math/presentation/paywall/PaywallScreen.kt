@@ -17,7 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.Entitlement
 import com.ddakpul.math.domain.model.PremiumPass
+import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import kotlin.math.ceil
 
@@ -43,6 +46,17 @@ fun PaywallScreen(
 ) {
     val entitlement by viewModel.entitlement.collectAsStateWithLifecycle()
     val now = remember { System.currentTimeMillis() }
+    // 구매 전 부모 확인 게이트 — 어린이 오구매 방지.
+    var pendingPass by remember { mutableStateOf<PremiumPass?>(null) }
+    pendingPass?.let { pass ->
+        ParentGateDialog(
+            onVerified = {
+                viewModel.activate(pass)
+                pendingPass = null
+            },
+            onDismiss = { pendingPass = null },
+        )
+    }
     Column(
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -78,13 +92,13 @@ fun PaywallScreen(
                 pass = PremiumPass.ONE_YEAR,
                 titleRes = R.string.paywall_pass_1y_title,
                 highlighted = true,
-                onActivate = viewModel::activate,
+                onActivate = { pendingPass = it },
             )
             PassCard(
                 pass = PremiumPass.SIX_MONTHS,
                 titleRes = R.string.paywall_pass_6m_title,
                 highlighted = false,
-                onActivate = viewModel::activate,
+                onActivate = { pendingPass = it },
             )
 
             Text(
