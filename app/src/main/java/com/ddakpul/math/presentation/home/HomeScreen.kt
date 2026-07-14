@@ -97,16 +97,19 @@ private fun HomeContent(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             StatTile(
+                icon = "📚",
                 label = stringResource(R.string.home_stat_solved),
                 value = stringResource(R.string.home_unit_count, solved),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
+                icon = "🎯",
                 label = stringResource(R.string.home_stat_accuracy),
                 value = stringResource(R.string.home_unit_percent, accuracyPercent),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
+                icon = "🏆",
                 label = stringResource(R.string.home_stat_difficulty),
                 value = stringResource(R.string.home_unit_level, level),
                 modifier = Modifier.weight(1f),
