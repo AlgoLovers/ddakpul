@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.report
 import android.content.Context
 import android.print.PrintAttributes
 import android.print.PrintManager
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,12 +11,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Print
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -28,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +44,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.BarEntry
+import com.ddakpul.math.core.designsystem.component.LevelTrack
 import com.ddakpul.math.core.designsystem.component.MasteryChip
 import com.ddakpul.math.core.designsystem.component.MasteryMatrix
 import com.ddakpul.math.core.designsystem.component.MasteryStage
@@ -155,7 +163,9 @@ private fun ReportContent(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            SummaryTiles(stats)
+            HeroCard(stats)
+
+            KeyStatTiles(stats)
 
             NarrativeSections(weeklySummary = weeklySummary, insights = insights)
 
@@ -171,7 +181,7 @@ private fun ReportContent(
                 PremiumLockedCard(onOpenPaywall = onOpenPaywall)
             }
 
-            SectionCard(title = stringResource(R.string.report_parent_tips_title)) {
+            SectionCard(title = stringResource(R.string.report_parent_tips_title), icon = "🧑‍🏫") {
                 stringArrayResource(R.array.parent_tips).forEach { tip ->
                     Text(
                         text = "• $tip",
@@ -255,14 +265,14 @@ private fun PremiumAnalyticsSections(
     masteryGrid: List<MasteryCellUi>,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        SectionCard(title = stringResource(R.string.report_daily_title)) {
+        SectionCard(title = stringResource(R.string.report_daily_title), icon = "📊") {
             MiniBarChart(
                 entries = dayCells.map { BarEntry(value = it.solved.toFloat(), emphasized = it.isToday) },
                 startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
                 endLabel = dayCells.lastOrNull()?.dateLabel().orEmpty(),
             )
         }
-        SectionCard(title = stringResource(R.string.report_trend_title)) {
+        SectionCard(title = stringResource(R.string.report_trend_title), icon = "📈") {
             TrendLineChart(
                 values = dayCells.map { it.accuracy },
                 startLabel = dayCells.firstOrNull()?.dateLabel().orEmpty(),
@@ -270,7 +280,7 @@ private fun PremiumAnalyticsSections(
             )
         }
         if (stats.difficultyProgress.size >= 2) {
-            SectionCard(title = stringResource(R.string.report_growth_title)) {
+            SectionCard(title = stringResource(R.string.report_growth_title), icon = "🚀") {
                 StepLineChart(
                     values = stats.difficultyProgress.takeLast(MAX_GROWTH_POINTS).map { it.difficulty },
                     minValue = Difficulty.MIN,
@@ -283,13 +293,22 @@ private fun PremiumAnalyticsSections(
                 )
             }
         }
+        if (stats.avgTimeSecByDifficulty.isNotEmpty()) {
+            SectionCard(
+                title = stringResource(R.string.report_avgtime_title),
+                icon = "⏱️",
+                subtitle = stringResource(R.string.report_avgtime_caption),
+            ) {
+                AvgTimeBars(stats.avgTimeSecByDifficulty)
+            }
+        }
         val concepts = stats.conceptStats.filter { it.solved >= 2 }.take(MAX_CONCEPT_ROWS)
         if (concepts.isNotEmpty()) {
-            SectionCard(title = stringResource(R.string.report_concept_title)) {
+            SectionCard(title = stringResource(R.string.report_concept_title), icon = "🧩") {
                 concepts.forEach { concept -> ConceptRow(concept) }
             }
         }
-        SectionCard(title = stringResource(R.string.report_matrix_title)) {
+        SectionCard(title = stringResource(R.string.report_matrix_title), icon = "🗺️") {
             MasteryMap(masteryGrid = masteryGrid, currentDifficulty = stats.currentDifficulty)
         }
     }
@@ -310,36 +329,146 @@ private fun PremiumLockedCard(onOpenPaywall: () -> Unit) {
     }
 }
 
+/**
+ * 히어로 카드 — 이 앱의 성장은 '난이도 등반'이라(학년 개념 없음) 정답률보다 현재 난이도를
+ * 앞세운다. 1~7 트랙으로 '어디까지 왔는지'를 한눈에.
+ */
 @Composable
-private fun SummaryTiles(stats: LearningStats) {
-    // 2×2 격자 — 폰에서 4칸을 한 줄에 넣으면 값·라벨이 글자 중간에서 줄바꿈된다(태블릿은 720dp 상한).
+private fun HeroCard(stats: LearningStats) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.report_hero_label),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+            Text(
+                text = stringResource(R.string.home_unit_level, stats.currentDifficulty),
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+            LevelTrack(current = stats.currentDifficulty, min = Difficulty.MIN, max = Difficulty.MAX)
+            Text(
+                text = stringResource(R.string.report_hero_caption, Difficulty.MAX),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
+            )
+        }
+    }
+}
+
+/** 핵심 지표 2×2 — 아이콘·보조 수치(맞음·최고 연속·지난주 대비·오늘)까지 담아 자세하게. */
+@Composable
+private fun KeyStatTiles(stats: LearningStats) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatTile(
+                icon = "📚",
                 label = stringResource(R.string.report_total_solved),
                 value = stringResource(R.string.home_unit_count, stats.totalSolved),
+                caption = stringResource(R.string.report_caption_correct, stats.correctCount),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
+                icon = "🎯",
                 label = stringResource(R.string.report_accuracy),
                 value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                caption = accuracyDeltaCaption(stats),
                 modifier = Modifier.weight(1f),
             )
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatTile(
-                label = stringResource(R.string.report_current_level),
-                value = stringResource(R.string.home_unit_level, stats.currentDifficulty),
+                icon = "🔥",
+                label = stringResource(R.string.report_streak),
+                value = stringResource(R.string.report_unit_days, stats.streakDays),
+                caption = stringResource(R.string.report_caption_best_streak, stats.bestStreakDays),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
-                label = stringResource(R.string.report_streak),
-                value = stringResource(R.string.report_unit_days, stats.streakDays),
+                icon = "📅",
+                label = stringResource(R.string.report_today),
+                value = stringResource(R.string.home_unit_count, stats.todaySolved),
+                caption = stringResource(R.string.report_caption_today_time, stats.todayTimeSpentSec / 60),
                 modifier = Modifier.weight(1f),
             )
         }
     }
 }
+
+/** 최근 7일 vs 그 이전 7일 정답률 차이를 보조 수치로. 둘 다 있어야 계산. */
+@Composable
+private fun accuracyDeltaCaption(stats: LearningStats): String? {
+    val recent = stats.recentAccuracy ?: return null
+    val previous = stats.previousAccuracy ?: return null
+    val delta = ((recent - previous) * 100).roundToInt()
+    return when {
+        delta > 0 -> stringResource(R.string.report_caption_delta_up, delta)
+        delta < 0 -> stringResource(R.string.report_caption_delta_down, -delta)
+        else -> stringResource(R.string.report_caption_delta_same)
+    }
+}
+
+/** 난이도별 평균 풀이 시간 — '어려운 문제에 얼마나 오래 고민하는지'(시간 = 사고의 흔적). */
+@Composable
+private fun AvgTimeBars(avgByDifficulty: Map<Int, Int>) {
+    val maxSec = avgByDifficulty.values.maxOrNull()?.takeIf { it > 0 } ?: return
+    val barBg = MaterialTheme.colorScheme.surfaceVariant
+    val barFg = MaterialTheme.colorScheme.primary
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        for (level in Difficulty.MIN..Difficulty.MAX) {
+            val sec = avgByDifficulty[level] ?: continue
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.report_avgtime_level, level),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.width(60.dp),
+                )
+                Box(
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .height(14.dp)
+                            .clip(RoundedCornerShape(7.dp))
+                            .background(barBg),
+                ) {
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxWidth(sec.toFloat() / maxSec)
+                                .height(14.dp)
+                                .clip(RoundedCornerShape(7.dp))
+                                .background(barFg),
+                    )
+                }
+                Text(
+                    text = durationText(sec),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.width(52.dp),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun durationText(sec: Int): String =
+    if (sec >= 60) {
+        stringResource(R.string.report_avgtime_min, sec / 60)
+    } else {
+        stringResource(R.string.report_avgtime_sec, sec)
+    }
 
 /** 해석이 끝난 "말" 섹션 — 주간 요약 문단과 인사이트 목록. */
 @Composable
@@ -349,7 +478,7 @@ private fun NarrativeSections(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         weeklySummary?.let { summary ->
-            SectionCard(title = stringResource(R.string.report_weekly_title)) {
+            SectionCard(title = stringResource(R.string.report_weekly_title), icon = "📝") {
                 Text(
                     text = summary.toParagraph(),
                     style = MaterialTheme.typography.bodyLarge,
@@ -358,7 +487,7 @@ private fun NarrativeSections(
         }
 
         if (insights.isNotEmpty()) {
-            SectionCard(title = stringResource(R.string.report_insights_title)) {
+            SectionCard(title = stringResource(R.string.report_insights_title), icon = "💡") {
                 insights.forEach { insight ->
                     Text(
                         text = insight.toText(),
@@ -407,7 +536,7 @@ private fun DayCell.dateLabel(): String = LocalDate.ofEpochDay(epochDay).format(
 
 @Composable
 private fun MistakeNoteSection(mistakes: List<Problem>) {
-    SectionCard(title = stringResource(R.string.report_mistakes_title)) {
+    SectionCard(title = stringResource(R.string.report_mistakes_title), icon = "✏️") {
         Text(
             text = stringResource(R.string.report_mistakes_desc),
             style = MaterialTheme.typography.bodyMedium,

@@ -14,11 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-/** 제목이 있는 카드 컨테이너. 내용은 [content] 슬롯으로 받는다. */
+/**
+ * 제목이 있는 카드 컨테이너. 내용은 [content] 슬롯으로 받는다.
+ * [icon]은 제목 앞 이모지, [subtitle]은 제목 아래 한 줄 설명(둘 다 선택).
+ */
 @Composable
 fun SectionCard(
     title: String,
     modifier: Modifier = Modifier,
+    icon: String? = null,
+    subtitle: String? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
@@ -30,10 +35,17 @@ fun SectionCard(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = title,
+                text = if (icon != null) "$icon  $title" else title,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
             )
+            if (subtitle != null) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             content()
         }
     }

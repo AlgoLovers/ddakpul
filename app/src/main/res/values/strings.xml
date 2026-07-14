@@ -153,7 +153,25 @@
     <string name="report_current_level">현재 난이도</string>
     <string name="report_streak">연속 학습</string>
     <string name="report_unit_days">%1$d일</string>
+    <string name="report_today">오늘 푼 문제</string>
     <string name="report_empty">아직 푼 문제가 없어요.\n아이가 문제를 풀면 리포트가 채워집니다.</string>
+
+    <!-- 리포트 · 히어로/핵심 지표 (성장=난이도 등반을 앞세움) -->
+    <string name="report_hero_label">지금 실력</string>
+    <string name="report_hero_caption">난이도 %1$d단계 중 지금 여기까지 왔어요.</string>
+    <string name="report_caption_correct">맞은 문제 %1$d개</string>
+    <string name="report_caption_best_streak">최고 %1$d일</string>
+    <string name="report_caption_today_time">%1$d분 학습</string>
+    <string name="report_caption_delta_up">지난주 대비 +%1$d%%p</string>
+    <string name="report_caption_delta_down">지난주 대비 −%1$d%%p</string>
+    <string name="report_caption_delta_same">지난주와 비슷해요</string>
+
+    <!-- 리포트 · 난이도별 평균 시간 -->
+    <string name="report_avgtime_title">난이도별 평균 시간</string>
+    <string name="report_avgtime_caption">어려운 문제일수록 오래 고민한다면 좋은 신호예요 — 시간은 사고의 흔적이에요.</string>
+    <string name="report_avgtime_level">난이도 %1$d</string>
+    <string name="report_avgtime_min">%1$d분</string>
+    <string name="report_avgtime_sec">%1$d초</string>
 
     <!-- 리포트 · 인사이트 (해석이 끝난 문장) -->
     <string name="report_insights_title">이번 주 인사이트</string>
@@ -178,7 +196,7 @@
     <string name="report_daily_title">최근 2주 학습량</string>
     <string name="report_trend_title">정답률 추이</string>
     <string name="report_growth_title">난이도 성장 곡선</string>
-    <string name="report_growth_caption">문제를 풀 때마다 아이 수준에 맞춰 난이도(1~5)가 움직여요.</string>
+    <string name="report_growth_caption">문제를 풀 때마다 아이 수준에 맞춰 난이도(1~7)가 움직여요.</string>
     <string name="report_concept_title">개념별 숙달도</string>
     <string name="report_concept_stat">%1$d문제 · 정답률 %2$d%%</string>
     <string name="report_matrix_title">난이도별 숙달 지도</string>
