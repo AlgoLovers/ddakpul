@@ -41,6 +41,12 @@ enum class FigureType {
      * heights: 면마다 [col,row,눈] 3개씩 평탄화(길이 18).
      */
     CUBE_NET,
+
+    /**
+     * 성냥개비로 한 줄로 이어 붙인 도형(변을 공유). params: n(도형 개수),
+     * tri(1이면 정삼각형을 위아래 번갈아, 그 외/없으면 정사각형을 나란히).
+     */
+    MATCHSTICK,
 }
 
 data class ProblemFigure(

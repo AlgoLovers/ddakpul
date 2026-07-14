@@ -200,7 +200,42 @@ def cube_net(d, fig, box):
             d.ellipse([cx - pr, cy - pr, cx + pr, cy + pr], fill=INK)
 
 
-RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan, "CUBE_NET": cube_net}
+def matchstick(d, fig, box):
+    n = min(max(fig["params"].get("n", 3), 1), 8)
+    is_tri = fig["params"].get("tri", 0) == 1
+    x0, y0, x1, y1 = box
+    side = min(x1 - x0, y1 - y0) * 0.82
+    cx, top = (x0 + x1) / 2, (y0 + y1) / 2 - side / 2
+    W = 6
+
+    def stick(a, b):
+        d.line([a, b], fill=INK, width=W)
+
+    if not is_tri:
+        s = min(side / n, side * 0.5)
+        gl, gt = cx - s * n / 2, top + (side - s) / 2
+        stick((gl, gt), (gl + s * n, gt))
+        stick((gl, gt + s), (gl + s * n, gt + s))
+        for i in range(n + 1):
+            stick((gl + i * s, gt), (gl + i * s, gt + s))
+    else:
+        s = min(side * 2 / (n + 1), side * 0.5)
+        hgt, total_w = s * 0.87, s * (n + 1) / 2
+        gl = cx - total_w / 2
+        base_y = top + (side + hgt) / 2
+        top_y = base_y - hgt
+        def px(k):
+            return gl + k * (s / 2)
+        def py(k):
+            return base_y if k % 2 == 0 else top_y
+        for i in range(n):
+            a, b, c = (px(i), py(i)), (px(i + 1), py(i + 1)), (px(i + 2), py(i + 2))
+            stick(a, b)
+            stick(b, c)
+            stick(c, a)
+
+
+RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan, "CUBE_NET": cube_net, "MATCHSTICK": matchstick}
 TW, FH, LH = 300, 210, 96
 
 
