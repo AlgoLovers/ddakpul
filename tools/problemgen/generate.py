@@ -2594,8 +2594,36 @@ def gen_grid_area_hard():
         )
 
 
+# ── 129. 줄에서 위치로 인원 세기 (난2, 자료와가능성) ────────────────────────
+def gen_position_count():
+    for front, back in [(4, 3), (3, 5), (6, 2), (2, 4)]:
+        ans = front + back - 1
+        add(
+            "position", "DATA_POSSIBILITY", 2, ["위치 사고", "간격"],
+            f"아이들이 한 줄로 서 있어요. 민수는 앞에서 {front}번째이고, 동시에 뒤에서 {back}번째예요. 줄에 서 있는 아이는 모두 몇 명일까요?",
+            f"{ans}명", [f"{front + back}명", f"{ans - 1}명", f"{front + back + 1}명"],
+            f"민수를 두 번 세지 않게 조심해요. 앞에서 {front}번째면 민수 앞에 {front - 1}명, 뒤에서 {back}번째면 민수 뒤에 {back - 1}명. 앞({front - 1}) + 민수(1) + 뒤({back - 1}) = {ans}명이에요. (또는 {front}+{back}−1={ans}, 겹치는 민수를 한 번 빼요.)",
+            [(f"{front + back}명", f"{front}+{back}로 세면 민수를 두 번 센 거예요 — 한 번 빼야 해요.")],
+            detail="'앞에서 몇째 + 뒤에서 몇째'로 전체를 셀 땐 그 사람을 양쪽에서 한 번씩, 두 번 세게 돼요. 그래서 −1을 해요. 나무 심기·자르기처럼 '겹치거나 사이를 세는' 문제의 한 갈래예요. 동그라미를 그려 보면 확실해져요.",
+        )
+
+
+# ── 130. 거꾸로 생각하기 — 빠진 더하는 수 (난1, 수와연산) ────────────────────
+def gen_missing_addend():
+    for a, total in [(7, 15), (8, 20), (6, 13), (9, 16)]:
+        ans = total - a
+        add(
+            "addend", "NUMBER_OPERATION", 1, ["거꾸로 생각하기", "가르기"],
+            f"어떤 수에 {a}을 더했더니 {total}이 됐어요. 처음 수는 얼마일까요?",
+            str(ans), [str(total), str(total + a), str(ans - 1)],
+            f"거꾸로 생각해요. {a}을 더해서 {total}이 됐으니 {total}에서 {a}을 도로 빼면 처음 수가 나와요: {total}−{a}={ans}이에요. (검산: {ans}+{a}={total}.)",
+            [(str(total), f"그건 더한 뒤의 수예요. {a}을 도로 빼야 처음 수예요.")],
+            detail=f"'□ + {a} = {total}'에서 □를 찾는 건 더하기를 거꾸로(빼기로) 되짚는 거예요. 더하기↔빼기는 서로 반대라, 한쪽을 알면 다른 쪽으로 되돌릴 수 있어요. 이 '거꾸로 생각하기'가 나중에 방정식의 바탕이 돼요.",
+        )
+
+
 GENERATORS = [
-    gen_number_split, gen_height_order,
+    gen_number_split, gen_height_order, gen_position_count, gen_missing_addend,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
     gen_handshake, gen_gauss_sum, gen_ratio_share, gen_fraction_whole,
