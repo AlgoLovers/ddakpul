@@ -1,12 +1,16 @@
 package com.ddakpul.math.presentation.settings
 
 import android.content.Intent
+import android.speech.tts.TextToSpeech
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -16,6 +20,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +36,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.presentation.common.ParentGateDialog
+import com.ddakpul.math.presentation.common.SpeechSettings
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
+import com.ddakpul.math.presentation.common.rememberSpeaker
 
 @Composable
 fun SettingsScreen(
@@ -59,7 +66,7 @@ fun SettingsScreen(
     }
 
     Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
+        modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         Text(
@@ -78,6 +85,9 @@ fun SettingsScreen(
 
         // 하루 목표 — 아이가 스스로 정한다(자율성, SDT).
         DailyGoalCard(dailyGoal = uiState.dailyGoal, onSelect = viewModel::setDailyGoal)
+
+        // 읽어주기(TTS) 음성 — 엔진·속도 선택(한국어는 기기마다 잘하는 엔진이 다르다).
+        TtsCard()
 
         // 별로였던 문제 내보내기 — 부모가 개발 채널로 보내면 다음 업데이트에 반영된다.
         FeedbackExportCard(
@@ -195,6 +205,94 @@ private fun DailyGoalCard(
                     onClick = { onSelect(option) },
                     label = { Text(stringResource(R.string.settings_goal_option, option)) },
                 )
+            }
+        }
+    }
+}
+
+/** 읽어주기 음성 설정 — 설치된 TTS 엔진 선택 + 속도 + 미리 듣기 + 시스템 음성 설정 연결. */
+@Composable
+private fun TtsCard() {
+    val context = LocalContext.current
+    var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
+    var selectedEngine by remember { mutableStateOf(SpeechSettings.enginePackage(context)) }
+    var rate by remember { mutableStateOf(SpeechSettings.rate(context)) }
+
+    // 설치된 TTS 엔진 목록을 읽기 위한 임시 인스턴스.
+    DisposableEffect(Unit) {
+        var probe: TextToSpeech? = null
+        probe = TextToSpeech(context) { engines = probe?.engines.orEmpty() }
+        onDispose { probe?.shutdown() }
+    }
+    // 미리 듣기용 — 선택이 바뀌어 재구성되면 새 엔진/속도로 붙는다(SpeechSettings를 읽음).
+    val speak = rememberSpeaker()
+
+    SettingsCard {
+        Text(
+            text = stringResource(R.string.settings_tts_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = stringResource(R.string.settings_tts_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        if (engines.isNotEmpty()) {
+            Text(stringResource(R.string.settings_tts_engine), style = MaterialTheme.typography.labelLarge)
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                FilterChip(
+                    selected = selectedEngine == null,
+                    onClick = {
+                        selectedEngine = null
+                        SpeechSettings.setEnginePackage(context, null)
+                    },
+                    label = { Text(stringResource(R.string.settings_tts_engine_default)) },
+                )
+                engines.forEach { e ->
+                    FilterChip(
+                        selected = selectedEngine == e.name,
+                        onClick = {
+                            selectedEngine = e.name
+                            SpeechSettings.setEnginePackage(context, e.name)
+                        },
+                        label = { Text(e.label) },
+                    )
+                }
+            }
+        }
+        Text(stringResource(R.string.settings_tts_speed), style = MaterialTheme.typography.labelLarge)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf(
+                0.8f to R.string.settings_tts_slow,
+                1.0f to R.string.settings_tts_normal,
+                1.2f to R.string.settings_tts_fast,
+            ).forEach { (r, res) ->
+                FilterChip(
+                    selected = rate == r,
+                    onClick = {
+                        rate = r
+                        SpeechSettings.setRate(context, r)
+                    },
+                    label = { Text(stringResource(res)) },
+                )
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { speak(context.getString(R.string.settings_tts_sample)) }) {
+                Text(stringResource(R.string.settings_tts_test))
+            }
+            TextButton(onClick = {
+                runCatching {
+                    context.startActivity(
+                        Intent("com.android.settings.TTS_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    )
+                }
+            }) {
+                Text(stringResource(R.string.settings_tts_system))
             }
         }
     }
