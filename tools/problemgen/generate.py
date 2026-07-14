@@ -2594,6 +2594,69 @@ def gen_grid_area_hard():
         )
 
 
+# ── 135. 합과 곱으로 두 수 찾기 (난6, 수와연산) ─────────────────────────────
+def gen_sum_product_pair():
+    for s, p in [(7, 12), (9, 20), (10, 21), (8, 15)]:
+        disc = s * s - 4 * p
+        r = int(disc ** 0.5)
+        assert r * r == disc
+        x = (s - r) // 2
+        y = (s + r) // 2
+        assert x + y == s and x * y == p and x > 0
+        add(
+            "sumprod", "NUMBER_OPERATION", 6, ["연립 추론", "합과 곱"],
+            f"두 자연수를 더하면 {s}, 곱하면 {p}예요. 두 수 중 '더 큰' 수는 무엇일까요?",
+            str(y), [str(x), str(s), str(y + 1)],
+            f"합이 {s}가 되는 짝(1과 {s - 1}, 2와 {s - 2}, …)을 하나씩 곱해 보면 {x}×{y}={p}인 짝을 만나요. 그중 큰 수는 {y}예요.",
+            [(str(x), "그건 두 수 중 작은 쪽이에요. '더 큰' 수를 골라요.")],
+            detail="'합과 곱을 아는 두 수 찾기'는 합이 되는 짝을 차례로 곱해 보는 게 기본이에요. 사실 이 두 수는 x²−(합)x+(곱)=0의 두 해 — 중학교에서 배울 이차방정식의 씨앗이죠. 합이 정해졌을 때 곱이 클수록 두 수가 가깝다는 것도 함께 보면 재미있어요.",
+        )
+
+
+# ── 136. 시간 계산 = 60진법 받아올림 (난3, 변화와관계) ──────────────────────
+def gen_time_duration():
+    for h, m, dh, dm in [(3, 40, 1, 50), (2, 20, 2, 55), (9, 45, 1, 30), (7, 50, 2, 20)]:
+        tot = (h * 60 + m) + (dh * 60 + dm)
+        eh, em = (tot // 60) % 24, tot % 60
+        add(
+            "timedur", "CHANGE_RELATION", 3, ["시간 계산", "60 받아올림"],
+            f"어떤 일을 {h}시 {m}분에 시작해서 {dh}시간 {dm}분 동안 했어요. 끝난 시각은 몇 시 몇 분일까요?",
+            f"{eh}시 {em}분", [f"{h + dh}시 {m + dm}분", f"{(eh + 1) % 24}시 {em}분", f"{eh}시 {(em + 10) % 60}분"],
+            f"분끼리, 시끼리 더하되 분이 60을 넘으면 1시간으로 올려요. 분: {m}+{dm}={m + dm}분 → {(m + dm) // 60}시간 {(m + dm) % 60}분. 시: {h}+{dh}+{(m + dm) // 60}={h + dh + (m + dm) // 60}시. 그래서 {eh}시 {em}분이에요.",
+            [(f"{h + dh}시 {m + dm}분", "분을 그냥 이어 붙이면 안 돼요 — 60분이 넘으면 1시간으로 받아올려요.")],
+            detail="시간 계산은 '60진법'이라 분이 60을 넘으면 시로 올려요(10진법 받아올림과 같은데 넘는 기준만 60). 거꾸로 '몇 시간 몇 분 전'은 60을 빌려 내림하고요. 시계가 한 바퀴 도는 것도 같은 나머지 감각이에요.",
+        )
+
+
+# ── 137. 격자 속 정사각형 개수 = 제곱수의 합 (난6, 도형과측정) ───────────────
+def gen_squares_in_grid():
+    for k in [2, 3, 4, 5]:
+        ans = k * (k + 1) * (2 * k + 1) // 6
+        add(
+            "gridsquares", "SHAPE_MEASUREMENT", 6, ["세기", "제곱수 합"],
+            f"{k}×{k} 크기의 모눈종이(작은 정사각형 {k * k}개)가 있어요. 이 안에서 찾을 수 있는 크기가 다른 모든 '정사각형'(1×1, 2×2, …)은 모두 몇 개일까요?",
+            f"{ans}개", [f"{k * k}개", f"{ans + 1}개", f"{k * k * k}개"],
+            f"크기별로 나눠 세요. 1×1은 {k}×{k}={k * k}개, 2×2는 {k - 1}×{k - 1}={(k - 1) ** 2}개… 큰 정사각형일수록 놓을 자리가 줄어요. 다 더하면 1²+2²+…+{k}²={ans}개예요.",
+            [(f"{k * k}개", "1×1짜리 작은 칸만 센 거예요 — 2×2, 3×3처럼 큰 정사각형도 세요.")],
+            detail="n×n 격자 속 정사각형 개수 = 1²+2²+…+n²이에요(크기 s×s는 (n−s+1)²자리). 이 '제곱수의 합'엔 n(n+1)(2n+1)÷6 공식도 있어요. 직사각형까지 세면 또 달라지죠 — '무엇을 세는가'를 정확히 하는 게 세기의 핵심이에요.",
+        )
+
+
+# ── 138. 합과 차로 두 수 찾기 = 합차법 (난4, 변화와관계) ────────────────────
+def gen_two_sum_diff():
+    for s, diff in [(20, 4), (30, 6), (50, 10), (18, 2)]:
+        big = (s + diff) // 2
+        small = (s - diff) // 2
+        add(
+            "sumdiff", "CHANGE_RELATION", 4, ["합과 차", "합차법"],
+            f"두 수의 합이 {s}, 차가 {diff}예요. 두 수 중 '큰' 수는 무엇일까요?",
+            str(big), [str(small), str(s // 2), str(big + diff)],
+            f"합과 차를 알 땐 '더하고 빼기'가 지름길이에요. 합({s})에 차({diff})를 더하면 큰 수의 2배가 돼요: ({s}+{diff})÷2={big}. (작은 수는 ({s}−{diff})÷2={small}.) 큰 수는 {big}이에요.",
+            [(str(s // 2), "두 수가 같지 않으니 절반이 아니에요 — 합에 차를 더해 2로 나눠요.")],
+            detail="합차법: 큰 수 = (합+차)÷2, 작은 수 = (합−차)÷2. 합과 차를 막대 두 개로 그리면 차만큼 삐져나온 부분을 맞춰 생각할 수 있어요. 나이·개수·거리처럼 두 미지수가 '합과 차'로 주어지면 늘 통해요.",
+        )
+
+
 # ── 131. 세 수의 최대공약수 (난6, 수와연산) ─────────────────────────────────
 def gen_gcd_three():
     for a, b, c in [(12, 18, 20), (24, 36, 20), (30, 45, 50), (16, 40, 28)]:
@@ -2707,6 +2770,7 @@ GENERATORS = [
     gen_reverse_operation, gen_similar_area_ratio, gen_handshake_reverse,
     gen_divisor_from_remainder, gen_diagonal_cells,
     gen_gcd_three, gen_sum_arithmetic_series, gen_tribonacci_stairs, gen_toggle_lights,
+    gen_sum_product_pair, gen_time_duration, gen_squares_in_grid, gen_two_sum_diff,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
