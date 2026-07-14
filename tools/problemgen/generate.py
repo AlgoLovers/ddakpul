@@ -2594,6 +2594,69 @@ def gen_grid_area_hard():
         )
 
 
+# ── 131. 세 수의 최대공약수 (난6, 수와연산) ─────────────────────────────────
+def gen_gcd_three():
+    for a, b, c in [(12, 18, 20), (24, 36, 20), (30, 45, 50), (16, 40, 28)]:
+        ans = gcd(gcd(a, b), c)
+        add(
+            "gcd3", "NUMBER_OPERATION", 6, ["최대공약수", "세 수"],
+            f"{a}, {b}, {c} 세 수의 최대공약수(세 수를 모두 나누어떨어지게 하는 가장 큰 수)는 무엇일까요?",
+            str(ans), [str(gcd(a, b)), str(ans + 1), str(min(a, b, c))],
+            f"세 수의 최대공약수는 '두 개씩 차례로' 구하면 돼요. 먼저 {a}와 {b}의 최대공약수는 {gcd(a, b)}. 그 결과와 {c}의 최대공약수를 구하면 {ans}이에요.",
+            [(str(gcd(a, b)), f"{a}, {b}만 본 게 아니라 {c}까지 모두 나누어떨어지는 수여야 해요.")],
+            detail="세 수 이상의 최대공약수는 두 개씩 짝지어 차례로 구하거나, 각 수를 소인수분해해 '공통으로 든 소수를 가장 적게 나온 만큼' 곱해 구해요. 최소공배수는 반대로 '가장 많이 나온 만큼'이고요.",
+        )
+
+
+# ── 132. 등차수열의 합 (난5, 변화와관계) ────────────────────────────────────
+def gen_sum_arithmetic_series():
+    for first, diff, n in [(2, 3, 10), (5, 2, 8), (1, 4, 12), (3, 5, 6)]:
+        last = first + diff * (n - 1)
+        ans = n * (first + last) // 2
+        add(
+            "arithsum", "CHANGE_RELATION", 5, ["등차수열 합", "짝지어 더하기"],
+            f"등차수열 {first}, {first + diff}, {first + 2 * diff}, … 의 첫 {n}개 항을 모두 더하면 얼마일까요? (마지막 {n}번째 항은 {last}예요.)",
+            str(ans), [str(n * first), str(first + last), str(ans + diff)],
+            f"양 끝을 짝지어요: (첫 항 {first} + 끝 항 {last}) = {first + last}. 이런 짝이 항 {n}개에 대해 {n}÷2쌍만큼 생기니 합 = (첫+끝)×개수÷2 = ({first}+{last})×{n}÷2 = {ans}이에요.",
+            [(str(first + last), "그건 첫 항과 끝 항의 합이에요 — 개수를 곱하고 2로 나눠야 전체 합이에요.")],
+            detail="등차수열의 합 = (첫 항 + 끝 항) × 항의 수 ÷ 2예요. 가우스가 1~100을 순식간에 더한 방법(양 끝 짝짓기)과 똑같아요. 짝의 합이 모두 같다는 대칭이 핵심이라, 항이 홀수 개여도 '가운데 항 × 개수'로 같은 결과가 나와요.",
+        )
+
+
+# ── 133. 1·2·3칸 계단 = 트리보나치 (난6, 자료와가능성) ──────────────────────
+def gen_tribonacci_stairs():
+    for n in [5, 6, 7, 4]:
+        ways = [0] * (n + 1)
+        ways[0] = 1
+        for i in range(1, n + 1):
+            for step in (1, 2, 3):
+                if i - step >= 0:
+                    ways[i] += ways[i - step]
+        ans = ways[n]
+        add(
+            "tribstairs", "DATA_POSSIBILITY", 6, ["경우 나누어 세기", "점화식"],
+            f"한 번에 1칸, 2칸, 또는 3칸씩 오를 수 있는 {n}칸 계단이 있어요. 오르는 서로 다른 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{ans - 1}가지", f"{ans + 2}가지", f"{2 ** (n - 1)}가지"],
+            f"마지막 걸음이 1칸·2칸·3칸이었는지로 나눠요. 그러면 '{n}칸 방법 = {n - 1}칸 + {n - 2}칸 + {n - 3}칸 방법'이에요(앞 세 개의 합!). 1칸 1, 2칸 2, 3칸 4부터 차례로 쌓으면 {n}칸은 {ans}가지예요.",
+            [(f"{ans - 1}가지", "마지막 걸음을 1·2·3칸 세 경우로 빠짐없이 나눴는지 확인해요.")],
+            detail="1·2칸이면 피보나치, 1·2·3칸이면 '앞 세 수의 합'(트리보나치)이에요. 큰 문제를 '마지막 한 걸음'으로 쪼개 작은 문제들의 합으로 만드는 점화식이 핵심. 오를 수 있는 칸 종류가 늘면 더할 항도 그만큼 늘어요.",
+        )
+
+
+# ── 134. 전구 문제 = 제곱수 (난7, 자료와가능성) ─────────────────────────────
+def gen_toggle_lights():
+    for n in [10, 25, 16, 36]:
+        ans = int(n ** 0.5)
+        add(
+            "lights", "DATA_POSSIBILITY", 7, ["약수의 개수", "제곱수"],
+            f"{n}개의 전구가 일렬로 있고 모두 꺼져 있어요. 1번 사람은 1의 배수 자리(전부), 2번 사람은 2의 배수 자리, … {n}번 사람은 {n}의 배수 자리 전구의 스위치를 눌러요(켜져 있으면 끄고, 꺼져 있으면 켜요). 모두 지나간 뒤 '켜져 있는' 전구는 몇 개일까요?",
+            f"{ans}개", [f"{ans + 1}개", f"{n // 2}개", f"{ans - 1}개"],
+            f"어떤 전구가 눌린 횟수 = 그 번호의 '약수의 개수'예요. 켜진 채로 남으려면 홀수 번 눌려야 하는데, 약수 개수가 홀수인 수는 '제곱수'뿐이에요(약수가 짝을 이루는데 제곱수만 √n×√n으로 짝이 없거든요). {n}까지의 제곱수는 1,4,9,…로 모두 {ans}개예요.",
+            [(f"{n // 2}개", "절반이 아니에요 — 약수 개수가 홀수인 수(제곱수)만 켜져 있어요.")],
+            detail=f"각 전구는 '자기 번호의 약수'인 사람들에게 눌려요. 약수는 보통 짝(12 → 1·12, 2·6, 3·4)을 이뤄 개수가 짝수인데, 제곱수만 √n이 자기 자신과 짝이라 홀수예요. 그래서 켜진 전구 = {n} 이하 제곱수 개수 = √{n}의 정수 부분 = {ans}개. 유명한 '전구 문제'랍니다.",
+        )
+
+
 # ── 129. 줄에서 위치로 인원 세기 (난2, 자료와가능성) ────────────────────────
 def gen_position_count():
     for front, back in [(4, 3), (3, 5), (6, 2), (2, 4)]:
@@ -2643,6 +2706,7 @@ GENERATORS = [
     gen_clock_gain, gen_book_reading, gen_train_pass_person,
     gen_reverse_operation, gen_similar_area_ratio, gen_handshake_reverse,
     gen_divisor_from_remainder, gen_diagonal_cells,
+    gen_gcd_three, gen_sum_arithmetic_series, gen_tribonacci_stairs, gen_toggle_lights,
     gen_cryptarithm, gen_chicken_rabbit, gen_excess_deficit, gen_age, gen_trees,
     gen_log, gen_meeting, gen_work, gen_train, gen_pyramid, gen_stairs, gen_grid,
     gen_cycle, gen_calendar, gen_average, gen_border, gen_candle, gen_mirror,
