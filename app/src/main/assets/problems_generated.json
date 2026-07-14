@@ -7626,6 +7626,158 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "정확히는 (5의 배수 수)+(25의 배수 수)+(125의 배수 수)+… = ⌊100/5⌋+⌊100/25⌋+… = 24. 25=5×5는 5를 두 개 품으니 한 번 더 세는 거예요. '2와 5의 쌍이 10을 만드는데 5가 병목'이라는 생각은, 자릿수·약수 문제에서 두루 쓰이는 강력한 도구랍니다."
+  },
+  {
+   "id": "gen-gridblock-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridblock-6",
+   "concepts": [
+    "최단 경로",
+    "장애물",
+    "경우의 수"
+   ],
+   "statement": "가로 3칸, 세로 3칸 바둑판 길에서 왼쪽 아래(●)에서 오른쪽 위(◯)까지 오른쪽·위로만 가요. 그런데 ✕ 표시된 교차점은 공사 중이라 지날 수 없어요. 갈 수 있는 가장 짧은 길은 모두 몇 가지일까요?",
+   "choices": [
+    "10가지",
+    "11가지",
+    "13가지",
+    "20가지"
+   ],
+   "answerIndex": 1,
+   "explanation": "막힌 곳이 없다면 최단 경로는 20가지예요. 각 교차점에 (왼쪽 점 수)+(아래 점 수)를 차례로 더해 가되, ✕ 교차점만 0으로 두고 지나가지 않게 하면 도착점이 11가지가 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 막힌 곳이 없을 때 수예요. ✕를 지나는 길을 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 3,
+     "mark": 1,
+     "blockX": 1,
+     "blockY": 1
+    }
+   },
+   "detailedExplanation": "두 방법으로 풀려요. ①전체(20) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요."
+  },
+  {
+   "id": "gen-gridblock-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridblock-6",
+   "concepts": [
+    "최단 경로",
+    "장애물",
+    "경우의 수"
+   ],
+   "statement": "가로 4칸, 세로 2칸 바둑판 길에서 왼쪽 아래(●)에서 오른쪽 위(◯)까지 오른쪽·위로만 가요. 그런데 ✕ 표시된 교차점은 공사 중이라 지날 수 없어요. 갈 수 있는 가장 짧은 길은 모두 몇 가지일까요?",
+   "choices": [
+    "6가지",
+    "15가지",
+    "5가지",
+    "8가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "막힌 곳이 없다면 최단 경로는 15가지예요. 각 교차점에 (왼쪽 점 수)+(아래 점 수)를 차례로 더해 가되, ✕ 교차점만 0으로 두고 지나가지 않게 하면 도착점이 6가지가 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "그건 막힌 곳이 없을 때 수예요. ✕를 지나는 길을 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 4,
+     "h": 2,
+     "mark": 1,
+     "blockX": 2,
+     "blockY": 1
+    }
+   },
+   "detailedExplanation": "두 방법으로 풀려요. ①전체(15) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요."
+  },
+  {
+   "id": "gen-gridblock-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridblock-6",
+   "concepts": [
+    "최단 경로",
+    "장애물",
+    "경우의 수"
+   ],
+   "statement": "가로 3칸, 세로 2칸 바둑판 길에서 왼쪽 아래(●)에서 오른쪽 위(◯)까지 오른쪽·위로만 가요. 그런데 ✕ 표시된 교차점은 공사 중이라 지날 수 없어요. 갈 수 있는 가장 짧은 길은 모두 몇 가지일까요?",
+   "choices": [
+    "10가지",
+    "6가지",
+    "3가지",
+    "4가지"
+   ],
+   "answerIndex": 3,
+   "explanation": "막힌 곳이 없다면 최단 경로는 10가지예요. 각 교차점에 (왼쪽 점 수)+(아래 점 수)를 차례로 더해 가되, ✕ 교차점만 0으로 두고 지나가지 않게 하면 도착점이 4가지가 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "그건 막힌 곳이 없을 때 수예요. ✕를 지나는 길을 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 3,
+     "h": 2,
+     "mark": 1,
+     "blockX": 1,
+     "blockY": 1
+    }
+   },
+   "detailedExplanation": "두 방법으로 풀려요. ①전체(10) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요."
+  },
+  {
+   "id": "gen-gridblock-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-gridblock-6",
+   "concepts": [
+    "최단 경로",
+    "장애물",
+    "경우의 수"
+   ],
+   "statement": "가로 4칸, 세로 3칸 바둑판 길에서 왼쪽 아래(●)에서 오른쪽 위(◯)까지 오른쪽·위로만 가요. 그런데 ✕ 표시된 교차점은 공사 중이라 지날 수 없어요. 갈 수 있는 가장 짧은 길은 모두 몇 가지일까요?",
+   "choices": [
+    "17가지",
+    "16가지",
+    "19가지",
+    "35가지"
+   ],
+   "answerIndex": 0,
+   "explanation": "막힌 곳이 없다면 최단 경로는 35가지예요. 각 교차점에 (왼쪽 점 수)+(아래 점 수)를 차례로 더해 가되, ✕ 교차점만 0으로 두고 지나가지 않게 하면 도착점이 17가지가 돼요.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "그건 막힌 곳이 없을 때 수예요. ✕를 지나는 길을 빼야 해요."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID",
+    "params": {
+     "w": 4,
+     "h": 3,
+     "mark": 1,
+     "blockX": 2,
+     "blockY": 1
+    }
+   },
+   "detailedExplanation": "두 방법으로 풀려요. ①전체(35) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요."
   }
  ]
 }
