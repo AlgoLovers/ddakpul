@@ -1018,6 +1018,26 @@ def gen_cube_stack():
         )
 
 
+# ── 49-b. 쌓기나무 개수 세기 (난2, 무료) — 작은 입체, 첫 경험용 그림 문제 ──────────
+def gen_cube_stack_easy():
+    for w, d, heights in [
+        (2, 1, [1, 2]),
+        (2, 2, [1, 1, 1, 1]),
+        (3, 1, [1, 2, 1]),
+        (2, 2, [2, 1, 1, 1]),
+    ]:
+        assert len(heights) == w * d
+        ans = sum(heights)
+        add(
+            "cubestackeasy", "SHAPE_MEASUREMENT", 2, ["쌓기나무", "공간 지각"],
+            "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (뒤에 가려 안 보이는 나무도 세어요)",
+            f"{ans}개", [f"{ans - 1}개", f"{ans + 1}개", f"{max(1, ans - 2)}개"],
+            f"기둥마다 몇 층인지 세어 더해요. 모두 합하면 {ans}개예요. 앞 나무에 가려 안 보여도 뒤·아래는 채워져 있어요.",
+            [(f"{ans - 1}개", "앞에 가려 안 보이는 나무도 빠짐없이 세어요.")],
+            figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
+        )
+
+
 # ── 50. 격자 넓이 (도형과측정) — 그림 필수(GRID_POLYGON) ──────────────────────
 def _shoelace2(pts):
     """다각형 넓이의 2배(정수)를 신발끈 공식으로. 좌표 오타 검산용."""
@@ -1246,6 +1266,8 @@ GENERATORS = [
     gen_polygon_exterior,
     # v4.2 확충 — 쌓기나무(CUBE_STACK 입체 그림, 그림 필수)
     gen_cube_stack,
+    # v4.6 확충 — 무료(난2) 작은 쌓기나무: 첫 경험용 그림 문제(무료 체험 비주얼 강화)
+    gen_cube_stack_easy,
     # v4.3 확충 — 격자 넓이(GRID_POLYGON 그림 필수): 삼각형·평행사변형·사다리꼴·기울어진 도형
     gen_grid_area,
     # v4.4 확충 — 삼각형 개수 세기(TRIANGLE_FAN 그림 필수): 체계적 세기
