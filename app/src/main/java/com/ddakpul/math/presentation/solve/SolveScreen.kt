@@ -131,10 +131,12 @@ private fun SolveContent(
                         showExplanation = uiState.showExplanation,
                         sessionStreak = uiState.sessionStreak,
                         softCutSuggested = uiState.softCutSuggested,
+                        isPremium = uiState.isPremium,
                         onNext = onNext,
                         onFinishToday = onGoHome,
                         onExcludeRequest = { showExcludeDialog = true },
                         onReportAnswer = { onReportAnswer(result) },
+                        onUpgrade = onUpgrade,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }
