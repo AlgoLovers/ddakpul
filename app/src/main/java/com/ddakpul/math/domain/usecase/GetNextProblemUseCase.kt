@@ -34,7 +34,7 @@ class GetNextProblemUseCase
             if (allGroups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
             // 무료 사용자는 난이도 상한까지만 — 문제은행 자체를 걸러 상한 위 문제는 나오지 않게 한다.
-            val premium = entitlementRepository.getEntitlement().isPremium(nowMillis)
+            val premium = entitlementRepository.getEntitlement().hasFullAccess(nowMillis)
             val groups =
                 if (premium) {
                     allGroups

@@ -2,6 +2,7 @@ package com.ddakpul.math.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.BuildExclusionReportUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
@@ -27,6 +28,8 @@ data class SettingsUiState(
     /** 프리미엄 이용권 보유 여부와 남은 일수 — 이용권 카드 상태 표시. */
     val isPremium: Boolean = false,
     val premiumDaysLeft: Int = 0,
+    /** 출시 기념 무료 마감 시각(구매 안 했고 프로모션 중일 때 > 0). */
+    val launchFreeUntilMillis: Long = 0L,
 )
 
 @HiltViewModel
@@ -49,6 +52,7 @@ class SettingsViewModel
                     excludedCount = excluded,
                     isPremium = premium,
                     premiumDaysLeft = if (premium) ceil((entitlement.premiumUntilMillis - now).toDouble() / MILLIS_PER_DAY).toInt() else 0,
+                    launchFreeUntilMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS.takeIf { Monetization.isLaunchFree(now) } ?: 0L,
                 )
             }.stateIn(
                 scope = viewModelScope,

@@ -109,7 +109,7 @@ class ReportViewModel
                     insights = buildInsights(stats),
                     weeklySummary = buildWeeklySummary(stats),
                     masteryGrid = buildMasteryGrid(stats),
-                    isPremium = entitlement.isPremium(System.currentTimeMillis()),
+                    isPremium = entitlement.hasFullAccess(System.currentTimeMillis()),
                 )
             }.stateIn(
                 scope = viewModelScope,

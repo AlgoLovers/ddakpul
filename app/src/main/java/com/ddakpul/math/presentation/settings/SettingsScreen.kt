@@ -30,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 
 @Composable
 fun SettingsScreen(
@@ -69,6 +70,7 @@ fun SettingsScreen(
         PremiumCard(
             isPremium = uiState.isPremium,
             daysLeft = uiState.premiumDaysLeft,
+            launchFreeUntilMillis = uiState.launchFreeUntilMillis,
             onOpenPaywall = onOpenPaywall,
         )
 
@@ -108,8 +110,10 @@ fun SettingsScreen(
 private fun PremiumCard(
     isPremium: Boolean,
     daysLeft: Int,
+    launchFreeUntilMillis: Long,
     onOpenPaywall: () -> Unit,
 ) {
+    val launchFree = !isPremium && launchFreeUntilMillis > 0L
     SettingsCard {
         Text(
             text = stringResource(R.string.settings_premium_title),
@@ -118,13 +122,18 @@ private fun PremiumCard(
         )
         Text(
             text =
-                if (isPremium) {
-                    stringResource(R.string.settings_premium_active, daysLeft)
-                } else {
-                    stringResource(R.string.settings_premium_desc)
+                when {
+                    isPremium -> stringResource(R.string.settings_premium_active, daysLeft)
+                    launchFree -> stringResource(R.string.settings_launch_free, launchFreeDeadlineText(launchFreeUntilMillis))
+                    else -> stringResource(R.string.settings_premium_desc)
                 },
             style = MaterialTheme.typography.bodyMedium,
-            color = if (isPremium) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+            color =
+                when {
+                    isPremium -> MaterialTheme.colorScheme.primary
+                    launchFree -> MaterialTheme.colorScheme.tertiary
+                    else -> MaterialTheme.colorScheme.onSurfaceVariant
+                },
         )
         OutlinedButton(onClick = onOpenPaywall) {
             Text(stringResource(if (isPremium) R.string.settings_premium_manage else R.string.settings_premium_open))

@@ -61,7 +61,7 @@ class SolveViewModel
             }
             viewModelScope.launch {
                 observeEntitlement().collect { entitlement ->
-                    _uiState.update { it.copy(isPremium = entitlement.isPremium(System.currentTimeMillis())) }
+                    _uiState.update { it.copy(isPremium = entitlement.hasFullAccess(System.currentTimeMillis())) }
                 }
             }
         }

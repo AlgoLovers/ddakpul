@@ -140,7 +140,8 @@ class GetNextProblemUseCaseTest {
                 useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
                     todaySolved = 0,
                     zoneOffsetMillis = 0L,
-                    nowMillis = 0L,
+                    // 출시 기념 무료 기간이 지난 시점 — 진짜 무료(게이트 적용) 동작을 검증.
+                    nowMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS,
                 )
 
             val rec = (result as AppResult.Success).data
@@ -150,6 +151,26 @@ class GetNextProblemUseCaseTest {
             assertThat(rec.problem.difficulty).isAtMost(Monetization.FREE_MAX_DIFFICULTY)
             // 상한에 그대로 머무르므로 난이도 저장은 일어나지 않는다.
             assertThat(learner.setDifficultyCallCount).isEqualTo(0)
+        }
+
+    @Test
+    fun freeUser_duringLaunchPromo_getsFullAccessAndPromotes() =
+        runTest {
+            val learner = FakeLearnerRepository(initialDifficulty = 3)
+            learner.recordAttempt(attempt("d3-1", true))
+            learner.recordAttempt(attempt("d3-2", true))
+
+            // 무료 사용자라도 출시 기념 무료 기간(마감 직전) 동안엔 상한 없이 승급한다.
+            val result =
+                useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
+                    todaySolved = 0,
+                    zoneOffsetMillis = 0L,
+                    nowMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS - 1L,
+                )
+
+            val rec = (result as AppResult.Success).data
+            assertThat(rec.targetDifficulty).isEqualTo(4)
+            assertThat(rec.premiumSuggested).isFalse()
         }
 
     @Test
@@ -184,7 +205,8 @@ class GetNextProblemUseCaseTest {
                 useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
                     todaySolved = 0,
                     zoneOffsetMillis = 0L,
-                    nowMillis = 0L,
+                    // 출시 기념 무료 기간이 지난 시점 — 진짜 무료(게이트 적용) 동작을 검증.
+                    nowMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS,
                 )
 
             val rec = (result as AppResult.Success).data
