@@ -3169,8 +3169,84 @@ def gen_prodsum():
         )
 
 
+def gen_quadseq():
+    # 계차(이웃 차이)가 등차인 2차 수열의 n번째 항 — '규칙의 규칙'을 찾아 멀리 있는 항 구하기. (변화와관계 난8)
+    cases = [
+        ("n×n＋1", lambda k: k * k + 1, 10),
+        ("n×(n＋1)", lambda k: k * (k + 1), 10),
+        ("n×(n＋2)", lambda k: k * (k + 2), 9),
+        ("2×n×n−1", lambda k: 2 * k * k - 1, 8),
+    ]
+    for label, f, pos in cases:
+        terms = [f(k) for k in range(1, 6)]
+        diffs = [terms[i + 1] - terms[i] for i in range(4)]
+        ans = f(pos)
+        naive = terms[-1] + (pos - 5) * diffs[-1]  # 계차가 일정하다고 착각한 값(대표 오답)
+        add(
+            "quadseq", "CHANGE_RELATION", 8, ["계차수열", "규칙의 규칙"],
+            f"어떤 수열이 {terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, … 로 이어져요. "
+            f"이 규칙을 이어 가면 {pos}번째 수는 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [naive, ans + pos, ans - pos, terms[-1] + diffs[-1]])],
+            f"이웃한 두 수의 차(계차)가 {diffs[0]}, {diffs[1]}, {diffs[2]}, {diffs[3]}, … 처럼 "
+            f"{diffs[1] - diffs[0]}씩 일정하게 커지는 등차예요(계차의 계차가 일정 → 2차 수열). "
+            f"규칙은 {label}이라, {pos}번째 수는 {ans}예요.",
+            [(str(naive), "계차가 '일정하다'고 보면 안 돼요. 계차 자체가 일정하게 커지는(등차) 2차 수열이에요."),
+             (str(terms[-1] + diffs[-1]), "6번째까지만 가지 말고, 계차를 규칙대로 늘려 가며 목표 항까지 끝까지 더하세요.")],
+            detail="계차(이웃 항의 차)가 등차수열이면 원래 수열은 2차식(an²+bn+c)으로 표현돼요 — '계차의 계차'가 일정하기 때문이에요. "
+            "가까운 몇 항으로 계차의 규칙을 잡은 뒤, 그 계차를 늘려 가며 더하면 멀리 있는 항도 구할 수 있어요. 규칙의 규칙을 보는 눈을 기르는 문제예요.",
+        )
+
+
+def gen_polyhedron():
+    # 정다면체의 모서리 수 = (면 수 × 한 면의 변 수) ÷ 2 (모서리는 두 면이 공유). 오일러 공식으로 꼭짓점도. (도형과측정 난8)
+    for name, faces, sides in [("정십이면체", 12, 5), ("정이십면체", 20, 3), ("정팔면체", 8, 3), ("정사면체", 4, 3)]:
+        edges = faces * sides // 2
+        verts = edges - faces + 2
+        add(
+            "polyhedron", "SHAPE_MEASUREMENT", 8, ["공간 도형", "모서리는 두 면이 공유"],
+            f"면이 {faces}개이고 각 면이 정{sides}각형인 볼록 다면체({name})가 있어요. 이 다면체의 모서리(edge)는 모두 몇 개일까요?",
+            f"{edges}개", [f"{c}개" for c in _pick_distractors(edges, [faces * sides, faces + sides, edges + 2, verts])],
+            f"각 면은 변이 {sides}개라 변을 모두 세면 {faces}×{sides}={faces * sides}개예요. 그런데 모서리 하나는 "
+            f"이웃한 두 면이 함께 쓰므로 정확히 두 번씩 세어졌어요. 그래서 2로 나눠 {faces * sides}÷2={edges}개예요. "
+            f"(오일러 공식 꼭짓점−모서리+면=2로 확인하면 꼭짓점은 {verts}개.)",
+            [(f"{faces * sides}개", f"변을 센 {faces}×{sides}는 모서리를 '두 번씩' 센 값이에요. 2로 나눠야 해요."),
+             (f"{verts}개", "그건 꼭짓점 수예요. 모서리는 (면×변)÷2로 구해요.")],
+            detail="다면체의 모서리 수는 (면 수×한 면의 변 수)÷2예요 — 모서리 하나를 이웃한 두 면이 공유해 두 번 세어지기 때문이에요. "
+            "꼭짓점은 오일러 공식(꼭짓점−모서리+면=2)으로 구해요. '겹쳐 세고 나누기'와 오일러 공식을 잇는 공간 도형의 대표 문제예요.",
+        )
+
+
+def gen_multiperm():
+    # 같은 것이 있는 순열: 전체 순열 total!을 같은 것끼리의 팩토리얼로 나눔. (자료와가능성 난8)
+    palette = [
+        [("빨강", 2), ("파랑", 3)],
+        [("빨강", 3), ("파랑", 3)],
+        [("빨강", 2), ("파랑", 2), ("노랑", 1)],
+        [("빨강", 4), ("파랑", 2)],
+    ]
+    for colors in palette:
+        total = sum(c for _, c in colors)
+        ans = factorial(total)
+        for _, c in colors:
+            ans //= factorial(c)
+        desc = ", ".join(f"{name} 구슬 {c}개" for name, c in colors)
+        denom = "×".join(f"{c}!" for _, c in colors)
+        add(
+            "multiperm", "DATA_POSSIBILITY", 8, ["같은 것이 있는 순열", "중복 나누기"],
+            f"{desc}를 한 줄로 늘어놓으려고 해요. 같은 색 구슬끼리는 서로 구별하지 않을 때, 서로 다른 배열은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [factorial(total), ans + 2, ans * 2, total * total])],
+            f"구슬이 모두 {total}개라 자리에 놓는 전체 순열은 {total}!={factorial(total)}가지예요. 하지만 같은 색끼리 자리를 "
+            f"바꿔도 같은 배열이라, 각 색 개수의 팩토리얼로 나눠요 → {total}! ÷ ({denom}) = {ans}가지예요.",
+            [(f"{factorial(total)}가지", "같은 색 구슬을 서로 다른 것처럼 셌어요. 같은 색끼리 바꾼 경우를 나눠 줘야 해요."),
+             (f"{ans * 2}가지", "나누는 값이 모자라요. 모든 색의 개수 팩토리얼을 빠짐없이 곱해 나누세요.")],
+            detail="같은 것이 섞인 것을 일렬로 배열하는 경우의 수는 (전체)! ÷ (같은 것끼리의 개수!들의 곱)이에요 — 전체를 다 다르다고 보고 센 뒤, "
+            "같은 것끼리 자리만 바꾼 중복을 나눠 없애는 거예요. 순열에서 '구별되지 않음'을 다루는 대표 도구예요.",
+        )
+
+
 GENERATORS = [
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
+    gen_quadseq, gen_polyhedron, gen_multiperm,
     gen_diophantine, gen_painted_cube_faces, gen_stars_bars,
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
