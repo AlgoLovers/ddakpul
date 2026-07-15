@@ -2812,8 +2812,52 @@ def gen_io_rule():
         )
 
 
+def gen_midpoint():
+    # 수직선 한가운데 수 = 두 수의 평균 감각(계산보다 '가운데' 개념).
+    for a, b in [(4, 12), (6, 14), (10, 20), (8, 18)]:
+        mid = (a + b) // 2
+        assert (a + b) % 2 == 0, "가운데 수가 정수여야"
+        add(
+            "midpt", "NUMBER_OPERATION", 2, ["수직선", "중간값"],
+            f"수직선 위에 {a}{_gwa(str(a))} {b}{_iga(str(b))} 있어요. 두 수의 정확히 한가운데에 있는 수는 얼마일까요?",
+            str(mid), [str(mid + 1), str(mid - 1), str(a + b)],
+            f"한가운데 수는 {a}에서 {b}까지 거리({b - a})의 절반만큼 떨어져 있어요. {a}에서 {(b - a) // 2}만큼 가면 {mid}, {b}에서 {(b - a) // 2}만큼 와도 {mid} — 양쪽에서 똑같이 {(b - a) // 2}칸이라 답은 {mid}{_copula(mid)}.",
+            [(str(a + b), "두 수를 더하기만 하면 안 돼요. 한가운데는 더한 뒤 절반이에요.")],
+            detail="두 수의 '한가운데'는 두 수의 합을 반으로 나눈 값(평균)이에요. 수직선에서 양 끝에서 같은 칸만큼 떨어진 자리를 찾는 것과 같아요. 이 '가운데=평균' 감각은 나중에 평균·대칭·중점에서 계속 쓰여요.",
+        )
+
+
+def gen_consecutive_middle():
+    # 연속하는 세 수의 합 = 가운데 수 × 3 (양옆 −1·+1 상쇄). 계산이 아닌 구조 통찰.
+    for mid in [7, 10, 6, 12]:
+        total = 3 * mid
+        add(
+            "consecmid", "NUMBER_OPERATION", 2, ["연속수", "합과 가운데"],
+            f"연속하는 세 수를 더했더니 {total}{_iga(str(total))} 됐어요. 이 세 수의 가운데 수는 얼마일까요?",
+            str(mid), [str(mid + 1), str(mid - 1), str(total // 2)],
+            f"연속하는 세 수는 (가운데−1), 가운데, (가운데＋1)이라 더하면 −1과 ＋1이 없어져 '가운데 수의 3배'가 돼요. 그래서 가운데 수는 {total}÷3＝{mid}{_copula(mid)}.",
+            [(str(total // 2), "둘이 아니라 셋으로 나눠요. 세 수의 합이니까요.")],
+            detail="연속하는 세 수의 합은 언제나 '가운데 수 × 3'이에요(양옆의 −1, ＋1이 서로 상쇄되니까). 그래서 합을 3으로 나누면 바로 가운데 수가 나와요. 연속수의 이 성질은 합·평균 문제에서 계속 쓰여요.",
+        )
+
+
+def gen_multiple_condition():
+    # 조건(어떤 수보다 작은)을 만족하는 최대 배수 — 배수 감각 + 조건 따지기.
+    for limit, k in [(30, 5), (40, 7), (25, 4), (50, 8)]:
+        ans = ((limit - 1) // k) * k
+        add(
+            "multcond", "NUMBER_OPERATION", 1, ["배수", "조건 따지기"],
+            f"{limit}보다 작은 수 중에서 {k}{_euro(str(k))} 나누어떨어지는(={k}단에 나오는) 가장 큰 수는 얼마일까요?",
+            str(ans), [str(ans + k), str(ans - k), str(limit)],
+            f"{k}단 수를 크기 순으로 떠올려요: … {ans - k}, {ans}, {ans + k}. 이 중 {limit}보다 작은 가장 큰 수는 {ans}예요({ans + k}{_eun(str(ans + k))} {limit}보다 크거나 같아 안 돼요).",
+            [(str(ans + k), f"{ans + k}{_eun(str(ans + k))} {limit}보다 작지 않아요. 조건을 넘겼어요."), (str(limit), f"{limit}{_eun(str(limit))} {k}로 나누어떨어지지 않을 수 있어요. {k}단 수여야 해요.")],
+            detail=f"'○보다 작은 △의 배수 중 가장 큰 수'는 △단(배수)을 순서대로 떠올리며 조건 경계 바로 아래를 찾는 거예요. {limit}÷{k}의 몫만큼 {k}를 곱하면 한 번에 나오기도 해요. 조건(부등호)과 배수를 함께 따지는 연습이에요.",
+        )
+
+
 GENERATORS = [
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
+    gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
     gen_number_split, gen_height_order, gen_position_count, gen_missing_addend,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
