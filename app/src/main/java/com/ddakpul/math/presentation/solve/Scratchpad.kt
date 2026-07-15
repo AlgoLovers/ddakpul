@@ -2,6 +2,7 @@
 
 package com.ddakpul.math.presentation.solve
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -45,8 +47,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
 import com.ddakpul.math.domain.model.ProblemFigure
@@ -66,56 +66,59 @@ private enum class ScratchTool { PEN, ERASER }
 fun rememberScratchStrokes(problemId: String): SnapshotStateList<ScratchStroke> = remember(problemId) { mutableStateListOf() }
 
 /**
- * 전체화면 디지털 연습장. 위에 문제를 작게 고정해 보면서 풀 수 있게 하고, 아래는 모눈 그리기 판.
+ * 전체화면 디지털 연습장(오버레이). 위에 문제를 작게 고정해 보면서 풀 수 있게 하고, 아래는 모눈 그리기 판.
  * 그린 내용은 [strokes]에 남아 이 문제를 푸는 동안 유지된다(닫았다 열어도 그대로).
+ *
+ * 별도 Dialog 창이 아니라 본문 위 오버레이라, 태블릿 작업표시줄/네비게이션 바 인셋을 앱 창과 똑같이
+ * 존중한다(Dialog 창은 인셋을 전달하지 않아 하단 도구모음이 가려지는 문제가 있었다).
  */
 @Composable
-fun ScratchpadDialog(
+fun ScratchpadOverlay(
     statement: String,
     figure: ProblemFigure?,
     strokes: SnapshotStateList<ScratchStroke>,
     onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
-            Column(modifier = Modifier.fillMaxSize().padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                ScratchHeader(statement = statement, onDismiss = onDismiss)
+    BackHandler(onBack = onDismiss)
+    Surface(modifier = modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
+        Column(modifier = Modifier.fillMaxSize().systemBarsPadding().padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            ScratchHeader(statement = statement, onDismiss = onDismiss)
 
-                var tool by remember { mutableStateOf(ScratchTool.PEN) }
-                var penColor by remember { mutableStateOf(InkColors.first()) }
+            var tool by remember { mutableStateOf(ScratchTool.PEN) }
+            var penColor by remember { mutableStateOf(InkColors.first()) }
 
-                Box(modifier = Modifier.weight(1f).fillMaxWidth().background(PaperColor, RoundedCornerShape(12.dp))) {
-                    // 도형 문제면 그림을 연습장 위쪽에 깔아, 그 위에 보조선을 그으며 풀 수 있게 한다.
-                    figure?.let {
-                        ProblemFigureView(figure = it, modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp))
-                    }
-                    ScratchCanvas(strokes = strokes, tool = tool, penColor = penColor, modifier = Modifier.fillMaxSize())
+            Box(modifier = Modifier.weight(1f).fillMaxWidth().background(PaperColor, RoundedCornerShape(12.dp))) {
+                // 도형 문제면 그림을 연습장 위쪽에 깔아, 그 위에 보조선을 그으며 풀 수 있게 한다.
+                figure?.let {
+                    ProblemFigureView(figure = it, modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp))
                 }
+                ScratchCanvas(strokes = strokes, tool = tool, penColor = penColor, modifier = Modifier.fillMaxSize())
+            }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    InkColors.forEach { c ->
-                        val selected = tool == ScratchTool.PEN && penColor == c
-                        Box(
-                            modifier =
-                                Modifier
-                                    .size(if (selected) 40.dp else 32.dp)
-                                    .background(c, CircleShape)
-                                    .then(if (selected) Modifier.border(3.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
-                                    .clickable {
-                                        tool = ScratchTool.PEN
-                                        penColor = c
-                                    },
-                        )
-                    }
-                    Spacer(Modifier.weight(1f))
-                    ToolButton(R.string.scratch_eraser, tool == ScratchTool.ERASER) { tool = ScratchTool.ERASER }
-                    ToolButton(R.string.scratch_undo, false) { strokes.removeLastOrNull() }
-                    ToolButton(R.string.scratch_clear, false) { strokes.clear() }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                InkColors.forEach { c ->
+                    val selected = tool == ScratchTool.PEN && penColor == c
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(if (selected) 40.dp else 32.dp)
+                                .background(c, CircleShape)
+                                .then(if (selected) Modifier.border(3.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
+                                .clickable {
+                                    tool = ScratchTool.PEN
+                                    penColor = c
+                                },
+                    )
                 }
+                Spacer(Modifier.weight(1f))
+                ToolButton(R.string.scratch_eraser, tool == ScratchTool.ERASER) { tool = ScratchTool.ERASER }
+                ToolButton(R.string.scratch_undo, false) { strokes.removeLastOrNull() }
+                ToolButton(R.string.scratch_clear, false) { strokes.clear() }
             }
         }
     }

@@ -3,6 +3,7 @@ package com.ddakpul.math.ui
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.BarChart
@@ -63,7 +64,8 @@ fun DdakPulApp(
     val useRail = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
 
     if (useRail) {
-        Row(modifier = modifier.fillMaxSize()) {
+        // 태블릿 레일 분기는 Scaffold가 없어 인셋이 적용되지 않으므로, 시스템 바를 직접 피한다(폰은 Scaffold가 처리).
+        Row(modifier = modifier.fillMaxSize().systemBarsPadding()) {
             DdakPulNavigationRail(navController)
             AppNavHost(navController = navController, modifier = Modifier.fillMaxSize())
         }

@@ -100,6 +100,8 @@ private fun SolveContent(
     modifier: Modifier = Modifier,
 ) {
     var showExcludeDialog by remember { mutableStateOf(false) }
+    // 연습장은 본문 폭 제한과 무관하게 콘텐츠 영역 전체를 덮어야 해, 상태를 여기(fillMaxSize Box)로 올려 오버레이로 띄운다.
+    var showScratchpad by remember { mutableStateOf(false) }
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when (uiState.phase) {
@@ -121,6 +123,7 @@ private fun SolveContent(
                     onSubmit = onSubmit,
                     onExcludeRequest = { showExcludeDialog = true },
                     onUpgrade = onUpgrade,
+                    onScratchpad = { showScratchpad = true },
                     modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                 )
             }
@@ -141,6 +144,19 @@ private fun SolveContent(
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }
+            }
+        }
+
+        // 연습장 오버레이 — 문제 풀이 위에 전체 폭으로 덮는다(도형 문제면 그림도 함께).
+        uiState.problem?.let { problem ->
+            if (showScratchpad) {
+                ScratchpadOverlay(
+                    statement = problem.statement,
+                    figure = problem.figure,
+                    strokes = rememberScratchStrokes(problem.id),
+                    onDismiss = { showScratchpad = false },
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
         }
     }
@@ -255,21 +271,11 @@ private fun SolvingBody(
     onSubmit: () -> Unit,
     onExcludeRequest: () -> Unit,
     onUpgrade: () -> Unit,
+    onScratchpad: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
     val speaker = rememberSpeaker()
-    // 디지털 연습장 — 종이 대신 손으로 풀이를 끄적인다. 그린 건 이 문제 푸는 동안 유지.
-    var showScratchpad by remember { mutableStateOf(false) }
-    val scratchStrokes = rememberScratchStrokes(problem.id)
-    if (showScratchpad) {
-        ScratchpadDialog(
-            statement = problem.statement,
-            figure = problem.figure,
-            strokes = scratchStrokes,
-            onDismiss = { showScratchpad = false },
-        )
-    }
     Column(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -294,7 +300,7 @@ private fun SolvingBody(
                 isReview = uiState.isReview,
                 speaker = speaker,
                 statement = problem.statement,
-                onScratchpad = { showScratchpad = true },
+                onScratchpad = onScratchpad,
             )
         }
 

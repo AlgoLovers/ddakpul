@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -60,7 +61,8 @@ fun OnboardingScreen(
     var startingDifficulty by remember { mutableIntStateOf(Difficulty.DEFAULT) }
 
     Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
+        // edge-to-edge라 시스템 바(상태/네비게이션) 영역을 피해야 하단 '다음' 버튼이 네비게이션 바에 가리지 않는다.
+        modifier = modifier.fillMaxSize().systemBarsPadding().padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         StepDots(current = step, total = STEP_COUNT)
