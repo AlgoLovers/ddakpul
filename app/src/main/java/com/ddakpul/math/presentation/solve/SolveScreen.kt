@@ -207,6 +207,47 @@ private fun ReadAloudButton(
     }
 }
 
+/** 문제 위 정보 줄: (복습 배지)·영역/난이도 + 연습장·읽어주기 도구. */
+@Composable
+private fun ProblemHeaderRow(
+    area: com.ddakpul.math.domain.model.MathArea,
+    difficulty: Int,
+    isReview: Boolean,
+    speaker: com.ddakpul.math.presentation.common.SpeakerController,
+    statement: String,
+    onScratchpad: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            if (isReview) {
+                Text(
+                    text = stringResource(R.string.solve_review_badge),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Text(
+                text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), difficulty),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        // 연습장(손풀이) + 읽어주기 — 사고력 문제는 끄적이며 풀어야 하고, 글 서툰 아이는 듣게.
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Top) {
+            TextButton(onClick = onScratchpad) {
+                Text(stringResource(R.string.solve_scratchpad))
+            }
+            ReadAloudButton(speaker = speaker, text = statement)
+        }
+    }
+}
+
 @Composable
 private fun SolvingBody(
     uiState: SolveUiState,
@@ -218,6 +259,17 @@ private fun SolvingBody(
 ) {
     val problem = uiState.problem ?: return
     val speaker = rememberSpeaker()
+    // 디지털 연습장 — 종이 대신 손으로 풀이를 끄적인다. 그린 건 이 문제 푸는 동안 유지.
+    var showScratchpad by remember { mutableStateOf(false) }
+    val scratchStrokes = rememberScratchStrokes(problem.id)
+    if (showScratchpad) {
+        ScratchpadDialog(
+            statement = problem.statement,
+            figure = problem.figure,
+            strokes = scratchStrokes,
+            onDismiss = { showScratchpad = false },
+        )
+    }
     Column(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -236,33 +288,14 @@ private fun SolvingBody(
         }
 
         uiState.area?.let { area ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (uiState.isReview) {
-                        Text(
-                            text = stringResource(R.string.solve_review_badge),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.tertiary,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-                    Text(
-                        text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-                // 읽어주기 — 아직 글이 서툰 아이도 '생각'에 집중하도록. 재생 중 다시 누르면 정지.
-                ReadAloudButton(speaker = speaker, text = problem.statement)
-            }
+            ProblemHeaderRow(
+                area = area,
+                difficulty = uiState.difficulty,
+                isReview = uiState.isReview,
+                speaker = speaker,
+                statement = problem.statement,
+                onScratchpad = { showScratchpad = true },
+            )
         }
 
         Card(

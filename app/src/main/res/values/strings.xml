@@ -28,6 +28,12 @@
     <string name="solve_area_label">%1$s · 난이도 %2$d</string>
     <string name="solve_review_badge">🔁 복습</string>
     <string name="solve_read_aloud">🔊 읽어주기</string>
+    <string name="solve_scratchpad">✏️ 연습장</string>
+    <string name="scratch_title">연습장 — 손으로 풀어 보세요</string>
+    <string name="scratch_close">닫기</string>
+    <string name="scratch_eraser">지우개</string>
+    <string name="scratch_undo">되돌리기</string>
+    <string name="scratch_clear">전체 지우기</string>
     <string name="solve_submit">채점하기</string>
     <string name="solve_choice_prefix">%1$s.</string>
     <string name="solve_loading">문제를 불러오는 중…</string>
