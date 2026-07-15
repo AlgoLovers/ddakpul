@@ -3119,6 +3119,42 @@ def gen_unitprice():
         )
 
 
+def gen_foldcut():
+    # 종이를 반으로 접고 구멍을 뚫으면, 펼쳤을 때 구멍 = 구멍 수 × 2^(접은 횟수). 대칭 사고. (도형과측정 난1)
+    for folds, h in [(1, 1), (1, 2), (1, 3), (2, 1)]:
+        layers = 2 ** folds
+        ans = h * layers
+        add(
+            "foldcut", "SHAPE_MEASUREMENT", 1, ["대칭", "겹쳐서 세기"],
+            f"색종이를 반으로 {folds}번 접은 다음, 겹친 채로 구멍을 {h}개 뚫었어요. 종이를 다시 펼치면 구멍은 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [h, h + folds, ans + 1, h * folds])],
+            f"반으로 {folds}번 접으면 종이가 {layers}겹으로 겹쳐요. 구멍 하나를 뚫으면 {layers}장이 한꺼번에 뚫려 "
+            f"펼치면 {layers}개가 돼요. 구멍이 {h}개니까 {h}×{layers} = {ans}개예요.",
+            [(f"{h}개", "접힌 채로 뚫으면 겹친 장수만큼 구멍이 생겨요. 펼치면 늘어나요."),
+             (f"{h + folds}개", "접은 '횟수'를 더하는 게 아니라, 겹친 '장수'만큼 곱해요.")],
+            detail="반으로 한 번 접으면 2겹, 두 번 접으면 4겹처럼 접을 때마다 겹이 2배가 돼요. 겹친 채 뚫은 구멍은 펼치면 "
+            "겹친 장수만큼 늘어나요(대칭으로 생겨요). 접기와 대칭을 잇는 공간 사고의 첫걸음이에요.",
+        )
+
+
+def gen_knockout():
+    # 토너먼트(지면 탈락) 우승까지 경기 수 = 참가자 − 1 (경기마다 한 명 탈락). (자료와가능성 난2)
+    for n in [8, 4, 16, 6]:
+        ans = n - 1
+        add(
+            "knockout", "DATA_POSSIBILITY", 2, ["거꾸로 생각하기", "탈락으로 세기"],
+            f"{n}명이 토너먼트로 우승자를 가려요. 한 번 지면 바로 탈락할 때, 우승자가 정해질 때까지 모두 몇 경기를 "
+            f"해야 할까요?",
+            f"{ans}경기", [f"{c}경기" for c in _pick_distractors(ans, [n, n // 2, n - 2, ans + 1])],
+            f"우승자 한 명만 남으려면 나머지 {ans}명이 모두 탈락해야 해요. 한 경기에 딱 한 명씩 탈락하니, "
+            f"필요한 경기는 {n}−1 = {ans}경기예요.",
+            [(f"{n // 2}경기", "첫 판만 센 거예요. 우승할 때까지 모든 판을 세야 해요."),
+             (f"{n}경기", "탈락해야 할 사람은 우승자를 뺀 {}명이에요. 그만큼만 경기해요.".format(ans))],
+            detail="'경기 수'를 직접 세는 대신 '탈락하는 사람 수'로 바꿔 생각하면 쉬워요. 우승자 1명을 뺀 나머지가 다 탈락해야 "
+            "하고 경기마다 딱 한 명이 지므로, 경기 수는 언제나 (참가자−1)이에요. 거꾸로 보는 사고의 힘이에요.",
+        )
+
+
 def gen_makesquare():
     # 완전제곱수로 만드는 최소 곱수 = 소인수분해에서 지수가 홀수인 소인수들의 곱. (수와연산 난9)
     for n in [72, 48, 50, 12]:
@@ -3886,6 +3922,7 @@ GENERATORS = [
     gen_rectperim, gen_interiorangle, gen_prismparts, gen_triangleangle,
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
+    gen_foldcut, gen_knockout,
     gen_makesquare, gen_compose, gen_euler, gen_atleastprob,
     gen_sigma, gen_recur, gen_conevolume, gen_setpartition,
     gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
