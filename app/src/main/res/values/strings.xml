@@ -72,12 +72,12 @@
     <string name="onboarding_value1_body">계산 문제가 아니라, 연습장 펴고 5분 고민하는 문제예요.</string>
     <string name="onboarding_value2_title">광고 없이, 안전하게</string>
     <string name="onboarding_value2_body">광고도 결제 유도도 없어요. 학습 기록은 이 기기 안에만 남아요.</string>
-    <string name="onboarding_value3_title">아이 스스로, 부모는 리포트로</string>
-    <string name="onboarding_value3_body">아이는 스스로 풀고, 부모님은 성장 리포트로 지켜봐요.</string>
+    <string name="onboarding_value3_title">스스로 풀고, 리포트로 확인</string>
+    <string name="onboarding_value3_body">스스로 문제를 풀면, 성장 리포트로 실력을 확인해요.</string>
     <string name="onboarding_goal_title">하루에 몇 문제 풀까요?</string>
     <string name="onboarding_goal_subtitle">언제든 설정에서 바꿀 수 있어요.</string>
     <string name="onboarding_goal_chip">%1$d문제</string>
-    <string name="onboarding_level_title">아이에게 맞는 시작을 골라요</string>
+    <string name="onboarding_level_title">실력에 맞는 시작을 골라요</string>
     <string name="onboarding_level_subtitle">풀다 보면 실력에 맞게 저절로 조절돼요.</string>
     <string name="onboarding_level_easy_title">처음이에요</string>
     <string name="onboarding_level_easy_body">기초부터 차근차근 시작해요.</string>
@@ -153,14 +153,14 @@
 
     <!-- 리포트 (부모용) -->
     <string name="report_title">학습 리포트</string>
-    <string name="report_subtitle">아이의 학습 현황을 한눈에 확인하세요.</string>
+    <string name="report_subtitle">학습 현황을 한눈에 확인하세요.</string>
     <string name="report_total_solved">총 푼 문제</string>
     <string name="report_accuracy">전체 정답률</string>
     <string name="report_current_level">현재 난이도</string>
     <string name="report_streak">연속 학습</string>
     <string name="report_unit_days">%1$d일</string>
     <string name="report_today">오늘 푼 문제</string>
-    <string name="report_empty">아직 푼 문제가 없어요.\n아이가 문제를 풀면 리포트가 채워집니다.</string>
+    <string name="report_empty">아직 푼 문제가 없어요.\n문제를 풀면 리포트가 채워집니다.</string>
 
     <!-- 리포트 · 히어로/핵심 지표 (성장=난이도 등반을 앞세움) -->
     <string name="report_hero_label">지금 실력</string>
@@ -197,7 +197,7 @@
     <!-- 리포트 · 인사이트 (해석이 끝난 문장) -->
     <string name="report_insights_title">이번 주 인사이트</string>
     <string name="report_mistakes_title">오답 노트 · 최근 틀린 문제</string>
-    <string name="report_mistakes_desc">아이가 최근 틀린 문제예요. 함께 풀이를 보며 이야기해 보면 오답이 실력이 돼요.</string>
+    <string name="report_mistakes_desc">최근 틀린 문제예요. 풀이를 다시 보며 짚어 보면 오답이 실력이 돼요.</string>
     <string name="insight_goal_done">✅ 오늘 목표를 달성했어요. 스스로 정한 양을 지킨 게 최고의 습관이에요!</string>
     <string name="insight_streak">🔥 %1$d일 연속 학습 중이에요. 꾸준함이 실력을 만들고 있어요.</string>
     <string name="insight_accuracy_up">📈 정답률이 지난주보다 %1$d%%p 올랐어요. 지금 방식이 효과가 있어요!</string>
@@ -221,7 +221,7 @@
     <string name="report_concept_title">개념별 숙달도</string>
     <string name="report_concept_stat">%1$d문제 · 정답률 %2$d%%</string>
     <string name="report_matrix_title">난이도별 숙달 지도</string>
-    <string name="report_matrix_caption">칸의 숫자는 정답률이에요. 진한 색일수록 숙달, 굵은 테두리 열은 지금 아이가 도전 중인 난이도예요.</string>
+    <string name="report_matrix_caption">칸의 숫자는 정답률이에요. 진한 색일수록 숙달, 굵은 테두리 열은 지금 도전 중인 난이도예요.</string>
 
     <!-- 숙달 단계 — 점수가 아니라 단계 라벨로 (성적처럼 읽히지 않게) -->
     <string name="mastery_mastered">숙달</string>
@@ -280,7 +280,7 @@
     <!-- 설정 -->
     <string name="settings_title">설정</string>
     <string name="settings_goal_title">하루 목표</string>
-    <string name="settings_goal_desc">아이가 스스로 목표를 정하면 더 오래, 즐겁게 공부해요.</string>
+    <string name="settings_goal_desc">스스로 목표를 정하면 더 오래, 즐겁게 공부해요.</string>
     <string name="settings_goal_option">%1$d문제</string>
 
     <!-- 설정 · 읽어주기(TTS) 음성 -->
