@@ -1,6 +1,8 @@
 package com.ddakpul.math.presentation.settings
 
 import android.content.Intent
+import android.os.Build
+import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -429,8 +431,60 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
             }
         }
         TtsPreviewRow(speaker = speaker, context = context)
+        // 진단 정보 공유 — 삼성 미노출 원인 파악용(로그캣 대체). 텍스트로 개발자에게 전달.
+        OutlinedButton(onClick = { shareTtsDiagnostic(context, engines, defaultEngine) }) {
+            Text("🔧 진단 정보 공유")
+        }
     }
 }
+
+/** TTS 진단 텍스트를 만들어 공유 시트로 내보낸다(개발자에게 전달용). */
+private fun shareTtsDiagnostic(
+    context: android.content.Context,
+    engines: List<TextToSpeech.EngineInfo>,
+    defaultEngine: String?,
+) {
+    val text = buildTtsDiagnostic(context, engines, defaultEngine)
+    val send =
+        Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+    context.startActivity(Intent.createChooser(send, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+}
+
+/** 삼성 TTS가 왜 안 잡히는지 원격 진단하기 위한 정보 덤프. */
+private fun buildTtsDiagnostic(
+    context: android.content.Context,
+    engines: List<TextToSpeech.EngineInfo>,
+    defaultEngine: String?,
+): String {
+    val sb = StringBuilder()
+    sb.append("=== 딱풀 TTS 진단 ===\n")
+    sb.append("기기: ${Build.MANUFACTURER} ${Build.MODEL} / Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})\n")
+    sb.append("앱: v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})\n\n")
+    sb.append("[getEngines()] ${engines.size}개\n")
+    engines.forEach { sb.append("  · ${it.name} (${it.label})\n") }
+    sb.append("getDefaultEngine(): ${defaultEngine ?: "?"}\n\n")
+    val secure = runCatching { Settings.Secure.getString(context.contentResolver, "tts_default_synth") }.getOrNull()
+    sb.append("tts_default_synth: $secure\n\n")
+    val pm = context.packageManager
+    val services = runCatching { pm.queryIntentServices(Intent("android.intent.action.TTS_SERVICE"), 0) }.getOrDefault(emptyList())
+    sb.append("[queryIntentServices(TTS_SERVICE)] ${services.size}개\n")
+    services.forEach { sb.append("  · ${it.serviceInfo?.packageName} / ${it.serviceInfo?.name}\n") }
+    sb.append("\n")
+    val matched =
+        runCatching {
+            pm.getInstalledPackages(0).map { it.packageName }.filter { p ->
+                listOf("tts", "samsung", "smt", "speech", "vocalizer", "bixby").any { p.contains(it, ignoreCase = true) }
+            }
+        }.getOrDefault(emptyList())
+    sb.append("[설치 패키지 중 tts/samsung/speech/bixby 포함] ${matched.size}개\n")
+    matched.take(MAX_DIAG_PKGS).forEach { sb.append("  · $it\n") }
+    return sb.toString()
+}
+
+private const val MAX_DIAG_PKGS = 50
 
 /** 미리 듣기(재생/정지 토글) + 시스템 음성 설정 바로가기. */
 @Composable
