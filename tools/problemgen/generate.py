@@ -12,6 +12,7 @@ docs/CONTENT_SOURCING.md 3단계(템플릿+생성+솔버 검증)의 1차 구현.
 """
 import json
 import random
+import re
 from math import comb, factorial, gcd
 from pathlib import Path
 
@@ -81,6 +82,20 @@ def _copula(w):
     return "이에요" if _has_batchim(w) else "예요"
 
 
+def _fix_number_copula(text):
+    """숫자 바로 뒤 한국어 조사를 그 숫자 읽기의 받침에 맞춰 자동 교정.
+    서술격(예요/이에요)·목적격(을/를)·주격(이/가)·보조사(은/는)·접속(과/와)·부사격(으로/로)을
+    모두 다룬다. 예: '7예요'→'7이에요', '5을'→'5를', '43로'→'43으로'.
+    조사 뒤에 공백·문장부호가 오는 진짜 조사만 고쳐, '가지'·'이에요'·'개' 같은 낱말은 건드리지 않는다."""
+    if not text:
+        return text
+    text = re.sub(r"(\d+)(?:예요|이에요)", lambda m: m.group(1) + _copula(m.group(1)), text)
+    pat = [("을", "를", _eul), ("이", "가", _iga), ("은", "는", _eun), ("과", "와", _gwa), ("으로", "로", _euro)]
+    for a, b, fn in pat:
+        text = re.sub(rf"(\d+)(?:{a}|{b})(?=[\s.,)])", lambda m, fn=fn: m.group(1) + fn(m.group(1)), text)
+    return text
+
+
 def add(family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes=None, figure=None, detail=None):
     """정답 1 + 오답 3을 섞어 4지선다로 만든다. 겹치는 오답은 숫자를 밀어 자동 대체."""
     unique = []
@@ -106,12 +121,12 @@ def add(family, area, diff, concepts, statement, answer_text, distractors, expl,
         "difficulty": diff,
         "groupId": f"g-gen-{family}-{diff}",
         "concepts": concepts,
-        "statement": statement,
+        "statement": _fix_number_copula(statement),
         "choices": shuffled,
         "answerIndex": answer_index,
-        "explanation": expl,
+        "explanation": _fix_number_copula(expl),
         "mistakes": [
-            {"choiceIndex": shuffled.index(text), "misconception": why}
+            {"choiceIndex": shuffled.index(text), "misconception": _fix_number_copula(why)}
             for text, why in (mistakes or [])
             if text in shuffled and shuffled.index(text) != answer_index
         ],
@@ -120,7 +135,7 @@ def add(family, area, diff, concepts, statement, answer_text, distractors, expl,
     if figure:
         problem["figure"] = figure
     if detail:
-        problem["detailedExplanation"] = detail
+        problem["detailedExplanation"] = _fix_number_copula(detail)
     problems.append(problem)
     stats["generated"] += 1
 
