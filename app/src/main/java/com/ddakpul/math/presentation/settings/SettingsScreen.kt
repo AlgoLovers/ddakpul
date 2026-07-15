@@ -401,6 +401,12 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
                 }
             }
         }
+        // 진단(임시): 앱이 실제로 보는 TTS 엔진 패키지 목록 — 삼성(com.samsung.SMT)이 있는지 확인용.
+        Text(
+            text = "진단 · 엔진 " + engines.size + "개: " + engines.joinToString { it.name } + " / 기본=" + (defaultEngine ?: "?"),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.error,
+        )
         // 지금 어떤 음성으로 읽는지 명확히 — 사용자 혼동 방지.
         Text(
             text = stringResource(R.string.settings_tts_active, speaker.engineLabel),

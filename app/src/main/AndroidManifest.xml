@@ -19,6 +19,12 @@
         </intent>
     </queries>
 
+    <!--
+      진단용(임시): 위 <queries>로도 삼성 TTS가 안 보이는지 확정하기 위해 모든 패키지 가시성을
+      연다. 원인이 가시성인지 아닌지 가려낸 뒤 제거 예정(출시 빌드엔 남기지 않는다).
+    -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
     <application
         android:name=".DdakPulApplication"
         android:allowBackup="true"
