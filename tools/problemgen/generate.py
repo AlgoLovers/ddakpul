@@ -3119,6 +3119,164 @@ def gen_unitprice():
         )
 
 
+def gen_makesquare():
+    # 완전제곱수로 만드는 최소 곱수 = 소인수분해에서 지수가 홀수인 소인수들의 곱. (수와연산 난9)
+    for n in [72, 48, 50, 12]:
+        m, res, p = n, 1, 2
+        odd_primes = []
+        while p * p <= m:
+            e = 0
+            while m % p == 0:
+                m //= p
+                e += 1
+            if e % 2:
+                res *= p
+                odd_primes.append(p)
+            p += 1
+        if m > 1:
+            res *= m
+            odd_primes.append(m)
+        root = int((n * res) ** 0.5)
+        add(
+            "makesquare", "NUMBER_OPERATION", 9, ["소인수분해", "완전제곱수"],
+            f"{n}에 자연수를 곱해서 어떤 수의 제곱(완전제곱수)이 되게 하려고 해요. 곱해야 하는 가장 작은 자연수는 무엇일까요?",
+            str(res), [str(c) for c in _pick_distractors(res, [res + 1, res * 2, res + 2, res + 3])],
+            f"{n} = {_prime_factor_str(n)}예요. 완전제곱수는 모든 소인수의 지수가 짝수여야 해요. 지수가 홀수인 소인수 "
+            f"{', '.join(map(str, odd_primes))}를 하나씩 더 곱해 짝수로 맞추면 {n}×{res} = {n * res} = {root}²이에요.",
+            [(str(res + 1), "필요 이상으로 곱했어요. 지수가 홀수인 소인수만 딱 한 번씩 더 곱하면 돼요.")],
+            detail="완전제곱수는 소인수분해했을 때 모든 지수가 짝수인 수예요. 그래서 지수가 홀수인 소인수마다 하나씩 더 곱해 "
+            "짝수로 만들면 가장 작은 곱수가 나와요. 소인수의 지수로 제곱수를 판별하는 정수론 문제예요.",
+        )
+
+
+def gen_compose():
+    # 함수(수 기계)를 여러 번 반복 적용. f(x)=ax+b를 d번. (변화와관계 난9)
+    for a, b, x0, d in [(2, 1, 1, 3), (2, 3, 1, 3), (3, 1, 2, 3), (2, 5, 0, 3)]:
+        seq = [x0]
+        x = x0
+        for _ in range(d):
+            x = a * x + b
+            seq.append(x)
+        ans = x
+        steps = " → ".join(str(v) for v in seq)
+        add(
+            "compose", "CHANGE_RELATION", 9, ["함수 반복", "규칙 적용"],
+            f"어떤 기계에 수를 넣으면 '{a}배 하고 {b}{_eul(str(b))} 더한' 수가 나와요. {x0}{_eul(str(x0))} 넣고, "
+            f"나온 수를 다시 넣기를 {d}번 반복하면 마지막에 나오는 수는 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [a * ans, ans + b, seq[-2], ans + a])],
+            f"넣을 때마다 '×{a}, +{b}'를 해요: {steps}. {d}번 반복한 마지막 값은 {ans}예요.",
+            [(str(seq[-2]), "한 번 덜 돌렸어요. 정확히 {}번 반복한 값을 구하세요.".format(d))],
+            detail="같은 규칙(함수)을 반복해서 적용하면 값이 규칙적으로 바뀌어요. 한 단계씩 차근차근 계산해 나가는 게 안전하고, "
+            "이런 반복은 점화식·수열의 뿌리예요.",
+        )
+
+
+def gen_euler():
+    # 오일러 공식으로 모서리 역산: 꼭짓점−모서리+면=2 → 모서리 = 꼭짓점+면−2. (도형과측정 난9)
+    for v, f in [(12, 20), (8, 6), (6, 8), (20, 12)]:
+        ans = v + f - 2
+        add(
+            "euler", "SHAPE_MEASUREMENT", 9, ["오일러 공식", "다면체"],
+            f"어떤 볼록 다면체의 꼭짓점이 {v}개, 면이 {f}개예요. 이 다면체의 모서리는 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [v + f, v * f // 4, ans + 2, ans - 2])],
+            f"볼록 다면체는 항상 '꼭짓점 − 모서리 + 면 = 2'(오일러 공식)를 만족해요. 모서리로 정리하면 "
+            f"모서리 = 꼭짓점 + 면 − 2 = {v} + {f} − 2 = {ans}개예요.",
+            [(f"{v + f}개", "−2를 빼먹었어요. 오일러 공식은 꼭짓점+면−2가 모서리예요.")],
+            detail="볼록 다면체에서는 꼭짓점(V)−모서리(E)+면(F)=2가 항상 성립해요(오일러 공식). 셋 중 둘을 알면 나머지를 "
+            "바로 구할 수 있어요. 공간 도형을 잇는 아름다운 규칙이에요.",
+        )
+
+
+def gen_atleastprob():
+    # 여사건: '적어도 한 개 앞면' = 1 − '모두 뒷면'. (자료와가능성 난9)
+    for n in [4, 3, 5, 2]:
+        whole = 2 ** n
+        ans = f"{whole - 1}/{whole}"
+        add(
+            "atleastprob", "DATA_POSSIBILITY", 9, ["여사건", "적어도"],
+            f"공정한 동전 {n}개를 동시에 던져요. 적어도 한 개는 앞면이 나올 확률은 얼마일까요?",
+            ans, [f"1/{whole}", "1/2", f"{n}/{whole}"],
+            f"'적어도 한 개 앞면'의 반대는 '모두 뒷면'이에요. 모두 뒷면일 확률은 (1/2)를 {n}번 곱한 1/{whole}이고, "
+            f"1에서 빼면 {whole - 1}/{whole}이에요.",
+            [(f"1/{whole}", "그건 '모두 뒷면'일 확률이에요. 구하려는 건 그 여사건(1−그 값)이에요.")],
+            detail="'적어도 하나'는 반대(여사건) '하나도 없음'을 구해 1에서 빼는 게 훨씬 쉬워요. 모두 뒷면 확률 (1/2)^n을 "
+            "1에서 빼면 답이에요. 여사건은 '적어도' 문제의 강력한 도구예요.",
+        )
+
+
+def gen_sigma():
+    # 진약수의 합(자기 제외). 완전수·부족수·과잉수 판별의 기초. (수와연산 난10)
+    for n in [28, 12, 24, 18]:
+        divisors = [d for d in range(1, n) if n % d == 0]
+        ans = sum(divisors)
+        div_str = " + ".join(map(str, divisors))
+        note = " (자기 자신과 같아 '완전수'예요)" if ans == n else ""
+        add(
+            "sigma", "NUMBER_OPERATION", 10, ["약수", "진약수의 합"],
+            f"{n}의 진약수(자기 자신 {n}{_eul(str(n))} 뺀 약수)를 모두 더하면 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [ans + n, ans - 1, ans + 1, n])],
+            f"{n}의 진약수는 {div_str}이에요. 모두 더하면 {ans}예요{note}.",
+            [(str(ans + n), f"자기 자신 {n}{_eun(str(n))} 진약수가 아니에요(빼고 더해요).")],
+            detail="자기 자신을 뺀 약수(진약수)의 합으로 수를 분류해요 — 합이 자신과 같으면 완전수(6, 28…), 작으면 부족수, "
+            "크면 과잉수예요. 약수를 빠짐없이 찾아 더하는 정수론의 고전 주제예요.",
+        )
+
+
+def gen_recur():
+    # 점화식 a_{n+1}=p·a_n+q의 특정 항. (변화와관계 난10)
+    for a1, p, q, t in [(1, 2, 3, 5), (2, 2, 1, 5), (1, 3, 1, 4), (2, 3, 1, 4)]:
+        seq = [a1]
+        a = a1
+        for _ in range(t - 1):
+            a = p * a + q
+            seq.append(a)
+        ans = a
+        steps = ", ".join(str(v) for v in seq)
+        add(
+            "recur", "CHANGE_RELATION", 10, ["점화식", "수열의 항"],
+            f"수열의 첫째 항이 {a1}이고, 다음 항은 '앞 항의 {p}배에 {q}{_eul(str(q))} 더한' 값이에요. 이 수열의 {t}번째 항은 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [p * ans + q, seq[-2], ans + q, ans - q])],
+            f"규칙 '×{p}, +{q}'로 항을 이어 가요: {steps}. {t}번째 항은 {ans}예요.",
+            [(str(seq[-2]), "한 항 덜 갔어요. {}번째 항까지 규칙을 적용하세요.".format(t)),
+             (str(p * ans + q), "그건 {}번째(한 항 더 간) 값이에요.".format(t + 1))],
+            detail="앞 항으로 다음 항을 정하는 규칙이 점화식이에요. 규칙을 한 항씩 적용해 원하는 항까지 이어 가면 돼요. "
+            "이자·인구·알고리즘 등 '이전 상태로 다음을 정하는' 수많은 현상의 뼈대예요.",
+        )
+
+
+def gen_conevolume():
+    # 뿔의 부피 = 밑넓이 × 높이 ÷ 3 (같은 밑면·높이 기둥의 1/3). (도형과측정 난10)
+    for base, h in [(12, 5), (9, 4), (18, 7), (6, 10)]:
+        ans = base * h // 3
+        add(
+            "conevolume", "SHAPE_MEASUREMENT", 10, ["뿔의 부피", "기둥의 3분의 1"],
+            f"밑면의 넓이가 {base}cm², 높이가 {h}cm인 뿔(각뿔·원뿔)의 부피는 몇 cm³일까요?",
+            f"{ans}cm³", [f"{c}cm³" for c in _pick_distractors(ans, [base * h, base * h // 2, ans + 2, ans - 2])],
+            f"뿔의 부피는 밑면과 높이가 같은 기둥의 딱 3분의 1이에요. 밑넓이 × 높이 ÷ 3 = {base} × {h} ÷ 3 = {ans}cm³예요.",
+            [(f"{base * h}cm³", "그건 같은 밑면·높이 '기둥'의 부피예요. 뿔은 그 3분의 1이라 ÷3 해요.")],
+            detail="같은 밑넓이·높이라면 뿔의 부피는 기둥의 정확히 1/3이에요. 그래서 (밑넓이×높이)÷3으로 구해요. "
+            "물을 부어 옮기면 세 번에 꽉 차는 걸로도 확인되는 입체 측정의 핵심이에요.",
+        )
+
+
+def gen_setpartition():
+    # 서로 다른 n명을 비지 않은 두 팀으로(팀 구별 없이) 나누기 = 2^(n-1) − 1. (자료와가능성 난10)
+    for n in [4, 5, 3, 6]:
+        ans = 2 ** (n - 1) - 1
+        whole = 2 ** n
+        add(
+            "setpartition", "DATA_POSSIBILITY", 10, ["집합 나누기", "여집합 중복"],
+            f"서로 다른 {n}명을 비어 있지 않은 두 모둠으로 나눠요. 두 모둠을 구별하지 않을 때(A·B 이름 없음), "
+            f"나누는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [2 ** (n - 1), whole, ans + 1, ans - 1])],
+            f"각 사람이 두 모둠 중 하나에 속하니 {whole}가지지만, 한쪽이 비는 2가지(전부 한 모둠)를 빼고, 두 모둠을 "
+            f"구별하지 않아 2로 나눠요 → ({whole}−2)÷2 = {ans}가지예요.",
+            [(f"{2 ** (n - 1)}가지", "한쪽이 텅 비는 경우를 아직 안 뺐어요. (전체−2)를 반으로 나눠요.")],
+            detail="서로 다른 것을 두 묶음으로 가르는 수는, 각자가 두 곳 중 하나를 고르는 2^n에서 '한쪽이 빈' 2가지를 빼고 "
+            "묶음의 이름을 구별하지 않아 2로 나눈 2^(n−1)−1이에요. 여집합 쌍의 중복을 다루는 세기예요.",
+        )
+
+
 def gen_geosum():
     # 등비수열 합 1+2+4+…+2^(k-1) = 2^k − 1. 2배씩 커지는 수의 합 규칙. (변화와관계 난8)
     for k in [8, 6, 10, 7]:
@@ -3728,6 +3886,8 @@ GENERATORS = [
     gen_rectperim, gen_interiorangle, gen_prismparts, gen_triangleangle,
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
+    gen_makesquare, gen_compose, gen_euler, gen_atleastprob,
+    gen_sigma, gen_recur, gen_conevolume, gen_setpartition,
     gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_quadseq, gen_polyhedron, gen_multiperm,
