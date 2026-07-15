@@ -2855,9 +2855,46 @@ def gen_multiple_condition():
         )
 
 
+def gen_choose_two():
+    # 순서 무관 2개 고르기(nC2) = 순서 있게 센 뒤 ÷2. 조합의 핵심 통찰.
+    for names in [["딸기", "포도", "귤"], ["빨강", "파랑", "노랑", "초록"], ["가", "나", "다", "라", "마"], ["사과", "배", "감", "밤"]]:
+        n = len(names)
+        ans = n * (n - 1) // 2
+        add(
+            "choose2", "DATA_POSSIBILITY", 1, ["조합", "순서 무관"],
+            f"서로 다른 {n}가지({', '.join(names)}) 중에서 2가지를 고르려고 해요. 고르는 순서는 상관없어요({names[0]}·{names[1]} = {names[1]}·{names[0]}). 고르는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{n * (n - 1)}가지", f"{ans + 1}가지", f"{ans - 1}가지"],
+            f"한 개를 먼저 고르는 방법 {n}가지, 남은 것 중 하나 더 {n - 1}가지 → {n}×{n - 1}={n * (n - 1)}가지. 그런데 순서를 안 따지니 ({names[0]},{names[1]})와 ({names[1]},{names[0]})가 같아 2로 나눠요: {n * (n - 1)}÷2={ans}가지예요.",
+            [(f"{n * (n - 1)}가지", "순서를 따지면 그 수지만, 순서 상관없으니 절반(÷2)이에요.")],
+            detail="'순서 상관없이 2개 고르기'는 순서 있게 센 뒤(첫째×둘째) 2로 나눠요 — 같은 짝을 두 번 세지 않으려는 거예요. 이 생각은 악수·경기 수·짝짓기에서 똑같이 쓰여요.",
+        )
+
+
+def gen_data_read():
+    # 자료를 큰 순서로 세워 '몇 번째'를 찾기 — 1등에만 눈이 가는 걸 넘어서는 해석력.
+    surveys = [
+        ("좋아하는 과일", [("사과", 5), ("바나나", 3), ("포도", 7), ("귤", 2)]),
+        ("좋아하는 운동", [("축구", 8), ("농구", 4), ("수영", 6), ("야구", 3)]),
+        ("기르고 싶은 동물", [("강아지", 9), ("고양이", 5), ("햄스터", 2), ("금붕어", 4)]),
+        ("좋아하는 색깔", [("빨강", 4), ("파랑", 7), ("노랑", 3), ("초록", 5)]),
+    ]
+    for topic, data in surveys:
+        s = sorted(data, key=lambda x: -x[1])
+        second = s[1][0]
+        add(
+            "dataread", "DATA_POSSIBILITY", 1, ["자료 해석", "순서 비교"],
+            f"우리 반 친구들에게 {topic}{_eul(topic)} 물었어요. {', '.join(f'{k} {v}명' for k, v in data)}. 두 번째로 많이 나온 것은 무엇일까요?",
+            second, [s[0][0], s[2][0], s[3][0]],
+            f"많은 순서대로 줄을 세우면 {' > '.join(f'{k}({v})' for k, v in s)} 예요. 두 번째는 {second}{_copula(second)}.",
+            [(s[0][0], "그건 가장 많은 것(1번째)이에요. 두 번째를 찾아야 해요.")],
+            detail="자료에서 '몇 번째로 많은지'를 물으면 큰 순서대로 줄을 세우는 게 가장 확실해요. 가장 큰 것(1등)에 눈이 먼저 가지만, 순서를 정리하면 2등·3등도 헷갈리지 않아요.",
+        )
+
+
 GENERATORS = [
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
+    gen_choose_two, gen_data_read,
     gen_number_split, gen_height_order, gen_position_count, gen_missing_addend,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
