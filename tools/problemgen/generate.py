@@ -3119,6 +3119,110 @@ def gen_unitprice():
         )
 
 
+def gen_geosum():
+    # 등비수열 합 1+2+4+…+2^(k-1) = 2^k − 1. 2배씩 커지는 수의 합 규칙. (변화와관계 난8)
+    for k in [8, 6, 10, 7]:
+        last = 2 ** (k - 1)
+        ans = 2 ** k - 1
+        add(
+            "geosum", "CHANGE_RELATION", 8, ["등비수열", "합의 규칙"],
+            f"1 + 2 + 4 + 8 + … 처럼 앞의 수의 2배씩 커지는 수를, 1부터 {last}까지 모두 더하면 합은 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [2 ** k, last, ans + 1, ans - 1])],
+            f"2배씩 커지는 수를 다 더하면 신기하게도 '마지막 수의 2배보다 1 작은 수'가 돼요. 마지막이 {last}이니 "
+            f"{last}×2 − 1 = {2 ** k} − 1 = {ans}예요.",
+            [(str(2 ** k), "마지막 수의 2배에서 1을 빼야 해요(딱 1 모자라요)."),
+             (str(last), "마지막 한 항이 아니라 전부 더한 합이에요.")],
+            detail="1+2+4+…+2^(k−1) = 2^k − 1이에요. 각 항이 그 앞까지의 합보다 1 큰 성질(1, 1+2=3, 1+2+4=7…)이라, "
+            "합은 항상 다음 2의 거듭제곱보다 1 작아요. 이진법·배수 사고와 이어지는 등비수열 합의 기본이에요.",
+        )
+
+
+def gen_dist3d():
+    # 공간에서 원점부터 (x,y,z)까지 거리 = √(x²+y²+z²). (도형과측정 난8)
+    for x, y, z in [(2, 3, 6), (1, 2, 2), (2, 6, 9), (6, 6, 7)]:
+        sq = x * x + y * y + z * z
+        ans = int(sq ** 0.5)
+        add(
+            "dist3d", "SHAPE_MEASUREMENT", 8, ["공간 좌표", "피타고라스"],
+            f"공간에서 점 (0, 0, 0)부터 점 ({x}, {y}, {z})까지의 거리는 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [x + y + z, ans + 1, ans - 1, x + y])],
+            f"공간에서 거리는 √(가로²+세로²+높이²)로 구해요(피타고라스의 공간판). "
+            f"√({x}²+{y}²+{z}²) = √{sq} = {ans}예요.",
+            [(str(x + y + z), "좌표를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요.")],
+            detail="평면의 거리 √(x²+y²)를 공간으로 넓히면 √(x²+y²+z²)예요. 직육면체의 대각선을 두 번의 피타고라스로 구하는 것과 "
+            "같아요. 좌표와 길이를 잇는 공간 측정의 핵심이에요.",
+        )
+
+
+def gen_necklace():
+    # 염주(목걸이)순열 = (n−1)!/2 : 원순열에서 뒤집기까지 같게 본다. (자료와가능성 난8)
+    for n in [4, 5, 6, 7]:
+        circ = factorial(n - 1)
+        ans = circ // 2
+        add(
+            "necklace", "DATA_POSSIBILITY", 8, ["염주순열", "회전·대칭 겹침"],
+            f"서로 다른 구슬 {n}개를 실에 꿰어 목걸이를 만들어요. 돌리거나 뒤집어서 같아지는 것은 한 가지로 볼 때, "
+            f"서로 다른 목걸이는 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [circ, factorial(n), ans + 2, ans - 1])],
+            f"한 줄로 꿰면 {n}!가지지만, 원형이라 돌려서 같은 {n}가지를 묶으면 원순열 (n−1)!={circ}가지예요. "
+            f"목걸이는 뒤집어도 같으니 다시 2로 나눠 {circ}÷2={ans}가지예요.",
+            [(f"{circ}가지", "목걸이는 '뒤집으면' 같아져요. 원순열에서 2로 한 번 더 나눠요.")],
+            detail="목걸이(염주)처럼 회전뿐 아니라 뒤집기로도 같아지는 배열은 원순열 (n−1)!을 다시 2로 나눈 (n−1)!/2예요. "
+            "'같다고 보는 움직임'이 많을수록 경우의 수가 줄어드는 대칭 세기의 대표 문제예요.",
+        )
+
+
+def gen_boxsurface():
+    # 직육면체 겉넓이 = 2(ab+bc+ca). (도형과측정 난6)
+    for a, b, c in [(3, 4, 5), (2, 3, 4), (5, 5, 2), (1, 4, 6)]:
+        ans = 2 * (a * b + b * c + c * a)
+        add(
+            "boxsurface", "SHAPE_MEASUREMENT", 6, ["겉넓이", "면 세기"],
+            f"가로 {a}cm, 세로 {b}cm, 높이 {c}cm인 직육면체의 겉넓이는 몇 cm²일까요?",
+            f"{ans}cm²", [f"{v}cm²" for v in _pick_distractors(ans, [a * b * c, a * b + b * c + c * a, ans + 4, ans - 4])],
+            f"직육면체는 마주 보는 면이 세 쌍이에요. 한 쌍씩 넓이는 {a}×{b}, {b}×{c}, {c}×{a}이고, 각각 2개씩이라 "
+            f"2×({a * b}+{b * c}+{c * a}) = {ans}cm²예요.",
+            [(f"{a * b * c}cm²", "그건 부피예요(가로×세로×높이). 겉넓이는 여섯 면의 넓이 합이에요."),
+             (f"{a * b + b * c + c * a}cm²", "세 면만 더했어요. 마주 보는 면까지 각각 2개씩이라 ×2 해요.")],
+            detail="직육면체 겉넓이는 마주 보는 세 쌍의 면 넓이를 더한 2(ab+bc+ca)예요. 부피(abc)와 헷갈리지 않고, "
+            "면을 빠짐없이 세는 게 핵심이에요.",
+        )
+
+
+def gen_passcode():
+    # 반복 허용 비밀번호 경우의 수 = (숫자 종류)^(자리 수). (자료와가능성 난6)
+    for base, dig in [(10, 3), (2, 5), (6, 3), (3, 4)]:
+        ans = base ** dig
+        add(
+            "passcode", "DATA_POSSIBILITY", 6, ["곱의 법칙", "반복 허용"],
+            f"0부터 {base - 1}까지 {base}가지 숫자로 {dig}자리 비밀번호를 만들어요. 같은 숫자를 여러 번 써도 될 때, "
+            f"만들 수 있는 비밀번호는 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [base * dig, base ** (dig - 1), ans + base, ans - base])],
+            f"각 자리마다 {base}가지 숫자가 올 수 있고, 자리가 {dig}개니까 {base}를 {dig}번 곱해요 → "
+            f"{'×'.join([str(base)] * dig)} = {ans}가지예요.",
+            [(f"{base * dig}가지", "자리 수만큼 '더하는' 게 아니라 '곱해요'. 각 자리가 독립이라 곱의 법칙이에요.")],
+            detail="각 자리를 독립적으로 채우고 반복을 허용하면 (선택 가지)^(자리 수)예요. 자리마다 곱하는 곱의 법칙의 대표 예로, "
+            "암호·번호판 경우의 수가 왜 폭발하는지 보여줘요.",
+        )
+
+
+def gen_symaxis():
+    # 정n각형의 대칭축 개수 = n. (도형과측정 난3)
+    for n in [3, 4, 5, 6]:
+        ans = n
+        name = {3: "정삼각형", 4: "정사각형", 5: "정오각형", 6: "정육각형"}[n]
+        add(
+            "symaxis", "SHAPE_MEASUREMENT", 3, ["선대칭", "대칭축"],
+            f"{name}은 선대칭 도형이에요. 접었을 때 완전히 겹치게 하는 대칭축은 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [1, 2, n + 1, n - 1])],
+            f"{name}은 각 꼭짓점(또는 변의 한가운데)을 지나는 대칭축을 가져요. 그 수는 변의 수와 같은 {ans}개예요.",
+            [("1개", "대칭축이 하나만 있는 게 아니에요. 여러 방향으로 접어도 겹쳐요."),
+             (f"{n - 1}개", "정{}각형의 대칭축은 변의 수와 같아요. 하나 빠뜨리지 않았는지 세어 보세요.".format(n))],
+            detail="정n각형은 n개의 대칭축을 가져요. 홀수각형은 각 꼭짓점과 마주 보는 변의 중점을 잇고, 짝수각형은 마주 보는 "
+            "꼭짓점끼리·변끼리를 이어요. 어느 쪽이든 축의 수는 변의 수 n과 같아요.",
+        )
+
+
 def gen_rectperim():
     # 직사각형 둘레 = 2×(가로+세로). 측정. (도형과측정 난4)
     for a, b in [(7, 4), (9, 5), (6, 6), (8, 3)]:
@@ -3623,6 +3727,7 @@ GENERATORS = [
     gen_league, gen_twodigit, gen_tablediff, gen_unitprice,
     gen_rectperim, gen_interiorangle, gen_prismparts, gen_triangleangle,
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
+    gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
     gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_quadseq, gen_polyhedron, gen_multiperm,
