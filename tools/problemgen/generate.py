@@ -3119,6 +3119,145 @@ def gen_unitprice():
         )
 
 
+def gen_rectperim():
+    # 직사각형 둘레 = 2×(가로+세로). 측정. (도형과측정 난4)
+    for a, b in [(7, 4), (9, 5), (6, 6), (8, 3)]:
+        ans = 2 * (a + b)
+        add(
+            "rectperim", "SHAPE_MEASUREMENT", 4, ["둘레", "측정"],
+            f"가로 {a}cm, 세로 {b}cm인 직사각형이 있어요. 이 직사각형의 둘레는 몇 cm일까요?",
+            f"{ans}cm", [f"{c}cm" for c in _pick_distractors(ans, [a * b, a + b, ans + 2, ans - 2])],
+            f"직사각형은 가로 두 변, 세로 두 변이에요. 둘레 = (가로+세로)×2 = ({a}+{b})×2 = {ans}cm예요.",
+            [(f"{a * b}cm", "그건 넓이예요(가로×세로). 둘레는 네 변의 길이를 더해요."),
+             (f"{a + b}cm", "가로와 세로를 한 번씩만 더했어요. 각각 두 변씩이라 ×2 해요.")],
+            detail="직사각형 둘레는 네 변의 합이에요. 마주 보는 변이 같으니 (가로+세로)를 구해 2배 하면 돼요. 넓이(가로×세로)와 "
+            "헷갈리지 않는 게 핵심이에요.",
+        )
+
+
+def gen_interiorangle():
+    # 정n각형 한 내각 = (n−2)×180 ÷ n. (도형과측정 난4)
+    for n in [5, 6, 8, 10]:
+        ans = (n - 2) * 180 // n
+        total = (n - 2) * 180
+        add(
+            "interiorangle", "SHAPE_MEASUREMENT", 4, ["다각형 내각", "각도"],
+            f"정{n}각형의 한 내각의 크기는 몇 도일까요? (모든 각이 같아요)",
+            f"{ans}도", [f"{c}도" for c in _pick_distractors(ans, [total // (n - 1), ans + 10, ans - 10, 180 - ans])],
+            f"n각형의 내각의 합은 (n−2)×180이에요. 정{n}각형은 {n}−2={n - 2}, ×180 = {total}도이고, 각이 {n}개로 같으니 "
+            f"{total}÷{n} = {ans}도예요.",
+            [(f"{180 - ans}도", "한 내각을 직접 구해요. 내각의 합을 각 개수로 나눠요.")],
+            detail="다각형의 내각의 합은 삼각형으로 쪼갠 개수(n−2)에 180°를 곱해 구해요. 정다각형은 모든 각이 같으니 그 합을 "
+            "각의 개수로 나누면 한 내각이 나와요.",
+        )
+
+
+def gen_prismparts():
+    # 각기둥의 모서리 수 = 밑면 변수 × 3. (도형과측정 난4)
+    for n in [5, 6, 4, 8]:
+        ans = 3 * n
+        add(
+            "prismparts", "SHAPE_MEASUREMENT", 4, ["입체도형", "모서리 세기"],
+            f"밑면이 {n}각형인 각기둥이 있어요. 이 각기둥의 모서리는 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [2 * n, n + 2, ans + 2, ans - 2])],
+            f"각기둥은 위·아래 밑면에 {n}개씩 모서리가 있고, 두 밑면을 잇는 기둥 모서리가 {n}개 더 있어요. "
+            f"{n}+{n}+{n} = {n}×3 = {ans}개예요.",
+            [(f"{2 * n}개", "그건 꼭짓점 수예요(위·아래 {}개씩). 모서리는 밑면 두 개 + 기둥이라 3배예요.".format(n)),
+             (f"{n + 2}개", "그건 면의 수예요(옆면 {}개 + 밑면 2개). 모서리를 세요.".format(n))],
+            detail="n각기둥은 밑면(위·아래) 모서리가 n개씩 2n개, 두 밑면을 잇는 옆 모서리가 n개라 모두 3n개예요. "
+            "꼭짓점(2n)·면(n+2)과 구분해 세는 공간 감각 문제예요.",
+        )
+
+
+def gen_triangleangle():
+    # 삼각형 세 각의 합은 180° — 두 각으로 나머지 구하기. (도형과측정 난4)
+    for a, b in [(50, 70), (40, 65), (90, 35), (72, 53)]:
+        ans = 180 - a - b
+        add(
+            "triangleangle", "SHAPE_MEASUREMENT", 4, ["삼각형 내각", "각도"],
+            f"삼각형의 세 각 중 두 각이 각각 {a}도와 {b}도예요. 나머지 한 각은 몇 도일까요?",
+            f"{ans}도", [f"{c}도" for c in _pick_distractors(ans, [a + b, 180 - a, ans + 10, ans - 10])],
+            f"삼각형 세 각의 합은 항상 180도예요. 그래서 나머지 각 = 180 − {a} − {b} = {ans}도예요.",
+            [(f"{a + b}도", "두 각을 더하기만 하면 안 돼요. 180도에서 두 각을 빼요.")],
+            detail="삼각형 세 각의 합은 언제나 180°예요. 두 각을 알면 180에서 빼서 나머지 각을 구해요. 도형 각도 문제의 가장 기본 규칙이에요.",
+        )
+
+
+def gen_avgbasic():
+    # 평균 = 합 ÷ 개수. (자료와가능성 난4)
+    for vals in [[4, 6, 8, 10], [2, 4, 9, 5], [10, 20, 30, 40], [3, 7, 8, 6]]:
+        total = sum(vals)
+        ans = total // len(vals)
+        vs = ", ".join(str(v) for v in vals)
+        add(
+            "avgbasic", "DATA_POSSIBILITY", 4, ["평균", "합 나누기"],
+            f"네 번의 점수가 {vs}이에요. 이 점수들의 평균은 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
+            f"평균은 모두 더해 개수로 나눠요. {vs}을 더하면 {total}, 4로 나누면 {ans}예요.",
+            [(str(total), "합만 구하면 안 돼요. 개수로 나눠야 평균이에요."),
+             (str(max(vals)), "가장 큰 값이 아니라, 전체를 고르게 나눈 값이 평균이에요.")],
+            detail="평균은 여러 값을 '고르게 나눈' 대푯값으로, 모두 더해 개수로 나눠요. 자료를 하나의 수로 요약하는 통계의 기본이에요.",
+        )
+
+
+def gen_lineup():
+    # n명을 한 줄로 세우는 방법 = n!. (자료와가능성 난4)
+    for n in [3, 4, 5, 6]:
+        ans = factorial(n)
+        add(
+            "lineup", "DATA_POSSIBILITY", 4, ["경우의 수", "순서 세기"],
+            f"서로 다른 {n}명이 한 줄로 서는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [n * n, factorial(n - 1), n * (n - 1), ans + n])],
+            f"맨 앞에 설 사람이 {n}가지, 그다음 자리는 남은 {n - 1}가지, 그다음 {n - 2}가지… 이렇게 곱하면 "
+            f"{'×'.join(str(k) for k in range(n, 0, -1))} = {ans}가지예요.",
+            [(f"{n * n}가지", "자리마다 사람이 '한 명씩 줄어들어요'. 같은 수를 곱하는 게 아니라 {}×{}×…예요.".format(n, n - 1))],
+            detail="서로 다른 것을 한 줄로 배열하는 방법의 수는 n! = n×(n−1)×…×1이에요. 앞자리부터 채울 때 쓸 수 있는 것이 "
+            "하나씩 줄어들기 때문이에요. 순서가 있는 세기(순열)의 기본이에요.",
+        )
+
+
+def gen_mode():
+    # 최빈값 — 가장 자주 나온 값. (자료와가능성 난4)
+    for vals in [[3, 5, 3, 7, 3, 5], [2, 2, 4, 6, 2], [8, 1, 8, 3, 8, 1], [5, 9, 5, 5, 2]]:
+        ans = max(set(vals), key=vals.count)
+        vs = ", ".join(str(v) for v in vals)
+        second = sorted(set(vals), key=vals.count)[-2]
+        add(
+            "mode", "DATA_POSSIBILITY", 4, ["최빈값", "자료 정리"],
+            f"자료 {vs} 가 있어요. 가장 많이 나온 수(최빈값)는 무엇일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [second, max(vals), min(vals), ans + 1])],
+            f"각 수가 몇 번 나왔는지 세어 봐요. {ans}이(가) {vals.count(ans)}번으로 가장 많이 나왔으니 최빈값은 {ans}이에요.",
+            [(str(max(vals)), "가장 '큰' 수가 아니라 가장 '자주 나온' 수가 최빈값이에요.")],
+            detail="최빈값은 자료에서 가장 자주 나타나는 값이에요. 평균·중앙값과 함께 자료를 대표하는 값 중 하나로, 개수를 "
+            "세어 가장 많은 것을 찾으면 돼요.",
+        )
+
+
+def gen_simpleprob():
+    # 간단한 확률 = (해당 경우) ÷ (전체). 기약분수. (자료와가능성 난4)
+    def _frac(num, den):
+        g = gcd(num, den) or 1
+        return f"{num // g}/{den // g}"
+    for r, b in [(3, 2), (2, 4), (4, 6), (5, 3)]:
+        total = r + b
+        ans = _frac(r, total)
+        cands = [_frac(b, total), f"{r}/{b}", _frac(r + 1, total), _frac(r, total + 1)]
+        distract = []
+        for c in cands:
+            if c != ans and c not in distract:
+                distract.append(c)
+        add(
+            "simpleprob", "DATA_POSSIBILITY", 4, ["확률", "부분과 전체"],
+            f"주머니에 빨간 공 {r}개와 파란 공 {b}개가 있어요. 눈을 감고 공 하나를 꺼낼 때, 빨간 공이 나올 확률은 얼마일까요?",
+            ans, distract[:3],
+            f"전체 공은 {r}+{b}={total}개, 그중 빨간 공이 {r}개예요. 확률은 (빨간 공)÷(전체) = {r}/{total}"
+            + (f" = {ans}" if ans != f"{r}/{total}" else "") + "예요.",
+            [(f"{r}/{b}", "분모는 파란 공 수가 아니라 '전체' 공 수예요.")],
+            detail="확률은 (원하는 경우의 수)÷(전체 경우의 수)예요. 여기선 빨간 공 수를 전체 공 수로 나눠요. 분모를 '전체'로 "
+            "두는 것과 기약분수로 나타내는 게 핵심이에요.",
+        )
+
+
 def _prime_factor_str(n):
     """n의 소인수분해를 '2²×3' 형태 문자열로. (해설용)"""
     sup = {1: "", 2: "²", 3: "³", 4: "⁴", 5: "⁵"}
@@ -3482,6 +3621,8 @@ def gen_partition():
 GENERATORS = [
     gen_crt3, gen_fibsum, gen_diagcross, gen_partition,
     gen_league, gen_twodigit, gen_tablediff, gen_unitprice,
+    gen_rectperim, gen_interiorangle, gen_prismparts, gen_triangleangle,
+    gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_quadseq, gen_polyhedron, gen_multiperm,
