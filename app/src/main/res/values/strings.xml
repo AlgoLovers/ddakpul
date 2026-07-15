@@ -282,6 +282,7 @@
     <string name="settings_tts_desc">문제를 읽어 주는 목소리를 골라요. 한국어는 기기마다 잘하는 엔진이 달라요.</string>
     <string name="settings_tts_engine">엔진</string>
     <string name="settings_tts_engine_default">기기 기본</string>
+    <string name="settings_tts_engine_default_named">기기 기본 · %1$s</string>
     <string name="settings_tts_speed">속도</string>
     <string name="settings_tts_slow">느리게</string>
     <string name="settings_tts_normal">보통</string>
