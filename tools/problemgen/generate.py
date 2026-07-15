@@ -2992,7 +2992,67 @@ def gen_coin_weighing():
         )
 
 
+def gen_diophantine():
+    # 일차부정방정식 자연수해 개수 — 두 값의 관계를 만족하는 (a,b) 조합을 빠짐없이 세기. (변화와관계 난8)
+    for ua, ub, total in [(300, 500, 3800), (400, 300, 4300), (200, 700, 6500), (500, 600, 7100)]:
+        sols = [(a, b) for a in range(1, total // ua + 1) for b in range(1, total // ub + 1) if ua * a + ub * b == total]
+        ans = len(sols)
+        add(
+            "diophantine", "CHANGE_RELATION", 8, ["일차부정방정식", "빠짐없이 경우 세기"],
+            f"한 개 {ua}원짜리 사탕과 한 개 {ub}원짜리 초콜릿을 각각 1개 이상 사서 정확히 {total}원을 쓰려고 해요. "
+            f"(사탕 수, 초콜릿 수) 조합은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [ans + 1, ans + 2, ans - 1, ans + 3])],
+            f"사탕을 a개, 초콜릿을 b개라 하면 {ua}×a + {ub}×b = {total}이에요. 한쪽(예: 초콜릿 수)을 1개씩 늘려 가며 "
+            f"나머지가 {ua}{_euro(str(ua))} 나누어떨어지는 경우만 남기면 (a,b) = {', '.join(f'({a},{b})' for a, b in sols)} — 모두 {ans}가지예요.",
+            [(f"{ans + 1}가지", "한쪽 개수를 하나씩 바꿔 가며 '딱 나누어떨어지는' 경우만 세요. 빠뜨리거나 겹치기 쉬워요."),
+             (f"{ans - 1 if ans > 1 else ans + 2}가지", "양 끝(한쪽이 최소일 때)까지 포함해 빠짐없이 세었는지 확인하세요.")],
+            detail="'두 종류를 정수 개수로 조합해 정해진 값을 맞춘다'는 일차부정방정식이에요. 한 변수를 1씩 움직이면 다른 변수는 계수만큼 반대로 움직여요("
+            "여기선 한쪽이 늘면 다른 쪽이 규칙적으로 줄어요). 그래서 해는 일정 간격으로 띄엄띄엄 나타나고, 양 끝 사이를 빠짐없이 세면 개수를 구할 수 있어요.",
+        )
+
+
+def gen_painted_cube_faces():
+    # 겉면을 칠한 n×n×n 정육면체를 단위정육면체로 자를 때, 정확히 두 면만 칠해진 개수 = 모서리 12개 × (n-2). (도형과측정 난8)
+    for n in [4, 5, 3, 6]:
+        two = 12 * (n - 2)
+        three = 8               # 꼭짓점(세 면)
+        one = 6 * (n - 2) ** 2  # 면 안쪽(한 면)
+        add(
+            "paintcube", "SHAPE_MEASUREMENT", 8, ["공간 감각", "위치로 나누어 세기"],
+            f"겉면을 모두 빨갛게 칠한 {n}×{n}×{n} 정육면체를 1×1×1 작은 정육면체 {n ** 3}개로 잘랐어요. "
+            f"정확히 '두 면'만 빨간 작은 정육면체는 몇 개일까요?",
+            f"{two}개", [f"{c}개" for c in _pick_distractors(two, [three, (n - 2) ** 3, one, two + 12, two - 12 if two > 12 else two + 6])],
+            f"작은 정육면체가 칠해진 면 수는 놓인 '위치'로 정해져요. 세 면=꼭짓점 8개, 두 면=모서리(꼭짓점 뺀 부분), 한 면=각 면 안쪽. "
+            f"두 면은 모서리 12개마다 꼭짓점을 뺀 {n - 2}개씩이라 12×{n - 2}={two}개예요.",
+            [(f"{three}개", "세 면 칠해진 건 꼭짓점 8개예요. '두 면'은 모서리 위(꼭짓점 제외)를 세요."),
+             (f"{(n - 2) ** 3}개", "그건 아예 안 칠해진(속) 정육면체 수예요. 두 면은 모서리 위에 있어요.")],
+            detail="정육면체를 자르면 작은 정육면체는 놓인 위치에 따라 칠해진 면 수가 정해져요 — 꼭짓점=세 면(8개 고정), 모서리 위=두 면, "
+            "면 안쪽=한 면, 완전히 속=0면. '두 면'은 모서리 12개 각각에서 양 끝 꼭짓점을 뺀 (n−2)개씩이라 12(n−2)예요. 위치로 나누어 세는 공간 감각 문제예요.",
+        )
+
+
+def gen_stars_bars():
+    # 같은 물건 N개를 몇 명에게 0개까지 허용해 나누는 방법 = 중복조합(별과 막대) C(N+k-1, k-1). (자료와가능성 난8)
+    for total_items, kids in [(5, 3), (6, 3), (7, 3), (4, 2)]:
+        ans = comb(total_items + kids - 1, kids - 1)
+        wrong_no_zero = comb(total_items - 1, kids - 1) if total_items >= kids else 0  # 각자 1개 이상일 때(흔한 혼동)
+        add(
+            "starsbars", "DATA_POSSIBILITY", 8, ["중복조합", "같은 것 나누기"],
+            f"똑같은 사탕 {total_items}개를 {kids}명의 아이에게 남김없이 나눠 줘요. 한 개도 못 받는 아이가 있어도 돼요. "
+            f"나눠 주는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [wrong_no_zero, ans + 2, total_items * kids, ans + 1, ans - 1])],
+            f"사탕 {total_items}개(●)를 한 줄로 놓고 사이에 칸막이({kids - 1}개)를 꽂아 {kids}묶음으로 나눈다고 생각해요. "
+            f"●와 칸막이 합 {total_items + kids - 1}자리 중 칸막이 {kids - 1}자리를 고르는 조합이라 "
+            f"{total_items + kids - 1}C{kids - 1}={ans}가지예요.",
+            [(f"{wrong_no_zero}가지", "'0개 가능'이라 각자 최소 1개 조건과 달라요. 사탕과 칸막이를 함께 배열해 세요."),
+             (f"{total_items * kids}가지", "곱셈이 아니라, 사탕 사이에 칸막이를 꽂는 '조합'으로 세요.")],
+            detail="같은 물건을 여러 사람에게 (0개 허용) 나누는 방법은 '별과 막대'로 세요 — 물건 N개를 점으로 늘어놓고 사람 수보다 하나 적은 칸막이를 그 사이에 꽂아 묶음으로 가르는 거예요. "
+            "그래서 (물건+칸막이)자리 중 칸막이 자리를 고르는 중복조합 C(N+k−1, k−1)이 돼요. 같은 것을 나누는 경우의 수의 대표 도구예요.",
+        )
+
+
 GENERATORS = [
+    gen_diophantine, gen_painted_cube_faces, gen_stars_bars,
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
     gen_choose_two, gen_data_read,
