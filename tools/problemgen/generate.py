@@ -2753,7 +2753,67 @@ def gen_missing_addend():
         )
 
 
+# ── v3 확충 — 입문(난1~2) 사고력 바닥 보강: 깔때기 입구가 가장 얇아 여기부터 ──────────
+def gen_transitivity():
+    # 이행성(A>B>C>D) 순서 추론 — 계산 없이 '이어서 비교'하는 논리. 실제 지식 지름길 없게 이름/중립 상황.
+    scenes = [
+        ("달리기 시합", "빨랐어요", "가장 느린", ["지호", "민수", "서연", "하은"]),
+        ("줄넘기 대회", "많이 넘었어요", "가장 적게 넘은", ["윤아", "도윤", "시우", "예은"]),
+        ("멀리뛰기", "멀리 뛰었어요", "가장 가까이 뛴", ["준우", "하린", "은우", "다인"]),
+        ("블록 높이 쌓기", "높이 쌓았어요", "가장 낮게 쌓은", ["소율", "건우", "나윤", "시윤"]),
+    ]
+    for ctx, verb, ask, names in scenes:
+        a, b, c, d = names
+        add(
+            "trans", "CHANGE_RELATION", 1, ["순서 추론", "이행성"],
+            f"{ctx}에서 {a}{_iga(a)} {b}보다, {b}{_iga(b)} {c}보다, {c}{_iga(c)} {d}보다 {verb}. {ask} 사람은 누구일까요?",
+            d, [a, b, c],
+            f"이어서 순서를 세우면 {a} → {b} → {c} → {d} 예요. 맨 끝인 {d}{_iga(d)} {ask.replace('가장 ', '')} 사람이라 답은 {d}{_copula(d)}.",
+            [(a, f"{a}{_eun(a)} 제일 잘한 쪽이라 정반대예요.")],
+            detail="'A가 B보다, B가 C보다 ~' 처럼 이어지는 비교는 한 줄로 순서를 세우면 한눈에 보여요(A→B→C→D). 이렇게 이어서 비교하는 생각(이행성)은 키 재기·시합 등수·수의 대소 비교에서 계속 쓰여요.",
+        )
+
+
+def gen_repeating_pattern():
+    # 반복 무늬의 n번째 — 주기와 나머지 개념(계산 아님, 규칙 발견).
+    palette = ["빨강", "파랑", "노랑", "초록"]
+    cases = [(["빨강", "파랑"], 10), (["빨강", "파랑", "노랑"], 11), (["노랑", "초록", "빨강"], 14), (["파랑", "노랑"], 15)]
+    for pat, n in cases:
+        p = len(pat)
+        r = n % p  # 묶음(주기) 안에서 몇 번째인지 — 나머지 0이면 맨 끝
+        position = r if r != 0 else p
+        color = pat[position - 1]
+        others = [c for c in palette if c != color][:3]
+        where = f"나머지는 0, 곧 한 묶음의 맨 끝({p}번째)" if r == 0 else f"나머지는 {r}, 곧 한 묶음의 {r}번째"
+        add(
+            "pattern", "CHANGE_RELATION", 1, ["반복 규칙", "주기와 나머지"],
+            f"구슬을 {' - '.join(pat)} 순서로 반복해서 놓아요: {' - '.join(pat + pat)} - … 이렇게요. {n}번째 구슬의 색은 무엇일까요?",
+            color, others,
+            f"색 {p}개가 반복되니 {p}개마다 처음으로 돌아와요. {n}{_eul(str(n))} {p}{_euro(str(p))} 나누면 {where}인 {color}{_copula(color)}.",
+            [(pat[-1], "무늬의 마지막 색이 아니라, 몇 번째 자리(나머지)인지를 따져야 해요.")],
+            detail="반복 무늬는 '한 묶음(주기)'이 몇 개인지부터 세요. 그 수로 나눈 '나머지'가 묶음 안에서 몇 번째인지 알려줘요(나머지가 0이면 묶음의 맨 끝). 주기 규칙은 요일·시계·달력에서도 똑같이 쓰여요.",
+        )
+
+
+def gen_io_rule():
+    # 입력→출력 대응 규칙 찾기(×▲+●). 여러 쌍에서 공통 규칙을 발견하는 사고력.
+    cases = [(2, 1, [1, 2, 3], 5), (3, 1, [1, 2, 3], 4), (2, 2, [1, 2, 3], 5), (1, 5, [2, 3, 4], 6)]
+    for a, b, inputs, q in cases:
+        pairs = ", ".join(f"{x} → {a * x + b}" for x in inputs)
+        ans = a * q + b
+        rule = f"×{a}" + (f"＋{b}" if b else "")
+        add(
+            "iorule", "CHANGE_RELATION", 2, ["대응 규칙", "규칙 찾기"],
+            f"마법 상자에 수를 넣으면 정해진 규칙으로 바뀌어 나와요. {pairs} 처럼요. 그럼 {q}{_eul(str(q))} 넣으면 무엇이 나올까요?",
+            str(ans), [str(ans + 1), str(ans - 1), str(a * q if b else ans + a)],
+            f"넣은 수와 나온 수를 비교하면 규칙은 (넣은 수){rule} 예요. 세 쌍 모두 맞아요. 그러니 {q}{rule.replace('×', '×').replace('＋', '＋')} = {ans}{_copula(ans)}.",
+            [(str(a * q) if b else str(ans + a), "곱하기만 하고 더하는 걸 빼먹었어요." if b else "규칙을 다시 확인해요.")],
+            detail="입력→출력 표에서 규칙을 찾을 땐 ①차이가 일정한가(더하기) ②몇 배인가(곱하기) ③곱하고 더했나(×▲＋●) 순서로 확인해요. 여러 쌍에서 '모두' 맞는 규칙이 진짜 규칙이에요 — 한 쌍만 보고 정하면 틀리기 쉬워요.",
+        )
+
+
 GENERATORS = [
+    gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_number_split, gen_height_order, gen_position_count, gen_missing_addend,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
