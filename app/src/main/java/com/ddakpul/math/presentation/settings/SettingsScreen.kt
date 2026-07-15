@@ -215,15 +215,22 @@ private fun DailyGoalCard(
 private fun TtsCard() {
     val context = LocalContext.current
     var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
+    var defaultEngine by remember { mutableStateOf<String?>(null) }
     var selectedEngine by remember { mutableStateOf(SpeechSettings.enginePackage(context)) }
     var rate by remember { mutableStateOf(SpeechSettings.rate(context)) }
 
-    // 설치된 TTS 엔진 목록을 읽기 위한 임시 인스턴스.
+    // 설치된 TTS 엔진 목록 + 기기 기본 엔진을 읽기 위한 임시 인스턴스.
     DisposableEffect(Unit) {
         var probe: TextToSpeech? = null
-        probe = TextToSpeech(context) { engines = probe?.engines.orEmpty() }
+        probe =
+            TextToSpeech(context) {
+                engines = probe?.engines.orEmpty()
+                defaultEngine = probe?.defaultEngine
+            }
         onDispose { probe?.shutdown() }
     }
+    // '기기 기본'이 실제로 어떤 엔진인지(중복 여부가 바로 보이게).
+    val defaultLabel = engines.firstOrNull { it.name == defaultEngine }?.label
     // 미리 듣기용 — 선택이 바뀌어 재구성되면 새 엔진/속도로 붙는다(SpeechSettings를 읽음).
     val speak = rememberSpeaker()
 
@@ -250,7 +257,15 @@ private fun TtsCard() {
                         selectedEngine = null
                         SpeechSettings.setEnginePackage(context, null)
                     },
-                    label = { Text(stringResource(R.string.settings_tts_engine_default)) },
+                    label = {
+                        Text(
+                            if (defaultLabel != null) {
+                                stringResource(R.string.settings_tts_engine_default_named, defaultLabel)
+                            } else {
+                                stringResource(R.string.settings_tts_engine_default)
+                            },
+                        )
+                    },
                 )
                 engines.forEach { e ->
                     FilterChip(
