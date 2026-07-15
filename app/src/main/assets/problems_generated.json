@@ -154,7 +154,7 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F_k = F_{k+2}−F_{k+1}) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
+   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F(k) = F(k+2)−F(k+1)) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
   },
   {
    "id": "gen-fibsum-2",
@@ -185,7 +185,7 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F_k = F_{k+2}−F_{k+1}) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
+   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F(k) = F(k+2)−F(k+1)) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
   },
   {
    "id": "gen-fibsum-3",
@@ -216,7 +216,7 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F_k = F_{k+2}−F_{k+1}) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
+   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F(k) = F(k+2)−F(k+1)) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
   },
   {
    "id": "gen-fibsum-4",
@@ -247,7 +247,7 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F_k = F_{k+2}−F_{k+1}) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
+   "detailedExplanation": "피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F(k) = F(k+2)−F(k+1)) 사슬처럼 지워져 맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요."
   },
   {
    "id": "gen-diagcross-1",
@@ -4713,7 +4713,7 @@
    "mistakes": [
     {
      "choiceIndex": 3,
-     "misconception": "그건 제한 없는 전체 순열({n}!)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
+     "misconception": "그건 제한 없는 전체 순열(4!=24)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
     },
     {
      "choiceIndex": 2,
@@ -4744,7 +4744,7 @@
    "mistakes": [
     {
      "choiceIndex": 1,
-     "misconception": "그건 제한 없는 전체 순열({n}!)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
+     "misconception": "그건 제한 없는 전체 순열(5!=120)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
     },
     {
      "choiceIndex": 3,
@@ -4775,7 +4775,7 @@
    "mistakes": [
     {
      "choiceIndex": 0,
-     "misconception": "그건 제한 없는 전체 순열({n}!)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
+     "misconception": "그건 제한 없는 전체 순열(6!=720)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
     },
     {
      "choiceIndex": 1,
@@ -4806,7 +4806,7 @@
    "mistakes": [
     {
      "choiceIndex": 3,
-     "misconception": "그건 제한 없는 전체 순열({n}!)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
+     "misconception": "그건 제한 없는 전체 순열(3!=6)이에요. '아무도 제자리 아님' 조건을 빼야 해요."
     },
     {
      "choiceIndex": 1,
