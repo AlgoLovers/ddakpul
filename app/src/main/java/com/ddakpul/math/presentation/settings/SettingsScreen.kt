@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -39,6 +41,8 @@ import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.SpeechSettings
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import com.ddakpul.math.presentation.common.rememberSpeaker
+import com.ddakpul.math.presentation.common.tts.DownloadState
+import com.ddakpul.math.presentation.common.tts.TtsModels
 
 @Composable
 fun SettingsScreen(
@@ -88,6 +92,9 @@ fun SettingsScreen(
 
         // 읽어주기(TTS) 음성 — 엔진·속도 선택(한국어는 기기마다 잘하는 엔진이 다르다).
         TtsCard()
+
+        // 고품질 신경망 음성 — 런타임 다운로드(선택). 받은 뒤엔 오프라인.
+        NeuralVoiceCard(viewModel)
 
         // 별로였던 문제 내보내기 — 부모가 개발 채널로 보내면 다음 업데이트에 반영된다.
         FeedbackExportCard(
@@ -205,6 +212,67 @@ private fun DailyGoalCard(
                     onClick = { onSelect(option) },
                     label = { Text(stringResource(R.string.settings_goal_option, option)) },
                 )
+            }
+        }
+    }
+}
+
+/** 고품질 신경망 음성(Supertonic) — 런타임 다운로드 + 진행률. 재생 연결(sherpa-onnx)은 다음 단계. */
+@Composable
+private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
+    val model = TtsModels.SUPERTONIC
+    val downloadState by viewModel.ttsDownloadState.collectAsStateWithLifecycle()
+    val downloaded by viewModel.ttsDownloaded.collectAsStateWithLifecycle()
+    val sizeMb = (model.totalBytes / 1024 / 1024).toInt()
+    LaunchedEffect(Unit) { viewModel.refreshTtsDownloaded(model) }
+
+    SettingsCard {
+        Text(
+            text = model.displayName,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = stringResource(R.string.settings_neural_desc, sizeMb),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        val state = downloadState
+        when {
+            state is DownloadState.Downloading -> {
+                LinearProgressIndicator(
+                    progress = { state.percent / 100f },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = stringResource(R.string.settings_neural_downloading, state.percent),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+
+            downloaded -> {
+                Text(
+                    text = stringResource(R.string.settings_neural_done),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                OutlinedButton(onClick = { viewModel.deleteTtsModel(model) }) {
+                    Text(stringResource(R.string.settings_neural_delete))
+                }
+            }
+
+            else -> {
+                if (state is DownloadState.Failed) {
+                    Text(
+                        text = stringResource(R.string.settings_neural_failed, state.message),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+                Button(onClick = { viewModel.downloadTtsModel(model) }) {
+                    Text(stringResource(R.string.settings_neural_download, sizeMb))
+                }
             }
         }
     }

@@ -10,6 +10,9 @@ import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveExcludedCountUseCase
 import com.ddakpul.math.domain.usecase.ResetProgressUseCase
 import com.ddakpul.math.domain.usecase.SetDailyGoalUseCase
+import com.ddakpul.math.presentation.common.tts.DownloadState
+import com.ddakpul.math.presentation.common.tts.TtsModel
+import com.ddakpul.math.presentation.common.tts.TtsModelManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,7 +45,32 @@ class SettingsViewModel
         private val setDailyGoal: SetDailyGoalUseCase,
         private val resetProgress: ResetProgressUseCase,
         private val buildExclusionReport: BuildExclusionReportUseCase,
+        private val ttsModelManager: TtsModelManager,
     ) : ViewModel() {
+        /** 신경망 TTS 모델 다운로드 진행 상태(진행바·재시도 UI용). */
+        val ttsDownloadState: StateFlow<DownloadState> = ttsModelManager.state
+
+        private val _ttsDownloaded = MutableStateFlow(false)
+
+        /** 고품질 음성 모델이 이미 받아져 있는지(초기 표시용). */
+        val ttsDownloaded: StateFlow<Boolean> = _ttsDownloaded.asStateFlow()
+
+        fun refreshTtsDownloaded(model: TtsModel) {
+            _ttsDownloaded.value = ttsModelManager.isDownloaded(model)
+        }
+
+        fun downloadTtsModel(model: TtsModel) {
+            viewModelScope.launch {
+                ttsModelManager.download(model)
+                _ttsDownloaded.value = ttsModelManager.isDownloaded(model)
+            }
+        }
+
+        fun deleteTtsModel(model: TtsModel) {
+            ttsModelManager.delete(model)
+            _ttsDownloaded.value = false
+        }
+
         val uiState: StateFlow<SettingsUiState> =
             combine(observeDailyGoal(), observeExcludedCount(), observeEntitlement()) { goal, excluded, entitlement ->
                 val now = System.currentTimeMillis()
