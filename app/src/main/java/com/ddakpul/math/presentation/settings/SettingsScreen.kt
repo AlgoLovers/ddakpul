@@ -2,9 +2,10 @@ package com.ddakpul.math.presentation.settings
 
 import android.content.Intent
 import android.speech.tts.TextToSpeech
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,6 +43,7 @@ import com.ddakpul.math.presentation.common.SpeechSettings
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.common.tts.DownloadState
+import com.ddakpul.math.presentation.common.tts.TtsModel
 import com.ddakpul.math.presentation.common.tts.TtsModels
 
 @Composable
@@ -220,7 +222,7 @@ private fun DailyGoalCard(
     }
 }
 
-/** 고품질 신경망 음성(Supertonic) — 런타임 다운로드 + 진행률. 재생 연결(sherpa-onnx)은 다음 단계. */
+/** 고품질 신경망 음성(Supertonic) — 런타임 다운로드(모델+.so) + 진행률, 받으면 바로 선택 가능. */
 @Composable
 private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
     val model = TtsModels.SUPERTONIC
@@ -255,14 +257,7 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
             }
 
             downloaded -> {
-                Text(
-                    text = stringResource(R.string.settings_neural_done),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                OutlinedButton(onClick = { viewModel.deleteTtsModel(model) }) {
-                    Text(stringResource(R.string.settings_neural_delete))
-                }
+                NeuralDownloadedActions(model = model, onDelete = { viewModel.deleteTtsModel(model) })
             }
 
             else -> {
@@ -282,11 +277,56 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
 }
 
 /**
+ * 받아둔 신경망 음성의 액션 — **받은 그 자리에서 바로 선택/해제**(엔진 목록까지 안 내려가도 됨).
+ * 지금 이 음성으로 읽는 중이면 '사용 중'을 보여 주고, 아니면 '이 음성으로 읽기' 버튼을 준다.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun NeuralDownloadedActions(
+    model: TtsModel,
+    onDelete: () -> Unit,
+) {
+    val context = LocalContext.current
+    val selectedEngine by SpeechSettings.engine.collectAsStateWithLifecycle()
+    val engineValue = TtsModels.engineValue(model)
+    val isSelected = selectedEngine == engineValue
+
+    Text(
+        text = stringResource(R.string.settings_neural_done),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.primary,
+    )
+    if (isSelected) {
+        Text(
+            text = stringResource(R.string.settings_neural_inuse),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        if (isSelected) {
+            OutlinedButton(onClick = { SpeechSettings.setEngine(context, null, null) }) {
+                Text(stringResource(R.string.settings_neural_use_default))
+            }
+        } else {
+            Button(onClick = { SpeechSettings.setEngine(context, engineValue, model.displayName) }) {
+                Text(stringResource(R.string.settings_neural_use))
+            }
+        }
+        OutlinedButton(onClick = onDelete) {
+            Text(stringResource(R.string.settings_neural_delete))
+        }
+    }
+}
+
+/**
  * 읽어주기 음성 설정 — 설치된 시스템 TTS 엔진 + 받아둔 신경망 모델을 **한 목록**에서 고른다.
  * 속도·미리 듣기(재생/정지 토글)·시스템 음성 설정 연결 포함.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TtsCard(neuralModels: List<com.ddakpul.math.presentation.common.tts.TtsModel>) {
+private fun TtsCard(neuralModels: List<TtsModel>) {
     val context = LocalContext.current
     var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
     var defaultEngine by remember { mutableStateOf<String?>(null) }
@@ -322,9 +362,11 @@ private fun TtsCard(neuralModels: List<com.ddakpul.math.presentation.common.tts.
         )
         if (engines.isNotEmpty()) {
             Text(stringResource(R.string.settings_tts_engine), style = MaterialTheme.typography.labelLarge)
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            // 줄바꿈으로 모든 엔진 칩을 한눈에(가로 스크롤에 숨지 않게).
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 FilterChip(
                     selected = selectedEngine == null,

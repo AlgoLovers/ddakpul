@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.common.tts
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import java.util.Locale
@@ -46,12 +47,30 @@ class SystemSpeechEngine(
     @Volatile
     private var ready = false
 
-    private val tts: TextToSpeech =
-        if (enginePackage != null) {
-            TextToSpeech(context, ::onInit, enginePackage)
+    private val tts: TextToSpeech = createTts(context, enginePackage)
+
+    /**
+     * 사용자가 특정 엔진을 고르지 않았으면(기기 기본) 시스템 설정의 기본 TTS 엔진을 **직접 읽어**
+     * 그 엔진으로 명시적으로 붙는다. 안드로이드 기본 생성자(TextToSpeech(context, listener))가
+     * 시스템 기본(예: 삼성)을 무시하고 구글로 붙는 기기가 있어서, 시스템 설정값을 신뢰한다.
+     */
+    private fun createTts(
+        context: Context,
+        enginePackage: String?,
+    ): TextToSpeech {
+        val pkg = enginePackage ?: systemDefaultEngine(context)
+        return if (pkg != null) {
+            TextToSpeech(context, ::onInit, pkg)
         } else {
             TextToSpeech(context, ::onInit)
         }
+    }
+
+    /** 시스템 설정의 기본 TTS 엔진 패키지("tts_default_synth"). 없으면 null. */
+    private fun systemDefaultEngine(context: Context): String? =
+        runCatching {
+            Settings.Secure.getString(context.contentResolver, "tts_default_synth")
+        }.getOrNull()?.takeIf { it.isNotBlank() }
 
     private fun onInit(status: Int) {
         if (status != TextToSpeech.SUCCESS) return
