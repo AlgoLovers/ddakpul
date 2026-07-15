@@ -79,12 +79,16 @@ fun ScratchpadDialog(
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
             Column(modifier = Modifier.fillMaxSize().padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                ScratchHeader(statement = statement, figure = figure, onDismiss = onDismiss)
+                ScratchHeader(statement = statement, onDismiss = onDismiss)
 
                 var tool by remember { mutableStateOf(ScratchTool.PEN) }
                 var penColor by remember { mutableStateOf(InkColors.first()) }
 
                 Box(modifier = Modifier.weight(1f).fillMaxWidth().background(PaperColor, RoundedCornerShape(12.dp))) {
+                    // 도형 문제면 그림을 연습장 위쪽에 깔아, 그 위에 보조선을 그으며 풀 수 있게 한다.
+                    figure?.let {
+                        ProblemFigureView(figure = it, modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp))
+                    }
                     ScratchCanvas(strokes = strokes, tool = tool, penColor = penColor, modifier = Modifier.fillMaxSize())
                 }
 
@@ -120,7 +124,6 @@ fun ScratchpadDialog(
 @Composable
 private fun ScratchHeader(
     statement: String,
-    figure: ProblemFigure?,
     onDismiss: () -> Unit,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -133,7 +136,6 @@ private fun ScratchHeader(
             )
             Text(text = statement, style = MaterialTheme.typography.bodyMedium)
         }
-        figure?.let { ProblemFigureView(figure = it, modifier = Modifier.padding(start = 8.dp)) }
         Text(
             text = "✕",
             style = MaterialTheme.typography.titleLarge,
