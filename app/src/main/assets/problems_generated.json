@@ -1109,6 +1109,12 @@
    "explanation": "n각형의 내각의 합은 (n−2)×180이에요. 정5각형은 5−2=3, ×180 = 540도이고, 각이 5개로 같으니 540÷5 = 108도예요.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 5
+    }
+   },
    "detailedExplanation": "다각형의 내각의 합은 삼각형으로 쪼갠 개수(n−2)에 180°를 곱해 구해요. 정다각형은 모든 각이 같으니 그 합을 각의 개수로 나누면 한 내각이 나와요."
   },
   {
@@ -1131,6 +1137,12 @@
    "explanation": "n각형의 내각의 합은 (n−2)×180이에요. 정6각형은 6−2=4, ×180 = 720도이고, 각이 6개로 같으니 720÷6 = 120도예요.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 6
+    }
+   },
    "detailedExplanation": "다각형의 내각의 합은 삼각형으로 쪼갠 개수(n−2)에 180°를 곱해 구해요. 정다각형은 모든 각이 같으니 그 합을 각의 개수로 나누면 한 내각이 나와요."
   },
   {
@@ -1153,6 +1165,12 @@
    "explanation": "n각형의 내각의 합은 (n−2)×180이에요. 정8각형은 8−2=6, ×180 = 1080도이고, 각이 8개로 같으니 1080÷8 = 135도예요.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 8
+    }
+   },
    "detailedExplanation": "다각형의 내각의 합은 삼각형으로 쪼갠 개수(n−2)에 180°를 곱해 구해요. 정다각형은 모든 각이 같으니 그 합을 각의 개수로 나누면 한 내각이 나와요."
   },
   {
@@ -1175,6 +1193,12 @@
    "explanation": "n각형의 내각의 합은 (n−2)×180이에요. 정10각형은 10−2=8, ×180 = 1440도이고, 각이 10개로 같으니 1440÷10 = 144도예요.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 10
+    }
+   },
    "detailedExplanation": "다각형의 내각의 합은 삼각형으로 쪼갠 개수(n−2)에 180°를 곱해 구해요. 정다각형은 모든 각이 같으니 그 합을 각의 개수로 나누면 한 내각이 나와요."
   },
   {
@@ -2453,6 +2477,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 3
+    }
+   },
    "detailedExplanation": "정n각형은 n개의 대칭축을 가져요. 홀수각형은 각 꼭짓점과 마주 보는 변의 중점을 잇고, 짝수각형은 마주 보는 꼭짓점끼리·변끼리를 이어요. 어느 쪽이든 축의 수는 변의 수 n과 같아요."
   },
   {
@@ -2480,6 +2510,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 4
+    }
+   },
    "detailedExplanation": "정n각형은 n개의 대칭축을 가져요. 홀수각형은 각 꼭짓점과 마주 보는 변의 중점을 잇고, 짝수각형은 마주 보는 꼭짓점끼리·변끼리를 이어요. 어느 쪽이든 축의 수는 변의 수 n과 같아요."
   },
   {
@@ -2507,6 +2543,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 5
+    }
+   },
    "detailedExplanation": "정n각형은 n개의 대칭축을 가져요. 홀수각형은 각 꼭짓점과 마주 보는 변의 중점을 잇고, 짝수각형은 마주 보는 꼭짓점끼리·변끼리를 이어요. 어느 쪽이든 축의 수는 변의 수 n과 같아요."
   },
   {
@@ -2534,6 +2576,12 @@
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 6
+    }
+   },
    "detailedExplanation": "정n각형은 n개의 대칭축을 가져요. 홀수각형은 각 꼭짓점과 마주 보는 변의 중점을 잇고, 짝수각형은 마주 보는 꼭짓점끼리·변끼리를 이어요. 어느 쪽이든 축의 수는 변의 수 n과 같아요."
   },
   {
