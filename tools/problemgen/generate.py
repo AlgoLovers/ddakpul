@@ -3244,7 +3244,81 @@ def gen_multiperm():
         )
 
 
+def gen_lasttwo():
+    # 큰 거듭제곱의 '끝 두 자리' = mod 100. 오일러 정리(base^φ(100)=base^40≡1)로 지수를 줄여 손계산. (수와연산 난10)
+    for base, exp in [(3, 99), (7, 55), (13, 77), (17, 33)]:
+        ans = pow(base, exp, 100)
+        reduced = exp % 40 or 40
+        add(
+            "lasttwo", "NUMBER_OPERATION", 10, ["오일러 정리", "나머지로 거듭제곱"],
+            f"{base}{_eul(str(base))} {exp}번 곱한 수(즉 {base}^{exp})의 끝 두 자리 수는 무엇일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [(ans + 1) % 100, (ans + 10) % 100, (ans * base) % 100, ans - 1])],
+            f"끝 두 자리는 100으로 나눈 나머지예요. {base}{_eun(str(base))} 100과 서로소라, 오일러 정리로 {base}^40 ≡ 1 (mod 100)이에요"
+            f"(100 이하 100과 서로소인 수가 40개라 φ(100)=40). 그래서 지수 {exp}{_eul(str(exp))} 40으로 나눈 나머지 {reduced}만 남겨 "
+            f"{base}^{reduced} = 끝 두 자리 {ans}로 구해요.",
+            [(str((ans + 1) % 100), "끝 자리 하나만 보지 말고, 100으로 나눈 나머지(두 자리)를 오일러 정리로 줄여 구하세요.")],
+            detail="아주 큰 거듭제곱의 끝 두 자리는 100으로 나눈 나머지예요. 밑이 100과 서로소면 오일러 정리로 base^40≡1(mod 100)이라, "
+            "지수를 40으로 나눈 나머지까지 줄여 손으로 계산할 수 있어요. 나머지 세계에서 거듭제곱의 주기를 쓰는 정수론의 핵심 도구예요.",
+        )
+
+
+def gen_cubesum():
+    # 세제곱의 합 1³+…+n³ = (1+2+…+n)² = (삼각수)². 합과 삼각수 제곱의 관계 발견. (변화와관계 난10)
+    for n in [4, 5, 6, 3]:
+        tri = n * (n + 1) // 2
+        ans = tri * tri
+        sq_sum = n * (n + 1) * (2 * n + 1) // 6  # 제곱의 합(헷갈리기 쉬운 값)
+        add(
+            "cubesum", "CHANGE_RELATION", 10, ["수열의 합", "숨은 관계 발견"],
+            f"1³ + 2³ + 3³ + … + {n}³ 의 값은 얼마일까요? (각 수를 세제곱해서 더해요)",
+            str(ans), [str(c) for c in _pick_distractors(ans, [sq_sum, tri, n ** 3, ans - tri])],
+            f"놀랍게도 세제곱의 합은 '1부터 그 수까지의 합(삼각수)'을 제곱한 것과 같아요. "
+            f"1+2+…+{n} = {tri}이고, 그 제곱 {tri}² = {ans}이에요.",
+            [(str(sq_sum), "그건 '제곱'의 합(1²+…+n²)이에요. 여기선 '세제곱'의 합이라 삼각수의 제곱이 돼요."),
+             (str(tri), "삼각수 그 자체가 아니라, 삼각수를 '제곱'한 값이에요.")],
+            detail="1³+2³+…+n³ = (1+2+…+n)² = (n(n+1)/2)²이에요. 세제곱을 하나씩 더한 값이 '합을 통째로 제곱한 값'과 같다는 "
+            "아름다운 관계로, 그림(정사각형을 계단식으로 쌓기)으로도 증명돼요. 겉보기 다른 두 양의 숨은 관계를 발견하는 문제예요.",
+        )
+
+
+def gen_pick():
+    # 픽의 정리: 격자 다각형 넓이 = 내부 격자점 + 둘레 격자점÷2 − 1. (도형과측정 난10)
+    for inner, boundary in [(4, 6), (5, 8), (0, 4), (6, 10)]:
+        ans = inner + boundary // 2 - 1
+        add(
+            "pick", "SHAPE_MEASUREMENT", 10, ["픽의 정리", "격자점으로 넓이"],
+            f"모눈종이의 격자점을 꼭짓점으로 하는 다각형이 있어요. 다각형 '내부'에 있는 격자점이 {inner}개, "
+            f"'둘레(변)' 위에 있는 격자점이 {boundary}개예요. 이 다각형의 넓이는 얼마일까요? (모눈 한 칸 넓이는 1)",
+            str(ans), [str(c) for c in _pick_distractors(ans, [inner + boundary, inner + boundary // 2, ans + 1, ans + 2])],
+            f"픽의 정리를 쓰면 넓이 = (내부 격자점) + (둘레 격자점)÷2 − 1 이에요. "
+            f"= {inner} + {boundary}÷2 − 1 = {inner} + {boundary // 2} − 1 = {ans}예요.",
+            [(str(inner + boundary), "내부와 둘레 점을 그냥 더하면 안 돼요. 둘레는 반만 세고 1을 빼는 게 픽의 정리예요."),
+             (str(inner + boundary // 2), "마지막에 −1을 빼먹었어요. 넓이 = 내부 + 둘레÷2 − 1 이에요.")],
+            detail="픽의 정리는 격자점 위 다각형의 넓이를 '내부 격자점 수 + 둘레 격자점 수÷2 − 1'로 구해요. 자로 재지 않고 점만 세어 넓이를 "
+            "정확히 얻는 놀라운 정리로, 삼각형으로 쪼개 더해도 성립함을 보일 수 있어요. 측정과 세기를 잇는 기하의 보석이에요.",
+        )
+
+
+def gen_catalan():
+    # 카탈란 수 Cn = C(2n,n)/(n+1): 올바른 괄호 짝, 격자 경로, 이진트리 등을 세는 수. (자료와가능성 난10)
+    for n in [3, 4, 5, 2]:
+        whole = comb(2 * n, n)
+        ans = whole // (n + 1)
+        add(
+            "catalan", "DATA_POSSIBILITY", 10, ["카탈란 수", "올바른 배열 세기"],
+            f"여는 괄호 '(' {n}개와 닫는 괄호 ')' {n}개, 모두 {2 * n}개를 한 줄로 놓아요. 왼쪽에서부터 어느 자리까지 세어도 "
+            f"닫는 괄호 수가 여는 괄호 수를 넘지 않도록(올바른 괄호 짝) 배열하는 방법은 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [whole, whole // 2, ans + 2, ans * 2])],
+            f"제약 없이 {2 * n}자리 중 여는 괄호 {n}자리를 고르면 {2 * n}C{n} = {whole}가지예요. 여기서 중간에 닫는 괄호가 "
+            f"앞서는 '잘못된' 배열을 반사 원리로 빼면, 카탈란 수 C{n} = {whole}÷{n + 1} = {ans}가지만 남아요.",
+            [(f"{whole}가지", "괄호 위치만 고른 전체 경우예요. '닫는 괄호가 앞서면 안 됨' 조건으로 걸러야 해요.")],
+            detail="카탈란 수 Cn = (2n)!/(n!(n+1)!) = C(2n,n)/(n+1)은 올바른 괄호 짝, 격자 대각선 아래 경로, 이진트리 모양처럼 "
+            "'중간에 규칙이 깨지면 안 되는' 배열을 세는 수예요. 전체에서 규칙을 어긴 경우를 반사 원리로 덜어내 구해요. 조합론의 스타 수열이에요.",
+        )
+
+
 GENERATORS = [
+    gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_quadseq, gen_polyhedron, gen_multiperm,
     gen_diophantine, gen_painted_cube_faces, gen_stars_bars,
