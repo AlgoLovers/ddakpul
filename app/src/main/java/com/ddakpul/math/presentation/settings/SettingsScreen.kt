@@ -84,7 +84,7 @@ fun SettingsScreen(
             fontWeight = FontWeight.Bold,
         )
 
-        // 이용권 — 난이도 4~7과 전체 리포트를 여는 진입점. 현재 상태(무료/이용중)도 보여준다.
+        // 이용권 — 무료 상한 위 상위 난이도와 전체 리포트를 여는 진입점. 현재 상태(무료/이용중)도 보여준다.
         PremiumCard(
             isPremium = uiState.isPremium,
             daysLeft = uiState.premiumDaysLeft,
