@@ -2926,11 +2926,78 @@ def gen_narcissistic():
         )
 
 
+def _pick_distractors(answer, cands):
+    """정답과 다르고 서로 다른 오답 3개를 후보에서 고른다(문자열)."""
+    out = []
+    for c in cands:
+        s = str(c)
+        if c != answer and c > 0 and s not in out:
+            out.append(s)
+        if len(out) == 3:
+            break
+    return out
+
+
+def gen_mod_power():
+    # 거듭제곱의 나머지 = 나머지의 '주기'를 찾아 활용. 큰 지수도 규칙으로 손계산.
+    for base, exp, m in [(2, 100, 7), (3, 50, 5), (7, 77, 10), (2, 64, 9)]:
+        period = 1
+        while pow(base, period, m) != 1:
+            period += 1
+        cyc = [pow(base, k, m) for k in range(1, period + 1)]
+        pos = exp % period or period
+        ans = cyc[pos - 1]
+        add(
+            "modpow", "NUMBER_OPERATION", 8, ["거듭제곱", "나머지 주기"],
+            f"{base}{_eul(str(base))} {exp}번 곱한 수(즉 {base}^{exp})를 {m}{_euro(str(m))} 나눈 나머지는 얼마일까요?",
+            str(ans), _pick_distractors(ans, [(ans + 1) % m, (ans + 2) % m, (ans + m - 1) % m, (ans + 3) % m]),
+            f"{base}을 거듭제곱하며 {m}으로 나눈 나머지는 {', '.join(map(str, cyc))} 가 반복돼요(주기 {period}). {exp}{_eul(str(exp))} {period}로 나눈 나머지는 {exp % period}(자리) → 주기의 {pos}번째 값 {ans}예요.",
+            [(str((ans + 1) % m), "대충 어림하면 틀려요. 나머지의 반복 주기를 정확히 찾아 지수를 주기로 나눠요.")],
+            detail="같은 수를 거듭 곱해 나눈 '나머지'는 반드시 일정하게 반복돼요(주기). 주기 길이로 지수를 나눈 나머지가 주기 안 몇 번째인지 알려줘요(0이면 주기의 끝). 큰 지수도 이 규칙이면 손으로 구할 수 있어요.",
+        )
+
+
+def gen_lattice_paths():
+    # 격자 최단 경로 수 = 오른쪽·위 이동을 섞는 조합.
+    for w, h in [(3, 2), (2, 2), (3, 3), (4, 2)]:
+        ans = comb(w + h, w)
+        add(
+            "lattice", "NUMBER_OPERATION", 8, ["조합", "최단 경로"],
+            f"가로 {w}칸, 세로 {h}칸짜리 격자가 있어요. 왼쪽 아래 꼭짓점에서 오른쪽 위 꼭짓점까지 오른쪽 또는 위로만 갈 때, 서로 다른 최단 경로는 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{ans + 2}가지", f"{ans + 1}가지", f"{w * h}가지"],
+            f"최단 경로는 오른쪽 {w}번, 위로 {h}번, 합쳐서 {w + h}번 움직이고 그 '순서'만 다른 거예요. {w + h}번 중 오른쪽 갈 {w}번을 고르는 조합이라 {w + h}C{w}={ans}가지예요.",
+            [(f"{w * h}가지", "칸의 개수가 아니라, 이동 순서를 고르는 '조합'으로 세요.")],
+            detail="격자 최단 경로 수는 '오른쪽 R번·위 U번을 어떤 순서로 섞느냐'와 같아 조합 (R＋U)C(R)로 구해요. 각 경로가 R·U를 일렬로 배열한 것과 1:1 대응하기 때문이에요. 파스칼 삼각형으로 각 꼭짓점까지 경로 수를 채워 가도 돼요.",
+        )
+
+
+def gen_coin_weighing():
+    # 가짜(무거운) 동전 찾기 최소 저울질 = 3분할 전략(3^n ≥ 개수).
+    for n in [9, 27, 8, 3]:
+        w, cap = 0, 1
+        while cap < n:
+            cap *= 3
+            w += 1
+        w2, cap2 = 0, 1
+        while cap2 < n:
+            cap2 *= 2
+            w2 += 1
+        add(
+            "weigh", "NUMBER_OPERATION", 8, ["3분할 전략", "최악의 경우"],
+            f"똑같이 생긴 동전 {n}개 중에 딱 하나만 무거워요. 양팔 저울로 무게만 비교할 수 있을 때, 무거운 동전을 반드시 찾으려면 최소 몇 번 재야 할까요?",
+            f"{w}번", [f"{c}번" for c in _pick_distractors(w, [w2, w + 1, w + 2, n, n - 1])],
+            f"동전을 세 무더기로 나눠 두 무더기를 저울에 올리면 기울면 그쪽, 평형이면 안 올린 쪽 — 매번 후보가 3분의 1로 줄어요. {n}개는 3을 {w}번 곱해야 넘으니(3을 {w}번 곱하면 {3 ** w}≥{n}) {w}번이면 반드시 찾아요.",
+            [(f"{w2}번", "두 무더기가 아니라 '세 무더기'로 나눠요. 저울은 한 번에 세 경우를 알려줘 3분의 1로 줄어요."), (f"{n - 1}번", "하나씩 다 재지 않아도 돼요. 3분할이면 훨씬 적어요.")],
+            detail="양팔 저울은 한 번에 '왼쪽 무겁다/오른쪽 무겁다/평형' 세 가지를 알려줘 후보를 3분의 1로 줄여요. 그래서 최소 횟수는 '3을 몇 번 곱해야 개수를 넘느냐'(3^횟수 ≥ 개수)예요. 정보량을 최대로 담는 분할 전략의 대표 문제예요.",
+        )
+
+
 GENERATORS = [
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
     gen_choose_two, gen_data_read,
     gen_aliquot, gen_narcissistic,
+    gen_mod_power, gen_lattice_paths, gen_coin_weighing,
     gen_number_split, gen_height_order, gen_position_count, gen_missing_addend,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
