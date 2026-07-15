@@ -2891,10 +2891,46 @@ def gen_data_read():
         )
 
 
+def gen_aliquot():
+    # 진약수(자기 제외 약수)의 합 — 완전수/과잉수/부족수. 약수를 빠짐없이 찾는 사고.
+    for n in [6, 28, 12, 8]:
+        divs = [d for d in range(1, n) if n % d == 0]
+        s = sum(divs)
+        extra = f" 진약수 합이 자기 자신과 같으니 {n}{_eun(str(n))} '완전수'예요!" if s == n else ""
+        add(
+            "aliquot", "NUMBER_OPERATION", 7, ["약수", "완전수"],
+            f"어떤 수의 '진약수'는 자기 자신을 뺀 약수예요(예: 6의 진약수는 1, 2, 3). {n}의 진약수를 모두 더하면 얼마일까요?",
+            str(s), [str(s + n), str(s + 1), str(s - 1)],
+            f"{n}의 진약수는 {', '.join(map(str, divs))}이고, 모두 더하면 {'＋'.join(map(str, divs))}={s}예요.{extra}",
+            [(str(s + n), "약수에 자기 자신까지 더하면 안 돼요. 진약수는 자기 자신을 빼요.")],
+            detail="진약수(자기 제외 약수)의 합으로 수를 나눠요: 합＝자신이면 완전수(6, 28…), 합＞자신이면 과잉수, 합＜자신이면 부족수예요. 약수를 빠짐없이 찾으려면 1부터 짝을 지어(1과 n, 2와 n÷2…) 세는 게 확실해요.",
+        )
+
+
+def gen_narcissistic():
+    # 아름스트롱 수 — 각 자리 세제곱 합 = 자신. 자릿값과 거듭제곱을 함께 다루는 사고.
+    narc = [153, 370, 371, 407]
+    for i, t in enumerate(narc):
+        ex = narc[(i + 1) % len(narc)]
+        exd = [int(c) for c in str(ex)]
+        td = [int(c) for c in str(t)]
+        # 오답은 아름스트롱 수가 아니어야 한다(370·371처럼 이웃한 아름스트롱 수를 피한다).
+        distractors = [str(x) for x in (t + 2, t - 2, t + 5, t - 5, t + 11) if x not in narc][:3]
+        add(
+            "narciss", "NUMBER_OPERATION", 7, ["자릿값", "세제곱 합"],
+            f"각 자리 숫자를 세제곱해서 더하면 자기 자신이 되는 세 자리 수가 있어요. 예를 들어 {ex}＝{'＋'.join(f'{x}³' for x in exd)}＝{'＋'.join(str(x ** 3) for x in exd)}＝{ex} 처럼요. 이런 수가 몇 개 더 있는데, 다음 중 그런 수는 무엇일까요?",
+            str(t), distractors,
+            f"{t}의 각 자리 {', '.join(map(str, td))}을 세제곱해 더하면 {'＋'.join(str(x ** 3) for x in td)}＝{t}이라 자기 자신과 같아요. 나머지 보기는 세제곱 합이 자신과 달라요.",
+            [(distractors[0], f"{distractors[0]}의 세제곱 합은 {sum(int(c) ** 3 for c in distractors[0])}(이)라 자기 자신과 달라요.")],
+            detail="각 자리 숫자를 세제곱해 더한 값이 자기 자신과 같은 수를 '아름스트롱 수(수선화 수)'라고 해요. 세 자리에선 153, 370, 371, 407 넷뿐이에요. 자릿값과 거듭제곱을 함께 다루는 좋은 연습이에요.",
+        )
+
+
 GENERATORS = [
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
     gen_choose_two, gen_data_read,
+    gen_aliquot, gen_narcissistic,
     gen_number_split, gen_height_order, gen_position_count, gen_missing_addend,
     gen_lcm_together, gen_consecutive_sum, gen_pigeonhole, gen_missing_score,
     gen_units_cycle, gen_set_both, gen_round_trip,
