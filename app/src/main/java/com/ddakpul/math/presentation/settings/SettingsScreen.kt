@@ -284,8 +284,9 @@ private fun TtsCard() {
     val context = LocalContext.current
     var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
     var defaultEngine by remember { mutableStateOf<String?>(null) }
-    var selectedEngine by remember { mutableStateOf(SpeechSettings.enginePackage(context)) }
-    var rate by remember { mutableStateOf(SpeechSettings.rate(context)) }
+    // 선택 상태는 SpeechSettings의 StateFlow를 관찰한다 — 탭하면 즉시 반영·미리듣기도 새 엔진.
+    val selectedEngine by SpeechSettings.engine.collectAsStateWithLifecycle()
+    val rate by SpeechSettings.rate.collectAsStateWithLifecycle()
 
     // 설치된 TTS 엔진 목록 + 기기 기본 엔진을 읽기 위한 임시 인스턴스.
     DisposableEffect(Unit) {
@@ -299,8 +300,8 @@ private fun TtsCard() {
     }
     // '기기 기본'이 실제로 어떤 엔진인지(중복 여부가 바로 보이게).
     val defaultLabel = engines.firstOrNull { it.name == defaultEngine }?.label
-    // 미리 듣기용 — 선택이 바뀌어 재구성되면 새 엔진/속도로 붙는다(SpeechSettings를 읽음).
-    val speak = rememberSpeaker()
+    // 미리 듣기용 — 선택이 바뀌면 새 엔진/속도로 즉시 다시 붙는다(SpeechSettings flow 구독).
+    val speaker = rememberSpeaker()
 
     SettingsCard {
         Text(
@@ -321,10 +322,7 @@ private fun TtsCard() {
             ) {
                 FilterChip(
                     selected = selectedEngine == null,
-                    onClick = {
-                        selectedEngine = null
-                        SpeechSettings.setEnginePackage(context, null)
-                    },
+                    onClick = { SpeechSettings.setEngine(context, null, null) },
                     label = {
                         Text(
                             if (defaultLabel != null) {
@@ -338,15 +336,19 @@ private fun TtsCard() {
                 engines.forEach { e ->
                     FilterChip(
                         selected = selectedEngine == e.name,
-                        onClick = {
-                            selectedEngine = e.name
-                            SpeechSettings.setEnginePackage(context, e.name)
-                        },
+                        onClick = { SpeechSettings.setEngine(context, e.name, e.label) },
                         label = { Text(e.label) },
                     )
                 }
             }
         }
+        // 지금 어떤 음성으로 읽는지 명확히 — 사용자 혼동 방지.
+        Text(
+            text = stringResource(R.string.settings_tts_active, speaker.engineLabel),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold,
+        )
         Text(stringResource(R.string.settings_tts_speed), style = MaterialTheme.typography.labelLarge)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf(
@@ -356,17 +358,21 @@ private fun TtsCard() {
             ).forEach { (r, res) ->
                 FilterChip(
                     selected = rate == r,
-                    onClick = {
-                        rate = r
-                        SpeechSettings.setRate(context, r)
-                    },
+                    onClick = { SpeechSettings.setRate(context, r) },
                     label = { Text(stringResource(res)) },
                 )
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { speak(context.getString(R.string.settings_tts_sample)) }) {
-                Text(stringResource(R.string.settings_tts_test))
+            // 미리 듣기 = 재생/정지 토글(재생 중 다시 누르면 멈춤).
+            OutlinedButton(onClick = { speaker.toggle(context.getString(R.string.settings_tts_sample)) }) {
+                Text(
+                    if (speaker.isSpeaking) {
+                        stringResource(R.string.settings_tts_stop)
+                    } else {
+                        stringResource(R.string.settings_tts_test)
+                    },
+                )
             }
             TextButton(onClick = {
                 runCatching {

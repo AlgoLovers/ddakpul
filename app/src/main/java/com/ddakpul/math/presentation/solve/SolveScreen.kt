@@ -179,6 +179,34 @@ private fun ExcludeConfirmDialog(
     )
 }
 
+/** 읽어주기 버튼 + "지금 이 음성으로 읽어요" 표시. 재생 중 다시 누르면 정지(토글). */
+@Composable
+private fun ReadAloudButton(
+    speaker: com.ddakpul.math.presentation.common.SpeakerController,
+    text: String,
+) {
+    Column(horizontalAlignment = Alignment.End) {
+        TextButton(onClick = { speaker.toggle(text) }) {
+            Text(
+                text =
+                    if (speaker.isSpeaking) {
+                        stringResource(R.string.solve_read_stop)
+                    } else {
+                        stringResource(R.string.solve_read_aloud)
+                    },
+            )
+        }
+        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지).
+        if (speaker.engineLabel.isNotBlank()) {
+            Text(
+                text = stringResource(R.string.solve_reading_with, speaker.engineLabel),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
 @Composable
 private fun SolvingBody(
     uiState: SolveUiState,
@@ -189,7 +217,7 @@ private fun SolvingBody(
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
-    val speak = rememberSpeaker()
+    val speaker = rememberSpeaker()
     Column(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -232,10 +260,8 @@ private fun SolvingBody(
                         fontWeight = FontWeight.Bold,
                     )
                 }
-                // 읽어주기 — 아직 글이 서툰 아이도 '생각'에 집중하도록.
-                TextButton(onClick = { speak(problem.statement) }) {
-                    Text(text = stringResource(R.string.solve_read_aloud))
-                }
+                // 읽어주기 — 아직 글이 서툰 아이도 '생각'에 집중하도록. 재생 중 다시 누르면 정지.
+                ReadAloudButton(speaker = speaker, text = problem.statement)
             }
         }
 
