@@ -338,7 +338,7 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
     val selectedEngine by SpeechSettings.engine.collectAsStateWithLifecycle()
     val rate by SpeechSettings.rate.collectAsStateWithLifecycle()
 
-    // 설치된 TTS 엔진 목록 + 기기 기본 엔진(targetSdk 34에선 삼성 포함)을 임시 인스턴스로 읽는다.
+    // 설치된 TTS 엔진 목록 + 기기 기본 엔진을 임시 인스턴스로 읽는다(getEngines가 반환하는 엔진).
     DisposableEffect(Unit) {
         var probe: TextToSpeech? = null
         probe =
