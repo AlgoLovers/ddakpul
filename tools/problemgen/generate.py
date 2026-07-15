@@ -3051,6 +3051,74 @@ def gen_stars_bars():
         )
 
 
+def gen_league():
+    # 리그전(서로 한 번씩) 경기 수 = C(n,2). 중복(A-B=B-A)을 빼는 세기. (자료와가능성 난3)
+    for n in [4, 5, 6, 7]:
+        ans = n * (n - 1) // 2
+        add(
+            "league", "DATA_POSSIBILITY", 3, ["경우의 수", "중복 빼기"],
+            f"{n}개 팀이 서로 한 번씩 경기를 해요. 모두 몇 경기를 하게 될까요?",
+            f"{ans}경기", [f"{c}경기" for c in _pick_distractors(ans, [n * (n - 1), n - 1, ans + n, ans - 1])],
+            f"한 팀이 나머지 {n - 1}팀과 한 번씩 하니 {n}×{n - 1}={n * (n - 1)}처럼 보이지만, 'A와 B' 경기와 'B와 A' 경기는 "
+            f"같은 한 경기예요. 그래서 2로 나눠 {n * (n - 1)}÷2={ans}경기예요.",
+            [(f"{n * (n - 1)}경기", "같은 경기를 두 번 세었어요. A-B와 B-A는 한 경기라 2로 나눠요.")],
+            detail="서로 한 번씩 맞붙는 리그전 경기 수는 팀 중 2팀을 고르는 조합 C(n,2)=n(n−1)/2예요. 각 팀이 (n−1)경기씩 하지만 "
+            "한 경기를 두 팀이 함께 세므로 2로 나눠요. 짝을 '순서 없이' 고르는 세기의 기본이에요.",
+        )
+
+
+def gen_twodigit():
+    # 서로 다른 숫자 카드로 만드는 두 자리 수 개수 = nP2 = n(n−1). (자료와가능성 난3)
+    for cards in [[1, 2, 3, 4], [2, 3, 5], [1, 3, 5, 7], [4, 6, 8]]:
+        n = len(cards)
+        ans = n * (n - 1)
+        card_str = ", ".join(map(str, cards))
+        add(
+            "twodigit", "DATA_POSSIBILITY", 3, ["경우의 수", "자리별로 세기"],
+            f"숫자 카드 {card_str} 가 있어요. 이 중 두 장을 뽑아 두 자리 수를 만들 때, 만들 수 있는 서로 다른 두 자리 수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [n * n, n, ans + 2, ans - 2])],
+            f"십의 자리에 올 수 있는 카드가 {n}가지, 그 각각에 대해 일의 자리엔 남은 {n - 1}가지가 와요. "
+            f"곱하면 {n}×{n - 1}={ans}개예요.",
+            [(f"{n * n}개", "같은 카드를 십·일의 자리에 두 번 쓸 순 없어요. 일의 자리는 한 장 적은 {}가지예요.".format(n - 1))],
+            detail="서로 다른 카드로 두 자리 수를 만드는 경우의 수는 순서가 있는 뽑기(순열) nP2 = n×(n−1)이에요. "
+            "십의 자리를 정하면 일의 자리는 한 장이 빠져 한 가지 줄어들어요. 자리마다 경우를 곱하는 곱의 법칙 문제예요.",
+        )
+
+
+def gen_tablediff():
+    # 표(요일별 값)에서 최댓값−최솟값. 자료 읽고 비교하기. (자료와가능성 난3)
+    for a, b, c, d in [(3, 5, 2, 6), (4, 7, 1, 5), (8, 3, 6, 2), (5, 9, 4, 7)]:
+        vals = [a, b, c, d]
+        ans = max(vals) - min(vals)
+        add(
+            "tablediff", "DATA_POSSIBILITY", 3, ["자료 읽기", "최댓값·최솟값"],
+            f"월·화·수·목요일에 읽은 책이 각각 {a}권, {b}권, {c}권, {d}권이에요. 가장 많이 읽은 날과 가장 적게 읽은 날의 "
+            f"책 수 차이는 몇 권일까요?",
+            f"{ans}권", [f"{v}권" for v in _pick_distractors(ans, [max(vals), sum(vals), ans + 1, ans - 1])],
+            f"가장 많이 읽은 날은 {max(vals)}권, 가장 적게 읽은 날은 {min(vals)}권이에요. 차이는 {max(vals)}−{min(vals)}={ans}권이에요.",
+            [(f"{max(vals)}권", "가장 큰 값만 답하면 안 돼요. 가장 큰 값에서 가장 작은 값을 빼요."),
+             (f"{sum(vals)}권", "다 더하는 게 아니라, 최댓값과 최솟값의 '차이'를 구해요.")],
+            detail="여러 자료에서 '가장 많은 것과 가장 적은 것의 차이(범위)'는 최댓값에서 최솟값을 빼요. 표나 그래프를 읽고 "
+            "가장 크고 작은 값을 정확히 집어내는 자료 해석의 기본이에요.",
+        )
+
+
+def gen_unitprice():
+    # 단가 비례 — 한 개 값을 구해 개수만큼 곱하기. (변화와관계 난2)
+    for cnt0, price0, cnt1 in [(3, 600, 5), (4, 800, 7), (2, 500, 6), (5, 1500, 8)]:
+        unit = price0 // cnt0
+        ans = unit * cnt1
+        add(
+            "unitprice", "CHANGE_RELATION", 2, ["비례 관계", "한 개 값 구하기"],
+            f"연필 {cnt0}자루가 {price0}원이에요. 같은 연필 {cnt1}자루는 얼마일까요?",
+            f"{ans}원", [f"{c}원" for c in _pick_distractors(ans, [ans + unit, ans - unit, price0 + cnt1 * unit, ans + 2 * unit])],
+            f"먼저 한 자루 값을 구해요 — {price0}÷{cnt0}={unit}원. {cnt1}자루는 {unit}×{cnt1}={ans}원이에요.",
+            [(f"{ans + unit}원", "자루 수를 하나 더 세었는지 확인하세요. 한 자루 값 × 자루 수예요.")],
+            detail="개수가 늘면 값도 같은 비율로 느는 '비례'예요. 먼저 한 개(단위량)의 값을 구하고, 필요한 개수만큼 곱하면 돼요. "
+            "'한 개 값 구하기'는 비례 문제를 푸는 가장 튼튼한 방법이에요.",
+        )
+
+
 def _prime_factor_str(n):
     """n의 소인수분해를 '2²×3' 형태 문자열로. (해설용)"""
     sup = {1: "", 2: "²", 3: "³", 4: "⁴", 5: "⁵"}
@@ -3413,6 +3481,7 @@ def gen_partition():
 
 GENERATORS = [
     gen_crt3, gen_fibsum, gen_diagcross, gen_partition,
+    gen_league, gen_twodigit, gen_tablediff, gen_unitprice,
     gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_quadseq, gen_polyhedron, gen_multiperm,
