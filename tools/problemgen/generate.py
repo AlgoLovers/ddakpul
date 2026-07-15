@@ -3051,7 +3051,106 @@ def gen_stars_bars():
         )
 
 
+def _prime_factor_str(n):
+    """n의 소인수분해를 '2²×3' 형태 문자열로. (해설용)"""
+    sup = {1: "", 2: "²", 3: "³", 4: "⁴", 5: "⁵"}
+    parts, m, p = [], n, 2
+    while p * p <= m:
+        e = 0
+        while m % p == 0:
+            m //= p
+            e += 1
+        if e:
+            parts.append(f"{p}{sup.get(e, '^' + str(e))}")
+        p += 1
+    if m > 1:
+        parts.append(str(m))
+    return "×".join(parts)
+
+
+def gen_totient():
+    # 오일러 피 함수 φ(n): n 이하에서 n과 서로소인 수의 개수 = n×∏(1−1/p). (수와연산 난9)
+    for n in [12, 20, 30, 36]:
+        primes = sorted({p for p in range(2, n + 1) if n % p == 0 and all(p % q for q in range(2, p))})
+        ans = sum(1 for k in range(1, n + 1) if gcd(k, n) == 1)
+        prod = "×".join([str(n)] + [f"(1−1/{p})" for p in primes])
+        add(
+            "totient", "NUMBER_OPERATION", 9, ["오일러 피 함수", "서로소 개수"],
+            f"1부터 {n}까지의 자연수 중에서 {n}{_gwa(str(n))} 서로소인(공약수가 1뿐인) 수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [n // 2, ans + 1, ans - 1, ans + 2])],
+            f"{n}{_eun(str(n))} {_prime_factor_str(n)}이라, 각 소인수 {', '.join(map(str, primes))}의 배수를 걸러내요. "
+            f"서로소 개수는 {prod} = {ans}개예요. (전체에서 소인수의 배수 비율만큼씩 덜어내는 곱셈이에요.)",
+            [(f"{n // 2}개", "짝수만 빼면 안 돼요. 모든 소인수의 배수를 겹치지 않게 걸러야 해요."),
+             (f"{ans + 1}개", "1은 모든 수와 서로소예요. 빠뜨리기 쉬우니 포함해서 세요.")],
+            detail="오일러 피 함수 φ(n)은 'n 이하에서 n과 서로소인 수의 개수'예요. n의 서로 다른 소인수 p마다 (1−1/p)를 곱하면 구해져요 — "
+            "전체 n개에서 각 소인수의 배수 비율을 곱으로 덜어내는 거예요(포함배제와 같은 원리). 약수·서로소를 다루는 정수론의 핵심 함수예요.",
+        )
+
+
+def gen_josephus():
+    # 조세푸스 문제(2명마다 제거): 원으로 앉아 짝수 번째부터 빼면 마지막 생존자 = 2L+1 (n=2^m+L). (변화와관계 난9)
+    for n in [7, 10, 13, 6]:
+        power = 1 << (n.bit_length() - 1)  # n 이하 최대 2의 거듭제곱
+        leftover = n - power
+        ans = 2 * leftover + 1
+        add(
+            "josephus", "CHANGE_RELATION", 9, ["2의 거듭제곱", "규칙 찾아 일반화"],
+            f"{n}명이 동그랗게 둘러앉아 1번부터 차례로 번호를 붙였어요. 1번은 남기고 2번을 빼고, 3번은 남기고 4번을 빼고… "
+            f"이렇게 한 사람씩 건너뛰며 원을 돌며 빼낼 때, 맨 마지막까지 남는 사람은 몇 번일까요?",
+            f"{ans}번", [f"{c}번" for c in _pick_distractors(ans, [n, n - 1, ans + 2, 1])],
+            f"{n}명을 '{power}(2의 거듭제곱) + {leftover}'으로 봐요. 인원이 딱 2의 거듭제곱이면 항상 1번이 살아남아요. "
+            f"남는 {leftover}명만큼 제거가 진행된 뒤라, 살아남는 자리는 2×{leftover}+1 = {ans}번이에요.",
+            [(f"{n}번", "마지막 번호가 남는 게 아니에요. 2의 거듭제곱을 기준으로 자리를 다시 세요."),
+             (f"1번", "인원이 2의 거듭제곱일 때만 1번이 살아남아요. 남는 인원만큼 자리가 밀려요.")],
+            detail="원을 돌며 한 명씩 건너뛰어 제거하는 '조세푸스 문제'예요. 인원이 2의 거듭제곱이면 시작(1번)이 살아남는 성질을 이용해, "
+            "n=2^m+L로 쪼개면 생존자는 2L+1번이 돼요. 2의 거듭제곱이라는 뼈대에서 규칙을 일반화하는 대표 문제예요.",
+        )
+
+
+def gen_spacediag():
+    # 직육면체 대각선이 지나는 단위정육면체 수 = a+b+c − gcd쌍합 + gcd(a,b,c) (포함배제, 3차원). (도형과측정 난9)
+    for a, b, c in [(2, 3, 4), (3, 4, 5), (2, 4, 6), (4, 6, 8)]:
+        ans = a + b + c - gcd(a, b) - gcd(b, c) - gcd(c, a) + gcd(gcd(a, b), c)
+        naive = a + b + c
+        add(
+            "spacediag", "SHAPE_MEASUREMENT", 9, ["포함배제", "공간 대각선"],
+            f"작은 정육면체 {a * b * c}개를 가로 {a}칸·세로 {b}칸·높이 {c}칸으로 빈틈없이 쌓아 직육면체를 만들었어요. "
+            f"한 꼭짓점에서 가장 먼 반대쪽 꼭짓점까지 속을 관통하는 대각선을 그으면, 이 대각선은 작은 정육면체 몇 개를 지날까요?",
+            f"{ans}개", [f"{c2}개" for c2 in _pick_distractors(ans, [naive, ans + 1, ans - 1, naive - 1])],
+            f"대각선은 가로·세로·높이 칸막이를 넘을 때마다 새 정육면체로 들어가요. 칸막이는 {a}+{b}+{c}={naive}번이지만, "
+            f"두 칸막이를 '동시에' 넘는 모서리(gcd만큼)는 한 번만 세야 하고, 세 칸막이를 동시에 넘는 꼭짓점은 다시 더해요. "
+            f"{naive} − ({gcd(a, b)}+{gcd(b, c)}+{gcd(c, a)}) + {gcd(gcd(a, b), c)} = {ans}개예요.",
+            [(f"{naive}개", "가로+세로+높이만 더하면 안 돼요. 모서리·꼭짓점에서 겹쳐 지나는 곳을 빼고 더해야 해요(포함배제)."),
+             (f"{ans - 1}개", "시작하는 첫 칸도 한 개로 세요. 넘는 칸막이 수와 지나는 칸 수를 헷갈리기 쉬워요.")],
+            detail="대각선이 지나는 단위정육면체 수는 3차원 포함배제로 세요 — 세 방향 칸막이를 넘는 횟수 (a+b+c)에서, 두 방향 칸막이를 동시에 넘는 모서리(gcd(a,b) 등)를 빼고, "
+            "세 방향을 동시에 넘는 꼭짓점(gcd(a,b,c))을 다시 더해요. 2차원(a+b−gcd)을 공간으로 확장한 아름다운 정수·기하 문제예요.",
+        )
+
+
+def gen_derange():
+    # 교란순열(완전순열) D(n): 아무도 제자리가 아닌 순열의 수. D(n)=(n−1)(D(n−1)+D(n−2)). (자료와가능성 난9)
+    d = [1, 0]  # d[0]=D(0)=1, d[1]=D(1)=0
+    for i in range(2, 12):
+        d.append((i - 1) * (d[i - 1] + d[i - 2]))
+    for n in [4, 5, 6, 3]:
+        ans = d[n]
+        allperm = factorial(n)
+        add(
+            "derange", "DATA_POSSIBILITY", 9, ["교란순열", "포함배제"],
+            f"{n}명이 각자 자기 이름표를 하나씩 갖고 있다가, 전부 걷어 섞은 뒤 다시 한 개씩 나눠 가졌어요. "
+            f"아무도 자기 이름표를 받지 않는 경우는 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [allperm, ans + 1, ans - 1, allperm - 1])],
+            f"{n}명이 이름표를 나눠 갖는 전체 경우는 {n}!={allperm}가지예요. 여기서 '적어도 한 명은 자기 것을 받는' 경우를 "
+            f"빼는 포함배제로 세거나, 규칙 D(n)=(n−1)×(D(n−1)+D(n−2))을 쓰면 D({n})={ans}가지예요.",
+            [(f"{allperm}가지", "그건 제한 없는 전체 순열({n}!)이에요. '아무도 제자리 아님' 조건을 빼야 해요."),
+             (f"{ans - 1}가지", "포함배제에서 더하고 빼는 부호를 놓치기 쉬워요. 점화식으로 교차검증하세요.")],
+            detail="아무도 제자리에 오지 않는 순열을 '교란순열(완전순열) D(n)'이라 해요. 전체 n!에서 '누군가는 제자리인' 경우를 포함배제로 덜어내면 "
+            "D(n)=n!(1−1/1!+1/2!−…)이 되고, 점화식 D(n)=(n−1)(D(n−1)+D(n−2))로도 구해요. '적어도' 조건을 뒤집어 세는 대표 문제예요.",
+        )
+
+
 GENERATORS = [
+    gen_totient, gen_josephus, gen_spacediag, gen_derange,
     gen_diophantine, gen_painted_cube_faces, gen_stars_bars,
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
