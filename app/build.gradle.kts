@@ -41,16 +41,6 @@ android {
         }
     }
 
-    // 신경망 TTS 네이티브 라이브러리(.so)가 커서 ABI별로 APK를 쪼갠다 — 실기기(arm64)는
-    // arm64 APK만 받으면 되어 크기가 절반으로 준다. x86_64는 에뮬레이터 검증용.
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("arm64-v8a", "x86_64")
-            isUniversalApk = false
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -69,10 +59,15 @@ detekt {
     config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
 }
 
+// 벤더링한 sherpa-onnx Kotlin 바인딩(외부 코드)은 정적분석 제외.
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    exclude("**/com/k2fsa/**")
+}
+
 dependencies {
-    // 온디바이스 신경망 TTS(Supertonic) — sherpa-onnx 1.13.4. 네이티브 .so는 src/main/jniLibs.
-    // 선택 기능이라 다운로드한 사용자만 쓰고, 실패 시 시스템 TTS로 안전하게 폴백한다.
-    implementation(files("libs/sherpa-onnx-1.13.4.jar"))
+    // 온디바이스 신경망 TTS(Supertonic)는 sherpa-onnx 1.13.4 Kotlin 바인딩(com.k2fsa.sherpa.onnx.Tts)을
+    // 소스로 포함하고, 네이티브 .so는 APK에 넣지 않는다 — 모델과 함께 런타임에 받아 filesDir에서 로드해
+    // 기본 APK를 가볍게 유지한다(안 쓰는 사용자엔 부담 0).
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)

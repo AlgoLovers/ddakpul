@@ -13,7 +13,8 @@ plugins {
 spotless {
     kotlin {
         target("**/*.kt")
-        targetExclude("**/build/**/*.kt")
+        // 벤더링한 sherpa-onnx Kotlin 바인딩(외부 코드)은 스타일 검사 제외.
+        targetExclude("**/build/**/*.kt", "**/com/k2fsa/**/*.kt")
         ktlint()
         trimTrailingWhitespace()
         endWithNewline()

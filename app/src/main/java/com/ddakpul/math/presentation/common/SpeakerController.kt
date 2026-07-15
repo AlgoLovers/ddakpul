@@ -89,6 +89,7 @@ fun rememberSpeaker(): SpeakerController {
             if (neuralModel != null) {
                 NeuralSpeechEngine(
                     modelDir = neuralModel.dir(context),
+                    soFile = neuralModel.soFile(context),
                     speed = rate,
                     label = label,
                     onSpeakingChanged = onSpeaking,

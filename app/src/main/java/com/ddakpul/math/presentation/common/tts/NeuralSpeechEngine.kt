@@ -24,6 +24,7 @@ import java.util.concurrent.Executors
  */
 class NeuralSpeechEngine(
     private val modelDir: File,
+    private val soFile: File,
     private val speed: Float,
     override val label: String,
     private val onSpeakingChanged: (Boolean) -> Unit,
@@ -51,13 +52,23 @@ class NeuralSpeechEngine(
 
     private fun ensureTts() {
         if (tts != null || initFailed) return
+        // 런타임에 받아둔 네이티브 .so를 먼저 로드(APK엔 없음). 실패 시 시스템 음성으로 폴백.
+        if (!SherpaNative.ensureLoaded(soFile)) {
+            Log.w(TAG, "네이티브 로드 실패 — 시스템 음성으로 폴백: ${soFile.absolutePath}")
+            failAndFallback()
+            return
+        }
         runCatching { OfflineTts(assetManager = null, config = buildConfig()) }
             .onSuccess { tts = it }
             .onFailure { error ->
                 Log.w(TAG, "Supertonic 초기화 실패 — 시스템 음성으로 폴백", error)
-                initFailed = true
-                mainHandler.post { onUnavailable() }
+                failAndFallback()
             }
+    }
+
+    private fun failAndFallback() {
+        initFailed = true
+        mainHandler.post { onUnavailable() }
     }
 
     private fun buildConfig(): OfflineTtsConfig {
@@ -203,5 +214,26 @@ class NeuralSpeechEngine(
         const val CHUNK = 4096
         const val POLL_MS = 20L
         const val STALL_LIMIT = 100
+    }
+}
+
+/**
+ * sherpa-onnx 네이티브 라이브러리를 프로세스에 **1회** 로드한다 — APK에 내장하지 않고 런타임에
+ * 받아둔 .so를 절대경로로 [System.load]한다. 실패해도(파일 없음·ABI 불일치 등) 크래시하지 않고
+ * false를 돌려주어 호출부가 시스템 음성으로 폴백하게 한다.
+ */
+object SherpaNative {
+    @Volatile
+    private var loaded = false
+
+    @Synchronized
+    fun ensureLoaded(soFile: File): Boolean {
+        if (loaded) return true
+        if (!soFile.exists() || soFile.length() == 0L) return false
+        return runCatching {
+            System.load(soFile.absolutePath)
+            loaded = true
+            true
+        }.getOrDefault(false)
     }
 }
