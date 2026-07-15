@@ -409,11 +409,11 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold,
         )
-        // 진단(임시): targetSdk 34에서 getEngines()가 삼성을 포함하는지 확인용. 원인 확정 후 제거.
+        // 한국어 음성 안내 — 삼성은 안드로이드 15+에서 앱 사용이 막혀 Supertonic을 권한다.
         Text(
-            text = "🔎 " + engines.joinToString { it.name } + " · 기본=" + (defaultEngine ?: "?"),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.error,
+            text = stringResource(R.string.settings_tts_korean_tip),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(stringResource(R.string.settings_tts_speed), style = MaterialTheme.typography.labelLarge)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

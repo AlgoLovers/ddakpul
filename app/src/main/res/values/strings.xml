@@ -279,7 +279,8 @@
 
     <!-- 설정 · 읽어주기(TTS) 음성 -->
     <string name="settings_tts_title">읽어주기 음성</string>
-    <string name="settings_tts_desc">문제를 읽어 주는 목소리를 골라요. 한국어는 기기마다 잘하는 엔진이 달라요.</string>
+    <string name="settings_tts_desc">문제를 읽어 주는 목소리를 골라요.</string>
+    <string name="settings_tts_korean_tip">💡 한국어는 아래 \'고품질 음성 (Supertonic)\'이 가장 자연스러워요. (삼성 음성은 안드로이드 15부터 다른 앱에서 쓸 수 없게 막혔어요.)</string>
     <string name="settings_tts_engine">엔진</string>
     <string name="settings_tts_engine_default">기기 기본</string>
     <string name="settings_tts_engine_default_named">기기 기본 · %1$s</string>
