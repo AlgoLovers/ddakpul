@@ -16,13 +16,13 @@ data class Mistake(
 /**
  * 한 문제. 앱에 사전 생성되어 내장되며(실시간 생성 금지), 추천은 개별 문제가 아니라
  * [groupId]가 같은 묶음(유사 개념·난이도) 단위로 이뤄진다.
- * 학년 구분은 두지 않는다 — 난이도(1~7)가 유일한 수준 축이다.
+ * 학년 구분은 두지 않는다 — 난이도(Difficulty.MIN..MAX)가 유일한 수준 축이다. 천장은 점진 확장.
  */
 data class Problem(
     val id: String,
     val area: MathArea,
     val conceptTags: List<String>,
-    val difficulty: Int, // 1~7
+    val difficulty: Int, // 1~N (Difficulty.MIN..MAX)
     val groupId: String,
     val statement: String,
     val choices: List<String>,
