@@ -39,6 +39,12 @@ data class TtsModel(
 
 object TtsModels {
     /**
+     * 엔진 선택값이 이 접두사로 시작하면 신경망 모델을 뜻한다(시스템 TTS 패키지명과 구분).
+     * 예: "neural:supertonic-ko-int8". [SpeechSettings]에 이 문자열이 저장된다.
+     */
+    const val NEURAL_PREFIX = "neural:"
+
+    /**
      * Supertonic(한국 Supertone) 한국어 INT8 — sherpa-onnx 배포본. 한국어가 1급이라 자연스럽다.
      * 라이선스: 코드 MIT / 가중치 OpenRAIL-M(상업 허용, 사용 제한조항 있음 — 출시 전 확인).
      */
@@ -61,4 +67,14 @@ object TtsModels {
         )
 
     val ALL = listOf(SUPERTONIC)
+
+    /** 엔진 선택값에서 신경망 모델을 찾는다(neural: 접두사 형태). 아니면 null. */
+    fun neuralOf(enginePackage: String?): TtsModel? {
+        if (enginePackage == null || !enginePackage.startsWith(NEURAL_PREFIX)) return null
+        val id = enginePackage.removePrefix(NEURAL_PREFIX)
+        return ALL.firstOrNull { it.id == id }
+    }
+
+    /** 이 모델을 엔진 선택값으로 저장할 때 쓰는 문자열. */
+    fun engineValue(model: TtsModel): String = NEURAL_PREFIX + model.id
 }

@@ -12,8 +12,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.ddakpul.math.R
+import com.ddakpul.math.presentation.common.tts.NeuralSpeechEngine
 import com.ddakpul.math.presentation.common.tts.SpeechEngine
 import com.ddakpul.math.presentation.common.tts.SystemSpeechEngine
+import com.ddakpul.math.presentation.common.tts.TtsModels
 
 /**
  * 읽어주기 컨트롤러 — 재생/정지 토글과 "지금 읽는 중" 상태, 현재 음성 이름을 들고 있다.
@@ -75,17 +77,35 @@ fun rememberSpeaker(): SpeakerController {
     val defaultLabel = stringResource(R.string.settings_tts_engine_default)
     val label = savedLabel ?: defaultLabel
 
+    // 선택값이 신경망 모델이고 실제로 받아져 있으면 신경망 엔진, 아니면 시스템 TTS.
+    val neuralModel = TtsModels.neuralOf(enginePackage)?.takeIf { it.isDownloaded(context) }
+
     val controller = remember { SpeakerController() }
     controller.engineLabel = label
 
-    DisposableEffect(enginePackage, rate, label) {
-        val engine =
-            SystemSpeechEngine(
-                context = context,
-                enginePackage = enginePackage,
-                rate = rate,
-                label = label,
-            ) { speaking -> controller.isSpeaking = speaking }
+    DisposableEffect(enginePackage, rate, label, neuralModel) {
+        val onSpeaking = { speaking: Boolean -> controller.isSpeaking = speaking }
+        val engine: SpeechEngine =
+            if (neuralModel != null) {
+                NeuralSpeechEngine(
+                    modelDir = neuralModel.dir(context),
+                    speed = rate,
+                    label = label,
+                    onSpeakingChanged = onSpeaking,
+                    // 초기화 실패 시 선택을 기기 기본으로 되돌려 자동으로 시스템 음성 폴백.
+                    onUnavailable = { SpeechSettings.setEngine(context, null, null) },
+                )
+            } else {
+                // 신경망 선택값이지만 미다운로드면 시스템 기본으로(잘못된 패키지 전달 방지).
+                val systemPkg = enginePackage?.takeUnless { TtsModels.neuralOf(it) != null }
+                SystemSpeechEngine(
+                    context = context,
+                    enginePackage = systemPkg,
+                    rate = rate,
+                    label = label,
+                    onSpeakingChanged = onSpeaking,
+                )
+            }
         controller.attach(engine)
         onDispose {
             controller.detach()

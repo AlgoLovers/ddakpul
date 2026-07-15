@@ -40,6 +40,17 @@ android {
             )
         }
     }
+
+    // 신경망 TTS 네이티브 라이브러리(.so)가 커서 ABI별로 APK를 쪼갠다 — 실기기(arm64)는
+    // arm64 APK만 받으면 되어 크기가 절반으로 준다. x86_64는 에뮬레이터 검증용.
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "x86_64")
+            isUniversalApk = false
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -59,6 +70,9 @@ detekt {
 }
 
 dependencies {
+    // 온디바이스 신경망 TTS(Supertonic) — sherpa-onnx 1.13.4. 네이티브 .so는 src/main/jniLibs.
+    // 선택 기능이라 다운로드한 사용자만 쓰고, 실패 시 시스템 TTS로 안전하게 폴백한다.
+    implementation(files("libs/sherpa-onnx-1.13.4.jar"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)

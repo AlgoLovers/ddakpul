@@ -90,10 +90,13 @@ fun SettingsScreen(
         // 하루 목표 — 아이가 스스로 정한다(자율성, SDT).
         DailyGoalCard(dailyGoal = uiState.dailyGoal, onSelect = viewModel::setDailyGoal)
 
-        // 읽어주기(TTS) 음성 — 엔진·속도 선택(한국어는 기기마다 잘하는 엔진이 다르다).
-        TtsCard()
+        // 읽어주기(TTS) 음성 — 엔진·속도 선택. 받은 신경망 모델도 같은 목록에서 고른다.
+        val neuralDownloaded by viewModel.ttsDownloaded.collectAsStateWithLifecycle()
+        LaunchedEffect(Unit) { viewModel.refreshTtsDownloaded(TtsModels.SUPERTONIC) }
+        val downloadedNeural = if (neuralDownloaded) TtsModels.ALL else emptyList()
+        TtsCard(neuralModels = downloadedNeural)
 
-        // 고품질 신경망 음성 — 런타임 다운로드(선택). 받은 뒤엔 오프라인.
+        // 고품질 신경망 음성 — 런타임 다운로드(선택). 받은 뒤엔 위 '엔진'에서 골라 쓴다.
         NeuralVoiceCard(viewModel)
 
         // 별로였던 문제 내보내기 — 부모가 개발 채널로 보내면 다음 업데이트에 반영된다.
@@ -278,9 +281,12 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
     }
 }
 
-/** 읽어주기 음성 설정 — 설치된 TTS 엔진 선택 + 속도 + 미리 듣기 + 시스템 음성 설정 연결. */
+/**
+ * 읽어주기 음성 설정 — 설치된 시스템 TTS 엔진 + 받아둔 신경망 모델을 **한 목록**에서 고른다.
+ * 속도·미리 듣기(재생/정지 토글)·시스템 음성 설정 연결 포함.
+ */
 @Composable
-private fun TtsCard() {
+private fun TtsCard(neuralModels: List<com.ddakpul.math.presentation.common.tts.TtsModel>) {
     val context = LocalContext.current
     var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
     var defaultEngine by remember { mutableStateOf<String?>(null) }
@@ -340,6 +346,15 @@ private fun TtsCard() {
                         label = { Text(e.label) },
                     )
                 }
+                // 받아둔 신경망 음성(Supertonic 등)도 같은 목록에서 선택.
+                neuralModels.forEach { m ->
+                    val value = TtsModels.engineValue(m)
+                    FilterChip(
+                        selected = selectedEngine == value,
+                        onClick = { SpeechSettings.setEngine(context, value, m.displayName) },
+                        label = { Text(m.displayName) },
+                    )
+                }
             }
         }
         // 지금 어떤 음성으로 읽는지 명확히 — 사용자 혼동 방지.
@@ -363,26 +378,35 @@ private fun TtsCard() {
                 )
             }
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            // 미리 듣기 = 재생/정지 토글(재생 중 다시 누르면 멈춤).
-            OutlinedButton(onClick = { speaker.toggle(context.getString(R.string.settings_tts_sample)) }) {
-                Text(
-                    if (speaker.isSpeaking) {
-                        stringResource(R.string.settings_tts_stop)
-                    } else {
-                        stringResource(R.string.settings_tts_test)
-                    },
+        TtsPreviewRow(speaker = speaker, context = context)
+    }
+}
+
+/** 미리 듣기(재생/정지 토글) + 시스템 음성 설정 바로가기. */
+@Composable
+private fun TtsPreviewRow(
+    speaker: com.ddakpul.math.presentation.common.SpeakerController,
+    context: android.content.Context,
+) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        // 미리 듣기 = 재생/정지 토글(재생 중 다시 누르면 멈춤).
+        OutlinedButton(onClick = { speaker.toggle(context.getString(R.string.settings_tts_sample)) }) {
+            Text(
+                if (speaker.isSpeaking) {
+                    stringResource(R.string.settings_tts_stop)
+                } else {
+                    stringResource(R.string.settings_tts_test)
+                },
+            )
+        }
+        TextButton(onClick = {
+            runCatching {
+                context.startActivity(
+                    Intent("com.android.settings.TTS_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 )
             }
-            TextButton(onClick = {
-                runCatching {
-                    context.startActivity(
-                        Intent("com.android.settings.TTS_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                    )
-                }
-            }) {
-                Text(stringResource(R.string.settings_tts_system))
-            }
+        }) {
+            Text(stringResource(R.string.settings_tts_system))
         }
     }
 }

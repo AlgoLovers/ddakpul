@@ -301,7 +301,7 @@
     <string name="settings_neural_desc">삼성·구글보다 더 자연스러운 한국어 신경망 음성이에요. 약 %1$dMB를 한 번 받으면 오프라인으로 쓸 수 있어요.</string>
     <string name="settings_neural_download">다운로드 (약 %1$dMB)</string>
     <string name="settings_neural_downloading">받는 중… %1$d%%</string>
-    <string name="settings_neural_done">받음 ✓ · 신경망 음성 재생 연결은 다음 업데이트에서 켜져요. 지금은 아래 시스템 음성 중에서 고르면 바로 반영돼요.</string>
+    <string name="settings_neural_done">받음 ✓ · 위 \'엔진\'에서 \"고품질 음성 (Supertonic)\"을 고르면 이 음성으로 읽어요. (첫 문장은 준비에 1~2초)</string>
     <string name="settings_neural_delete">삭제</string>
     <string name="settings_neural_failed">다운로드 실패: %1$s</string>
 
