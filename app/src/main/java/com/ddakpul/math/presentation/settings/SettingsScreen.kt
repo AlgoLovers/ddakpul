@@ -409,6 +409,12 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold,
         )
+        // 진단(임시): targetSdk 34에서 getEngines()가 삼성을 포함하는지 확인용. 원인 확정 후 제거.
+        Text(
+            text = "🔎 " + engines.joinToString { it.name } + " · 기본=" + (defaultEngine ?: "?"),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.error,
+        )
         Text(stringResource(R.string.settings_tts_speed), style = MaterialTheme.typography.labelLarge)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf(

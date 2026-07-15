@@ -57,15 +57,9 @@ class SystemSpeechEngine(
 
     private fun onInit(status: Int) {
         if (status != TextToSpeech.SUCCESS) return
+        // OPicHelper(동작 확인된 사용자 앱)와 동일하게 setLanguage만 한다 — voice 오버라이드 없이.
         tts.language = Locale.KOREAN
         tts.setSpeechRate(rate)
-        // 네트워크 없이 되는 한국어 음성을 우선(오프라인 원칙).
-        runCatching {
-            tts.voices
-                ?.filter { it.locale.language == "ko" && !it.isNetworkConnectionRequired }
-                ?.maxByOrNull { it.quality }
-                ?.let { tts.voice = it }
-        }
         tts.setOnUtteranceProgressListener(progressListener)
         ready = true
     }
