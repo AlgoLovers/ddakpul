@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ddakpul.math.BuildConfig
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.presentation.common.ParentGateDialog
@@ -113,7 +114,8 @@ fun SettingsScreen(
         PrivacyCard(onOpenPrivacy = onOpenPrivacy)
 
         Text(
-            text = stringResource(R.string.settings_about),
+            // 버전 표기 — 어떤 빌드가 설치됐는지 확인용(업데이트 반영 여부 진단).
+            text = stringResource(R.string.settings_about) + "  ·  v" + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
