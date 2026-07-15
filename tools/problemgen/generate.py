@@ -3149,8 +3149,28 @@ def gen_derange():
         )
 
 
+def gen_prodsum():
+    # 연속한 두 수의 곱의 합 1·2+2·3+…+n(n+1) = n(n+1)(n+2)/3. 이웃 항이 지워지는 텔레스코핑. (변화와관계 난7)
+    for n in [5, 6, 4, 7]:
+        ans = n * (n + 1) * (n + 2) // 3
+        last = n * (n + 1)
+        terms = " + ".join(f"{k}×{k + 1}" for k in range(1, min(n, 3) + 1)) + (f" + … + {n}×{n + 1}" if n > 3 else "")
+        add(
+            "prodsum", "CHANGE_RELATION", 7, ["수열의 합", "규칙으로 한꺼번에"],
+            f"{terms} 의 값은 얼마일까요?",
+            str(ans), [str(c) for c in _pick_distractors(ans, [last, ans // 2, ans + last, n * (n + 1) // 2])],
+            f"연속한 두 수의 곱을 더하는 합은 항이 늘어도 규칙이 있어요 — 1·2+2·3+…+n·(n+1) = n(n+1)(n+2)÷3. "
+            f"여기선 {n}×{n + 1}×{n + 2}÷3 = {ans}예요. (각 항을 '3칸짜리 계단의 차이'로 바꾸면 이웃끼리 지워져 마지막만 남는 원리예요.)",
+            [(str(last), "마지막 항 하나가 아니라 모든 항을 더한 값이에요."),
+             (str(n * (n + 1) // 2), "1부터 더한 삼각수와 헷갈리지 마세요. 여기선 '두 수의 곱'을 더해요.")],
+            detail="1·2+2·3+…+n(n+1)처럼 연속한 두 수의 곱을 더하면 n(n+1)(n+2)/3이 돼요. 각 항 k(k+1)을 "
+            "[k(k+1)(k+2)−(k−1)k(k+1)]/3으로 바꾸면 앞뒤 항이 사슬처럼 지워지고(텔레스코핑) 맨 끝 n(n+1)(n+2)/3만 남기 때문이에요. "
+            "많은 항을 규칙 하나로 한꺼번에 더하는 수열 합의 대표 문제예요.",
+        )
+
+
 GENERATORS = [
-    gen_totient, gen_josephus, gen_spacediag, gen_derange,
+    gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_diophantine, gen_painted_cube_faces, gen_stars_bars,
     gen_transitivity, gen_repeating_pattern, gen_io_rule,
     gen_midpoint, gen_consecutive_middle, gen_multiple_condition,
