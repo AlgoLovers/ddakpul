@@ -3317,7 +3317,102 @@ def gen_catalan():
         )
 
 
+def _fib(k):
+    a, b = 1, 1
+    for _ in range(k - 1):
+        a, b = b, a + b
+    return a
+
+
+def gen_crt3():
+    # 중국인의 나머지 정리: 세 서로소 수로 나눈 나머지가 정해진 가장 작은 자연수. (수와연산 난9)
+    for rem_mod in [[(2, 3), (3, 5), (2, 7)], [(1, 3), (2, 4), (3, 5)], [(2, 5), (1, 6), (4, 7)], [(1, 2), (2, 3), (4, 5)]]:
+        n, step = 0, 1
+        for r, m in rem_mod:
+            while n % m != r:
+                n += step
+            step *= m
+        cond = ", ".join(f"{m}{_euro(str(m))} 나누면 {r}" for r, m in rem_mod)
+        period = 1
+        for _, m in rem_mod:
+            period *= m
+        add(
+            "crt3", "NUMBER_OPERATION", 9, ["중국인의 나머지 정리", "조건 좁혀 가기"],
+            f"{cond}{_iga(str(rem_mod[-1][0]))} 남는 가장 작은 자연수는 무엇일까요?",
+            str(n), [str(c) for c in _pick_distractors(n, [n + period, n + rem_mod[0][1], n - rem_mod[0][1], n + 1])],
+            f"세 나눗수 {', '.join(str(m) for _, m in rem_mod)}{_eun(str(rem_mod[-1][1]))} 서로소라, 조건을 만족하는 수는 "
+            f"곱 {period}마다 되풀이돼요(중국인의 나머지 정리). 한 조건씩 좁혀 가면 그중 가장 작은 값은 {n}이에요.",
+            [(str(n + period), "조건을 만족하는 다음 수예요. '가장 작은' 자연수를 찾아야 해요."),
+             (str(n + rem_mod[0][1]), "한 조건만 맞추면 안 돼요. 세 조건을 동시에 만족하는 수를 찾으세요.")],
+            detail="서로소인 여러 수로 나눈 나머지가 모두 정해지면, 그 조건을 동시에 만족하는 수는 '나눗수들의 곱'을 주기로 반드시 하나씩 존재해요"
+            "(중국인의 나머지 정리). 한 조건씩 겹쳐 좁히면 가장 작은 답을 손으로 찾을 수 있어요. 나머지 세계의 연립방정식이에요.",
+        )
+
+
+def gen_fibsum():
+    # 피보나치 부분합 F1+…+Fn = F(n+2)−1. 합과 한 항의 숨은 관계. (변화와관계 난9)
+    for n in [6, 8, 10, 7]:
+        terms = [_fib(k) for k in range(1, 6)]
+        total = sum(_fib(k) for k in range(1, n + 1))
+        fplus2 = _fib(n + 2)
+        add(
+            "fibsum", "CHANGE_RELATION", 9, ["피보나치", "합의 숨은 규칙"],
+            f"{terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, … 처럼 앞의 두 수를 더해 만드는 "
+            f"피보나치 수열이 있어요. 첫째 항부터 {n}째 항까지 모두 더하면 얼마일까요?",
+            str(total), [str(c) for c in _pick_distractors(total, [fplus2, _fib(n + 1), total + 1, total - 1])],
+            f"피보나치 수를 처음부터 더한 합에는 규칙이 있어요 — 첫째부터 n째까지의 합은 (n+2)째 항보다 딱 1 작아요. "
+            f"{n + 2}째 항이 {fplus2}이니, 합은 {fplus2} − 1 = {total}이에요.",
+            [(str(fplus2), "(n+2)째 항 자체가 아니라, 거기서 1을 뺀 값이 부분합이에요."),
+             (str(_fib(n + 1)), "한 항 어긋났어요. 부분합은 (n+1)째가 아니라 (n+2)째 항에서 1을 뺀 값이에요.")],
+            detail="피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F_k = F_{k+2}−F_{k+1}) 사슬처럼 지워져 "
+            "맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요.",
+        )
+
+
+def gen_diagcross():
+    # 볼록 n각형 대각선의 내부 교점 수 = C(n,4) (어느 세 대각선도 한 점에서 만나지 않을 때). (도형과측정 난9)
+    for n in [6, 7, 8, 5]:
+        ans = comb(n, 4)
+        diags = n * (n - 3) // 2
+        add(
+            "diagcross", "SHAPE_MEASUREMENT", 9, ["조합으로 세기", "대각선 교점"],
+            f"볼록 {n}각형의 대각선을 모두 그었어요. 어느 세 대각선도 내부의 한 점에서 겹쳐 만나지 않는다면, "
+            f"대각선끼리 다각형 내부에서 생기는 교점은 모두 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [diags, comb(n, 3), comb(n, 2), ans + 2])],
+            f"내부 교점 하나는 꼭짓점 4개를 고르면 정확히 하나 정해져요 — 그 네 점이 만드는 사각형의 두 대각선이 만나는 점이에요. "
+            f"그래서 교점 수는 꼭짓점 {n}개 중 4개를 고르는 조합 {n}C4 = {ans}개예요.",
+            [(str(diags) + "개", "그건 대각선의 '개수'예요. 교점은 꼭짓점 4개를 고르는 조합으로 세요."),
+             (f"{comb(n, 3)}개", "3개가 아니라 4개를 골라야 교점 하나가 정해져요(사각형의 두 대각선).")],
+            detail="볼록 다각형에서 (어느 세 대각선도 한 점에 모이지 않으면) 내부 교점 하나는 꼭짓점 4개와 1:1로 대응해요 — 네 점이 만드는 사각형의 "
+            "두 대각선 교점이 딱 하나이기 때문이에요. 그래서 교점 수 = C(n,4). 도형 세기를 조합으로 바꾸는 대표 문제예요.",
+        )
+
+
+def gen_partition():
+    # 자연수의 분할 p(n): n을 자연수의 합으로 나타내기(순서 무시). (자료와가능성 난9)
+    def part(k, mx):
+        if k == 0:
+            return 1
+        return sum(part(k - j, j) for j in range(min(k, mx), 0, -1))
+    for n in [5, 6, 7, 4]:
+        ans = part(n, n)
+        ordered = 2 ** (n - 1)  # 순서를 구별하면(합성) 2^(n-1) — 흔한 혼동
+        add(
+            "partition", "DATA_POSSIBILITY", 9, ["자연수의 분할", "순서 무시 세기"],
+            f"{n}{_eul(str(n))} 1 이상의 자연수의 합으로 나타내는 방법은 모두 몇 가지일까요? "
+            f"더하는 순서만 다른 것은 같은 것으로 봐요(예: 1+2와 2+1은 같음).",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [ordered, ans + 1, ans - 1, n])],
+            f"큰 수부터 차례로 놓아 빠짐없이·겹치지 않게 세요. {n}={n}부터 시작해 한 조각씩 잘게 쪼개 가면 모두 {ans}가지예요"
+            f"(순서만 다른 건 한 가지로).",
+            [(f"{ordered}가지", "그건 순서를 '구별'했을 때(예: 1+2와 2+1을 다르게)예요. 순서를 무시하면 훨씬 적어요."),
+             (f"{ans + 1}가지", "빠뜨리거나 같은 걸 두 번 세기 쉬워요. 큰 수부터 체계적으로 나열해 확인하세요.")],
+            detail="자연수 n을 순서 무시하고 자연수의 합으로 쪼개는 가짓수를 '분할수 p(n)'이라 해요. 순서를 구별하는 '합성'(2^(n−1)가지)과 달리, "
+            "큰 조각부터 놓는 규칙으로 빠짐없이 세요. 딱 떨어지는 공식이 없어 체계적 나열이 핵심인 정수·조합의 고전이에요.",
+        )
+
+
 GENERATORS = [
+    gen_crt3, gen_fibsum, gen_diagcross, gen_partition,
     gen_lasttwo, gen_cubesum, gen_pick, gen_catalan,
     gen_totient, gen_josephus, gen_spacediag, gen_derange, gen_prodsum,
     gen_quadseq, gen_polyhedron, gen_multiperm,
