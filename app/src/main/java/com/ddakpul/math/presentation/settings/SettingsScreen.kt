@@ -384,7 +384,8 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
                         )
                     },
                 )
-                engines.forEach { e ->
+                // 기본 엔진과 같은 엔진은 명시 칩을 숨긴다('기기 기본 · X'와 'X' 중복 방지).
+                engines.filter { it.name != defaultEngine }.forEach { e ->
                     FilterChip(
                         selected = selectedEngine == e.name,
                         onClick = { SpeechSettings.setEngine(context, e.name, e.label) },
