@@ -3119,6 +3119,40 @@ def gen_unitprice():
         )
 
 
+def gen_rectdiag():
+    # 직사각형 대각선 = √(가로²+세로²). 피타고라스 입문(정수 결과). (도형과측정 난4)
+    for a, b in [(3, 4), (6, 8), (5, 12), (8, 15)]:
+        sq = a * a + b * b
+        ans = int(sq ** 0.5)
+        add(
+            "rectdiag", "SHAPE_MEASUREMENT", 4, ["피타고라스", "대각선"],
+            f"가로 {a}cm, 세로 {b}cm인 직사각형의 대각선(맞은편 꼭짓점을 잇는 선)의 길이는 몇 cm일까요?",
+            f"{ans}cm", [f"{c}cm" for c in _pick_distractors(ans, [a + b, ans + 1, ans - 1, a + b - 1])],
+            f"대각선은 가로·세로를 두 변으로 하는 직각삼각형의 빗변이에요. 가로²+세로² = {a}²+{b}² = {sq}이고, "
+            f"그 제곱근이 {ans}cm예요(피타고라스 정리).",
+            [(f"{a + b}cm", "가로와 세로를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요.")],
+            detail="직각삼각형에서 빗변² = 두 변²의 합이에요(피타고라스 정리). 직사각형의 대각선은 가로·세로를 두 변으로 하는 "
+            "빗변이라 √(가로²+세로²)로 구해요. 길이를 좌표·제곱으로 다루는 측정의 핵심 도구예요.",
+        )
+
+
+def gen_electpair():
+    # 반장·부반장 뽑기 = 순서 있는 2명 뽑기 nP2 = n(n−1). (자료와가능성 난4)
+    for n in [4, 5, 6, 8]:
+        ans = n * (n - 1)
+        add(
+            "electpair", "DATA_POSSIBILITY", 4, ["경우의 수", "순서 있는 뽑기"],
+            f"{n}명 중에서 반장 1명과 부반장 1명을 뽑아요. 한 사람이 둘 다 할 수는 없어요. 뽑는 방법은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [n * n, n * (n - 1) // 2, n, ans + 2])],
+            f"반장은 {n}명 중 누구나 될 수 있어 {n}가지, 부반장은 남은 {n - 1}명 중 뽑으니 {n - 1}가지예요. "
+            f"곱하면 {n}×{n - 1} = {ans}가지예요.",
+            [(f"{n * (n - 1) // 2}가지", "반장과 부반장은 서로 다른 자리라 순서를 구별해요. 2로 나누면 안 돼요."),
+             (f"{n * n}가지", "한 사람이 두 자리를 겸할 순 없어요. 부반장은 한 명 적은 {}가지예요.".format(n - 1))],
+            detail="반장·부반장처럼 뽑은 뒤 '자리(순서)가 구별되는' 선택은 순열 nP2 = n×(n−1)이에요. 두 명을 그냥 '대표'로 "
+            "뽑는 조합(÷2)과 달리, 자리가 다르면 순서를 구별해 나누지 않아요.",
+        )
+
+
 def gen_foldcut():
     # 종이를 반으로 접고 구멍을 뚫으면, 펼쳤을 때 구멍 = 구멍 수 × 2^(접은 횟수). 대칭 사고. (도형과측정 난1)
     for folds, h in [(1, 1), (1, 2), (1, 3), (2, 1)]:
@@ -3922,6 +3956,7 @@ GENERATORS = [
     gen_rectperim, gen_interiorangle, gen_prismparts, gen_triangleangle,
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
+    gen_rectdiag, gen_electpair,
     gen_foldcut, gen_knockout,
     gen_makesquare, gen_compose, gen_euler, gen_atleastprob,
     gen_sigma, gen_recur, gen_conevolume, gen_setpartition,
