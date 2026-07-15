@@ -15,9 +15,11 @@ android {
     defaultConfig {
         applicationId = "com.ddakpul.math"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 7
-        versionName = "0.3.5"
+        // targetSdk 35+에서 Android 15/16이 삼성 등 서드파티 TTS 엔진을 걸러낸다(getEngines에서 제외).
+        // 삼성 TTS를 쓰려면 34여야 한다(사용자 앱 OPicHelper와 동일 — 실기기 확인됨).
+        targetSdk = 34
+        versionCode = 8
+        versionName = "0.3.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

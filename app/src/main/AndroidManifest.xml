@@ -8,23 +8,6 @@
     -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--
-      Android 11(API 30)+ 패키지 가시성: 이 선언이 없으면 TextToSpeech.getEngines()가 삼성 등
-      서드파티 TTS 엔진을 못 보고 구글만 보인다(그래서 '기기 기본'이 삼성인데 구글로 읽던 문제).
-      TTS 엔진 서비스를 조회할 수 있게 선언해, 설치된 모든 엔진(삼성 포함)을 보이게 한다.
-    -->
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.TTS_SERVICE" />
-        </intent>
-    </queries>
-
-    <!--
-      진단용(임시): 위 <queries>로도 삼성 TTS가 안 보이는지 확정하기 위해 모든 패키지 가시성을
-      연다. 원인이 가시성인지 아닌지 가려낸 뒤 제거 예정(출시 빌드엔 남기지 않는다).
-    -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-
     <application
         android:name=".DdakPulApplication"
         android:allowBackup="true"

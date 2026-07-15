@@ -332,16 +332,23 @@ private fun NeuralDownloadedActions(
 @Composable
 private fun TtsCard(neuralModels: List<TtsModel>) {
     val context = LocalContext.current
+    var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
+    var defaultEngine by remember { mutableStateOf<String?>(null) }
     // 선택 상태는 SpeechSettings의 StateFlow를 관찰한다 — 탭하면 즉시 반영·미리듣기도 새 엔진.
     val selectedEngine by SpeechSettings.engine.collectAsStateWithLifecycle()
     val rate by SpeechSettings.rate.collectAsStateWithLifecycle()
 
-    // ★ TextToSpeech.getEngines()는 MATCH_DEFAULT_ONLY로 삼성 등을 걸러낸다(삼성 S24/Android16에서
-    //   삼성 서비스가 그 조건에 안 맞음). PackageManager로 TTS_SERVICE를 직접 열거해 모든 엔진(삼성
-    //   포함)을 얻는다. 기본 엔진은 시스템 설정값(tts_default_synth)을 신뢰한다.
-    val engines = remember { queryTtsEngines(context) }
-    val defaultEngine = remember { systemDefaultTtsPackage(context) }
-    val defaultLabel = engines.firstOrNull { it.first == defaultEngine }?.second
+    // 설치된 TTS 엔진 목록 + 기기 기본 엔진(targetSdk 34에선 삼성 포함)을 임시 인스턴스로 읽는다.
+    DisposableEffect(Unit) {
+        var probe: TextToSpeech? = null
+        probe =
+            TextToSpeech(context) {
+                engines = probe?.engines.orEmpty()
+                defaultEngine = probe?.defaultEngine
+            }
+        onDispose { probe?.shutdown() }
+    }
+    val defaultLabel = engines.firstOrNull { it.name == defaultEngine }?.label
     // 미리 듣기용 — 선택이 바뀌면 새 엔진/속도로 즉시 다시 붙는다(SpeechSettings flow 구독).
     val speaker = rememberSpeaker()
 
@@ -377,11 +384,11 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
                         )
                     },
                 )
-                engines.forEach { (pkg, label) ->
+                engines.forEach { e ->
                     FilterChip(
-                        selected = selectedEngine == pkg,
-                        onClick = { SpeechSettings.setEngine(context, pkg, label) },
-                        label = { Text(label) },
+                        selected = selectedEngine == e.name,
+                        onClick = { SpeechSettings.setEngine(context, e.name, e.label) },
+                        label = { Text(e.label) },
                     )
                 }
                 // 받아둔 신경망 음성(Supertonic 등)도 같은 목록에서 선택.
@@ -395,12 +402,6 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
                 }
             }
         }
-        // 진단(임시): 앱이 실제로 보는 TTS 엔진 패키지 목록 — 삼성(com.samsung.SMT)이 있는지 확인용.
-        Text(
-            text = "진단 · 엔진 " + engines.size + "개: " + engines.joinToString { it.first } + " / 기본=" + (defaultEngine ?: "?"),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.error,
-        )
         // 지금 어떤 음성으로 읽는지 명확히 — 사용자 혼동 방지.
         Text(
             text = stringResource(R.string.settings_tts_active, speaker.engineLabel),
@@ -423,67 +424,7 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
             }
         }
         TtsPreviewRow(speaker = speaker, context = context)
-        // 진단 정보 공유 — 삼성 미노출 원인 파악용(로그캣 대체). 텍스트로 개발자에게 전달.
-        OutlinedButton(onClick = { shareTtsDiagnostic(context, engines, defaultEngine) }) {
-            Text("🔧 진단 정보 공유")
-        }
     }
-}
-
-/**
- * 설치된 TTS 엔진을 PackageManager로 직접 열거한다(pkg→라벨). TextToSpeech.getEngines()는
- * MATCH_DEFAULT_ONLY로 삼성 등을 걸러내므로, TTS_SERVICE 서비스를 flags=0으로 조회해 전부 얻는다.
- */
-private fun queryTtsEngines(context: android.content.Context): List<Pair<String, String>> =
-    runCatching {
-        val pm = context.packageManager
-        pm
-            .queryIntentServices(Intent("android.intent.action.TTS_SERVICE"), 0)
-            .mapNotNull { ri ->
-                val pkg = ri.serviceInfo?.packageName ?: return@mapNotNull null
-                pkg to ri.loadLabel(pm).toString()
-            }.distinctBy { it.first }
-    }.getOrDefault(emptyList())
-
-/** 시스템 설정의 기본 TTS 엔진 패키지("tts_default_synth"). */
-private fun systemDefaultTtsPackage(context: android.content.Context): String? =
-    runCatching {
-        Settings.Secure.getString(context.contentResolver, "tts_default_synth")
-    }.getOrNull()?.takeIf { it.isNotBlank() }
-
-/** TTS 진단 텍스트를 만들어 공유 시트로 내보낸다(개발자에게 전달용). */
-private fun shareTtsDiagnostic(
-    context: android.content.Context,
-    engines: List<Pair<String, String>>,
-    defaultEngine: String?,
-) {
-    val text = buildTtsDiagnostic(context, engines, defaultEngine)
-    val send =
-        Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
-    context.startActivity(Intent.createChooser(send, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-}
-
-/** 삼성 TTS가 왜 안 잡히는지 원격 진단하기 위한 정보 덤프. */
-private fun buildTtsDiagnostic(
-    context: android.content.Context,
-    engines: List<Pair<String, String>>,
-    defaultEngine: String?,
-): String {
-    val sb = StringBuilder()
-    sb.append("=== 딱풀 TTS 진단 ===\n")
-    sb.append("기기: ${Build.MANUFACTURER} ${Build.MODEL} / Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})\n")
-    sb.append("앱: v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})\n\n")
-    sb.append("[열거된 엔진(PackageManager)] ${engines.size}개\n")
-    engines.forEach { sb.append("  · ${it.first} (${it.second})\n") }
-    sb.append("tts_default_synth(기본): ${defaultEngine ?: "?"}\n\n")
-    val pm = context.packageManager
-    val services = runCatching { pm.queryIntentServices(Intent("android.intent.action.TTS_SERVICE"), 0) }.getOrDefault(emptyList())
-    sb.append("[queryIntentServices(TTS_SERVICE)] ${services.size}개\n")
-    services.forEach { sb.append("  · ${it.serviceInfo?.packageName} / ${it.serviceInfo?.name}\n") }
-    return sb.toString()
 }
 
 /** 미리 듣기(재생/정지 토글) + 시스템 음성 설정 바로가기. */

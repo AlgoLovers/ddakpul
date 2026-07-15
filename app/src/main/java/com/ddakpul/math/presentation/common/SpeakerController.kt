@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.ddakpul.math.R
-import com.ddakpul.math.presentation.common.tts.DirectTtsEngine
 import com.ddakpul.math.presentation.common.tts.NeuralSpeechEngine
 import com.ddakpul.math.presentation.common.tts.SpeechEngine
 import com.ddakpul.math.presentation.common.tts.SystemSpeechEngine
@@ -84,47 +83,29 @@ fun rememberSpeaker(): SpeakerController {
     val controller = remember { SpeakerController() }
     controller.engineLabel = label
 
-    // 명시적으로 고른 시스템 엔진(구글 아닌 삼성 등)은 표준 API가 getEngines() 필터로 못 붙이므로
-    // 서비스에 직접 바인딩한다. '기기 기본'(null)은 안전한 SystemSpeechEngine 유지.
-    val explicitSystemEngine = enginePackage?.takeUnless { TtsModels.neuralOf(it) != null }
-
     DisposableEffect(enginePackage, rate, label, neuralModel) {
         val onSpeaking = { speaking: Boolean -> controller.isSpeaking = speaking }
-        val toDefault = { SpeechSettings.setEngine(context, null, null) }
         val engine: SpeechEngine =
-            when {
-                neuralModel != null -> {
-                    NeuralSpeechEngine(
-                        modelDir = neuralModel.dir(context),
-                        soFile = neuralModel.soFile(context),
-                        speed = rate,
-                        label = label,
-                        onSpeakingChanged = onSpeaking,
-                        // 초기화 실패 시 선택을 기기 기본으로 되돌려 자동으로 시스템 음성 폴백.
-                        onUnavailable = toDefault,
-                    )
-                }
-
-                explicitSystemEngine != null -> {
-                    DirectTtsEngine(
-                        context = context,
-                        enginePackage = explicitSystemEngine,
-                        label = label,
-                        onSpeakingChanged = onSpeaking,
-                        // 직접 바인딩 실패 시 기기 기본으로 폴백.
-                        onUnavailable = toDefault,
-                    )
-                }
-
-                else -> {
-                    SystemSpeechEngine(
-                        context = context,
-                        enginePackage = null,
-                        rate = rate,
-                        label = label,
-                        onSpeakingChanged = onSpeaking,
-                    )
-                }
+            if (neuralModel != null) {
+                NeuralSpeechEngine(
+                    modelDir = neuralModel.dir(context),
+                    soFile = neuralModel.soFile(context),
+                    speed = rate,
+                    label = label,
+                    onSpeakingChanged = onSpeaking,
+                    // 초기화 실패 시 선택을 기기 기본으로 되돌려 자동으로 시스템 음성 폴백.
+                    onUnavailable = { SpeechSettings.setEngine(context, null, null) },
+                )
+            } else {
+                // 신경망 선택값이지만 미다운로드면 시스템 기본으로(잘못된 패키지 전달 방지).
+                val systemPkg = enginePackage?.takeUnless { TtsModels.neuralOf(it) != null }
+                SystemSpeechEngine(
+                    context = context,
+                    enginePackage = systemPkg,
+                    rate = rate,
+                    label = label,
+                    onSpeakingChanged = onSpeaking,
+                )
             }
         controller.attach(engine)
         onDispose {
