@@ -1188,6 +1188,14 @@ def gen_number_riddle():
             f"두 조건을 함께 써요. (십의 자리)+(일의 자리)={s}, (십의 자리)−(일의 자리)={d}. 두 식을 더하면 일의 자리끼리 지워져 십의 자리가 두 배가 되니, ({s}+{d})÷2={tens}{_iga(tens)} 십의 자리예요. 일의 자리는 {s}−{tens}={ones}이니 답은 {ans}{_copula(ans)}.",
             [(str(reversed_num), "십의 자리와 일의 자리를 바꿔 썼어요. 십의 자리가 더 큰 수예요.")],
             detail=f"합과 차를 알 때는 '두 식을 더하거나 빼기'가 지름길이에요. 합＋차를 하면 작은 쪽이 지워져 큰 쪽의 2배가 나와요: ({s}+{d})÷2={tens}가 십의 자리. 이 '합차 방법'은 나이·개수·거리처럼 두 미지수가 얽힌 문제에 두루 통하는 강력한 도구예요.",
+            en={
+                "statement": f"There is a two-digit number. Its tens digit and ones digit add up to {s}, and the tens digit is {d} more than the ones digit. What is the number?",
+                "answer": str(ans),
+                "distractors": [str(reversed_num), str(ans + 1), str(ans - 1)],
+                "explanation": f"Use both clues together. (tens)+(ones)={s}, (tens)−(ones)={d}. Adding the two equations cancels the ones digit and leaves twice the tens digit, so ({s}+{d})÷2={tens} is the tens digit. The ones digit is {s}−{tens}={ones}, so the answer is {ans}.",
+                "mistakes": [(str(reversed_num), "You swapped the tens and ones digits. The tens digit is the larger one.")],
+                "detail": f"When you know a sum and a difference, 'adding or subtracting the two equations' is the shortcut. Sum + difference cancels the smaller part and leaves twice the larger: ({s}+{d})÷2={tens} as the tens digit. This 'sum-and-difference method' works widely for problems where two unknowns are tangled together — ages, counts, distances.",
+            },
         )
 
 
@@ -2485,6 +2493,14 @@ def gen_odd_sum_square():
             f"신기하게도 1부터 홀수를 차례로 더하면 항상 '제곱수'가 돼요: 1=1×1, 1+3=4=2×2, 1+3+5=9=3×3… 홀수 {n}개를 더하면 {n}×{n}={ans}이에요.",
             [(str(last * n), "가장 큰 홀수에 개수를 곱하는 게 아니라, 개수를 제곱해요.")],
             detail="왜 제곱이 될까요? 점을 ㄱ자로 하나씩 덧대 정사각형을 키워 보면 보여요 — 한 변이 늘 때마다 홀수 개(3,5,7…)씩 점이 늘어 언제나 정사각형(제곱수)을 이뤄요. '그림으로 왜 그런지'를 보면 공식이 살아 있는 지식이 돼요.",
+            en={
+                "statement": f"If you add up the first {n} odd numbers (1, 3, 5, …, {last}), what do you get?",
+                "answer": str(ans),
+                "distractors": [str((n - 1) * (n - 1)), str(last * n), str(ans + n)],
+                "explanation": f"Amazingly, adding the odd numbers in order starting from 1 always gives a 'square number': 1=1×1, 1+3=4=2×2, 1+3+5=9=3×3… Adding {n} odd numbers gives {n}×{n}={ans}.",
+                "mistakes": [(str(last * n), "Don't multiply the largest odd number by the count — square the count instead.")],
+                "detail": "Why a square? Grow a square by adding dots in an L-shape one layer at a time and you'll see it — each time a side grows, an odd number of dots (3, 5, 7…) is added, always forming a square (a square number). Seeing 'why' as a picture turns the formula into living knowledge.",
+            },
         )
 
 
@@ -2524,6 +2540,14 @@ def gen_reverse_diff():
             f"자리값으로 풀어 봐요. {num} = {tens}×10 + {ones}, 바꾼 수 {rev} = {ones}×10 + {tens}. 빼면 (10−1)×({tens}−{ones}) = 9×{tens - ones} = {ans}이에요.",
             [(str(tens - ones), "두 숫자의 차만 답하면 안 돼요 — 그 차의 9배예요.")],
             detail="두 자리 수와 숫자를 바꾼 수의 차는 '항상 9의 배수'예요(정확히는 9×(두 숫자의 차)). 세 자리 수라면 처음·끝을 바꾼 차가 99의 배수고요. 자리값(10, 100…)의 차이가 만드는 이런 규칙은 마술 같은 숫자 퍼즐의 비밀이에요.",
+            en={
+                "statement": f"Take the two-digit number {num}. If you subtract the number with its tens and ones digits swapped ({rev}), what do you get?",
+                "answer": str(ans),
+                "distractors": [str(tens - ones), str(ans + 9), str(ans - 9)],
+                "explanation": f"Solve with place value. {num} = {tens}×10 + {ones}, and the swapped number {rev} = {ones}×10 + {tens}. Subtracting gives (10−1)×({tens}−{ones}) = 9×{tens - ones} = {ans}.",
+                "mistakes": [(str(tens - ones), "Don't just give the difference of the two digits — it's 9 times that difference.")],
+                "detail": "The difference between a two-digit number and its digit-swapped version is 'always a multiple of 9' (exactly 9×(difference of the two digits)). For a three-digit number, swapping the first and last digits gives a multiple of 99. Rules like this, made by the differences in place value (10, 100…), are the secret behind magic-like number puzzles.",
+            },
         )
 
 
@@ -2637,6 +2661,14 @@ def gen_common_mult_range():
             f"{a}, {b} 두 수로 모두 나누어떨어지려면 두 수의 '공배수'여야 해요. 공배수는 최소공배수 {lcm}의 배수들이니, {limit}까지 {lcm}의 배수 개수 = {limit}÷{lcm}={ans}개예요.",
             [(f"{limit // a}개", f"그건 {a}의 배수 개수예요. 둘 다 나누어떨어지려면 공배수(최소공배수의 배수)를 세야 해요.")],
             detail=f"'A로도 B로도 나누어떨어짐' = A와 B의 공배수 = 최소공배수 {lcm}의 배수예요. 그래서 {limit}÷{lcm}만 세면 돼요. '적어도 하나로 나누어떨어짐'을 물으면 그땐 {a}의 배수 + {b}의 배수 − 공배수(포함배제)로 구하고요.",
+            en={
+                "statement": f"Among the whole numbers from 1 to {limit}, how many are divisible by both {a} and {b}?",
+                "answer": _en_plural(ans, "number"),
+                "distractors": [_en_plural(limit // a, "number"), _en_plural(limit // b, "number"), _en_plural(ans + 1, "number")],
+                "explanation": f"To be divisible by both {a} and {b}, a number must be a 'common multiple' of the two. The common multiples are exactly the multiples of the least common multiple {lcm}, so the count up to {limit} is {limit}÷{lcm}={ans}.",
+                "mistakes": [(_en_plural(limit // a, "number"), f"That's how many multiples of {a} there are. To be divisible by both, count the common multiples (the multiples of the least common multiple).")],
+                "detail": f"'Divisible by both A and B' = a common multiple of A and B = a multiple of the least common multiple {lcm}. So you just count {limit}÷{lcm}. If it asked 'divisible by at least one', you'd use multiples of {a} + multiples of {b} − common multiples (inclusion-exclusion).",
+            },
         )
 
 
@@ -2806,6 +2838,14 @@ def gen_divisor_sum():
             f"약수를 '작은 수 × 큰 수' 짝으로 빠짐없이 찾아요: {num}의 약수는 {', '.join(map(str, divs))}. 모두 더하면 {' + '.join(map(str, divs))} = {ans}이에요.",
             [(str(ans - num), f"자기 자신({num})도 약수예요 — 빠뜨리지 마세요.")],
             detail=f"약수는 짝을 지어 찾으면 빠짐이 없어요(1×{num}, 2×…). 자기 자신을 뺀 약수의 합이 자신과 같으면 '완전수'(6=1+2+3), 자신보다 크면 '과잉수'라고 불러요. {num}이 어디에 속하는지 따져 보는 것도 재미있어요.",
+            en={
+                "statement": f"Find all the divisors of {num} and add them up. What is the sum?",
+                "answer": f"{ans}",
+                "distractors": [str(ans - num), str(ans + num), str(ans + 3)],
+                "explanation": f"Find the divisors in 'small × large' pairs so none are missed: the divisors of {num} are {', '.join(map(str, divs))}. Adding them all gives {' + '.join(map(str, divs))} = {ans}.",
+                "mistakes": [(str(ans - num), f"{num} itself is also a divisor — don't leave it out.")],
+                "detail": f"Finding divisors in pairs (1×{num}, 2×…) means you miss none. If the sum of the divisors excluding the number itself equals the number, it's a 'perfect number' (6=1+2+3); if it's larger, an 'abundant number'. It's fun to work out where {num} falls.",
+            },
         )
 
 
@@ -2933,6 +2973,14 @@ def gen_leap_year_count():
             f"윤년은 기본적으로 4의 배수 해예요. {y1}~{y2} 사이에서 4의 배수 해를 세면 {cnt}번이에요(이 구간엔 100·400 예외로 달라지는 해가 없어요).",
             [(f"{cnt + 1}번", "4의 배수를 셀 때 시작·끝 해를 잘못 포함했을 수 있어요.")],
             detail="윤년 규칙은 '4의 배수 → 윤년, 단 100의 배수는 제외, 400의 배수는 다시 윤년'이에요(2000년은 윤년, 1900년은 아님). 지구가 태양을 도는 데 정확히 365일이 아니라 약 365.25일이라, 4년마다 하루를 더해 맞추는 거예요. 이런 '배수 규칙'은 나머지로 판정해요.",
+            en={
+                "statement": f"From {y1} to {y2}, how many leap years (years where February has 29 days) are there? A leap year is a year divisible by 4 (except that a year divisible by 100 is not a leap year, but a year divisible by 400 is a leap year again).",
+                "answer": _en_plural(cnt, "leap year"),
+                "distractors": [_en_plural(cnt + 1, "leap year"), _en_plural(cnt - 1, "leap year"), _en_plural(cnt + 2, "leap year")],
+                "explanation": f"A leap year is basically a year that's a multiple of 4. Counting the multiples of 4 between {y1} and {y2} gives {cnt} (this range has no years shifted by the 100/400 exceptions).",
+                "mistakes": [(_en_plural(cnt + 1, "leap year"), "When counting the multiples of 4, you may have wrongly included the start or end year.")],
+                "detail": "The leap-year rule is 'multiple of 4 → leap year, except a multiple of 100 is not, but a multiple of 400 is again' (2000 was a leap year, 1900 was not). Because Earth takes about 365.25 days — not exactly 365 — to orbit the Sun, we add a day every 4 years to keep in step. A 'multiple rule' like this is decided using remainders.",
+            },
         )
 
 
@@ -3032,6 +3080,14 @@ def gen_max_product():
             f"합이 정해진 두 수는 서로 '가까울수록' 곱이 커져요. {s}를 최대한 똑같이 둘로 나누면 {a}와 {b}. 그때 곱이 최대인 {a}×{b}={ans}예요. (1×{s - 1}={s - 1}처럼 벌어지면 곱이 작아져요.)",
             [(str(s - 1), "양 끝(1과 큰 수)으로 벌리면 곱이 가장 작아요. 가운데로 모아야 최대예요.")],
             detail="'합이 일정할 때 곱은 두 수가 같을 때 최대'예요 — 같은 둘레에서 정사각형이 넓이가 최대인 것과 똑같은 원리(가로+세로 일정 → 정사각형이 최대 넓이). 반대로 '곱이 일정할 때 합은 두 수가 같을 때 최소'고요. 자연·경제 곳곳의 '균형이 최적' 현상이에요.",
+            en={
+                "statement": f"Two whole numbers add up to {s}. When their 'product' is as large as possible, what is that product?",
+                "answer": f"{ans}",
+                "distractors": [str(s - 1), str(ans - 1), str(a * b + a)],
+                "explanation": f"For two numbers with a fixed sum, the closer they are to each other, the larger the product. Splitting {s} as evenly as possible gives {a} and {b}, and that's when the product is largest: {a}×{b}={ans}. (Spread them apart, like 1×{s - 1}={s - 1}, and the product shrinks.)",
+                "mistakes": [(str(s - 1), "Spreading to the extremes (1 and a big number) gives the smallest product. Gather them toward the middle for the largest.")],
+                "detail": "'When the sum is fixed, the product is largest when the two numbers are equal' — the same principle as a square having the largest area for a fixed perimeter (width + height fixed → the square has the largest area). Conversely, 'when the product is fixed, the sum is smallest when the two numbers are equal'. It's the 'balance is optimal' pattern found all over nature and the economy.",
+            },
         )
 
 
@@ -3136,6 +3192,14 @@ def gen_divisor_from_remainder():
             f"'{num}을 나눠 {rem} 남는다'는 건 {num}−{rem}={target}이 그 수로 딱 나누어떨어진다는 뜻이에요. 그러니 나누는 수는 {target}의 약수 중 나머지 {rem}보다 큰 수들: {', '.join(map(str, divs))} — 모두 {cnt}가지예요.",
             [(f"{cnt + 1}가지", f"나누는 수는 나머지 {rem}보다 커야 해요. 조건에 맞는 약수만 세요.")],
             detail=f"'나눠서 나머지가 r'이면 (원래 수 − r)이 그 수로 나누어떨어져요 — 나누는 수는 (원래 수 − r)의 약수예요. 단 나머지는 나누는 수보다 작아야 하니 나누는 수 > r. 이 두 조건(약수 + r보다 큼)으로 거르는 게 핵심이에요.",
+            en={
+                "statement": f"When {num} is divided by some number, the remainder is {rem}. How many possible values are there for the divisor? (The divisor must be larger than the remainder {rem}.)",
+                "answer": _en_plural(cnt, "value"),
+                "distractors": [_en_plural(cnt + 1, "value"), _en_plural(cnt - 1, "value"), _en_plural(cnt + 2, "value")],
+                "explanation": f"'{num} divided leaves a remainder of {rem}' means {num}−{rem}={target} is exactly divisible by that number. So the divisor is one of the divisors of {target} that is larger than the remainder {rem}: {', '.join(map(str, divs))} — that's {cnt} in all.",
+                "mistakes": [(_en_plural(cnt + 1, "value"), f"The divisor must be larger than the remainder {rem}. Count only the divisors that meet the condition.")],
+                "detail": "If dividing leaves remainder r, then (original number − r) is divisible by that number — so the divisor is a divisor of (original number − r). But the remainder must be smaller than the divisor, so divisor > r. Filtering by these two conditions (a divisor, and larger than r) is the key.",
+            },
         )
 
 
@@ -3304,6 +3368,8 @@ def gen_median():
 def gen_gcd_bags():
     for a, b, ia, ib in [(24, 36, "사과", "귤"), (18, 30, "빨간 구슬", "파란 구슬"), (40, 60, "사탕", "초콜릿"), (16, 24, "연필", "지우개")]:
         g = gcd(a, b)
+        _item_en = {"사과": "apples", "귤": "tangerines", "빨간 구슬": "red marbles", "파란 구슬": "blue marbles", "사탕": "candies", "초콜릿": "chocolates", "연필": "pencils", "지우개": "erasers"}
+        ia_en, ib_en = _item_en[ia], _item_en[ib]
         add(
             "gcdbags", "NUMBER_OPERATION", 5, ["최대공약수", "똑같이 나눠담기"],
             f"{ia} {a}개와 {ib} {b}개를 여러 봉지에 '남김없이 똑같이' 나눠 담으려고 해요(모든 봉지의 구성이 같아야 해요). 최대한 '많은' 봉지에 담으려면 봉지는 몇 개가 필요할까요?",
@@ -3311,6 +3377,14 @@ def gen_gcd_bags():
             f"봉지 수는 {a}과 {b}를 '둘 다 남김없이' 나눠야 하니 두 수의 공약수여야 해요. 가장 많은 봉지를 만들려면 그중 가장 큰 '최대공약수'를 골라요. {a}와 {b}의 최대공약수는 {g}이니 {g}개 봉지(한 봉지에 {ia} {a // g}개, {ib} {b // g}개)예요.",
             [(f"{a}개", "봉지마다 똑같이 담아야 해요 — 두 수의 공약수(최대공약수)만큼만 만들 수 있어요.")],
             detail="'여러 종류를 똑같이, 최대한 많은 묶음으로' = 최대공약수예요. 반대로 '두 주기가 처음 겹치는 순간'이나 '두 길이로 정사각형 만들기'는 최소공배수고요. 나눠담기=GCD, 함께맞추기=LCM으로 기억하면 헷갈리지 않아요.",
+            en={
+                "statement": f"You want to split {a} {ia_en} and {b} {ib_en} into several bags 'equally with none left over' (every bag must have the same contents). To make as 'many' bags as possible, how many bags do you need?",
+                "answer": _en_plural(g, "bag"),
+                "distractors": [_en_plural(a, "bag"), _en_plural(a * b // g, "bag"), _en_plural(g // 2, "bag")],
+                "explanation": f"The number of bags must divide both {a} and {b} with nothing left over, so it must be a common divisor of the two numbers. To make the most bags, pick the largest one — the 'greatest common divisor'. The GCD of {a} and {b} is {g}, so {g} bags (each bag holds {a // g} {ia_en} and {b // g} {ib_en}).",
+                "mistakes": [(_en_plural(a, "bag"), "Every bag must hold the same amount — you can only make as many bags as a common divisor (the greatest common divisor) of the two numbers.")],
+                "detail": "'Splitting several kinds equally into as many groups as possible' = greatest common divisor. Conversely, 'the first moment two cycles line up' or 'making a square from two lengths' is the least common multiple. Remember: splitting into bags = GCD, lining up together = LCM, and you won't mix them up.",
+            },
         )
 
 
