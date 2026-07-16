@@ -189,6 +189,14 @@ def gen_cryptarithm():
             f"(가나)는 10×가+나, 자리를 바꾼 (나가)는 10×나+가예요. 둘을 더하면 가와 나를 각각 11번씩 더한 셈이라 11×(가+나)가 돼요. {total}÷11={s}이니 가+나={s}예요.",
             [(str(total // 10), "두 수의 합은 항상 11의 배수예요. 11로 나눠 보세요.")],
             detail=f"복면산은 '자릿값'으로 구조를 보면 확 쉬워져요. AB＋BA=(10A+B)+(10B+A)=11×(A+B) — 그래서 합이 항상 11의 배수({total}=11×{s})인 거예요. 일일이 대입하기 전에 이렇게 식으로 규칙을 찾으면 후보를 크게 줄일 수 있어요.",
+            en={
+                "statement": f"A two-digit number (AB) plus the number with its digits swapped (BA) adds up to {total}. What is A+B? (A and B are nonzero single digits.)",
+                "answer": str(s),
+                "distractors": distractors,
+                "explanation": f"(AB) is 10×A+B, and the swapped number (BA) is 10×B+A. Adding them counts A and B eleven times each, which is 11×(A+B). {total}÷11={s}, so A+B={s}.",
+                "mistakes": [(str(total // 10), "The sum of the two numbers is always a multiple of 11. Try dividing by 11.")],
+                "detail": f"Cryptarithms get much easier when you see the structure through 'place value'. AB+BA=(10A+B)+(10B+A)=11×(A+B) — that's why the sum is always a multiple of 11 ({total}=11×{s}). Finding the rule as a formula like this, before plugging in numbers one by one, cuts down the candidates a lot.",
+            },
         )
 
 
@@ -229,6 +237,7 @@ def gen_excess_deficit():
         assert (a + b) % (y - x) == 0 and (a + b) // (y - x) == p, "과부족 검산 실패"
         name = rng.choice(NAMES)
         fruit = rng.choice(FRUITS)
+        fruit_en = {"사과": "apples", "귤": "tangerines", "배": "pears", "감": "persimmons"}[fruit]
         add(
             "excess", "NUMBER_OPERATION", 4, ["과부족", "차이로 나누기"],
             f"{name}이(가) 친구들에게 {fruit}을(를) 나눠 줘요. 한 명에게 {x}개씩 주면 {a}개가 남고, {y}개씩 주면 {b}개가 모자라요. 친구는 모두 몇 명일까요?",
@@ -236,6 +245,14 @@ def gen_excess_deficit():
             f"{x}개씩 줄 때는 {a}개가 남고, {y}개씩 줄 때는 {b}개가 모자라요 — 방법을 바꾸면 필요한 {fruit}이 {a}+{b}={a + b}개 차이 나는 거예요. 한 명당 {y - x}개씩 더 주기 때문이니, 친구 수는 {a + b}÷{y - x}={p}명이에요.",
             [(f"{a + b}명", f"{a + b}는 필요한 개수의 차이예요. 한 명당 차이 {y - x}개로 나눠요.")],
             detail=f"과부족 문제의 핵심은 '남는 양 + 모자란 양 = 나눠 주는 방법의 차이 총합'이에요. 한 명당 {y}−{x}={y - x}개씩 더 주면, 전체로는 {a}(남던 것)+{b}(모자란 것)={a + b}개가 더 필요해지죠. 그래서 명수 = (남음+모자람)÷(한 명당 차이). 식으로 쓰면 {x}×명수+{a} = {y}×명수−{b} — 같은 이야기를 저울처럼 맞춘 거예요.",
+            en={
+                "statement": f"A hands out {fruit_en} to some friends. Giving {x} each leaves {a} over, and giving {y} each falls {b} short. How many friends are there in all?",
+                "answer": _en_plural(p, "friend"),
+                "distractors": [_en_plural(p - 1, "friend"), _en_plural(p + 1, "friend"), _en_plural(a + b, "friend")],
+                "explanation": f"Giving {x} each leaves {a} over, and giving {y} each falls {b} short — switching the plan changes the {fruit_en} needed by {a}+{b}={a + b}. That's because each friend gets {y - x} more, so the number of friends is {a + b}÷{y - x}={p}.",
+                "mistakes": [(_en_plural(a + b, "friend"), f"{a + b} is the difference in the number needed. Divide by the per-friend difference of {y - x}.")],
+                "detail": f"The key to excess-and-deficit problems is 'amount left over + amount short = total change between the two sharing plans'. Giving {y}−{x}={y - x} more to each friend needs {a} (was left over)+{b} (was short)={a + b} more in total. So (number of friends) = (over + short)÷(per-friend difference). Written as an equation, {x}×friends+{a} = {y}×friends−{b} — the same story balanced like a scale.",
+            },
         )
 
 
@@ -1017,6 +1034,14 @@ def gen_remainder():
             f"두 조건을 동시에 만족해야 해요. {b}{_euro(b)} 나눈 나머지가 {rb}인 수를 작은 것부터 적으며 {a}{_euro(a)} 나눈 나머지가 {ra}인지 확인하면, 두 자리 수 중 처음 맞는 수가 {ans}{_copula(ans)}. ({ans}{_eul(ans)} {a}{_euro(a)} 나누면 나머지가 {ra}, {b}{_euro(b)} 나누면 나머지가 {rb}{_copula(rb)})",
             [(str(nxt), "그 수도 두 조건은 맞지만, 더 작은 두 자리 수가 있어요.")],
             detail=f"두 나눗셈 조건을 동시에 만족하는 수는 {a}와 {b}의 최소공배수({a * b // gcd(a, b)})마다 규칙적으로 반복돼요. 그래서 답을 하나 찾으면, 거기에 {a * b // gcd(a, b)}를 계속 더한 수들이 모두 답이에요. 이게 옛 중국 수학책에도 나오는 '중국인의 나머지 정리'의 기초 생각이랍니다.",
+            en={
+                "statement": f"A number leaves a remainder of {ra} when divided by {a}, and a remainder of {rb} when divided by {b}. What is the smallest two-digit number like this?",
+                "answer": str(ans),
+                "distractors": [str(nxt), str(ans + 1), str(max(10, ans - 1))],
+                "explanation": f"Both conditions must hold at once. List numbers that leave remainder {rb} when divided by {b}, from smallest up, and check which also leave remainder {ra} when divided by {a}; the first two-digit number that works is {ans}. ({ans} divided by {a} leaves remainder {ra}, and divided by {b} leaves remainder {rb}.)",
+                "mistakes": [(str(nxt), "That number also fits both conditions, but there is a smaller two-digit number.")],
+                "detail": f"Numbers that satisfy both division conditions at once repeat regularly, every least common multiple of {a} and {b} ({a * b // gcd(a, b)}). So once you find one answer, adding {a * b // gcd(a, b)} to it again and again gives all the others. This is the basic idea behind the 'Chinese Remainder Theorem', which appears even in old Chinese math books.",
+            },
         )
 
 
@@ -1096,6 +1121,14 @@ def gen_divisor_count():
             f"약수를 '작은 수 × 큰 수'로 짝지어 빠짐없이 찾아요. 1부터 순서대로 {num}{_eul(num)} 나누어떨어지게 하는 수를 적으면 {', '.join(map(str, divisors))} — 모두 {ans}개예요.",
             [(f"{ans + 1}개", "약수를 하나 빠뜨리거나 중복해 세지 않았는지 짝지어 확인해요.")],
             detail="약수 개수엔 지름길이 있어요. 소인수분해해서 각 지수에 1을 더해 곱하면 돼요. 예를 들어 12=2×2×3이니 (2+1)×(1+1)=6개. '2를 0~2개, 3을 0~1개 골라 곱하기'의 조합으로 보는 거예요. 큰 수도 이 방법이면 빠르게 셀 수 있어요.",
+            en={
+                "statement": f"How many divisors does {num} have in all?",
+                "answer": _en_plural(ans, "divisor"),
+                "distractors": [_en_plural(ans - 2, "divisor"), _en_plural(ans + 2, "divisor"), _en_plural(ans + 1, "divisor")],
+                "explanation": f"Find every divisor by pairing them as 'small × large'. Listing the numbers that divide {num} evenly, in order from 1, gives {', '.join(map(str, divisors))} — {ans} in all.",
+                "mistakes": [(_en_plural(ans + 1, "divisor"), "Check by pairing that you didn't miss a divisor or count one twice.")],
+                "detail": "There's a shortcut for the number of divisors. Factor into primes, add 1 to each exponent, and multiply. For example, 12=2×2×3, so (2+1)×(1+1)=6. You're viewing it as the combinations of 'pick 0-2 twos, pick 0-1 threes, and multiply'. This method counts large numbers quickly too.",
+            },
         )
 
 
@@ -2097,6 +2130,14 @@ def gen_gauss_sum():
             f"양 끝에서 짝을 지어 더해 봐요: 1+{n}={n + 1}, 2+{n - 1}={n + 1}, … 모든 짝의 합이 {n + 1}로 똑같아요. 짝은 모두 {n}÷2={n // 2}쌍이니 {n + 1}×{n // 2}={ans}이에요.",
             [(str(n * n), "제곱이 아니라, 양 끝을 짝지어 더한 값이에요.")],
             detail=f"어린 가우스가 찾았다는 방법이에요: 1+2+…+n = n×(n+1)÷2. 수를 거꾸로도 써서 위아래로 더하면 왜 그런지 한눈에 보여요(세로 합이 모두 n+1). 등차수열의 합은 전부 '(첫+끝)×개수÷2'로 통해요.",
+            en={
+                "statement": f"What do you get when you add up all the whole numbers from 1 to {n}?",
+                "answer": str(ans),
+                "distractors": [str(n * n), str(ans + n), str(ans - n)],
+                "explanation": f"Pair the numbers from both ends and add: 1+{n}={n + 1}, 2+{n - 1}={n + 1}, … every pair sums to the same {n + 1}. There are {n}÷2={n // 2} pairs, so {n + 1}×{n // 2}={ans}.",
+                "mistakes": [(str(n * n), "It's not a square — it's the value from pairing the two ends and adding.")],
+                "detail": f"This is the method young Gauss is said to have found: 1+2+…+n = n×(n+1)÷2. Write the numbers backwards too and add them top to bottom, and you see why at a glance (every column sums to n+1). Every arithmetic-sequence sum works out to '(first+last)×count÷2'.",
+            },
         )
 
 
@@ -2423,6 +2464,14 @@ def gen_multiples_in_range():
             f"{div}의 배수는 {div}×1, {div}×2, {div}×3, …이에요. {limit}을 넘지 않는 가장 큰 배수는 {div}×{ans}={div * ans}이니 {div}×1부터 {div}×{ans}까지 모두 {ans}개. 즉 {limit}÷{div}의 몫이에요.",
             [(f"{ans + 1}개", f"{div}×{ans + 1}={div * (ans + 1)}은 {limit}을 넘어요. 몫까지만 세요.")],
             detail=f"'범위 안 배수 개수'는 나눗셈의 몫이에요: {limit}÷{div}={ans}. 배수는 일정 간격({div})으로 놓이니 개수는 곧 '몇 칸 들어가나'죠. 시작이 1이 아니면 '큰 쪽 몫 − 작은 쪽 몫'으로 빼서 구하면 돼요.",
+            en={
+                "statement": f"Among the whole numbers from 1 to {limit}, how many are multiples of {div}?",
+                "answer": _en_plural(ans, "multiple"),
+                "distractors": [_en_plural(ans + 1, "multiple"), _en_plural(ans - 1, "multiple"), _en_plural(ans + div, "multiple")],
+                "explanation": f"The multiples of {div} are {div}×1, {div}×2, {div}×3, …. The largest multiple not over {limit} is {div}×{ans}={div * ans}, so from {div}×1 to {div}×{ans} there are {ans} in all. That's the quotient of {limit}÷{div}.",
+                "mistakes": [(_en_plural(ans + 1, "multiple"), f"{div}×{ans + 1}={div * (ans + 1)} is over {limit}. Count only up to the quotient.")],
+                "detail": f"'How many multiples in a range' is a division quotient: {limit}÷{div}={ans}. Multiples sit at regular gaps ({div}), so the count is just 'how many fit'. If the range doesn't start at 1, find it by 'quotient of the top − quotient of the bottom'.",
+            },
         )
 
 
@@ -2522,6 +2571,14 @@ def gen_percent_of():
             f"{pct}%는 '전체를 100으로 봤을 때 {pct}만큼'이라는 뜻이에요. 그러니 {whole}명의 {pct}% = {whole}×{pct}÷100 = {ans}명이에요. (또는 1%가 {whole}÷100={whole // 100 if whole % 100 == 0 else whole / 100:g}명이니 {pct}배 해도 {ans}.)",
             [(f"{pct}명", f"{pct}는 퍼센트(비율)예요. 전체 {whole}명에 곱해서 실제 인원을 구해요.")],
             detail=f"백분율은 '100분의 몇'이라는 비율이에요. 전체의 {pct}%는 전체를 100등분한 것 중 {pct}조각. 반대로 '{ans}명은 전체의 몇 %인가?'는 {ans}÷{whole}×100으로 거꾸로 구해요. 할인·이자·통계가 다 백분율 위에 있어요.",
+            en={
+                "statement": f"At a school, {pct}% of the {whole} students wear glasses. How many students wear glasses?",
+                "answer": _en_plural(ans, "student"),
+                "distractors": [_en_plural(pct, "student"), _en_plural(whole - ans, "student"), _en_plural(ans + pct, "student")],
+                "explanation": f"{pct}% means '{pct} out of the whole seen as 100'. So {pct}% of {whole} = {whole}×{pct}÷100 = {ans}. (Or, since 1% is {whole}÷100={whole // 100 if whole % 100 == 0 else whole / 100:g}, multiplying by {pct} also gives {ans}.)",
+                "mistakes": [(_en_plural(pct, "student"), f"{pct} is a percent (a ratio). Multiply it by the whole of {whole} to get the actual number of people.")],
+                "detail": f"A percent is a ratio meaning 'so many out of 100'. {pct}% of the whole is {pct} slices when the whole is split into 100. Going the other way, '{ans} is what percent of the whole?' is found by {ans}÷{whole}×100. Discounts, interest, and statistics all rest on percentages.",
+            },
         )
 
 
@@ -2631,6 +2688,7 @@ def gen_least_to_share():
         r = candy % kids
         ans = (kids - r) % kids
         assert 0 < ans < kids
+        _cd = lambda k: f"{k} candy" if k == 1 else f"{k} candies"
         add(
             "leasttoshare", "NUMBER_OPERATION", 4, ["나머지", "최소 보충"],
             f"사탕 {candy}개를 친구 {kids}명에게 '똑같이' 나눠주려고 해요. 남거나 모자라지 않게 나누려면 사탕이 '최소' 몇 개 더 있어야 할까요?",
@@ -2638,6 +2696,14 @@ def gen_least_to_share():
             f"{candy}÷{kids}를 하면 한 명당 {candy // kids}개씩, {r}개가 남아요. 남은 {r}개로는 {kids}명에게 하나씩 더 못 주니 {kids}개를 채워야 다 같이 하나씩 더 받아요. 그래서 {kids}−{r}={ans}개가 더 필요해요.",
             [(f"{r}개", f"그건 남는 개수예요. 모두에게 하나씩 더 주려면 {kids}−{r}만큼 채워야 해요.")],
             detail=f"'똑같이 나누기'는 나머지가 열쇠예요. 나머지가 {r}이면 다음 배수까지 {kids}−{r}={ans}만큼만 더하면 딱 떨어져요(모두 한 개씩 더). 반대로 '최소 몇 개 빼면 딱 떨어질까?'는 나머지 {r}개를 빼면 되고요. 배수와 나머지를 오가는 감각이에요.",
+            en={
+                "statement": f"You want to share {candy} candies 'equally' among {kids} friends. To share with none left over and none short, at least how many more candies do you need?",
+                "answer": _cd(ans),
+                "distractors": [_cd(r), _cd(kids), _cd(ans + kids)],
+                "explanation": f"{candy}÷{kids} gives {candy // kids} each with {r} left over. The {r} left over aren't enough to give one more to all {kids} friends, so you need {kids} to fill up and everyone gets one more. That's why you need {kids}−{r}={ans} more.",
+                "mistakes": [(_cd(r), f"That's the number left over. To give everyone one more, you must fill up by {kids}−{r}.")],
+                "detail": f"For 'sharing equally', the remainder is the key. If the remainder is {r}, adding just {kids}−{r}={ans} reaches the next multiple and divides evenly (everyone one more). Going the other way, 'at least how many to take away to divide evenly?' is just removing the remainder of {r}. It's a feel for moving between multiples and remainders.",
+            },
         )
 
 
@@ -2810,6 +2876,14 @@ def gen_reverse_operation():
             f"거꾸로 되짚어요. 마지막에 {add_n}을 더했으니 먼저 {add_n}을 빼면 {result}−{add_n}={result - add_n}. 그 전에 {mul}을 곱했으니 {mul}로 나누면 {result - add_n}÷{mul}={start}이에요. (검산: {start}×{mul}+{add_n}={result}.)",
             [(str(result - add_n), "빼기까지만 하고 멈췄어요 — 곱한 것도 거꾸로 나눠야 해요.")],
             detail=f"'거꾸로' 풀 땐 연산 순서를 뒤집고 반대 연산을 써요: 더하기↔빼기, 곱하기↔나누기. 마지막 연산부터 반대로 풀면 처음 수가 나와요. 이건 방정식({mul}×□+{add_n}={result})을 푸는 것과 똑같아요.",
+            en={
+                "statement": f"A number is multiplied by {mul} and then {add_n} is added, giving {result}. What was the starting number?",
+                "answer": str(start),
+                "distractors": [str(result - add_n), str(start + 2), str(start - 1)],
+                "explanation": f"Work backwards. Since {add_n} was added last, subtract {add_n} first: {result}−{add_n}={result - add_n}. Since {mul} was multiplied before that, divide by {mul}: {result - add_n}÷{mul}={start}. (Check: {start}×{mul}+{add_n}={result}.)",
+                "mistakes": [(str(result - add_n), "You stopped after just subtracting — you also have to undo the multiplication by dividing.")],
+                "detail": f"To solve 'backwards', reverse the order of operations and use the opposite operation: add↔subtract, multiply↔divide. Undo from the last operation first and you get the starting number. This is exactly the same as solving the equation ({mul}×□+{add_n}={result}).",
+            },
         )
 
 
@@ -2953,6 +3027,14 @@ def gen_book_reading():
             f"먼저 {days}일 동안 읽은 양을 구해요: {perday}×{days}={read}쪽. 전체 {total}쪽에서 읽은 {read}쪽을 빼면 {total}−{read}={ans}쪽이 남아요.",
             [(f"{read}쪽", "그건 '읽은' 양이에요. 전체에서 빼야 '남은' 양이 나와요.")],
             detail="'매일 같은 양 × 날수'로 읽은 양을 구하고 전체에서 빼면 남은 양이에요(곱셈 다음 뺄셈). 거꾸로 '며칠이면 다 읽을까?'는 전체 ÷ 하루치로 구하고, 딱 안 나눠떨어지면 마지막 날을 하나 더해요.",
+            en={
+                "statement": f"You read a {total}-page book, {perday} pages every day. After reading for {days} days, how many pages are left?",
+                "answer": _en_plural(ans, "page"),
+                "distractors": [_en_plural(read, "page"), _en_plural(total - perday, "page"), _en_plural(ans - perday, "page")],
+                "explanation": f"First find how much you read over {days} days: {perday}×{days}={read} pages. Subtracting the {read} pages read from the total of {total} leaves {total}−{read}={ans} pages.",
+                "mistakes": [(_en_plural(read, "page"), "That's the amount you 'read'. Subtract it from the total to get the amount 'left'.")],
+                "detail": "Find the amount read with 'same amount each day × number of days', then subtract from the total for the amount left (multiply, then subtract). Going the other way, 'how many days to finish?' is total ÷ daily amount, and if it doesn't divide evenly, add one more day at the end.",
+            },
         )
 
 
@@ -3075,6 +3157,14 @@ def gen_prime_pick():
             f"소수는 약수가 1과 자기 자신, 딱 둘뿐인 수예요. 나머지 수들은 다른 약수가 더 있어요(예: {others[0]}={sm}×{others[0] // sm}). {prime}은 1과 {prime} 말고는 나누어떨어지지 않으니 소수예요.",
             [(str(others[0]), "그 수는 1과 자신 말고도 약수가 있어 소수가 아니에요.")],
             detail="소수는 '더 이상 쪼갤 수 없는 수의 원자'예요 — 모든 자연수는 소수들의 곱으로 딱 한 가지로 나타나요(소인수분해). 2,3,5,7,11,13,17,…처럼 불규칙하게 나타나고 끝없이 많다는 게 오래전에 증명됐어요.",
+            en={
+                "statement": f"Which of these four numbers is a 'prime' (a number divisible only by 1 and itself)? {prime}, {others[0]}, {others[1]}, {others[2]}",
+                "answer": str(prime),
+                "distractors": [str(others[0]), str(others[1]), str(others[2])],
+                "explanation": f"A prime has exactly two divisors, 1 and itself. The other numbers have more divisors (e.g. {others[0]}={sm}×{others[0] // sm}). {prime} is divisible by nothing except 1 and {prime}, so it is prime.",
+                "mistakes": [(str(others[0]), "That number has divisors besides 1 and itself, so it is not prime.")],
+                "detail": "Primes are 'the atoms of numbers that can't be split further' — every whole number is written as a product of primes in exactly one way (prime factorization). They appear irregularly like 2,3,5,7,11,13,17,… and it was proven long ago that there are infinitely many.",
+            },
         )
 
 
