@@ -2871,6 +2871,19 @@ def gen_repeating_pattern():
             f"색 {p}개가 반복되니 {p}개마다 처음으로 돌아와요. {n}{_eul(str(n))} {p}{_euro(str(p))} 나누면 {where}인 {color}{_copula(color)}.",
             [(pat[-1], "무늬의 마지막 색이 아니라, 몇 번째 자리(나머지)인지를 따져야 해요.")],
             detail="반복 무늬는 '한 묶음(주기)'이 몇 개인지부터 세요. 그 수로 나눈 '나머지'가 묶음 안에서 몇 번째인지 알려줘요(나머지가 0이면 묶음의 맨 끝). 주기 규칙은 요일·시계·달력에서도 똑같이 쓰여요.",
+            en=(lambda cmap: {
+                "statement": f"Beads are placed repeating in the order {' - '.join(cmap[c] for c in pat)}: "
+                             f"{' - '.join(cmap[c] for c in pat + pat)} - … . What color is the {n}th bead?",
+                "answer": cmap[color],
+                "distractors": [cmap[c] for c in others],
+                "explanation": f"The {p} colors repeat, so they return to the start every {p}. Dividing {n} by {p}, "
+                               + (f"the remainder is 0 — the last in a group (position {p})" if r == 0
+                                  else f"the remainder is {r} — position {r} in a group")
+                               + f", which is {cmap[color]}.",
+                "mistakes": [(cmap[pat[-1]], "It’s not the last color of the pattern — work out which position (the remainder) it is.")],
+                "detail": "For a repeating pattern, first count how many are in one group (the period). The remainder after dividing by "
+                          "that number tells you the position within the group (remainder 0 means the last). The same idea drives weekdays, clocks, and calendars.",
+            })({"빨강": "red", "파랑": "blue", "노랑": "yellow", "초록": "green"}),
         )
 
 
@@ -2931,6 +2944,17 @@ def gen_multiple_condition():
             f"{k}단 수를 크기 순으로 떠올려요: … {ans - k}, {ans}, {ans + k}. 이 중 {limit}보다 작은 가장 큰 수는 {ans}예요({ans + k}{_eun(str(ans + k))} {limit}보다 크거나 같아 안 돼요).",
             [(str(ans + k), f"{ans + k}{_eun(str(ans + k))} {limit}보다 작지 않아요. 조건을 넘겼어요."), (str(limit), f"{limit}{_eun(str(limit))} {k}로 나누어떨어지지 않을 수 있어요. {k}단 수여야 해요.")],
             detail=f"'○보다 작은 △의 배수 중 가장 큰 수'는 △단(배수)을 순서대로 떠올리며 조건 경계 바로 아래를 찾는 거예요. {limit}÷{k}의 몫만큼 {k}를 곱하면 한 번에 나오기도 해요. 조건(부등호)과 배수를 함께 따지는 연습이에요.",
+            en={
+                "statement": f"Among numbers less than {limit}, what is the largest one divisible by {k} (a multiple of {k})?",
+                "answer": str(ans),
+                "distractors": [str(ans + k), str(ans - k), str(limit)],
+                "explanation": f"List the multiples of {k} in order: … {ans - k}, {ans}, {ans + k}. The largest one under {limit} is "
+                               f"{ans} ({ans + k} is {limit} or more, so it’s out).",
+                "mistakes": [(str(ans + k), f"{ans + k} is not less than {limit} — it breaks the condition."),
+                             (str(limit), f"{limit} may not be divisible by {k}; it has to be a multiple of {k}.")],
+                "detail": f"'The largest multiple of △ under ○' means listing △’s multiples and finding the one just below the boundary. "
+                          f"Multiplying {k} by the quotient of {limit}÷{k} gives it in one step. It practices combining a condition (inequality) with multiples.",
+            },
         )
 
 
