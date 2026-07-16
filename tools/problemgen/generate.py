@@ -4760,6 +4760,15 @@ def gen_makesquare():
             [(str(res + 1), "필요 이상으로 곱했어요. 지수가 홀수인 소인수만 딱 한 번씩 더 곱하면 돼요.")],
             detail="완전제곱수는 소인수분해했을 때 모든 지수가 짝수인 수예요. 그래서 지수가 홀수인 소인수마다 하나씩 더 곱해 "
             "짝수로 만들면 가장 작은 곱수가 나와요. 소인수의 지수로 제곱수를 판별하는 정수론 문제예요.",
+            en={
+                "statement": f"You want to multiply {n} by a natural number to make it a perfect square (some number squared). What is the smallest natural number you must multiply by?",
+                "answer": str(res),
+                "distractors": [str(c) for c in _pick_distractors(res, [res + 1, res * 2, res + 2, res + 3])],
+                "explanation": f"{n} = {_prime_factor_str(n)}. A perfect square must have every prime factor raised to an even exponent. "
+                f"Multiplying in one more of each prime that has an odd exponent, {', '.join(map(str, odd_primes))}, evens them out: {n}×{res} = {n * res} = {root}².",
+                "mistakes": [(str(res + 1), "You multiplied by more than needed. Multiply in each prime with an odd exponent exactly once more.")],
+                "detail": "A perfect square is a number whose prime factorization has every exponent even. So multiplying in one more of each prime factor with an odd exponent makes them all even, giving the smallest multiplier. A number-theory problem that identifies squares by their prime exponents.",
+            },
         )
 
 
@@ -4782,6 +4791,14 @@ def gen_compose():
             [(str(seq[-2]), "한 번 덜 돌렸어요. 정확히 {}번 반복한 값을 구하세요.".format(d))],
             detail="같은 규칙(함수)을 반복해서 적용하면 값이 규칙적으로 바뀌어요. 한 단계씩 차근차근 계산해 나가는 게 안전하고, "
             "이런 반복은 점화식·수열의 뿌리예요.",
+            en={
+                "statement": f"When you put a number into a machine, out comes 'times {a}, plus {b}'. Starting with {x0}, you feed each result back in, passing through the machine {d} times in all. What is the final number that comes out?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [a * ans, ans + b, seq[-2], ans + a])],
+                "explanation": f"Each pass through the machine is '×{a}, +{b}': {steps}. After {d} passes the final value is {ans}.",
+                "mistakes": [(str(seq[-2]), f"You ran it one time too few. Find the value after exactly {d} repetitions.")],
+                "detail": "Applying the same rule (function) over and over changes the value in a regular way. Working through it one step at a time is the safe approach, and this kind of repetition is the root of recurrence relations and sequences.",
+            },
         )
 
 
@@ -4798,6 +4815,15 @@ def gen_euler():
             [(f"{v + f}개", "−2를 빼먹었어요. 오일러 공식은 꼭짓점+면−2가 모서리예요.")],
             detail="볼록 다면체에서는 꼭짓점(V)−모서리(E)+면(F)=2가 항상 성립해요(오일러 공식). 셋 중 둘을 알면 나머지를 "
             "바로 구할 수 있어요. 공간 도형을 잇는 아름다운 규칙이에요.",
+            en={
+                "statement": f"A convex polyhedron has {v} vertices and {f} faces. How many edges does this polyhedron have in all?",
+                "answer": f"{ans} edges",
+                "distractors": [f"{c} edges" for c in _pick_distractors(ans, [v + f, v * f // 4, ans + 2, ans - 2])],
+                "explanation": f"A convex polyhedron always satisfies 'vertices − edges + faces = 2' (Euler's formula). Rearranging for edges: "
+                f"edges = vertices + faces − 2 = {v} + {f} − 2 = {ans}.",
+                "mistakes": [(f"{v + f} edges", "You forgot to subtract 2. Euler's formula gives edges = vertices + faces − 2.")],
+                "detail": "In a convex polyhedron, vertices (V) − edges (E) + faces (F) = 2 always holds (Euler's formula). Knowing two of the three gives the last one right away. A beautiful rule tying solid figures together.",
+            },
         )
 
 
@@ -4815,6 +4841,15 @@ def gen_atleastprob():
             [(f"1/{whole}", "그건 '모두 뒷면'일 확률이에요. 구하려는 건 그 여사건(1−그 값)이에요.")],
             detail="'적어도 하나'는 반대(여사건) '하나도 없음'을 구해 1에서 빼는 게 훨씬 쉬워요. 모두 뒷면 확률 (1/2)^n을 "
             "1에서 빼면 답이에요. 여사건은 '적어도' 문제의 강력한 도구예요.",
+            en={
+                "statement": f"You toss {n} fair coins at the same time. What is the probability that at least one comes up heads?",
+                "answer": ans,
+                "distractors": [f"1/{whole}", "1/2", f"{n}/{whole}"],
+                "explanation": f"The opposite of 'at least one heads' is 'all tails'. The probability of all tails is (1/2) multiplied {n} times, which is 1/{whole}; "
+                f"subtracting from 1 gives {whole - 1}/{whole}.",
+                "mistakes": [(f"1/{whole}", "That is the probability of 'all tails'. You want its complement (1 − that value).")],
+                "detail": "For 'at least one', it's far easier to find the complement 'none at all' and subtract from 1. Subtracting the all-tails probability (1/2)^n from 1 gives the answer. The complement is a powerful tool for 'at least' problems.",
+            },
         )
 
 
@@ -5371,6 +5406,16 @@ def gen_totient():
              (f"{ans + 1}개", "1은 모든 수와 서로소예요. 빠뜨리기 쉬우니 포함해서 세요.")],
             detail="오일러 피 함수 φ(n)은 'n 이하에서 n과 서로소인 수의 개수'예요. n의 서로 다른 소인수 p마다 (1−1/p)를 곱하면 구해져요 — "
             "전체 n개에서 각 소인수의 배수 비율을 곱으로 덜어내는 거예요(포함배제와 같은 원리). 약수·서로소를 다루는 정수론의 핵심 함수예요.",
+            en={
+                "statement": f"Among the natural numbers from 1 to {n}, how many are coprime to {n} (share only 1 as a common factor)?",
+                "answer": f"{ans} numbers",
+                "distractors": [f"{c} numbers" for c in _pick_distractors(ans, [n // 2, ans + 1, ans - 1, ans + 2])],
+                "explanation": f"Since {n} = {_prime_factor_str(n)}, we sieve out the multiples of each prime factor {', '.join(map(str, primes))}. "
+                f"The count of coprime numbers is {prod} = {ans}. (A product that removes the fraction of multiples of each prime factor from the whole.)",
+                "mistakes": [(f"{n // 2} numbers", "Removing only the even numbers isn't enough. You must sieve out the multiples of every prime factor without double-counting."),
+                             (f"{ans + 1} numbers", "1 is coprime to every number. It's easy to miss, so be sure to count it.")],
+                "detail": "Euler's totient function φ(n) is 'the count of numbers up to n that are coprime to n'. For each distinct prime factor p of n, multiply by (1−1/p) — removing the fraction of multiples of each prime factor from the total n (the same idea as inclusion-exclusion). It's the core number-theory function for divisors and coprimality.",
+            },
         )
 
 
@@ -5391,6 +5436,17 @@ def gen_josephus():
              (f"1번", "인원이 2의 거듭제곱일 때만 1번이 살아남아요. 남는 인원만큼 자리가 밀려요.")],
             detail="원을 돌며 한 명씩 건너뛰어 제거하는 '조세푸스 문제'예요. 인원이 2의 거듭제곱이면 시작(1번)이 살아남는 성질을 이용해, "
             "n=2^m+L로 쪼개면 생존자는 2L+1번이 돼요. 2의 거듭제곱이라는 뼈대에서 규칙을 일반화하는 대표 문제예요.",
+            en={
+                "statement": f"{n} people sit in a circle, numbered in order starting from 1. Keep number 1 and remove number 2, keep number 3 and remove number 4… "
+                f"Skipping one person at a time as you go around removing them, which numbered person is the very last one left?",
+                "answer": f"person {ans}",
+                "distractors": [f"person {c}" for c in _pick_distractors(ans, [n, n - 1, ans + 2, 1])],
+                "explanation": f"Write {n} as '{power} (a power of 2) + {leftover}'. When the count is exactly a power of 2, number 1 always survives. "
+                f"After {leftover} removals have advanced past that point, the surviving seat is 2×{leftover}+1 = person {ans}.",
+                "mistakes": [(f"person {n}", "The last number isn't the survivor. Recount the seat using the nearest power of 2."),
+                             (f"person 1", "Number 1 only survives when the count is exactly a power of 2. The leftover people shift the surviving seat along.")],
+                "detail": "This is the 'Josephus problem', removing every other person around a circle. Using the fact that when the count is a power of 2 the start (number 1) survives, split n = 2^m + L to get survivor = person 2L+1. A classic problem of generalizing a rule from the power-of-2 skeleton.",
+            },
         )
 
 
@@ -5411,6 +5467,18 @@ def gen_spacediag():
              (f"{ans - 1}개", "시작하는 첫 칸도 한 개로 세요. 넘는 칸막이 수와 지나는 칸 수를 헷갈리기 쉬워요.")],
             detail="대각선이 지나는 단위정육면체 수는 3차원 포함배제로 세요 — 세 방향 칸막이를 넘는 횟수 (a+b+c)에서, 두 방향 칸막이를 동시에 넘는 모서리(gcd(a,b) 등)를 빼고, "
             "세 방향을 동시에 넘는 꼭짓점(gcd(a,b,c))을 다시 더해요. 2차원(a+b−gcd)을 공간으로 확장한 아름다운 정수·기하 문제예요.",
+            en={
+                "statement": f"You stack {a * b * c} small cubes into a rectangular box, {a} wide, {b} deep, and {c} tall, with no gaps. "
+                f"If you draw the diagonal that runs through the inside from one corner to the farthest opposite corner, how many small cubes does this diagonal pass through?",
+                "answer": f"{ans} small cubes",
+                "distractors": [f"{c2} small cubes" for c2 in _pick_distractors(ans, [naive, ans + 1, ans - 1, naive - 1])],
+                "explanation": f"The diagonal enters a new cube each time it crosses a partition in the width, depth, or height direction. There are {a}+{b}+{c}={naive} crossings, "
+                f"but an edge where two partitions are crossed 'at once' (as many as their gcd) must be counted only once, and a corner where three are crossed at once is added back. "
+                f"{naive} − ({gcd(a, b)}+{gcd(b, c)}+{gcd(c, a)}) + {gcd(gcd(a, b), c)} = {ans}.",
+                "mistakes": [(f"{naive} small cubes", "You can't just add width+depth+height. You must subtract and add back the places where crossings overlap at edges and corners (inclusion-exclusion)."),
+                             (f"{ans - 1} small cubes", "Count the very first cube too. It's easy to confuse the number of partitions crossed with the number of cubes passed through.")],
+                "detail": "The number of unit cubes a diagonal passes through is counted by 3D inclusion-exclusion — from the crossings in all three directions (a+b+c), subtract the edges where two directions are crossed at once (gcd(a,b), etc.), then add back the corners where all three are crossed at once (gcd(a,b,c)). A beautiful number-and-geometry problem extending the 2D case (a+b−gcd) into space.",
+            },
         )
 
 
@@ -5433,6 +5501,17 @@ def gen_derange():
              (f"{ans - 1}가지", "포함배제에서 더하고 빼는 부호를 놓치기 쉬워요. 점화식으로 교차검증하세요.")],
             detail="아무도 제자리에 오지 않는 순열을 '교란순열(완전순열) D(n)'이라 해요. 전체 n!에서 '누군가는 제자리인' 경우를 포함배제로 덜어내면 "
             "D(n)=n!(1−1/1!+1/2!−…)이 되고, 점화식 D(n)=(n−1)(D(n−1)+D(n−2))로도 구해요. '적어도' 조건을 뒤집어 세는 대표 문제예요.",
+            en={
+                "statement": f"{n} people each have their own name tag. All the tags are collected, shuffled, and handed back out one per person. "
+                f"In how many ways does it happen that no one gets their own name tag?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(int(c), "way") for c in _pick_distractors(ans, [allperm, ans + 1, ans - 1, allperm - 1])],
+                "explanation": f"The total number of ways {n} people can receive the tags is {n}!={allperm}. Removing the cases where 'at least one person gets their own' by inclusion-exclusion, "
+                f"or using the rule D(n)=(n−1)×(D(n−1)+D(n−2)), gives D({n})={ans}.",
+                "mistakes": [(_en_plural(allperm, "way"), f"That's the unrestricted total of all permutations ({n}!={allperm}). You must remove the 'no one in their own place' condition."),
+                             (_en_plural(ans - 1, "way"), "It's easy to lose track of the plus/minus signs in inclusion-exclusion. Cross-check with the recurrence.")],
+                "detail": "A permutation where no one ends up in their own place is called a 'derangement D(n)'. Removing the 'someone is in their own place' cases from the total n! by inclusion-exclusion gives D(n)=n!(1−1/1!+1/2!−…), and it also comes from the recurrence D(n)=(n−1)(D(n−1)+D(n−2)). A classic problem of counting by inverting an 'at least' condition.",
+            },
         )
 
 
@@ -5674,6 +5753,9 @@ def gen_crt3():
         period = 1
         for _, m in rem_mod:
             period *= m
+        conds_en = [f"{r} when divided by {m}" for r, m in rem_mod]
+        cond_en = ", ".join(conds_en[:-1]) + ", and " + conds_en[-1]
+        mods_en = ", ".join(str(m) for _, m in rem_mod)
         add(
             "crt3", "NUMBER_OPERATION", 9, ["중국인의 나머지 정리", "조건 좁혀 가기"],
             f"{cond}{_iga(str(rem_mod[-1][0]))} 남는 가장 작은 자연수는 무엇일까요?",
@@ -5684,6 +5766,16 @@ def gen_crt3():
              (str(n + rem_mod[0][1]), "한 조건만 맞추면 안 돼요. 세 조건을 동시에 만족하는 수를 찾으세요.")],
             detail="서로소인 여러 수로 나눈 나머지가 모두 정해지면, 그 조건을 동시에 만족하는 수는 '나눗수들의 곱'을 주기로 반드시 하나씩 존재해요"
             "(중국인의 나머지 정리). 한 조건씩 겹쳐 좁히면 가장 작은 답을 손으로 찾을 수 있어요. 나머지 세계의 연립방정식이에요.",
+            en={
+                "statement": f"What is the smallest natural number that leaves {cond_en}?",
+                "answer": str(n),
+                "distractors": [str(c) for c in _pick_distractors(n, [n + period, n + rem_mod[0][1], n - rem_mod[0][1], n + 1])],
+                "explanation": f"The three divisors {mods_en} are pairwise coprime, so numbers satisfying the conditions repeat every {period} (their product) — the Chinese Remainder Theorem. "
+                f"Narrowing one condition at a time, the smallest such value is {n}.",
+                "mistakes": [(str(n + period), "That's the next number satisfying the conditions. You need the smallest one."),
+                             (str(n + rem_mod[0][1]), "Matching just one condition isn't enough. Find a number that satisfies all three at once.")],
+                "detail": "When the remainders on division by several pairwise-coprime numbers are all fixed, exactly one number satisfying every condition exists in each period of 'the product of the divisors' (the Chinese Remainder Theorem). Narrowing condition by condition, you can find the smallest answer by hand. It's a system of simultaneous equations in the world of remainders.",
+            },
         )
 
 
@@ -5704,6 +5796,17 @@ def gen_fibsum():
              (str(_fib(n + 1)), "한 항 어긋났어요. 부분합은 (n+1)째가 아니라 (n+2)째 항에서 1을 뺀 값이에요.")],
             detail="피보나치 부분합 F1+F2+…+Fn = F(n+2)−1이에요. 각 항을 이웃 항의 차로 바꾸면(F(k) = F(k+2)−F(k+1)) 사슬처럼 지워져 "
             "맨 끝 F(n+2)−1만 남기 때문이에요(텔레스코핑). 수열의 합과 한 항 사이의 숨은 관계를 보는 문제예요.",
+            en={
+                "statement": f"There is a Fibonacci sequence {terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, …, where each number is the sum of the two before it. "
+                f"What do you get when you add up all the terms from the 1st up to the {n}th?",
+                "answer": str(total),
+                "distractors": [str(c) for c in _pick_distractors(total, [fplus2, _fib(n + 1), total + 1, total - 1])],
+                "explanation": f"The sum of Fibonacci numbers from the start follows a rule — the sum of the 1st through the nth term is exactly 1 less than the (n+2)th term. "
+                f"The {n + 2}th term is {fplus2}, so the sum is {fplus2} − 1 = {total}.",
+                "mistakes": [(str(fplus2), "Not the (n+2)th term itself — the partial sum is that value minus 1."),
+                             (str(_fib(n + 1)), "Off by one term. The partial sum is the (n+2)th term minus 1, not the (n+1)th.")],
+                "detail": "The Fibonacci partial sum F1+F2+…+Fn = F(n+2)−1. Rewriting each term as a difference of neighbors (F(k) = F(k+2)−F(k+1)) makes them cancel in a chain (telescoping), leaving only F(n+2)−1. A problem about the hidden relationship between a sum of terms and a single term.",
+            },
         )
 
 
@@ -5724,6 +5827,17 @@ def gen_diagcross():
             figure={"type": "POLYGON", "params": {"n": n, "diagonals": 1}},
             detail="볼록 다각형에서 (어느 세 대각선도 한 점에 모이지 않으면) 내부 교점 하나는 꼭짓점 4개와 1:1로 대응해요 — 네 점이 만드는 사각형의 "
             "두 대각선 교점이 딱 하나이기 때문이에요. 그래서 교점 수 = C(n,4). 도형 세기를 조합으로 바꾸는 대표 문제예요.",
+            en={
+                "statement": f"You draw all the diagonals of a convex {n}-gon. If no three diagonals meet at a single interior point, "
+                f"how many interior intersection points do the diagonals make inside the polygon?",
+                "answer": f"{ans} points",
+                "distractors": [f"{c} points" for c in _pick_distractors(ans, [diags, comb(n, 3), comb(n, 2), ans + 2])],
+                "explanation": f"Each interior intersection point is fixed by choosing exactly 4 vertices — it's where the two diagonals of the quadrilateral those four points form cross. "
+                f"So the number of points is the number of ways to choose 4 of the {n} vertices, C({n},4) = {ans}.",
+                "mistakes": [(f"{diags} points", "That's the number of diagonals. Count intersection points by choosing 4 vertices."),
+                             (f"{comb(n, 3)} points", "Choosing 3 won't fix a point; you need 4 (the two diagonals of a quadrilateral).")],
+                "detail": "In a convex polygon (when no three diagonals meet at one point) each interior intersection point corresponds one-to-one with a choice of 4 vertices — because those four points make a quadrilateral with exactly one crossing of its two diagonals. So the number of points = C(n,4). A classic problem of turning a geometric count into a combination.",
+            },
         )
 
 
@@ -5747,6 +5861,17 @@ def gen_partition():
              (f"{ans + 1}가지", "빠뜨리거나 같은 걸 두 번 세기 쉬워요. 큰 수부터 체계적으로 나열해 확인하세요.")],
             detail="자연수 n을 순서 무시하고 자연수의 합으로 쪼개는 가짓수를 '분할수 p(n)'이라 해요. 순서를 구별하는 '합성'(2^(n−1)가지)과 달리, "
             "큰 조각부터 놓는 규칙으로 빠짐없이 세요. 딱 떨어지는 공식이 없어 체계적 나열이 핵심인 정수·조합의 고전이에요.",
+            en={
+                "statement": f"In how many ways can {n} be written as a sum of natural numbers each at least 1? "
+                f"Sums that differ only in the order of the addends count as the same (for example, 1+2 and 2+1 are the same).",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [ordered, ans + 1, ans - 1, n])],
+                "explanation": f"Count without gaps or repeats by placing the largest part first. Starting from {n}={n} and breaking off one smaller piece at a time gives {ans} ways in all "
+                f"(sums differing only in order count once).",
+                "mistakes": [(f"{ordered} ways", "That's when order is 'distinguished' (e.g. 1+2 and 2+1 as different). Ignoring order gives far fewer."),
+                             (f"{ans + 1} ways", "It's easy to miss some or count the same one twice. List systematically from the largest part to check.")],
+                "detail": "The number of ways to break a natural number n into a sum of naturals ignoring order is called the 'partition number p(n)'. Unlike compositions, which distinguish order (2^(n−1) ways), count them by placing the largest part first so nothing is missed. With no neat closed formula, systematic listing is the key — a classic of number theory and combinatorics.",
+            },
         )
 
 
