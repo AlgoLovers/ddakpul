@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -210,6 +211,8 @@ private fun ReadAloudButton(
                     } else {
                         stringResource(R.string.solve_read_aloud)
                     },
+                softWrap = false,
+                maxLines = 1,
             )
         }
         // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지).
@@ -238,7 +241,11 @@ private fun ProblemHeaderRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             if (isReview) {
                 Text(
                     text = stringResource(R.string.solve_review_badge),
@@ -252,12 +259,15 @@ private fun ProblemHeaderRow(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
             )
         }
         // 연습장(손풀이) + 읽어주기 — 사고력 문제는 끄적이며 풀어야 하고, 글 서툰 아이는 듣게.
+        // 버튼 텍스트가 한 글자씩 세로로 쪼개지지 않게, 버튼 영역은 줄지 않도록(위 라벨이 weight로 흡수).
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Top) {
             TextButton(onClick = onScratchpad) {
-                Text(stringResource(R.string.solve_scratchpad))
+                Text(stringResource(R.string.solve_scratchpad), softWrap = false, maxLines = 1)
             }
             ReadAloudButton(speaker = speaker, text = statement)
         }
