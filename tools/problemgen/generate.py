@@ -1947,6 +1947,14 @@ def gen_coin_balance():
             f"저울 한 번의 결과는 '왼쪽이 무겁다·오른쪽이 무겁다·평형' 세 가지예요. 그래서 {k}번 재면 3×3×…={3 ** k}가지까지 구분할 수 있어요. 동전을 세 무더기로 나눠 두 무더기를 저울에 올리는 식으로 후보를 매번 1/3로 줄이면, {n}개는 {k}번이면 충분해요(한 번 덜 재면 {3 ** (k - 1)}가지뿐이라 부족).",
             [(f"{n - 1}번", "한 개씩 다 재 볼 필요는 없어요. 세 무더기로 나누면 훨씬 빨라요.")],
             detail=f"핵심은 '한 번의 정보량'이에요. 저울은 결과가 3가지라 3진법 탐색이 되고, k번이면 3^k가지를 가릴 수 있어요. 그래서 필요한 횟수는 3^k ≥ {n}을 만족하는 가장 작은 k. 만약 '가벼운지 무거운지도 모르는 가짜'라면 정보가 더 필요해 횟수가 늘어요. 이분탐색(2가지)보다 저울(3가지)이 더 빠른 이유죠.",
+            en={
+                "statement": f"One of {n} identical-looking coins is a slightly lighter counterfeit. Using only a two-pan balance scale, what is the fewest number of weighings needed to be sure of finding the fake?",
+                "answer": _en_plural(k, "weighing"),
+                "distractors": [_en_plural(k - 1, "weighing"), _en_plural(k + 1, "weighing"), _en_plural(n - 1, "weighing")],
+                "explanation": f"One weighing has three possible results: 'left side heavier, right side heavier, or balanced'. So with {k} weighings you can tell apart up to 3×3×…={3 ** k} cases. By splitting the coins into three piles and putting two of them on the scale, you cut the candidates to 1/3 each time, so {n} coins need only {k} weighings (one weighing fewer leaves only {3 ** (k - 1)} cases — not enough).",
+                "mistakes": [(_en_plural(n - 1, "weighing"), "You don't need to weigh them one at a time. Splitting into three piles is much faster.")],
+                "detail": f"The key is 'how much information one weighing gives'. A balance has 3 results, so it becomes a base-3 (ternary) search, and {k} weighings can distinguish 3^k cases. So the number needed is the smallest k with 3^k ≥ {n}. If the fake could be either lighter or heavier (unknown), you'd need more information and more weighings. That's why a balance (3 results) is faster than a binary search (2 results).",
+            },
         )
 
 
@@ -1962,6 +1970,14 @@ def gen_circular_perm():
             f"둥근 탁자는 '돌리면 같은' 자리라서 한 명을 기준으로 콱 고정해요. 그러면 나머지 {n - 1}명을 한 줄로 세우는 것과 똑같아져 ({n}−1)! = {n - 1}×…×1 = {ans}가지예요. 한 줄({factorial(n)}가지)로 세면 {n}가지 회전을 중복으로 세게 돼요.",
             [(f"{factorial(n)}가지", "그건 한 줄로 세운 수예요. 원탁은 회전이 같으니 자리 수로 나눠요.")],
             detail=f"직선으로 세우면 {n}! = {factorial(n)}가지지만, 원탁에선 {n}가지 회전이 모두 '같은 배치'라 {n}으로 나눠 {factorial(n)}÷{n} = {ans}가지. 이렇게 '중복으로 센 만큼 나누기'는 경우의 수의 핵심 도구예요(목걸이처럼 뒤집기까지 같다고 보면 2로 한 번 더 나눠요).",
+            en={
+                "statement": f"In how many ways can {n} people sit around a round table? (arrangements that become the same after rotating count as one)",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(factorial(n), "way"), _en_plural(ans * 2, "way"), _en_plural(ans - 1, "way")],
+                "explanation": f"A round table has seats that are 'the same when rotated', so pin one person down as a reference. Then it becomes exactly like lining up the remaining {n - 1} people in a row: ({n}−1)! = {n - 1}×…×1 = {ans} ways. Counting them in a row ({factorial(n)} ways) would count the {n} rotations as duplicates.",
+                "mistakes": [(_en_plural(factorial(n), "way"), "That's the count for a straight row. At a round table the rotations are the same, so divide by the number of seats.")],
+                "detail": f"In a straight line it's {n}! = {factorial(n)} ways, but at a round table all {n} rotations are the 'same arrangement', so divide by {n}: {factorial(n)}÷{n} = {ans} ways. This 'divide by however much you overcounted' is a core tool of counting (if flips also count as the same, like a necklace, divide by 2 once more).",
+            },
         )
 
 
@@ -2303,6 +2319,14 @@ def gen_round_trip():
             f"평균 속력은 '(전체 거리) ÷ (전체 시간)'이지, 두 속력의 산술평균이 아니에요. 편도 거리를 {dist}km라 두면 갈 때 {dist}÷{va}={dist // va}시간, 올 때 {dist}÷{vb}={dist // vb}시간. 왕복 거리 {2 * dist}km ÷ 전체 시간 {dist // va + dist // vb}시간 = {avg}km/h예요. 느린 쪽에 시간을 더 쓰니 단순 평균보다 낮아져요.",
             [(f"{(va + vb) // 2}km", "두 속력을 그냥 더해 반으로 나누면 안 돼요 — 느린 구간에 시간이 더 걸리거든요.")],
             detail="같은 '거리'를 다른 속력으로 갈 때의 평균은 산술평균이 아니라 조화평균(2ab/(a+b))이에요. 직관과 달리 늘 느린 쪽에 더 끌려가요. 반대로 같은 '시간'을 다른 속력으로 가면 그땐 산술평균이 맞고요 — '무엇이 같은가(거리냐 시간이냐)'를 먼저 보는 게 핵심이에요.",
+            en={
+                "statement": f"Going from home to school you travel at {va} km/h, and coming back at {vb} km/h. What is the round-trip 'average speed', in km/h?",
+                "answer": f"{avg} km/h",
+                "distractors": [f"{(va + vb) // 2} km/h", f"{va + vb} km/h", f"{avg - 5} km/h"],
+                "explanation": f"Average speed is '(total distance) ÷ (total time)', not the arithmetic mean of the two speeds. Taking the one-way distance as {dist} km, going takes {dist}÷{va}={dist // va} hours and coming back {dist}÷{vb}={dist // vb} hours. Round-trip distance {2 * dist} km ÷ total time {dist // va + dist // vb} hours = {avg} km/h. You spend more time on the slower leg, so it comes out lower than the plain average.",
+                "mistakes": [(f"{(va + vb) // 2} km/h", "You can't just add the two speeds and halve them — the slower stretch takes more time.")],
+                "detail": "The average when covering the same 'distance' at different speeds is not the arithmetic mean but the harmonic mean (2ab/(a+b)). Contrary to intuition it's always pulled toward the slower side. Conversely, covering the same 'time' at different speeds does give the arithmetic mean — the key is to first see 'what is the same (distance or time)'.",
+            },
         )
 
 
@@ -2708,6 +2732,14 @@ def gen_power_of_two():
             f"한 번 접을 때마다 겹이 '2배'가 돼요. 1번에 2겹, 2번에 4겹, 3번에 8겹… {n}번이면 2를 {n}번 곱한 값 = {ans}겹이에요.",
             [(f"{2 * n}겹", "2씩 더하는 게 아니라 2씩 곱해요. 접을 때마다 두 배!")],
             detail=f"'매번 2배'는 폭발적으로 커져요(2,4,8,16,32…). 겨우 {n}번 접었는데 {ans}겹! 실제로 종이를 7~8번 이상 접기 어려운 이유죠. 이 '2배씩(지수) 성장'은 세균 번식·소문 퍼지기·복리 이자에도 똑같이 나타나요.",
+            en={
+                "statement": f"Folding a sheet of paper in half makes it 2 layers thick, folding again makes 4, again makes 8… folding it {n} times like this, how many layers thick is it?",
+                "answer": _en_plural(ans, "layer"),
+                "distractors": [_en_plural(2 * n, "layer"), _en_plural(ans // 2, "layer"), _en_plural(ans + 2, "layer")],
+                "explanation": f"Every fold 'doubles' the layers. 2 layers after 1 fold, 4 after 2, 8 after 3… so {n} folds is 2 multiplied {n} times = {ans} layers.",
+                "mistakes": [(_en_plural(2 * n, "layer"), "You don't add 2 each time, you multiply by 2 — double with every fold!")],
+                "detail": f"'Doubling every time' grows explosively (2,4,8,16,32…). Just {n} folds and it's {ans} layers! That's why it's hard to fold real paper more than 7 or 8 times. This 'doubling (exponential) growth' shows up the same way in bacteria multiplying, rumors spreading, and compound interest.",
+            },
         )
 
 
@@ -2838,6 +2870,14 @@ def gen_salt_concentration():
             f"농도는 '소금물 전체 중 소금이 차지하는 비율'이에요. 소금물 전체는 물+소금 = {water}+{salt}={total}g. 그중 소금이 {salt}g이니 농도 = {salt}÷{total}×100 = {ans}%예요.",
             [(f"{salt * 100 // water}%", "물 무게가 아니라 '소금물 전체(물+소금)'로 나눠야 해요.")],
             detail="농도 = 소금 ÷ 소금물(물+소금) × 100. 분모가 '전체'라는 게 핵심이에요(물만 넣으면 틀려요). 물을 더 부으면 소금 양은 그대로인데 전체가 커져 농도가 낮아지고, 증발시키면 진해져요 — 소금 양을 고정해 두고 생각하면 쉬워요.",
+            en={
+                "statement": f"You fully dissolve {salt} g of salt in {water} g of water. What is the concentration (strength) of this salt water, in %?",
+                "answer": f"{ans}%",
+                "distractors": [f"{salt * 100 // water}%", f"{ans + 3}%", f"{ans - 3}%"],
+                "explanation": f"Concentration is 'the fraction of the whole salt water that is salt'. The whole salt water is water+salt = {water}+{salt}={total} g. Of that, {salt} g is salt, so concentration = {salt}÷{total}×100 = {ans}%.",
+                "mistakes": [(f"{salt * 100 // water}%", "You have to divide by the 'whole salt water (water+salt)', not by the weight of the water.")],
+                "detail": "Concentration = salt ÷ salt water (water+salt) × 100. The key is that the denominator is the 'whole' (using just the water is wrong). Add more water and the amount of salt stays the same while the whole grows, so the concentration drops; evaporate it and it gets stronger — it's easy if you hold the amount of salt fixed.",
+            },
         )
 
 
@@ -3043,6 +3083,14 @@ def gen_tank_fill_drain():
             f"채우기와 빼기가 동시에 일어나니 '1분에 실제로 늘어나는 양'을 봐요: {fill}−{drain}={net}L씩 늘어요. 용량 {cap}L를 이 속도로 채우니 {cap}÷{net}={ans}분이 걸려요.",
             [(f"{cap // fill}분", "새는 물을 빼먹었어요. 실제로 늘어나는 양은 (넣는 양 − 새는 양)이에요.")],
             detail="'동시에 반대로 작용'하는 문제는 순수 증가량(넣기 − 빼기)으로 바꾸면 간단해져요. 새는 양이 넣는 양보다 크면 영영 못 채우고, 같으면 그대로예요. 일 문제(하나는 만들고 하나는 부수는)도 똑같은 '순 일률'로 풀려요.",
+            en={
+                "statement": f"An empty water tank (capacity {cap} L) has an inflow pipe that fills {fill} L per minute, while at the same time a leak drains {drain} L per minute. How many minutes does it take for the tank to fill up?",
+                "answer": _en_plural(ans, "minute"),
+                "distractors": [_en_plural(cap // fill, "minute"), _en_plural(cap // drain, "minute"), _en_plural(ans + 2, "minute")],
+                "explanation": f"Since filling and draining happen at the same time, look at 'how much actually builds up each minute': {fill}−{drain}={net} L more per minute. Filling the {cap} L capacity at this rate takes {cap}÷{net}={ans} minutes.",
+                "mistakes": [(_en_plural(cap // fill, "minute"), "You left out the leaking water. The amount that actually builds up is (inflow − leak).")],
+                "detail": "Problems with 'opposite actions happening at once' get simple when you switch to the net gain (inflow − leak). If the leak is bigger than the inflow it never fills; if they're equal it stays put. Work problems (one builds while another tears down) solve with the same 'net rate'.",
+            },
         )
 
 
@@ -3148,6 +3196,14 @@ def gen_double_discount():
             f"할인은 '남은 가격에' 차례로 적용돼요. 먼저 {d1}% 할인하면 {100 - d1}%가 남아 {price}×{100 - d1}÷100={after1}원. 여기서 다시 {d2}% 할인하면 {after1}×{100 - d2}÷100={ans}원이에요.",
             [(f"{naive}원", f"두 할인율을 더해서({d1}+{d2}={d1 + d2}%) 한 번에 빼면 안 돼요 — 두 번째 할인은 '이미 깎인 가격'에 적용돼요.")],
             detail=f"연속 할인은 '더하기'가 아니라 '곱하기'예요. {d1}% 뒤 {d2}%는 {100 - d1}%의 {100 - d2}%라, {d1}+{d2}%를 한 번에 빼는 것보다 덜 깎여요(그래서 {naive}원이 아니라 {ans}원). 이자·인구 증가율을 연속으로 적용할 때도 똑같이 곱셈으로 이어져요.",
+            en={
+                "statement": f"An item costs {price} coins. It is discounted by {d1}%, then from that price discounted by a further {d2}%. What is the final price?",
+                "answer": _en_plural(ans, "coin"),
+                "distractors": [_en_plural(naive, "coin"), _en_plural(after1, "coin"), _en_plural(ans - 500, "coin")],
+                "explanation": f"Discounts apply one after another 'to the remaining price'. First a {d1}% discount leaves {100 - d1}%, so {price}×{100 - d1}÷100={after1} coins. Discounting that by another {d2}% gives {after1}×{100 - d2}÷100={ans} coins.",
+                "mistakes": [(_en_plural(naive, "coin"), f"You can't add the two discount rates ({d1}+{d2}={d1 + d2}%) and take them off at once — the second discount applies to the 'already reduced price'.")],
+                "detail": f"Successive discounts 'multiply', they don't 'add'. {d1}% then {d2}% is {100 - d2}% of {100 - d1}%, so it takes off less than subtracting {d1}+{d2}% at once (that's why it's {ans} coins, not {naive} coins). Applying interest or population-growth rates one after another chains the same way, by multiplication.",
+            },
         )
 
 
@@ -3260,6 +3316,14 @@ def gen_handshake_reverse():
             f"n명이 악수하면 n×(n−1)÷2번이에요. 거꾸로 '몇 명이면 {total}번일까?'를 찾아요. 곱해서 {total * 2}(={total}×2)가 되는 연이은 두 수(n과 n−1)를 찾으면 {n}×{n - 1}={n * (n - 1)}이니 {n}명이에요.",
             [(f"{total // 2}명", "악수 수를 2로 나눈 게 사람 수가 아니에요 — n×(n−1)÷2 꼴을 거꾸로 풀어야 해요.")],
             detail=f"'결과에서 사람 수를 역산'하는 문제예요. n×(n−1)=2×(악수 수)를 만족하는 '연이은 두 자연수'를 찾으면 돼요({total}번이면 n×(n−1)={total * 2}). 곱이 그 값이 되는 이웃한 두 수를 어림해 찾는 감각이 핵심이에요.",
+            en={
+                "statement": f"At a gathering everyone shook hands with each other exactly once, and there were {total} handshakes in all. How many people were at the gathering?",
+                "answer": f"{n} people",
+                "distractors": [f"{total // 2} people", f"{n + 2} people", f"{n - 1} people"],
+                "explanation": f"With n people there are n×(n−1)÷2 handshakes. Work backwards to find 'how many people give {total}'. Look for two consecutive numbers (n and n−1) whose product is {total * 2}(={total}×2): {n}×{n - 1}={n * (n - 1)}, so {n} people.",
+                "mistakes": [(f"{total // 2} people", "Halving the number of handshakes is not the number of people — you have to undo the n×(n−1)÷2 form.")],
+                "detail": f"This is a problem of 'working the number of people back from the result'. Find the 'two consecutive whole numbers' with n×(n−1)=2×(handshakes) ({total} handshakes means n×(n−1)={total * 2}). The knack is estimating the two neighbouring numbers whose product hits that value.",
+            },
         )
 
 
@@ -3374,6 +3438,14 @@ def gen_clock_gain():
             f"하루에 {gain}분씩 '쌓여요'. {days}일이면 {gain}×{days}={ans}분 빨라져요. 매일 같은 양이 더해지니 곱셈으로 한 번에 구해요.",
             [(f"{gain + days}분", "더하는 게 아니라, 매일 쌓이는 양이라 곱해요.")],
             detail=f"'매일 일정하게 쌓이는' 문제는 (하루치)×(날수)로 구해요 — 비례 관계죠. 반대로 '며칠 뒤 정확히 60분 빨라질까?'는 60÷{gain}로 거꾸로 구하면 돼요.",
+            en={
+                "statement": f"A certain clock gains {gain} minutes every day. After it is set to the exact time, how many minutes ahead of the real time is it {days} days later?",
+                "answer": _en_plural(ans, "minute"),
+                "distractors": [_en_plural(gain + days, "minute"), _en_plural(gain * days // 2, "minute"), _en_plural(ans + gain, "minute")],
+                "explanation": f"It 'piles up' {gain} minutes a day. Over {days} days that's {gain}×{days}={ans} minutes ahead. The same amount is added each day, so you get it in one step by multiplying.",
+                "mistakes": [(_en_plural(gain + days, "minute"), "You don't add — it's an amount that piles up each day, so you multiply.")],
+                "detail": f"Problems where something 'piles up steadily each day' are (amount per day)×(number of days) — a proportional relationship. Going the other way, 'after how many days will it be exactly 60 minutes ahead?' is found in reverse as 60÷{gain}.",
+            },
         )
 
 
@@ -3509,6 +3581,14 @@ def gen_collatz():
             f"직접 따라가 봐요: {n}에서 규칙(짝수→÷2, 홀수→×3+1)을 적용하면 {steps}번 만에 1에 도착해요. 규칙은 단순하지만 커졌다 작아졌다 하는 길이 재미있어요.",
             [(f"{steps - 1}번", "1이 '되는' 그 단계까지 빠짐없이 세었는지 확인해요.")],
             detail="이건 '콜라츠 추측'이라는 유명한 문제예요 — 어떤 자연수로 시작해도 결국 1이 된다고 믿지만, 아직 아무도 '증명'하지 못했어요! 규칙은 초등학생도 알지만 답은 수학자도 모르는, 단순함 속 신비예요.",
+            en={
+                "statement": f"You repeat a rule on a number: if it's even, divide by 2; if it's odd, multiply by 3 and add 1. Starting from {n}, how many times do you apply the rule until it becomes '1'?",
+                "answer": _en_plural(steps, "time"),
+                "distractors": [_en_plural(steps - 1, "time"), _en_plural(steps + 1, "time"), _en_plural(steps + 2, "time")],
+                "explanation": f"Just follow it through: applying the rule (even→÷2, odd→×3+1) from {n} reaches 1 in {steps} times. The rule is simple, but the path that grows and shrinks is fun to watch.",
+                "mistakes": [(_en_plural(steps - 1, "time"), "Check that you counted every step right up to the one that 'becomes' 1.")],
+                "detail": "This is the famous 'Collatz conjecture' — people believe that no matter which whole number you start from you eventually reach 1, but nobody has yet 'proved' it! A rule even a grade-schooler can follow, yet an answer even mathematicians don't know — mystery inside simplicity.",
+            },
         )
 
 
@@ -3735,6 +3815,14 @@ def gen_tribonacci_stairs():
             f"마지막 걸음이 1칸·2칸·3칸이었는지로 나눠요. 그러면 '{n}칸 방법 = {n - 1}칸 + {n - 2}칸 + {n - 3}칸 방법'이에요(앞 세 개의 합!). 1칸 1, 2칸 2, 3칸 4부터 차례로 쌓으면 {n}칸은 {ans}가지예요.",
             [(f"{ans - 1}가지", "마지막 걸음을 1·2·3칸 세 경우로 빠짐없이 나눴는지 확인해요.")],
             detail="1·2칸이면 피보나치, 1·2·3칸이면 '앞 세 수의 합'(트리보나치)이에요. 큰 문제를 '마지막 한 걸음'으로 쪼개 작은 문제들의 합으로 만드는 점화식이 핵심. 오를 수 있는 칸 종류가 늘면 더할 항도 그만큼 늘어요.",
+            en={
+                "statement": f"There is a staircase of {n} steps, and you can go up 1, 2, or 3 steps at a time. How many different ways are there to climb it?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(ans - 1, "way"), _en_plural(ans + 2, "way"), _en_plural(2 ** (n - 1), "way")],
+                "explanation": f"Split by whether the last move was 1, 2, or 3 steps. Then 'ways for {n} steps = ways for {n - 1} + {n - 2} + {n - 3} steps' (the sum of the previous three!). Building up from 1 step: 1, 2 steps: 2, 3 steps: 4, and so on, {n} steps gives {ans} ways.",
+                "mistakes": [(_en_plural(ans - 1, "way"), "Check that you split the last move into all three cases of 1, 2, and 3 steps.")],
+                "detail": "With 1·2 steps it's Fibonacci; with 1·2·3 steps it's 'the sum of the previous three' (tribonacci). The key is a recurrence that breaks a big problem into the sum of smaller ones by the 'last single move'. As the kinds of steps you can climb increase, so do the terms you add.",
+            },
         )
 
 
@@ -4731,6 +4819,14 @@ def gen_passcode():
             [(f"{base * dig}가지", "자리 수만큼 '더하는' 게 아니라 '곱해요'. 각 자리가 독립이라 곱의 법칙이에요.")],
             detail="각 자리를 독립적으로 채우고 반복을 허용하면 (선택 가지)^(자리 수)예요. 자리마다 곱하는 곱의 법칙의 대표 예로, "
             "암호·번호판 경우의 수가 왜 폭발하는지 보여줘요.",
+            en={
+                "statement": f"You make a {dig}-digit passcode from the {base} digits 0 to {base - 1}. If you may reuse the same digit multiple times, how many passcodes can you make in all?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [base * dig, base ** (dig - 1), ans + base, ans - base])],
+                "explanation": f"Each position can hold {base} digits, and there are {dig} positions, so multiply {base} by itself {dig} times → {'×'.join([str(base)] * dig)} = {ans} ways.",
+                "mistakes": [(f"{base * dig} ways", "You don't 'add' one per position, you 'multiply'. Each position is independent, so it's the product (multiplication) rule.")],
+                "detail": "Filling each position independently with repetition allowed gives (choices)^(positions). It's the flagship example of the product rule — multiplying position by position — and shows why the number of passcodes or license plates explodes.",
+            },
         )
 
 
