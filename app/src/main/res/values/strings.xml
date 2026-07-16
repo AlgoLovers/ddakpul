@@ -279,6 +279,11 @@
 
     <!-- 설정 -->
     <string name="settings_title">설정</string>
+    <!-- 설정 · 언어(앱 내 전환) -->
+    <string name="settings_language_title">언어 / Language</string>
+    <string name="settings_language_desc">앱 언어를 바꿔요. 문제 콘텐츠도 함께 바뀌며, 적용을 위해 앱이 다시 시작돼요.</string>
+    <string name="settings_language_ko">한국어</string>
+    <string name="settings_language_en">English</string>
     <string name="settings_goal_title">하루 목표</string>
     <string name="settings_goal_desc">스스로 목표를 정하면 더 오래, 즐겁게 공부해요.</string>
     <string name="settings_goal_option">%1$d문제</string>

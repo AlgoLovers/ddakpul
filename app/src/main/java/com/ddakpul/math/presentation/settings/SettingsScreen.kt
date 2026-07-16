@@ -40,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.BuildConfig
 import com.ddakpul.math.R
+import com.ddakpul.math.core.common.LocaleManagerCompat
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.SpeechSettings
@@ -83,6 +84,9 @@ fun SettingsScreen(
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
         )
+
+        // 언어 — 앱 안에서 바로 한국어 ⇄ English. 문제 콘텐츠까지 바꾸려 앱을 재시작한다.
+        LanguageCard()
 
         // 이용권 — 무료 상한 위 상위 난이도와 전체 리포트를 여는 진입점. 현재 상태(무료/이용중)도 보여준다.
         PremiumCard(
@@ -175,6 +179,41 @@ private fun PremiumCard(
         )
         OutlinedButton(onClick = onOpenPaywall) {
             Text(stringResource(if (isPremium) R.string.settings_premium_manage else R.string.settings_premium_open))
+        }
+    }
+}
+
+/**
+ * 언어 토글 — 앱 안에서 한국어 ⇄ English 즉시 전환(시스템 언어 안 건드려도 됨).
+ * 고르면 [LocaleManagerCompat.apply]가 선택을 저장하고 앱을 재시작해 UI 문자열은 물론
+ * 문제 콘텐츠까지 새 언어로 다시 시딩되게 한다.
+ */
+@Composable
+private fun LanguageCard() {
+    val context = LocalContext.current
+    val current = LocaleManagerCompat.currentLang(context)
+    SettingsCard {
+        Text(
+            text = stringResource(R.string.settings_language_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = stringResource(R.string.settings_language_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(
+                selected = current == LocaleManagerCompat.KOREAN,
+                onClick = { LocaleManagerCompat.apply(context, LocaleManagerCompat.KOREAN) },
+                label = { Text(stringResource(R.string.settings_language_ko)) },
+            )
+            FilterChip(
+                selected = current == LocaleManagerCompat.ENGLISH,
+                onClick = { LocaleManagerCompat.apply(context, LocaleManagerCompat.ENGLISH) },
+                label = { Text(stringResource(R.string.settings_language_en)) },
+            )
         }
     }
 }

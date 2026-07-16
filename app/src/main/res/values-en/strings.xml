@@ -279,6 +279,11 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+    <!-- Settings · Language (in-app switch) -->
+    <string name="settings_language_title">Language / 언어</string>
+    <string name="settings_language_desc">Change the app language. Problem content switches too, and the app restarts to apply it.</string>
+    <string name="settings_language_ko">한국어</string>
+    <string name="settings_language_en">English</string>
     <string name="settings_goal_title">Daily goal</string>
     <string name="settings_goal_desc">Setting your own goal makes studying last longer and feel better.</string>
     <string name="settings_goal_option">%1$d</string>
