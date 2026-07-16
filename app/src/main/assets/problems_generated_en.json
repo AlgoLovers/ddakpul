@@ -3,6 +3,346 @@
  "lang": "en",
  "problems": [
   {
+   "id": "gen-league-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-league-3",
+   "concepts": [
+    "counting",
+    "subtracting overlaps"
+   ],
+   "statement": "4 teams each play every other team once. How many games are played in all?",
+   "choices": [
+    "12 games",
+    "6 games",
+    "3 games",
+    "10 games"
+   ],
+   "answerIndex": 1,
+   "explanation": "Each team plays the other 3 teams once, which looks like 4×3=12. But 'A vs B' and 'B vs A' are the same single game, so divide by 2: 12÷2=6 games.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You counted each game twice. A-B and B-A are one game, so divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of games in a round-robin where everyone plays everyone once equals the ways to choose 2 teams, C(n,2)=n(n−1)/2. Each team plays (n−1) games, but every game is shared by two teams, so divide by 2. This is the basis of counting unordered pairs."
+  },
+  {
+   "id": "gen-league-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-league-3",
+   "concepts": [
+    "counting",
+    "subtracting overlaps"
+   ],
+   "statement": "5 teams each play every other team once. How many games are played in all?",
+   "choices": [
+    "4 games",
+    "10 games",
+    "20 games",
+    "15 games"
+   ],
+   "answerIndex": 1,
+   "explanation": "Each team plays the other 4 teams once, which looks like 5×4=20. But 'A vs B' and 'B vs A' are the same single game, so divide by 2: 20÷2=10 games.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted each game twice. A-B and B-A are one game, so divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of games in a round-robin where everyone plays everyone once equals the ways to choose 2 teams, C(n,2)=n(n−1)/2. Each team plays (n−1) games, but every game is shared by two teams, so divide by 2. This is the basis of counting unordered pairs."
+  },
+  {
+   "id": "gen-league-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-league-3",
+   "concepts": [
+    "counting",
+    "subtracting overlaps"
+   ],
+   "statement": "6 teams each play every other team once. How many games are played in all?",
+   "choices": [
+    "15 games",
+    "30 games",
+    "21 games",
+    "5 games"
+   ],
+   "answerIndex": 0,
+   "explanation": "Each team plays the other 5 teams once, which looks like 6×5=30. But 'A vs B' and 'B vs A' are the same single game, so divide by 2: 30÷2=15 games.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted each game twice. A-B and B-A are one game, so divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of games in a round-robin where everyone plays everyone once equals the ways to choose 2 teams, C(n,2)=n(n−1)/2. Each team plays (n−1) games, but every game is shared by two teams, so divide by 2. This is the basis of counting unordered pairs."
+  },
+  {
+   "id": "gen-league-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-league-3",
+   "concepts": [
+    "counting",
+    "subtracting overlaps"
+   ],
+   "statement": "7 teams each play every other team once. How many games are played in all?",
+   "choices": [
+    "28 games",
+    "21 games",
+    "6 games",
+    "42 games"
+   ],
+   "answerIndex": 1,
+   "explanation": "Each team plays the other 6 teams once, which looks like 7×6=42. But 'A vs B' and 'B vs A' are the same single game, so divide by 2: 42÷2=21 games.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You counted each game twice. A-B and B-A are one game, so divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of games in a round-robin where everyone plays everyone once equals the ways to choose 2 teams, C(n,2)=n(n−1)/2. Each team plays (n−1) games, but every game is shared by two teams, so divide by 2. This is the basis of counting unordered pairs."
+  },
+  {
+   "id": "gen-twodigit-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-twodigit-3",
+   "concepts": [
+    "counting",
+    "counting by place"
+   ],
+   "statement": "You have the number cards 1, 2, 3, 4. Picking two of them to form a two-digit number, how many different two-digit numbers can you make?",
+   "choices": [
+    "16 numbers",
+    "14 numbers",
+    "4 numbers",
+    "12 numbers"
+   ],
+   "answerIndex": 3,
+   "explanation": "The tens place can be any of 4 cards, and for each of those the ones place is one of the remaining 3 cards. Multiply: 4×3=12 numbers.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You can't use the same card in both the tens and ones place. The ones place has one fewer card: 3 choices."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of two-digit numbers from distinct cards is an ordered pick (a permutation), nP2 = n×(n−1). Once the tens digit is set, the ones place has one fewer card. It's a multiplication-rule problem where you multiply the choices at each place."
+  },
+  {
+   "id": "gen-twodigit-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-twodigit-3",
+   "concepts": [
+    "counting",
+    "counting by place"
+   ],
+   "statement": "You have the number cards 2, 3, 5. Picking two of them to form a two-digit number, how many different two-digit numbers can you make?",
+   "choices": [
+    "8 numbers",
+    "3 numbers",
+    "9 numbers",
+    "6 numbers"
+   ],
+   "answerIndex": 3,
+   "explanation": "The tens place can be any of 3 cards, and for each of those the ones place is one of the remaining 2 cards. Multiply: 3×2=6 numbers.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You can't use the same card in both the tens and ones place. The ones place has one fewer card: 2 choices."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of two-digit numbers from distinct cards is an ordered pick (a permutation), nP2 = n×(n−1). Once the tens digit is set, the ones place has one fewer card. It's a multiplication-rule problem where you multiply the choices at each place."
+  },
+  {
+   "id": "gen-twodigit-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-twodigit-3",
+   "concepts": [
+    "counting",
+    "counting by place"
+   ],
+   "statement": "You have the number cards 1, 3, 5, 7. Picking two of them to form a two-digit number, how many different two-digit numbers can you make?",
+   "choices": [
+    "16 numbers",
+    "14 numbers",
+    "4 numbers",
+    "12 numbers"
+   ],
+   "answerIndex": 3,
+   "explanation": "The tens place can be any of 4 cards, and for each of those the ones place is one of the remaining 3 cards. Multiply: 4×3=12 numbers.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You can't use the same card in both the tens and ones place. The ones place has one fewer card: 3 choices."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of two-digit numbers from distinct cards is an ordered pick (a permutation), nP2 = n×(n−1). Once the tens digit is set, the ones place has one fewer card. It's a multiplication-rule problem where you multiply the choices at each place."
+  },
+  {
+   "id": "gen-twodigit-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-twodigit-3",
+   "concepts": [
+    "counting",
+    "counting by place"
+   ],
+   "statement": "You have the number cards 4, 6, 8. Picking two of them to form a two-digit number, how many different two-digit numbers can you make?",
+   "choices": [
+    "6 numbers",
+    "9 numbers",
+    "3 numbers",
+    "8 numbers"
+   ],
+   "answerIndex": 0,
+   "explanation": "The tens place can be any of 3 cards, and for each of those the ones place is one of the remaining 2 cards. Multiply: 3×2=6 numbers.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "You can't use the same card in both the tens and ones place. The ones place has one fewer card: 2 choices."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The number of two-digit numbers from distinct cards is an ordered pick (a permutation), nP2 = n×(n−1). Once the tens digit is set, the ones place has one fewer card. It's a multiplication-rule problem where you multiply the choices at each place."
+  },
+  {
+   "id": "gen-tablediff-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-tablediff-3",
+   "concepts": [
+    "reading data",
+    "maximum and minimum"
+   ],
+   "statement": "On Monday, Tuesday, Wednesday, and Thursday, the books read were 3, 5, 2, and 6. What is the difference between the most-read day and the least-read day?",
+   "choices": [
+    "6 books",
+    "5 books",
+    "16 books",
+    "4 books"
+   ],
+   "answerIndex": 3,
+   "explanation": "The most-read day is 6 books and the least-read day is 2 books. The difference is 6−2=4 books.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Don't just give the largest value. Subtract the smallest from the largest."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "Don't add them all — find the 'difference' between the largest and smallest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The 'difference between the most and the least (the range)' is the maximum minus the minimum. Reading a table or graph and pinpointing the largest and smallest values exactly is the basis of data interpretation."
+  },
+  {
+   "id": "gen-tablediff-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-tablediff-3",
+   "concepts": [
+    "reading data",
+    "maximum and minimum"
+   ],
+   "statement": "On Monday, Tuesday, Wednesday, and Thursday, the books read were 4, 7, 1, and 5. What is the difference between the most-read day and the least-read day?",
+   "choices": [
+    "17 books",
+    "6 books",
+    "5 books",
+    "7 books"
+   ],
+   "answerIndex": 1,
+   "explanation": "The most-read day is 7 books and the least-read day is 1 books. The difference is 7−1=6 books.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't just give the largest value. Subtract the smallest from the largest."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "Don't add them all — find the 'difference' between the largest and smallest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The 'difference between the most and the least (the range)' is the maximum minus the minimum. Reading a table or graph and pinpointing the largest and smallest values exactly is the basis of data interpretation."
+  },
+  {
+   "id": "gen-tablediff-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-tablediff-3",
+   "concepts": [
+    "reading data",
+    "maximum and minimum"
+   ],
+   "statement": "On Monday, Tuesday, Wednesday, and Thursday, the books read were 8, 3, 6, and 2. What is the difference between the most-read day and the least-read day?",
+   "choices": [
+    "19 books",
+    "8 books",
+    "7 books",
+    "6 books"
+   ],
+   "answerIndex": 3,
+   "explanation": "The most-read day is 8 books and the least-read day is 2 books. The difference is 8−2=6 books.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't just give the largest value. Subtract the smallest from the largest."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "Don't add them all — find the 'difference' between the largest and smallest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The 'difference between the most and the least (the range)' is the maximum minus the minimum. Reading a table or graph and pinpointing the largest and smallest values exactly is the basis of data interpretation."
+  },
+  {
+   "id": "gen-tablediff-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-tablediff-3",
+   "concepts": [
+    "reading data",
+    "maximum and minimum"
+   ],
+   "statement": "On Monday, Tuesday, Wednesday, and Thursday, the books read were 5, 9, 4, and 7. What is the difference between the most-read day and the least-read day?",
+   "choices": [
+    "5 books",
+    "6 books",
+    "9 books",
+    "25 books"
+   ],
+   "answerIndex": 0,
+   "explanation": "The most-read day is 9 books and the least-read day is 4 books. The difference is 9−4=5 books.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don't just give the largest value. Subtract the smallest from the largest."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't add them all — find the 'difference' between the largest and smallest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The 'difference between the most and the least (the range)' is the maximum minus the minimum. Reading a table or graph and pinpointing the largest and smallest values exactly is the basis of data interpretation."
+  },
+  {
    "id": "gen-unitprice-1",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
@@ -13,16 +353,16 @@
    ],
    "statement": "3 pencils cost 600 coins. How much do 5 of the same pencils cost?",
    "choices": [
-    "1200 coins",
     "1000 coins",
     "800 coins",
-    "1600 coins"
+    "1600 coins",
+    "1200 coins"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "First find the price of one pencil — 600÷3=200 coins. Then 5 pencils cost 200×5=1000 coins.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Check you didn’t count one pencil too many. It’s (price of one) × (number of pencils)."
     }
    ],
@@ -40,16 +380,16 @@
    ],
    "statement": "4 pencils cost 800 coins. How much do 7 of the same pencils cost?",
    "choices": [
-    "1200 coins",
-    "1400 coins",
     "1600 coins",
+    "1400 coins",
+    "1200 coins",
     "2200 coins"
    ],
    "answerIndex": 1,
    "explanation": "First find the price of one pencil — 800÷4=200 coins. Then 7 pencils cost 200×7=1400 coins.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "Check you didn’t count one pencil too many. It’s (price of one) × (number of pencils)."
     }
    ],
@@ -67,16 +407,16 @@
    ],
    "statement": "2 pencils cost 500 coins. How much do 6 of the same pencils cost?",
    "choices": [
-    "1500 coins",
-    "1750 coins",
     "2000 coins",
-    "1250 coins"
+    "1500 coins",
+    "1250 coins",
+    "1750 coins"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "First find the price of one pencil — 500÷2=250 coins. Then 6 pencils cost 250×6=1500 coins.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Check you didn’t count one pencil too many. It’s (price of one) × (number of pencils)."
     }
    ],
@@ -94,21 +434,329 @@
    ],
    "statement": "5 pencils cost 1500 coins. How much do 8 of the same pencils cost?",
    "choices": [
-    "3900 coins",
+    "2700 coins",
     "2400 coins",
     "2100 coins",
-    "2700 coins"
+    "3900 coins"
    ],
    "answerIndex": 1,
    "explanation": "First find the price of one pencil — 1500÷5=300 coins. Then 8 pencils cost 300×8=2400 coins.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Check you didn’t count one pencil too many. It’s (price of one) × (number of pencils)."
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "When the count grows, the cost grows in the same ratio — that’s proportion. Find the price of one (the unit amount) first, then multiply by how many you need. 'Find the unit price' is the sturdiest way to do proportion problems."
+  },
+  {
+   "id": "gen-symaxis-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-symaxis-3",
+   "concepts": [
+    "line symmetry",
+    "axes of symmetry"
+   ],
+   "statement": "An equilateral triangle is a line-symmetric shape. How many axes of symmetry make it overlap completely when folded?",
+   "choices": [
+    "3 axes",
+    "2 axes",
+    "4 axes",
+    "1 axis"
+   ],
+   "answerIndex": 0,
+   "explanation": "An equilateral triangle has an axis of symmetry through each vertex (or the midpoint of each side). Their number equals the number of sides, 3.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "There isn't just one axis of symmetry — it overlaps when folded in several directions."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "A regular polygon's axes of symmetry equal the number of sides. Check you didn't miss one."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 3
+    }
+   },
+   "detailedExplanation": "A regular n-gon has n axes of symmetry. An odd-sided one joins each vertex to the midpoint of the opposite side; an even-sided one joins opposite vertices and opposite side midpoints. Either way, the number of axes equals the number of sides, n."
+  },
+  {
+   "id": "gen-symaxis-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-symaxis-3",
+   "concepts": [
+    "line symmetry",
+    "axes of symmetry"
+   ],
+   "statement": "A square is a line-symmetric shape. How many axes of symmetry make it overlap completely when folded?",
+   "choices": [
+    "1 axis",
+    "2 axes",
+    "4 axes",
+    "5 axes"
+   ],
+   "answerIndex": 2,
+   "explanation": "A square has an axis of symmetry through each vertex (or the midpoint of each side). Their number equals the number of sides, 4.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "There isn't just one axis of symmetry — it overlaps when folded in several directions."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 4
+    }
+   },
+   "detailedExplanation": "A regular n-gon has n axes of symmetry. An odd-sided one joins each vertex to the midpoint of the opposite side; an even-sided one joins opposite vertices and opposite side midpoints. Either way, the number of axes equals the number of sides, n."
+  },
+  {
+   "id": "gen-symaxis-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-symaxis-3",
+   "concepts": [
+    "line symmetry",
+    "axes of symmetry"
+   ],
+   "statement": "A regular pentagon is a line-symmetric shape. How many axes of symmetry make it overlap completely when folded?",
+   "choices": [
+    "6 axes",
+    "5 axes",
+    "2 axes",
+    "1 axis"
+   ],
+   "answerIndex": 1,
+   "explanation": "A regular pentagon has an axis of symmetry through each vertex (or the midpoint of each side). Their number equals the number of sides, 5.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "There isn't just one axis of symmetry — it overlaps when folded in several directions."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 5
+    }
+   },
+   "detailedExplanation": "A regular n-gon has n axes of symmetry. An odd-sided one joins each vertex to the midpoint of the opposite side; an even-sided one joins opposite vertices and opposite side midpoints. Either way, the number of axes equals the number of sides, n."
+  },
+  {
+   "id": "gen-symaxis-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-symaxis-3",
+   "concepts": [
+    "line symmetry",
+    "axes of symmetry"
+   ],
+   "statement": "A regular hexagon is a line-symmetric shape. How many axes of symmetry make it overlap completely when folded?",
+   "choices": [
+    "6 axes",
+    "2 axes",
+    "1 axis",
+    "7 axes"
+   ],
+   "answerIndex": 0,
+   "explanation": "A regular hexagon has an axis of symmetry through each vertex (or the midpoint of each side). Their number equals the number of sides, 6.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "There isn't just one axis of symmetry — it overlaps when folded in several directions."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "POLYGON",
+    "params": {
+     "n": 6
+    }
+   },
+   "detailedExplanation": "A regular n-gon has n axes of symmetry. An odd-sided one joins each vertex to the midpoint of the opposite side; an even-sided one joins opposite vertices and opposite side midpoints. Either way, the number of axes equals the number of sides, n."
+  },
+  {
+   "id": "gen-barchart-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-barchart-3",
+   "concepts": [
+    "reading data",
+    "comparing by size"
+   ],
+   "statement": "The graph below shows the number of flowerpots collected by classes A, B, C, and D. How many flowerpots did the class with the second-most collect?",
+   "choices": [
+    "5 flowerpots",
+    "3 flowerpots",
+    "2 flowerpots",
+    "6 flowerpots"
+   ],
+   "answerIndex": 0,
+   "explanation": "Reading the bars from tallest to shortest gives 6, 5, 3, 2. The tallest bar is 6, and the next one (the second) is 5.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That's the class with the 'most'. Read the next-tallest (second) bar."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "You want the second-'most', not the fewest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "BAR_CHART",
+    "heights": [
+     3,
+     5,
+     2,
+     6
+    ],
+    "params": {
+     "highlight": -1
+    }
+   },
+   "detailedExplanation": "A bar chart compares sizes at a glance by bar height. The 'second-most' is the tallest of the rest after removing the tallest bar. It's practice at reading data sorted by size."
+  },
+  {
+   "id": "gen-barchart-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-barchart-3",
+   "concepts": [
+    "reading data",
+    "comparing by size"
+   ],
+   "statement": "The graph below shows the number of flowerpots collected by classes A, B, C, and D. How many flowerpots did the class with the second-most collect?",
+   "choices": [
+    "7 flowerpots",
+    "3 flowerpots",
+    "8 flowerpots",
+    "4 flowerpots"
+   ],
+   "answerIndex": 0,
+   "explanation": "Reading the bars from tallest to shortest gives 8, 7, 4, 3. The tallest bar is 8, and the next one (the second) is 7.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That's the class with the 'most'. Read the next-tallest (second) bar."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You want the second-'most', not the fewest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "BAR_CHART",
+    "heights": [
+     4,
+     7,
+     3,
+     8
+    ],
+    "params": {
+     "highlight": -1
+    }
+   },
+   "detailedExplanation": "A bar chart compares sizes at a glance by bar height. The 'second-most' is the tallest of the rest after removing the tallest bar. It's practice at reading data sorted by size."
+  },
+  {
+   "id": "gen-barchart-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-barchart-3",
+   "concepts": [
+    "reading data",
+    "comparing by size"
+   ],
+   "statement": "The graph below shows the number of flowerpots collected by classes A, B, C, and D. How many flowerpots did the class with the second-most collect?",
+   "choices": [
+    "6 flowerpots",
+    "9 flowerpots",
+    "2 flowerpots",
+    "5 flowerpots"
+   ],
+   "answerIndex": 0,
+   "explanation": "Reading the bars from tallest to shortest gives 9, 6, 5, 2. The tallest bar is 9, and the next one (the second) is 6.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That's the class with the 'most'. Read the next-tallest (second) bar."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "You want the second-'most', not the fewest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "BAR_CHART",
+    "heights": [
+     6,
+     2,
+     9,
+     5
+    ],
+    "params": {
+     "highlight": -1
+    }
+   },
+   "detailedExplanation": "A bar chart compares sizes at a glance by bar height. The 'second-most' is the tallest of the rest after removing the tallest bar. It's practice at reading data sorted by size."
+  },
+  {
+   "id": "gen-barchart-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-barchart-3",
+   "concepts": [
+    "reading data",
+    "comparing by size"
+   ],
+   "statement": "The graph below shows the number of flowerpots collected by classes A, B, C, and D. How many flowerpots did the class with the second-most collect?",
+   "choices": [
+    "10 flowerpots",
+    "7 flowerpots",
+    "4 flowerpots",
+    "5 flowerpots"
+   ],
+   "answerIndex": 1,
+   "explanation": "Reading the bars from tallest to shortest gives 10, 7, 5, 4. The tallest bar is 10, and the next one (the second) is 7.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "That's the class with the 'most'. Read the next-tallest (second) bar."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "You want the second-'most', not the fewest."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "BAR_CHART",
+    "heights": [
+     5,
+     10,
+     7,
+     4
+    ],
+    "params": {
+     "highlight": -1
+    }
+   },
+   "detailedExplanation": "A bar chart compares sizes at a glance by bar height. The 'second-most' is the tallest of the rest after removing the tallest bar. It's practice at reading data sorted by size."
   },
   {
    "id": "gen-foldcut-1",
@@ -121,12 +769,12 @@
    ],
    "statement": "You fold a sheet of paper in half 1 time(s), then punch 1 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
    "choices": [
-    "1 holes",
-    "5 holes",
+    "2 holes",
     "3 holes",
-    "2 holes"
+    "5 holes",
+    "1 holes"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Folding in half 1 time(s) stacks the paper into 2 layers. One punch goes through all 2 at once, so it becomes 2 holes. With 1 hole(s) punched, that’s 1×2 = 2.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -143,20 +791,20 @@
    ],
    "statement": "You fold a sheet of paper in half 1 time(s), then punch 2 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
    "choices": [
-    "5 holes",
     "3 holes",
     "2 holes",
+    "5 holes",
     "4 holes"
    ],
    "answerIndex": 3,
    "explanation": "Folding in half 1 time(s) stacks the paper into 2 layers. One punch goes through all 2 at once, so it becomes 2 holes. With 2 hole(s) punched, that’s 2×2 = 4.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Punching through folds makes as many holes as stacked layers — they multiply when unfolded."
     },
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "Don’t add the number of folds — multiply by the number of stacked layers."
     }
    ],
@@ -175,11 +823,11 @@
    "statement": "You fold a sheet of paper in half 1 time(s), then punch 3 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
    "choices": [
     "3 holes",
+    "6 holes",
     "7 holes",
-    "4 holes",
-    "6 holes"
+    "4 holes"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Folding in half 1 time(s) stacks the paper into 2 layers. One punch goes through all 2 at once, so it becomes 2 holes. With 3 hole(s) punched, that’s 3×2 = 6.",
    "mistakes": [
     {
@@ -187,7 +835,7 @@
      "misconception": "Punching through folds makes as many holes as stacked layers — they multiply when unfolded."
     },
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Don’t add the number of folds — multiply by the number of stacked layers."
     }
    ],
@@ -205,12 +853,12 @@
    ],
    "statement": "You fold a sheet of paper in half 2 time(s), then punch 1 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
    "choices": [
-    "4 holes",
     "1 holes",
+    "4 holes",
     "3 holes",
     "5 holes"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Folding in half 2 time(s) stacks the paper into 4 layers. One punch goes through all 4 at once, so it becomes 4 holes. With 1 hole(s) punched, that’s 1×4 = 4.",
    "mistakes": [
     {
@@ -234,14 +882,14 @@
    "choices": [
     "8 games",
     "6 games",
-    "4 games",
-    "7 games"
+    "7 games",
+    "4 games"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "For one champion to remain, the other 7 players must all be eliminated. Each game knocks out exactly one, so 8−1 = 7 games.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "That’s only the first round. Count every game up to the win."
     },
     {
@@ -263,20 +911,20 @@
    ],
    "statement": "4 players compete in a knockout tournament. Once you lose, you’re out. How many games are played before a champion is decided?",
    "choices": [
-    "2 games",
+    "4 games",
     "3 games",
-    "6 games",
-    "4 games"
+    "2 games",
+    "6 games"
    ],
    "answerIndex": 1,
    "explanation": "For one champion to remain, the other 3 players must all be eliminated. Each game knocks out exactly one, so 4−1 = 3 games.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 2,
      "misconception": "That’s only the first round. Count every game up to the win."
     },
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Only 3 need to be eliminated (everyone but the champion) — that many games."
     }
    ],
@@ -295,11 +943,11 @@
    "statement": "16 players compete in a knockout tournament. Once you lose, you’re out. How many games are played before a champion is decided?",
    "choices": [
     "8 games",
-    "16 games",
+    "15 games",
     "14 games",
-    "15 games"
+    "16 games"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "For one champion to remain, the other 15 players must all be eliminated. Each game knocks out exactly one, so 16−1 = 15 games.",
    "mistakes": [
     {
@@ -307,7 +955,7 @@
      "misconception": "That’s only the first round. Count every game up to the win."
     },
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Only 15 need to be eliminated (everyone but the champion) — that many games."
     }
    ],
@@ -325,20 +973,20 @@
    ],
    "statement": "6 players compete in a knockout tournament. Once you lose, you’re out. How many games are played before a champion is decided?",
    "choices": [
+    "3 games",
     "5 games",
     "4 games",
-    "6 games",
-    "3 games"
+    "6 games"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "For one champion to remain, the other 5 players must all be eliminated. Each game knocks out exactly one, so 6−1 = 5 games.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "That’s only the first round. Count every game up to the win."
     },
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Only 5 need to be eliminated (everyone but the champion) — that many games."
     }
    ],
@@ -357,15 +1005,15 @@
    "statement": "In a race, A was faster than B, B was faster than C, and C was faster than D. Who is the slowest?",
    "choices": [
     "D",
-    "B",
     "C",
-    "A"
+    "A",
+    "B"
    ],
    "answerIndex": 0,
    "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who is the slowest.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "A is the best one — the exact opposite."
     }
    ],
@@ -383,16 +1031,16 @@
    ],
    "statement": "In a jump-rope contest, A jumped more than B, B jumped more than C, and C jumped more than D. Who jumped the fewest?",
    "choices": [
-    "A",
-    "D",
     "B",
-    "C"
+    "A",
+    "C",
+    "D"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who jumped the fewest.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "A is the best one — the exact opposite."
     }
    ],
@@ -410,16 +1058,16 @@
    ],
    "statement": "In the long jump, A jumped farther than B, B jumped farther than C, and C jumped farther than D. Who jumped the shortest?",
    "choices": [
-    "C",
-    "D",
+    "A",
     "B",
-    "A"
+    "C",
+    "D"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who jumped the shortest.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "A is the best one — the exact opposite."
     }
    ],
@@ -437,16 +1085,16 @@
    ],
    "statement": "In a block-stacking game, A stacked higher than B, B stacked higher than C, and C stacked higher than D. Who stacked the lowest?",
    "choices": [
-    "A",
     "D",
-    "B",
-    "C"
+    "A",
+    "C",
+    "B"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who stacked the lowest.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "A is the best one — the exact opposite."
     }
    ],
@@ -464,12 +1112,12 @@
    ],
    "statement": "Beads are placed repeating in the order red - blue: red - blue - red - blue - … . What color is the 10th bead?",
    "choices": [
-    "blue",
-    "yellow",
+    "red",
     "green",
-    "red"
+    "yellow",
+    "blue"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "The 2 colors repeat, so they return to the start every 2. Dividing 10 by 2, the remainder is 0 — the last in a group (position 2), which is blue.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -486,16 +1134,16 @@
    ],
    "statement": "Beads are placed repeating in the order red - blue - yellow: red - blue - yellow - red - blue - yellow - … . What color is the 11th bead?",
    "choices": [
-    "red",
-    "yellow",
     "blue",
-    "green"
+    "red",
+    "green",
+    "yellow"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "The 3 colors repeat, so they return to the start every 3. Dividing 11 by 3, the remainder is 2 — position 2 in a group, which is blue.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "It’s not the last color of the pattern — work out which position (the remainder) it is."
     }
    ],
@@ -514,15 +1162,15 @@
    "statement": "Beads are placed repeating in the order yellow - green - red: yellow - green - red - yellow - green - red - … . What color is the 14th bead?",
    "choices": [
     "yellow",
+    "red",
     "green",
-    "blue",
-    "red"
+    "blue"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "The 3 colors repeat, so they return to the start every 3. Dividing 14 by 3, the remainder is 2 — position 2 in a group, which is green.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 1,
      "misconception": "It’s not the last color of the pattern — work out which position (the remainder) it is."
     }
    ],
@@ -540,16 +1188,16 @@
    ],
    "statement": "Beads are placed repeating in the order blue - yellow: blue - yellow - blue - yellow - … . What color is the 15th bead?",
    "choices": [
-    "blue",
-    "yellow",
+    "green",
     "red",
-    "green"
+    "yellow",
+    "blue"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "The 2 colors repeat, so they return to the start every 2. Dividing 15 by 2, the remainder is 1 — position 1 in a group, which is blue.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "It’s not the last color of the pattern — work out which position (the remainder) it is."
     }
    ],
@@ -568,15 +1216,15 @@
    "statement": "A magic box changes a number by a fixed rule, like 1 → 3, 2 → 5, 3 → 7. So if you put in 5, what comes out?",
    "choices": [
     "11",
-    "10",
+    "12",
     "14",
-    "12"
+    "10"
    ],
    "answerIndex": 0,
    "explanation": "Comparing inputs and outputs, the rule is (input)×2+1. All three pairs fit, so 5×2+1 = 11.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "You multiplied but forgot to add."
     }
    ],
@@ -594,16 +1242,16 @@
    ],
    "statement": "A magic box changes a number by a fixed rule, like 1 → 4, 2 → 7, 3 → 10. So if you put in 4, what comes out?",
    "choices": [
-    "13",
+    "12",
     "16",
     "14",
-    "12"
+    "13"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Comparing inputs and outputs, the rule is (input)×3+1. All three pairs fit, so 4×3+1 = 13.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "You multiplied but forgot to add."
     }
    ],
@@ -622,9 +1270,9 @@
    "statement": "A magic box changes a number by a fixed rule, like 1 → 4, 2 → 6, 3 → 8. So if you put in 5, what comes out?",
    "choices": [
     "12",
-    "13",
+    "11",
     "10",
-    "11"
+    "13"
    ],
    "answerIndex": 0,
    "explanation": "Comparing inputs and outputs, the rule is (input)×2+2. All three pairs fit, so 5×2+2 = 12.",
@@ -648,16 +1296,16 @@
    ],
    "statement": "A magic box changes a number by a fixed rule, like 2 → 7, 3 → 8, 4 → 9. So if you put in 6, what comes out?",
    "choices": [
-    "12",
     "11",
     "6",
+    "12",
     "10"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "Comparing inputs and outputs, the rule is (input)×1+5. All three pairs fit, so 6×1+5 = 11.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "You multiplied but forgot to add."
     }
    ],
@@ -675,16 +1323,16 @@
    ],
    "statement": "On a number line, 4 and 12 are marked. What number lies exactly halfway between them?",
    "choices": [
-    "8",
     "7",
-    "16",
-    "9"
+    "8",
+    "9",
+    "16"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "The halfway number sits half of the distance (8) from each end. Going 4 up from 4 gives 8, and coming 4 down from 12 also gives 8 — same steps from both sides, so 8.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Don’t just add the two numbers. The middle is the sum, then halved."
     }
    ],
@@ -702,16 +1350,16 @@
    ],
    "statement": "On a number line, 6 and 14 are marked. What number lies exactly halfway between them?",
    "choices": [
-    "9",
-    "11",
+    "10",
     "20",
-    "10"
+    "9",
+    "11"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "The halfway number sits half of the distance (8) from each end. Going 4 up from 6 gives 10, and coming 4 down from 14 also gives 10 — same steps from both sides, so 10.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Don’t just add the two numbers. The middle is the sum, then halved."
     }
    ],
@@ -730,15 +1378,15 @@
    "statement": "On a number line, 10 and 20 are marked. What number lies exactly halfway between them?",
    "choices": [
     "16",
+    "14",
     "15",
-    "30",
-    "14"
+    "30"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "The halfway number sits half of the distance (10) from each end. Going 5 up from 10 gives 15, and coming 5 down from 20 also gives 15 — same steps from both sides, so 15.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Don’t just add the two numbers. The middle is the sum, then halved."
     }
    ],
@@ -756,16 +1404,16 @@
    ],
    "statement": "On a number line, 8 and 18 are marked. What number lies exactly halfway between them?",
    "choices": [
-    "14",
+    "26",
     "13",
-    "12",
-    "26"
+    "14",
+    "12"
    ],
    "answerIndex": 1,
    "explanation": "The halfway number sits half of the distance (10) from each end. Going 5 up from 8 gives 13, and coming 5 down from 18 also gives 13 — same steps from both sides, so 13.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Don’t just add the two numbers. The middle is the sum, then halved."
     }
    ],
@@ -783,12 +1431,12 @@
    ],
    "statement": "Three consecutive numbers add up to 21. What is the middle one?",
    "choices": [
-    "8",
+    "6",
     "10",
-    "7",
-    "6"
+    "8",
+    "7"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Three consecutive numbers are (middle−1), middle, (middle+1). Adding them, the −1 and +1 cancel, giving 3× the middle. So the middle is 21÷3 = 7.",
    "mistakes": [
     {
@@ -837,16 +1485,16 @@
    ],
    "statement": "Three consecutive numbers add up to 18. What is the middle one?",
    "choices": [
-    "5",
-    "6",
+    "7",
     "9",
-    "7"
+    "5",
+    "6"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Three consecutive numbers are (middle−1), middle, (middle+1). Adding them, the −1 and +1 cancel, giving 3× the middle. So the middle is 18÷3 = 6.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Divide by 3, not 2 — it’s the sum of three numbers."
     }
    ],
@@ -864,10 +1512,10 @@
    ],
    "statement": "Three consecutive numbers add up to 36. What is the middle one?",
    "choices": [
-    "11",
+    "13",
     "12",
     "18",
-    "13"
+    "11"
    ],
    "answerIndex": 1,
    "explanation": "Three consecutive numbers are (middle−1), middle, (middle+1). Adding them, the −1 and +1 cancel, giving 3× the middle. So the middle is 36÷3 = 12.",
@@ -891,20 +1539,20 @@
    ],
    "statement": "Among numbers less than 30, what is the largest one divisible by 5 (a multiple of 5)?",
    "choices": [
-    "25",
-    "28",
     "30",
-    "20"
+    "20",
+    "25",
+    "28"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "List the multiples of 5 in order: … 20, 25, 30. The largest one under 30 is 25 (30 is 30 or more, so it’s out).",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "30 is not less than 30 — it breaks the condition."
     },
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "30 may not be divisible by 5; it has to be a multiple of 5."
     }
    ],
@@ -953,20 +1601,20 @@
    ],
    "statement": "Among numbers less than 25, what is the largest one divisible by 4 (a multiple of 4)?",
    "choices": [
-    "28",
     "20",
     "25",
+    "28",
     "24"
    ],
    "answerIndex": 3,
    "explanation": "List the multiples of 4 in order: … 20, 24, 28. The largest one under 25 is 24 (28 is 25 or more, so it’s out).",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 2,
      "misconception": "28 is not less than 25 — it breaks the condition."
     },
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "25 may not be divisible by 4; it has to be a multiple of 4."
     }
    ],
@@ -986,8 +1634,8 @@
    "choices": [
     "48",
     "56",
-    "50",
-    "40"
+    "40",
+    "50"
    ],
    "answerIndex": 0,
    "explanation": "List the multiples of 8 in order: … 40, 48, 56. The largest one under 50 is 48 (56 is 50 or more, so it’s out).",
@@ -997,7 +1645,7 @@
      "misconception": "56 is not less than 50 — it breaks the condition."
     },
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "50 may not be divisible by 8; it has to be a multiple of 8."
     }
    ],
@@ -1015,16 +1663,16 @@
    ],
    "statement": "You pick 2 from 3 different things (A, B, C). Order doesn’t matter (A·B = B·A). How many ways are there?",
    "choices": [
-    "6 ways",
+    "3 ways",
     "2 ways",
     "4 ways",
-    "3 ways"
+    "6 ways"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Pick the first in 3 ways and one more from the rest in 2 ways → 3×2=6. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 6÷2=3.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
     }
    ],
@@ -1042,16 +1690,16 @@
    ],
    "statement": "You pick 2 from 4 different things (A, B, C, D). Order doesn’t matter (A·B = B·A). How many ways are there?",
    "choices": [
-    "6 ways",
     "12 ways",
-    "5 ways",
-    "7 ways"
+    "6 ways",
+    "7 ways",
+    "5 ways"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Pick the first in 4 ways and one more from the rest in 3 ways → 4×3=12. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 12÷2=6.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
     }
    ],
@@ -1069,16 +1717,16 @@
    ],
    "statement": "You pick 2 from 5 different things (A, B, C, D, E). Order doesn’t matter (A·B = B·A). How many ways are there?",
    "choices": [
-    "9 ways",
-    "20 ways",
+    "11 ways",
     "10 ways",
-    "11 ways"
+    "9 ways",
+    "20 ways"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "Pick the first in 5 ways and one more from the rest in 4 ways → 5×4=20. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 20÷2=10.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
     }
    ],
@@ -1098,10 +1746,10 @@
    "choices": [
     "5 ways",
     "12 ways",
-    "7 ways",
-    "6 ways"
+    "6 ways",
+    "7 ways"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Pick the first in 4 ways and one more from the rest in 3 ways → 4×3=12. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 12÷2=6.",
    "mistakes": [
     {
@@ -1125,8 +1773,8 @@
    "choices": [
     "A",
     "C",
-    "D",
-    "B"
+    "B",
+    "D"
    ],
    "answerIndex": 0,
    "explanation": "Line them up from most to least: C(7) > A(5) > B(3) > D(2). The second is A.",
@@ -1150,16 +1798,16 @@
    ],
    "statement": "In our class we took a survey. The counts were A: 8, B: 4, C: 6, D: 3. Which one had the second most?",
    "choices": [
-    "B",
-    "D",
     "A",
-    "C"
+    "C",
+    "B",
+    "D"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Line them up from most to least: A(8) > C(6) > B(4) > D(3). The second is C.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "That’s the most (1st). You need the second."
     }
    ],
@@ -1177,16 +1825,16 @@
    ],
    "statement": "In our class we took a survey. The counts were A: 9, B: 5, C: 2, D: 4. Which one had the second most?",
    "choices": [
-    "B",
-    "D",
     "C",
-    "A"
+    "D",
+    "A",
+    "B"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Line them up from most to least: A(9) > B(5) > D(4) > C(2). The second is B.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "That’s the most (1st). You need the second."
     }
    ],
@@ -1204,16 +1852,16 @@
    ],
    "statement": "In our class we took a survey. The counts were A: 4, B: 7, C: 3, D: 5. Which one had the second most?",
    "choices": [
-    "D",
     "C",
-    "B",
-    "A"
+    "A",
+    "D",
+    "B"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "Line them up from most to least: B(7) > D(5) > A(4) > C(3). The second is D.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "That’s the most (1st). You need the second."
     }
    ],
@@ -1231,16 +1879,16 @@
    ],
    "statement": "You split 5 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 4 is the same as 4 & 1). How many ways are there?",
    "choices": [
-    "1 way",
-    "2 ways",
     "3 ways",
-    "4 ways"
+    "4 ways",
+    "2 ways",
+    "1 way"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Raise the smaller side from 1: (1,4), (2,3)… Since the plates aren’t distinguished, count only up to half. So 1 through 2 — 2 ways.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 1,
      "misconception": "Distinguishing the plates would double it, but since they aren’t, count only half."
     }
    ],
@@ -1258,12 +1906,12 @@
    ],
    "statement": "You split 6 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 5 is the same as 5 & 1). How many ways are there?",
    "choices": [
-    "3 ways",
-    "5 ways",
     "2 ways",
-    "4 ways"
+    "5 ways",
+    "4 ways",
+    "3 ways"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Raise the smaller side from 1: (1,5), (2,4)… Since the plates aren’t distinguished, count only up to half. So 1 through 3 — 3 ways.",
    "mistakes": [
     {
@@ -1285,16 +1933,16 @@
    ],
    "statement": "You split 7 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 6 is the same as 6 & 1). How many ways are there?",
    "choices": [
-    "4 ways",
     "2 ways",
-    "3 ways",
-    "6 ways"
+    "4 ways",
+    "6 ways",
+    "3 ways"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Raise the smaller side from 1: (1,6), (2,5)… Since the plates aren’t distinguished, count only up to half. So 1 through 3 — 3 ways.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "Distinguishing the plates would double it, but since they aren’t, count only half."
     }
    ],
@@ -1314,8 +1962,8 @@
    "choices": [
     "7 ways",
     "4 ways",
-    "5 ways",
-    "3 ways"
+    "3 ways",
+    "5 ways"
    ],
    "answerIndex": 1,
    "explanation": "Raise the smaller side from 1: (1,7), (2,6)… Since the plates aren’t distinguished, count only up to half. So 1 through 4 — 4 ways.",
@@ -1366,16 +2014,16 @@
    ],
    "statement": "Four people’s heights were compared. B is taller than C, A is taller than B, and C is taller than D. Who is the tallest of the four?",
    "choices": [
-    "B",
-    "A",
     "C",
-    "D"
+    "D",
+    "A",
+    "B"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Chain the 'taller than' hints into arrows: A→B→C→D. A, with no one above them, is the tallest.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Don’t use just one hint — chain them all into the full order."
     }
    ],
@@ -1393,16 +2041,16 @@
    ],
    "statement": "Four people’s heights were compared. B is taller than C, A is taller than B, and C is taller than D. Who is the tallest of the four?",
    "choices": [
-    "B",
     "D",
     "C",
-    "A"
+    "A",
+    "B"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Chain the 'taller than' hints into arrows: A→B→C→D. A, with no one above them, is the tallest.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Don’t use just one hint — chain them all into the full order."
     }
    ],
@@ -1421,11 +2069,11 @@
    "statement": "Children stand in a line. One child is 4th from the front and, at the same time, 3th from the back. How many children are in the line?",
    "choices": [
     "7 children",
-    "6 children",
     "8 children",
+    "6 children",
     "5 children"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Be careful not to count that child twice. 4th from the front means 3 in front; 3th from the back means 2 behind. Front(3) + the child(1) + behind(2) = 6. (Or 4+3−1=6, subtracting the doubly-counted child once.)",
    "mistakes": [
     {
@@ -1448,11 +2096,11 @@
    "statement": "Children stand in a line. One child is 3th from the front and, at the same time, 5th from the back. How many children are in the line?",
    "choices": [
     "8 children",
-    "6 children",
     "7 children",
+    "6 children",
     "9 children"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "Be careful not to count that child twice. 3th from the front means 2 in front; 5th from the back means 4 behind. Front(2) + the child(1) + behind(4) = 7. (Or 3+5−1=7, subtracting the doubly-counted child once.)",
    "mistakes": [
     {
@@ -1474,12 +2122,12 @@
    ],
    "statement": "Children stand in a line. One child is 6th from the front and, at the same time, 2th from the back. How many children are in the line?",
    "choices": [
-    "6 children",
-    "8 children",
     "9 children",
-    "7 children"
+    "8 children",
+    "7 children",
+    "6 children"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Be careful not to count that child twice. 6th from the front means 5 in front; 2th from the back means 1 behind. Front(5) + the child(1) + behind(1) = 7. (Or 6+2−1=7, subtracting the doubly-counted child once.)",
    "mistakes": [
     {
@@ -1502,11 +2150,11 @@
    "statement": "Children stand in a line. One child is 2th from the front and, at the same time, 4th from the back. How many children are in the line?",
    "choices": [
     "4 children",
-    "7 children",
+    "5 children",
     "6 children",
-    "5 children"
+    "7 children"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Be careful not to count that child twice. 2th from the front means 1 in front; 4th from the back means 3 behind. Front(1) + the child(1) + behind(3) = 5. (Or 2+4−1=5, subtracting the doubly-counted child once.)",
    "mistakes": [
     {
@@ -1530,8 +2178,8 @@
    "choices": [
     "8",
     "15",
-    "22",
-    "7"
+    "7",
+    "22"
    ],
    "answerIndex": 0,
    "explanation": "Think backwards. Adding 7 gave 15, so subtract 7 back from 15 to get the start: 15 − 7 = 8. (Check: 8 + 7 = 15.)",
@@ -1555,16 +2203,16 @@
    ],
    "statement": "Some number plus 8 makes 20. What was the starting number?",
    "choices": [
-    "12",
-    "11",
+    "20",
     "28",
-    "20"
+    "11",
+    "12"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Think backwards. Adding 8 gave 20, so subtract 8 back from 20 to get the start: 20 − 8 = 12. (Check: 12 + 8 = 20.)",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "That’s the number after adding. Subtract 8 back to get the starting number."
     }
    ],
@@ -1582,16 +2230,16 @@
    ],
    "statement": "Some number plus 6 makes 13. What was the starting number?",
    "choices": [
-    "13",
     "7",
+    "13",
     "19",
     "6"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "Think backwards. Adding 6 gave 13, so subtract 6 back from 13 to get the start: 13 − 6 = 7. (Check: 7 + 6 = 13.)",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "That’s the number after adding. Subtract 6 back to get the starting number."
     }
    ],
@@ -1609,16 +2257,16 @@
    ],
    "statement": "Some number plus 9 makes 16. What was the starting number?",
    "choices": [
-    "25",
-    "7",
     "6",
-    "16"
+    "16",
+    "25",
+    "7"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Think backwards. Adding 9 gave 16, so subtract 9 back from 16 to get the start: 16 − 9 = 7. (Check: 7 + 9 = 16.)",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 1,
      "misconception": "That’s the number after adding. Subtract 9 back to get the starting number."
     }
    ],
@@ -1636,16 +2284,16 @@
    ],
    "statement": "You add 3 consecutive whole numbers and get 24. What is the 'middle' number of the 3?",
    "choices": [
-    "11",
-    "12",
+    "7",
     "8",
-    "7"
+    "11",
+    "12"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−1, □, □+1. The − and + cancel, so the sum equals 'middle × count'. So the middle = 24 ÷ 3 = 8.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Divide by the count (3), not by 2, to get the middle."
     }
    ],
@@ -1663,16 +2311,16 @@
    ],
    "statement": "You add 5 consecutive whole numbers and get 60. What is the 'middle' number of the 5?",
    "choices": [
-    "12",
-    "30",
+    "17",
     "11",
-    "17"
+    "12",
+    "30"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−2, □−1, □, □+1, □+2. The − and + cancel, so the sum equals 'middle × count'. So the middle = 60 ÷ 5 = 12.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Divide by the count (5), not by 2, to get the middle."
     }
    ],
@@ -1690,16 +2338,16 @@
    ],
    "statement": "You add 3 consecutive whole numbers and get 60. What is the 'middle' number of the 3?",
    "choices": [
-    "30",
+    "23",
     "20",
     "19",
-    "23"
+    "30"
    ],
    "answerIndex": 1,
    "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−1, □, □+1. The − and + cancel, so the sum equals 'middle × count'. So the middle = 60 ÷ 3 = 20.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Divide by the count (3), not by 2, to get the middle."
     }
    ],
@@ -1718,20 +2366,992 @@
    "statement": "You add 5 consecutive whole numbers and get 150. What is the 'middle' number of the 5?",
    "choices": [
     "35",
-    "29",
     "75",
-    "30"
+    "30",
+    "29"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−2, □−1, □, □+1, □+2. The − and + cancel, so the sum equals 'middle × count'. So the middle = 150 ÷ 5 = 30.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Divide by the count (5), not by 2, to get the middle."
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "'Symmetric cancellation about the middle' is cleanest with an odd count (one exact middle). With an even count the middle sits between two numbers, so the sum is 'average of the middle two × count'. This eye also gives Gauss’s trick for 1+…+100."
+  },
+  {
+   "id": "gen-missscore-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-missscore-3",
+   "concepts": [
+    "average",
+    "back-solving from the total"
+   ],
+   "statement": "A test of 4 subjects has an average of 85 points. The 3 known scores are 80, 90, 88. How many points is the remaining subject?",
+   "choices": [
+    "77 points",
+    "82 points",
+    "87 points",
+    "85 points"
+   ],
+   "answerIndex": 1,
+   "explanation": "Turn the average into a 'total'. If 4 subjects average 85 points, the total must be 4×85=340 points. The 3 known subjects sum to 258, so the remaining subject = 340−258=82 points.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't just give the average. Subtract the known scores from the total."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The key to average problems is using 'average = total ÷ count' in reverse: total = average × count. Once you hold the total, the missing value is a single subtraction. 'How many more points to make the average X?' is solved the same way through the total."
+  },
+  {
+   "id": "gen-missscore-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-missscore-3",
+   "concepts": [
+    "average",
+    "back-solving from the total"
+   ],
+   "statement": "A test of 5 subjects has an average of 80 points. The 4 known scores are 75, 82, 78, 90. How many points is the remaining subject?",
+   "choices": [
+    "78 points",
+    "75 points",
+    "80 points",
+    "70 points"
+   ],
+   "answerIndex": 1,
+   "explanation": "Turn the average into a 'total'. If 5 subjects average 80 points, the total must be 5×80=400 points. The 4 known subjects sum to 325, so the remaining subject = 400−325=75 points.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don't just give the average. Subtract the known scores from the total."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The key to average problems is using 'average = total ÷ count' in reverse: total = average × count. Once you hold the total, the missing value is a single subtraction. 'How many more points to make the average X?' is solved the same way through the total."
+  },
+  {
+   "id": "gen-missscore-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-missscore-3",
+   "concepts": [
+    "average",
+    "back-solving from the total"
+   ],
+   "statement": "A test of 4 subjects has an average of 90 points. The 3 known scores are 92, 88, 95. How many points is the remaining subject?",
+   "choices": [
+    "80 points",
+    "90 points",
+    "88 points",
+    "85 points"
+   ],
+   "answerIndex": 3,
+   "explanation": "Turn the average into a 'total'. If 4 subjects average 90 points, the total must be 4×90=360 points. The 3 known subjects sum to 275, so the remaining subject = 360−275=85 points.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't just give the average. Subtract the known scores from the total."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The key to average problems is using 'average = total ÷ count' in reverse: total = average × count. Once you hold the total, the missing value is a single subtraction. 'How many more points to make the average X?' is solved the same way through the total."
+  },
+  {
+   "id": "gen-missscore-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-missscore-3",
+   "concepts": [
+    "average",
+    "back-solving from the total"
+   ],
+   "statement": "A test of 3 subjects has an average of 70 points. The 2 known scores are 65, 72. How many points is the remaining subject?",
+   "choices": [
+    "68 points",
+    "73 points",
+    "78 points",
+    "70 points"
+   ],
+   "answerIndex": 1,
+   "explanation": "Turn the average into a 'total'. If 3 subjects average 70 points, the total must be 3×70=210 points. The 2 known subjects sum to 137, so the remaining subject = 210−137=73 points.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't just give the average. Subtract the known scores from the total."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The key to average problems is using 'average = total ÷ count' in reverse: total = average × count. Once you hold the total, the missing value is a single subtraction. 'How many more points to make the average X?' is solved the same way through the total."
+  },
+  {
+   "id": "gen-fracwhole-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-fracwhole-3",
+   "concepts": [
+    "fractions",
+    "part and whole"
+   ],
+   "statement": "2/5 of the marbles in a jar is 12 marbles. How many marbles are in the jar in all?",
+   "choices": [
+    "18 marbles",
+    "17 marbles",
+    "30 marbles",
+    "60 marbles"
+   ],
+   "answerIndex": 2,
+   "explanation": "It means 2 of the 5 equal parts of the whole is 12 marbles. So one part is 12÷2=6 marbles. The whole is 5 parts, so 6×5=30 marbles.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't just multiply by the denominator. First find one part (÷ the numerator)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Part-and-whole problems hinge on finding 'one part (the unit fraction)' first. If 2/5 is 12, then 1/5 is 12÷2, and the whole (=5/5) is that times 5. In reverse, 'what is 2/5 of the whole?' is: divide the whole by 5 and multiply by 2."
+  },
+  {
+   "id": "gen-fracwhole-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-fracwhole-3",
+   "concepts": [
+    "fractions",
+    "part and whole"
+   ],
+   "statement": "3/4 of the marbles in a jar is 18 marbles. How many marbles are in the jar in all?",
+   "choices": [
+    "22 marbles",
+    "72 marbles",
+    "24 marbles",
+    "6 marbles"
+   ],
+   "answerIndex": 2,
+   "explanation": "It means 3 of the 4 equal parts of the whole is 18 marbles. So one part is 18÷3=6 marbles. The whole is 4 parts, so 6×4=24 marbles.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't just multiply by the denominator. First find one part (÷ the numerator)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Part-and-whole problems hinge on finding 'one part (the unit fraction)' first. If 3/4 is 18, then 1/4 is 18÷3, and the whole (=4/4) is that times 4. In reverse, 'what is 3/4 of the whole?' is: divide the whole by 4 and multiply by 3."
+  },
+  {
+   "id": "gen-fracwhole-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-fracwhole-3",
+   "concepts": [
+    "fractions",
+    "part and whole"
+   ],
+   "statement": "2/5 of the marbles in a jar is 20 marbles. How many marbles are in the jar in all?",
+   "choices": [
+    "30 marbles",
+    "50 marbles",
+    "100 marbles",
+    "25 marbles"
+   ],
+   "answerIndex": 1,
+   "explanation": "It means 2 of the 5 equal parts of the whole is 20 marbles. So one part is 20÷2=10 marbles. The whole is 5 parts, so 10×5=50 marbles.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don't just multiply by the denominator. First find one part (÷ the numerator)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Part-and-whole problems hinge on finding 'one part (the unit fraction)' first. If 2/5 is 20, then 1/5 is 20÷2, and the whole (=5/5) is that times 5. In reverse, 'what is 2/5 of the whole?' is: divide the whole by 5 and multiply by 2."
+  },
+  {
+   "id": "gen-fracwhole-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-fracwhole-3",
+   "concepts": [
+    "fractions",
+    "part and whole"
+   ],
+   "statement": "3/7 of the marbles in a jar is 21 marbles. How many marbles are in the jar in all?",
+   "choices": [
+    "28 marbles",
+    "147 marbles",
+    "52 marbles",
+    "49 marbles"
+   ],
+   "answerIndex": 3,
+   "explanation": "It means 3 of the 7 equal parts of the whole is 21 marbles. So one part is 21÷3=7 marbles. The whole is 7 parts, so 7×7=49 marbles.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't just multiply by the denominator. First find one part (÷ the numerator)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Part-and-whole problems hinge on finding 'one part (the unit fraction)' first. If 3/7 is 21, then 1/7 is 21÷3, and the whole (=7/7) is that times 7. In reverse, 'what is 3/7 of the whole?' is: divide the whole by 7 and multiply by 3."
+  },
+  {
+   "id": "gen-mincoin-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-mincoin-3",
+   "concepts": [
+    "making change",
+    "greedy method"
+   ],
+   "statement": "To give 780 in change using coins worth 500, 100, 50, and 10, how many coins are needed to use the 'fewest' possible?",
+   "choices": [
+    "6 coins",
+    "7 coins",
+    "9 coins",
+    "8 coins"
+   ],
+   "answerIndex": 1,
+   "explanation": "To use as few coins as possible, use the biggest coins first, as many as you can — 500s, then 100s, then 50s, then 10s. Altogether that comes to 7 coins.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Using the biggest coins first as much as possible cuts the count down further."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Biggest units first, as many as possible' is the greedy method. With our coin set (500, 100, 50, 10) it always guarantees the minimum. But not every system works that way — with 1, 3, and 4 coins, making 6 is fewer as 3+3 (2 coins) than as 4+1+1 (3 coins), so biggest-first isn't always best."
+  },
+  {
+   "id": "gen-mincoin-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-mincoin-3",
+   "concepts": [
+    "making change",
+    "greedy method"
+   ],
+   "statement": "To give 640 in change using coins worth 500, 100, 50, and 10, how many coins are needed to use the 'fewest' possible?",
+   "choices": [
+    "8 coins",
+    "6 coins",
+    "5 coins",
+    "7 coins"
+   ],
+   "answerIndex": 1,
+   "explanation": "To use as few coins as possible, use the biggest coins first, as many as you can — 500s, then 100s, then 50s, then 10s. Altogether that comes to 6 coins.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Using the biggest coins first as much as possible cuts the count down further."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Biggest units first, as many as possible' is the greedy method. With our coin set (500, 100, 50, 10) it always guarantees the minimum. But not every system works that way — with 1, 3, and 4 coins, making 6 is fewer as 3+3 (2 coins) than as 4+1+1 (3 coins), so biggest-first isn't always best."
+  },
+  {
+   "id": "gen-mincoin-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-mincoin-3",
+   "concepts": [
+    "making change",
+    "greedy method"
+   ],
+   "statement": "To give 970 in change using coins worth 500, 100, 50, and 10, how many coins are needed to use the 'fewest' possible?",
+   "choices": [
+    "10 coins",
+    "8 coins",
+    "9 coins",
+    "7 coins"
+   ],
+   "answerIndex": 1,
+   "explanation": "To use as few coins as possible, use the biggest coins first, as many as you can — 500s, then 100s, then 50s, then 10s. Altogether that comes to 8 coins.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Using the biggest coins first as much as possible cuts the count down further."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Biggest units first, as many as possible' is the greedy method. With our coin set (500, 100, 50, 10) it always guarantees the minimum. But not every system works that way — with 1, 3, and 4 coins, making 6 is fewer as 3+3 (2 coins) than as 4+1+1 (3 coins), so biggest-first isn't always best."
+  },
+  {
+   "id": "gen-mincoin-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-mincoin-3",
+   "concepts": [
+    "making change",
+    "greedy method"
+   ],
+   "statement": "To give 850 in change using coins worth 500, 100, 50, and 10, how many coins are needed to use the 'fewest' possible?",
+   "choices": [
+    "6 coins",
+    "4 coins",
+    "7 coins",
+    "5 coins"
+   ],
+   "answerIndex": 3,
+   "explanation": "To use as few coins as possible, use the biggest coins first, as many as you can — 500s, then 100s, then 50s, then 10s. Altogether that comes to 5 coins.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Using the biggest coins first as much as possible cuts the count down further."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Biggest units first, as many as possible' is the greedy method. With our coin set (500, 100, 50, 10) it always guarantees the minimum. But not every system works that way — with 1, 3, and 4 coins, making 6 is fewer as 3+3 (2 coins) than as 4+1+1 (3 coins), so biggest-first isn't always best."
+  },
+  {
+   "id": "gen-sqarea-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-sqarea-3",
+   "concepts": [
+    "squares",
+    "perimeter and area"
+   ],
+   "statement": "A square has a perimeter of 24 cm. What is the area of this square?",
+   "choices": [
+    "24 cm²",
+    "12 cm²",
+    "42 cm²",
+    "36 cm²"
+   ],
+   "answerIndex": 3,
+   "explanation": "A square has four equal sides. With a perimeter of 24 cm, one side is 24÷4=6 cm. The area is one side times itself, 6×6=36 cm².",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Perimeter and area differ. First find one side (÷4), then square it."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Perimeter is 'edge length (1-D)' and area is 'filled squares (2-D)', so even the units differ — cm versus cm². The order perimeter → one side (÷4) → area (square it) is the key. In reverse, from area 36 the side is the number that multiplied by itself gives 36 (6)."
+  },
+  {
+   "id": "gen-sqarea-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-sqarea-3",
+   "concepts": [
+    "squares",
+    "perimeter and area"
+   ],
+   "statement": "A square has a perimeter of 32 cm. What is the area of this square?",
+   "choices": [
+    "16 cm²",
+    "72 cm²",
+    "32 cm²",
+    "64 cm²"
+   ],
+   "answerIndex": 3,
+   "explanation": "A square has four equal sides. With a perimeter of 32 cm, one side is 32÷4=8 cm. The area is one side times itself, 8×8=64 cm².",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Perimeter and area differ. First find one side (÷4), then square it."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Perimeter is 'edge length (1-D)' and area is 'filled squares (2-D)', so even the units differ — cm versus cm². The order perimeter → one side (÷4) → area (square it) is the key. In reverse, from area 64 the side is the number that multiplied by itself gives 64 (8)."
+  },
+  {
+   "id": "gen-sqarea-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-sqarea-3",
+   "concepts": [
+    "squares",
+    "perimeter and area"
+   ],
+   "statement": "A square has a perimeter of 20 cm. What is the area of this square?",
+   "choices": [
+    "25 cm²",
+    "30 cm²",
+    "20 cm²",
+    "10 cm²"
+   ],
+   "answerIndex": 0,
+   "explanation": "A square has four equal sides. With a perimeter of 20 cm, one side is 20÷4=5 cm. The area is one side times itself, 5×5=25 cm².",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Perimeter and area differ. First find one side (÷4), then square it."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Perimeter is 'edge length (1-D)' and area is 'filled squares (2-D)', so even the units differ — cm versus cm². The order perimeter → one side (÷4) → area (square it) is the key. In reverse, from area 25 the side is the number that multiplied by itself gives 25 (5)."
+  },
+  {
+   "id": "gen-sqarea-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-sqarea-3",
+   "concepts": [
+    "squares",
+    "perimeter and area"
+   ],
+   "statement": "A square has a perimeter of 36 cm. What is the area of this square?",
+   "choices": [
+    "90 cm²",
+    "81 cm²",
+    "18 cm²",
+    "36 cm²"
+   ],
+   "answerIndex": 1,
+   "explanation": "A square has four equal sides. With a perimeter of 36 cm, one side is 36÷4=9 cm. The area is one side times itself, 9×9=81 cm².",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Perimeter and area differ. First find one side (÷4), then square it."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Perimeter is 'edge length (1-D)' and area is 'filled squares (2-D)', so even the units differ — cm versus cm². The order perimeter → one side (÷4) → area (square it) is the key. In reverse, from area 81 the side is the number that multiplied by itself gives 81 (9)."
+  },
+  {
+   "id": "gen-timedur-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-timedur-3",
+   "concepts": [
+    "time calculation",
+    "regrouping by 60"
+   ],
+   "statement": "You start a task at 3:40 and work for 1 hour 50 minutes. What time does it end?",
+   "choices": [
+    "5:40",
+    "6:30",
+    "5:30",
+    "4:90"
+   ],
+   "answerIndex": 2,
+   "explanation": "Add minutes to minutes and hours to hours, carrying 1 hour whenever the minutes pass 60. Minutes: 40+50=90 → 1 hour 30 min. Hours: 3+1+1=5. So it ends at 5:30.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't just stick the minutes together — carry to 1 hour once they pass 60."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Time is 'base 60', so when the minutes pass 60 you carry into hours (just like base-10 carrying, but the threshold is 60). Going backward, 'X hours Y minutes earlier' borrows 60 the same way. A clock going once around is the same remainder sense."
+  },
+  {
+   "id": "gen-timedur-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-timedur-3",
+   "concepts": [
+    "time calculation",
+    "regrouping by 60"
+   ],
+   "statement": "You start a task at 2:20 and work for 2 hours 55 minutes. What time does it end?",
+   "choices": [
+    "4:75",
+    "5:25",
+    "6:15",
+    "5:15"
+   ],
+   "answerIndex": 3,
+   "explanation": "Add minutes to minutes and hours to hours, carrying 1 hour whenever the minutes pass 60. Minutes: 20+55=75 → 1 hour 15 min. Hours: 2+2+1=5. So it ends at 5:15.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Don't just stick the minutes together — carry to 1 hour once they pass 60."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Time is 'base 60', so when the minutes pass 60 you carry into hours (just like base-10 carrying, but the threshold is 60). Going backward, 'X hours Y minutes earlier' borrows 60 the same way. A clock going once around is the same remainder sense."
+  },
+  {
+   "id": "gen-timedur-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-timedur-3",
+   "concepts": [
+    "time calculation",
+    "regrouping by 60"
+   ],
+   "statement": "You start a task at 9:45 and work for 1 hour 30 minutes. What time does it end?",
+   "choices": [
+    "12:15",
+    "11:25",
+    "11:15",
+    "10:75"
+   ],
+   "answerIndex": 2,
+   "explanation": "Add minutes to minutes and hours to hours, carrying 1 hour whenever the minutes pass 60. Minutes: 45+30=75 → 1 hour 15 min. Hours: 9+1+1=11. So it ends at 11:15.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't just stick the minutes together — carry to 1 hour once they pass 60."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Time is 'base 60', so when the minutes pass 60 you carry into hours (just like base-10 carrying, but the threshold is 60). Going backward, 'X hours Y minutes earlier' borrows 60 the same way. A clock going once around is the same remainder sense."
+  },
+  {
+   "id": "gen-timedur-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-timedur-3",
+   "concepts": [
+    "time calculation",
+    "regrouping by 60"
+   ],
+   "statement": "You start a task at 7:50 and work for 2 hours 20 minutes. What time does it end?",
+   "choices": [
+    "10:10",
+    "9:70",
+    "11:10",
+    "10:20"
+   ],
+   "answerIndex": 0,
+   "explanation": "Add minutes to minutes and hours to hours, carrying 1 hour whenever the minutes pass 60. Minutes: 50+20=70 → 1 hour 10 min. Hours: 7+2+1=10. So it ends at 10:10.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't just stick the minutes together — carry to 1 hour once they pass 60."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Time is 'base 60', so when the minutes pass 60 you carry into hours (just like base-10 carrying, but the threshold is 60). Going backward, 'X hours Y minutes earlier' borrows 60 the same way. A clock going once around is the same remainder sense."
+  },
+  {
+   "id": "gen-legs-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "counting legs",
+    "solve by assuming"
+   ],
+   "statement": "A yard has 6 chickens and rabbits altogether. Counting the legs gives 16. How many rabbits are there?",
+   "choices": [
+    "1 rabbit",
+    "4 rabbits",
+    "2 rabbits",
+    "3 rabbits"
+   ],
+   "answerIndex": 2,
+   "explanation": "Suppose they were all chickens. Then there would be 2×6=12 legs, but there are actually 16 — that's 4 more. Each time you swap a chicken for a rabbit the legs go up by 2, so 4÷2=2 are rabbits.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That's the number of chickens. The question asked for the rabbits."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "You can also set up an equation. If there are □ rabbits, there are 6−□ chickens, and the legs are 4×□ + 2×(6−□) = 16. Simplifying, 2×□ = 16−12, so □ = 2. 'Assume all are chickens' and 'set up an equation' are just two ways of writing the same calculation — the systems of equations you meet later are exactly this idea."
+  },
+  {
+   "id": "gen-legs-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "counting legs",
+    "solve by assuming"
+   ],
+   "statement": "A yard has 8 chickens and rabbits altogether. Counting the legs gives 22. How many rabbits are there?",
+   "choices": [
+    "5 rabbits",
+    "2 rabbits",
+    "4 rabbits",
+    "3 rabbits"
+   ],
+   "answerIndex": 3,
+   "explanation": "Suppose they were all chickens. Then there would be 2×8=16 legs, but there are actually 22 — that's 6 more. Each time you swap a chicken for a rabbit the legs go up by 2, so 6÷2=3 are rabbits.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "That's the number of chickens. The question asked for the rabbits."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "You can also set up an equation. If there are □ rabbits, there are 8−□ chickens, and the legs are 4×□ + 2×(8−□) = 22. Simplifying, 2×□ = 22−16, so □ = 3. 'Assume all are chickens' and 'set up an equation' are just two ways of writing the same calculation — the systems of equations you meet later are exactly this idea."
+  },
+  {
+   "id": "gen-legs-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "counting legs",
+    "solve by assuming"
+   ],
+   "statement": "A yard has 10 chickens and rabbits altogether. Counting the legs gives 28. How many rabbits are there?",
+   "choices": [
+    "4 rabbits",
+    "5 rabbits",
+    "6 rabbits",
+    "3 rabbits"
+   ],
+   "answerIndex": 0,
+   "explanation": "Suppose they were all chickens. Then there would be 2×10=20 legs, but there are actually 28 — that's 8 more. Each time you swap a chicken for a rabbit the legs go up by 2, so 8÷2=4 are rabbits.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That's the number of chickens. The question asked for the rabbits."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "You can also set up an equation. If there are □ rabbits, there are 10−□ chickens, and the legs are 4×□ + 2×(10−□) = 28. Simplifying, 2×□ = 28−20, so □ = 4. 'Assume all are chickens' and 'set up an equation' are just two ways of writing the same calculation — the systems of equations you meet later are exactly this idea."
+  },
+  {
+   "id": "gen-legs-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-legs-3",
+   "concepts": [
+    "counting legs",
+    "solve by assuming"
+   ],
+   "statement": "A yard has 12 chickens and rabbits altogether. Counting the legs gives 34. How many rabbits are there?",
+   "choices": [
+    "4 rabbits",
+    "7 rabbits",
+    "6 rabbits",
+    "5 rabbits"
+   ],
+   "answerIndex": 3,
+   "explanation": "Suppose they were all chickens. Then there would be 2×12=24 legs, but there are actually 34 — that's 10 more. Each time you swap a chicken for a rabbit the legs go up by 2, so 10÷2=5 are rabbits.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That's the number of chickens. The question asked for the rabbits."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "You can also set up an equation. If there are □ rabbits, there are 12−□ chickens, and the legs are 4×□ + 2×(12−□) = 34. Simplifying, 2×□ = 34−24, so □ = 5. 'Assume all are chickens' and 'set up an equation' are just two ways of writing the same calculation — the systems of equations you meet later are exactly this idea."
+  },
+  {
+   "id": "gen-tree-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "interval problems",
+    "both ends included"
+   ],
+   "statement": "Along one side of a road 24 m long, streetlights are placed every 4 m from the very start to the very end. How many streetlights are needed?",
+   "choices": [
+    "8 streetlights",
+    "5 streetlights",
+    "6 streetlights",
+    "7 streetlights"
+   ],
+   "answerIndex": 3,
+   "explanation": "Draw a small picture first. With 1 gap you need 2 lights, with 2 gaps you need 3 — there is always one more light than gaps. The number of gaps is 24÷4=6, so you need 6+1=7 lights.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "The number of gaps and the number of lights differ. Add the very first one."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Interval problems hinge on 'do you count the ends?'. ① Both ends → count = gaps+1. ② Only one end → count = gaps. ③ Neither end → count = gaps−1. ④ A circle (loop) → count = gaps (the end is the start). Rather than memorizing formulas, draw a small picture and just check 'how are the ends counted' — then any interval problem works."
+  },
+  {
+   "id": "gen-tree-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "interval problems",
+    "both ends included"
+   ],
+   "statement": "Along one side of a road 30 m long, streetlights are placed every 6 m from the very start to the very end. How many streetlights are needed?",
+   "choices": [
+    "6 streetlights",
+    "7 streetlights",
+    "4 streetlights",
+    "5 streetlights"
+   ],
+   "answerIndex": 0,
+   "explanation": "Draw a small picture first. With 1 gap you need 2 lights, with 2 gaps you need 3 — there is always one more light than gaps. The number of gaps is 30÷6=5, so you need 5+1=6 lights.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "The number of gaps and the number of lights differ. Add the very first one."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Interval problems hinge on 'do you count the ends?'. ① Both ends → count = gaps+1. ② Only one end → count = gaps. ③ Neither end → count = gaps−1. ④ A circle (loop) → count = gaps (the end is the start). Rather than memorizing formulas, draw a small picture and just check 'how are the ends counted' — then any interval problem works."
+  },
+  {
+   "id": "gen-tree-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "interval problems",
+    "both ends included"
+   ],
+   "statement": "Along one side of a road 28 m long, streetlights are placed every 7 m from the very start to the very end. How many streetlights are needed?",
+   "choices": [
+    "3 streetlights",
+    "4 streetlights",
+    "6 streetlights",
+    "5 streetlights"
+   ],
+   "answerIndex": 3,
+   "explanation": "Draw a small picture first. With 1 gap you need 2 lights, with 2 gaps you need 3 — there is always one more light than gaps. The number of gaps is 28÷7=4, so you need 4+1=5 lights.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "The number of gaps and the number of lights differ. Add the very first one."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Interval problems hinge on 'do you count the ends?'. ① Both ends → count = gaps+1. ② Only one end → count = gaps. ③ Neither end → count = gaps−1. ④ A circle (loop) → count = gaps (the end is the start). Rather than memorizing formulas, draw a small picture and just check 'how are the ends counted' — then any interval problem works."
+  },
+  {
+   "id": "gen-tree-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-tree-3",
+   "concepts": [
+    "interval problems",
+    "perimeter differs"
+   ],
+   "statement": "Trees are planted every 6 m around a round pond whose perimeter is 36 m. How many trees are needed?",
+   "choices": [
+    "7 trees",
+    "8 trees",
+    "6 trees",
+    "5 trees"
+   ],
+   "answerIndex": 2,
+   "explanation": "On a straight road there is one more tree than gaps, but on a circle the last tree meets the first after one full loop. So the number of trees equals the number of gaps. The gaps are 36÷6=6, so you need 6 trees.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "The +1 is only for a straight road. On a circle the last tree is the first tree!"
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Interval problems hinge on 'do you count the ends?'. ① Both ends → count = gaps+1. ② Only one end → count = gaps. ③ Neither end → count = gaps−1. ④ A circle (loop) → count = gaps (the end is the start). Draw the situation and just check 'how are the ends counted', and neither a line nor a circle will confuse you."
+  },
+  {
+   "id": "gen-log-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "number of cuts",
+    "interval reasoning"
+   ],
+   "statement": "You want to cut a long log into 6 pieces. If each cut takes 2 minutes, how many minutes does it take in all?",
+   "choices": [
+    "14 minutes",
+    "8 minutes",
+    "10 minutes",
+    "12 minutes"
+   ],
+   "answerIndex": 2,
+   "explanation": "Think small. To get 2 pieces you cut once, for 3 pieces twice — the number of cuts is always one less than the number of pieces. For 6 pieces you cut 5 times, so it takes 5×2=10 minutes.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You don't cut once per piece — the last piece appears on its own."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "This is the same as the 'planting trees' interval problem. The number of 'cuts' is always one less than the 'pieces' made (the two ends need no cut). Anything that counts the 'gaps between' — fence posts and panels, stairs and floors — watch for this off-by-one. So 6 pieces need 5 cuts, 5×2=10 minutes."
+  },
+  {
+   "id": "gen-log-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "number of cuts",
+    "interval reasoning"
+   ],
+   "statement": "You want to cut a long log into 7 pieces. If each cut takes 3 minutes, how many minutes does it take in all?",
+   "choices": [
+    "24 minutes",
+    "15 minutes",
+    "21 minutes",
+    "18 minutes"
+   ],
+   "answerIndex": 3,
+   "explanation": "Think small. To get 2 pieces you cut once, for 3 pieces twice — the number of cuts is always one less than the number of pieces. For 7 pieces you cut 6 times, so it takes 6×3=18 minutes.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You don't cut once per piece — the last piece appears on its own."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "This is the same as the 'planting trees' interval problem. The number of 'cuts' is always one less than the 'pieces' made (the two ends need no cut). Anything that counts the 'gaps between' — fence posts and panels, stairs and floors — watch for this off-by-one. So 7 pieces need 6 cuts, 6×3=18 minutes."
+  },
+  {
+   "id": "gen-log-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "number of cuts",
+    "interval reasoning"
+   ],
+   "statement": "You want to cut a long log into 8 pieces. If each cut takes 4 minutes, how many minutes does it take in all?",
+   "choices": [
+    "28 minutes",
+    "24 minutes",
+    "32 minutes",
+    "36 minutes"
+   ],
+   "answerIndex": 0,
+   "explanation": "Think small. To get 2 pieces you cut once, for 3 pieces twice — the number of cuts is always one less than the number of pieces. For 8 pieces you cut 7 times, so it takes 7×4=28 minutes.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You don't cut once per piece — the last piece appears on its own."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "This is the same as the 'planting trees' interval problem. The number of 'cuts' is always one less than the 'pieces' made (the two ends need no cut). Anything that counts the 'gaps between' — fence posts and panels, stairs and floors — watch for this off-by-one. So 8 pieces need 7 cuts, 7×4=28 minutes."
+  },
+  {
+   "id": "gen-log-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-log-3",
+   "concepts": [
+    "number of cuts",
+    "interval reasoning"
+   ],
+   "statement": "You want to cut a long log into 9 pieces. If each cut takes 2 minutes, how many minutes does it take in all?",
+   "choices": [
+    "14 minutes",
+    "16 minutes",
+    "20 minutes",
+    "18 minutes"
+   ],
+   "answerIndex": 1,
+   "explanation": "Think small. To get 2 pieces you cut once, for 3 pieces twice — the number of cuts is always one less than the number of pieces. For 9 pieces you cut 8 times, so it takes 8×2=16 minutes.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You don't cut once per piece — the last piece appears on its own."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "This is the same as the 'planting trees' interval problem. The number of 'cuts' is always one less than the 'pieces' made (the two ends need no cut). Anything that counts the 'gaps between' — fence posts and panels, stairs and floors — watch for this off-by-one. So 9 pieces need 8 cuts, 8×2=16 minutes."
+  },
+  {
+   "id": "gen-pyramid-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "number pyramid",
+    "thinking backwards"
+   ],
+   "statement": "In a number pyramid, each cell is the sum of the two cells right below it. If the bottom row is [3, □, 2] and the top is 15, what is □?",
+   "choices": [
+    "5",
+    "10",
+    "6",
+    "4"
+   ],
+   "answerIndex": 0,
+   "explanation": "Build upward by the rule. The middle row is (3+□) and (□+2), and the top is their sum, 3+□+□+2. So the two □'s add up to 15−3−2=10, which means □=10÷2=5.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That's the sum of the two □'s. Divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The top is the sum of the two cells below, so 15 = (left 3+□) + (right □+2) = 3+2+2×□. Tracing backward, □ = (top − sum of the ends) ÷ 2 = (15−3−2)÷2 = 5. Starting from the result and tracing back the cause — 'working backward' — is especially powerful in mazes and puzzles."
+  },
+  {
+   "id": "gen-pyramid-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "number pyramid",
+    "thinking backwards"
+   ],
+   "statement": "In a number pyramid, each cell is the sum of the two cells right below it. If the bottom row is [4, □, 7] and the top is 15, what is □?",
+   "choices": [
+    "2",
+    "4",
+    "3",
+    "1"
+   ],
+   "answerIndex": 0,
+   "explanation": "Build upward by the rule. The middle row is (4+□) and (□+7), and the top is their sum, 4+□+□+7. So the two □'s add up to 15−4−7=4, which means □=4÷2=2.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That's the sum of the two □'s. Divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The top is the sum of the two cells below, so 15 = (left 4+□) + (right □+7) = 4+7+2×□. Tracing backward, □ = (top − sum of the ends) ÷ 2 = (15−4−7)÷2 = 2. Starting from the result and tracing back the cause — 'working backward' — is especially powerful in mazes and puzzles."
+  },
+  {
+   "id": "gen-pyramid-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "number pyramid",
+    "thinking backwards"
+   ],
+   "statement": "In a number pyramid, each cell is the sum of the two cells right below it. If the bottom row is [6, □, 4] and the top is 16, what is □?",
+   "choices": [
+    "4",
+    "2",
+    "6",
+    "3"
+   ],
+   "answerIndex": 3,
+   "explanation": "Build upward by the rule. The middle row is (6+□) and (□+4), and the top is their sum, 6+□+□+4. So the two □'s add up to 16−6−4=6, which means □=6÷2=3.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That's the sum of the two □'s. Divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The top is the sum of the two cells below, so 16 = (left 6+□) + (right □+4) = 6+4+2×□. Tracing backward, □ = (top − sum of the ends) ÷ 2 = (16−6−4)÷2 = 3. Starting from the result and tracing back the cause — 'working backward' — is especially powerful in mazes and puzzles."
+  },
+  {
+   "id": "gen-pyramid-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-pyramid-3",
+   "concepts": [
+    "number pyramid",
+    "thinking backwards"
+   ],
+   "statement": "In a number pyramid, each cell is the sum of the two cells right below it. If the bottom row is [2, □, 5] and the top is 19, what is □?",
+   "choices": [
+    "5",
+    "7",
+    "6",
+    "12"
+   ],
+   "answerIndex": 2,
+   "explanation": "Build upward by the rule. The middle row is (2+□) and (□+5), and the top is their sum, 2+□+□+5. So the two □'s add up to 19−2−5=12, which means □=12÷2=6.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That's the sum of the two □'s. Divide by 2."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The top is the sum of the two cells below, so 19 = (left 2+□) + (right □+5) = 2+5+2×□. Tracing backward, □ = (top − sum of the ends) ÷ 2 = (19−2−5)÷2 = 6. Starting from the result and tracing back the cause — 'working backward' — is especially powerful in mazes and puzzles."
   },
   {
    "id": "gen-cycle-1",
@@ -1744,12 +3364,12 @@
    ],
    "statement": "Beads in the order red · yellow · blue are strung over and over. What color is the 50th bead?",
    "choices": [
-    "can’t tell",
-    "blue",
     "yellow",
-    "red"
+    "can’t tell",
+    "red",
+    "blue"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "Since 3 beads repeat as one group, dividing 50 by 3 is the key. 50÷3 gives quotient 16 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is yellow.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -1767,11 +3387,11 @@
    "statement": "Beads in the order green · purple · orange are strung over and over. What color is the 74th bead?",
    "choices": [
     "green",
+    "orange",
     "can’t tell",
-    "purple",
-    "orange"
+    "purple"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Since 3 beads repeat as one group, dividing 74 by 3 is the key. 74÷3 gives quotient 24 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is purple.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -1788,12 +3408,12 @@
    ],
    "statement": "Beads in the order red · yellow · blue · green are strung over and over. What color is the 90th bead?",
    "choices": [
-    "blue",
     "can’t tell",
     "red",
-    "yellow"
+    "yellow",
+    "blue"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Since 4 beads repeat as one group, dividing 90 by 4 is the key. 90÷4 gives quotient 22 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is yellow.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -1810,16 +3430,408 @@
    ],
    "statement": "Beads in the order green · purple · orange · pink are strung over and over. What color is the 66th bead?",
    "choices": [
+    "purple",
     "orange",
     "green",
-    "can’t tell",
-    "purple"
+    "can’t tell"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Since 4 beads repeat as one group, dividing 66 by 4 is the key. 66÷4 gives quotient 16 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is purple.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "For repeating problems, the remainder is the key. With 4 per group, where the 66th lands is set by the remainder of 66÷4 (remainder 0 means the last, #4). Weekdays (7), clocks (12), and calendars all run on this 'remainder world'."
+  },
+  {
+   "id": "gen-calweek-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "calendar structure",
+    "middle-number reasoning"
+   ],
+   "statement": "On a calendar, three numbers stacked vertically were chosen and their sum was 33. What is the middle number?",
+   "choices": [
+    "12",
+    "11",
+    "10",
+    "16"
+   ],
+   "answerIndex": 1,
+   "explanation": "On a calendar, numbers stacked vertically differ by 7. Writing the three as (middle−7), middle, (middle+7), the −7 and +7 cancel, so the sum is middle×3. 33÷3=11, so the middle number is 11.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't divide by 2. The sum of the three is 3 times the middle number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The trick is to anchor on the middle number. The one above is −7 and the one below is +7, so they cancel and the sum = middle×3. Anchoring on the middle makes the symmetric terms vanish and shrinks the arithmetic. Three numbers in a horizontal row (−1, +1) or consecutive odd numbers work the same way: middle×3."
+  },
+  {
+   "id": "gen-calweek-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "calendar structure",
+    "middle-number reasoning"
+   ],
+   "statement": "On a calendar, three numbers stacked vertically were chosen and their sum was 45. What is the middle number?",
+   "choices": [
+    "22",
+    "14",
+    "15",
+    "16"
+   ],
+   "answerIndex": 2,
+   "explanation": "On a calendar, numbers stacked vertically differ by 7. Writing the three as (middle−7), middle, (middle+7), the −7 and +7 cancel, so the sum is middle×3. 45÷3=15, so the middle number is 15.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Don't divide by 2. The sum of the three is 3 times the middle number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The trick is to anchor on the middle number. The one above is −7 and the one below is +7, so they cancel and the sum = middle×3. Anchoring on the middle makes the symmetric terms vanish and shrinks the arithmetic. Three numbers in a horizontal row (−1, +1) or consecutive odd numbers work the same way: middle×3."
+  },
+  {
+   "id": "gen-calweek-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "calendar structure",
+    "middle-number reasoning"
+   ],
+   "statement": "On a calendar, three numbers stacked vertically were chosen and their sum was 51. What is the middle number?",
+   "choices": [
+    "17",
+    "18",
+    "16",
+    "25"
+   ],
+   "answerIndex": 0,
+   "explanation": "On a calendar, numbers stacked vertically differ by 7. Writing the three as (middle−7), middle, (middle+7), the −7 and +7 cancel, so the sum is middle×3. 51÷3=17, so the middle number is 17.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't divide by 2. The sum of the three is 3 times the middle number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The trick is to anchor on the middle number. The one above is −7 and the one below is +7, so they cancel and the sum = middle×3. Anchoring on the middle makes the symmetric terms vanish and shrinks the arithmetic. Three numbers in a horizontal row (−1, +1) or consecutive odd numbers work the same way: middle×3."
+  },
+  {
+   "id": "gen-calweek-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-calweek-3",
+   "concepts": [
+    "calendar structure",
+    "middle-number reasoning"
+   ],
+   "statement": "On a calendar, three numbers stacked vertically were chosen and their sum was 60. What is the middle number?",
+   "choices": [
+    "19",
+    "30",
+    "20",
+    "21"
+   ],
+   "answerIndex": 2,
+   "explanation": "On a calendar, numbers stacked vertically differ by 7. Writing the three as (middle−7), middle, (middle+7), the −7 and +7 cancel, so the sum is middle×3. 60÷3=20, so the middle number is 20.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't divide by 2. The sum of the three is 3 times the middle number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The trick is to anchor on the middle number. The one above is −7 and the one below is +7, so they cancel and the sum = middle×3. Anchoring on the middle makes the symmetric terms vanish and shrinks the arithmetic. Three numbers in a horizontal row (−1, +1) or consecutive odd numbers work the same way: middle×3."
+  },
+  {
+   "id": "gen-border-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "counting the border",
+    "double-counted vertices"
+   ],
+   "statement": "You want to lay go stones in a hollow square shape with 7 stones on each side, as in the picture. How many stones are needed in all?",
+   "choices": [
+    "22 stones",
+    "24 stones",
+    "28 stones",
+    "49 stones"
+   ],
+   "answerIndex": 1,
+   "explanation": "Counting 7 on each of the four sides as 7×4=28 falls into a trap. The four corner stones each sit on two sides, so they get counted twice. Subtracting those 4 double-counted stones gives 28−4=24.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted the 4 corner stones twice."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "It's only the border, not a filled-in square."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 7
+    }
+   },
+   "detailedExplanation": "'Counting a border' is all about how you handle the overlaps. Another way: 7 on the top and bottom rows (7×2=14), then the two remaining sides have 5 each without the corners (total 10). Adding gives 14+10=24 — the same. Either 'subtract' the overlap or split so there's 'no overlap' — seeing both roads give the same answer is reassuring."
+  },
+  {
+   "id": "gen-border-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "counting the border",
+    "double-counted vertices"
+   ],
+   "statement": "You want to lay go stones in a hollow square shape with 8 stones on each side, as in the picture. How many stones are needed in all?",
+   "choices": [
+    "26 stones",
+    "28 stones",
+    "32 stones",
+    "64 stones"
+   ],
+   "answerIndex": 1,
+   "explanation": "Counting 8 on each of the four sides as 8×4=32 falls into a trap. The four corner stones each sit on two sides, so they get counted twice. Subtracting those 4 double-counted stones gives 32−4=28.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted the 4 corner stones twice."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "It's only the border, not a filled-in square."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 8
+    }
+   },
+   "detailedExplanation": "'Counting a border' is all about how you handle the overlaps. Another way: 8 on the top and bottom rows (8×2=16), then the two remaining sides have 6 each without the corners (total 12). Adding gives 16+12=28 — the same. Either 'subtract' the overlap or split so there's 'no overlap' — seeing both roads give the same answer is reassuring."
+  },
+  {
+   "id": "gen-border-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "counting the border",
+    "double-counted vertices"
+   ],
+   "statement": "You want to lay go stones in a hollow square shape with 12 stones on each side, as in the picture. How many stones are needed in all?",
+   "choices": [
+    "144 stones",
+    "44 stones",
+    "48 stones",
+    "42 stones"
+   ],
+   "answerIndex": 1,
+   "explanation": "Counting 12 on each of the four sides as 12×4=48 falls into a trap. The four corner stones each sit on two sides, so they get counted twice. Subtracting those 4 double-counted stones gives 48−4=44.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted the 4 corner stones twice."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "It's only the border, not a filled-in square."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 12
+    }
+   },
+   "detailedExplanation": "'Counting a border' is all about how you handle the overlaps. Another way: 12 on the top and bottom rows (12×2=24), then the two remaining sides have 10 each without the corners (total 20). Adding gives 24+20=44 — the same. Either 'subtract' the overlap or split so there's 'no overlap' — seeing both roads give the same answer is reassuring."
+  },
+  {
+   "id": "gen-border-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-border-3",
+   "concepts": [
+    "counting the border",
+    "double-counted vertices"
+   ],
+   "statement": "You want to lay go stones in a hollow square shape with 15 stones on each side, as in the picture. How many stones are needed in all?",
+   "choices": [
+    "54 stones",
+    "56 stones",
+    "60 stones",
+    "225 stones"
+   ],
+   "answerIndex": 1,
+   "explanation": "Counting 15 on each of the four sides as 15×4=60 falls into a trap. The four corner stones each sit on two sides, so they get counted twice. Subtracting those 4 double-counted stones gives 60−4=56.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted the 4 corner stones twice."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "It's only the border, not a filled-in square."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "DOT_BORDER",
+    "params": {
+     "side": 12
+    }
+   },
+   "detailedExplanation": "'Counting a border' is all about how you handle the overlaps. Another way: 15 on the top and bottom rows (15×2=30), then the two remaining sides have 13 each without the corners (total 26). Adding gives 30+26=56 — the same. Either 'subtract' the overlap or split so there's 'no overlap' — seeing both roads give the same answer is reassuring."
+  },
+  {
+   "id": "gen-mirror-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "mirror reasoning",
+    "symmetry"
+   ],
+   "statement": "The picture shows a wall clock seen in a mirror (it looks like 10 o'clock). What is the actual time?",
+   "choices": [
+    "2 o'clock",
+    "11 o'clock",
+    "10 o'clock",
+    "8 o'clock"
+   ],
+   "answerIndex": 0,
+   "explanation": "A mirror flips left and right only, so the 12 and 6 positions stay put. If it looks like 10 o'clock in the mirror, the real hand is on the opposite side of 12, at 2 o'clock. It helps to remember that the real time and the mirror time add up to 12 (2+10=12).",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You read it straight off the mirror. Left and right are flipped."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 10,
+     "minute": 0
+    }
+   },
+   "detailedExplanation": "A mirror flips left and right. When a clock is flipped about the 12 o'clock (top) axis, the time reads as '12 minus the real time'. So mirror 10 o'clock → real 2 o'clock (12−10=2). To go the other way, from real to mirror, subtract from 12 the same way. Remember symmetry as 'tracing back across an axis' and you won't get confused."
+  },
+  {
+   "id": "gen-mirror-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "mirror reasoning",
+    "symmetry"
+   ],
+   "statement": "The picture shows a wall clock seen in a mirror (it looks like 8 o'clock). What is the actual time?",
+   "choices": [
+    "9 o'clock",
+    "4 o'clock",
+    "8 o'clock",
+    "10 o'clock"
+   ],
+   "answerIndex": 1,
+   "explanation": "A mirror flips left and right only, so the 12 and 6 positions stay put. If it looks like 8 o'clock in the mirror, the real hand is on the opposite side of 12, at 4 o'clock. It helps to remember that the real time and the mirror time add up to 12 (4+8=12).",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You read it straight off the mirror. Left and right are flipped."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 8,
+     "minute": 0
+    }
+   },
+   "detailedExplanation": "A mirror flips left and right. When a clock is flipped about the 12 o'clock (top) axis, the time reads as '12 minus the real time'. So mirror 8 o'clock → real 4 o'clock (12−8=4). To go the other way, from real to mirror, subtract from 12 the same way. Remember symmetry as 'tracing back across an axis' and you won't get confused."
+  },
+  {
+   "id": "gen-mirror-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "mirror reasoning",
+    "symmetry"
+   ],
+   "statement": "The picture shows a wall clock seen in a mirror (it looks like 7 o'clock). What is the actual time?",
+   "choices": [
+    "11 o'clock",
+    "7 o'clock",
+    "5 o'clock",
+    "8 o'clock"
+   ],
+   "answerIndex": 2,
+   "explanation": "A mirror flips left and right only, so the 12 and 6 positions stay put. If it looks like 7 o'clock in the mirror, the real hand is on the opposite side of 12, at 5 o'clock. It helps to remember that the real time and the mirror time add up to 12 (5+7=12).",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "You read it straight off the mirror. Left and right are flipped."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 7,
+     "minute": 0
+    }
+   },
+   "detailedExplanation": "A mirror flips left and right. When a clock is flipped about the 12 o'clock (top) axis, the time reads as '12 minus the real time'. So mirror 7 o'clock → real 5 o'clock (12−7=5). To go the other way, from real to mirror, subtract from 12 the same way. Remember symmetry as 'tracing back across an axis' and you won't get confused."
+  },
+  {
+   "id": "gen-mirror-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-mirror-3",
+   "concepts": [
+    "mirror reasoning",
+    "symmetry"
+   ],
+   "statement": "The picture shows a wall clock seen in a mirror (it looks like 5 o'clock). What is the actual time?",
+   "choices": [
+    "1 o'clock",
+    "6 o'clock",
+    "7 o'clock",
+    "5 o'clock"
+   ],
+   "answerIndex": 2,
+   "explanation": "A mirror flips left and right only, so the 12 and 6 positions stay put. If it looks like 5 o'clock in the mirror, the real hand is on the opposite side of 12, at 7 o'clock. It helps to remember that the real time and the mirror time add up to 12 (7+5=12).",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You read it straight off the mirror. Left and right are flipped."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CLOCK",
+    "params": {
+     "hour": 5,
+     "minute": 0
+    }
+   },
+   "detailedExplanation": "A mirror flips left and right. When a clock is flipped about the 12 o'clock (top) axis, the time reads as '12 minus the real time'. So mirror 5 o'clock → real 7 o'clock (12−5=7). To go the other way, from real to mirror, subtract from 12 the same way. Remember symmetry as 'tracing back across an axis' and you won't get confused."
   },
   {
    "id": "gen-cards-1",
@@ -1832,16 +3844,16 @@
    ],
    "statement": "Using the number cards 3, 7, 5, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
-    "735",
-    "753",
+    "357",
     "375",
-    "357"
+    "735",
+    "753"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 7 in the hundreds, 5 in the tens, and 3 in the ones gives 753.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
     }
    ],
@@ -1859,16 +3871,16 @@
    ],
    "statement": "Using the number cards 2, 8, 4, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
-    "284",
     "824",
     "248",
+    "284",
     "842"
    ],
    "answerIndex": 3,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 8 in the hundreds, 4 in the tens, and 2 in the ones gives 842.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
     }
    ],
@@ -1886,8 +3898,8 @@
    ],
    "statement": "Using the number cards 6, 1, 9, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
-    "619",
     "916",
+    "619",
     "961",
     "169"
    ],
@@ -1913,16 +3925,16 @@
    ],
    "statement": "Using the number cards 4, 7, 2, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
+    "247",
     "724",
-    "472",
     "742",
-    "247"
+    "472"
    ],
    "answerIndex": 2,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 7 in the hundreds, 4 in the tens, and 2 in the ones gives 742.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
     }
    ],
@@ -1940,16 +3952,16 @@
    ],
    "statement": "Find the rule. 2, 5, 8, 11, □ — what number goes in the box?",
    "choices": [
+    "11",
     "17",
     "15",
-    "14",
-    "11"
+    "14"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 11 comes 11 + 3 = 14.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -1967,16 +3979,16 @@
    ],
    "statement": "Find the rule. 3, 7, 11, 15, □ — what number goes in the box?",
    "choices": [
-    "23",
-    "19",
     "15",
+    "19",
+    "23",
     "20"
    ],
    "answerIndex": 1,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 4 each time, so after 15 comes 15 + 4 = 19.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -1994,12 +4006,12 @@
    ],
    "statement": "Find the rule. 30, 26, 22, 18, □ — what number goes in the box?",
    "choices": [
-    "15",
-    "10",
     "14",
+    "10",
+    "15",
     "18"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "Look at the gap between neighboring numbers. It goes down by 4 each time, so after 18 comes 18 − 4 = 14.",
    "mistakes": [
     {
@@ -2021,16 +4033,16 @@
    ],
    "statement": "Find the rule. 1, 4, 7, 10, □ — what number goes in the box?",
    "choices": [
+    "14",
     "10",
     "13",
-    "16",
-    "14"
+    "16"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 10 comes 10 + 3 = 13.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -2048,16 +4060,16 @@
    ],
    "statement": "You join 3 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
-    "10 matchsticks",
     "12 matchsticks",
-    "11 matchsticks",
-    "9 matchsticks"
+    "9 matchsticks",
+    "10 matchsticks",
+    "11 matchsticks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 3 squares need 4 + 3×2 = 10.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
     }
    ],
@@ -2081,16 +4093,16 @@
    ],
    "statement": "You join 4 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
-    "16 matchsticks",
+    "13 matchsticks",
     "12 matchsticks",
     "15 matchsticks",
-    "13 matchsticks"
+    "16 matchsticks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 4 squares need 4 + 3×3 = 13.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
     }
    ],
@@ -2114,16 +4126,16 @@
    ],
    "statement": "You join 5 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
+    "15 matchsticks",
     "16 matchsticks",
     "20 matchsticks",
-    "15 matchsticks",
     "19 matchsticks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 5 squares need 4 + 3×4 = 16.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
     }
    ],
@@ -2147,16 +4159,16 @@
    ],
    "statement": "You join 6 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
-    "23 matchsticks",
     "24 matchsticks",
     "18 matchsticks",
+    "23 matchsticks",
     "19 matchsticks"
    ],
    "answerIndex": 3,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 6 squares need 4 + 3×5 = 19.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
     }
    ],
@@ -2207,16 +4219,16 @@
    ],
    "statement": "There are 2 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
-    "9 outfits",
     "7 outfits",
-    "6 outfits",
-    "5 outfits"
+    "9 outfits",
+    "5 outfits",
+    "6 outfits"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "For every top you can pair 3 bottoms, and there are 2 tops, so 2×3=6. Drawing a table and pairing them gives 6 as well.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "Don’t add — multiply. Each top pairs with every bottom."
     }
    ],
@@ -2236,8 +4248,8 @@
    "choices": [
     "7 outfits",
     "4 outfits",
-    "5 outfits",
-    "3 outfits"
+    "3 outfits",
+    "5 outfits"
    ],
    "answerIndex": 1,
    "explanation": "For every top you can pair 2 bottoms, and there are 2 tops, so 2×2=4. Drawing a table and pairing them gives 4 as well.",
@@ -2256,12 +4268,12 @@
    ],
    "statement": "There are 3 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
-    "10 outfits",
+    "8 outfits",
     "6 outfits",
-    "9 outfits",
-    "8 outfits"
+    "10 outfits",
+    "9 outfits"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "For every top you can pair 3 bottoms, and there are 3 tops, so 3×3=9. Drawing a table and pairing them gives 9 as well.",
    "mistakes": [
     {
@@ -2283,16 +4295,16 @@
    ],
    "statement": "□7 + 25 = 62. What digit goes in the box? (□ is a single digit)",
    "choices": [
-    "6",
-    "3",
     "2",
+    "3",
+    "6",
     "4"
    ],
    "answerIndex": 1,
    "explanation": "□7 is 62 minus 25. Since 62 − 25 = 37, the tens digit □ is 3. The ones digit 7 matches too.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 2,
      "misconception": "Don’t just answer the tens digit of the sum — subtract to check."
     }
    ],
@@ -2310,16 +4322,16 @@
    ],
    "statement": "□2 + 36 = 88. What digit goes in the box? (□ is a single digit)",
    "choices": [
+    "8",
     "4",
-    "5",
     "6",
-    "8"
+    "5"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "□2 is 88 minus 36. Since 88 − 36 = 52, the tens digit □ is 5. The ones digit 2 matches too.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Don’t just answer the tens digit of the sum — subtract to check."
     }
    ],
@@ -2337,16 +4349,16 @@
    ],
    "statement": "□8 + 13 = 61. What digit goes in the box? (□ is a single digit)",
    "choices": [
-    "6",
     "5",
-    "3",
-    "4"
+    "6",
+    "4",
+    "3"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "□8 is 61 minus 13. Since 61 − 13 = 48, the tens digit □ is 4. The ones digit 8 matches too.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "Don’t just answer the tens digit of the sum — subtract to check."
     }
    ],
@@ -2391,16 +4403,16 @@
    ],
    "statement": "How many different outcomes are there for tossing 3 coins at once (heads/tails distinguished)?",
    "choices": [
-    "10 ways",
-    "7 ways",
     "8 ways",
-    "6 ways"
+    "10 ways",
+    "6 ways",
+    "7 ways"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "Multiply the number of choices at each step: 2 × 2 × 2 = 8. Listing them all one by one also gives 8.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "Don’t add — multiply. Each first case branches into the next again."
     }
    ],
@@ -2420,10 +4432,10 @@
    "choices": [
     "11 ways",
     "8 ways",
-    "12 ways",
-    "14 ways"
+    "14 ways",
+    "12 ways"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Multiply the number of choices at each step: 6 × 2 = 12. Listing them all one by one also gives 12.",
    "mistakes": [
     {
@@ -2445,16 +4457,16 @@
    ],
    "statement": "How many different outcomes are there for two people playing one round of rock-paper-scissors (who threw what is distinguished)?",
    "choices": [
-    "11 ways",
-    "9 ways",
     "6 ways",
-    "8 ways"
+    "8 ways",
+    "11 ways",
+    "9 ways"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Multiply the number of choices at each step: 3 × 3 = 9. Listing them all one by one also gives 9.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "Don’t add — multiply. Each first case branches into the next again."
     }
    ],
@@ -2472,21 +4484,129 @@
    ],
    "statement": "How many different outcomes are there for picking one of 3 kinds of sandwiches and one of 2 kinds of drinks?",
    "choices": [
+    "6 ways",
     "8 ways",
     "5 ways",
-    "9 ways",
-    "6 ways"
+    "9 ways"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Multiply the number of choices at each step: 3 × 2 = 6. Listing them all one by one also gives 6.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "Don’t add — multiply. Each first case branches into the next again."
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "The multiplication principle applies when each step’s choice doesn’t affect the others ('and'). By contrast, mutually exclusive cases ('this or that', 'or') are added (the addition principle). Multiply vs. add = 'and' vs. 'or'. Mixing the two freely is the heart of counting."
+  },
+  {
+   "id": "gen-promise-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "custom operation",
+    "understanding and applying rules"
+   ],
+   "statement": "Here's a new made-up rule: a★b = a×b − b. For example, 2★3 = 3. So what is 5★3?",
+   "choices": [
+    "10",
+    "12",
+    "17",
+    "15"
+   ],
+   "answerIndex": 1,
+   "explanation": "Plug a=5 and b=3 straight into the rule to get 12. It's the same method as the example (2★3=3). Even with an unfamiliar symbol, just follow the definition in order.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You only multiplied the two numbers and skipped the rest of the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "An unfamiliar symbol is all about 'following the defined order of operations exactly'. Check the rule with the example (2★3=3), then swap in your numbers. The 'functions' you learn in later grades are exactly this idea — a box that gives a set output for what you put in. Don't fear a new symbol; follow the definition and any made-up operation works."
+  },
+  {
+   "id": "gen-promise-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "custom operation",
+    "understanding and applying rules"
+   ],
+   "statement": "Here's a new made-up rule: a◆b = a×b + a. For example, 2◆3 = 8. So what is 4◆6?",
+   "choices": [
+    "34",
+    "28",
+    "26",
+    "24"
+   ],
+   "answerIndex": 1,
+   "explanation": "Plug a=4 and b=6 straight into the rule to get 28. It's the same method as the example (2◆3=8). Even with an unfamiliar symbol, just follow the definition in order.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You only multiplied the two numbers and skipped the rest of the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "An unfamiliar symbol is all about 'following the defined order of operations exactly'. Check the rule with the example (2◆3=8), then swap in your numbers. The 'functions' you learn in later grades are exactly this idea — a box that gives a set output for what you put in. Don't fear a new symbol; follow the definition and any made-up operation works."
+  },
+  {
+   "id": "gen-promise-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "custom operation",
+    "understanding and applying rules"
+   ],
+   "statement": "Here's a new made-up rule: a♥b = a + b×2. For example, 2♥3 = 8. So what is 3♥5?",
+   "choices": [
+    "18",
+    "13",
+    "11",
+    "15"
+   ],
+   "answerIndex": 1,
+   "explanation": "Plug a=3 and b=5 straight into the rule to get 13. It's the same method as the example (2♥3=8). Even with an unfamiliar symbol, just follow the definition in order.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "You only multiplied the two numbers and skipped the rest of the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "An unfamiliar symbol is all about 'following the defined order of operations exactly'. Check the rule with the example (2♥3=8), then swap in your numbers. The 'functions' you learn in later grades are exactly this idea — a box that gives a set output for what you put in. Don't fear a new symbol; follow the definition and any made-up operation works."
+  },
+  {
+   "id": "gen-promise-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-promise-3",
+   "concepts": [
+    "custom operation",
+    "understanding and applying rules"
+   ],
+   "statement": "Here's a new made-up rule: a▲b = a×a − b. For example, 2▲3 = 1. So what is 6▲4?",
+   "choices": [
+    "24",
+    "30",
+    "32",
+    "36"
+   ],
+   "answerIndex": 2,
+   "explanation": "Plug a=6 and b=4 straight into the rule to get 32. It's the same method as the example (2▲3=1). Even with an unfamiliar symbol, just follow the definition in order.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You only multiplied the two numbers and skipped the rest of the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "An unfamiliar symbol is all about 'following the defined order of operations exactly'. Check the rule with the example (2▲3=1), then swap in your numbers. The 'functions' you learn in later grades are exactly this idea — a box that gives a set output for what you put in. Don't fear a new symbol; follow the definition and any made-up operation works."
   },
   {
    "id": "gen-seq2-1",
@@ -2500,15 +4620,15 @@
    "statement": "Find the rule. 1, 2, 4, 7, 11, □ — what number goes in the box?",
    "choices": [
     "17",
-    "16",
     "11",
-    "15"
+    "15",
+    "16"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Write the gaps between neighbors: 1, 2, 3, 4. The gap grows by 1 each time, so the next gap is 5, and 11+5=16.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
     }
    ],
@@ -2526,9 +4646,9 @@
    ],
    "statement": "Find the rule. 2, 3, 5, 8, 12, □ — what number goes in the box?",
    "choices": [
-    "12",
-    "17",
     "18",
+    "17",
+    "12",
     "16"
    ],
    "answerIndex": 1,
@@ -2553,16 +4673,16 @@
    ],
    "statement": "Find the rule. 1, 3, 6, 10, 15, □ — what number goes in the box?",
    "choices": [
-    "15",
     "21",
     "20",
+    "15",
     "22"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "Write the gaps between neighbors: 2, 3, 4, 5. The gap grows by 1 each time, so the next gap is 6, and 15+6=21.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
     }
    ],
@@ -2580,8 +4700,8 @@
    ],
    "statement": "Find the rule. 3, 4, 6, 9, 13, □ — what number goes in the box?",
    "choices": [
-    "17",
     "19",
+    "17",
     "13",
     "18"
    ],
@@ -2589,7 +4709,7 @@
    "explanation": "Write the gaps between neighbors: 1, 2, 3, 4. The gap grows by 1 each time, so the next gap is 5, and 13+5=18.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
     }
    ],
@@ -2607,16 +4727,16 @@
    ],
    "statement": "You join 3 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
-    "9 matchsticks",
-    "6 matchsticks",
     "8 matchsticks",
-    "7 matchsticks"
+    "7 matchsticks",
+    "6 matchsticks",
+    "9 matchsticks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 3 triangles need 3 + 2×2 = 7.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2642,15 +4762,15 @@
    "statement": "You join 4 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
     "8 matchsticks",
+    "9 matchsticks",
     "11 matchsticks",
-    "12 matchsticks",
-    "9 matchsticks"
+    "12 matchsticks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 4 triangles need 3 + 2×3 = 9.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2676,15 +4796,15 @@
    "statement": "You join 5 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
     "11 matchsticks",
-    "14 matchsticks",
     "15 matchsticks",
-    "10 matchsticks"
+    "10 matchsticks",
+    "14 matchsticks"
    ],
    "answerIndex": 0,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 5 triangles need 3 + 2×4 = 11.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2709,16 +4829,16 @@
    ],
    "statement": "You join 6 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
-    "17 matchsticks",
+    "18 matchsticks",
     "13 matchsticks",
     "12 matchsticks",
-    "18 matchsticks"
+    "17 matchsticks"
    ],
    "answerIndex": 1,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 6 triangles need 3 + 2×5 = 13.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2733,6 +4853,114 @@
    "detailedExplanation": "One triangle has 3 sides, but joining another shares one touching side. So the first needs 3 and each next adds only 2, giving 3+2×(n−1). 'Count a shared part once' also drives joining squares and figure perimeters."
   },
   {
+   "id": "gen-dicesum-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "counting",
+    "distinguishing order"
+   ],
+   "statement": "You roll 2 dice at the same time. In how many ways can the two faces add up to 5? (the two dice are told apart)",
+   "choices": [
+    "2 ways",
+    "3 ways",
+    "5 ways",
+    "4 ways"
+   ],
+   "answerIndex": 3,
+   "explanation": "List the pairs in order starting from the smallest face. Since the two dice are told apart, (first 1, second 4) and (first 4, second 1) count as different cases. Counting that way gives 4 ways in all.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You counted without telling the order apart. (first 1, second 4) and (first 4, second 1) are different cases."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The two dice are distinguishable, so a different order is a different case. Draw the 6×6=36-cell table and count the cells that sum to 5 — nothing gets missed. The distribution of the sum of two dice is symmetric about 7, so the farther from 7, the fewer the cases — knowing this symmetry lets you estimate the count without listing everything."
+  },
+  {
+   "id": "gen-dicesum-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "counting",
+    "distinguishing order"
+   ],
+   "statement": "You roll 2 dice at the same time. In how many ways can the two faces add up to 7? (the two dice are told apart)",
+   "choices": [
+    "5 ways",
+    "3 ways",
+    "6 ways",
+    "7 ways"
+   ],
+   "answerIndex": 2,
+   "explanation": "List the pairs in order starting from the smallest face. Since the two dice are told apart, (first 1, second 6) and (first 6, second 1) count as different cases. Counting that way gives 6 ways in all.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted without telling the order apart. (first 1, second 6) and (first 6, second 1) are different cases."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The two dice are distinguishable, so a different order is a different case. Draw the 6×6=36-cell table and count the cells that sum to 7 — nothing gets missed. The distribution of the sum of two dice is symmetric about 7, so the farther from 7, the fewer the cases — knowing this symmetry lets you estimate the count without listing everything."
+  },
+  {
+   "id": "gen-dicesum-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "counting",
+    "distinguishing order"
+   ],
+   "statement": "You roll 2 dice at the same time. In how many ways can the two faces add up to 9? (the two dice are told apart)",
+   "choices": [
+    "2 ways",
+    "3 ways",
+    "4 ways",
+    "5 ways"
+   ],
+   "answerIndex": 2,
+   "explanation": "List the pairs in order starting from the smallest face. Since the two dice are told apart, (first 3, second 6) and (first 6, second 3) count as different cases. Counting that way gives 4 ways in all.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You counted without telling the order apart. (first 3, second 6) and (first 6, second 3) are different cases."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The two dice are distinguishable, so a different order is a different case. Draw the 6×6=36-cell table and count the cells that sum to 9 — nothing gets missed. The distribution of the sum of two dice is symmetric about 7, so the farther from 7, the fewer the cases — knowing this symmetry lets you estimate the count without listing everything."
+  },
+  {
+   "id": "gen-dicesum-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 3,
+   "groupId": "g-gen-dicesum-3",
+   "concepts": [
+    "counting",
+    "distinguishing order"
+   ],
+   "statement": "You roll 2 dice at the same time. In how many ways can the two faces add up to 8? (the two dice are told apart)",
+   "choices": [
+    "5 ways",
+    "4 ways",
+    "3 ways",
+    "6 ways"
+   ],
+   "answerIndex": 0,
+   "explanation": "List the pairs in order starting from the smallest face. Since the two dice are told apart, (first 2, second 6) and (first 6, second 2) count as different cases. Counting that way gives 5 ways in all.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted without telling the order apart. (first 2, second 6) and (first 6, second 2) are different cases."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The two dice are distinguishable, so a different order is a different case. Draw the 6×6=36-cell table and count the cells that sum to 8 — nothing gets missed. The distribution of the sum of two dice is symmetric about 7, so the farther from 7, the fewer the cases — knowing this symmetry lets you estimate the count without listing everything."
+  },
+  {
    "id": "gen-cubestackeasy-1",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
@@ -2744,15 +4972,15 @@
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
     "1 block",
+    "2 blocks",
     "4 blocks",
-    "3 blocks",
-    "2 blocks"
+    "3 blocks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Add each column’s height: 1 + 2 = 3. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 1,
      "misconception": "Count the blocks hidden behind the front ones too."
     }
    ],
@@ -2783,10 +5011,10 @@
    "choices": [
     "3 blocks",
     "2 blocks",
-    "5 blocks",
-    "4 blocks"
+    "4 blocks",
+    "5 blocks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Add each column’s height: 1 + 1 + 1 + 1 = 4. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
@@ -2821,16 +5049,16 @@
    ],
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
-    "5 blocks",
     "2 blocks",
-    "4 blocks",
-    "3 blocks"
+    "5 blocks",
+    "3 blocks",
+    "4 blocks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Add each column’s height: 1 + 2 + 1 = 4. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "Count the blocks hidden behind the front ones too."
     }
    ],
@@ -2860,16 +5088,16 @@
    ],
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
-    "5 blocks",
     "4 blocks",
-    "6 blocks",
-    "3 blocks"
+    "5 blocks",
+    "3 blocks",
+    "6 blocks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Add each column’s height: 2 + 1 + 1 + 1 = 5. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "Count the blocks hidden behind the front ones too."
     }
    ],
@@ -2900,12 +5128,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
+    "3 blocks",
     "1 block",
     "4 blocks",
-    "2 blocks",
-    "3 blocks"
+    "2 blocks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Count how many high each column is and add them: 1 + 1 = 2.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2933,9 +5161,9 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
+    "4 blocks",
     "5 blocks",
     "2 blocks",
-    "4 blocks",
     "3 blocks"
    ],
    "answerIndex": 3,
@@ -2967,12 +5195,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
+    "2 blocks",
     "3 blocks",
-    "4 blocks",
     "5 blocks",
-    "2 blocks"
+    "4 blocks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Count how many high each column is and add them: 2 + 1 = 3.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -3000,12 +5228,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
-    "3 blocks",
     "6 blocks",
-    "5 blocks",
-    "4 blocks"
+    "4 blocks",
+    "3 blocks",
+    "5 blocks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Count how many high each column is and add them: 1 + 2 + 1 = 4.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -3035,8 +5263,8 @@
    "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
    "choices": [
     "4 cm²",
-    "5 cm²",
     "2 cm²",
+    "5 cm²",
     "3 cm²"
    ],
    "answerIndex": 3,
@@ -3078,12 +5306,12 @@
    ],
    "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
    "choices": [
+    "3 cm²",
     "4 cm²",
     "5 cm²",
-    "6 cm²",
-    "3 cm²"
+    "6 cm²"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Count the shaded cells one by one → 4 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -3122,12 +5350,12 @@
    ],
    "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
    "choices": [
+    "5 cm²",
     "7 cm²",
     "4 cm²",
-    "6 cm²",
-    "5 cm²"
+    "6 cm²"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Count the shaded cells one by one → 5 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -3166,12 +5394,12 @@
    ],
    "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
    "choices": [
-    "4 cm²",
-    "7 cm²",
     "5 cm²",
-    "6 cm²"
+    "7 cm²",
+    "6 cm²",
+    "4 cm²"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "Count the cells, or split into rectangles → 5 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -3210,8 +5438,8 @@
    ],
    "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
    "choices": [
-    "7 cm²",
     "6 cm²",
+    "7 cm²",
     "5 cm²",
     "4 cm²"
    ],
@@ -3298,12 +5526,12 @@
    ],
    "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
    "choices": [
-    "5 cm²",
-    "6 cm²",
     "4 cm²",
+    "6 cm²",
+    "5 cm²",
     "7 cm²"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "Count the cells, or split into rectangles → 5 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -3330,6 +5558,383 @@
     ]
    },
    "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. The key is imagining how to cut and rearrange, not memorizing formulas."
+  },
+  {
+   "id": "gen-cubemid-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "stacking blocks",
+    "spatial perception"
+   ],
+   "statement": "How many stacking blocks are there in all, stacked as in the picture? (count the hidden blocks behind and underneath too)",
+   "choices": [
+    "7 blocks",
+    "6 blocks",
+    "4 blocks",
+    "5 blocks"
+   ],
+   "answerIndex": 1,
+   "explanation": "Count the height of each column and add: 1 + 2 + 1 + 2 = 6. Even where the front or top hides them, the ones below are filled in.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Count the hidden blocks you can't see too — don't skip any."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 2
+    },
+    "heights": [
+     1,
+     2,
+     1,
+     2
+    ]
+   },
+   "detailedExplanation": "The number of stacking blocks equals the sum of the column heights written on each cell of the 'top view'. Even when hidden behind or above, knowing each column's height lets you count exactly. Adding the heights one by one gives 6. Thinking 'from the top view' lets you count without missing any, no matter how complex."
+  },
+  {
+   "id": "gen-cubemid-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "stacking blocks",
+    "spatial perception"
+   ],
+   "statement": "How many stacking blocks are there in all, stacked as in the picture? (count the hidden blocks behind and underneath too)",
+   "choices": [
+    "7 blocks",
+    "4 blocks",
+    "6 blocks",
+    "5 blocks"
+   ],
+   "answerIndex": 2,
+   "explanation": "Count the height of each column and add: 2 + 2 + 1 + 1 = 6. Even where the front or top hides them, the ones below are filled in.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Count the hidden blocks you can't see too — don't skip any."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 2
+    },
+    "heights": [
+     2,
+     2,
+     1,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of stacking blocks equals the sum of the column heights written on each cell of the 'top view'. Even when hidden behind or above, knowing each column's height lets you count exactly. Adding the heights one by one gives 6. Thinking 'from the top view' lets you count without missing any, no matter how complex."
+  },
+  {
+   "id": "gen-cubemid-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "stacking blocks",
+    "spatial perception"
+   ],
+   "statement": "How many stacking blocks are there in all, stacked as in the picture? (count the hidden blocks behind and underneath too)",
+   "choices": [
+    "5 blocks",
+    "7 blocks",
+    "6 blocks",
+    "8 blocks"
+   ],
+   "answerIndex": 1,
+   "explanation": "Count the height of each column and add: 1 + 1 + 2 + 1 + 1 + 1 = 7. Even where the front or top hides them, the ones below are filled in.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Count the hidden blocks you can't see too — don't skip any."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 3
+    },
+    "heights": [
+     1,
+     1,
+     2,
+     1,
+     1,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of stacking blocks equals the sum of the column heights written on each cell of the 'top view'. Even when hidden behind or above, knowing each column's height lets you count exactly. Adding the heights one by one gives 7. Thinking 'from the top view' lets you count without missing any, no matter how complex."
+  },
+  {
+   "id": "gen-cubemid-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-cubemid-3",
+   "concepts": [
+    "stacking blocks",
+    "spatial perception"
+   ],
+   "statement": "How many stacking blocks are there in all, stacked as in the picture? (count the hidden blocks behind and underneath too)",
+   "choices": [
+    "8 blocks",
+    "5 blocks",
+    "6 blocks",
+    "7 blocks"
+   ],
+   "answerIndex": 3,
+   "explanation": "Count the height of each column and add: 1 + 1 + 1 + 2 + 1 + 1 = 7. Even where the front or top hides them, the ones below are filled in.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Count the hidden blocks you can't see too — don't skip any."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 2
+    },
+    "heights": [
+     1,
+     1,
+     1,
+     2,
+     1,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of stacking blocks equals the sum of the column heights written on each cell of the 'top view'. Even when hidden behind or above, knowing each column's height lets you count exactly. Adding the heights one by one gives 7. Thinking 'from the top view' lets you count without missing any, no matter how complex."
+  },
+  {
+   "id": "gen-gridrect-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-gridrect-3",
+   "concepts": [
+    "area",
+    "grid squares"
+   ],
+   "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
+   "choices": [
+    "16 cm²",
+    "10 cm²",
+    "12 cm²",
+    "14 cm²"
+   ],
+   "answerIndex": 2,
+   "explanation": "Count the cells, or split into rectangles (or subtract an empty rectangle from a bigger one) → 12 cm².",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 4,
+     "rows": 4,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     4,
+     0,
+     4,
+     2,
+     2,
+     2,
+     2,
+     4,
+     0,
+     4
+    ]
+   },
+   "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange. (A triangle = half a rectangle; a parallelogram = a rectangle once you cut and move one side; a trapezoid = half a parallelogram when flipped and joined.)"
+  },
+  {
+   "id": "gen-gridrect-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-gridrect-3",
+   "concepts": [
+    "area",
+    "grid squares"
+   ],
+   "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
+   "choices": [
+    "16 cm²",
+    "18 cm²",
+    "20 cm²",
+    "14 cm²"
+   ],
+   "answerIndex": 0,
+   "explanation": "Count the cells, or split into rectangles (or subtract an empty rectangle from a bigger one) → 16 cm².",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 5,
+     "rows": 4,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     5,
+     0,
+     5,
+     2,
+     3,
+     2,
+     3,
+     4,
+     0,
+     4
+    ]
+   },
+   "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange. (A triangle = half a rectangle; a parallelogram = a rectangle once you cut and move one side; a trapezoid = half a parallelogram when flipped and joined.)"
+  },
+  {
+   "id": "gen-gridrect-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-gen-gridrect-3",
+   "concepts": [
+    "area",
+    "grid squares"
+   ],
+   "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
+   "choices": [
+    "13 cm²",
+    "15 cm²",
+    "17 cm²",
+    "11 cm²"
+   ],
+   "answerIndex": 0,
+   "explanation": "Count the cells, or split into rectangles (or subtract an empty rectangle from a bigger one) → 13 cm².",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 3,
+     "rows": 5,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     3,
+     0,
+     3,
+     3,
+     2,
+     3,
+     2,
+     5,
+     0,
+     5
+    ]
+   },
+   "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange. (A triangle = half a rectangle; a parallelogram = a rectangle once you cut and move one side; a trapezoid = half a parallelogram when flipped and joined.)"
+  },
+  {
+   "id": "gen-subst-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-subst-3",
+   "concepts": [
+    "substitution",
+    "unit conversion"
+   ],
+   "statement": "1 red block is worth 2 blue blocks, and 1 blue block is worth 3 green blocks. So 1 red block is worth how many green blocks?",
+   "choices": [
+    "6 green blocks",
+    "8 green blocks",
+    "9 green blocks",
+    "5 green blocks"
+   ],
+   "answerIndex": 0,
+   "explanation": "1 red block = 2 blue blocks, and each of those blue blocks is again 3 green blocks. So 1 red block = 2×3=6 green blocks. Multiply at each step as you change the unit.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't add — multiply at each step of the change."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Changing units (substitution) chains by multiplication: red→blue is ×2, blue→green is ×3, so red→green is ×(2×3). Exchange rates and unit conversions (1 hour = 60 min, 1 min = 60 sec → 1 hour = 3600 sec) work the same way."
+  },
+  {
+   "id": "gen-subst-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-subst-3",
+   "concepts": [
+    "substitution",
+    "unit conversion"
+   ],
+   "statement": "1 red block is worth 3 blue blocks, and 1 blue block is worth 2 green blocks. So 1 red block is worth how many green blocks?",
+   "choices": [
+    "6 green blocks",
+    "5 green blocks",
+    "9 green blocks",
+    "8 green blocks"
+   ],
+   "answerIndex": 0,
+   "explanation": "1 red block = 3 blue blocks, and each of those blue blocks is again 2 green blocks. So 1 red block = 3×2=6 green blocks. Multiply at each step as you change the unit.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don't add — multiply at each step of the change."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Changing units (substitution) chains by multiplication: red→blue is ×3, blue→green is ×2, so red→green is ×(3×2). Exchange rates and unit conversions (1 hour = 60 min, 1 min = 60 sec → 1 hour = 3600 sec) work the same way."
+  },
+  {
+   "id": "gen-subst-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-subst-3",
+   "concepts": [
+    "substitution",
+    "unit conversion"
+   ],
+   "statement": "1 red block is worth 2 blue blocks, and 1 blue block is worth 4 green blocks. So 1 red block is worth how many green blocks?",
+   "choices": [
+    "8 green blocks",
+    "10 green blocks",
+    "7 green blocks",
+    "6 green blocks"
+   ],
+   "answerIndex": 0,
+   "explanation": "1 red block = 2 blue blocks, and each of those blue blocks is again 4 green blocks. So 1 red block = 2×4=8 green blocks. Multiply at each step as you change the unit.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don't add — multiply at each step of the change."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Changing units (substitution) chains by multiplication: red→blue is ×2, blue→green is ×4, so red→green is ×(2×4). Exchange rates and unit conversions (1 hour = 60 min, 1 min = 60 sec → 1 hour = 3600 sec) work the same way."
   }
  ]
 }

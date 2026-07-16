@@ -205,6 +205,14 @@ def gen_chicken_rabbit():
             f"전부 닭이라고 가정해 봐요. 그러면 다리는 2×{total}={2 * total}개인데 실제는 {legs}개로 {legs - 2 * total}개 더 많아요. 닭 한 마리를 토끼로 바꿀 때마다 다리가 2개씩 늘어나니, {legs - 2 * total}÷2={rabbits}마리가 토끼예요.",
             [(f"{total - rabbits}마리", "그건 닭의 수예요. 문제는 토끼를 물었어요.")],
             detail=f"'식 세우기'로도 풀 수 있어요. 토끼를 □마리라 하면 닭은 {total}−□마리, 다리는 4×□ + 2×({total}−□) = {legs}. 정리하면 2×□ = {legs}−{2 * total}, 그래서 □ = {rabbits}. '전부 닭이라 가정하기'와 '식 세우기'는 같은 계산을 다르게 적은 것뿐이에요. 나중에 배우는 연립방정식도 바로 이 생각이랍니다.",
+            en={
+                "statement": f"A yard has {total} chickens and rabbits altogether. Counting the legs gives {legs}. How many rabbits are there?",
+                "answer": _en_plural(rabbits, "rabbit"),
+                "distractors": [_en_plural(rabbits - 1, "rabbit"), _en_plural(rabbits + 1, "rabbit"), _en_plural(total - rabbits, "rabbit")],
+                "explanation": f"Suppose they were all chickens. Then there would be 2×{total}={2 * total} legs, but there are actually {legs} — that's {legs - 2 * total} more. Each time you swap a chicken for a rabbit the legs go up by 2, so {legs - 2 * total}÷2={rabbits} are rabbits.",
+                "mistakes": [(_en_plural(total - rabbits, "rabbit"), "That's the number of chickens. The question asked for the rabbits.")],
+                "detail": f"You can also set up an equation. If there are □ rabbits, there are {total}−□ chickens, and the legs are 4×□ + 2×({total}−□) = {legs}. Simplifying, 2×□ = {legs}−{2 * total}, so □ = {rabbits}. 'Assume all are chickens' and 'set up an equation' are just two ways of writing the same calculation — the systems of equations you meet later are exactly this idea.",
+            },
         )
 
 
@@ -266,6 +274,14 @@ def gen_trees():
             f"작은 그림부터 그려 봐요. 간격이 1개면 가로등은 2개, 간격이 2개면 3개 — 가로등은 늘 간격보다 1개 많아요. 간격은 {length}÷{gap}={g}개이니 가로등은 {g}+1={g + 1}개예요.",
             [(f"{g}개", "간격 수와 가로등 수는 달라요. 맨 처음 것을 더해요.")],
             detail="간격 문제는 '끝을 세는지'가 열쇠예요. ①양 끝 다 심기 → 개수=간격+1 ②한쪽 끝만 → 개수=간격 ③양 끝 다 빼기 → 개수=간격−1 ④원(둘레) → 개수=간격(끝이 곧 처음). 공식을 외우기보다 작은 그림을 그려 '끝을 어떻게 세나'만 확인하면 어떤 간격 문제든 풀려요.",
+            en={
+                "statement": f"Along one side of a road {length} m long, streetlights are placed every {gap} m from the very start to the very end. How many streetlights are needed?",
+                "answer": _en_plural(g + 1, "streetlight"),
+                "distractors": [_en_plural(g, "streetlight"), _en_plural(g + 2, "streetlight"), _en_plural(g - 1, "streetlight")],
+                "explanation": f"Draw a small picture first. With 1 gap you need 2 lights, with 2 gaps you need 3 — there is always one more light than gaps. The number of gaps is {length}÷{gap}={g}, so you need {g}+1={g + 1} lights.",
+                "mistakes": [(_en_plural(g, "streetlight"), "The number of gaps and the number of lights differ. Add the very first one.")],
+                "detail": "Interval problems hinge on 'do you count the ends?'. ① Both ends → count = gaps+1. ② Only one end → count = gaps. ③ Neither end → count = gaps−1. ④ A circle (loop) → count = gaps (the end is the start). Rather than memorizing formulas, draw a small picture and just check 'how are the ends counted' — then any interval problem works.",
+            },
         )
     # 둘레(원형) 변형 — 시작점과 끝점이 만나므로 간격 수 = 나무 수
     length, gap = 36, 6
@@ -277,6 +293,14 @@ def gen_trees():
         f"직선 길에서는 나무가 간격보다 1개 많지만, 원에서는 한 바퀴 돌면 마지막 나무가 곧 첫 나무예요. 그래서 간격 수와 나무 수가 똑같아요. 간격은 {length}÷{gap}={g}개이니 나무도 {g}그루예요.",
         [(f"{g + 1}그루", "직선 길에서만 +1이에요. 원에서는 끝나무가 곧 첫나무!")],
         detail="간격 문제는 '끝을 세는지'가 열쇠예요. ①양 끝 다 심기 → 개수=간격+1 ②한쪽 끝만 → 개수=간격 ③양 끝 다 빼기 → 개수=간격−1 ④원(둘레) → 개수=간격(끝이 곧 처음). 상황을 그림으로 그려 '끝을 어떻게 세나'만 확인하면 직선이든 원이든 헷갈리지 않아요.",
+        en={
+            "statement": f"Trees are planted every {gap} m around a round pond whose perimeter is {length} m. How many trees are needed?",
+            "answer": _en_plural(g, "tree"),
+            "distractors": [_en_plural(g + 1, "tree"), _en_plural(g - 1, "tree"), _en_plural(g + 2, "tree")],
+            "explanation": f"On a straight road there is one more tree than gaps, but on a circle the last tree meets the first after one full loop. So the number of trees equals the number of gaps. The gaps are {length}÷{gap}={g}, so you need {g} trees.",
+            "mistakes": [(_en_plural(g + 1, "tree"), "The +1 is only for a straight road. On a circle the last tree is the first tree!")],
+            "detail": "Interval problems hinge on 'do you count the ends?'. ① Both ends → count = gaps+1. ② Only one end → count = gaps. ③ Neither end → count = gaps−1. ④ A circle (loop) → count = gaps (the end is the start). Draw the situation and just check 'how are the ends counted', and neither a line nor a circle will confuse you.",
+        },
     )
 
 
@@ -291,6 +315,14 @@ def gen_log():
             f"작게 생각해 봐요. 2도막을 내려면 1번, 3도막은 2번 — 자르는 횟수는 언제나 도막 수보다 1 작아요. {pieces}도막이면 {pieces - 1}번 잘라야 하니 {pieces - 1}×{per}={ans}분이 걸려요.",
             [(f"{pieces * per}분", "도막 수만큼 자르는 게 아니에요. 마지막 도막은 저절로 생겨요.")],
             detail=f"이건 '나무 심기'와 같은 간격 문제예요. 자르는 '횟수'는 생기는 '도막'보다 언제나 1 작아요(양 끝은 자를 필요가 없으니까). 울타리 기둥과 칸, 계단과 층처럼 '사이'를 세는 문제는 늘 이 1 차이를 조심해요. 그래서 {pieces}도막엔 {pieces - 1}번, {pieces - 1}×{per}={ans}분.",
+            en={
+                "statement": f"You want to cut a long log into {pieces} pieces. If each cut takes {per} minutes, how many minutes does it take in all?",
+                "answer": f"{ans} minutes",
+                "distractors": [f"{pieces * per} minutes", f"{(pieces - 2) * per} minutes", f"{ans + per * 2} minutes"],
+                "explanation": f"Think small. To get 2 pieces you cut once, for 3 pieces twice — the number of cuts is always one less than the number of pieces. For {pieces} pieces you cut {pieces - 1} times, so it takes {pieces - 1}×{per}={ans} minutes.",
+                "mistakes": [(f"{pieces * per} minutes", "You don't cut once per piece — the last piece appears on its own.")],
+                "detail": f"This is the same as the 'planting trees' interval problem. The number of 'cuts' is always one less than the 'pieces' made (the two ends need no cut). Anything that counts the 'gaps between' — fence posts and panels, stairs and floors — watch for this off-by-one. So {pieces} pieces need {pieces - 1} cuts, {pieces - 1}×{per}={ans} minutes.",
+            },
         )
 
 
@@ -363,6 +395,14 @@ def gen_pyramid():
             f"규칙을 따라 아래에서 위로 쌓아 봐요. 가운데 줄은 ({a}+□)와 (□+{c})이고, 꼭대기는 그 둘의 합이라 {a}+□+□+{c}가 돼요. 그러면 □ 두 개의 합은 {top}−{a}−{c}={top - a - c}이니, □={top - a - c}÷2={b}예요.",
             [(str(top - a - c), "그건 □ 두 개의 합이에요. 2로 나눠요.")],
             detail=f"꼭대기는 아래 두 칸의 합이니 {top} = (왼쪽 {a}+□) + (오른쪽 □+{c}) = {a}+{c}+2×□. 여기서 거꾸로 되짚으면 □ = (꼭대기 − 양 끝의 합) ÷ 2 = ({top}−{a}−{c})÷2 = {b}. 결과에서 출발해 원인을 되짚는 '거꾸로 생각하기'는 미로·퍼즐에서 특히 강력해요.",
+            en={
+                "statement": f"In a number pyramid, each cell is the sum of the two cells right below it. If the bottom row is [{a}, □, {c}] and the top is {top}, what is □?",
+                "answer": str(b),
+                "distractors": [str(b - 1), str(b + 1), str(top - a - c)],
+                "explanation": f"Build upward by the rule. The middle row is ({a}+□) and (□+{c}), and the top is their sum, {a}+□+□+{c}. So the two □'s add up to {top}−{a}−{c}={top - a - c}, which means □={top - a - c}÷2={b}.",
+                "mistakes": [(str(top - a - c), "That's the sum of the two □'s. Divide by 2.")],
+                "detail": f"The top is the sum of the two cells below, so {top} = (left {a}+□) + (right □+{c}) = {a}+{c}+2×□. Tracing backward, □ = (top − sum of the ends) ÷ 2 = ({top}−{a}−{c})÷2 = {b}. Starting from the result and tracing back the cause — 'working backward' — is especially powerful in mazes and puzzles.",
+            },
         )
 
 
@@ -451,6 +491,14 @@ def gen_calendar():
             f"달력에서 위아래로 붙은 수는 7씩 차이 나요. 세 수를 (가운데−7), 가운데, (가운데+7)로 쓰면 −7과 +7이 서로 지워져 합이 가운데×3이 돼요. {s}÷3={mid}이니 가운데 수는 {mid}예요.",
             [(str(s // 2), "2로 나누는 게 아니에요. 세 수의 합은 가운데 수의 3배.")],
             detail=f"가운데 수를 기준으로 잡는 게 비결이에요. 위·아래가 각각 −7, +7이라 서로 상쇄돼 합=가운데×3이 돼요. 이렇게 '가운데를 기준으로' 놓으면 대칭인 항이 지워져 계산이 확 줄죠. 가로로 나란한 세 수(−1, +1)나 연속한 홀수도 똑같이 가운데×3이에요.",
+            en={
+                "statement": f"On a calendar, three numbers stacked vertically were chosen and their sum was {s}. What is the middle number?",
+                "answer": str(mid),
+                "distractors": [str(mid - 1), str(mid + 1), str(s // 2)],
+                "explanation": f"On a calendar, numbers stacked vertically differ by 7. Writing the three as (middle−7), middle, (middle+7), the −7 and +7 cancel, so the sum is middle×3. {s}÷3={mid}, so the middle number is {mid}.",
+                "mistakes": [(str(s // 2), "Don't divide by 2. The sum of the three is 3 times the middle number.")],
+                "detail": f"The trick is to anchor on the middle number. The one above is −7 and the one below is +7, so they cancel and the sum = middle×3. Anchoring on the middle makes the symmetric terms vanish and shrinks the arithmetic. Three numbers in a horizontal row (−1, +1) or consecutive odd numbers work the same way: middle×3.",
+            },
         )
 
 
@@ -482,6 +530,15 @@ def gen_border():
             [(f"{4 * side}개", "꼭짓점 돌 4개를 두 번 센 거예요."), (f"{side * side}개", "속이 꽉 찬 정사각형이 아니라 테두리만이에요.")],
             figure={"type": "DOT_BORDER", "params": {"side": min(side, 12)}},
             detail=f"'테두리 세기'는 겹치는 부분을 어떻게 처리하느냐가 전부예요. 다르게도 셀 수 있어요: 위·아래 줄에 {side}개씩({side}×2={side * 2}), 남은 양옆은 꼭짓점을 뺀 {side - 2}개씩(합 {(side - 2) * 2}). 더하면 {side * 2}+{(side - 2) * 2}={ans}개로 똑같죠. 겹침을 '빼거나' 아예 '겹치지 않게 나누거나' — 두 길의 답이 같은지 보면 든든해요.",
+            en={
+                "statement": f"You want to lay go stones in a hollow square shape with {side} stones on each side, as in the picture. How many stones are needed in all?",
+                "answer": f"{ans} stones",
+                "distractors": [f"{4 * side} stones", f"{ans - 2} stones", f"{side * side} stones"],
+                "explanation": f"Counting {side} on each of the four sides as {side}×4={4 * side} falls into a trap. The four corner stones each sit on two sides, so they get counted twice. Subtracting those 4 double-counted stones gives {4 * side}−4={ans}.",
+                "mistakes": [(f"{4 * side} stones", "You counted the 4 corner stones twice."),
+                             (f"{side * side} stones", "It's only the border, not a filled-in square.")],
+                "detail": f"'Counting a border' is all about how you handle the overlaps. Another way: {side} on the top and bottom rows ({side}×2={side * 2}), then the two remaining sides have {side - 2} each without the corners (total {(side - 2) * 2}). Adding gives {side * 2}+{(side - 2) * 2}={ans} — the same. Either 'subtract' the overlap or split so there's 'no overlap' — seeing both roads give the same answer is reassuring.",
+            },
         )
 
 
@@ -518,6 +575,14 @@ def gen_mirror():
             [(f"{mirror}시", "거울 속 그대로 읽었어요. 좌우가 뒤집혀 있어요.")],
             figure={"type": "CLOCK", "params": {"hour": mirror, "minute": 0}},
             detail=f"거울은 좌우를 뒤집어요. 12시 방향(위)을 축으로 시계가 뒤집히면 시각은 '12 빼기 실제 시각'으로 보여요. 그래서 거울 속 {mirror}시 → 실제 {actual}시(12−{mirror}={actual}). 거꾸로 실제에서 거울 모습을 알 때도 똑같이 12에서 빼면 돼요. 대칭은 '축을 기준으로 되짚기'라고 기억하면 헷갈리지 않아요.",
+            en={
+                "statement": f"The picture shows a wall clock seen in a mirror (it looks like {mirror} o'clock). What is the actual time?",
+                "answer": f"{actual} o'clock",
+                "distractors": [f"{mirror} o'clock", f"{(actual + 6) % 12 or 12} o'clock", f"{(mirror + 1) % 12 or 12} o'clock"],
+                "explanation": f"A mirror flips left and right only, so the 12 and 6 positions stay put. If it looks like {mirror} o'clock in the mirror, the real hand is on the opposite side of 12, at {actual} o'clock. It helps to remember that the real time and the mirror time add up to 12 ({actual}+{mirror}=12).",
+                "mistakes": [(f"{mirror} o'clock", "You read it straight off the mirror. Left and right are flipped.")],
+                "detail": f"A mirror flips left and right. When a clock is flipped about the 12 o'clock (top) axis, the time reads as '12 minus the real time'. So mirror {mirror} o'clock → real {actual} o'clock (12−{mirror}={actual}). To go the other way, from real to mirror, subtract from 12 the same way. Remember symmetry as 'tracing back across an axis' and you won't get confused.",
+            },
         )
 
 
@@ -737,6 +802,14 @@ def gen_custom_op():
             f"약속한 규칙에 가={qa}, 나={qb}를 그대로 넣어 계산하면 {ans}{_copula(ans)}. 예시({ea}{sym}{eb}={ev})와 똑같은 방법이에요. 낯선 기호라도 정의 순서대로 따라가면 돼요.",
             [(str(qa * qb), "두 수를 곱하기만 하고 약속의 나머지 규칙을 따르지 않았어요.")],
             detail=f"낯선 기호는 '정의된 계산 순서를 그대로 따르기'가 전부예요. 예시({ea}{sym}{eb}={ev})로 규칙을 확인한 뒤 숫자만 바꿔 넣으면 되죠. 중·고등학교에서 배우는 '함수'도 바로 이 생각 — 넣으면 정해진 규칙대로 값이 나오는 상자예요. 새 기호에 겁먹지 말고 정의대로 따라가면 어떤 약속 연산도 풀려요.",
+            en={
+                "statement": f"Here's a new made-up rule: {desc.replace('가', 'a').replace('나', 'b')}. For example, {ea}{sym}{eb} = {ev}. So what is {qa}{sym}{qb}?",
+                "answer": str(ans),
+                "distractors": [str(qa * qb), str(ans + qb), str(ans - 2)],
+                "explanation": f"Plug a={qa} and b={qb} straight into the rule to get {ans}. It's the same method as the example ({ea}{sym}{eb}={ev}). Even with an unfamiliar symbol, just follow the definition in order.",
+                "mistakes": [(str(qa * qb), "You only multiplied the two numbers and skipped the rest of the rule.")],
+                "detail": f"An unfamiliar symbol is all about 'following the defined order of operations exactly'. Check the rule with the example ({ea}{sym}{eb}={ev}), then swap in your numbers. The 'functions' you learn in later grades are exactly this idea — a box that gives a set output for what you put in. Don't fear a new symbol; follow the definition and any made-up operation works.",
+            },
         )
 
 
@@ -870,6 +943,14 @@ def gen_dice_sum():
             f"작은 눈부터 빠짐없이 짝지어 적어 봐요. 두 주사위를 구별하니 (첫째 {ex_a}, 둘째 {ex_b}){_gwa(ex_b)} (첫째 {ex_b}, 둘째 {ex_a})처럼 순서만 바뀐 것도 서로 다른 경우예요. 그렇게 세면 모두 {cnt}가지예요.",
             [(f"{unordered}가지", f"순서를 구별하지 않고 세었어요. (첫째 {ex_a}, 둘째 {ex_b}){_gwa(ex_b)} (첫째 {ex_b}, 둘째 {ex_a}){_eun(ex_a)} 서로 다른 경우예요.")],
             detail=f"두 주사위는 서로 구별되니 순서가 다르면 다른 경우예요. 6×6=36칸짜리 표를 그려 합이 {k}인 칸을 세면 빠짐이 없어요. 두 주사위 합의 분포는 7을 가운데로 좌우 대칭이라, 7에서 멀어질수록 경우가 줄어요 — 이 대칭을 알면 다 세지 않아도 개수를 가늠할 수 있어요.",
+            en={
+                "statement": f"You roll 2 dice at the same time. In how many ways can the two faces add up to {k}? (the two dice are told apart)",
+                "answer": _en_plural(cnt, "way"),
+                "distractors": [_en_plural(unordered, "way"), _en_plural(cnt - 1, "way"), _en_plural(cnt + 1, "way")],
+                "explanation": f"List the pairs in order starting from the smallest face. Since the two dice are told apart, (first {ex_a}, second {ex_b}) and (first {ex_b}, second {ex_a}) count as different cases. Counting that way gives {cnt} ways in all.",
+                "mistakes": [(_en_plural(unordered, "way"), f"You counted without telling the order apart. (first {ex_a}, second {ex_b}) and (first {ex_b}, second {ex_a}) are different cases.")],
+                "detail": f"The two dice are distinguishable, so a different order is a different case. Draw the 6×6=36-cell table and count the cells that sum to {k} — nothing gets missed. The distribution of the sum of two dice is symmetric about 7, so the farther from 7, the fewer the cases — knowing this symmetry lets you estimate the count without listing everything.",
+            },
         )
 
 
@@ -1290,6 +1371,13 @@ def gen_grid_area():
             f"칸을 세거나 직사각형으로 나눠 구해요. {detail} → {area}㎠.",
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
+                "answer": f"{area} cm²",
+                "distractors": [f"{area + 2} cm²", f"{area - 2} cm²", f"{area + 4} cm²"],
+                "explanation": f"Count the cells, or split into rectangles (or subtract an empty rectangle from a bigger one) → {area} cm².",
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange. (A triangle = half a rectangle; a parallelogram = a rectangle once you cut and move one side; a trapezoid = half a parallelogram when flipped and joined.)",
+            },
         )
     # (b) 난4 — 직각삼각형: 밑변×높이÷2
     for b, h, pts in [
@@ -1568,6 +1656,14 @@ def gen_cube_stack_mid():
             [(f"{max(1, ans - 2)}개", "가려서 안 보이는 나무도 빠짐없이 세어요.")],
             figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
             detail=f"쌓기나무 개수는 '위에서 본 그림'의 각 칸에 적힌 층수를 모두 더한 값과 같아요. 앞·위에 가려 안 보여도 각 기둥의 높이만 알면 정확히 셀 수 있죠. 층수를 하나씩 더하면 {ans}개예요. 이렇게 '위에서 보기'로 생각하면 아무리 복잡해도 빠짐없이 셀 수 있어요.",
+            en={
+                "statement": "How many stacking blocks are there in all, stacked as in the picture? (count the hidden blocks behind and underneath too)",
+                "answer": _en_plural(ans, "block"),
+                "distractors": [_en_plural(ans - 1, "block"), _en_plural(ans + 1, "block"), _en_plural(max(1, ans - 2), "block")],
+                "explanation": f"Count the height of each column and add: {' + '.join(str(h) for h in heights)} = {ans}. Even where the front or top hides them, the ones below are filled in.",
+                "mistakes": [(_en_plural(max(1, ans - 2), "block"), "Count the hidden blocks you can't see too — don't skip any.")],
+                "detail": f"The number of stacking blocks equals the sum of the column heights written on each cell of the 'top view'. Even when hidden behind or above, knowing each column's height lets you count exactly. Adding the heights one by one gives {ans}. Thinking 'from the top view' lets you count without missing any, no matter how complex.",
+            },
         )
 
 
@@ -1678,6 +1774,14 @@ def gen_balance_substitution():
             f"{a_name} 1개 = {b_name} {k1}개인데, 그 {b_name} 하나하나가 다시 {c_name} {k2}개예요. 그래서 {a_name} 1개 = {c_name} {k1}×{k2}={ans}개. 단위를 한 단계씩 바꿀 때마다 곱해 가면 돼요.",
             [(f"{k1 + k2}개", "더하는 게 아니라, 한 단계 바꿀 때마다 곱해야 해요.")],
             detail=f"'단위 바꾸기(치환)'는 곱으로 이어져요: {a_name}→{b_name}는 ×{k1}, {b_name}→{c_name}는 ×{k2}이니 {a_name}→{c_name}는 ×({k1}×{k2}). 환율이나 단위 변환(1시간=60분, 1분=60초 → 1시간=3600초)도 똑같은 원리예요.",
+            en={
+                "statement": f"1 red block is worth {k1} blue blocks, and 1 blue block is worth {k2} green blocks. So 1 red block is worth how many green blocks?",
+                "answer": _en_plural(ans, "green block"),
+                "distractors": [_en_plural(k1 + k2, "green block"), _en_plural(ans - 1, "green block"), _en_plural(ans + 2, "green block")],
+                "explanation": f"1 red block = {k1} blue blocks, and each of those blue blocks is again {k2} green blocks. So 1 red block = {k1}×{k2}={ans} green blocks. Multiply at each step as you change the unit.",
+                "mistakes": [(_en_plural(k1 + k2, "green block"), "Don't add — multiply at each step of the change.")],
+                "detail": f"Changing units (substitution) chains by multiplication: red→blue is ×{k1}, blue→green is ×{k2}, so red→green is ×({k1}×{k2}). Exchange rates and unit conversions (1 hour = 60 min, 1 min = 60 sec → 1 hour = 3600 sec) work the same way.",
+            },
         )
 
 
@@ -1834,6 +1938,14 @@ def gen_missing_score():
             f"평균을 '합'으로 바꿔 생각해요. {subjects}과목 평균이 {avg}점이면 총점은 {subjects}×{avg}={total}점이어야 해요. 이미 아는 {len(known)}과목 합이 {sum(known)}점이니, 나머지 한 과목 = {total}−{sum(known)}={missing}점이에요.",
             [(f"{avg}점", "평균 점수를 그대로 답하면 안 돼요. 총점에서 아는 점수를 빼야 해요.")],
             detail="평균 문제의 열쇠는 '평균 = 총합 ÷ 개수'를 거꾸로 쓰는 거예요. 총합 = 평균 × 개수. 총합만 손에 쥐면 빠진 값은 뺄셈 한 번이에요. '몇 점 더 받아야 평균이 X가 될까?'도 전부 이 총합 사고로 풀려요.",
+            en={
+                "statement": f"A test of {subjects} subjects has an average of {avg} points. The {len(known)} known scores are {', '.join(map(str, known))}. How many points is the remaining subject?",
+                "answer": f"{missing} points",
+                "distractors": [f"{avg} points", f"{missing - 5} points", f"{missing + 5} points"],
+                "explanation": f"Turn the average into a 'total'. If {subjects} subjects average {avg} points, the total must be {subjects}×{avg}={total} points. The {len(known)} known subjects sum to {sum(known)}, so the remaining subject = {total}−{sum(known)}={missing} points.",
+                "mistakes": [(f"{avg} points", "Don't just give the average. Subtract the known scores from the total.")],
+                "detail": "The key to average problems is using 'average = total ÷ count' in reverse: total = average × count. Once you hold the total, the missing value is a single subtraction. 'How many more points to make the average X?' is solved the same way through the total.",
+            },
         )
 
 
@@ -1945,6 +2057,14 @@ def gen_fraction_whole():
             f"전체를 똑같이 {den}조각으로 나눈 것 중 {num}조각이 {part}개라는 뜻이에요. 그럼 1조각은 {part}÷{num}={part // num}개. 전체는 {den}조각이니 {part // num}×{den}={whole}개예요.",
             [(f"{part * den}개", "분모만 곱하면 안 돼요. 먼저 한 조각(÷분자)을 구해요.")],
             detail=f"부분·전체 문제는 '1조각(단위분수)'을 먼저 구하는 게 열쇠예요. {num}/{den}이 {part}면 1/{den}은 {part}÷{num}, 전체(={den}/{den})는 거기에 {den}배. 반대로 '전체의 {num}/{den}은?'은 전체를 {den}으로 나눠 {num}배 하면 돼요.",
+            en={
+                "statement": f"{num}/{den} of the marbles in a jar is {part} marbles. How many marbles are in the jar in all?",
+                "answer": _en_plural(whole, "marble"),
+                "distractors": [_en_plural(part * den, "marble"), _en_plural(part + den, "marble"), _en_plural(whole - part, "marble")],
+                "explanation": f"It means {num} of the {den} equal parts of the whole is {part} marbles. So one part is {part}÷{num}={part // num} marbles. The whole is {den} parts, so {part // num}×{den}={whole} marbles.",
+                "mistakes": [(_en_plural(part * den, "marble"), "Don't just multiply by the denominator. First find one part (÷ the numerator).")],
+                "detail": f"Part-and-whole problems hinge on finding 'one part (the unit fraction)' first. If {num}/{den} is {part}, then 1/{den} is {part}÷{num}, and the whole (={den}/{den}) is that times {den}. In reverse, 'what is {num}/{den} of the whole?' is: divide the whole by {den} and multiply by {num}.",
+            },
         )
 
 
@@ -1982,6 +2102,14 @@ def gen_change_coins():
             f"동전을 적게 쓰려면 '큰 동전부터' 최대한 많이 써요. {' + '.join(breakdown)} = 모두 {cnt}개예요.",
             [(f"{cnt + 1}개", "큰 동전부터 최대한 쓰면 개수를 더 줄일 수 있어요.")],
             detail="'큰 단위부터 최대한'이 욕심쟁이(그리디) 방법이에요. 우리 동전(500·100·50·10)은 이 방법이 늘 최소를 보장해요. 하지만 모든 체계가 그렇진 않아요 — 1·3·4원짜리라면 6원은 4+1+1(3개)보다 3+3(2개)이 적어, 큰 것부터가 최선이 아닐 수 있어요.",
+            en={
+                "statement": f"To give {amount} in change using coins worth 500, 100, 50, and 10, how many coins are needed to use the 'fewest' possible?",
+                "answer": f"{cnt} coins",
+                "distractors": [f"{cnt + 1} coins", f"{cnt - 1} coins", f"{cnt + 2} coins"],
+                "explanation": f"To use as few coins as possible, use the biggest coins first, as many as you can — 500s, then 100s, then 50s, then 10s. Altogether that comes to {cnt} coins.",
+                "mistakes": [(f"{cnt + 1} coins", "Using the biggest coins first as much as possible cuts the count down further.")],
+                "detail": "'Biggest units first, as many as possible' is the greedy method. With our coin set (500, 100, 50, 10) it always guarantees the minimum. But not every system works that way — with 1, 3, and 4 coins, making 6 is fewer as 3+3 (2 coins) than as 4+1+1 (3 coins), so biggest-first isn't always best.",
+            },
         )
 
 
@@ -2017,6 +2145,14 @@ def gen_square_area():
             f"정사각형은 네 변이 모두 같아요. 둘레가 {perim}cm면 한 변은 {perim}÷4={side}cm. 넓이는 한 변을 두 번 곱하니 {side}×{side}={area}㎠예요.",
             [(f"{perim}㎠", "둘레와 넓이는 달라요. 먼저 한 변(÷4)을 구한 뒤 곱해요.")],
             detail=f"둘레는 '가장자리 길이(1차원)', 넓이는 '채운 칸(2차원)'이라 단위도 cm와 ㎠로 달라요. 둘레→한 변(÷4)→넓이(제곱) 순서가 핵심. 반대로 넓이 {area}에서 한 변은 곱해서 {area}가 되는 수({side})를 찾으면 돼요.",
+            en={
+                "statement": f"A square has a perimeter of {perim} cm. What is the area of this square?",
+                "answer": f"{area} cm²",
+                "distractors": [f"{perim} cm²", f"{side * 2} cm²", f"{area + side} cm²"],
+                "explanation": f"A square has four equal sides. With a perimeter of {perim} cm, one side is {perim}÷4={side} cm. The area is one side times itself, {side}×{side}={area} cm².",
+                "mistakes": [(f"{perim} cm²", "Perimeter and area differ. First find one side (÷4), then square it.")],
+                "detail": f"Perimeter is 'edge length (1-D)' and area is 'filled squares (2-D)', so even the units differ — cm versus cm². The order perimeter → one side (÷4) → area (square it) is the key. In reverse, from area {area} the side is the number that multiplied by itself gives {area} ({side}).",
+            },
         )
 
 
@@ -2840,6 +2976,14 @@ def gen_time_duration():
             f"분끼리, 시끼리 더하되 분이 60을 넘으면 1시간으로 올려요. 분: {m}+{dm}={m + dm}분 → {(m + dm) // 60}시간 {(m + dm) % 60}분. 시: {h}+{dh}+{(m + dm) // 60}={h + dh + (m + dm) // 60}시. 그래서 {eh}시 {em}분이에요.",
             [(f"{h + dh}시 {m + dm}분", "분을 그냥 이어 붙이면 안 돼요 — 60분이 넘으면 1시간으로 받아올려요.")],
             detail="시간 계산은 '60진법'이라 분이 60을 넘으면 시로 올려요(10진법 받아올림과 같은데 넘는 기준만 60). 거꾸로 '몇 시간 몇 분 전'은 60을 빌려 내림하고요. 시계가 한 바퀴 도는 것도 같은 나머지 감각이에요.",
+            en={
+                "statement": f"You start a task at {h}:{m:02d} and work for {_en_plural(dh, 'hour')} {_en_plural(dm, 'minute')}. What time does it end?",
+                "answer": f"{eh}:{em:02d}",
+                "distractors": [f"{h + dh}:{m + dm:02d}", f"{(eh + 1) % 24}:{em:02d}", f"{eh}:{(em + 10) % 60:02d}"],
+                "explanation": f"Add minutes to minutes and hours to hours, carrying 1 hour whenever the minutes pass 60. Minutes: {m}+{dm}={m + dm} → {(m + dm) // 60} hour {(m + dm) % 60} min. Hours: {h}+{dh}+{(m + dm) // 60}={h + dh + (m + dm) // 60}. So it ends at {eh}:{em:02d}.",
+                "mistakes": [(f"{h + dh}:{m + dm:02d}", "Don't just stick the minutes together — carry to 1 hour once they pass 60.")],
+                "detail": "Time is 'base 60', so when the minutes pass 60 you carry into hours (just like base-10 carrying, but the threshold is 60). Going backward, 'X hours Y minutes earlier' borrows 60 the same way. A clock going once around is the same remainder sense.",
+            },
         )
 
 
@@ -3385,6 +3529,17 @@ def gen_league():
             [(f"{n * (n - 1)}경기", "같은 경기를 두 번 세었어요. A-B와 B-A는 한 경기라 2로 나눠요.")],
             detail="서로 한 번씩 맞붙는 리그전 경기 수는 팀 중 2팀을 고르는 조합 C(n,2)=n(n−1)/2예요. 각 팀이 (n−1)경기씩 하지만 "
             "한 경기를 두 팀이 함께 세므로 2로 나눠요. 짝을 '순서 없이' 고르는 세기의 기본이에요.",
+            en={
+                "statement": f"{n} teams each play every other team once. How many games are played in all?",
+                "answer": f"{ans} games",
+                "distractors": [f"{c} games" for c in _pick_distractors(ans, [n * (n - 1), n - 1, ans + n, ans - 1])],
+                "explanation": f"Each team plays the other {n - 1} teams once, which looks like {n}×{n - 1}={n * (n - 1)}. But "
+                               f"'A vs B' and 'B vs A' are the same single game, so divide by 2: {n * (n - 1)}÷2={ans} games.",
+                "mistakes": [(f"{n * (n - 1)} games", "You counted each game twice. A-B and B-A are one game, so divide by 2.")],
+                "detail": "The number of games in a round-robin where everyone plays everyone once equals the ways to choose 2 teams, "
+                          "C(n,2)=n(n−1)/2. Each team plays (n−1) games, but every game is shared by two teams, so divide by 2. "
+                          "This is the basis of counting unordered pairs.",
+            },
         )
 
 
@@ -3403,6 +3558,19 @@ def gen_twodigit():
             [(f"{n * n}개", "같은 카드를 십·일의 자리에 두 번 쓸 순 없어요. 일의 자리는 한 장 적은 {}가지예요.".format(n - 1))],
             detail="서로 다른 카드로 두 자리 수를 만드는 경우의 수는 순서가 있는 뽑기(순열) nP2 = n×(n−1)이에요. "
             "십의 자리를 정하면 일의 자리는 한 장이 빠져 한 가지 줄어들어요. 자리마다 경우를 곱하는 곱의 법칙 문제예요.",
+            en={
+                "statement": f"You have the number cards {card_str}. Picking two of them to form a two-digit number, how many "
+                             f"different two-digit numbers can you make?",
+                "answer": f"{ans} numbers",
+                "distractors": [f"{c} numbers" for c in _pick_distractors(ans, [n * n, n, ans + 2, ans - 2])],
+                "explanation": f"The tens place can be any of {n} cards, and for each of those the ones place is one of the "
+                               f"remaining {n - 1} cards. Multiply: {n}×{n - 1}={ans} numbers.",
+                "mistakes": [(f"{n * n} numbers", "You can't use the same card in both the tens and ones place. The ones place has "
+                                                  "one fewer card: {} choices.".format(n - 1))],
+                "detail": "The number of two-digit numbers from distinct cards is an ordered pick (a permutation), nP2 = n×(n−1). "
+                          "Once the tens digit is set, the ones place has one fewer card. It's a multiplication-rule problem where "
+                          "you multiply the choices at each place.",
+            },
         )
 
 
@@ -3421,6 +3589,18 @@ def gen_tablediff():
              (f"{sum(vals)}권", "다 더하는 게 아니라, 최댓값과 최솟값의 '차이'를 구해요.")],
             detail="여러 자료에서 '가장 많은 것과 가장 적은 것의 차이(범위)'는 최댓값에서 최솟값을 빼요. 표나 그래프를 읽고 "
             "가장 크고 작은 값을 정확히 집어내는 자료 해석의 기본이에요.",
+            en={
+                "statement": f"On Monday, Tuesday, Wednesday, and Thursday, the books read were {a}, {b}, {c}, and {d}. What is the "
+                             f"difference between the most-read day and the least-read day?",
+                "answer": f"{ans} books",
+                "distractors": [f"{v} books" for v in _pick_distractors(ans, [max(vals), sum(vals), ans + 1, ans - 1])],
+                "explanation": f"The most-read day is {max(vals)} books and the least-read day is {min(vals)} books. The difference is "
+                               f"{max(vals)}−{min(vals)}={ans} books.",
+                "mistakes": [(f"{max(vals)} books", "Don't just give the largest value. Subtract the smallest from the largest."),
+                             (f"{sum(vals)} books", "Don't add them all — find the 'difference' between the largest and smallest.")],
+                "detail": "The 'difference between the most and the least (the range)' is the maximum minus the minimum. Reading a table "
+                          "or graph and pinpointing the largest and smallest values exactly is the basis of data interpretation.",
+            },
         )
 
 
@@ -3718,6 +3898,15 @@ def gen_barchart():
             figure={"type": "BAR_CHART", "heights": vals, "params": {"highlight": -1}},
             detail="막대그래프는 막대의 높이로 크기를 한눈에 비교해요. '둘째로 많은 것'은 가장 높은 막대를 뺀 나머지 중 가장 "
             "높은 것이에요. 자료를 크기 순으로 정리해 읽는 연습이에요.",
+            en={
+                "statement": "The graph below shows the number of flowerpots collected by classes A, B, C, and D. How many flowerpots did the class with the second-most collect?",
+                "answer": f"{ans} flowerpots",
+                "distractors": [f"{c} flowerpots" for c in _pick_distractors(ans, [ordered[0], ordered[2], min(vals), ans + 1])],
+                "explanation": f"Reading the bars from tallest to shortest gives {ordered[0]}, {ordered[1]}, {ordered[2]}, {ordered[3]}. The tallest bar is {ordered[0]}, and the next one (the second) is {ans}.",
+                "mistakes": [(f"{ordered[0]} flowerpots", "That's the class with the 'most'. Read the next-tallest (second) bar."),
+                             (f"{min(vals)} flowerpots", "You want the second-'most', not the fewest.")],
+                "detail": "A bar chart compares sizes at a glance by bar height. The 'second-most' is the tallest of the rest after removing the tallest bar. It's practice at reading data sorted by size.",
+            },
         )
 
 
@@ -3862,6 +4051,15 @@ def gen_symaxis():
             figure={"type": "POLYGON", "params": {"n": n}},
             detail="정n각형은 n개의 대칭축을 가져요. 홀수각형은 각 꼭짓점과 마주 보는 변의 중점을 잇고, 짝수각형은 마주 보는 "
             "꼭짓점끼리·변끼리를 이어요. 어느 쪽이든 축의 수는 변의 수 n과 같아요.",
+            en={
+                "statement": f"{('An equilateral triangle', 'A square', 'A regular pentagon', 'A regular hexagon')[n - 3]} is a line-symmetric shape. How many axes of symmetry make it overlap completely when folded?",
+                "answer": f"{ans} axes",
+                "distractors": [f"{c} " + ("axis" if c == "1" else "axes") for c in _pick_distractors(ans, [1, 2, n + 1, n - 1])],
+                "explanation": f"{('An equilateral triangle', 'A square', 'A regular pentagon', 'A regular hexagon')[n - 3]} has an axis of symmetry through each vertex (or the midpoint of each side). Their number equals the number of sides, {ans}.",
+                "mistakes": [("1 axis", "There isn't just one axis of symmetry — it overlaps when folded in several directions."),
+                             (f"{n - 1} axes", "A regular polygon's axes of symmetry equal the number of sides. Check you didn't miss one.")],
+                "detail": "A regular n-gon has n axes of symmetry. An odd-sided one joins each vertex to the midpoint of the opposite side; an even-sided one joins opposite vertices and opposite side midpoints. Either way, the number of axes equals the number of sides, n.",
+            },
         )
 
 
