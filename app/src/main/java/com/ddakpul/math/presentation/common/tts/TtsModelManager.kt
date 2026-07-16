@@ -1,7 +1,6 @@
 package com.ddakpul.math.presentation.common.tts
 
 import android.content.Context
-import android.os.Build
 import com.ddakpul.math.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -11,10 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.zip.ZipFile
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,54 +65,18 @@ class TtsModelManager
                         }
                         done = downloadFile(model.url(file), File(dir, "${file.name}.part"), target, done, total)
                     }
-                    // 네이티브 런타임(.so)도 받아서 현재 기기 ABI에 맞는 것만 추출한다.
-                    ensureNativeLib(model, dir, done, total)
                     _state.value = DownloadState.Done
                 }.onFailure { e ->
                     _state.value = DownloadState.Failed(e.message ?: context.getString(R.string.tts_error_download_failed))
                 }
             }
 
-        /** sherpa-onnx AAR을 받아 현재 ABI의 .so만 꺼내 [TtsModel.soFile]에 둔다. AAR은 지운다. */
-        private fun ensureNativeLib(
-            model: TtsModel,
-            dir: File,
-            startDone: Long,
-            total: Long,
-        ): Long {
-            val so = model.soFile(context)
-            if (so.exists() && so.length() > 0) return startDone + model.nativeAarBytes
-            so.parentFile?.mkdirs()
-            val abi = Build.SUPPORTED_ABIS.firstOrNull() ?: error(context.getString(R.string.tts_error_no_abi))
-            val aar = File(dir, "sherpa.aar")
-            val done = downloadFile(model.nativeAarUrl, File(dir, "sherpa.aar.part"), aar, startDone, total)
-            extractSo(aar, "jni/$abi/${model.nativeSoName}", so)
-            aar.delete()
-            return done
-        }
-
-        /** AAR(zip)에서 한 항목을 꺼내 [target]에 저장(.part→rename). */
-        private fun extractSo(
-            aar: File,
-            entryPath: String,
-            target: File,
-        ) {
-            ZipFile(aar).use { zip ->
-                val entry = zip.getEntry(entryPath) ?: error(context.getString(R.string.tts_error_no_lib, entryPath))
-                zip.getInputStream(entry).use { input -> writeToFile(input, target) }
-            }
-        }
-
-        private fun writeToFile(
-            input: InputStream,
-            target: File,
-        ) {
-            val tmp = File(target.parentFile, "${target.name}.part")
-            FileOutputStream(tmp).use { out -> input.copyTo(out) }
-            check(tmp.renameTo(target)) { context.getString(R.string.tts_error_save_failed, target.name) }
-        }
-
-        /** 파일 하나를 .part로 받아 완료 시 이름 바꿈. 반환값은 갱신된 누적 바이트. */
+        /**
+         * 파일 하나를 .part로 받아 **완결성 검증 후** 이름을 바꾼다. 서버가 예고한 길이
+         * (Content-Length)와 실제 받은 양이 다르면(중간 끊김) 실패 처리 — 잘린 파일이
+         * "받아진 것"으로 남아 엔진 초기화가 계속 실패하는 문제를 막는다.
+         * 반환값은 갱신된 누적 바이트.
+         */
         private fun downloadFile(
             url: String,
             tmp: File,
@@ -131,7 +92,13 @@ class TtsModelManager
                 }
             val done =
                 try {
-                    conn.inputStream.use { input -> copyWithProgress(input, tmp, startDone, total) }
+                    val expected = conn.contentLengthLong
+                    val end = conn.inputStream.use { input -> copyWithProgress(input, tmp, startDone, total) }
+                    val received = end - startDone
+                    check(expected <= 0 || received == expected) {
+                        context.getString(R.string.tts_error_download_failed) + " ($received/$expected bytes)"
+                    }
+                    end
                 } finally {
                     conn.disconnect()
                 }

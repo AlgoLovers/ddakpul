@@ -30,6 +30,13 @@ enum class PremiumPass(
 
 /** 수익화 경계 상수. */
 object Monetization {
+    /**
+     * 실결제(Play Billing) 연동 여부. **false인 동안 구매 UI(가격·활성화 버튼)를 어디에도
+     * 노출하지 않는다** — 연동 없는 활성화 버튼은 공짜 프리미엄 지급 + 심사 오해 소지가 있다.
+     * Play Billing을 붙이는 PR에서만 true로 바꾼다(LAUNCH.md §6).
+     */
+    const val BILLING_ENABLED = false
+
     /** 무료로 풀 수 있는 최고 난이도 — 이보다 높은 난이도는 이용권이 필요하다. */
     const val FREE_MAX_DIFFICULTY = 3
 

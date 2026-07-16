@@ -39,6 +39,9 @@ class SystemSpeechEngine(
     private val enginePackage: String?,
     private val rate: Float,
     override val label: String,
+    // 읽을 언어 — 앱 언어(한국어 ⇄ English)를 따른다. 하드코딩하면 영어 모드에서 영어 문장을
+    // 한국어 로케일로 읽거나(발음 붕괴) 한국어 데이터 없는 기기에서 조용히 실패한다.
+    private val locale: Locale = Locale.KOREAN,
     private val onSpeakingChanged: (Boolean) -> Unit,
     // 실제로 붙은 엔진의 사람이 읽는 이름을 알려준다(기기 기본을 골랐을 때 "기기 기본" 대신
     // "Google 음성 인식 및 합성" 같은 실제 엔진명을 표시하기 위함). 알아내지 못하면 호출 안 함.
@@ -61,7 +64,11 @@ class SystemSpeechEngine(
     private fun onInit(status: Int) {
         if (status != TextToSpeech.SUCCESS) return
         // OPicHelper(동작 확인된 사용자 앱)와 동일하게 setLanguage만 한다 — voice 오버라이드 없이.
-        tts.language = Locale.KOREAN
+        // 언어 데이터가 없으면 강제하지 않고 엔진 기본 언어에 맡긴다(무음보다 낫다).
+        val langResult = tts.setLanguage(locale)
+        if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+            tts.language = Locale.getDefault()
+        }
         tts.setSpeechRate(rate)
         tts.setOnUtteranceProgressListener(progressListener)
         ready = true
