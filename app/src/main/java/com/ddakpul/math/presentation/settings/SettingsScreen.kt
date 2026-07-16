@@ -276,7 +276,7 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
 
     SettingsCard {
         Text(
-            text = model.displayName,
+            text = stringResource(model.displayNameRes),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )
@@ -353,7 +353,7 @@ private fun NeuralDownloadedActions(
                 Text(stringResource(R.string.settings_neural_use_default))
             }
         } else {
-            Button(onClick = { SpeechSettings.setEngine(context, engineValue, model.displayName) }) {
+            Button(onClick = { SpeechSettings.setEngine(context, engineValue, model.displayName(context)) }) {
                 Text(stringResource(R.string.settings_neural_use))
             }
         }
@@ -436,8 +436,8 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
                     val value = TtsModels.engineValue(m)
                     FilterChip(
                         selected = selectedEngine == value,
-                        onClick = { SpeechSettings.setEngine(context, value, m.displayName) },
-                        label = { Text(m.displayName) },
+                        onClick = { SpeechSettings.setEngine(context, value, m.displayName(context)) },
+                        label = { Text(stringResource(m.displayNameRes)) },
                     )
                 }
             }

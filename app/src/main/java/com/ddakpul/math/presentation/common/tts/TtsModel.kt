@@ -1,6 +1,8 @@
 package com.ddakpul.math.presentation.common.tts
 
 import android.content.Context
+import androidx.annotation.StringRes
+import com.ddakpul.math.R
 import java.io.File
 
 /** 다운로드형 신경망 TTS 모델의 파일 하나. [bytes]는 진행률 총량 계산용(대략치). */
@@ -19,7 +21,8 @@ data class ModelFile(
  */
 data class TtsModel(
     val id: String,
-    val displayName: String,
+    /** 표시 이름 리소스 — 언어에 따라 바뀐다(한국어/영어). 사용처에서 [displayName]으로 해석. */
+    @StringRes val displayNameRes: Int,
     /** HuggingFace resolve 기준 URL. 파일명을 붙여 개별 다운로드. */
     val baseUrl: String,
     val files: List<ModelFile>,
@@ -32,6 +35,9 @@ data class TtsModel(
     /** 라이선스 메모(출시 전 확인용). */
     val licenseNote: String,
 ) {
+    /** 현재 언어로 해석한 표시 이름. */
+    fun displayName(context: Context): String = context.getString(displayNameRes)
+
     /** 모델 파일 합계(네이티브 제외). */
     val modelBytes: Long get() = files.sumOf { it.bytes }
 
@@ -75,7 +81,7 @@ object TtsModels {
     val SUPERTONIC =
         TtsModel(
             id = "supertonic-ko-int8",
-            displayName = "고품질 음성 (Supertonic)",
+            displayNameRes = R.string.tts_supertonic_name,
             baseUrl = "https://huggingface.co/csukuangfj2/sherpa-onnx-supertonic-tts-int8-2026-03-06/resolve/main",
             files =
                 listOf(

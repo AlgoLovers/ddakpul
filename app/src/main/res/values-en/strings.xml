@@ -239,6 +239,18 @@
         <item>Ten minutes a day, just check whether the child kept the goal they set — small, near goals build confidence and interest.</item>
     </string-array>
 
+    <!-- Bar chart category labels — must match problem text (A, B, C…). -->
+    <string-array name="bar_chart_labels">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+    </string-array>
+
     <!-- Printable worksheet -->
     <string name="print_title">Print worksheet</string>
     <string name="print_subtitle">Want to solve on paper — print the problems and an answer/solution sheet.</string>
@@ -310,6 +322,7 @@
     <string name="solve_reading_with">%1$s</string>
 
     <!-- Settings · high-quality neural voice (runtime download) -->
+    <string name="tts_supertonic_name">High-quality voice (Supertonic)</string>
     <string name="settings_neural_desc">A neural voice that sounds more natural. Download about %1$dMB once and use it offline.</string>
     <string name="settings_neural_download">Download (about %1$dMB)</string>
     <string name="settings_neural_downloading">Downloading… %1$d%%</string>

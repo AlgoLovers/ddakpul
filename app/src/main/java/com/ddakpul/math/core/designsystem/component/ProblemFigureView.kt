@@ -13,11 +13,13 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.ProblemFigure
 import kotlin.math.cos
@@ -41,6 +43,8 @@ fun ProblemFigureView(
         )
     val textMeasurer = rememberTextMeasurer()
     val labelStyle = TextStyle(fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    // 막대그래프 범주 라벨은 언어 따라 바뀐다(한국어 가·나·다 / 영어 A·B·C) — 문제 본문과 일치시키려.
+    val barLabels = stringArrayResource(R.array.bar_chart_labels)
 
     Canvas(modifier = modifier.fillMaxWidth().height(170.dp)) {
         val side = min(size.width, size.height) * 0.85f
@@ -91,7 +95,7 @@ fun ProblemFigureView(
             }
 
             FigureType.BAR_CHART -> {
-                drawBarChart(figure, ink, accent, left, top, side) { text, x, y ->
+                drawBarChart(figure, ink, accent, left, top, side, barLabels) { text, x, y ->
                     val measured = textMeasurer.measure(text, labelStyle)
                     drawText(measured, topLeft = Offset(x - measured.size.width / 2f, y - measured.size.height / 2f))
                 }
@@ -100,7 +104,7 @@ fun ProblemFigureView(
     }
 }
 
-/** 막대그래프 — heights의 값들을 막대로 그리고 각 막대 위에 값, 아래에 범주(가·나·다…)를 쓴다. */
+/** 막대그래프 — heights의 값들을 막대로 그리고 각 막대 위에 값, 아래에 범주(가·나·다… / A·B·C…)를 쓴다. */
 private fun DrawScope.drawBarChart(
     figure: ProblemFigure,
     ink: Color,
@@ -108,6 +112,7 @@ private fun DrawScope.drawBarChart(
     left: Float,
     top: Float,
     side: Float,
+    barLabels: Array<String>,
     label: DrawScope.(String, Float, Float) -> Unit,
 ) {
     val values = figure.heights
@@ -129,11 +134,9 @@ private fun DrawScope.drawBarChart(
             size = Size(barW, barH),
         )
         label(values[i].toString(), cx, baseY - barH - 12f)
-        label(BAR_LABELS.getOrElse(i) { "${i + 1}" }, cx, baseY + 16f)
+        label(barLabels.getOrElse(i) { "${i + 1}" }, cx, baseY + 16f)
     }
 }
-
-private val BAR_LABELS = listOf("가", "나", "다", "라", "마", "바", "사", "아")
 
 /** 성냥개비로 한 줄로 이어 붙인 정사각형(기본) 또는 정삼각형(tri=1, 위아래 번갈아). */
 private fun DrawScope.drawMatchstick(

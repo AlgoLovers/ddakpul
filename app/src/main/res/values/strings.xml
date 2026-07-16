@@ -239,6 +239,18 @@
         <item>하루 10분, 아이가 스스로 정한 목표를 지켰는지만 확인하세요 — 작고 가까운 목표가 자신감과 흥미를 키워요.</item>
     </string-array>
 
+    <!-- 막대그래프 범주 라벨 — 문제 본문(가·나·다…)과 일치. 영어는 A·B·C…로 오버라이드. -->
+    <string-array name="bar_chart_labels">
+        <item>가</item>
+        <item>나</item>
+        <item>다</item>
+        <item>라</item>
+        <item>마</item>
+        <item>바</item>
+        <item>사</item>
+        <item>아</item>
+    </string-array>
+
     <!-- 인쇄 학습지 -->
     <string name="print_title">학습지 인쇄</string>
     <string name="print_subtitle">종이에 풀고 싶을 때 — 문제지와 정답·해설지를 인쇄하세요.</string>
@@ -310,6 +322,7 @@
     <string name="solve_reading_with">%1$s</string>
 
     <!-- 설정 · 고품질 신경망 음성(런타임 다운로드) -->
+    <string name="tts_supertonic_name">고품질 음성 (Supertonic)</string>
     <string name="settings_neural_desc">삼성·구글보다 더 자연스러운 한국어 신경망 음성이에요. 약 %1$dMB를 한 번 받으면 오프라인으로 쓸 수 있어요.</string>
     <string name="settings_neural_download">다운로드 (약 %1$dMB)</string>
     <string name="settings_neural_downloading">받는 중… %1$d%%</string>
