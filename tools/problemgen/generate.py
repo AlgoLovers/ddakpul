@@ -17,13 +17,16 @@ from math import comb, factorial, gcd
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[2] / "app/src/main/assets/problems_generated.json"
+OUT_EN = Path(__file__).resolve().parents[2] / "app/src/main/assets/problems_generated_en.json"
 rng = random.Random(20260710)  # 재현 가능하게 시드 고정
+rng_en = random.Random(20260711)  # 영어 뱅크 전용 rng — 한국어 rng 순서를 건드리지 않아 KO 뱅크가 바이트 동일
 
 NAMES = ["민준", "서연", "지호", "하은", "도윤", "예린", "시우", "지아"]
 FRUITS = ["사과", "귤", "배", "감"]
 COLORS3 = [["빨간", "노란", "파란"], ["초록", "보라", "주황"]]
 
 problems = []
+problems_en = []  # 다국어: add(en=...)로 영어가 제공된 계열만 여기 쌓인다
 stats = {"generated": 0, "rejected": 0}
 
 
@@ -96,8 +99,18 @@ def _fix_number_copula(text):
     return text
 
 
-def add(family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes=None, figure=None, detail=None):
-    """정답 1 + 오답 3을 섞어 4지선다로 만든다. 겹치는 오답은 숫자를 밀어 자동 대체."""
+def _fix_en_grammar(text):
+    """영어는 한국어 조사 교정이 필요 없다(복수형은 생성기에서 _en_plural로 처리). 자리표시자."""
+    return text
+
+
+def _en_plural(n, singular):
+    """'1 path' / '2 paths'처럼 수에 맞는 단수·복수. (단순 규칙; 불규칙은 생성기에서 직접)"""
+    return f"{n} {singular}" if n == 1 else f"{n} {singular}s"
+
+
+def _emit(target, rnd, family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes, figure, detail, fix):
+    """한 문제를 만들어 target 리스트에 넣는다. rnd·fix(조사교정)만 언어별로 다르다."""
     unique = []
     for d in distractors:
         if d != answer_text and d not in unique:
@@ -111,22 +124,22 @@ def add(family, area, diff, concepts, statement, answer_text, distractors, expl,
     choices = [answer_text] + unique[:3]
     assert len(set(choices)) == 4, f"{family}: 보기 중복 {choices}"
     order = list(range(4))
-    rng.shuffle(order)
+    rnd.shuffle(order)
     shuffled = [choices[i] for i in order]
     answer_index = shuffled.index(answer_text)
-    idx = sum(1 for p in problems if p["groupId"] == f"g-gen-{family}-{diff}") + 1
+    idx = sum(1 for p in target if p["groupId"] == f"g-gen-{family}-{diff}") + 1
     problem = {
         "id": f"gen-{family}-{idx}",
         "area": area,
         "difficulty": diff,
         "groupId": f"g-gen-{family}-{diff}",
         "concepts": concepts,
-        "statement": _fix_number_copula(statement),
+        "statement": fix(statement),
         "choices": shuffled,
         "answerIndex": answer_index,
-        "explanation": _fix_number_copula(expl),
+        "explanation": fix(expl),
         "mistakes": [
-            {"choiceIndex": shuffled.index(text), "misconception": _fix_number_copula(why)}
+            {"choiceIndex": shuffled.index(text), "misconception": fix(why)}
             for text, why in (mistakes or [])
             if text in shuffled and shuffled.index(text) != answer_index
         ],
@@ -135,9 +148,21 @@ def add(family, area, diff, concepts, statement, answer_text, distractors, expl,
     if figure:
         problem["figure"] = figure
     if detail:
-        problem["detailedExplanation"] = _fix_number_copula(detail)
-    problems.append(problem)
+        problem["detailedExplanation"] = fix(detail)
+    target.append(problem)
+
+
+def add(family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes=None, figure=None, detail=None, en=None):
+    """정답 1 + 오답 3을 섞어 4지선다로 만든다. en={statement,answer,distractors,explanation,...}를 주면
+    같은 수학(도형·정답구조)에서 영어 문제도 함께 만들어 problems_en에 넣는다(뱅크는 독립·rng도 별도)."""
+    _emit(problems, rng, family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes, figure, detail, _fix_number_copula)
     stats["generated"] += 1
+    if en is not None:
+        _emit(
+            problems_en, rng_en, family, area, diff,
+            en.get("concepts", concepts), en["statement"], en["answer"], en["distractors"],
+            en["explanation"], en.get("mistakes"), figure, en.get("detail"), _fix_en_grammar,
+        )
 
 
 # ── 1. 복면산 AB+BA (난4, 수와연산) ──────────────────────────────────────────
@@ -523,6 +548,16 @@ def gen_sequence_simple():
             f"이웃한 수의 차이를 살펴봐요. 매번 {abs(d)}씩 {grow} 있어요. 그러니 {seq[-1]} 다음은 {seq[-1]}{sign}{abs(d)}={nxt}{_copula(nxt)}.",
             [(str(seq[-1]), "마지막 수를 그대로 쓰면 안 돼요. 규칙만큼 더하거나 빼야 해요.")],
             detail=f"이웃한 수의 '차이'가 일정하면 등차예요. 규칙을 찾을 땐 늘 먼저 이웃 차이부터 적어 보세요 — 차이가 일정하면 등차, 차이가 '몇 배'면 등비, 차이의 차이가 일정하면 그 다음 단계 규칙이에요. n번째 수는 (첫 수)+(n−1)×(차이)로 한 번에 구할 수도 있어요.",
+            en={
+                "statement": f"Find the rule. {seqtxt}, □ — what number goes in the box?",
+                "answer": str(nxt),
+                "distractors": [str(nxt + d), str(seq[-1]), str(nxt + 1)],
+                "explanation": f"Look at the gap between neighboring numbers. It goes {'up' if d > 0 else 'down'} by {abs(d)} each time, "
+                               f"so after {seq[-1]} comes {seq[-1]} {sign} {abs(d)} = {nxt}.",
+                "mistakes": [(str(seq[-1]), "Don’t just repeat the last number — add or subtract by the rule.")],
+                "detail": "When the gap between neighbors stays constant, it’s an arithmetic sequence. Always write the gaps first: "
+                          "a constant gap means arithmetic, a constant ratio means geometric. The nth term is (first) + (n−1)×(gap).",
+            },
         )
 
 
@@ -561,6 +596,17 @@ def gen_outfits():
             f"윗옷 하나를 고를 때마다 아래옷을 {len(bottoms)}가지로 짝지을 수 있어요. 윗옷이 {len(tops)}가지니까 {len(tops)}×{len(bottoms)}={n}가지예요. 표를 그려 하나씩 짝지어도 {n}가지가 나와요.",
             [(f"{len(tops) + len(bottoms)}가지", "더하는 게 아니라 곱해요. 윗옷마다 아래옷이 다시 여러 개 있어요.")],
             detail="윗옷을 정하는 '단계'와 아래옷을 정하는 '단계'가 서로 영향을 안 주니 곱해요(곱의 원리). 윗옷 하나마다 아래옷 전부가 다시 가능하거든요. 만약 '윗옷 또는 아래옷 하나만' 고르는 거였다면 더했겠죠(합의 원리). 곱이냐 합이냐는 늘 '그리고냐 또는이냐'로 판단해요.",
+            en={
+                "statement": f"There are {len(tops)} tops and {len(bottoms)} bottoms. Picking one top and one bottom, "
+                             f"how many different outfits can you make?",
+                "answer": _en_plural(n, "outfit"),
+                "distractors": [_en_plural(len(tops) + len(bottoms), "outfit"), _en_plural(n - 1, "outfit"), _en_plural(n + 1, "outfit")],
+                "explanation": f"For every top you can pair {len(bottoms)} bottoms, and there are {len(tops)} tops, "
+                               f"so {len(tops)}×{len(bottoms)}={n}. Drawing a table and pairing them gives {n} as well.",
+                "mistakes": [(_en_plural(len(tops) + len(bottoms), "outfit"), "Don’t add — multiply. Each top pairs with every bottom.")],
+                "detail": "Choosing a top and choosing a bottom are independent steps, so you multiply (the multiplication principle) — "
+                          "each top allows all the bottoms again. If it were 'just a top OR just a bottom', you’d add. Multiply vs. add = 'and' vs. 'or'.",
+            },
         )
 
 
@@ -1343,6 +1389,14 @@ def gen_cube_stack_tiny():
             f"각 기둥이 몇 층인지 세어 더해요: {' + '.join(str(h) for h in heights)} = {ans}개.",
             figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
             detail=f"쌓기나무 개수는 '위에서 본 그림'의 각 칸에 적힌 층수를 모두 더한 값과 같아요. 앞·위에 가려 안 보여도 각 기둥의 높이만 알면 정확히 셀 수 있죠. 층수를 하나씩 더하면 {ans}개예요. 이렇게 '위에서 보기'로 생각하면 아무리 복잡해도 빠짐없이 셀 수 있어요.",
+            en={
+                "statement": "How many stacking blocks are there in the picture?",
+                "answer": _en_plural(ans, "block"),
+                "distractors": [_en_plural(ans - 1, "block"), _en_plural(ans + 1, "block"), _en_plural(ans + 2, "block")],
+                "explanation": f"Count how many high each column is and add them: {' + '.join(str(h) for h in heights)} = {ans}.",
+                "detail": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden "
+                          "behind or below, knowing each column’s height lets you count exactly. Thinking 'from the top' always works.",
+            },
         )
 
 
@@ -2765,6 +2819,16 @@ def gen_missing_addend():
             f"거꾸로 생각해요. {a}을 더해서 {total}이 됐으니 {total}에서 {a}을 도로 빼면 처음 수가 나와요: {total}−{a}={ans}이에요. (검산: {ans}+{a}={total}.)",
             [(str(total), f"그건 더한 뒤의 수예요. {a}을 도로 빼야 처음 수예요.")],
             detail=f"'□ + {a} = {total}'에서 □를 찾는 건 더하기를 거꾸로(빼기로) 되짚는 거예요. 더하기↔빼기는 서로 반대라, 한쪽을 알면 다른 쪽으로 되돌릴 수 있어요. 이 '거꾸로 생각하기'가 나중에 방정식의 바탕이 돼요.",
+            en={
+                "statement": f"Some number plus {a} makes {total}. What was the starting number?",
+                "answer": str(ans),
+                "distractors": [str(total), str(total + a), str(ans - 1)],
+                "explanation": f"Think backwards. Adding {a} gave {total}, so subtract {a} back from {total} to get the start: "
+                               f"{total} − {a} = {ans}. (Check: {ans} + {a} = {total}.)",
+                "mistakes": [(str(total), f"That’s the number after adding. Subtract {a} back to get the starting number.")],
+                "detail": f"Finding □ in '□ + {a} = {total}' means undoing the addition with subtraction. Adding and subtracting are "
+                          "opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later.",
+            },
         )
 
 
@@ -4139,11 +4203,17 @@ if blockfile.exists():
             blocked.add(line)
 before = len(problems)
 problems = [p for p in problems if p["id"] not in blocked]
+problems_en = [p for p in problems_en if p["id"] not in blocked]
 if blocked:
     print(f"블록리스트 제외: {before - len(problems)}문항 (등록 {len(blocked)}건)")
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(json.dumps({"version": 1, "problems": problems}, ensure_ascii=False, indent=1), encoding="utf-8")
+
+# 영어 뱅크 — add(en=...)로 변환된 계열만. 아직 변환 중이라 부분 뱅크.
+OUT_EN.write_text(json.dumps({"version": 1, "lang": "en", "problems": problems_en}, ensure_ascii=False, indent=1), encoding="utf-8")
+en_cov = len({p["groupId"].replace("g-gen-", "").rsplit("-", 1)[0] for p in problems_en})
+print(f"영어 뱅크: {len(problems_en)}문항 · {en_cov}계열 → {OUT_EN.name}")
 
 by_diff = {}
 for p in problems:

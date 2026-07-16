@@ -1,0 +1,459 @@
+{
+ "version": 1,
+ "lang": "en",
+ "problems": [
+  {
+   "id": "gen-addend-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-addend-1",
+   "concepts": [
+    "거꾸로 생각하기",
+    "가르기"
+   ],
+   "statement": "Some number plus 7 makes 15. What was the starting number?",
+   "choices": [
+    "15",
+    "8",
+    "22",
+    "7"
+   ],
+   "answerIndex": 1,
+   "explanation": "Think backwards. Adding 7 gave 15, so subtract 7 back from 15 to get the start: 15 − 7 = 8. (Check: 8 + 7 = 15.)",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "That’s the number after adding. Subtract 7 back to get the starting number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Finding □ in '□ + 7 = 15' means undoing the addition with subtraction. Adding and subtracting are opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later."
+  },
+  {
+   "id": "gen-addend-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-addend-1",
+   "concepts": [
+    "거꾸로 생각하기",
+    "가르기"
+   ],
+   "statement": "Some number plus 8 makes 20. What was the starting number?",
+   "choices": [
+    "28",
+    "12",
+    "20",
+    "11"
+   ],
+   "answerIndex": 1,
+   "explanation": "Think backwards. Adding 8 gave 20, so subtract 8 back from 20 to get the start: 20 − 8 = 12. (Check: 12 + 8 = 20.)",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That’s the number after adding. Subtract 8 back to get the starting number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Finding □ in '□ + 8 = 20' means undoing the addition with subtraction. Adding and subtracting are opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later."
+  },
+  {
+   "id": "gen-addend-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-addend-1",
+   "concepts": [
+    "거꾸로 생각하기",
+    "가르기"
+   ],
+   "statement": "Some number plus 6 makes 13. What was the starting number?",
+   "choices": [
+    "7",
+    "13",
+    "6",
+    "19"
+   ],
+   "answerIndex": 0,
+   "explanation": "Think backwards. Adding 6 gave 13, so subtract 6 back from 13 to get the start: 13 − 6 = 7. (Check: 7 + 6 = 13.)",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That’s the number after adding. Subtract 6 back to get the starting number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Finding □ in '□ + 6 = 13' means undoing the addition with subtraction. Adding and subtracting are opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later."
+  },
+  {
+   "id": "gen-addend-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-addend-1",
+   "concepts": [
+    "거꾸로 생각하기",
+    "가르기"
+   ],
+   "statement": "Some number plus 9 makes 16. What was the starting number?",
+   "choices": [
+    "6",
+    "7",
+    "25",
+    "16"
+   ],
+   "answerIndex": 1,
+   "explanation": "Think backwards. Adding 9 gave 16, so subtract 9 back from 16 to get the start: 16 − 9 = 7. (Check: 7 + 9 = 16.)",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That’s the number after adding. Subtract 9 back to get the starting number."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Finding □ in '□ + 9 = 16' means undoing the addition with subtraction. Adding and subtracting are opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later."
+  },
+  {
+   "id": "gen-seq1-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "Find the rule. 2, 5, 8, 11, □ — what number goes in the box?",
+   "choices": [
+    "17",
+    "15",
+    "11",
+    "14"
+   ],
+   "answerIndex": 3,
+   "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 11 comes 11 + 3 = 14.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don’t just repeat the last number — add or subtract by the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap between neighbors stays constant, it’s an arithmetic sequence. Always write the gaps first: a constant gap means arithmetic, a constant ratio means geometric. The nth term is (first) + (n−1)×(gap)."
+  },
+  {
+   "id": "gen-seq1-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "Find the rule. 3, 7, 11, 15, □ — what number goes in the box?",
+   "choices": [
+    "20",
+    "15",
+    "23",
+    "19"
+   ],
+   "answerIndex": 3,
+   "explanation": "Look at the gap between neighboring numbers. It goes up by 4 each time, so after 15 comes 15 + 4 = 19.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Don’t just repeat the last number — add or subtract by the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap between neighbors stays constant, it’s an arithmetic sequence. Always write the gaps first: a constant gap means arithmetic, a constant ratio means geometric. The nth term is (first) + (n−1)×(gap)."
+  },
+  {
+   "id": "gen-seq1-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "Find the rule. 30, 26, 22, 18, □ — what number goes in the box?",
+   "choices": [
+    "10",
+    "15",
+    "18",
+    "14"
+   ],
+   "answerIndex": 3,
+   "explanation": "Look at the gap between neighboring numbers. It goes down by 4 each time, so after 18 comes 18 − 4 = 14.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don’t just repeat the last number — add or subtract by the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap between neighbors stays constant, it’s an arithmetic sequence. Always write the gaps first: a constant gap means arithmetic, a constant ratio means geometric. The nth term is (first) + (n−1)×(gap)."
+  },
+  {
+   "id": "gen-seq1-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-seq1-1",
+   "concepts": [
+    "규칙 찾기",
+    "일정하게 커지는 수"
+   ],
+   "statement": "Find the rule. 1, 4, 7, 10, □ — what number goes in the box?",
+   "choices": [
+    "13",
+    "16",
+    "10",
+    "14"
+   ],
+   "answerIndex": 0,
+   "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 10 comes 10 + 3 = 13.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don’t just repeat the last number — add or subtract by the rule."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap between neighbors stays constant, it’s an arithmetic sequence. Always write the gaps first: a constant gap means arithmetic, a constant ratio means geometric. The nth term is (first) + (n−1)×(gap)."
+  },
+  {
+   "id": "gen-outfit-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "There are 3 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
+   "choices": [
+    "5 outfits",
+    "9 outfits",
+    "7 outfits",
+    "6 outfits"
+   ],
+   "answerIndex": 3,
+   "explanation": "For every top you can pair 2 bottoms, and there are 3 tops, so 3×2=6. Drawing a table and pairing them gives 6 as well.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Don’t add — multiply. Each top pairs with every bottom."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Choosing a top and choosing a bottom are independent steps, so you multiply (the multiplication principle) — each top allows all the bottoms again. If it were 'just a top OR just a bottom', you’d add. Multiply vs. add = 'and' vs. 'or'."
+  },
+  {
+   "id": "gen-outfit-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "There are 2 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
+   "choices": [
+    "7 outfits",
+    "6 outfits",
+    "9 outfits",
+    "5 outfits"
+   ],
+   "answerIndex": 1,
+   "explanation": "For every top you can pair 3 bottoms, and there are 2 tops, so 2×3=6. Drawing a table and pairing them gives 6 as well.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Don’t add — multiply. Each top pairs with every bottom."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Choosing a top and choosing a bottom are independent steps, so you multiply (the multiplication principle) — each top allows all the bottoms again. If it were 'just a top OR just a bottom', you’d add. Multiply vs. add = 'and' vs. 'or'."
+  },
+  {
+   "id": "gen-outfit-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "There are 2 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
+   "choices": [
+    "5 outfits",
+    "3 outfits",
+    "7 outfits",
+    "4 outfits"
+   ],
+   "answerIndex": 3,
+   "explanation": "For every top you can pair 2 bottoms, and there are 2 tops, so 2×2=4. Drawing a table and pairing them gives 4 as well.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Choosing a top and choosing a bottom are independent steps, so you multiply (the multiplication principle) — each top allows all the bottoms again. If it were 'just a top OR just a bottom', you’d add. Multiply vs. add = 'and' vs. 'or'."
+  },
+  {
+   "id": "gen-outfit-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-outfit-1",
+   "concepts": [
+    "경우의 수",
+    "빠짐없이 짝짓기"
+   ],
+   "statement": "There are 3 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
+   "choices": [
+    "9 outfits",
+    "10 outfits",
+    "6 outfits",
+    "8 outfits"
+   ],
+   "answerIndex": 0,
+   "explanation": "For every top you can pair 3 bottoms, and there are 3 tops, so 3×3=9. Drawing a table and pairing them gives 9 as well.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don’t add — multiply. Each top pairs with every bottom."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Choosing a top and choosing a bottom are independent steps, so you multiply (the multiplication principle) — each top allows all the bottoms again. If it were 'just a top OR just a bottom', you’d add. Multiply vs. add = 'and' vs. 'or'."
+  },
+  {
+   "id": "gen-cubetiny-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "How many stacking blocks are there in the picture?",
+   "choices": [
+    "2 blocks",
+    "3 blocks",
+    "4 blocks",
+    "1 block"
+   ],
+   "answerIndex": 0,
+   "explanation": "Count how many high each column is and add them: 1 + 1 = 2.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 1
+    },
+    "heights": [
+     1,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden behind or below, knowing each column’s height lets you count exactly. Thinking 'from the top' always works."
+  },
+  {
+   "id": "gen-cubetiny-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "How many stacking blocks are there in the picture?",
+   "choices": [
+    "2 blocks",
+    "3 blocks",
+    "4 blocks",
+    "5 blocks"
+   ],
+   "answerIndex": 1,
+   "explanation": "Count how many high each column is and add them: 1 + 1 + 1 = 3.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 1
+    },
+    "heights": [
+     1,
+     1,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden behind or below, knowing each column’s height lets you count exactly. Thinking 'from the top' always works."
+  },
+  {
+   "id": "gen-cubetiny-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "How many stacking blocks are there in the picture?",
+   "choices": [
+    "5 blocks",
+    "3 blocks",
+    "4 blocks",
+    "2 blocks"
+   ],
+   "answerIndex": 1,
+   "explanation": "Count how many high each column is and add them: 2 + 1 = 3.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 2,
+     "d": 1
+    },
+    "heights": [
+     2,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden behind or below, knowing each column’s height lets you count exactly. Thinking 'from the top' always works."
+  },
+  {
+   "id": "gen-cubetiny-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-cubetiny-1",
+   "concepts": [
+    "쌓기나무",
+    "수 세기"
+   ],
+   "statement": "How many stacking blocks are there in the picture?",
+   "choices": [
+    "3 blocks",
+    "4 blocks",
+    "5 blocks",
+    "6 blocks"
+   ],
+   "answerIndex": 1,
+   "explanation": "Count how many high each column is and add them: 1 + 2 + 1 = 4.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "CUBE_STACK",
+    "params": {
+     "w": 3,
+     "d": 1
+    },
+    "heights": [
+     1,
+     2,
+     1
+    ]
+   },
+   "detailedExplanation": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden behind or below, knowing each column’s height lets you count exactly. Thinking 'from the top' always works."
+  }
+ ]
+}
