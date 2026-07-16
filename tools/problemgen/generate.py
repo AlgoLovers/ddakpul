@@ -4349,6 +4349,14 @@ def gen_mod_power():
             f"{base}을 거듭제곱하며 {m}으로 나눈 나머지는 {', '.join(map(str, cyc))} 가 반복돼요(주기 {period}). {exp}{_eul(str(exp))} {period}로 나눈 나머지는 {exp % period}(자리) → 주기의 {pos}번째 값 {ans}예요.",
             [(str((ans + 1) % m), "대충 어림하면 틀려요. 나머지의 반복 주기를 정확히 찾아 지수를 주기로 나눠요.")],
             detail="같은 수를 거듭 곱해 나눈 '나머지'는 반드시 일정하게 반복돼요(주기). 주기 길이로 지수를 나눈 나머지가 주기 안 몇 번째인지 알려줘요(0이면 주기의 끝). 큰 지수도 이 규칙이면 손으로 구할 수 있어요.",
+            en={
+                "statement": f"What is the remainder when {base} is multiplied by itself {exp} times (that is, {base}^{exp}) and divided by {m}?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [(ans + 1) % m, (ans + 2) % m, (ans + m - 1) % m, (ans + 3) % m])],
+                "explanation": f"The remainders of {base} raised to successive powers and divided by {m} repeat as {', '.join(map(str, cyc))} (period {period}). The remainder of {exp} divided by {period} is {exp % period} → the value at position {pos} in the cycle, {ans}.",
+                "mistakes": [(str((ans + 1) % m), "Rough estimation gives the wrong answer. Find the exact repeating period of the remainders and divide the exponent by the period.")],
+                "detail": "The 'remainder' of multiplying the same number over and over and dividing always repeats in a fixed cycle (period). The remainder of the exponent divided by the period length tells you which position within the cycle you land on (0 means the end of the cycle). Even huge exponents can be found by hand with this rule.",
+            },
         )
 
 
@@ -4364,6 +4372,14 @@ def gen_lattice_paths():
             [(f"{w * h}가지", "칸의 개수가 아니라, 이동 순서를 고르는 '조합'으로 세요.")],
             figure={"type": "GRID", "params": {"w": w, "h": h, "mark": 1}},
             detail="격자 최단 경로 수는 '오른쪽 R번·위 U번을 어떤 순서로 섞느냐'와 같아 조합 (R＋U)C(R)로 구해요. 각 경로가 R·U를 일렬로 배열한 것과 1:1 대응하기 때문이에요. 파스칼 삼각형으로 각 꼭짓점까지 경로 수를 채워 가도 돼요.",
+            en={
+                "statement": f"There is a grid {w} cells wide and {h} cells tall. Going only right or up from the bottom-left corner to the top-right corner, how many different shortest paths are there in all?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{ans + 2} ways", f"{ans + 1} ways", f"{w * h} ways"],
+                "explanation": f"A shortest path moves right {w} times and up {h} times, {w + h} moves in total, differing only in their 'order'. It's the number of ways to choose which {w} of the {w + h} moves go right, a combination, so C({w + h},{w})={ans} ways.",
+                "mistakes": [(f"{w * h} ways", "Don't count the number of cells; count with a 'combination' that chooses the order of moves.")],
+                "detail": "The number of shortest grid paths equals 'in what order you mix R rights and U ups', found by the combination C(R+U, R). This is because each path corresponds one-to-one with an arrangement of R's and U's in a row. You can also fill in the path count to each vertex using Pascal's triangle.",
+            },
         )
 
 
@@ -4385,6 +4401,14 @@ def gen_coin_weighing():
             f"동전을 세 무더기로 나눠 두 무더기를 저울에 올리면 기울면 그쪽, 평형이면 안 올린 쪽 — 매번 후보가 3분의 1로 줄어요. {n}개는 3을 {w}번 곱해야 넘으니(3을 {w}번 곱하면 {3 ** w}≥{n}) {w}번이면 반드시 찾아요.",
             [(f"{w2}번", "두 무더기가 아니라 '세 무더기'로 나눠요. 저울은 한 번에 세 경우를 알려줘 3분의 1로 줄어요."), (f"{n - 1}번", "하나씩 다 재지 않아도 돼요. 3분할이면 훨씬 적어요.")],
             detail="양팔 저울은 한 번에 '왼쪽 무겁다/오른쪽 무겁다/평형' 세 가지를 알려줘 후보를 3분의 1로 줄여요. 그래서 최소 횟수는 '3을 몇 번 곱해야 개수를 넘느냐'(3^횟수 ≥ 개수)예요. 정보량을 최대로 담는 분할 전략의 대표 문제예요.",
+            en={
+                "statement": f"Among {n} identical-looking coins, exactly one is heavier. Using a balance scale that only compares weights, at least how many weighings do you need to be sure to find the heavy coin?",
+                "answer": _en_plural(w, "weighing"),
+                "distractors": [f"{c} weighings" for c in _pick_distractors(w, [w2, w + 1, w + 2, n, n - 1])],
+                "explanation": f"Split the coins into three piles and put two of them on the scale: if it tips, the heavy one is on that side; if it balances, it's in the pile left off — each time the candidates shrink to a third. For {n} coins you must multiply 3 by itself {w} times to exceed them (3 multiplied {w} times is {3 ** w}≥{n}), so {w} weighings are guaranteed to find it.",
+                "mistakes": [(f"{w2} weighings", "Split into 'three piles', not two. One weighing tells you three cases, shrinking to a third."), (f"{n - 1} weighings", "You don't have to weigh them one at a time. Splitting into three is far fewer.")],
+                "detail": "A balance scale tells you three things at once — 'left heavier / right heavier / balanced' — shrinking the candidates to a third. So the minimum number of weighings is 'how many times you multiply 3 to exceed the count' (3^weighings ≥ count). It's a classic problem of a splitting strategy that packs in the most information.",
+            },
         )
 
 
@@ -4404,6 +4428,18 @@ def gen_diophantine():
              (f"{ans - 1 if ans > 1 else ans + 2}가지", "양 끝(한쪽이 최소일 때)까지 포함해 빠짐없이 세었는지 확인하세요.")],
             detail="'두 종류를 정수 개수로 조합해 정해진 값을 맞춘다'는 일차부정방정식이에요. 한 변수를 1씩 움직이면 다른 변수는 계수만큼 반대로 움직여요("
             "여기선 한쪽이 늘면 다른 쪽이 규칙적으로 줄어요). 그래서 해는 일정 간격으로 띄엄띄엄 나타나고, 양 끝 사이를 빠짐없이 세면 개수를 구할 수 있어요.",
+            en={
+                "statement": f"You want to buy at least one candy costing {ua} won each and at least one chocolate costing {ub} won each, spending exactly {total} won. "
+                f"How many (number of candies, number of chocolates) combinations are there in all?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [ans + 1, ans + 2, ans - 1, ans + 3])],
+                "explanation": f"If there are a candies and b chocolates, then {ua}×a + {ub}×b = {total}. Increasing one side (say the number of chocolates) by one at a time and keeping "
+                f"only the cases where the rest is divisible by {ua}, you get (a,b) = {', '.join(f'({a},{b})' for a, b in sols)} — {ans} ways in all.",
+                "mistakes": [(f"{ans + 1} ways", "Change one count one at a time and count only the cases that 'divide evenly'. It's easy to miss some or double-count."),
+                             (f"{ans - 1 if ans > 1 else ans + 2} ways", "Check that you counted every case without omission, including both ends (when one side is at its minimum).")],
+                "detail": "'Combining two kinds in whole-number quantities to hit a fixed value' is a linear Diophantine equation. Move one variable by 1 and the other moves the opposite way by its coefficient "
+                "(here, as one goes up the other goes down regularly). So the solutions appear spaced at regular intervals, and counting every one between the two ends gives their number.",
+            },
         )
 
 
@@ -4424,6 +4460,18 @@ def gen_painted_cube_faces():
              (f"{(n - 2) ** 3}개", "그건 아예 안 칠해진(속) 정육면체 수예요. 두 면은 모서리 위에 있어요.")],
             detail="정육면체를 자르면 작은 정육면체는 놓인 위치에 따라 칠해진 면 수가 정해져요 — 꼭짓점=세 면(8개 고정), 모서리 위=두 면, "
             "면 안쪽=한 면, 완전히 속=0면. '두 면'은 모서리 12개 각각에서 양 끝 꼭짓점을 뺀 (n−2)개씩이라 12(n−2)예요. 위치로 나누어 세는 공간 감각 문제예요.",
+            en={
+                "statement": f"A {n}×{n}×{n} cube with its whole surface painted red is cut into {n ** 3} small 1×1×1 cubes. "
+                f"How many small cubes have exactly 'two faces' red?",
+                "answer": _en_plural(two, "cube"),
+                "distractors": [_en_plural(int(c), "cube") for c in _pick_distractors(two, [three, (n - 2) ** 3, one, two + 12, two - 12 if two > 12 else two + 6])],
+                "explanation": f"The number of painted faces on a small cube is set by its 'position'. Three faces = the 8 corners, two faces = the edges (minus the corners), one face = the inside of each face. "
+                f"Two faces means {n - 2} per edge after removing the corners, across 12 edges, so 12×{n - 2}={two} cubes.",
+                "mistakes": [(_en_plural(three, "cube"), "The ones painted on three faces are the 8 corners. For 'two faces', count along the edges (excluding corners)."),
+                             (_en_plural((n - 2) ** 3, "cube"), "That's the number of completely unpainted (interior) cubes. The two-face ones lie along the edges.")],
+                "detail": "When you cut a cube, each small cube's number of painted faces is set by its position — corner = three faces (fixed 8), on an edge = two faces, "
+                "inside a face = one face, fully interior = 0 faces. 'Two faces' is (n−2) per edge after removing the two end corners, across 12 edges, so 12(n−2). It's a spatial-reasoning problem of counting by position.",
+            },
         )
 
 
@@ -4444,6 +4492,19 @@ def gen_stars_bars():
              (f"{total_items * kids}가지", "곱셈이 아니라, 사탕 사이에 칸막이를 꽂는 '조합'으로 세요.")],
             detail="같은 물건을 여러 사람에게 (0개 허용) 나누는 방법은 '별과 막대'로 세요 — 물건 N개를 점으로 늘어놓고 사람 수보다 하나 적은 칸막이를 그 사이에 꽂아 묶음으로 가르는 거예요. "
             "그래서 (물건+칸막이)자리 중 칸막이 자리를 고르는 중복조합 C(N+k−1, k−1)이 돼요. 같은 것을 나누는 경우의 수의 대표 도구예요.",
+            en={
+                "statement": f"You hand out {total_items} identical candies to {kids} children with none left over. It's okay if some child gets none. "
+                f"How many ways are there to hand them out in all?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [wrong_no_zero, ans + 2, total_items * kids, ans + 1, ans - 1])],
+                "explanation": f"Think of laying the {total_items} candies (●) in a row and inserting {kids - 1} dividers between them to split into {kids} groups. "
+                f"Out of the {total_items + kids - 1} positions of ●'s and dividers combined, it's the number of ways to choose the {kids - 1} divider positions, a combination, so "
+                f"C({total_items + kids - 1},{kids - 1})={ans} ways.",
+                "mistakes": [(f"{wrong_no_zero} ways", "Since 'zero is allowed', it differs from the each-gets-at-least-one condition. Count by arranging candies and dividers together."),
+                             (f"{total_items * kids} ways", "Not multiplication — count with the 'combination' of inserting dividers among the candies.")],
+                "detail": "Ways to hand out identical objects to several people (zero allowed) are counted with 'stars and bars' — lay the N objects out as dots and insert one fewer divider than the number of people between them to split into groups. "
+                "So it becomes the multiset combination C(N+k−1, k−1), choosing the divider positions among the (objects+dividers) positions. It's the classic tool for counting ways to distribute identical things.",
+            },
         )
 
 
@@ -4921,6 +4982,17 @@ def gen_geosum():
              (str(last), "마지막 한 항이 아니라 전부 더한 합이에요.")],
             detail="1+2+4+…+2^(k−1) = 2^k − 1이에요. 각 항이 그 앞까지의 합보다 1 큰 성질(1, 1+2=3, 1+2+4=7…)이라, "
             "합은 항상 다음 2의 거듭제곱보다 1 작아요. 이진법·배수 사고와 이어지는 등비수열 합의 기본이에요.",
+            en={
+                "statement": f"Adding numbers that keep doubling like 1 + 2 + 4 + 8 + …, from 1 up to {last}, what is the sum?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [2 ** k, last, ans + 1, ans - 1])],
+                "explanation": f"Adding up numbers that keep doubling gives, surprisingly, 'one less than twice the last number'. Since the last is {last}, "
+                f"{last}×2 − 1 = {2 ** k} − 1 = {ans}.",
+                "mistakes": [(str(2 ** k), "You must subtract 1 from twice the last number (it falls exactly 1 short)."),
+                             (str(last), "It's the sum of all the terms, not just the last one.")],
+                "detail": "1+2+4+…+2^(k−1) = 2^k − 1. Each term is 1 more than the sum before it (1, 1+2=3, 1+2+4=7…), "
+                "so the sum is always 1 less than the next power of 2. It's the basis of geometric-series sums, connected to binary and multiple thinking.",
+            },
         )
 
 
@@ -4938,6 +5010,16 @@ def gen_dist3d():
             [(str(x + y + z), "좌표를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요.")],
             detail="평면의 거리 √(x²+y²)를 공간으로 넓히면 √(x²+y²+z²)예요. 직육면체의 대각선을 두 번의 피타고라스로 구하는 것과 "
             "같아요. 좌표와 길이를 잇는 공간 측정의 핵심이에요.",
+            en={
+                "statement": f"In space, what is the distance from the point (0, 0, 0) to the point ({x}, {y}, {z})?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [x + y + z, ans + 1, ans - 1, x + y])],
+                "explanation": f"In space, distance is found by √(width²+depth²+height²) (the spatial version of Pythagoras). "
+                f"√({x}²+{y}²+{z}²) = √{sq} = {ans}.",
+                "mistakes": [(str(x + y + z), "You can't just add the coordinates. Square each, add them, then take the square root.")],
+                "detail": "Extending the planar distance √(x²+y²) into space gives √(x²+y²+z²). It's the same as finding a rectangular box's diagonal with two applications of Pythagoras. "
+                "It's the heart of spatial measurement, linking coordinates and length.",
+            },
         )
 
 
@@ -4956,6 +5038,17 @@ def gen_necklace():
             [(f"{circ}가지", "목걸이는 '뒤집으면' 같아져요. 원순열에서 2로 한 번 더 나눠요.")],
             detail="목걸이(염주)처럼 회전뿐 아니라 뒤집기로도 같아지는 배열은 원순열 (n−1)!을 다시 2로 나눈 (n−1)!/2예요. "
             "'같다고 보는 움직임'이 많을수록 경우의 수가 줄어드는 대칭 세기의 대표 문제예요.",
+            en={
+                "statement": f"You thread {n} different beads on a string to make a necklace. Counting ones that become the same by rotating or flipping as one, "
+                f"how many different necklaces are there?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [circ, factorial(n), ans + 2, ans - 1])],
+                "explanation": f"Threading in a straight line gives {n}! ways, but since it's circular, grouping the {n} rotations that match gives the circular permutation (n−1)!={circ} ways. "
+                f"A necklace is the same when flipped too, so divide by 2 again: {circ}÷2={ans} ways.",
+                "mistakes": [(f"{circ} ways", "A necklace becomes the same when 'flipped'. Divide the circular permutation by 2 once more.")],
+                "detail": "Arrangements that become the same not only by rotation but also by flipping, like a necklace, are the circular permutation (n−1)! divided by 2 again, (n−1)!/2. "
+                "It's a classic symmetry-counting problem where the more 'motions treated as the same' there are, the fewer the cases.",
+            },
         )
 
 
@@ -5400,6 +5493,19 @@ def gen_quadseq():
              (str(terms[-1] + diffs[-1]), "6번째까지만 가지 말고, 계차를 규칙대로 늘려 가며 목표 항까지 끝까지 더하세요.")],
             detail="계차(이웃 항의 차)가 등차수열이면 원래 수열은 2차식(an²+bn+c)으로 표현돼요 — '계차의 계차'가 일정하기 때문이에요. "
             "가까운 몇 항으로 계차의 규칙을 잡은 뒤, 그 계차를 늘려 가며 더하면 멀리 있는 항도 구할 수 있어요. 규칙의 규칙을 보는 눈을 기르는 문제예요.",
+            en={
+                "statement": f"A sequence continues as {terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, …. "
+                f"Continuing this rule, what is the {pos}th number?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [naive, ans + pos, ans - pos, terms[-1] + diffs[-1]])],
+                "explanation": f"The differences between adjacent numbers (the first differences) are {diffs[0]}, {diffs[1]}, {diffs[2]}, {diffs[3]}, …, "
+                f"increasing steadily by {diffs[1] - diffs[0]} (an arithmetic sequence; the difference of the differences is constant → a quadratic sequence). "
+                f"The rule is {label}, so the {pos}th number is {ans}.",
+                "mistakes": [(str(naive), "Don't treat the differences as 'constant'. The differences themselves grow steadily (arithmetic) — it's a quadratic sequence."),
+                             (str(terms[-1] + diffs[-1]), "Don't stop at the 6th term; keep growing the differences by the rule and add all the way to the target term.")],
+                "detail": "If the first differences (differences of adjacent terms) form an arithmetic sequence, the original sequence is expressed by a quadratic (an²+bn+c) — because the 'difference of the differences' is constant. "
+                "After finding the rule of the differences from a few nearby terms, growing those differences and adding lets you find even far-away terms. It's a problem for training the eye to see the rule behind the rule.",
+            },
         )
 
 
@@ -5408,6 +5514,7 @@ def gen_polyhedron():
     for name, faces, sides in [("정십이면체", 12, 5), ("정이십면체", 20, 3), ("정팔면체", 8, 3), ("정사면체", 4, 3)]:
         edges = faces * sides // 2
         verts = edges - faces + 2
+        name_en = {"정십이면체": "regular dodecahedron", "정이십면체": "regular icosahedron", "정팔면체": "regular octahedron", "정사면체": "regular tetrahedron"}[name]
         add(
             "polyhedron", "SHAPE_MEASUREMENT", 8, ["공간 도형", "모서리는 두 면이 공유"],
             f"면이 {faces}개이고 각 면이 정{sides}각형인 볼록 다면체({name})가 있어요. 이 다면체의 모서리(edge)는 모두 몇 개일까요?",
@@ -5419,6 +5526,18 @@ def gen_polyhedron():
              (f"{verts}개", "그건 꼭짓점 수예요. 모서리는 (면×변)÷2로 구해요.")],
             detail="다면체의 모서리 수는 (면 수×한 면의 변 수)÷2예요 — 모서리 하나를 이웃한 두 면이 공유해 두 번 세어지기 때문이에요. "
             "꼭짓점은 오일러 공식(꼭짓점−모서리+면=2)으로 구해요. '겹쳐 세고 나누기'와 오일러 공식을 잇는 공간 도형의 대표 문제예요.",
+            en={
+                "statement": f"There is a convex polyhedron ({name_en}) with {faces} faces, each face a regular {sides}-gon. How many edges does this polyhedron have in all?",
+                "answer": f"{edges} edges",
+                "distractors": [f"{c} edges" for c in _pick_distractors(edges, [faces * sides, faces + sides, edges + 2, verts])],
+                "explanation": f"Each face has {sides} sides, so counting all the sides gives {faces}×{sides}={faces * sides}. But each edge is shared by two neighboring faces, "
+                f"so it was counted exactly twice. Dividing by 2, {faces * sides}÷2={edges} edges. "
+                f"(Checking with Euler's formula vertices−edges+faces=2, there are {verts} vertices.)",
+                "mistakes": [(f"{faces * sides} edges", f"Counting the sides, {faces}×{sides} counts each edge 'twice'. You must divide by 2."),
+                             (f"{verts} edges", "That's the number of vertices. Edges are (faces×sides)÷2.")],
+                "detail": "A polyhedron's number of edges is (number of faces × sides per face)÷2 — because each edge is shared by two neighboring faces and thus counted twice. "
+                "Vertices are found by Euler's formula (vertices−edges+faces=2). It's a classic solid-geometry problem linking 'over-count and divide' with Euler's formula.",
+            },
         )
 
 
@@ -5437,6 +5556,8 @@ def gen_multiperm():
             ans //= factorial(c)
         desc = ", ".join(f"{name} 구슬 {c}개" for name, c in colors)
         denom = "×".join(f"{c}!" for _, c in colors)
+        color_en = {"빨강": "red", "파랑": "blue", "노랑": "yellow"}
+        desc_en = ", ".join(_en_plural(c, f"{color_en[name]} bead") for name, c in colors)
         add(
             "multiperm", "DATA_POSSIBILITY", 8, ["같은 것이 있는 순열", "중복 나누기"],
             f"{desc}를 한 줄로 늘어놓으려고 해요. 같은 색 구슬끼리는 서로 구별하지 않을 때, 서로 다른 배열은 모두 몇 가지일까요?",
@@ -5447,6 +5568,17 @@ def gen_multiperm():
              (f"{ans * 2}가지", "나누는 값이 모자라요. 모든 색의 개수 팩토리얼을 빠짐없이 곱해 나누세요.")],
             detail="같은 것이 섞인 것을 일렬로 배열하는 경우의 수는 (전체)! ÷ (같은 것끼리의 개수!들의 곱)이에요 — 전체를 다 다르다고 보고 센 뒤, "
             "같은 것끼리 자리만 바꾼 중복을 나눠 없애는 거예요. 순열에서 '구별되지 않음'을 다루는 대표 도구예요.",
+            en={
+                "statement": f"You want to lay out {desc_en} in a row. When beads of the same color are not distinguished from each other, how many different arrangements are there in all?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [factorial(total), ans + 2, ans * 2, total * total])],
+                "explanation": f"With {total} beads in all, the total permutations placing them in positions is {total}!={factorial(total)} ways. But swapping same-colored beads gives the same arrangement, "
+                f"so divide by the factorial of each color's count → {total}! ÷ ({denom}) = {ans} ways.",
+                "mistakes": [(f"{factorial(total)} ways", "You counted same-colored beads as if they were different. You must divide out the swaps among same colors."),
+                             (f"{ans * 2} ways", "The divisor is too small. Multiply the factorials of every color's count and divide by all of them.")],
+                "detail": "The number of ways to arrange a mix with repeated items in a row is (total)! ÷ (product of the counts! of the identical items) — you count as if everything were different, "
+                "then divide out the duplicates from swapping identical items among themselves. It's the classic tool for handling 'indistinguishable' items in permutations.",
+            },
         )
 
 
