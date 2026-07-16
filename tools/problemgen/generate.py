@@ -486,6 +486,14 @@ def gen_grid():
             [(f"{w * h}가지", "칸 수를 곱하는 게 아니에요. 갈림길마다 방법 수를 더해 가요.")],
             figure={"type": "GRID", "params": {"w": w, "h": h, "mark": 1}},
             detail=f"각 점의 방법 수 = 왼쪽 점 + 아래 점 — 이렇게 더해 나간 표가 바로 파스칼의 삼각형이에요. 사실 오른쪽으로 {w}번, 위로 {h}번 가는 순서를 정하는 문제라 C({w}+{h}, {w})로 한 번에도 구할 수 있어요. '격자 최단 경로 = 조합'이라는 걸 알면 큰 격자도 겁나지 않아요.",
+            en={
+                "statement": f"There is a grid of paths {w} columns wide and {h} rows tall. How many shortest routes are there from the bottom-left corner to the top-right corner?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(ans - 2, "way"), _en_plural(ans + 2, "way"), _en_plural(w * h, "way")],
+                "explanation": f"At any junction, the routes reaching it come only from the left or from below. So at each point write (number from the left)+(number from below) in turn. Fill the edges near the start with 1 and add across to the end: the finish has {ans} ways.",
+                "mistakes": [(_en_plural(w * h, "way"), "You don't multiply the number of cells. Add up the route counts junction by junction.")],
+                "detail": f"Route count at each point = the point on the left + the point below — this table you build up is exactly Pascal's triangle. In fact it is deciding the order of going right {w} times and up {h} times, so you can also get it at once as C({w}+{h}, {w}). Once you see 'shortest grid path = combinations', even a big grid isn't scary.",
+            },
         )
 
 
@@ -1163,6 +1171,14 @@ def gen_clock_angle():
             [(f"{ans + 30}도", "한 칸이 30도예요. 떨어진 칸 수를 정확히 세었는지 확인해요.")],
             figure={"type": "CLOCK", "params": {"hour": h, "minute": 0}},
             detail=f"시계 한 바퀴 360도를 12칸으로 나누면 한 칸이 30도예요. 정각엔 분침이 12를, 시침이 {h}를 가리키니 {h}칸 = {ans}도. 단, 분침이 돌면 시침도 조금씩 따라 움직여요(1분에 0.5도) — 그래서 '몇 시 몇 분'의 각도는 시침의 이동까지 더해야 정확해요.",
+            en={
+                "statement": f"A clock points exactly to {h} o'clock. What is the smaller angle formed by the hour hand and the minute hand, in degrees?",
+                "answer": f"{ans}°",
+                "distractors": [f"{ans + 30}°", f"{max(0, ans - 30)}°", f"{ans + 60}°"],
+                "explanation": f"One full turn of a clock is 360° and there are 12 number marks, so each mark is 360÷12=30°. At exactly {h} o'clock the hour and minute hands are {h} marks apart, so {h}×30={ans}°.",
+                "mistakes": [(f"{ans + 30}°", "Each mark is 30°. Check you counted the number of marks apart correctly.")],
+                "detail": f"Splitting a clock's full 360° into 12 marks makes each mark 30°. On the hour the minute hand points at 12 and the hour hand at {h}, so {h} marks = {ans}°. But as the minute hand turns, the hour hand slowly follows it (0.5° per minute) — so for a 'so many hours and minutes' angle you must also add the hour hand's movement to be exact.",
+            },
         )
 
 
@@ -1178,6 +1194,14 @@ def gen_rectangle_count():
             [(f"{w * h}개", "1칸짜리만 센 게 아니라, 여러 칸을 합친 큰 직사각형도 모두 세요.")],
             figure={"type": "GRID", "params": {"w": w, "h": h}},
             detail=f"직사각형 하나는 '세로선 2개 + 가로선 2개'로 정해져요. 세로선 {w + 1}개 중 2개, 가로선 {h + 1}개 중 2개를 고르는 조합이니 C({w + 1},2)×C({h + 1},2)={comb(w + 1, 2) * comb(h + 1, 2)}개. 하나하나 세는 대신 '무엇을 고르면 하나가 정해지는가'를 찾으면 경우의 수가 단순해져요.",
+            en={
+                "statement": f"There is a rectangular grid divided into {w} columns and {h} rows. How many rectangles of all sizes can you find inside this grid?",
+                "answer": _en_plural(ans, "rectangle"),
+                "distractors": [_en_plural(w * h, "rectangle"), _en_plural(ans - 3, "rectangle"), _en_plural(ans + 3, "rectangle")],
+                "explanation": f"A rectangle is fixed once you pick 2 vertical lines and 2 horizontal lines. Choosing 2 of the {w + 1} vertical lines → {comb(w + 1, 2)} ways, and 2 of the {h + 1} horizontal lines → {comb(h + 1, 2)} ways. Multiplying gives {comb(w + 1, 2)}×{comb(h + 1, 2)}={ans}.",
+                "mistakes": [(_en_plural(w * h, "rectangle"), "Don't count only the single squares — count every larger rectangle made of several squares too.")],
+                "detail": f"One rectangle is fixed by '2 vertical lines + 2 horizontal lines'. It is choosing 2 of the {w + 1} vertical lines and 2 of the {h + 1} horizontal lines, so C({w + 1},2)×C({h + 1},2)={comb(w + 1, 2) * comb(h + 1, 2)}. Instead of counting one by one, finding 'what you pick to fix one' makes the counting simple.",
+            },
         )
 
 
@@ -1284,6 +1308,14 @@ def gen_polygon_angle():
             [(f"{360 // n}도", "그건 한 외각이에요. 내각은 180에서 외각을 뺀 값이에요.")],
             figure={"type": "POLYGON", "params": {"n": n}},
             detail=f"n각형은 한 꼭짓점에서 대각선을 그으면 삼각형 (n-2)개로 나뉘어요. 그래서 내각의 합 = (n-2)×180 = ({n}-2)×180 = {total}도. 정다각형은 이걸 n으로 똑같이 나눠 한 내각이 {ans}도. 도형을 아는 조각(삼각형)으로 쪼개는 건 넓이·각도의 만능 열쇠예요.",
+            en={
+                "statement": f"What is each interior angle of a regular {n}-gon, in degrees?",
+                "answer": f"{ans}°",
+                "distractors": [f"{360 // n}°", f"{total}°", f"{180 - ans}°"],
+                "explanation": f"The interior angles of a {n}-gon add up to ({n}−2)×180={total}°. A regular polygon has all interior angles equal, so divide by {n}. {total}÷{n}={ans}°.",
+                "mistakes": [(f"{360 // n}°", "That is one exterior angle. An interior angle is 180 minus the exterior angle.")],
+                "detail": f"Drawing diagonals from one vertex splits an n-gon into (n−2) triangles. So the sum of the interior angles = (n−2)×180 = ({n}−2)×180 = {total}°. A regular polygon divides this equally by n, giving each interior angle {ans}°. Splitting a shape into pieces you know (triangles) is an all-purpose key for area and angles.",
+            },
         )
 
 
@@ -1365,6 +1397,14 @@ def gen_polygon_exterior():
             [(f"{(n - 2) * 180 // n}도", "그건 한 내각이에요. 외각은 360을 꼭짓점 수로 나눈 값이에요.")],
             figure={"type": "POLYGON", "params": {"n": n}},
             detail=f"정다각형이든 아니든 외각을 모두 더하면 항상 360도예요 — 다각형을 한 바퀴 도는 동안 방향이 총 한 바퀴(360도) 꺾이거든요. 그래서 정{n}각형은 360÷{n}={ans}도. 내각+외각=180이라 내각도 바로 나와요. '한 바퀴는 360'이라는 이 사실이 외각 문제의 전부예요.",
+            en={
+                "statement": f"What is each exterior angle of a regular {n}-gon, in degrees?",
+                "answer": f"{ans}°",
+                "distractors": [f"{(n - 2) * 180 // n}°", "360°", f"{ans * 2}°"],
+                "explanation": f"For any polygon, all exterior angles add up to 360°. A regular {n}-gon has all exterior angles equal, so 360÷{n}={ans}°.",
+                "mistakes": [(f"{(n - 2) * 180 // n}°", "That is one interior angle. An exterior angle is 360 divided by the number of vertices.")],
+                "detail": f"Regular or not, all exterior angles of a polygon always add up to 360° — as you walk once around a polygon your direction turns one full turn (360°). So a regular {n}-gon has 360÷{n}={ans}°. Since interior+exterior=180, the interior angle comes right out too. The fact that 'one full turn is 360' is the whole of exterior-angle problems.",
+            },
         )
 
 
@@ -1485,6 +1525,14 @@ def gen_grid_area():
             [(f"{b * h}㎠", "삼각형은 직사각형의 절반 — 밑변×높이를 꼭 2로 나눠요.")],
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "What is the area of the shaded triangle, in cm²? (each grid square is 1 cm²)",
+                "answer": f"{area}cm²",
+                "distractors": [f"{b * h}cm²", f"{area + 2}cm²", f"{area - 2}cm²"],
+                "explanation": f"It is a right triangle with base {b} squares and height {h} squares. Triangle area = base×height÷2 = {b}×{h}÷2 = {area}cm².",
+                "mistakes": [(f"{b * h}cm²", "A triangle is half of a rectangle — be sure to divide base×height by 2.")],
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split it into pieces and add them up'. Finding it both ways and checking the answers match catches mistakes. Rather than memorizing formulas, the key to area is picturing 'how to cut and paste'. (Triangle = half a rectangle; parallelogram = cut off one side and paste it to make a rectangle; trapezoid = flip and paste to make half a parallelogram.)",
+            },
         )
     # (c) 난5 — 평행사변형: 밑변×수직높이(기울어져도 동일)
     for base, height, pts in [
@@ -1556,6 +1604,16 @@ def gen_shape_count():
             lines = k + 2                       # 밑변으로 가는 선(양옆 2 + 내부 k)
             ans = lines * (lines - 1) // 2       # 선 2개를 고를 때마다 삼각형 1개
             small = k + 1                        # 가장 작은 삼각형 개수
+            # trianglefan(난4)만 영어 뱅크에 넣는다. trianglefanx(난6)는 같은 add를 공유하므로 en=None.
+            en_fan = ({
+                "statement": "How many triangles can you find in the picture? (count larger triangles made of several small ones too)",
+                "answer": _en_plural(ans, "triangle"),
+                "distractors": [_en_plural(small, "triangle"), _en_plural(ans - 2, "triangle"), _en_plural(ans + 3, "triangle")],
+                "explanation": f"There are {lines} lines drawn from the apex down to the base. Choosing any 2 of these lines makes exactly one triangle between them. "
+                               f"Choosing 2 from {lines} = {lines}×{lines - 1}÷2 = {ans}. (From the {small} smallest triangles up to those made of two or three joined, none missed.)",
+                "mistakes": [(_en_plural(small, "triangle"), "Don't count only the smallest triangles — count the larger ones made of several joined together too.")],
+                "detail": f"A triangle appears each time you choose '2 lines going to the base'. So with {lines} lines the number of triangles = choosing 2 from {lines} = {lines}×{lines - 1}÷2 = {ans}. Each extra line adds (number of lines−1) more triangles. It's easy to miss some counting one by one, so recasting it as 'choose 2' keeps it accurate.",
+            } if diff == 4 else None)
             add(
                 fam, "SHAPE_MEASUREMENT", diff, ["삼각형 개수", "체계적 세기"],
                 "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
@@ -1565,6 +1623,7 @@ def gen_shape_count():
                 [(f"{small}개", "가장 작은 삼각형만 세지 말고, 여러 개를 합친 큰 삼각형도 빠짐없이 세어요.")],
                 figure={"type": "TRIANGLE_FAN", "params": {"cevians": k}},
                 detail=f"삼각형은 '밑변으로 가는 선 2개'를 고를 때마다 하나씩 생겨요. 그래서 선이 {lines}개면 삼각형 수 = {lines}개에서 2개 고르기 = {lines}×{lines - 1}÷2 = {ans}개. 선이 하나 늘 때마다 삼각형은 (선의 개수−1)개씩 늘어난답니다. 하나씩 세다 빠뜨리기 쉬우니, 이렇게 '2개 고르기'로 바꿔 세면 정확해요.",
+                en=en_fan,
             )
 
 
@@ -3911,6 +3970,14 @@ def gen_rectdiag():
             [(f"{a + b}cm", "가로와 세로를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요.")],
             detail="직각삼각형에서 빗변² = 두 변²의 합이에요(피타고라스 정리). 직사각형의 대각선은 가로·세로를 두 변으로 하는 "
             "빗변이라 √(가로²+세로²)로 구해요. 길이를 좌표·제곱으로 다루는 측정의 핵심 도구예요.",
+            en={
+                "statement": f"A rectangle is {a} cm wide and {b} cm tall. How long is its diagonal (the line joining opposite corners), in cm?",
+                "answer": f"{ans}cm",
+                "distractors": [f"{c}cm" for c in _pick_distractors(ans, [a + b, ans + 1, ans - 1, a + b - 1])],
+                "explanation": f"The diagonal is the hypotenuse of a right triangle whose two legs are the width and height. width²+height² = {a}²+{b}² = {sq}, and its square root is {ans} cm (the Pythagorean theorem).",
+                "mistakes": [(f"{a + b}cm", "You can't just add the width and height. Square each, add them, then take the square root.")],
+                "detail": "In a right triangle, hypotenuse² = the sum of the two legs² (the Pythagorean theorem). A rectangle's diagonal is the hypotenuse whose legs are the width and height, so it is √(width²+height²). It's a core measurement tool for handling length with coordinates and squares.",
+            },
         )
 
 
@@ -4352,6 +4419,15 @@ def gen_rectperim():
              (f"{a + b}cm", "가로와 세로를 한 번씩만 더했어요. 각각 두 변씩이라 ×2 해요.")],
             detail="직사각형 둘레는 네 변의 합이에요. 마주 보는 변이 같으니 (가로+세로)를 구해 2배 하면 돼요. 넓이(가로×세로)와 "
             "헷갈리지 않는 게 핵심이에요.",
+            en={
+                "statement": f"A rectangle is {a} cm wide and {b} cm tall. What is its perimeter, in cm?",
+                "answer": f"{ans}cm",
+                "distractors": [f"{c}cm" for c in _pick_distractors(ans, [a * b, a + b, ans + 2, ans - 2])],
+                "explanation": f"A rectangle has two width sides and two height sides. Perimeter = (width+height)×2 = ({a}+{b})×2 = {ans} cm.",
+                "mistakes": [(f"{a * b}cm", "That is the area (width×height). The perimeter adds up the lengths of the four sides."),
+                             (f"{a + b}cm", "You added the width and height only once. There are two of each side, so multiply by 2.")],
+                "detail": "A rectangle's perimeter is the sum of its four sides. Since opposite sides are equal, find (width+height) and double it. The key is not to mix it up with the area (width×height).",
+            },
         )
 
 
@@ -4370,6 +4446,14 @@ def gen_interiorangle():
             figure={"type": "POLYGON", "params": {"n": n}},
             detail="다각형의 내각의 합은 삼각형으로 쪼갠 개수(n−2)에 180°를 곱해 구해요. 정다각형은 모든 각이 같으니 그 합을 "
             "각의 개수로 나누면 한 내각이 나와요.",
+            en={
+                "statement": f"What is each interior angle of a regular {n}-gon, in degrees? (all angles are equal)",
+                "answer": f"{ans}°",
+                "distractors": [f"{c}°" for c in _pick_distractors(ans, [total // (n - 1), ans + 10, ans - 10, 180 - ans])],
+                "explanation": f"The interior angles of an n-gon add up to (n−2)×180. For a regular {n}-gon that is {n}−2={n - 2}, ×180 = {total}°, and since the {n} angles are equal, {total}÷{n} = {ans}°.",
+                "mistakes": [(f"{180 - ans}°", "Find one interior angle directly. Divide the sum of the interior angles by the number of angles.")],
+                "detail": "The sum of a polygon's interior angles is found by multiplying 180° by the number of triangles it splits into (n−2). In a regular polygon all angles are equal, so dividing that sum by the number of angles gives one interior angle.",
+            },
         )
 
 
@@ -4387,6 +4471,15 @@ def gen_prismparts():
              (f"{n + 2}개", "그건 면의 수예요(옆면 {}개 + 밑면 2개). 모서리를 세요.".format(n))],
             detail="n각기둥은 밑면(위·아래) 모서리가 n개씩 2n개, 두 밑면을 잇는 옆 모서리가 n개라 모두 3n개예요. "
             "꼭짓점(2n)·면(n+2)과 구분해 세는 공간 감각 문제예요.",
+            en={
+                "statement": f"A prism has a {n}-gon as its base. How many edges does this prism have in all?",
+                "answer": f"{ans} edges",
+                "distractors": [f"{c} edges" for c in _pick_distractors(ans, [2 * n, n + 2, ans + 2, ans - 2])],
+                "explanation": f"A prism has {n} edges on each of the top and bottom bases, plus {n} more edges connecting the two bases. {n}+{n}+{n} = {n}×3 = {ans}.",
+                "mistakes": [(f"{2 * n} edges", f"That is the number of vertices ({n} on the top and bottom each). Edges are the two bases plus the connecting pillars, so 3 times as many."),
+                             (f"{n + 2} edges", f"That is the number of faces ({n} side faces + 2 bases). Count the edges instead.")],
+                "detail": "A prism with an n-gon base has n edges on each base (2n in all) and n side edges connecting the two bases, for 3n edges in total. It's a spatial-sense problem about counting edges apart from vertices (2n) and faces (n+2).",
+            },
         )
 
 
@@ -4401,6 +4494,14 @@ def gen_triangleangle():
             f"삼각형 세 각의 합은 항상 180도예요. 그래서 나머지 각 = 180 − {a} − {b} = {ans}도예요.",
             [(f"{a + b}도", "두 각을 더하기만 하면 안 돼요. 180도에서 두 각을 빼요.")],
             detail="삼각형 세 각의 합은 언제나 180°예요. 두 각을 알면 180에서 빼서 나머지 각을 구해요. 도형 각도 문제의 가장 기본 규칙이에요.",
+            en={
+                "statement": f"Two of a triangle's three angles are {a}° and {b}°. What is the remaining angle, in degrees?",
+                "answer": f"{ans}°",
+                "distractors": [f"{c}°" for c in _pick_distractors(ans, [a + b, 180 - a, ans + 10, ans - 10])],
+                "explanation": f"The three angles of a triangle always add up to 180°. So the remaining angle = 180 − {a} − {b} = {ans}°.",
+                "mistakes": [(f"{a + b}°", "Don't just add the two angles. Subtract the two angles from 180°.")],
+                "detail": "The three angles of a triangle always add up to 180°. Knowing two, subtract from 180 to find the remaining angle. It's the most basic rule of shape-angle problems.",
+            },
         )
 
 
