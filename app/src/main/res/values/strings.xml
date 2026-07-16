@@ -347,6 +347,11 @@
     <string name="settings_feedback_desc">\"이 문제 별로예요\"로 제외한 목록을 텔레그램 등으로 보내 주시면 다음 업데이트에서 문제은행을 개선해요.</string>
     <string name="settings_feedback_share">제외한 문제 %1$d개 보내기</string>
     <string name="settings_feedback_empty">아직 제외한 문제가 없어요.</string>
+    <!-- 제외 문제 내보내기 공유 텍스트(개발 채널로 전달) -->
+    <string name="feedback_report_title">📋 딱풀 문제 피드백 — 별로예요 %1$d문제</string>
+    <string name="feedback_entry_header">[%1$s · %2$s · 난이도 %3$d]</string>
+    <string name="feedback_entry_missing">[%1$s · 문제은행에서 이미 삭제됨]</string>
+    <string name="feedback_entry_reason">이유: %1$s</string>
     <string name="settings_about">딱풀 · 초등 사고력 수학 적응형 학습</string>
 
     <!--

@@ -347,6 +347,11 @@
     <string name="settings_feedback_desc">Send us the list you flagged as \"something\'s off\" (e.g. via Telegram) and we\'ll improve the problem bank in the next update.</string>
     <string name="settings_feedback_share">Send %1$d flagged problems</string>
     <string name="settings_feedback_empty">No flagged problems yet.</string>
+    <!-- Flagged-problem export share text (sent to the dev channel) -->
+    <string name="feedback_report_title">📋 DdakPul problem feedback — %1$d flagged</string>
+    <string name="feedback_entry_header">[%1$s · %2$s · Level %3$d]</string>
+    <string name="feedback_entry_missing">[%1$s · already removed from the problem bank]</string>
+    <string name="feedback_entry_reason">Reason: %1$s</string>
     <string name="settings_about">DdakPul · adaptive thinking-math learning</string>
 
     <!--

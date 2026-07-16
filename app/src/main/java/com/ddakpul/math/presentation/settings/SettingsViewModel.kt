@@ -1,5 +1,6 @@
 package com.ddakpul.math.presentation.settings
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.domain.model.Monetization
@@ -14,6 +15,7 @@ import com.ddakpul.math.presentation.common.tts.DownloadState
 import com.ddakpul.math.presentation.common.tts.TtsModel
 import com.ddakpul.math.presentation.common.tts.TtsModelManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -46,6 +48,7 @@ class SettingsViewModel
         private val resetProgress: ResetProgressUseCase,
         private val buildExclusionReport: BuildExclusionReportUseCase,
         private val ttsModelManager: TtsModelManager,
+        @ApplicationContext private val context: Context,
     ) : ViewModel() {
         /** 신경망 TTS 모델 다운로드 진행 상태(진행바·재시도 UI용). */
         val ttsDownloadState: StateFlow<DownloadState> = ttsModelManager.state
@@ -101,7 +104,7 @@ class SettingsViewModel
         }
 
         fun requestExclusionShare() {
-            viewModelScope.launch { _pendingShareText.value = buildExclusionReport() }
+            viewModelScope.launch { _pendingShareText.value = buildExclusionReport()?.toShareText(context) }
         }
 
         fun consumeShareText() {
