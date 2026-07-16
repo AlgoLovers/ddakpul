@@ -3363,6 +3363,27 @@ def gen_setpartition():
         )
 
 
+def gen_diagregions():
+    # 볼록 n각형의 대각선이 내부를 나누는 조각(영역) 수 = 1 + 대각선수 + 교점수. (도형과측정 난10)
+    for n in [6, 7, 5, 8]:
+        diag = n * (n - 3) // 2
+        cross = comb(n, 4)
+        ans = 1 + diag + cross
+        add(
+            "diagregions", "SHAPE_MEASUREMENT", 10, ["오일러 공식", "영역 세기"],
+            f"볼록 {n}각형의 대각선을 모두 그었어요. 어느 세 대각선도 내부의 한 점에서 만나지 않는다면, 대각선들이 "
+            f"다각형 내부를 모두 몇 개의 조각(영역)으로 나눌까요?",
+            f"{ans}조각", [f"{c}조각" for c in _pick_distractors(ans, [cross, diag, ans - 1, ans + 2])],
+            f"처음엔 다각형 1조각이에요. 대각선을 하나 그을 때마다 '그 선이 지나는 교점 수 + 1'만큼 조각이 늘어요. "
+            f"모두 합치면 1 + (대각선 {diag}개) + (교점 {cross}개) = {ans}조각이에요.",
+            [(f"{cross}조각", "그건 대각선끼리 만나는 '교점' 수예요. 조각 수는 1 + 대각선 + 교점이에요."),
+             (f"{diag}조각", "그건 대각선의 '개수'예요. 조각은 더 많아요(교점에서 갈라지니까).")],
+            figure={"type": "POLYGON", "params": {"n": n, "diagonals": 1}},
+            detail="대각선이 나누는 조각 수는 오일러 공식(꼭짓점−변+면=2)으로 세요 — 꼭짓점=원래 n개+교점 C(n,4)개, 변은 각 "
+            "대각선·변이 교점마다 쪼개진 수예요. 정리하면 조각 수 = 1 + n(n−3)/2 + C(n,4). 교점 세기(C(n,4))에서 한 걸음 더 나간 문제예요.",
+        )
+
+
 def gen_geosum():
     # 등비수열 합 1+2+4+…+2^(k-1) = 2^k − 1. 2배씩 커지는 수의 합 규칙. (변화와관계 난8)
     for k in [8, 6, 10, 7]:
@@ -3976,6 +3997,7 @@ GENERATORS = [
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
     gen_rectdiag, gen_electpair,
+    gen_diagregions,
     gen_foldcut, gen_knockout,
     gen_makesquare, gen_compose, gen_euler, gen_atleastprob,
     gen_sigma, gen_recur, gen_conevolume, gen_setpartition,
