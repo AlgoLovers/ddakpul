@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.Entitlement
+import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.PremiumPass
 import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
@@ -88,29 +89,33 @@ fun PaywallScreen(
 
             BenefitsCard()
 
-            PassCard(
-                pass = PremiumPass.ONE_YEAR,
-                titleRes = R.string.paywall_pass_1y_title,
-                highlighted = true,
-                onActivate = { pendingPass = it },
-            )
-            PassCard(
-                pass = PremiumPass.SIX_MONTHS,
-                titleRes = R.string.paywall_pass_6m_title,
-                highlighted = false,
-                onActivate = { pendingPass = it },
-            )
-
-            Text(
-                text = stringResource(R.string.paywall_no_autorenew),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                text = stringResource(R.string.paywall_test_note),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            if (Monetization.BILLING_ENABLED) {
+                // 실결제가 연동된 빌드에서만 구매 UI를 노출한다. 연동 없이 노출하면
+                // (1) 공짜 프리미엄이 지급되고 (2) 가격 표기가 사용자·심사자를 오해시킨다.
+                PassCard(
+                    pass = PremiumPass.ONE_YEAR,
+                    titleRes = R.string.paywall_pass_1y_title,
+                    highlighted = true,
+                    onActivate = { pendingPass = it },
+                )
+                PassCard(
+                    pass = PremiumPass.SIX_MONTHS,
+                    titleRes = R.string.paywall_pass_6m_title,
+                    highlighted = false,
+                    onActivate = { pendingPass = it },
+                )
+                Text(
+                    text = stringResource(R.string.paywall_no_autorenew),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.paywall_coming_soon),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }

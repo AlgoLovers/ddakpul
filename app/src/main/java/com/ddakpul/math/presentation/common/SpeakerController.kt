@@ -94,7 +94,6 @@ fun rememberSpeaker(): SpeakerController {
             if (neuralModel != null) {
                 NeuralSpeechEngine(
                     modelDir = neuralModel.dir(context),
-                    soFile = neuralModel.soFile(context),
                     speed = rate,
                     label = label,
                     onSpeakingChanged = onSpeaking,
@@ -109,6 +108,8 @@ fun rememberSpeaker(): SpeakerController {
                     enginePackage = systemPkg,
                     rate = rate,
                     label = label,
+                    // 앱에서 고른 언어(한국어 ⇄ English)로 읽는다 — 액티비티 리소스 로케일을 따른다.
+                    locale = context.resources.configuration.locales[0],
                     onSpeakingChanged = onSpeaking,
                     // 기기 기본(systemPkg == null)일 때만 실제 엔진명을 받아 표시에 쓴다.
                     onEngineLabelResolved =

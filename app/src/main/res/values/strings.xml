@@ -104,6 +104,7 @@
     <string name="paywall_activate">이용권 시작하기</string>
     <string name="paywall_no_autorenew">자동 갱신 없어요. 기간이 끝나면 그냥 멈춰요. 광고도, 추가 결제 유도도 없어요.</string>
     <string name="paywall_test_note">(지금은 테스트용으로 바로 활성화됩니다 — 실제 스토어 결제는 연동 예정)</string>
+    <string name="paywall_coming_soon">정식 이용권 판매는 준비 중이에요. 지금은 결제 없이 모든 기능을 쓸 수 있어요.</string>
 
     <!-- 부모 확인 게이트(구매·초기화 전 어린이 차단) -->
     <string name="parent_gate_title">부모님 확인</string>

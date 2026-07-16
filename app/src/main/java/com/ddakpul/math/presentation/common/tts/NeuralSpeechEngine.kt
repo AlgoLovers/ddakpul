@@ -24,7 +24,6 @@ import java.util.concurrent.Executors
  */
 class NeuralSpeechEngine(
     private val modelDir: File,
-    private val soFile: File,
     private val speed: Float,
     override val label: String,
     private val onSpeakingChanged: (Boolean) -> Unit,
@@ -52,9 +51,9 @@ class NeuralSpeechEngine(
 
     private fun ensureTts() {
         if (tts != null || initFailed) return
-        // 런타임에 받아둔 네이티브 .so를 먼저 로드(APK엔 없음). 실패 시 시스템 음성으로 폴백.
-        if (!SherpaNative.ensureLoaded(soFile)) {
-            Log.w(TAG, "네이티브 로드 실패 — 시스템 음성으로 폴백: ${soFile.absolutePath}")
+        // 앱에 동봉된 네이티브 라이브러리를 로드(Play 정책 준수 — 실행 코드는 스토어로만 배포).
+        if (!SherpaNative.ensureLoaded()) {
+            Log.w(TAG, "네이티브 로드 실패 — 시스템 음성으로 폴백")
             failAndFallback()
             return
         }
@@ -218,20 +217,20 @@ class NeuralSpeechEngine(
 }
 
 /**
- * sherpa-onnx 네이티브 라이브러리를 프로세스에 **1회** 로드한다 — APK에 내장하지 않고 런타임에
- * 받아둔 .so를 절대경로로 [System.load]한다. 실패해도(파일 없음·ABI 불일치 등) 크래시하지 않고
- * false를 돌려주어 호출부가 시스템 음성으로 폴백하게 한다.
+ * sherpa-onnx 네이티브 라이브러리를 프로세스에 **1회** 로드한다 — 빌드 시점에 AAB에 동봉된
+ * .so를 [System.loadLibrary]로 로드한다(Google Play 정책상 실행 코드의 런타임 다운로드는 금지라
+ * 스토어를 통해서만 배포). 실패해도(미지원 ABI 등) 크래시하지 않고 false를 돌려주어 호출부가
+ * 시스템 음성으로 폴백하게 한다.
  */
 object SherpaNative {
     @Volatile
     private var loaded = false
 
     @Synchronized
-    fun ensureLoaded(soFile: File): Boolean {
+    fun ensureLoaded(): Boolean {
         if (loaded) return true
-        if (!soFile.exists() || soFile.length() == 0L) return false
         return runCatching {
-            System.load(soFile.absolutePath)
+            System.loadLibrary("sherpa-onnx-jni")
             loaded = true
             true
         }.getOrDefault(false)

@@ -104,6 +104,7 @@
     <string name="paywall_activate">Start a Pass</string>
     <string name="paywall_no_autorenew">No auto-renewal. When it ends, it just stops. No ads, no nudges to pay more.</string>
     <string name="paywall_test_note">(For now this activates instantly for testing — real store billing is coming)</string>
+    <string name="paywall_coming_soon">Passes are not on sale yet. For now, everything is free — no payment needed.</string>
 
     <!-- Grown-up check (blocks kids before purchase/reset) -->
     <string name="parent_gate_title">Grown-up check</string>
