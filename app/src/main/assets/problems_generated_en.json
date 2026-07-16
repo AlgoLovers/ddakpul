@@ -8,8 +8,8 @@
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
    "concepts": [
-    "반복 규칙",
-    "주기와 나머지"
+    "repeating patterns",
+    "cycles and remainders"
    ],
    "statement": "Beads are placed repeating in the order red - blue: red - blue - red - blue - … . What color is the 10th bead?",
    "choices": [
@@ -30,8 +30,8 @@
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
    "concepts": [
-    "반복 규칙",
-    "주기와 나머지"
+    "repeating patterns",
+    "cycles and remainders"
    ],
    "statement": "Beads are placed repeating in the order red - blue - yellow: red - blue - yellow - red - blue - yellow - … . What color is the 11th bead?",
    "choices": [
@@ -57,8 +57,8 @@
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
    "concepts": [
-    "반복 규칙",
-    "주기와 나머지"
+    "repeating patterns",
+    "cycles and remainders"
    ],
    "statement": "Beads are placed repeating in the order yellow - green - red: yellow - green - red - yellow - green - red - … . What color is the 14th bead?",
    "choices": [
@@ -84,8 +84,8 @@
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
    "concepts": [
-    "반복 규칙",
-    "주기와 나머지"
+    "repeating patterns",
+    "cycles and remainders"
    ],
    "statement": "Beads are placed repeating in the order blue - yellow: blue - yellow - blue - yellow - … . What color is the 15th bead?",
    "choices": [
@@ -111,8 +111,8 @@
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
    "concepts": [
-    "배수",
-    "조건 따지기"
+    "multiples",
+    "checking conditions"
    ],
    "statement": "Among numbers less than 30, what is the largest one divisible by 5 (a multiple of 5)?",
    "choices": [
@@ -142,8 +142,8 @@
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
    "concepts": [
-    "배수",
-    "조건 따지기"
+    "multiples",
+    "checking conditions"
    ],
    "statement": "Among numbers less than 40, what is the largest one divisible by 7 (a multiple of 7)?",
    "choices": [
@@ -173,8 +173,8 @@
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
    "concepts": [
-    "배수",
-    "조건 따지기"
+    "multiples",
+    "checking conditions"
    ],
    "statement": "Among numbers less than 25, what is the largest one divisible by 4 (a multiple of 4)?",
    "choices": [
@@ -204,8 +204,8 @@
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
    "concepts": [
-    "배수",
-    "조건 따지기"
+    "multiples",
+    "checking conditions"
    ],
    "statement": "Among numbers less than 50, what is the largest one divisible by 8 (a multiple of 8)?",
    "choices": [
@@ -235,8 +235,8 @@
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
    "concepts": [
-    "거꾸로 생각하기",
-    "가르기"
+    "thinking backwards",
+    "decomposing numbers"
    ],
    "statement": "Some number plus 7 makes 15. What was the starting number?",
    "choices": [
@@ -262,8 +262,8 @@
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
    "concepts": [
-    "거꾸로 생각하기",
-    "가르기"
+    "thinking backwards",
+    "decomposing numbers"
    ],
    "statement": "Some number plus 8 makes 20. What was the starting number?",
    "choices": [
@@ -289,8 +289,8 @@
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
    "concepts": [
-    "거꾸로 생각하기",
-    "가르기"
+    "thinking backwards",
+    "decomposing numbers"
    ],
    "statement": "Some number plus 6 makes 13. What was the starting number?",
    "choices": [
@@ -316,8 +316,8 @@
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
    "concepts": [
-    "거꾸로 생각하기",
-    "가르기"
+    "thinking backwards",
+    "decomposing numbers"
    ],
    "statement": "Some number plus 9 makes 16. What was the starting number?",
    "choices": [
@@ -343,8 +343,8 @@
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
    "concepts": [
-    "규칙 찾기",
-    "일정하게 커지는 수"
+    "finding patterns",
+    "numbers growing by a constant"
    ],
    "statement": "Find the rule. 2, 5, 8, 11, □ — what number goes in the box?",
    "choices": [
@@ -370,8 +370,8 @@
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
    "concepts": [
-    "규칙 찾기",
-    "일정하게 커지는 수"
+    "finding patterns",
+    "numbers growing by a constant"
    ],
    "statement": "Find the rule. 3, 7, 11, 15, □ — what number goes in the box?",
    "choices": [
@@ -397,8 +397,8 @@
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
    "concepts": [
-    "규칙 찾기",
-    "일정하게 커지는 수"
+    "finding patterns",
+    "numbers growing by a constant"
    ],
    "statement": "Find the rule. 30, 26, 22, 18, □ — what number goes in the box?",
    "choices": [
@@ -424,8 +424,8 @@
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
    "concepts": [
-    "규칙 찾기",
-    "일정하게 커지는 수"
+    "finding patterns",
+    "numbers growing by a constant"
    ],
    "statement": "Find the rule. 1, 4, 7, 10, □ — what number goes in the box?",
    "choices": [
@@ -451,8 +451,8 @@
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
    "concepts": [
-    "경우의 수",
-    "빠짐없이 짝짓기"
+    "counting",
+    "pairing without omission"
    ],
    "statement": "There are 3 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
@@ -478,8 +478,8 @@
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
    "concepts": [
-    "경우의 수",
-    "빠짐없이 짝짓기"
+    "counting",
+    "pairing without omission"
    ],
    "statement": "There are 2 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
@@ -505,8 +505,8 @@
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
    "concepts": [
-    "경우의 수",
-    "빠짐없이 짝짓기"
+    "counting",
+    "pairing without omission"
    ],
    "statement": "There are 2 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
@@ -527,8 +527,8 @@
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
    "concepts": [
-    "경우의 수",
-    "빠짐없이 짝짓기"
+    "counting",
+    "pairing without omission"
    ],
    "statement": "There are 3 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
@@ -554,8 +554,8 @@
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
    "concepts": [
-    "쌓기나무",
-    "수 세기"
+    "stacking blocks",
+    "counting"
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
@@ -587,8 +587,8 @@
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
    "concepts": [
-    "쌓기나무",
-    "수 세기"
+    "stacking blocks",
+    "counting"
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
@@ -621,8 +621,8 @@
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
    "concepts": [
-    "쌓기나무",
-    "수 세기"
+    "stacking blocks",
+    "counting"
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
@@ -654,8 +654,8 @@
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
    "concepts": [
-    "쌓기나무",
-    "수 세기"
+    "stacking blocks",
+    "counting"
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [

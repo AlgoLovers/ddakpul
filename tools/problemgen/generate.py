@@ -16,6 +16,8 @@ import re
 from math import comb, factorial, gcd
 from pathlib import Path
 
+from concept_en import CONCEPT_EN  # 개념 태그 한→영 사전(리포트 노출용)
+
 OUT = Path(__file__).resolve().parents[2] / "app/src/main/assets/problems_generated.json"
 OUT_EN = Path(__file__).resolve().parents[2] / "app/src/main/assets/problems_generated_en.json"
 rng = random.Random(20260710)  # 재현 가능하게 시드 고정
@@ -158,9 +160,11 @@ def add(family, area, diff, concepts, statement, answer_text, distractors, expl,
     _emit(problems, rng, family, area, diff, concepts, statement, answer_text, distractors, expl, mistakes, figure, detail, _fix_number_copula)
     stats["generated"] += 1
     if en is not None:
+        # 개념 태그는 사전으로 자동 번역(계열마다 따로 안 줘도 됨). 미등록 태그는 원문 유지.
+        en_concepts = en.get("concepts") or [CONCEPT_EN.get(c, c) for c in concepts]
         _emit(
             problems_en, rng_en, family, area, diff,
-            en.get("concepts", concepts), en["statement"], en["answer"], en["distractors"],
+            en_concepts, en["statement"], en["answer"], en["distractors"],
             en["explanation"], en.get("mistakes"), figure, en.get("detail"), _fix_en_grammar,
         )
 
