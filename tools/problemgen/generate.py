@@ -3382,6 +3382,24 @@ def gen_barchart():
         )
 
 
+def gen_chartavg():
+    # 막대그래프를 읽어 평균 구하기(자료 읽기 + 평균). (자료와가능성 난5)
+    for vals in [[4, 6, 8, 10], [3, 5, 9, 7], [8, 4, 6, 10], [5, 11, 7, 9]]:
+        total = sum(vals)
+        ans = total // len(vals)
+        add(
+            "chartavg", "DATA_POSSIBILITY", 5, ["자료 읽기", "평균"],
+            "아래 그래프는 가·나·다·라 네 모둠이 캔 감자 수예요. 네 모둠이 캔 감자의 평균은 몇 개일까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
+            f"막대 값을 모두 읽어 더하면 {'+'.join(map(str, vals))}={total}개예요. 모둠이 4개니 평균은 {total}÷4={ans}개예요.",
+            [(f"{total}개", "합만 구하면 안 돼요. 모둠 수(4)로 나눠야 평균이에요."),
+             (f"{max(vals)}개", "가장 높은 막대가 아니라, 전체를 고르게 나눈 값이 평균이에요.")],
+            figure={"type": "BAR_CHART", "heights": vals, "params": {"highlight": -1}},
+            detail="막대그래프에서 평균은 모든 막대 값을 더해 막대 개수로 나눠요. 그래프를 정확히 읽어 수로 옮긴 뒤 계산하는, "
+            "자료 해석과 평균을 잇는 문제예요.",
+        )
+
+
 def gen_diagregions():
     # 볼록 n각형의 대각선이 내부를 나누는 조각(영역) 수 = 1 + 대각선수 + 교점수. (도형과측정 난10)
     for n in [6, 7, 5, 8]:
@@ -4016,7 +4034,7 @@ GENERATORS = [
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
     gen_rectdiag, gen_electpair,
-    gen_diagregions, gen_barchart,
+    gen_diagregions, gen_barchart, gen_chartavg,
     gen_foldcut, gen_knockout,
     gen_makesquare, gen_compose, gen_euler, gen_atleastprob,
     gen_sigma, gen_recur, gen_conevolume, gen_setpartition,
