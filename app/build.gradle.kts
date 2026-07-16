@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,6 +10,15 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
+
+// 업로드 키 정보는 gitignore된 keystore.properties에서만 읽는다(비밀번호를 저장소에 넣지 않기 위함).
+// 이 파일이 없으면(CI 등) 릴리스 빌드는 디버그 키로 폴백해 빌드 자체는 통과한다.
+val keystorePropsFile = rootProject.file("keystore.properties")
+val keystoreProps =
+    Properties().apply {
+        if (keystorePropsFile.exists()) FileInputStream(keystorePropsFile).use { load(it) }
+    }
+val hasUploadKey = keystorePropsFile.exists()
 
 android {
     namespace = "com.ddakpul.math"
@@ -29,6 +41,14 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        if (hasUploadKey) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
@@ -38,6 +58,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            // 업로드 키가 있으면 그것으로, 없으면(CI) 디버그 키로 서명해 빌드는 항상 통과.
+            signingConfig =
+                if (hasUploadKey) {
+                    signingConfigs.getByName("release")
+                } else {
+                    signingConfigs.getByName("debug")
+                }
         }
     }
 

@@ -22,3 +22,5 @@ local.properties
 # Python
 __pycache__/
 *.pyc
+keystore.properties
+/ddakpul-upload.keystore
