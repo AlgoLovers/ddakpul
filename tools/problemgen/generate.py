@@ -532,6 +532,18 @@ def gen_digit_cards():
             f"가장 큰 수를 만들려면 큰 숫자를 높은 자리에 놓아야 해요. 백의 자리에 {desc[0]}, 십의 자리에 {desc[1]}, 일의 자리에 {desc[2]}을(를) 놓으면 {biggest}{_copula(biggest)}.",
             [(str(smallest), "그건 가장 작은 수예요. 큰 수는 큰 숫자를 앞자리에 놓아요.")],
             detail="가장 큰 수는 '큰 숫자를 높은 자리에' 놓으면 돼요. 백의 자리 1은 십의 자리 10, 일의 자리 100만큼의 값이라, 큰 숫자일수록 높은 자리에 있어야 이득이 커요. 가장 작은 수는 반대로 하면 되고요. 이렇게 '가장 좋은 걸 먼저 배치'하는 방법을 욕심쟁이(그리디) 방법이라고 해요.",
+            en={
+                "statement": f"Using the number cards {cardtxt}, each exactly once, you make a three-digit number. "
+                             f"What is the largest number you can make?",
+                "answer": str(biggest),
+                "distractors": [str(smallest), str(asgiven), str(swapped)],
+                "explanation": f"To make the largest number, put bigger digits in higher places. Putting {desc[0]} in the hundreds, "
+                               f"{desc[1]} in the tens, and {desc[2]} in the ones gives {biggest}.",
+                "mistakes": [(str(smallest), "That’s the smallest number. For the largest, put big digits in the front places.")],
+                "detail": "The largest number comes from placing bigger digits in higher place values — a digit in the hundreds place is "
+                          "worth 100× its face value, so bigger digits should sit higher. The smallest is the reverse. Placing the best "
+                          "option first like this is called the greedy method.",
+            },
         )
 
 
@@ -580,6 +592,16 @@ def gen_matchsticks():
             [(f"{4 * n}개", "정사각형마다 4개씩 세면 이웃끼리 붙은 변을 두 번 세게 돼요.")],
             figure={"type": "MATCHSTICK", "params": {"n": n}},
             detail=f"정사각형 하나는 변 4개지만, 옆에 붙이면 맞닿은 변 1개를 '공유'해요. 그래서 첫 칸은 4개, 다음부터는 3개씩만 늘어 총 {3 * n + 1}=3×{n}+1개. '공유하는 부분은 한 번만 센다'는 생각은 둘레·격자 세기에서 계속 쓰여요.",
+            en={
+                "statement": f"You join {n} equal squares in a row with matchsticks. How many matchsticks do you need in all?",
+                "answer": _en_plural(matches, "matchstick"),
+                "distractors": [_en_plural(4 * n, "matchstick"), _en_plural(3 * n, "matchstick"), _en_plural(4 * n - 1, "matchstick")],
+                "explanation": f"One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only "
+                               f"needs 3 more. So {n} squares need 4 + 3×{n - 1} = {matches}.",
+                "mistakes": [(_en_plural(4 * n, "matchstick"), "Counting 4 per square double-counts the shared sides between neighbors.")],
+                "detail": "A square has 4 sides, but joining one on the side shares 1 touching side. So the first cell needs 4 and each next "
+                          "one adds only 3, giving 3n+1 in all. 'Count a shared part once' comes back again in perimeter and grid counting.",
+            },
         )
 
 
@@ -1420,6 +1442,14 @@ def gen_grid_tiny():
             f"칸을 하나씩 세어요. {detail} → {area}㎠.",
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
+                "answer": f"{area} cm²",
+                "distractors": [f"{area - 1} cm²", f"{area + 1} cm²", f"{area + 2} cm²"],
+                "explanation": f"Count the shaded cells one by one → {area} cm².",
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. "
+                          "Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange.",
+            },
         )
 
 
@@ -1620,6 +1650,17 @@ def gen_number_split():
             f"작은 쪽을 1개부터 차례로 늘려 봐요: (1,{total - 1}), (2,{total - 2})… 두 접시를 구분하지 않으니 절반까지만 세면 돼요. 그래서 1부터 {ans}까지 {ans}가지예요.",
             [(f"{total - 1}가지", "두 접시를 구분하면 두 배가 되지만, 구분하지 않으니 절반만 세요.")],
             detail=f"'작은 쪽을 1,2,3…으로 늘려 가며 빠짐없이 세기'가 경우의 수의 기본이에요. 두 접시를 구분하면 (1,{total - 1})과 ({total - 1},1)이 다른 경우라 두 배가 되지만, 구분하지 않으면 절반. '구분하나 안 하나'를 늘 먼저 확인하는 게 핵심이에요.",
+            en={
+                "statement": f"You split {total} beads onto two plates. Each plate gets at least 1, and the two plates are not "
+                             f"distinguished (1 & {total - 1} is the same as {total - 1} & 1). How many ways are there?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(ans + 1, "way"), _en_plural(ans - 1, "way"), _en_plural(total - 1, "way")],
+                "explanation": f"Raise the smaller side from 1: (1,{total - 1}), (2,{total - 2})… Since the plates aren’t distinguished, "
+                               f"count only up to half. So 1 through {ans} — {ans} ways.",
+                "mistakes": [(_en_plural(total - 1, "way"), "Distinguishing the plates would double it, but since they aren’t, count only half.")],
+                "detail": "Raising the smaller side 1, 2, 3… and counting without omission is the basis of counting problems. Distinguishing "
+                          "the two plates doubles it; not distinguishing halves it. Always check first: distinguished or not?",
+            },
         )
 
 
@@ -2840,13 +2881,14 @@ def gen_missing_addend():
 def gen_transitivity():
     # 이행성(A>B>C>D) 순서 추론 — 계산 없이 '이어서 비교'하는 논리. 실제 지식 지름길 없게 이름/중립 상황.
     scenes = [
-        ("달리기 시합", "빨랐어요", "가장 느린", ["지호", "민수", "서연", "하은"]),
-        ("줄넘기 대회", "많이 넘었어요", "가장 적게 넘은", ["윤아", "도윤", "시우", "예은"]),
-        ("멀리뛰기", "멀리 뛰었어요", "가장 가까이 뛴", ["준우", "하린", "은우", "다인"]),
-        ("블록 높이 쌓기", "높이 쌓았어요", "가장 낮게 쌓은", ["소율", "건우", "나윤", "시윤"]),
+        ("달리기 시합", "빨랐어요", "가장 느린", ["지호", "민수", "서연", "하은"], "a race", "was faster", "is the slowest"),
+        ("줄넘기 대회", "많이 넘었어요", "가장 적게 넘은", ["윤아", "도윤", "시우", "예은"], "a jump-rope contest", "jumped more", "jumped the fewest"),
+        ("멀리뛰기", "멀리 뛰었어요", "가장 가까이 뛴", ["준우", "하린", "은우", "다인"], "the long jump", "jumped farther", "jumped the shortest"),
+        ("블록 높이 쌓기", "높이 쌓았어요", "가장 낮게 쌓은", ["소율", "건우", "나윤", "시윤"], "a block-stacking game", "stacked higher", "stacked the lowest"),
     ]
-    for ctx, verb, ask, names in scenes:
+    for ctx, verb, ask, names, en_ctx, en_comp, en_super in scenes:
         a, b, c, d = names
+        ea, eb, ec, ed = "A", "B", "C", "D"
         add(
             "trans", "CHANGE_RELATION", 1, ["순서 추론", "이행성"],
             f"{ctx}에서 {a}{_iga(a)} {b}보다, {b}{_iga(b)} {c}보다, {c}{_iga(c)} {d}보다 {verb}. {ask} 사람은 누구일까요?",
@@ -2854,6 +2896,15 @@ def gen_transitivity():
             f"이어서 순서를 세우면 {a} → {b} → {c} → {d} 예요. 맨 끝인 {d}{_iga(d)} {ask.replace('가장 ', '')} 사람이라 답은 {d}{_copula(d)}.",
             [(a, f"{a}{_eun(a)} 제일 잘한 쪽이라 정반대예요.")],
             detail="'A가 B보다, B가 C보다 ~' 처럼 이어지는 비교는 한 줄로 순서를 세우면 한눈에 보여요(A→B→C→D). 이렇게 이어서 비교하는 생각(이행성)은 키 재기·시합 등수·수의 대소 비교에서 계속 쓰여요.",
+            en={
+                "statement": f"In {en_ctx}, {ea} {en_comp} than {eb}, {eb} {en_comp} than {ec}, and {ec} {en_comp} than {ed}. Who {en_super}?",
+                "answer": ed,
+                "distractors": [ea, eb, ec],
+                "explanation": f"Line them up in order: {ea} → {eb} → {ec} → {ed}. The one at the very end, {ed}, is the one who {en_super}.",
+                "mistakes": [(ea, f"{ea} is the best one — the exact opposite.")],
+                "detail": "A chain of comparisons like 'A beats B, B beats C…' becomes clear when you line everyone up in one order "
+                          "(A→B→C→D). This chained comparison (transitivity) comes up in heights, rankings, and comparing numbers.",
+            },
         )
 
 
@@ -2974,6 +3025,18 @@ def gen_choose_two():
             f"한 개를 먼저 고르는 방법 {n}가지, 남은 것 중 하나 더 {n - 1}가지 → {n}×{n - 1}={n * (n - 1)}가지. 그런데 순서를 안 따지니 ({names[0]},{names[1]})와 ({names[1]},{names[0]})가 같아 2로 나눠요: {n * (n - 1)}÷2={ans}가지예요.",
             [(f"{n * (n - 1)}가지", "순서를 따지면 그 수지만, 순서 상관없으니 절반(÷2)이에요.")],
             detail="'순서 상관없이 2개 고르기'는 순서 있게 센 뒤(첫째×둘째) 2로 나눠요 — 같은 짝을 두 번 세지 않으려는 거예요. 이 생각은 악수·경기 수·짝짓기에서 똑같이 쓰여요.",
+            en=(lambda el: {
+                "statement": f"You pick 2 from {n} different things ({', '.join(el)}). Order doesn’t matter "
+                             f"({el[0]}·{el[1]} = {el[1]}·{el[0]}). How many ways are there?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(n * (n - 1), "way"), _en_plural(ans + 1, "way"), _en_plural(ans - 1, "way")],
+                "explanation": f"Pick the first in {n} ways and one more from the rest in {n - 1} ways → {n}×{n - 1}={n * (n - 1)}. "
+                               f"But since order doesn’t matter, ({el[0]},{el[1]}) and ({el[1]},{el[0]}) are the same, so ÷2: "
+                               f"{n * (n - 1)}÷2={ans}.",
+                "mistakes": [(_en_plural(n * (n - 1), "way"), "That counts order; since order doesn’t matter, it’s half (÷2).")],
+                "detail": "'Choosing 2 without order' means counting with order (first×second) then dividing by 2 — so you don’t count the "
+                          "same pair twice. The same idea drives handshakes, number of games, and pairing.",
+            })(list("ABCDE")[:n]),
         )
 
 
@@ -2995,6 +3058,18 @@ def gen_data_read():
             f"많은 순서대로 줄을 세우면 {' > '.join(f'{k}({v})' for k, v in s)} 예요. 두 번째는 {second}{_copula(second)}.",
             [(s[0][0], "그건 가장 많은 것(1번째)이에요. 두 번째를 찾아야 해요.")],
             detail="자료에서 '몇 번째로 많은지'를 물으면 큰 순서대로 줄을 세우는 게 가장 확실해요. 가장 큰 것(1등)에 눈이 먼저 가지만, 순서를 정리하면 2등·3등도 헷갈리지 않아요.",
+            en=(lambda lab: {
+                "statement": "In our class we took a survey. The counts were "
+                             + ", ".join(f"{lab[k]}: {v}" for k, v in data)
+                             + ". Which one had the second most?",
+                "answer": lab[second],
+                "distractors": [lab[s[0][0]], lab[s[2][0]], lab[s[3][0]]],
+                "explanation": "Line them up from most to least: " + " > ".join(f"{lab[k]}({v})" for k, v in s)
+                               + f". The second is {lab[second]}.",
+                "mistakes": [(lab[s[0][0]], "That’s the most (1st). You need the second.")],
+                "detail": "When asked 'which is the Nth most', lining the data up from largest to smallest is the surest way. Your eye jumps "
+                          "to the biggest (1st), but sorting keeps 2nd and 3rd from getting confused.",
+            })({k: chr(65 + i) for i, (k, _) in enumerate(data)}),
         )
 
 
@@ -3276,6 +3351,18 @@ def gen_foldcut():
              (f"{h + folds}개", "접은 '횟수'를 더하는 게 아니라, 겹친 '장수'만큼 곱해요.")],
             detail="반으로 한 번 접으면 2겹, 두 번 접으면 4겹처럼 접을 때마다 겹이 2배가 돼요. 겹친 채 뚫은 구멍은 펼치면 "
             "겹친 장수만큼 늘어나요(대칭으로 생겨요). 접기와 대칭을 잇는 공간 사고의 첫걸음이에요.",
+            en={
+                "statement": f"You fold a sheet of paper in half {folds} time(s), then punch {h} hole(s) through the folded layers. "
+                             f"When you unfold it, how many holes are there in all?",
+                "answer": _en_plural(ans, "hole"),
+                "distractors": [_en_plural(c, "hole") for c in _pick_distractors(ans, [h, h + folds, ans + 1, h * folds])],
+                "explanation": f"Folding in half {folds} time(s) stacks the paper into {layers} layers. One punch goes through all "
+                               f"{layers} at once, so it becomes {layers} holes. With {h} hole(s) punched, that’s {h}×{layers} = {ans}.",
+                "mistakes": [(_en_plural(h, "hole"), "Punching through folds makes as many holes as stacked layers — they multiply when unfolded."),
+                             (_en_plural(h + folds, "hole"), "Don’t add the number of folds — multiply by the number of stacked layers.")],
+                "detail": "Folding in half once makes 2 layers, twice makes 4 — each fold doubles the layers. A hole punched through folds "
+                          "multiplies into that many holes when unfolded (they appear symmetrically). A first step in linking folding and symmetry.",
+            },
         )
 
 

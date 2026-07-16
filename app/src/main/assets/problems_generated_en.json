@@ -3,6 +3,225 @@
  "lang": "en",
  "problems": [
   {
+   "id": "gen-foldcut-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-foldcut-1",
+   "concepts": [
+    "symmetry",
+    "counting through overlaps"
+   ],
+   "statement": "You fold a sheet of paper in half 1 time(s), then punch 1 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
+   "choices": [
+    "1 holes",
+    "2 holes",
+    "3 holes",
+    "5 holes"
+   ],
+   "answerIndex": 1,
+   "explanation": "Folding in half 1 time(s) stacks the paper into 2 layers. One punch goes through all 2 at once, so it becomes 2 holes. With 1 hole(s) punched, that’s 1×2 = 2.",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Folding in half once makes 2 layers, twice makes 4 — each fold doubles the layers. A hole punched through folds multiplies into that many holes when unfolded (they appear symmetrically). A first step in linking folding and symmetry."
+  },
+  {
+   "id": "gen-foldcut-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-foldcut-1",
+   "concepts": [
+    "symmetry",
+    "counting through overlaps"
+   ],
+   "statement": "You fold a sheet of paper in half 1 time(s), then punch 2 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
+   "choices": [
+    "3 holes",
+    "4 holes",
+    "2 holes",
+    "5 holes"
+   ],
+   "answerIndex": 1,
+   "explanation": "Folding in half 1 time(s) stacks the paper into 2 layers. One punch goes through all 2 at once, so it becomes 2 holes. With 2 hole(s) punched, that’s 2×2 = 4.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Punching through folds makes as many holes as stacked layers — they multiply when unfolded."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "Don’t add the number of folds — multiply by the number of stacked layers."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Folding in half once makes 2 layers, twice makes 4 — each fold doubles the layers. A hole punched through folds multiplies into that many holes when unfolded (they appear symmetrically). A first step in linking folding and symmetry."
+  },
+  {
+   "id": "gen-foldcut-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-foldcut-1",
+   "concepts": [
+    "symmetry",
+    "counting through overlaps"
+   ],
+   "statement": "You fold a sheet of paper in half 1 time(s), then punch 3 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
+   "choices": [
+    "6 holes",
+    "3 holes",
+    "7 holes",
+    "4 holes"
+   ],
+   "answerIndex": 0,
+   "explanation": "Folding in half 1 time(s) stacks the paper into 2 layers. One punch goes through all 2 at once, so it becomes 2 holes. With 3 hole(s) punched, that’s 3×2 = 6.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Punching through folds makes as many holes as stacked layers — they multiply when unfolded."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "Don’t add the number of folds — multiply by the number of stacked layers."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Folding in half once makes 2 layers, twice makes 4 — each fold doubles the layers. A hole punched through folds multiplies into that many holes when unfolded (they appear symmetrically). A first step in linking folding and symmetry."
+  },
+  {
+   "id": "gen-foldcut-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-foldcut-1",
+   "concepts": [
+    "symmetry",
+    "counting through overlaps"
+   ],
+   "statement": "You fold a sheet of paper in half 2 time(s), then punch 1 hole(s) through the folded layers. When you unfold it, how many holes are there in all?",
+   "choices": [
+    "5 holes",
+    "4 holes",
+    "3 holes",
+    "1 holes"
+   ],
+   "answerIndex": 1,
+   "explanation": "Folding in half 2 time(s) stacks the paper into 4 layers. One punch goes through all 4 at once, so it becomes 4 holes. With 1 hole(s) punched, that’s 1×4 = 4.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Don’t add the number of folds — multiply by the number of stacked layers."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Folding in half once makes 2 layers, twice makes 4 — each fold doubles the layers. A hole punched through folds multiplies into that many holes when unfolded (they appear symmetrically). A first step in linking folding and symmetry."
+  },
+  {
+   "id": "gen-trans-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-trans-1",
+   "concepts": [
+    "order reasoning",
+    "transitivity"
+   ],
+   "statement": "In a race, A was faster than B, B was faster than C, and C was faster than D. Who is the slowest?",
+   "choices": [
+    "A",
+    "C",
+    "B",
+    "D"
+   ],
+   "answerIndex": 3,
+   "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who is the slowest.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "A is the best one — the exact opposite."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "A chain of comparisons like 'A beats B, B beats C…' becomes clear when you line everyone up in one order (A→B→C→D). This chained comparison (transitivity) comes up in heights, rankings, and comparing numbers."
+  },
+  {
+   "id": "gen-trans-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-trans-1",
+   "concepts": [
+    "order reasoning",
+    "transitivity"
+   ],
+   "statement": "In a jump-rope contest, A jumped more than B, B jumped more than C, and C jumped more than D. Who jumped the fewest?",
+   "choices": [
+    "C",
+    "B",
+    "A",
+    "D"
+   ],
+   "answerIndex": 3,
+   "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who jumped the fewest.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "A is the best one — the exact opposite."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "A chain of comparisons like 'A beats B, B beats C…' becomes clear when you line everyone up in one order (A→B→C→D). This chained comparison (transitivity) comes up in heights, rankings, and comparing numbers."
+  },
+  {
+   "id": "gen-trans-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-trans-1",
+   "concepts": [
+    "order reasoning",
+    "transitivity"
+   ],
+   "statement": "In the long jump, A jumped farther than B, B jumped farther than C, and C jumped farther than D. Who jumped the shortest?",
+   "choices": [
+    "A",
+    "C",
+    "B",
+    "D"
+   ],
+   "answerIndex": 3,
+   "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who jumped the shortest.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "A is the best one — the exact opposite."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "A chain of comparisons like 'A beats B, B beats C…' becomes clear when you line everyone up in one order (A→B→C→D). This chained comparison (transitivity) comes up in heights, rankings, and comparing numbers."
+  },
+  {
+   "id": "gen-trans-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 1,
+   "groupId": "g-gen-trans-1",
+   "concepts": [
+    "order reasoning",
+    "transitivity"
+   ],
+   "statement": "In a block-stacking game, A stacked higher than B, B stacked higher than C, and C stacked higher than D. Who stacked the lowest?",
+   "choices": [
+    "D",
+    "A",
+    "B",
+    "C"
+   ],
+   "answerIndex": 0,
+   "explanation": "Line them up in order: A → B → C → D. The one at the very end, D, is the one who stacked the lowest.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "A is the best one — the exact opposite."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "A chain of comparisons like 'A beats B, B beats C…' becomes clear when you line everyone up in one order (A→B→C→D). This chained comparison (transitivity) comes up in heights, rankings, and comparing numbers."
+  },
+  {
    "id": "gen-pattern-1",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
@@ -14,11 +233,11 @@
    "statement": "Beads are placed repeating in the order red - blue: red - blue - red - blue - … . What color is the 10th bead?",
    "choices": [
     "red",
-    "blue",
+    "green",
     "yellow",
-    "green"
+    "blue"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "The 2 colors repeat, so they return to the start every 2. Dividing 10 by 2, the remainder is 0 — the last in a group (position 2), which is blue.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -37,8 +256,8 @@
    "choices": [
     "yellow",
     "blue",
-    "red",
-    "green"
+    "green",
+    "red"
    ],
    "answerIndex": 1,
    "explanation": "The 3 colors repeat, so they return to the start every 3. Dividing 11 by 3, the remainder is 2 — position 2 in a group, which is blue.",
@@ -62,12 +281,12 @@
    ],
    "statement": "Beads are placed repeating in the order yellow - green - red: yellow - green - red - yellow - green - red - … . What color is the 14th bead?",
    "choices": [
-    "green",
+    "blue",
     "red",
     "yellow",
-    "blue"
+    "green"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "The 3 colors repeat, so they return to the start every 3. Dividing 14 by 3, the remainder is 2 — position 2 in a group, which is green.",
    "mistakes": [
     {
@@ -89,16 +308,16 @@
    ],
    "statement": "Beads are placed repeating in the order blue - yellow: blue - yellow - blue - yellow - … . What color is the 15th bead?",
    "choices": [
-    "green",
     "blue",
-    "yellow",
-    "red"
+    "green",
+    "red",
+    "yellow"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "The 2 colors repeat, so they return to the start every 2. Dividing 15 by 2, the remainder is 1 — position 1 in a group, which is blue.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "It’s not the last color of the pattern — work out which position (the remainder) it is."
     }
    ],
@@ -116,20 +335,20 @@
    ],
    "statement": "Among numbers less than 30, what is the largest one divisible by 5 (a multiple of 5)?",
    "choices": [
-    "30",
-    "28",
+    "25",
     "20",
-    "25"
+    "28",
+    "30"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "List the multiples of 5 in order: … 20, 25, 30. The largest one under 30 is 25 (30 is 30 or more, so it’s out).",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "30 is not less than 30 — it breaks the condition."
     },
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "30 may not be divisible by 5; it has to be a multiple of 5."
     }
    ],
@@ -147,20 +366,20 @@
    ],
    "statement": "Among numbers less than 40, what is the largest one divisible by 7 (a multiple of 7)?",
    "choices": [
-    "40",
-    "28",
     "42",
-    "35"
+    "35",
+    "28",
+    "40"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "List the multiples of 7 in order: … 28, 35, 42. The largest one under 40 is 35 (42 is 40 or more, so it’s out).",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "42 is not less than 40 — it breaks the condition."
     },
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "40 may not be divisible by 7; it has to be a multiple of 7."
     }
    ],
@@ -178,20 +397,20 @@
    ],
    "statement": "Among numbers less than 25, what is the largest one divisible by 4 (a multiple of 4)?",
    "choices": [
-    "28",
     "25",
+    "24",
     "20",
-    "24"
+    "28"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "List the multiples of 4 in order: … 20, 24, 28. The largest one under 25 is 24 (28 is 25 or more, so it’s out).",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "28 is not less than 25 — it breaks the condition."
     },
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "25 may not be divisible by 4; it has to be a multiple of 4."
     }
    ],
@@ -209,16 +428,16 @@
    ],
    "statement": "Among numbers less than 50, what is the largest one divisible by 8 (a multiple of 8)?",
    "choices": [
-    "48",
     "56",
+    "48",
     "40",
     "50"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "List the multiples of 8 in order: … 40, 48, 56. The largest one under 50 is 48 (56 is 50 or more, so it’s out).",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "56 is not less than 50 — it breaks the condition."
     },
     {
@@ -228,6 +447,330 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "'The largest multiple of △ under ○' means listing △’s multiples and finding the one just below the boundary. Multiplying 8 by the quotient of 50÷8 gives it in one step. It practices combining a condition (inequality) with multiples."
+  },
+  {
+   "id": "gen-choose2-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-choose2-1",
+   "concepts": [
+    "combinations",
+    "order-independent"
+   ],
+   "statement": "You pick 2 from 3 different things (A, B, C). Order doesn’t matter (A·B = B·A). How many ways are there?",
+   "choices": [
+    "3 ways",
+    "4 ways",
+    "2 ways",
+    "6 ways"
+   ],
+   "answerIndex": 0,
+   "explanation": "Pick the first in 3 ways and one more from the rest in 2 ways → 3×2=6. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 6÷2=3.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Choosing 2 without order' means counting with order (first×second) then dividing by 2 — so you don’t count the same pair twice. The same idea drives handshakes, number of games, and pairing."
+  },
+  {
+   "id": "gen-choose2-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-choose2-1",
+   "concepts": [
+    "combinations",
+    "order-independent"
+   ],
+   "statement": "You pick 2 from 4 different things (A, B, C, D). Order doesn’t matter (A·B = B·A). How many ways are there?",
+   "choices": [
+    "12 ways",
+    "7 ways",
+    "6 ways",
+    "5 ways"
+   ],
+   "answerIndex": 2,
+   "explanation": "Pick the first in 4 ways and one more from the rest in 3 ways → 4×3=12. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 12÷2=6.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Choosing 2 without order' means counting with order (first×second) then dividing by 2 — so you don’t count the same pair twice. The same idea drives handshakes, number of games, and pairing."
+  },
+  {
+   "id": "gen-choose2-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-choose2-1",
+   "concepts": [
+    "combinations",
+    "order-independent"
+   ],
+   "statement": "You pick 2 from 5 different things (A, B, C, D, E). Order doesn’t matter (A·B = B·A). How many ways are there?",
+   "choices": [
+    "9 ways",
+    "10 ways",
+    "11 ways",
+    "20 ways"
+   ],
+   "answerIndex": 1,
+   "explanation": "Pick the first in 5 ways and one more from the rest in 4 ways → 5×4=20. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 20÷2=10.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Choosing 2 without order' means counting with order (first×second) then dividing by 2 — so you don’t count the same pair twice. The same idea drives handshakes, number of games, and pairing."
+  },
+  {
+   "id": "gen-choose2-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-choose2-1",
+   "concepts": [
+    "combinations",
+    "order-independent"
+   ],
+   "statement": "You pick 2 from 4 different things (A, B, C, D). Order doesn’t matter (A·B = B·A). How many ways are there?",
+   "choices": [
+    "6 ways",
+    "7 ways",
+    "12 ways",
+    "5 ways"
+   ],
+   "answerIndex": 0,
+   "explanation": "Pick the first in 4 ways and one more from the rest in 3 ways → 4×3=12. But since order doesn’t matter, (A,B) and (B,A) are the same, so ÷2: 12÷2=6.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That counts order; since order doesn’t matter, it’s half (÷2)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Choosing 2 without order' means counting with order (first×second) then dividing by 2 — so you don’t count the same pair twice. The same idea drives handshakes, number of games, and pairing."
+  },
+  {
+   "id": "gen-dataread-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-dataread-1",
+   "concepts": [
+    "interpreting data",
+    "comparing order"
+   ],
+   "statement": "In our class we took a survey. The counts were A: 5, B: 3, C: 7, D: 2. Which one had the second most?",
+   "choices": [
+    "A",
+    "B",
+    "D",
+    "C"
+   ],
+   "answerIndex": 0,
+   "explanation": "Line them up from most to least: C(7) > A(5) > B(3) > D(2). The second is A.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That’s the most (1st). You need the second."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When asked 'which is the Nth most', lining the data up from largest to smallest is the surest way. Your eye jumps to the biggest (1st), but sorting keeps 2nd and 3rd from getting confused."
+  },
+  {
+   "id": "gen-dataread-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-dataread-1",
+   "concepts": [
+    "interpreting data",
+    "comparing order"
+   ],
+   "statement": "In our class we took a survey. The counts were A: 8, B: 4, C: 6, D: 3. Which one had the second most?",
+   "choices": [
+    "C",
+    "D",
+    "A",
+    "B"
+   ],
+   "answerIndex": 0,
+   "explanation": "Line them up from most to least: A(8) > C(6) > B(4) > D(3). The second is C.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That’s the most (1st). You need the second."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When asked 'which is the Nth most', lining the data up from largest to smallest is the surest way. Your eye jumps to the biggest (1st), but sorting keeps 2nd and 3rd from getting confused."
+  },
+  {
+   "id": "gen-dataread-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-dataread-1",
+   "concepts": [
+    "interpreting data",
+    "comparing order"
+   ],
+   "statement": "In our class we took a survey. The counts were A: 9, B: 5, C: 2, D: 4. Which one had the second most?",
+   "choices": [
+    "B",
+    "A",
+    "C",
+    "D"
+   ],
+   "answerIndex": 0,
+   "explanation": "Line them up from most to least: A(9) > B(5) > D(4) > C(2). The second is B.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That’s the most (1st). You need the second."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When asked 'which is the Nth most', lining the data up from largest to smallest is the surest way. Your eye jumps to the biggest (1st), but sorting keeps 2nd and 3rd from getting confused."
+  },
+  {
+   "id": "gen-dataread-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-dataread-1",
+   "concepts": [
+    "interpreting data",
+    "comparing order"
+   ],
+   "statement": "In our class we took a survey. The counts were A: 4, B: 7, C: 3, D: 5. Which one had the second most?",
+   "choices": [
+    "B",
+    "D",
+    "C",
+    "A"
+   ],
+   "answerIndex": 1,
+   "explanation": "Line them up from most to least: B(7) > D(5) > A(4) > C(3). The second is D.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "That’s the most (1st). You need the second."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When asked 'which is the Nth most', lining the data up from largest to smallest is the surest way. Your eye jumps to the biggest (1st), but sorting keeps 2nd and 3rd from getting confused."
+  },
+  {
+   "id": "gen-numsplit-1",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-numsplit-1",
+   "concepts": [
+    "counting",
+    "decomposing numbers"
+   ],
+   "statement": "You split 5 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 4 is the same as 4 & 1). How many ways are there?",
+   "choices": [
+    "2 ways",
+    "1 way",
+    "4 ways",
+    "3 ways"
+   ],
+   "answerIndex": 0,
+   "explanation": "Raise the smaller side from 1: (1,4), (2,3)… Since the plates aren’t distinguished, count only up to half. So 1 through 2 — 2 ways.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Distinguishing the plates would double it, but since they aren’t, count only half."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Raising the smaller side 1, 2, 3… and counting without omission is the basis of counting problems. Distinguishing the two plates doubles it; not distinguishing halves it. Always check first: distinguished or not?"
+  },
+  {
+   "id": "gen-numsplit-2",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-numsplit-1",
+   "concepts": [
+    "counting",
+    "decomposing numbers"
+   ],
+   "statement": "You split 6 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 5 is the same as 5 & 1). How many ways are there?",
+   "choices": [
+    "2 ways",
+    "4 ways",
+    "5 ways",
+    "3 ways"
+   ],
+   "answerIndex": 3,
+   "explanation": "Raise the smaller side from 1: (1,5), (2,4)… Since the plates aren’t distinguished, count only up to half. So 1 through 3 — 3 ways.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Distinguishing the plates would double it, but since they aren’t, count only half."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Raising the smaller side 1, 2, 3… and counting without omission is the basis of counting problems. Distinguishing the two plates doubles it; not distinguishing halves it. Always check first: distinguished or not?"
+  },
+  {
+   "id": "gen-numsplit-3",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-numsplit-1",
+   "concepts": [
+    "counting",
+    "decomposing numbers"
+   ],
+   "statement": "You split 7 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 6 is the same as 6 & 1). How many ways are there?",
+   "choices": [
+    "4 ways",
+    "3 ways",
+    "6 ways",
+    "2 ways"
+   ],
+   "answerIndex": 1,
+   "explanation": "Raise the smaller side from 1: (1,6), (2,5)… Since the plates aren’t distinguished, count only up to half. So 1 through 3 — 3 ways.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Distinguishing the plates would double it, but since they aren’t, count only half."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Raising the smaller side 1, 2, 3… and counting without omission is the basis of counting problems. Distinguishing the two plates doubles it; not distinguishing halves it. Always check first: distinguished or not?"
+  },
+  {
+   "id": "gen-numsplit-4",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 1,
+   "groupId": "g-gen-numsplit-1",
+   "concepts": [
+    "counting",
+    "decomposing numbers"
+   ],
+   "statement": "You split 8 beads onto two plates. Each plate gets at least 1, and the two plates are not distinguished (1 & 7 is the same as 7 & 1). How many ways are there?",
+   "choices": [
+    "5 ways",
+    "4 ways",
+    "3 ways",
+    "7 ways"
+   ],
+   "answerIndex": 1,
+   "explanation": "Raise the smaller side from 1: (1,7), (2,6)… Since the plates aren’t distinguished, count only up to half. So 1 through 4 — 4 ways.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Distinguishing the plates would double it, but since they aren’t, count only half."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Raising the smaller side 1, 2, 3… and counting without omission is the basis of counting problems. Distinguishing the two plates doubles it; not distinguishing halves it. Always check first: distinguished or not?"
   },
   {
    "id": "gen-addend-1",
@@ -242,10 +785,10 @@
    "choices": [
     "15",
     "7",
-    "22",
-    "8"
+    "8",
+    "22"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Think backwards. Adding 7 gave 15, so subtract 7 back from 15 to get the start: 15 − 7 = 8. (Check: 8 + 7 = 15.)",
    "mistakes": [
     {
@@ -267,16 +810,16 @@
    ],
    "statement": "Some number plus 8 makes 20. What was the starting number?",
    "choices": [
-    "28",
+    "20",
     "12",
-    "11",
-    "20"
+    "28",
+    "11"
    ],
    "answerIndex": 1,
    "explanation": "Think backwards. Adding 8 gave 20, so subtract 8 back from 20 to get the start: 20 − 8 = 12. (Check: 12 + 8 = 20.)",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "That’s the number after adding. Subtract 8 back to get the starting number."
     }
    ],
@@ -295,15 +838,15 @@
    "statement": "Some number plus 6 makes 13. What was the starting number?",
    "choices": [
     "19",
-    "13",
+    "7",
     "6",
-    "7"
+    "13"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Think backwards. Adding 6 gave 13, so subtract 6 back from 13 to get the start: 13 − 6 = 7. (Check: 7 + 6 = 13.)",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "That’s the number after adding. Subtract 6 back to get the starting number."
     }
    ],
@@ -321,21 +864,129 @@
    ],
    "statement": "Some number plus 9 makes 16. What was the starting number?",
    "choices": [
+    "25",
     "7",
     "6",
-    "16",
-    "25"
+    "16"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Think backwards. Adding 9 gave 16, so subtract 9 back from 16 to get the start: 16 − 9 = 7. (Check: 7 + 9 = 16.)",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "That’s the number after adding. Subtract 9 back to get the starting number."
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "Finding □ in '□ + 9 = 16' means undoing the addition with subtraction. Adding and subtracting are opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later."
+  },
+  {
+   "id": "gen-cards-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "place value",
+    "making the largest number"
+   ],
+   "statement": "Using the number cards 3, 7, 5, each exactly once, you make a three-digit number. What is the largest number you can make?",
+   "choices": [
+    "753",
+    "735",
+    "357",
+    "375"
+   ],
+   "answerIndex": 0,
+   "explanation": "To make the largest number, put bigger digits in higher places. Putting 7 in the hundreds, 5 in the tens, and 3 in the ones gives 753.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The largest number comes from placing bigger digits in higher place values — a digit in the hundreds place is worth 100× its face value, so bigger digits should sit higher. The smallest is the reverse. Placing the best option first like this is called the greedy method."
+  },
+  {
+   "id": "gen-cards-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "place value",
+    "making the largest number"
+   ],
+   "statement": "Using the number cards 2, 8, 4, each exactly once, you make a three-digit number. What is the largest number you can make?",
+   "choices": [
+    "284",
+    "248",
+    "824",
+    "842"
+   ],
+   "answerIndex": 3,
+   "explanation": "To make the largest number, put bigger digits in higher places. Putting 8 in the hundreds, 4 in the tens, and 2 in the ones gives 842.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The largest number comes from placing bigger digits in higher place values — a digit in the hundreds place is worth 100× its face value, so bigger digits should sit higher. The smallest is the reverse. Placing the best option first like this is called the greedy method."
+  },
+  {
+   "id": "gen-cards-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "place value",
+    "making the largest number"
+   ],
+   "statement": "Using the number cards 6, 1, 9, each exactly once, you make a three-digit number. What is the largest number you can make?",
+   "choices": [
+    "169",
+    "619",
+    "916",
+    "961"
+   ],
+   "answerIndex": 3,
+   "explanation": "To make the largest number, put bigger digits in higher places. Putting 9 in the hundreds, 6 in the tens, and 1 in the ones gives 961.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The largest number comes from placing bigger digits in higher place values — a digit in the hundreds place is worth 100× its face value, so bigger digits should sit higher. The smallest is the reverse. Placing the best option first like this is called the greedy method."
+  },
+  {
+   "id": "gen-cards-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 1,
+   "groupId": "g-gen-cards-1",
+   "concepts": [
+    "place value",
+    "making the largest number"
+   ],
+   "statement": "Using the number cards 4, 7, 2, each exactly once, you make a three-digit number. What is the largest number you can make?",
+   "choices": [
+    "742",
+    "247",
+    "724",
+    "472"
+   ],
+   "answerIndex": 0,
+   "explanation": "To make the largest number, put bigger digits in higher places. Putting 7 in the hundreds, 4 in the tens, and 2 in the ones gives 742.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The largest number comes from placing bigger digits in higher place values — a digit in the hundreds place is worth 100× its face value, so bigger digits should sit higher. The smallest is the reverse. Placing the best option first like this is called the greedy method."
   },
   {
    "id": "gen-seq1-1",
@@ -348,16 +999,16 @@
    ],
    "statement": "Find the rule. 2, 5, 8, 11, □ — what number goes in the box?",
    "choices": [
-    "14",
-    "11",
+    "17",
     "15",
-    "17"
+    "11",
+    "14"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 11 comes 11 + 3 = 14.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -375,16 +1026,16 @@
    ],
    "statement": "Find the rule. 3, 7, 11, 15, □ — what number goes in the box?",
    "choices": [
-    "23",
     "19",
-    "15",
-    "20"
+    "23",
+    "20",
+    "15"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 4 each time, so after 15 comes 15 + 4 = 19.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -403,15 +1054,15 @@
    "statement": "Find the rule. 30, 26, 22, 18, □ — what number goes in the box?",
    "choices": [
     "15",
+    "10",
     "14",
-    "18",
-    "10"
+    "18"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Look at the gap between neighboring numbers. It goes down by 4 each time, so after 18 comes 18 − 4 = 14.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -429,12 +1080,12 @@
    ],
    "statement": "Find the rule. 1, 4, 7, 10, □ — what number goes in the box?",
    "choices": [
+    "14",
     "16",
-    "13",
     "10",
-    "14"
+    "13"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 10 comes 10 + 3 = 13.",
    "mistakes": [
     {
@@ -444,6 +1095,138 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "When the gap between neighbors stays constant, it’s an arithmetic sequence. Always write the gaps first: a constant gap means arithmetic, a constant ratio means geometric. The nth term is (first) + (n−1)×(gap)."
+  },
+  {
+   "id": "gen-match-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "shared sides",
+    "finding patterns"
+   ],
+   "statement": "You join 3 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
+   "choices": [
+    "10 matchsticks",
+    "12 matchsticks",
+    "11 matchsticks",
+    "9 matchsticks"
+   ],
+   "answerIndex": 0,
+   "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 3 squares need 4 + 3×2 = 10.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 3
+    }
+   },
+   "detailedExplanation": "A square has 4 sides, but joining one on the side shares 1 touching side. So the first cell needs 4 and each next one adds only 3, giving 3n+1 in all. 'Count a shared part once' comes back again in perimeter and grid counting."
+  },
+  {
+   "id": "gen-match-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "shared sides",
+    "finding patterns"
+   ],
+   "statement": "You join 4 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
+   "choices": [
+    "12 matchsticks",
+    "15 matchsticks",
+    "16 matchsticks",
+    "13 matchsticks"
+   ],
+   "answerIndex": 3,
+   "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 4 squares need 4 + 3×3 = 13.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 4
+    }
+   },
+   "detailedExplanation": "A square has 4 sides, but joining one on the side shares 1 touching side. So the first cell needs 4 and each next one adds only 3, giving 3n+1 in all. 'Count a shared part once' comes back again in perimeter and grid counting."
+  },
+  {
+   "id": "gen-match-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "shared sides",
+    "finding patterns"
+   ],
+   "statement": "You join 5 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
+   "choices": [
+    "16 matchsticks",
+    "15 matchsticks",
+    "19 matchsticks",
+    "20 matchsticks"
+   ],
+   "answerIndex": 0,
+   "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 5 squares need 4 + 3×4 = 16.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 5
+    }
+   },
+   "detailedExplanation": "A square has 4 sides, but joining one on the side shares 1 touching side. So the first cell needs 4 and each next one adds only 3, giving 3n+1 in all. 'Count a shared part once' comes back again in perimeter and grid counting."
+  },
+  {
+   "id": "gen-match-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-match-1",
+   "concepts": [
+    "shared sides",
+    "finding patterns"
+   ],
+   "statement": "You join 6 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
+   "choices": [
+    "19 matchsticks",
+    "23 matchsticks",
+    "24 matchsticks",
+    "18 matchsticks"
+   ],
+   "answerIndex": 0,
+   "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 6 squares need 4 + 3×5 = 19.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "MATCHSTICK",
+    "params": {
+     "n": 6
+    }
+   },
+   "detailedExplanation": "A square has 4 sides, but joining one on the side shares 1 touching side. So the first cell needs 4 and each next one adds only 3, giving 3n+1 in all. 'Count a shared part once' comes back again in perimeter and grid counting."
   },
   {
    "id": "gen-outfit-1",
@@ -456,16 +1239,16 @@
    ],
    "statement": "There are 3 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
-    "6 outfits",
     "7 outfits",
-    "9 outfits",
-    "5 outfits"
+    "6 outfits",
+    "5 outfits",
+    "9 outfits"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "For every top you can pair 2 bottoms, and there are 3 tops, so 3×2=6. Drawing a table and pairing them gives 6 as well.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 2,
      "misconception": "Don’t add — multiply. Each top pairs with every bottom."
     }
    ],
@@ -483,16 +1266,16 @@
    ],
    "statement": "There are 2 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
-    "5 outfits",
-    "7 outfits",
     "6 outfits",
-    "9 outfits"
+    "9 outfits",
+    "7 outfits",
+    "5 outfits"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "For every top you can pair 3 bottoms, and there are 2 tops, so 2×3=6. Drawing a table and pairing them gives 6 as well.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Don’t add — multiply. Each top pairs with every bottom."
     }
    ],
@@ -510,12 +1293,12 @@
    ],
    "statement": "There are 2 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
-    "7 outfits",
-    "4 outfits",
+    "3 outfits",
     "5 outfits",
-    "3 outfits"
+    "4 outfits",
+    "7 outfits"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "For every top you can pair 2 bottoms, and there are 2 tops, so 2×2=4. Drawing a table and pairing them gives 4 as well.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -532,12 +1315,12 @@
    ],
    "statement": "There are 3 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
+    "10 outfits",
     "9 outfits",
-    "8 outfits",
     "6 outfits",
-    "10 outfits"
+    "8 outfits"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "For every top you can pair 3 bottoms, and there are 3 tops, so 3×3=9. Drawing a table and pairing them gives 9 as well.",
    "mistakes": [
     {
@@ -559,12 +1342,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
-    "2 blocks",
     "3 blocks",
     "4 blocks",
-    "1 block"
+    "1 block",
+    "2 blocks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Count how many high each column is and add them: 1 + 1 = 2.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -592,12 +1375,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
-    "3 blocks",
-    "5 blocks",
     "2 blocks",
-    "4 blocks"
+    "3 blocks",
+    "4 blocks",
+    "5 blocks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "Count how many high each column is and add them: 1 + 1 + 1 = 3.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -626,12 +1409,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
-    "3 blocks",
     "2 blocks",
     "5 blocks",
-    "4 blocks"
+    "4 blocks",
+    "3 blocks"
    ],
-   "answerIndex": 0,
+   "answerIndex": 3,
    "explanation": "Count how many high each column is and add them: 2 + 1 = 3.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -681,6 +1464,138 @@
     ]
    },
    "detailedExplanation": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden behind or below, knowing each column’s height lets you count exactly. Thinking 'from the top' always works."
+  },
+  {
+   "id": "gen-gridtiny-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-gridtiny-1",
+   "concepts": [
+    "area",
+    "counting cells"
+   ],
+   "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
+   "choices": [
+    "2 cm²",
+    "4 cm²",
+    "3 cm²",
+    "5 cm²"
+   ],
+   "answerIndex": 2,
+   "explanation": "Count the shaded cells one by one → 3 cm².",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 2,
+     "rows": 2,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     2,
+     0,
+     2,
+     1,
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
+    ]
+   },
+   "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange."
+  },
+  {
+   "id": "gen-gridtiny-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-gridtiny-1",
+   "concepts": [
+    "area",
+    "counting cells"
+   ],
+   "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
+   "choices": [
+    "5 cm²",
+    "3 cm²",
+    "6 cm²",
+    "4 cm²"
+   ],
+   "answerIndex": 3,
+   "explanation": "Count the shaded cells one by one → 4 cm².",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 3,
+     "rows": 2,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     3,
+     0,
+     3,
+     1,
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
+    ]
+   },
+   "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange."
+  },
+  {
+   "id": "gen-gridtiny-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 1,
+   "groupId": "g-gen-gridtiny-1",
+   "concepts": [
+    "area",
+    "counting cells"
+   ],
+   "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
+   "choices": [
+    "6 cm²",
+    "7 cm²",
+    "4 cm²",
+    "5 cm²"
+   ],
+   "answerIndex": 3,
+   "explanation": "Count the shaded cells one by one → 5 cm².",
+   "mistakes": [],
+   "source": "generated:v1(template+brute-force-verified)",
+   "figure": {
+    "type": "GRID_POLYGON",
+    "params": {
+     "cols": 2,
+     "rows": 3,
+     "n": 6
+    },
+    "heights": [
+     0,
+     0,
+     2,
+     0,
+     2,
+     2,
+     1,
+     2,
+     1,
+     3,
+     0,
+     3
+    ]
+   },
+   "detailedExplanation": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. Getting the same answer both ways catches mistakes. More than memorizing formulas, the key is imagining how to cut and rearrange."
   }
  ]
 }
