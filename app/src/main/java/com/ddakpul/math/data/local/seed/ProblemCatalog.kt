@@ -31,6 +31,7 @@ object ProblemCatalog {
         explanation: String? = null,
         mistakes: List<Mistake> = emptyList(),
         figure: ProblemFigure? = null,
+        detailedExplanation: String? = null,
     ): Problem =
         Problem(
             id = id,
@@ -44,6 +45,7 @@ object ProblemCatalog {
             explanation = explanation,
             commonMistakes = mistakes,
             figure = figure,
+            detailedExplanation = detailedExplanation,
         )
 
     val problems: List<Problem> =

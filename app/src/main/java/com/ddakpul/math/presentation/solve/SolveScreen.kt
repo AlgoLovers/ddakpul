@@ -1,5 +1,7 @@
 package com.ddakpul.math.presentation.solve
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,8 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,16 +39,20 @@ import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.ChoiceOption
 import com.ddakpul.math.core.designsystem.component.ChoiceState
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
+import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.presentation.common.labelRes
+import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.result.ResultView
 
 @Composable
 fun SolveScreen(
     onGoHome: () -> Unit,
+    onUpgrade: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SolveViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     SolveContent(
         uiState = uiState,
         onSelect = viewModel::selectChoice,
@@ -52,8 +60,32 @@ fun SolveScreen(
         onNext = viewModel::loadNext,
         onExclude = viewModel::excludeCurrent,
         onGoHome = onGoHome,
+        onUpgrade = onUpgrade,
+        onReportAnswer = { result -> shareAnswerReport(context, result) },
         modifier = modifier,
     )
+}
+
+/** '정답이 이상해요' — 문제 정보를 채운 쪽지를 공유 시트로 띄운다(개발자에게 전달, 무서버). */
+private fun shareAnswerReport(
+    context: Context,
+    result: GradingResult,
+) {
+    val text =
+        context.getString(
+            R.string.report_answer_feedback,
+            result.problem.id,
+            result.problem.statement,
+            result.problem.choices.joinToString(" / "),
+            result.problem.choices[result.correctIndex],
+            result.problem.choices[result.selectedIndex],
+        )
+    val sendIntent =
+        Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+    context.startActivity(Intent.createChooser(sendIntent, null))
 }
 
 @Composable
@@ -64,9 +96,13 @@ private fun SolveContent(
     onNext: () -> Unit,
     onExclude: () -> Unit,
     onGoHome: () -> Unit,
+    onUpgrade: () -> Unit,
+    onReportAnswer: (GradingResult) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showExcludeDialog by remember { mutableStateOf(false) }
+    // 연습장은 본문 폭 제한과 무관하게 콘텐츠 영역 전체를 덮어야 해, 상태를 여기(fillMaxSize Box)로 올려 오버레이로 띄운다.
+    var showScratchpad by remember { mutableStateOf(false) }
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when (uiState.phase) {
@@ -87,6 +123,8 @@ private fun SolveContent(
                     onSelect = onSelect,
                     onSubmit = onSubmit,
                     onExcludeRequest = { showExcludeDialog = true },
+                    onUpgrade = onUpgrade,
+                    onScratchpad = { showScratchpad = true },
                     modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                 )
             }
@@ -98,12 +136,28 @@ private fun SolveContent(
                         showExplanation = uiState.showExplanation,
                         sessionStreak = uiState.sessionStreak,
                         softCutSuggested = uiState.softCutSuggested,
+                        isPremium = uiState.isPremium,
                         onNext = onNext,
                         onFinishToday = onGoHome,
                         onExcludeRequest = { showExcludeDialog = true },
+                        onReportAnswer = { onReportAnswer(result) },
+                        onUpgrade = onUpgrade,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }
+            }
+        }
+
+        // 연습장 오버레이 — 문제 풀이 위에 전체 폭으로 덮는다(도형 문제면 그림도 함께).
+        uiState.problem?.let { problem ->
+            if (showScratchpad) {
+                ScratchpadOverlay(
+                    statement = problem.statement,
+                    figure = problem.figure,
+                    strokes = rememberScratchStrokes(problem.id),
+                    onDismiss = { showScratchpad = false },
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
         }
     }
@@ -142,15 +196,96 @@ private fun ExcludeConfirmDialog(
     )
 }
 
+/** 읽어주기 버튼 + "지금 이 음성으로 읽어요" 표시. 재생 중 다시 누르면 정지(토글). */
+@Composable
+private fun ReadAloudButton(
+    speaker: com.ddakpul.math.presentation.common.SpeakerController,
+    text: String,
+) {
+    Column(horizontalAlignment = Alignment.End) {
+        TextButton(onClick = { speaker.toggle(text) }) {
+            Text(
+                text =
+                    if (speaker.isSpeaking) {
+                        stringResource(R.string.solve_read_stop)
+                    } else {
+                        stringResource(R.string.solve_read_aloud)
+                    },
+                softWrap = false,
+                maxLines = 1,
+            )
+        }
+        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지).
+        if (speaker.engineLabel.isNotBlank()) {
+            Text(
+                text = stringResource(R.string.solve_reading_with, speaker.engineLabel),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+/** 문제 위 정보 줄: (복습 배지)·영역/난이도 + 연습장·읽어주기 도구. */
+@Composable
+private fun ProblemHeaderRow(
+    area: com.ddakpul.math.domain.model.MathArea,
+    difficulty: Int,
+    isReview: Boolean,
+    speaker: com.ddakpul.math.presentation.common.SpeakerController,
+    statement: String,
+    onScratchpad: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (isReview) {
+                Text(
+                    text = stringResource(R.string.solve_review_badge),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Text(
+                text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), difficulty),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        // 연습장(손풀이) + 읽어주기 — 사고력 문제는 끄적이며 풀어야 하고, 글 서툰 아이는 듣게.
+        // 버튼 텍스트가 한 글자씩 세로로 쪼개지지 않게, 버튼 영역은 줄지 않도록(위 라벨이 weight로 흡수).
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Top) {
+            TextButton(onClick = onScratchpad) {
+                Text(stringResource(R.string.solve_scratchpad), softWrap = false, maxLines = 1)
+            }
+            ReadAloudButton(speaker = speaker, text = statement)
+        }
+    }
+}
+
 @Composable
 private fun SolvingBody(
     uiState: SolveUiState,
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
     onExcludeRequest: () -> Unit,
+    onUpgrade: () -> Unit,
+    onScratchpad: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
+    val speaker = rememberSpeaker()
     Column(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -158,23 +293,25 @@ private fun SolvingBody(
         // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다.
         TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
 
+        // 무료 상한을 넘어 승급 준비가 됐으면 이용권을 권한다(계속 풀 수는 있다).
+        if (uiState.premiumSuggested) {
+            PremiumBanner(onUpgrade = onUpgrade)
+        }
+
+        // 무료 상한 난이도에 머물 때 — 왜 더 안 올라가는지 상시 안내(헷갈림 방지).
+        if (uiState.showFreeCapHint) {
+            FreeCapHint(onUpgrade = onUpgrade)
+        }
+
         uiState.area?.let { area ->
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (uiState.isReview) {
-                    Text(
-                        text = stringResource(R.string.solve_review_badge),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.tertiary,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-                Text(
-                    text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), uiState.difficulty),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
+            ProblemHeaderRow(
+                area = area,
+                difficulty = uiState.difficulty,
+                isReview = uiState.isReview,
+                speaker = speaker,
+                statement = problem.statement,
+                onScratchpad = onScratchpad,
+            )
         }
 
         Card(
@@ -242,6 +379,47 @@ private fun TodayProgressHeader(
         LinearProgressIndicator(
             progress = { (todaySolved.toFloat() / dailyGoal).coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+/** 무료 상한을 넘어 승급 준비가 됐을 때의 이용권 배너 — 막지 않고 권유만 한다. */
+@Composable
+private fun PremiumBanner(onUpgrade: () -> Unit) {
+    Card(
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.solve_premium_banner),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            Button(onClick = onUpgrade) {
+                Text(stringResource(R.string.solve_premium_cta))
+            }
+        }
+    }
+}
+
+/** 무료 상한 난이도에서 늘 보이는 저강도 안내 — 왜 난이도가 안 올라가는지 알려주고 페이월로 안내. */
+@Composable
+private fun FreeCapHint(onUpgrade: () -> Unit) {
+    TextButton(
+        onClick = onUpgrade,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Text(
+            text = stringResource(R.string.solve_free_cap_hint),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

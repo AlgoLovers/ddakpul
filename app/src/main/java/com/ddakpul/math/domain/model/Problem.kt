@@ -16,18 +16,20 @@ data class Mistake(
 /**
  * 한 문제. 앱에 사전 생성되어 내장되며(실시간 생성 금지), 추천은 개별 문제가 아니라
  * [groupId]가 같은 묶음(유사 개념·난이도) 단위로 이뤄진다.
- * 학년 구분은 두지 않는다 — 난이도(1~5)가 유일한 수준 축이다.
+ * 학년 구분은 두지 않는다 — 난이도(Difficulty.MIN..MAX)가 유일한 수준 축이다. 천장은 점진 확장.
  */
 data class Problem(
     val id: String,
     val area: MathArea,
     val conceptTags: List<String>,
-    val difficulty: Int, // 1~5
+    val difficulty: Int, // 1~N (Difficulty.MIN..MAX)
     val groupId: String,
     val statement: String,
     val choices: List<String>,
     val answer: Answer,
-    val explanation: String?, // 모든 문제가 단계별 풀이를 보유한다(콘텐츠 규칙, ProblemCatalogTest가 강제)
+    val explanation: String?, // 1차 풀이 — 모든 문제가 보유(콘텐츠 규칙, ProblemCatalogTest가 강제). 무료 공개.
     val commonMistakes: List<Mistake>,
     val figure: ProblemFigure? = null,
+    /** 2차(심화) 풀이 — 더 깊은 개념·다른 풀이법. 이용권 전용. 없는 문제도 있어 nullable. */
+    val detailedExplanation: String? = null,
 )

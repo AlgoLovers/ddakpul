@@ -39,6 +39,19 @@ data class DifficultyPoint(
 )
 
 /**
+ * 난이도×카테고리 매트릭스의 한 칸 — 이 앱의 핵심 축 두 개를 교차한 숙달 지도.
+ * 학년 개념이 없으므로 이 지도가 "아이가 어디까지 왔는지"의 유일한 좌표계다.
+ */
+data class MatrixCell(
+    val area: MathArea,
+    val difficulty: Int,
+    val solved: Int,
+    val correct: Int,
+) {
+    val accuracy: Float get() = if (solved == 0) 0f else correct.toFloat() / solved
+}
+
+/**
  * 학습 기록 전체에서 파생되는 통계 묶음. 홈(오늘 진행·스트릭)과
  * 부모용 리포트(추이·숙달도·인사이트)가 모두 이 모델 하나를 읽는다.
  */
@@ -52,6 +65,8 @@ data class LearningStats(
     val conceptStats: List<ConceptStat>,
     /** 시도 순서대로의 난이도 — 성장 곡선. */
     val difficultyProgress: List<DifficultyPoint>,
+    /** 난이도×카테고리 매트릭스 — 시도가 있는 칸만 담는다(빈 칸은 UI에서 채움). */
+    val matrixCells: List<MatrixCell>,
     /** 오늘까지 이어진 연속 학습일. 오늘 안 했어도 어제까지 이어졌으면 살아 있다. */
     val streakDays: Int,
     val bestStreakDays: Int,
@@ -70,6 +85,8 @@ data class LearningStats(
      * 복습 루프가 작동한다는 증거이자 "틀림 = 나쁨이 아님" 메시지. 틀린 문제가 없으면 null.
      */
     val errorRecoveryRate: Float?,
+    /** 최근 틀린 문제(각 문제의 '가장 최근 시도'가 오답인 것) — 오답 노트용. 최신순. */
+    val recentMistakes: List<Problem> = emptyList(),
 ) {
     val accuracy: Float get() = if (totalSolved == 0) 0f else correctCount.toFloat() / totalSolved
     val isEmpty: Boolean get() = totalSolved == 0

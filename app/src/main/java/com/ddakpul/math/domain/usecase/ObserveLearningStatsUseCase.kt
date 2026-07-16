@@ -7,6 +7,7 @@ import com.ddakpul.math.domain.model.DailyStat
 import com.ddakpul.math.domain.model.DifficultyPoint
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
+import com.ddakpul.math.domain.model.MatrixCell
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
@@ -50,6 +51,9 @@ class ObserveLearningStatsUseCase
 
 /** 정답률 추이 비교 구간(최근 N일 vs 그 전 N일). */
 internal const val TREND_WINDOW_DAYS = 7
+
+/** 오답 노트에 보여줄 최대 문제 수. */
+internal const val RECENT_MISTAKES_LIMIT = 6
 
 /** 순수 집계 로직 — 단위 테스트로 검증한다. [attempts]는 시간 오름차순. */
 internal fun buildLearningStats(
@@ -99,6 +103,19 @@ internal fun buildLearningStats(
             problemsById[attempt.problemId]?.let { DifficultyPoint(attempt.timestamp, it.difficulty) }
         }
 
+    val matrixCells =
+        attempts
+            .mapNotNull { attempt -> problemsById[attempt.problemId]?.let { it to attempt } }
+            .groupBy({ (problem, _) -> problem.area to problem.difficulty }, { (_, attempt) -> attempt })
+            .map { (key, inCell) ->
+                MatrixCell(
+                    area = key.first,
+                    difficulty = key.second,
+                    solved = inCell.size,
+                    correct = inCell.count { it.isCorrect },
+                )
+            }
+
     val studyDays = dailyStats.mapTo(sortedSetOf()) { it.epochDay }
     val (streak, bestStreak) = computeStreaks(studyDays, today)
 
@@ -118,6 +135,17 @@ internal fun buildLearningStats(
 
     val errorRecoveryRate = computeErrorRecoveryRate(attempts)
 
+    // 오답 노트 — 각 문제의 '가장 최근 시도'가 오답인 문제들을 최신순으로. (attempts는 시간 오름차순)
+    val recentMistakes =
+        attempts
+            .groupBy { it.problemId }
+            .mapNotNull { (id, tries) ->
+                val last = tries.last()
+                if (!last.isCorrect) problemsById[id]?.let { it to last.timestamp } else null
+            }.sortedByDescending { it.second }
+            .take(RECENT_MISTAKES_LIMIT)
+            .map { it.first }
+
     return LearningStats(
         totalSolved = attempts.size,
         correctCount = attempts.count { it.isCorrect },
@@ -126,6 +154,7 @@ internal fun buildLearningStats(
         dailyStats = dailyStats,
         conceptStats = conceptStats,
         difficultyProgress = difficultyProgress,
+        matrixCells = matrixCells,
         streakDays = streak,
         bestStreakDays = bestStreak,
         todaySolved = todayAttempts.size,
@@ -135,6 +164,7 @@ internal fun buildLearningStats(
         recentAccuracy = recent.accuracyOrNull(),
         previousAccuracy = previous.accuracyOrNull(),
         errorRecoveryRate = errorRecoveryRate,
+        recentMistakes = recentMistakes,
     )
 }
 

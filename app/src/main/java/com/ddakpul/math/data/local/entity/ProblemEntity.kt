@@ -20,4 +20,5 @@ data class ProblemEntity(
     val explanation: String?,
     val mistakesJson: String,
     val figureJson: String? = null,
+    val detailedExplanation: String? = null,
 )

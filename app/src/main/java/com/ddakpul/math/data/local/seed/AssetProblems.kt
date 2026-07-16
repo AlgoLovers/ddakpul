@@ -30,6 +30,7 @@ data class AssetProblemDto(
     val choices: List<String>,
     val answerIndex: Int,
     val explanation: String? = null,
+    val detailedExplanation: String? = null,
     val mistakes: List<AssetMistakeDto> = emptyList(),
     val source: String? = null,
     val figure: FigureDto? = null,
@@ -58,5 +59,6 @@ fun parseAssetProblems(text: String): List<Problem> =
             explanation = dto.explanation,
             commonMistakes = dto.mistakes.map { Mistake(it.choiceIndex, it.misconception) },
             figure = dto.figure?.toDomain(),
+            detailedExplanation = dto.detailedExplanation,
         )
     }

@@ -44,6 +44,23 @@ class BuildLearningStatsTest {
     }
 
     @Test
+    fun recentMistakes_onlyLatestWrongPerProblem_newestFirst() {
+        val stats =
+            build(
+                listOf(
+                    attempt("num1", false, timestamp = DAY * 100), // num1 틀림
+                    attempt("num1", true, timestamp = DAY * 101), // 나중에 맞힘 → 오답 노트 제외
+                    attempt("num2", true, timestamp = DAY * 102),
+                    attempt("num2", false, timestamp = DAY * 103), // 최근 시도가 오답 → 포함
+                    attempt("geo1", false, timestamp = DAY * 104), // 최근 오답 → 포함
+                ),
+            )
+
+        // 최신순으로 geo1(104) → num2(103). 다시 맞힌 num1은 빠진다.
+        assertThat(stats.recentMistakes.map { it.id }).containsExactly("geo1", "num2").inOrder()
+    }
+
+    @Test
     fun dailyStats_groupByLocalDay_respectingZoneOffset() {
         // UTC 기준 23:30과 다음날 00:30 — 오프셋 +1h를 주면 같은 날(자정 넘김)로 묶이지 않고
         // 23:30+1h=다음날 00:30, 00:30+1h=다음날 01:30으로 둘 다 "다음날"이 된다.
@@ -228,6 +245,30 @@ class BuildLearningStatsTest {
         // 취약(정답률 낮은) 순 정렬
         assertThat(stats.conceptStats.first().concept).isEqualTo("소수")
         assertThat(stats.conceptStats.last().concept).isEqualTo("각도")
+    }
+
+    @Test
+    fun matrixCells_aggregatePerAreaAndDifficulty() {
+        val stats =
+            build(
+                listOf(
+                    // 수와연산: 난2(num1) 1문제 정답, 난3(num2) 1문제 오답
+                    attempt("num1", true, timestamp = DAY * 100),
+                    attempt("num2", false, timestamp = DAY * 100),
+                    // 도형: 난2(geo1) 2문제 중 1정답
+                    attempt("geo1", true, timestamp = DAY * 100),
+                    attempt("geo1", false, timestamp = DAY * 100 + HOUR),
+                ),
+            )
+
+        val byKey = stats.matrixCells.associateBy { it.area to it.difficulty }
+        assertThat(byKey[MathArea.NUMBER_OPERATION to 2]?.solved).isEqualTo(1)
+        assertThat(byKey[MathArea.NUMBER_OPERATION to 2]?.correct).isEqualTo(1)
+        assertThat(byKey[MathArea.NUMBER_OPERATION to 3]?.correct).isEqualTo(0)
+        assertThat(byKey[MathArea.SHAPE_MEASUREMENT to 2]?.solved).isEqualTo(2)
+        assertThat(byKey[MathArea.SHAPE_MEASUREMENT to 2]?.accuracy).isWithin(TOLERANCE).of(0.5f)
+        // 시도 없는 칸은 없다
+        assertThat(byKey.containsKey(MathArea.DATA_POSSIBILITY to 1)).isFalse()
     }
 
     @Test

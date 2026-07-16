@@ -1,0 +1,387 @@
+<resources>
+    <string name="app_name">DdakPul</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_solve">Solve</string>
+    <string name="nav_report">Report</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="home_greeting">Ready for today\'s just-right problems?</string>
+    <string name="home_start">Start learning</string>
+    <string name="home_goal_title">Today\'s goal</string>
+    <string name="home_goal_progress">%1$d / %2$d problems</string>
+    <string name="home_goal_done">Today\'s goal done! 🎉</string>
+    <string name="home_streak">🔥 %1$d-day streak</string>
+    <string name="home_streak_best">Best: %1$d days</string>
+    <string name="home_streak_start">Solve one problem today to start a streak</string>
+    <string name="home_stat_solved">Solved</string>
+    <string name="home_stat_accuracy">Accuracy</string>
+    <string name="home_stat_difficulty">Level</string>
+    <string name="home_unit_count">%1$d</string>
+    <string name="home_unit_percent">%1$d%%</string>
+    <string name="home_unit_level">Lv.%1$d</string>
+
+    <!-- Solving -->
+    <string name="solve_today_progress">Today %1$d / %2$d</string>
+    <string name="solve_area_label">%1$s · Level %2$d</string>
+    <string name="solve_review_badge">🔁 Review</string>
+    <string name="solve_read_aloud">🔊 Read aloud</string>
+    <string name="solve_scratchpad">✏️ Scratchpad</string>
+    <string name="scratch_title">Scratchpad — work it out by hand</string>
+    <string name="scratch_close">Close</string>
+    <string name="scratch_eraser">Eraser</string>
+    <string name="scratch_undo">Undo</string>
+    <string name="scratch_clear">Clear all</string>
+    <string name="solve_submit">Check answer</string>
+    <string name="solve_choice_prefix">%1$s.</string>
+    <string name="solve_loading">Loading a problem…</string>
+    <string name="solve_empty">No problems available right now.</string>
+    <string name="solve_exclude_button">Something\'s off with this one</string>
+    <string name="solve_exclude_dialog_title">Stop showing this problem?</string>
+    <string name="solve_exclude_dialog_body">Problems you flag won\'t come back. Please use this only when a problem is truly wrong — not just because it\'s hard!</string>
+    <string name="solve_exclude_dialog_confirm">Stop showing it</string>
+    <string name="solve_exclude_dialog_cancel">Keep solving</string>
+
+    <!-- Result -->
+    <string name="result_correct">Correct! 🎉</string>
+    <string name="result_wrong">So close — want another look?</string>
+    <string name="result_your_answer">Your answer: %1$s</string>
+    <string name="result_correct_answer">Answer: %1$s</string>
+    <string name="result_explanation_label">Solution</string>
+    <string name="result_show_explanation">Show solution</string>
+    <string name="result_detailed_label">🔍 Deeper dive</string>
+    <string name="result_detailed_show">Show the deeper dive</string>
+    <string name="result_detailed_locked_title">🔍 Deeper dive with a Pass</string>
+    <string name="result_detailed_locked_body">See the deeper concepts and other ways to solve this problem with a Pass.</string>
+    <string name="result_detailed_cta">See Passes</string>
+    <string name="report_answer_button">This answer looks wrong</string>
+    <string name="report_answer_feedback">[DdakPul answer question]\nProblem ID: %1$s\nProblem: %2$s\nChoices: %3$s\nApp\'s answer: %4$s\nYour answer: %5$s\n\n(Write what you think and send it to us)</string>
+    <string name="result_mistake_label">Could this have been the slip?</string>
+    <string name="result_remediation_hint">Let\'s rebuild from the basics, one step at a time.</string>
+    <string name="result_next">Next problem</string>
+    <string name="result_softcut_title">This is plenty for today 🌙</string>
+    <string name="result_softcut_body">Resting after hard work is part of learning. But if you want more, keep going!</string>
+    <string name="result_softcut_stop">Done for today</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to DdakPul</string>
+    <string name="onboarding_welcome_subtitle">Grow your thinking with just-right problems.</string>
+    <string name="onboarding_value1_title">Real thinking problems</string>
+    <string name="onboarding_value1_body">Not drills — problems worth grabbing a scratchpad and pondering for five minutes.</string>
+    <string name="onboarding_value2_title">Ad-free and safe</string>
+    <string name="onboarding_value2_body">No ads, no nudges to pay. Your progress stays on this device only.</string>
+    <string name="onboarding_value3_title">Solve on your own, track with reports</string>
+    <string name="onboarding_value3_body">Solve independently, and watch your skills grow in the report.</string>
+    <string name="onboarding_goal_title">How many problems a day?</string>
+    <string name="onboarding_goal_subtitle">You can change this anytime in Settings.</string>
+    <string name="onboarding_goal_chip">%1$d</string>
+    <string name="onboarding_level_title">Pick a starting point that fits</string>
+    <string name="onboarding_level_subtitle">It adjusts to your level as you go.</string>
+    <string name="onboarding_level_easy_title">I\'m new</string>
+    <string name="onboarding_level_easy_body">Start from the basics, step by step.</string>
+    <string name="onboarding_level_mid_title">I\'ve done some</string>
+    <string name="onboarding_level_mid_body">Start at a comfortable level.</string>
+    <string name="onboarding_level_hard_title">I\'m confident</string>
+    <string name="onboarding_level_hard_body">Start with challenging problems.</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_start">Get started</string>
+
+    <!-- Pass (monetization / paywall) -->
+    <string name="paywall_title">DdakPul Pass</string>
+    <string name="paywall_close">Close</string>
+    <string name="paywall_active_status">Pass active · %1$d days left</string>
+    <string name="paywall_active_extend">Buy another Pass and it adds to your remaining time.</string>
+    <string name="paywall_benefits_title">A Pass unlocks</string>
+    <string name="paywall_benefit1">Higher-level challenge problems (the heart of reasoning)</string>
+    <string name="paywall_benefit2">The full growth report and mastery map by level</string>
+    <string name="paywall_benefit3">Spaced review that resurfaces problems right before you forget</string>
+    <string name="paywall_pass_6m_title">6-month Pass</string>
+    <string name="paywall_pass_1y_title">1-year Pass</string>
+    <string name="paywall_pass_1y_badge">Best value</string>
+    <string name="paywall_activate">Start a Pass</string>
+    <string name="paywall_no_autorenew">No auto-renewal. When it ends, it just stops. No ads, no nudges to pay more.</string>
+    <string name="paywall_test_note">(For now this activates instantly for testing — real store billing is coming)</string>
+
+    <!-- Grown-up check (blocks kids before purchase/reset) -->
+    <string name="parent_gate_title">Grown-up check</string>
+    <string name="parent_gate_body">This step is for a grown-up. Please tap the numbers below in order.</string>
+    <string name="parent_gate_retry">Wrong order. Please start again from the beginning.</string>
+    <string name="parent_gate_cancel">Cancel</string>
+
+    <!-- Launch promo: everything free -->
+    <string name="home_launch_free_title">🎉 Launch offer · Everything free until %1$s</string>
+    <string name="home_launch_free_desc">Right now, higher levels and the full report are all free. After the deadline, a Pass is needed.</string>
+    <string name="settings_launch_free">Launch offer · Everything is open until %1$s (a Pass is needed after that)</string>
+    <string name="paywall_launch_free_title">It\'s the free launch period right now</string>
+    <string name="paywall_launch_free_desc">Every feature is open with no payment until %1$s. Pick a Pass below only if you want to get ready for after the deadline.</string>
+
+    <string name="settings_premium_title">Pass</string>
+    <string name="settings_premium_desc">A Pass unlocks higher levels and the full report.</string>
+    <string name="settings_premium_open">See Passes</string>
+    <string name="settings_premium_active">Active · %1$d days left</string>
+    <string name="settings_premium_manage">Extend Pass</string>
+
+    <string name="solve_premium_banner">🎉 You\'re doing great at Level 3! Level 4 and up open with a Pass.</string>
+    <string name="solve_premium_cta">See Passes</string>
+    <string name="solve_free_cap_hint">Free goes up to Level 3 · Unlock higher levels with a Pass ›</string>
+
+    <string name="report_premium_locked_title">More detail with a Pass</string>
+    <string name="report_premium_locked_desc">The accuracy trend, level-growth curve, mastery by concept, and mastery map by level are available with a Pass.</string>
+    <string name="report_premium_cta">See Passes</string>
+
+    <!-- Privacy · data safety -->
+    <string name="privacy_title">Privacy · Data safety</string>
+    <string name="privacy_back">Close</string>
+    <string name="privacy_intro">DdakPul is built so kids can use it with peace of mind. Here\'s exactly what we protect.</string>
+    <string name="privacy_item1_title">We collect no personal data</string>
+    <string name="privacy_item1_body">We never ask for or store any personal info like name, birthday, or contacts.</string>
+    <string name="privacy_item2_title">Data stays on this device</string>
+    <string name="privacy_item2_body">All learning records are saved on this device only. Nothing is sent to a server — there is no server to send to.</string>
+    <string name="privacy_item3_title">No ads</string>
+    <string name="privacy_item3_body">No ads and no third-party tracking (analytics).</string>
+    <string name="privacy_item4_title">No accounts, no logins</string>
+    <string name="privacy_item4_body">No sign-up — open the app and start right away.</string>
+    <string name="privacy_item5_title">Works without the internet</string>
+    <string name="privacy_item5_body">Every feature works fully offline.</string>
+    <string name="privacy_footer">We do not collect personal data from children under 13 (COPPA/GDPR-K compliant).</string>
+    <string name="settings_privacy_title">Privacy · Data safety</string>
+    <string name="settings_privacy_desc">See what DdakPul protects — no ads, data on-device only.</string>
+    <string name="settings_privacy_open">Learn more</string>
+
+    <!-- Report -->
+    <string name="report_title">Learning report</string>
+    <string name="report_subtitle">See your learning at a glance.</string>
+    <string name="report_total_solved">Total solved</string>
+    <string name="report_accuracy">Overall accuracy</string>
+    <string name="report_current_level">Current level</string>
+    <string name="report_streak">Streak</string>
+    <string name="report_unit_days">%1$d days</string>
+    <string name="report_today">Solved today</string>
+    <string name="report_empty">No problems solved yet.\nSolve some and your report fills in.</string>
+
+    <!-- Report · hero / key metrics -->
+    <string name="report_hero_label">Current skill</string>
+    <string name="report_hero_caption">You\'ve reached here, out of %1$d levels.</string>
+    <string name="report_caption_correct">%1$d correct</string>
+    <string name="report_caption_best_streak">Best %1$d days</string>
+    <string name="report_caption_today_time">%1$d min studied</string>
+    <string name="report_caption_delta_up">+%1$d%%p vs last week</string>
+    <string name="report_caption_delta_down">−%1$d%%p vs last week</string>
+    <string name="report_caption_delta_same">About the same as last week</string>
+
+    <!-- Report · next step (actionable feedback) -->
+    <string name="report_nextstep_label">👉 Next step</string>
+    <string name="report_nextstep_solve">Solve now</string>
+    <string name="report_nextstep_start_today">No problems solved today yet. Even one keeps the momentum going.</string>
+    <string name="report_nextstep_focus_area">\'%1$s\' looks a bit tough lately. Solving some of these together would help.</string>
+    <string name="report_nextstep_ready">Answers are coming easily lately — you\'re about ready to move up a level. Keep the challenge going!</string>
+    <string name="report_nextstep_streak">🔥 %1$d days and counting! One problem today keeps the flow.</string>
+    <string name="report_nextstep_encourage">One problem a day. Asking \'how did you solve it?\' matters more than the answer — that\'s how thinking grows.</string>
+
+    <!-- Report · achievement by area -->
+    <string name="report_area_title">By area</string>
+    <string name="report_area_subtitle">See at a glance which of the four areas is strong and which needs more.</string>
+    <string name="report_area_stat">%1$d · %2$d%%</string>
+    <string name="report_area_none">Not solved yet</string>
+
+    <!-- Report · average time by level -->
+    <string name="report_avgtime_title">Average time by level</string>
+    <string name="report_avgtime_caption">Spending longer on harder problems is a good sign — time is the trace of thinking.</string>
+    <string name="report_avgtime_level">Level %1$d</string>
+    <string name="report_avgtime_min">%1$d min</string>
+    <string name="report_avgtime_sec">%1$d sec</string>
+
+    <!-- Report · insights -->
+    <string name="report_insights_title">This week\'s insights</string>
+    <string name="report_mistakes_title">Mistake notes · recently missed</string>
+    <string name="report_mistakes_desc">Recently missed problems. Revisiting the solutions turns misses into skill.</string>
+    <string name="insight_goal_done">✅ Today\'s goal is done. Keeping to a goal you set yourself is the best habit!</string>
+    <string name="insight_streak">🔥 %1$d-day streak. Consistency is building real skill.</string>
+    <string name="insight_accuracy_up">📈 Accuracy is up %1$d%%p from last week. What you\'re doing is working!</string>
+    <string name="insight_accuracy_down">🌱 Accuracy dipped %1$d%%p from last week. That can mean you\'re taking on harder problems.</string>
+    <string name="insight_error_recovery">💪 You re-solved %1$d%% of the problems you\'d missed. Misses are becoming skill.</string>
+    <string name="insight_weak_concept">🔍 Good to shore up \'%1$s\' (accuracy %2$d%%). Try some problems on this concept together.</string>
+
+    <!-- Report · weekly summary -->
+    <string name="report_weekly_title">This week</string>
+    <string name="weekly_base">This week you solved %2$d problems over %1$d days, for %3$d%% accuracy.</string>
+    <string name="weekly_delta_up">Up %1$d%%p from last week. 📈</string>
+    <string name="weekly_delta_down">Down %1$d%%p from last week — which can mean harder problems are in play.</string>
+    <string name="weekly_weak">Next week, try shoring up \'%1$s\' together.</string>
+    <string name="weekly_none">No problems solved this week yet. Shall we start with one today?</string>
+
+    <!-- Report · charts -->
+    <string name="report_daily_title">Last 2 weeks</string>
+    <string name="report_trend_title">Accuracy trend</string>
+    <string name="report_growth_title">Level-growth curve</string>
+    <string name="report_growth_caption">The level moves on its own to fit you as you solve (from beginner to advanced).</string>
+    <string name="report_concept_title">Mastery by concept</string>
+    <string name="report_concept_stat">%1$d · accuracy %2$d%%</string>
+    <string name="report_matrix_title">Mastery map by level</string>
+    <string name="report_matrix_caption">Numbers are accuracy. Darker means more mastered; the bold-outlined column is the level you\'re working on now.</string>
+
+    <!-- Mastery stages -->
+    <string name="mastery_mastered">Mastered</string>
+    <string name="mastery_practicing">Practicing</string>
+    <string name="mastery_weak">Needs work</string>
+    <string name="mastery_not_attempted">Not tried</string>
+
+    <!-- Report · guide for grown-ups (research-based) -->
+    <string name="report_parent_tips_title">Tips for grown-ups</string>
+    <string-array name="parent_tips">
+        <item>Ask \"how did you solve it?\" instead of \"you\'re so smart\" — kids praised for their method persist longer on hard problems.</item>
+        <item>Look at \"problems tried\" and \"problems re-solved\" alongside accuracy — noticing the effort is the best reward.</item>
+        <item>Even if math was hard for you, avoid \"I was bad at math too\" in front of a child — math anxiety is contagious.</item>
+        <item>On a miss, start with \"how far was it right?\" rather than giving the answer — unpacking the slip together builds skill.</item>
+        <item>Ten minutes a day, just check whether the child kept the goal they set — small, near goals build confidence and interest.</item>
+    </string-array>
+
+    <!-- Bar chart category labels — must match problem text (A, B, C…). -->
+    <string-array name="bar_chart_labels">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+    </string-array>
+
+    <!-- Printable worksheet -->
+    <string name="print_title">Print worksheet</string>
+    <string name="print_subtitle">Want to solve on paper — print the problems and an answer/solution sheet.</string>
+    <string name="print_back">Back</string>
+    <string name="print_count_label">Number of problems</string>
+    <string name="print_count_option">%1$d</string>
+    <string name="print_source_label">Selection</string>
+    <string name="print_source_recommended">DdakPul picks</string>
+    <string name="print_source_wrong">Missed ones</string>
+    <string name="print_area_label">Area</string>
+    <string name="print_area_all">All</string>
+    <string name="print_include_answers">Include answers &amp; solutions (separate sheet)</string>
+    <string name="print_action">Print</string>
+    <string name="print_job_name">DdakPul worksheet</string>
+    <string name="print_empty">No problems match. Try changing the options.</string>
+    <string name="report_print_button">Print worksheet</string>
+
+    <!-- Report PDF export -->
+    <string name="report_export_button">Save this report as PDF</string>
+    <string name="report_export_job">DdakPul learning report</string>
+    <string name="report_export_title">DdakPul learning report</string>
+    <string name="report_export_generated">As of %s</string>
+    <string name="report_export_section_area">By area</string>
+    <string name="report_export_section_weak">Concepts to review</string>
+    <string name="report_export_section_mistake">Recent misses</string>
+    <string name="report_export_weak_empty">No particular weak spots yet — doing great!</string>
+    <string name="report_export_mistake_empty">No recent misses — excellent!</string>
+    <string name="report_export_recovery">%d%% of missed problems re-solved — review is going well.</string>
+    <string name="report_export_footer">DdakPul · the just-right problem, every time</string>
+
+    <!-- Worksheet PDF text -->
+    <string name="worksheet_title">DdakPul worksheet</string>
+    <string name="worksheet_name_line">Name: ______________</string>
+    <string name="worksheet_date_line">Date: ____ / ____</string>
+    <string name="worksheet_answer_title">Answers &amp; solutions</string>
+    <string name="worksheet_footer">DdakPul — the just-right problem, every time</string>
+    <string name="worksheet_solution_space">Work</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <!-- Settings · Language (in-app switch) -->
+    <string name="settings_language_title">Language / 언어</string>
+    <string name="settings_language_desc">Change the app language. Problem content switches too, and the app restarts to apply it.</string>
+    <string name="settings_language_ko">한국어</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_goal_title">Daily goal</string>
+    <string name="settings_goal_desc">Setting your own goal makes studying last longer and feel better.</string>
+    <string name="settings_goal_option">%1$d</string>
+
+    <!-- Settings · read-aloud (TTS) voice -->
+    <string name="settings_tts_title">Read-aloud voice</string>
+    <string name="settings_tts_desc">Choose the voice that reads problems out loud.</string>
+    <string name="settings_tts_korean_tip">💡 Uses your device\'s voice. You can add or change voices in your device\'s text-to-speech settings.</string>
+    <string name="settings_tts_engine">Engine</string>
+    <string name="settings_tts_engine_default">Default voice</string>
+    <string name="settings_tts_speed">Speed</string>
+    <string name="settings_tts_slow">Slow</string>
+    <string name="settings_tts_normal">Normal</string>
+    <string name="settings_tts_fast">Fast</string>
+    <string name="settings_tts_test">🔊 Preview</string>
+    <string name="settings_tts_stop">⏹ Stop</string>
+    <string name="settings_tts_active">Reading with this voice now · %1$s</string>
+    <string name="settings_tts_neural_hint">💡 The high-quality voice takes 1–2 sec to prepare the first sentence.</string>
+    <string name="settings_tts_neural_remove">🗑 Remove high-quality voice · frees about %1$dMB</string>
+    <string name="settings_tts_system">System voice settings</string>
+    <string name="settings_tts_sample">DdakPul will read thinking problems in this voice.</string>
+
+    <!-- Read problem aloud -->
+    <string name="solve_read_stop">⏹ Stop</string>
+    <string name="solve_reading_with">%1$s</string>
+
+    <!-- Settings · high-quality neural voice (runtime download) -->
+    <string name="tts_supertonic_name">High-quality voice (Supertonic)</string>
+    <string name="tts_error_download_failed">Download failed</string>
+    <string name="tts_error_no_abi">Couldn\'t find a supported device type</string>
+    <string name="tts_error_no_lib">No voice library for this device (%1$s)</string>
+    <string name="tts_error_save_failed">Couldn\'t save: %1$s</string>
+    <string name="settings_neural_desc">A neural voice that sounds more natural. Download about %1$dMB once and use it offline.</string>
+    <string name="settings_neural_download">Download (about %1$dMB)</string>
+    <string name="settings_neural_downloading">Downloading… %1$d%%</string>
+    <string name="settings_neural_failed">Download failed: %1$s</string>
+
+    <string name="settings_reset">Reset learning records</string>
+    <string name="settings_reset_desc">Returns all solving history and level to the starting state.</string>
+    <string name="settings_reset_confirm">Reset</string>
+    <string name="settings_reset_cancel">Cancel</string>
+    <string name="settings_reset_dialog_title">Reset learning records?</string>
+    <string name="settings_reset_dialog_body">This can\'t be undone. All solving history will be deleted.</string>
+    <string name="settings_feedback_title">Flagged problems</string>
+    <string name="settings_feedback_desc">Send us the list you flagged as \"something\'s off\" (e.g. via Telegram) and we\'ll improve the problem bank in the next update.</string>
+    <string name="settings_feedback_share">Send %1$d flagged problems</string>
+    <string name="settings_feedback_empty">No flagged problems yet.</string>
+    <!-- Flagged-problem export share text (sent to the dev channel) -->
+    <string name="feedback_report_title">📋 DdakPul problem feedback — %1$d flagged</string>
+    <string name="feedback_entry_header">[%1$s · %2$s · Level %3$d]</string>
+    <string name="feedback_entry_missing">[%1$s · already removed from the problem bank]</string>
+    <string name="feedback_entry_reason">Reason: %1$s</string>
+    <string name="settings_about">DdakPul · adaptive thinking-math learning</string>
+
+    <!--
+        Encouragement — process-praise from growth-mindset research (Mueller &amp; Dweck 1998, Gunderson 2013).
+        Names strategy, effort, improvement — not intelligence or talent. Misses reframed as "the brain growing" (Moser 2011).
+    -->
+    <string-array name="praise_correct">
+        <item>You followed the steps carefully — and it worked!</item>
+        <item>You used what you learned right here. Your connecting power is growing!</item>
+        <item>I can tell you read the whole problem before solving. Great habit.</item>
+        <item>You solved it your own way! Want to explain how you did it?</item>
+        <item>Your skill is growing with practice. One step ahead of yesterday\'s you!</item>
+    </string-array>
+    <string-array name="praise_wrong">
+        <item>A miss means your brain is hard at work growing right now!</item>
+        <item>So close! Let\'s find where it got tangled — finding it makes it real skill.</item>
+        <item>You just haven\'t solved this \'yet\'. That \'yet\' matters!</item>
+        <item>Want to try it a different way? Switching methods is a skill too.</item>
+        <item>Taking on a hard problem is awesome. Only easy ones won\'t help you grow.</item>
+    </string-array>
+    <string-array name="praise_streak">
+        <item>Streak! Your method is getting sturdier and sturdier.</item>
+        <item>Looks like this got easy for you — let\'s try something harder!</item>
+        <item>Streak going strong! The steady practice is showing.</item>
+    </string-array>
+    <string-array name="praise_stuck">
+        <item>You\'ve hit the tricky part — this is the hardest stretch. Read the solution and try just one more.</item>
+        <item>This is plenty for today. It\'ll look clearer when you come back tomorrow.</item>
+        <item>You know more now than a moment ago. Retrace the basics and it\'ll click soon.</item>
+    </string-array>
+
+    <!-- Math areas -->
+    <string name="area_number_operation">Numbers &amp; Operations</string>
+    <string name="area_change_relation">Patterns &amp; Relationships</string>
+    <string name="area_shape_measurement">Shapes &amp; Measurement</string>
+    <string name="area_data_possibility">Data &amp; Probability</string>
+</resources>

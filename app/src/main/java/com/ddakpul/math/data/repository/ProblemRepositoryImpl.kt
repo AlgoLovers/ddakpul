@@ -30,11 +30,15 @@ class ProblemRepositoryImpl
 
         private suspend fun ensureSeeded() {
             val all = ProblemCatalog.problems + assetProblemSource.problems
-            if (problemDao.count() == all.size) return
+            val lang = assetProblemSource.langTag
+            // 문항 수가 같아도 언어가 바뀌었으면(앱 내 언어 토글) 문제은행 텍스트를 새로 시딩한다.
+            // 문제 id는 언어와 무관하게 동일해 학습 기록(시도·진도)은 그대로 유지된다.
+            if (problemDao.count() == all.size && assetProblemSource.seededLang == lang) return
             seedMutex.withLock {
                 // 락을 기다리는 사이 다른 코루틴이 이미 시딩했을 수 있으니 다시 확인한다.
-                if (problemDao.count() == all.size) return
+                if (problemDao.count() == all.size && assetProblemSource.seededLang == lang) return
                 problemDao.replaceAll(all.map { it.toEntity() })
+                assetProblemSource.seededLang = lang
             }
         }
 

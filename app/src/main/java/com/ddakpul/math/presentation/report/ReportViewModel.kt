@@ -2,13 +2,18 @@ package com.ddakpul.math.presentation.report
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
+import com.ddakpul.math.domain.model.MathArea
+import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.domain.usecase.ComputeNextStepUseCase
+import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import java.util.TimeZone
 import javax.inject.Inject
@@ -20,6 +25,17 @@ data class DayCell(
     val solved: Int,
     val accuracy: Float?,
     val isToday: Boolean,
+)
+
+/**
+ * 숙달 지도의 한 칸(영역×난이도). [stats.matrixCells]는 시도가 있는 칸만 담으므로,
+ * 시도 없는 칸도 solved=0으로 채워 4×5 그리드를 항상 완성한다.
+ */
+data class MasteryCellUi(
+    val area: MathArea,
+    val difficulty: Int,
+    val solved: Int,
+    val accuracy: Float?,
 )
 
 /**
@@ -68,6 +84,11 @@ data class ReportUiState(
     val dayCells: List<DayCell> = emptyList(),
     val insights: List<ReportInsight> = emptyList(),
     val weeklySummary: WeeklySummary? = null,
+    val masteryGrid: List<MasteryCellUi> = emptyList(),
+    /** '다음 한 걸음' — 통계를 실행 가능한 코칭으로. */
+    val nextStep: NextStep? = null,
+    /** 프리미엄이면 심화 분석(차트·숙달 지도)까지 보여주고, 무료면 요약까지만. */
+    val isPremium: Boolean = false,
 )
 
 @HiltViewModel
@@ -75,18 +96,26 @@ class ReportViewModel
     @Inject
     constructor(
         observeStats: ObserveLearningStatsUseCase,
+        observeEntitlement: ObserveEntitlementUseCase,
+        private val computeNextStep: ComputeNextStepUseCase,
     ) : ViewModel() {
         val uiState: StateFlow<ReportUiState> =
-            observeStats(
-                zoneOffsetMillis = zoneOffsetMillis(),
-                nowMillis = { System.currentTimeMillis() },
-            ).map { stats ->
+            combine(
+                observeStats(
+                    zoneOffsetMillis = zoneOffsetMillis(),
+                    nowMillis = { System.currentTimeMillis() },
+                ),
+                observeEntitlement(),
+            ) { stats, entitlement ->
                 ReportUiState(
                     stats = stats,
                     isLoading = false,
                     dayCells = buildDayCells(stats),
                     insights = buildInsights(stats),
                     weeklySummary = buildWeeklySummary(stats),
+                    masteryGrid = buildMasteryGrid(stats),
+                    nextStep = computeNextStep(stats),
+                    isPremium = entitlement.hasFullAccess(System.currentTimeMillis()),
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -107,6 +136,26 @@ class ReportViewModel
                     accuracy = stat?.let { if (it.solved > 0) it.accuracy else null },
                     isToday = day == today,
                 )
+            }
+        }
+
+        /**
+         * 영역×난이도 20칸을 전부 채운다 — 시도 없는 칸도 solved=0으로 그리드에 나타나야 한다.
+         * [stats.matrixCells]는 시도가 있는 칸만 담으므로(집계 로직상 solved=0인 칸은 만들어지지
+         * 않는다) `cell`이 있으면 항상 solved > 0이다.
+         */
+        private fun buildMasteryGrid(stats: LearningStats): List<MasteryCellUi> {
+            val byKey = stats.matrixCells.associateBy { it.area to it.difficulty }
+            return MathArea.entries.flatMap { area ->
+                (Difficulty.MIN..Difficulty.MAX).map { difficulty ->
+                    val cell = byKey[area to difficulty]
+                    MasteryCellUi(
+                        area = area,
+                        difficulty = difficulty,
+                        solved = cell?.solved ?: 0,
+                        accuracy = cell?.accuracy,
+                    )
+                }
             }
         }
 

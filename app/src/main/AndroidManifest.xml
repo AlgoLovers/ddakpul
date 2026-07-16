@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
+      핵심 기능(문제 풀이·채점·추천·리포트)은 인터넷 없이 완결된다. INTERNET 권한은 오직
+      '선택적 고품질 음성(신경망 TTS) 모델'을 사용자가 원할 때 1회 내려받기 위해서만 쓴다.
+      아동 학습 데이터는 어떤 경우에도 기기 밖으로 나가지 않는다.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".DdakPulApplication"
         android:allowBackup="true"
@@ -8,6 +15,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DdakPul">

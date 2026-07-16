@@ -30,6 +30,7 @@ import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import kotlin.math.roundToInt
 
 @Composable
@@ -42,6 +43,7 @@ fun HomeScreen(
     HomeContent(
         stats = uiState.stats,
         dailyGoal = uiState.dailyGoal,
+        launchFreeUntilMillis = uiState.launchFreeUntilMillis,
         onStartLearning = onStartLearning,
         modifier = modifier,
     )
@@ -51,6 +53,7 @@ fun HomeScreen(
 private fun HomeContent(
     stats: LearningStats?,
     dailyGoal: Int,
+    launchFreeUntilMillis: Long,
     onStartLearning: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -71,32 +74,42 @@ private fun HomeContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
+        if (launchFreeUntilMillis > 0L) {
+            LaunchFreeBanner(
+                untilMillis = launchFreeUntilMillis,
+                modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
+            )
+        }
+
         TodayGoalCard(
             todaySolved = stats?.todaySolved ?: 0,
             goal = dailyGoal,
             streakDays = stats?.streakDays ?: 0,
             bestStreakDays = stats?.bestStreakDays ?: 0,
-            modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
+            modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
         )
 
         val solved = stats?.totalSolved ?: 0
         val accuracyPercent = ((stats?.accuracy ?: 0f) * 100).roundToInt()
         val level = stats?.currentDifficulty ?: Difficulty.DEFAULT
         Row(
-            modifier = Modifier.fillMaxWidth().widthIn(max = 560.dp),
+            modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             StatTile(
+                icon = "📚",
                 label = stringResource(R.string.home_stat_solved),
                 value = stringResource(R.string.home_unit_count, solved),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
+                icon = "🎯",
                 label = stringResource(R.string.home_stat_accuracy),
                 value = stringResource(R.string.home_unit_percent, accuracyPercent),
                 modifier = Modifier.weight(1f),
             )
             StatTile(
+                icon = "🏆",
                 label = stringResource(R.string.home_stat_difficulty),
                 value = stringResource(R.string.home_unit_level, level),
                 modifier = Modifier.weight(1f),
@@ -105,13 +118,42 @@ private fun HomeContent(
 
         Button(
             onClick = onStartLearning,
-            modifier = Modifier.fillMaxWidth().widthIn(max = 400.dp),
+            modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth(),
         ) {
             Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null)
             Text(
                 text = stringResource(R.string.home_start),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
+            )
+        }
+    }
+}
+
+/** 출시 기념 무료 안내 배너 — 압박 없이 정직하게 마감일과 이후 정책을 알린다. */
+@Composable
+private fun LaunchFreeBanner(
+    untilMillis: Long,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.home_launch_free_title, launchFreeDeadlineText(untilMillis)),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+            )
+            Text(
+                text = stringResource(R.string.home_launch_free_desc),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
             )
         }
     }

@@ -1,9 +1,13 @@
 package com.ddakpul.math.core.di
 
+import com.ddakpul.math.data.repository.EntitlementRepositoryImpl
 import com.ddakpul.math.data.repository.LearnerRepositoryImpl
+import com.ddakpul.math.data.repository.OnboardingRepositoryImpl
 import com.ddakpul.math.data.repository.ProblemFeedbackRepositoryImpl
 import com.ddakpul.math.data.repository.ProblemRepositoryImpl
+import com.ddakpul.math.domain.repository.EntitlementRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
+import com.ddakpul.math.domain.repository.OnboardingRepository
 import com.ddakpul.math.domain.repository.ProblemFeedbackRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
 import dagger.Binds
@@ -19,6 +23,12 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindLearnerRepository(impl: LearnerRepositoryImpl): LearnerRepository
+
+    @Binds
+    abstract fun bindOnboardingRepository(impl: OnboardingRepositoryImpl): OnboardingRepository
+
+    @Binds
+    abstract fun bindEntitlementRepository(impl: EntitlementRepositoryImpl): EntitlementRepository
 
     @Binds
     abstract fun bindProblemFeedbackRepository(impl: ProblemFeedbackRepositoryImpl): ProblemFeedbackRepository

@@ -1,5 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.group
@@ -115,10 +116,10 @@ class RecommendNextProblemUseCaseTest {
     fun rule6_promotionIsClampedAtMax() {
         val attempts = listOf(attempt("d5-1", true), attempt("d5-2", true))
 
-        val result = recommend(state(currentDifficulty = 5, recentAttempts = attempts), standardGroups(), seededRandom)
+        val result = recommend(state(currentDifficulty = Difficulty.MAX, recentAttempts = attempts), standardGroups(), seededRandom)
 
         assertThat(result!!.reason).isEqualTo(RecommendationReason.ADVANCED)
-        assertThat(result.targetDifficulty).isEqualTo(5)
+        assertThat(result.targetDifficulty).isEqualTo(Difficulty.MAX)
     }
 
     @Test
@@ -164,6 +165,23 @@ class RecommendNextProblemUseCaseTest {
         val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), standardGroups(), seededRandom)
 
         assertThat(result!!.reason).isEqualTo(RecommendationReason.STAY)
+    }
+
+    @Test
+    fun stay_avoidsRepeatingSameGroupTypeConsecutively() {
+        val groups =
+            listOf(
+                group(difficulty = 3, problems = (1..3).map { problem("a$it", 3, groupId = "g-a") }, id = "g-a"),
+                group(difficulty = 3, problems = (1..3).map { problem("b$it", 3, groupId = "g-b") }, id = "g-b"),
+            )
+        // 혼조 유지(STAY) + 직전이 정답이라 재도전 아님 — 직전 문제 a1은 g-a 소속.
+        val attempts = listOf(attempt("b1", false), attempt("a1", true))
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), groups, seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.STAY)
+        // 같은 유형(g-a)이 연달아 나오지 않고 다른 그룹(g-b)에서 출제된다.
+        assertThat(result.group.id).isEqualTo("g-b")
     }
 
     @Test

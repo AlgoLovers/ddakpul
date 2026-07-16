@@ -62,3 +62,32 @@ val MIGRATION_4_5 =
             )
         }
     }
+
+/** v5 → v6: 온보딩 완료 여부(onboardingComplete) 컬럼 추가 — 첫 실행 안내를 한 번만 보여주기 위해. */
+val MIGRATION_5_6 =
+    object : Migration(5, 6) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE learner_progress ADD COLUMN onboardingComplete INTEGER NOT NULL DEFAULT 0",
+            )
+        }
+    }
+
+/** v6 → v7: 이용권 만료 시각(premiumUntilMillis) 컬럼 추가 — 기간제 프리미엄 이용권 상태 보관. */
+val MIGRATION_6_7 =
+    object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE learner_progress ADD COLUMN premiumUntilMillis INTEGER NOT NULL DEFAULT 0",
+            )
+        }
+    }
+
+val MIGRATION_7_8 =
+    object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE problem ADD COLUMN detailedExplanation TEXT")
+            // problem은 순수 시드 데이터 — 비워서 다음 접근 때 최신 콘텐츠(2차 풀이 포함)로 강제 재시딩.
+            db.execSQL("DELETE FROM problem")
+        }
+    }

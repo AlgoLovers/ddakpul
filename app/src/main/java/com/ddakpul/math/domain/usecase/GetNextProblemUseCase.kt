@@ -2,7 +2,9 @@ package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.core.common.AppError
 import com.ddakpul.math.core.common.AppResult
+import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.Recommendation
+import com.ddakpul.math.domain.repository.EntitlementRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import javax.inject.Inject
 
@@ -19,6 +21,7 @@ class GetNextProblemUseCase
     constructor(
         private val getActiveGroups: GetActiveProblemGroupsUseCase,
         private val learnerRepository: LearnerRepository,
+        private val entitlementRepository: EntitlementRepository,
         private val recommend: RecommendNextProblemUseCase,
         private val computeReviewQueue: ComputeReviewQueueUseCase,
     ) {
@@ -27,7 +30,17 @@ class GetNextProblemUseCase
             zoneOffsetMillis: Long,
             nowMillis: Long,
         ): AppResult<Recommendation> {
-            val groups = getActiveGroups()
+            val allGroups = getActiveGroups()
+            if (allGroups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
+
+            // 무료 사용자는 난이도 상한까지만 — 문제은행 자체를 걸러 상한 위 문제는 나오지 않게 한다.
+            val premium = entitlementRepository.getEntitlement().hasFullAccess(nowMillis)
+            val groups =
+                if (premium) {
+                    allGroups
+                } else {
+                    allGroups.filter { it.difficulty <= Monetization.FREE_MAX_DIFFICULTY }
+                }
             if (groups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
             val state = learnerRepository.getLearnerState()
@@ -46,9 +59,20 @@ class GetNextProblemUseCase
                     todaySolved = todaySolved,
                 ) ?: return AppResult.Failure(AppError.NoProblemAvailable)
 
-            if (recommendation.targetDifficulty != state.currentDifficulty) {
-                learnerRepository.setCurrentDifficulty(recommendation.targetDifficulty)
+            // 무료인데 추천 난이도가 상한을 넘겼다면(= 상위 단계 준비 완료) 페이월을 권하고, 난이도는 상한으로 고정한다.
+            val premiumSuggested = !premium && recommendation.targetDifficulty > Monetization.FREE_MAX_DIFFICULTY
+            val effectiveDifficulty =
+                if (premium) {
+                    recommendation.targetDifficulty
+                } else {
+                    minOf(recommendation.targetDifficulty, Monetization.FREE_MAX_DIFFICULTY)
+                }
+
+            if (effectiveDifficulty != state.currentDifficulty) {
+                learnerRepository.setCurrentDifficulty(effectiveDifficulty)
             }
-            return AppResult.Success(recommendation)
+            return AppResult.Success(
+                recommendation.copy(targetDifficulty = effectiveDifficulty, premiumSuggested = premiumSuggested),
+            )
         }
     }

@@ -25,6 +25,8 @@ data class WorksheetTexts(
     val footer: String,
     val solutionSpaceLabel: String,
     val areaLabels: Map<MathArea, String>,
+    /** 막대그래프 범주 라벨(가·나·다… / A·B·C…) — 언어에 맞춰 문제 본문과 일치시킨다. */
+    val barLabels: List<String>,
 )
 
 // A4 (포인트, 72dpi)
@@ -210,7 +212,7 @@ class WorksheetPdfGenerator(
 
         // 도형 지시서 — 화면과 같은 그림을 인쇄물에도 그린다.
         problem.figure?.let { figure ->
-            drawFigure(canvas, figure, PAGE_WIDTH / 2f, y, FIGURE_SIZE)
+            drawFigure(canvas, figure, PAGE_WIDTH / 2f, y, FIGURE_SIZE, texts.barLabels)
             y += FIGURE_SIZE + 8f
         }
 
@@ -283,6 +285,7 @@ private fun drawFigure(
     centerX: Float,
     top: Float,
     size: Float,
+    barLabels: List<String>,
 ) {
     val ink =
         Paint().apply {
@@ -302,6 +305,348 @@ private fun drawFigure(
         FigureType.DOT_BORDER -> drawPdfDotBorder(canvas, figure, centerX, top, size, fill)
         FigureType.GRID -> drawPdfGrid(canvas, figure, centerX, top, size, ink, fill)
         FigureType.L_SHAPE -> drawPdfLShape(canvas, figure, centerX, top, size, ink)
+        FigureType.POLYGON -> drawPdfPolygon(canvas, figure, centerX, top, size, ink)
+        FigureType.CUBE_STACK -> drawPdfCubeStack(canvas, figure, centerX, top, size)
+        FigureType.GRID_POLYGON -> drawPdfGridPolygon(canvas, figure, centerX, top, size, ink)
+        FigureType.TRIANGLE_FAN -> drawPdfTriangleFan(canvas, figure, centerX, top, size, ink)
+        FigureType.CUBE_NET -> drawPdfCubeNet(canvas, figure, centerX, top, size, ink, fill)
+        FigureType.MATCHSTICK -> drawPdfMatchstick(canvas, figure, centerX, top, size, ink)
+        FigureType.BAR_CHART -> drawPdfBarChart(canvas, figure, centerX, top, size, ink, barLabels)
+    }
+}
+
+/** 막대그래프 — heights의 값을 막대로, 위에 값·아래에 범주(가·나·다… / A·B·C…)를 찍는다. */
+private fun drawPdfBarChart(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+    barLabels: List<String>,
+) {
+    val values = figure.heights
+    if (values.isEmpty()) return
+    val n = values.size
+    val maxV = (values.maxOrNull() ?: 1).coerceAtLeast(1)
+    val highlight = figure.params["highlight"] ?: -1
+    val left = centerX - size / 2f
+    val base = top + size * 0.86f
+    val chartH = size * 0.66f
+    val slot = size / n
+    val barW = slot * 0.54f
+    canvas.drawLine(left, base, left + size, base, ink)
+    val barPaint =
+        Paint().apply {
+            color = Color.rgb(70, 100, 200)
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+    val hiPaint =
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+    val labelPaint =
+        TextPaint().apply {
+            textSize = 9f
+            color = Color.DKGRAY
+            isAntiAlias = true
+            textAlign = Paint.Align.CENTER
+        }
+    for (i in 0 until n) {
+        val cx = left + slot * (i + 0.5f)
+        val barH = chartH * values[i] / maxV
+        canvas.drawRect(cx - barW / 2f, base - barH, cx + barW / 2f, base, if (i == highlight) hiPaint else barPaint)
+        canvas.drawText(values[i].toString(), cx, base - barH - 4f, labelPaint)
+        canvas.drawText(barLabels.getOrElse(i) { "${i + 1}" }, cx, base + 12f, labelPaint)
+    }
+}
+
+/** 성냥개비로 이어 붙인 정사각형(기본)/정삼각형(tri=1) 한 줄. */
+private fun drawPdfMatchstick(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val n = (figure.params["n"] ?: 3).coerceIn(1, 8)
+    val isTri = (figure.params["tri"] ?: 0) == 1
+    val stick =
+        Paint(ink).apply {
+            strokeWidth = 3f
+            strokeCap = Paint.Cap.ROUND
+        }
+    if (!isTri) {
+        val s = min(size / n, size * 0.5f)
+        val gl = centerX - s * n / 2f
+        val gt = top + (size - s) / 2f
+        canvas.drawLine(gl, gt, gl + s * n, gt, stick)
+        canvas.drawLine(gl, gt + s, gl + s * n, gt + s, stick)
+        for (i in 0..n) canvas.drawLine(gl + i * s, gt, gl + i * s, gt + s, stick)
+    } else {
+        val s = min(size * 2f / (n + 1), size * 0.5f)
+        val hgt = s * 0.87f
+        val totalW = s * (n + 1) / 2f
+        val gl = centerX - totalW / 2f
+        val baseY = top + (size + hgt) / 2f
+        val topY = baseY - hgt
+
+        fun px(k: Int) = gl + k * (s / 2f)
+
+        fun py(k: Int) = if (k % 2 == 0) baseY else topY
+        for (i in 0 until n) {
+            canvas.drawLine(px(i), py(i), px(i + 1), py(i + 1), stick)
+            canvas.drawLine(px(i + 1), py(i + 1), px(i + 2), py(i + 2), stick)
+            canvas.drawLine(px(i + 2), py(i + 2), px(i), py(i), stick)
+        }
+    }
+}
+
+/** 주사위 눈(1~6) 위치를 면 내부 비율 좌표(0~1)로. */
+private fun pdfPips(v: Int): List<Pair<Float, Float>> =
+    when (v) {
+        1 -> listOf(0.5f to 0.5f)
+        2 -> listOf(0.3f to 0.3f, 0.7f to 0.7f)
+        3 -> listOf(0.28f to 0.28f, 0.5f to 0.5f, 0.72f to 0.72f)
+        4 -> listOf(0.3f to 0.3f, 0.7f to 0.3f, 0.3f to 0.7f, 0.7f to 0.7f)
+        5 -> listOf(0.28f to 0.28f, 0.72f to 0.28f, 0.5f to 0.5f, 0.28f to 0.72f, 0.72f to 0.72f)
+        6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
+        else -> emptyList()
+    }
+
+/** 정육면체(주사위) 전개도 — 흑백 인쇄용: 격자에 면·눈을 찍고 색칠 면은 회색으로 강조. */
+private fun drawPdfCubeNet(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+    fill: Paint,
+) {
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val query = figure.params["query"] ?: -1
+    val hs = figure.heights
+    if (hs.size != 18) return
+    val cell = min(size / cols, size / rows)
+    val gl = centerX - cell * cols / 2f
+    val gt = top + (size - cell * rows) / 2f
+    val pipR = cell * 0.07f
+    val shade =
+        Paint().apply {
+            style = Paint.Style.FILL
+            color = Color.rgb(220, 220, 220)
+            isAntiAlias = true
+        }
+    for (i in 0 until 6) {
+        val x = gl + hs[i * 3] * cell
+        val y = gt + hs[i * 3 + 1] * cell
+        val v = hs[i * 3 + 2]
+        if (v == query) canvas.drawRect(x, y, x + cell, y + cell, shade)
+        canvas.drawRect(x, y, x + cell, y + cell, ink)
+        for ((fx, fy) in pdfPips(v)) canvas.drawCircle(x + fx * cell, y + fy * cell, pipR, fill)
+    }
+}
+
+/** 삼각형 개수 세기 부채꼴 — 큰 삼각형 + 꼭짓점에서 밑변으로 그은 k개의 선. */
+private fun drawPdfTriangleFan(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val apexX = centerX
+    val apexY = top + size * 0.06f
+    val baseY = top + size * 0.94f
+    val blX = centerX - size * 0.44f
+    val brX = centerX + size * 0.44f
+    val thin = Paint(ink).apply { strokeWidth = 0.8f }
+    for (i in 1..k) {
+        val footX = blX + (brX - blX) * i / (k + 1)
+        canvas.drawLine(apexX, apexY, footX, baseY, thin)
+    }
+    canvas.drawLine(apexX, apexY, blX, baseY, ink)
+    canvas.drawLine(apexX, apexY, brX, baseY, ink)
+    canvas.drawLine(blX, baseY, brX, baseY, ink)
+}
+
+/** 격자 위 색칠 다각형(넓이 문제) — 흑백 인쇄용: 옅은 모눈 + 회색 채움 + 굵은 외곽선. */
+private fun drawPdfGridPolygon(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val pts = figure.heights
+    if (pts.size != n * 2) return
+    val cell = min(size / cols, size / rows)
+    val gl = centerX - cell * cols / 2f
+    val gt = top + (size - cell * rows) / 2f
+    val gridPaint =
+        Paint(ink).apply {
+            strokeWidth = 0.6f
+            color = Color.rgb(160, 160, 160)
+        }
+    for (i in 0..cols) canvas.drawLine(gl + i * cell, gt, gl + i * cell, gt + rows * cell, gridPaint)
+    for (j in 0..rows) canvas.drawLine(gl, gt + j * cell, gl + cols * cell, gt + j * cell, gridPaint)
+    val path =
+        Path().apply {
+            moveTo(gl + pts[0] * cell, gt + pts[1] * cell)
+            for (i in 1 until n) lineTo(gl + pts[i * 2] * cell, gt + pts[i * 2 + 1] * cell)
+            close()
+        }
+    canvas.drawPath(
+        path,
+        Paint().apply {
+            style = Paint.Style.FILL
+            color = Color.rgb(205, 205, 205)
+            isAntiAlias = true
+        },
+    )
+    canvas.drawPath(
+        path,
+        Paint(ink).apply {
+            strokeWidth = 1.8f
+            color = Color.BLACK
+        },
+    )
+}
+
+private fun drawPdfPolygon(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val cy = top + size / 2f
+    val radius = size * 0.42f
+    val xs = FloatArray(n)
+    val ys = FloatArray(n)
+    for (i in 0 until n) {
+        val a = Math.toRadians(-90.0 + i * 360.0 / n)
+        xs[i] = centerX + cos(a).toFloat() * radius
+        ys[i] = cy + sin(a).toFloat() * radius
+    }
+    for (i in 0 until n) {
+        canvas.drawLine(xs[i], ys[i], xs[(i + 1) % n], ys[(i + 1) % n], ink)
+    }
+    if ((figure.params["diagonals"] ?: 0) == 1) {
+        drawPdfPolygonDiagonals(canvas, xs, ys, Paint(ink).apply { strokeWidth = 0.8f })
+    }
+}
+
+private fun drawPdfPolygonDiagonals(
+    canvas: Canvas,
+    xs: FloatArray,
+    ys: FloatArray,
+    paint: Paint,
+) {
+    val n = xs.size
+    for (i in 0 until n) {
+        for (j in i + 2 until n) {
+            if (i == 0 && j == n - 1) continue // 첫·끝 꼭짓점은 변이라 제외
+            canvas.drawLine(xs[i], ys[i], xs[j], ys[j], paint)
+        }
+    }
+}
+
+private class PdfIso(
+    val ox: Float,
+    val oy: Float,
+    val hw: Float,
+    val hh: Float,
+    val ch: Float,
+) {
+    fun px(
+        gx: Float,
+        gy: Float,
+        gz: Float,
+    ) = floatArrayOf(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+}
+
+private fun drawPdfIsoFace(
+    canvas: Canvas,
+    pts: List<FloatArray>,
+    fill: Paint,
+    outline: Paint,
+) {
+    val path =
+        Path().apply {
+            moveTo(pts[0][0], pts[0][1])
+            for (k in 1 until pts.size) lineTo(pts[k][0], pts[k][1])
+            close()
+        }
+    canvas.drawPath(path, fill)
+    canvas.drawPath(path, outline)
+}
+
+private fun drawPdfStackCube(
+    canvas: Canvas,
+    view: PdfIso,
+    c: Float,
+    r: Float,
+    l: Float,
+    fills: List<Paint>,
+    outline: Paint,
+) {
+    drawPdfIsoFace(canvas, listOf(view.px(c, r, l + 1), view.px(c + 1, r, l + 1), view.px(c + 1, r + 1, l + 1), view.px(c, r + 1, l + 1)), fills[0], outline)
+    drawPdfIsoFace(canvas, listOf(view.px(c + 1, r, l + 1), view.px(c + 1, r + 1, l + 1), view.px(c + 1, r + 1, l), view.px(c + 1, r, l)), fills[1], outline)
+    drawPdfIsoFace(canvas, listOf(view.px(c, r + 1, l + 1), view.px(c + 1, r + 1, l + 1), view.px(c + 1, r + 1, l), view.px(c, r + 1, l)), fills[2], outline)
+}
+
+private fun drawPdfCubeStack(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+) {
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val heights = figure.heights
+    if (heights.size != w * d) return
+    val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
+    val u = size * 0.9f / maxOf((w + d).toFloat(), (w + d) / 2f + maxH)
+    val ox = centerX - size / 2f + (size - (w + d) * u) / 2f + d * u
+    val oy = top + (size - ((w + d) * u / 2f + maxH * u)) / 2f + maxH * u
+    val view = PdfIso(ox, oy, u, u / 2f, u)
+    val outline =
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.STROKE
+            strokeWidth = 1.2f
+            isAntiAlias = true
+        }
+    val fills =
+        listOf(255, 228, 205).map { g ->
+            Paint().apply {
+                color = Color.rgb(g, g, g)
+                style = Paint.Style.FILL
+                isAntiAlias = true
+            }
+        }
+    for (t in 0..(w + d - 2)) {
+        for (c in 0 until w) {
+            val r = t - c
+            if (r < 0 || r >= d) continue
+            for (l in 0 until heights[r * w + c]) drawPdfStackCube(canvas, view, c.toFloat(), r.toFloat(), l.toFloat(), fills, outline)
+        }
     }
 }
 
@@ -378,6 +723,20 @@ private fun drawPdfGrid(
     if ((figure.params["mark"] ?: 0) == 1) {
         canvas.drawCircle(gl, gt + h * cell, 4f, fill)
         canvas.drawCircle(gl + w * cell, gt, 4f, ink)
+    }
+    val blockX = figure.params["blockX"]
+    val blockY = figure.params["blockY"]
+    if (blockX != null && blockY != null) {
+        val cx = gl + blockX.coerceIn(0, w) * cell
+        val cy = gt + blockY.coerceIn(0, h) * cell
+        val r = cell * 0.22f
+        val x = Paint(ink).apply { strokeWidth = 2.4f }
+        canvas.drawLine(cx - r, cy - r, cx + r, cy + r, x)
+        canvas.drawLine(cx - r, cy + r, cx + r, cy - r, x)
+    }
+    if ((figure.params["diag"] ?: 0) == 1) {
+        val diag = Paint(ink).apply { strokeWidth = 2.4f }
+        canvas.drawLine(gl, gt, gl + w * cell, gt + h * cell, diag)
     }
 }
 
