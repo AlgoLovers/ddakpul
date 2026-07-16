@@ -35,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -223,6 +224,7 @@ private fun worksheetTexts(areaLabels: Map<MathArea, String>): WorksheetTexts =
         footer = stringResource(R.string.worksheet_footer),
         solutionSpaceLabel = stringResource(R.string.worksheet_solution_space),
         areaLabels = areaLabels,
+        barLabels = stringArrayResource(R.array.bar_chart_labels).toList(),
     )
 
 /** 안드로이드 인쇄 프레임워크로 학습지 인쇄 잡을 시작한다. */

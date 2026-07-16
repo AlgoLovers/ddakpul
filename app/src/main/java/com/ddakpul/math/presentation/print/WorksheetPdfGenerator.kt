@@ -25,6 +25,8 @@ data class WorksheetTexts(
     val footer: String,
     val solutionSpaceLabel: String,
     val areaLabels: Map<MathArea, String>,
+    /** 막대그래프 범주 라벨(가·나·다… / A·B·C…) — 언어에 맞춰 문제 본문과 일치시킨다. */
+    val barLabels: List<String>,
 )
 
 // A4 (포인트, 72dpi)
@@ -210,7 +212,7 @@ class WorksheetPdfGenerator(
 
         // 도형 지시서 — 화면과 같은 그림을 인쇄물에도 그린다.
         problem.figure?.let { figure ->
-            drawFigure(canvas, figure, PAGE_WIDTH / 2f, y, FIGURE_SIZE)
+            drawFigure(canvas, figure, PAGE_WIDTH / 2f, y, FIGURE_SIZE, texts.barLabels)
             y += FIGURE_SIZE + 8f
         }
 
@@ -283,6 +285,7 @@ private fun drawFigure(
     centerX: Float,
     top: Float,
     size: Float,
+    barLabels: List<String>,
 ) {
     val ink =
         Paint().apply {
@@ -308,11 +311,11 @@ private fun drawFigure(
         FigureType.TRIANGLE_FAN -> drawPdfTriangleFan(canvas, figure, centerX, top, size, ink)
         FigureType.CUBE_NET -> drawPdfCubeNet(canvas, figure, centerX, top, size, ink, fill)
         FigureType.MATCHSTICK -> drawPdfMatchstick(canvas, figure, centerX, top, size, ink)
-        FigureType.BAR_CHART -> drawPdfBarChart(canvas, figure, centerX, top, size, ink)
+        FigureType.BAR_CHART -> drawPdfBarChart(canvas, figure, centerX, top, size, ink, barLabels)
     }
 }
 
-/** 막대그래프 — heights의 값을 막대로, 위에 값·아래에 범주(가·나·다…)를 찍는다. */
+/** 막대그래프 — heights의 값을 막대로, 위에 값·아래에 범주(가·나·다… / A·B·C…)를 찍는다. */
 private fun drawPdfBarChart(
     canvas: Canvas,
     figure: ProblemFigure,
@@ -320,6 +323,7 @@ private fun drawPdfBarChart(
     top: Float,
     size: Float,
     ink: Paint,
+    barLabels: List<String>,
 ) {
     val values = figure.heights
     if (values.isEmpty()) return
@@ -351,13 +355,12 @@ private fun drawPdfBarChart(
             isAntiAlias = true
             textAlign = Paint.Align.CENTER
         }
-    val labels = "가나다라마바사아"
     for (i in 0 until n) {
         val cx = left + slot * (i + 0.5f)
         val barH = chartH * values[i] / maxV
         canvas.drawRect(cx - barW / 2f, base - barH, cx + barW / 2f, base, if (i == highlight) hiPaint else barPaint)
         canvas.drawText(values[i].toString(), cx, base - barH - 4f, labelPaint)
-        canvas.drawText(if (i < labels.length) labels[i].toString() else "${i + 1}", cx, base + 12f, labelPaint)
+        canvas.drawText(barLabels.getOrElse(i) { "${i + 1}" }, cx, base + 12f, labelPaint)
     }
 }
 
