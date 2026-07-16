@@ -1626,6 +1626,114 @@
    "detailedExplanation": "Finding □ in '□ + 9 = 16' means undoing the addition with subtraction. Adding and subtracting are opposites, so knowing one lets you reverse the other. This 'think backwards' idea is the foundation of equations later."
   },
   {
+   "id": "gen-consec-1",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "consecutive numbers",
+    "middle as anchor"
+   ],
+   "statement": "You add 3 consecutive whole numbers and get 24. What is the 'middle' number of the 3?",
+   "choices": [
+    "11",
+    "12",
+    "8",
+    "7"
+   ],
+   "answerIndex": 2,
+   "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−1, □, □+1. The − and + cancel, so the sum equals 'middle × count'. So the middle = 24 ÷ 3 = 8.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Divide by the count (3), not by 2, to get the middle."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Symmetric cancellation about the middle' is cleanest with an odd count (one exact middle). With an even count the middle sits between two numbers, so the sum is 'average of the middle two × count'. This eye also gives Gauss’s trick for 1+…+100."
+  },
+  {
+   "id": "gen-consec-2",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "consecutive numbers",
+    "middle as anchor"
+   ],
+   "statement": "You add 5 consecutive whole numbers and get 60. What is the 'middle' number of the 5?",
+   "choices": [
+    "12",
+    "30",
+    "11",
+    "17"
+   ],
+   "answerIndex": 0,
+   "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−2, □−1, □, □+1, □+2. The − and + cancel, so the sum equals 'middle × count'. So the middle = 60 ÷ 5 = 12.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "Divide by the count (5), not by 2, to get the middle."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Symmetric cancellation about the middle' is cleanest with an odd count (one exact middle). With an even count the middle sits between two numbers, so the sum is 'average of the middle two × count'. This eye also gives Gauss’s trick for 1+…+100."
+  },
+  {
+   "id": "gen-consec-3",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "consecutive numbers",
+    "middle as anchor"
+   ],
+   "statement": "You add 3 consecutive whole numbers and get 60. What is the 'middle' number of the 3?",
+   "choices": [
+    "30",
+    "20",
+    "19",
+    "23"
+   ],
+   "answerIndex": 1,
+   "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−1, □, □+1. The − and + cancel, so the sum equals 'middle × count'. So the middle = 60 ÷ 3 = 20.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Divide by the count (3), not by 2, to get the middle."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Symmetric cancellation about the middle' is cleanest with an odd count (one exact middle). With an even count the middle sits between two numbers, so the sum is 'average of the middle two × count'. This eye also gives Gauss’s trick for 1+…+100."
+  },
+  {
+   "id": "gen-consec-4",
+   "area": "NUMBER_OPERATION",
+   "difficulty": 3,
+   "groupId": "g-gen-consec-3",
+   "concepts": [
+    "consecutive numbers",
+    "middle as anchor"
+   ],
+   "statement": "You add 5 consecutive whole numbers and get 150. What is the 'middle' number of the 5?",
+   "choices": [
+    "35",
+    "29",
+    "75",
+    "30"
+   ],
+   "answerIndex": 3,
+   "explanation": "Consecutive numbers are symmetric about the middle. Call the middle □; then they are □−2, □−1, □, □+1, □+2. The − and + cancel, so the sum equals 'middle × count'. So the middle = 150 ÷ 5 = 30.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "Divide by the count (5), not by 2, to get the middle."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "'Symmetric cancellation about the middle' is cleanest with an odd count (one exact middle). With an even count the middle sits between two numbers, so the sum is 'average of the middle two × count'. This eye also gives Gauss’s trick for 1+…+100."
+  },
+  {
    "id": "gen-cycle-1",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
@@ -1637,9 +1745,9 @@
    "statement": "Beads in the order red · yellow · blue are strung over and over. What color is the 50th bead?",
    "choices": [
     "can’t tell",
-    "red",
+    "blue",
     "yellow",
-    "blue"
+    "red"
    ],
    "answerIndex": 2,
    "explanation": "Since 3 beads repeat as one group, dividing 50 by 3 is the key. 50÷3 gives quotient 16 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is yellow.",
@@ -1658,12 +1766,12 @@
    ],
    "statement": "Beads in the order green · purple · orange are strung over and over. What color is the 74th bead?",
    "choices": [
-    "purple",
     "green",
-    "orange",
-    "can’t tell"
+    "can’t tell",
+    "purple",
+    "orange"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "Since 3 beads repeat as one group, dividing 74 by 3 is the key. 74÷3 gives quotient 24 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is purple.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -1680,12 +1788,12 @@
    ],
    "statement": "Beads in the order red · yellow · blue · green are strung over and over. What color is the 90th bead?",
    "choices": [
-    "red",
-    "yellow",
     "blue",
-    "can’t tell"
+    "can’t tell",
+    "red",
+    "yellow"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Since 4 beads repeat as one group, dividing 90 by 4 is the key. 90÷4 gives quotient 22 and remainder 2, so it lands on bead #2 within a group — and #2 in the group is yellow.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -1702,9 +1810,9 @@
    ],
    "statement": "Beads in the order green · purple · orange · pink are strung over and over. What color is the 66th bead?",
    "choices": [
-    "can’t tell",
     "orange",
     "green",
+    "can’t tell",
     "purple"
    ],
    "answerIndex": 3,
@@ -1725,11 +1833,11 @@
    "statement": "Using the number cards 3, 7, 5, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
     "735",
-    "375",
     "753",
+    "375",
     "357"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 7 in the hundreds, 5 in the tens, and 3 in the ones gives 753.",
    "mistakes": [
     {
@@ -1751,16 +1859,16 @@
    ],
    "statement": "Using the number cards 2, 8, 4, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
-    "248",
+    "284",
     "824",
-    "842",
-    "284"
+    "248",
+    "842"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 8 in the hundreds, 4 in the tens, and 2 in the ones gives 842.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 2,
      "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
     }
    ],
@@ -1780,14 +1888,14 @@
    "choices": [
     "619",
     "916",
-    "169",
-    "961"
+    "961",
+    "169"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 9 in the hundreds, 6 in the tens, and 1 in the ones gives 961.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
     }
    ],
@@ -1805,16 +1913,16 @@
    ],
    "statement": "Using the number cards 4, 7, 2, each exactly once, you make a three-digit number. What is the largest number you can make?",
    "choices": [
-    "472",
-    "247",
     "724",
-    "742"
+    "472",
+    "742",
+    "247"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "To make the largest number, put bigger digits in higher places. Putting 7 in the hundreds, 4 in the tens, and 2 in the ones gives 742.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "That’s the smallest number. For the largest, put big digits in the front places."
     }
    ],
@@ -1832,16 +1940,16 @@
    ],
    "statement": "Find the rule. 2, 5, 8, 11, □ — what number goes in the box?",
    "choices": [
+    "17",
     "15",
     "14",
-    "11",
-    "17"
+    "11"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 11 comes 11 + 3 = 14.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -1859,16 +1967,16 @@
    ],
    "statement": "Find the rule. 3, 7, 11, 15, □ — what number goes in the box?",
    "choices": [
-    "15",
-    "20",
     "23",
-    "19"
+    "19",
+    "15",
+    "20"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 4 each time, so after 15 comes 15 + 4 = 19.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 2,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -1886,16 +1994,16 @@
    ],
    "statement": "Find the rule. 30, 26, 22, 18, □ — what number goes in the box?",
    "choices": [
-    "18",
     "15",
+    "10",
     "14",
-    "10"
+    "18"
    ],
    "answerIndex": 2,
    "explanation": "Look at the gap between neighboring numbers. It goes down by 4 each time, so after 18 comes 18 − 4 = 14.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -1913,16 +2021,16 @@
    ],
    "statement": "Find the rule. 1, 4, 7, 10, □ — what number goes in the box?",
    "choices": [
-    "14",
     "10",
     "13",
-    "16"
+    "16",
+    "14"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "Look at the gap between neighboring numbers. It goes up by 3 each time, so after 10 comes 10 + 3 = 13.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 0,
      "misconception": "Don’t just repeat the last number — add or subtract by the rule."
     }
    ],
@@ -1940,16 +2048,16 @@
    ],
    "statement": "You join 3 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
+    "10 matchsticks",
     "12 matchsticks",
     "11 matchsticks",
-    "10 matchsticks",
     "9 matchsticks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 3 squares need 4 + 3×2 = 10.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
     }
    ],
@@ -1974,11 +2082,11 @@
    "statement": "You join 4 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
     "16 matchsticks",
-    "13 matchsticks",
     "12 matchsticks",
-    "15 matchsticks"
+    "15 matchsticks",
+    "13 matchsticks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 4 squares need 4 + 3×3 = 13.",
    "mistakes": [
     {
@@ -2006,12 +2114,12 @@
    ],
    "statement": "You join 5 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
-    "19 matchsticks",
-    "20 matchsticks",
     "16 matchsticks",
-    "15 matchsticks"
+    "20 matchsticks",
+    "15 matchsticks",
+    "19 matchsticks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 0,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 5 squares need 4 + 3×4 = 16.",
    "mistakes": [
     {
@@ -2039,16 +2147,16 @@
    ],
    "statement": "You join 6 equal squares in a row with matchsticks. How many matchsticks do you need in all?",
    "choices": [
-    "18 matchsticks",
-    "19 matchsticks",
+    "23 matchsticks",
     "24 matchsticks",
-    "23 matchsticks"
+    "18 matchsticks",
+    "19 matchsticks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "One square needs 4 matchsticks. Each square you add on the right already shares its left side, so it only needs 3 more. So 6 squares need 4 + 3×5 = 19.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Counting 4 per square double-counts the shared sides between neighbors."
     }
    ],
@@ -2072,16 +2180,16 @@
    ],
    "statement": "There are 3 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
+    "7 outfits",
     "6 outfits",
-    "5 outfits",
     "9 outfits",
-    "7 outfits"
+    "5 outfits"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "For every top you can pair 2 bottoms, and there are 3 tops, so 3×2=6. Drawing a table and pairing them gives 6 as well.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Don’t add — multiply. Each top pairs with every bottom."
     }
    ],
@@ -2099,16 +2207,16 @@
    ],
    "statement": "There are 2 tops and 3 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
-    "5 outfits",
-    "7 outfits",
     "9 outfits",
-    "6 outfits"
+    "7 outfits",
+    "6 outfits",
+    "5 outfits"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "For every top you can pair 3 bottoms, and there are 2 tops, so 2×3=6. Drawing a table and pairing them gives 6 as well.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 3,
      "misconception": "Don’t add — multiply. Each top pairs with every bottom."
     }
    ],
@@ -2126,12 +2234,12 @@
    ],
    "statement": "There are 2 tops and 2 bottoms. Picking one top and one bottom, how many different outfits can you make?",
    "choices": [
+    "7 outfits",
     "4 outfits",
-    "3 outfits",
     "5 outfits",
-    "7 outfits"
+    "3 outfits"
    ],
-   "answerIndex": 0,
+   "answerIndex": 1,
    "explanation": "For every top you can pair 2 bottoms, and there are 2 tops, so 2×2=4. Drawing a table and pairing them gives 4 as well.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2150,10 +2258,10 @@
    "choices": [
     "10 outfits",
     "6 outfits",
-    "8 outfits",
-    "9 outfits"
+    "9 outfits",
+    "8 outfits"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "For every top you can pair 3 bottoms, and there are 3 tops, so 3×3=9. Drawing a table and pairing them gives 9 as well.",
    "mistakes": [
     {
@@ -2203,15 +2311,15 @@
    "statement": "□2 + 36 = 88. What digit goes in the box? (□ is a single digit)",
    "choices": [
     "4",
-    "8",
     "5",
-    "6"
+    "6",
+    "8"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "□2 is 88 minus 36. Since 88 − 36 = 52, the tens digit □ is 5. The ones digit 2 matches too.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Don’t just answer the tens digit of the sum — subtract to check."
     }
    ],
@@ -2229,16 +2337,16 @@
    ],
    "statement": "□8 + 13 = 61. What digit goes in the box? (□ is a single digit)",
    "choices": [
-    "3",
-    "4",
     "6",
-    "5"
+    "5",
+    "3",
+    "4"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "□8 is 61 minus 13. Since 61 − 13 = 48, the tens digit □ is 4. The ones digit 8 matches too.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 0,
      "misconception": "Don’t just answer the tens digit of the sum — subtract to check."
     }
    ],
@@ -2256,16 +2364,16 @@
    ],
    "statement": "□4 + 19 = 83. What digit goes in the box? (□ is a single digit)",
    "choices": [
-    "5",
-    "7",
+    "8",
     "6",
-    "8"
+    "5",
+    "7"
    ],
-   "answerIndex": 2,
+   "answerIndex": 1,
    "explanation": "□4 is 83 minus 19. Since 83 − 19 = 64, the tens digit □ is 6. The ones digit 4 matches too.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Don’t just answer the tens digit of the sum — subtract to check."
     }
    ],
@@ -2283,12 +2391,12 @@
    ],
    "statement": "How many different outcomes are there for tossing 3 coins at once (heads/tails distinguished)?",
    "choices": [
+    "10 ways",
     "7 ways",
     "8 ways",
-    "10 ways",
     "6 ways"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Multiply the number of choices at each step: 2 × 2 × 2 = 8. Listing them all one by one also gives 8.",
    "mistakes": [
     {
@@ -2310,16 +2418,16 @@
    ],
    "statement": "How many different outcomes are there for rolling one die and tossing one coin together?",
    "choices": [
-    "14 ways",
-    "12 ways",
+    "11 ways",
     "8 ways",
-    "11 ways"
+    "12 ways",
+    "14 ways"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Multiply the number of choices at each step: 6 × 2 = 12. Listing them all one by one also gives 12.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 1,
      "misconception": "Don’t add — multiply. Each first case branches into the next again."
     }
    ],
@@ -2337,16 +2445,16 @@
    ],
    "statement": "How many different outcomes are there for two people playing one round of rock-paper-scissors (who threw what is distinguished)?",
    "choices": [
-    "8 ways",
-    "6 ways",
     "11 ways",
-    "9 ways"
+    "9 ways",
+    "6 ways",
+    "8 ways"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "Multiply the number of choices at each step: 3 × 3 = 9. Listing them all one by one also gives 9.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "Don’t add — multiply. Each first case branches into the next again."
     }
    ],
@@ -2365,20 +2473,128 @@
    "statement": "How many different outcomes are there for picking one of 3 kinds of sandwiches and one of 2 kinds of drinks?",
    "choices": [
     "8 ways",
-    "6 ways",
+    "5 ways",
     "9 ways",
-    "5 ways"
+    "6 ways"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Multiply the number of choices at each step: 3 × 2 = 6. Listing them all one by one also gives 6.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 1,
      "misconception": "Don’t add — multiply. Each first case branches into the next again."
     }
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "The multiplication principle applies when each step’s choice doesn’t affect the others ('and'). By contrast, mutually exclusive cases ('this or that', 'or') are added (the addition principle). Multiply vs. add = 'and' vs. 'or'. Mixing the two freely is the heart of counting."
+  },
+  {
+   "id": "gen-seq2-1",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "difference sequences",
+    "the rule of the differences"
+   ],
+   "statement": "Find the rule. 1, 2, 4, 7, 11, □ — what number goes in the box?",
+   "choices": [
+    "17",
+    "16",
+    "11",
+    "15"
+   ],
+   "answerIndex": 1,
+   "explanation": "Write the gaps between neighbors: 1, 2, 3, 4. The gap grows by 1 each time, so the next gap is 5, and 11+5=16.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap isn’t constant, look at the 'gap of the gaps'. Here the gap grows by 1 each time (a difference sequence). Such numbers show up in triangular numbers (1,3,6,10…) as a shape grows a row at a time. Seeing the 'change of the change' is the key to cracking harder rules."
+  },
+  {
+   "id": "gen-seq2-2",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "difference sequences",
+    "the rule of the differences"
+   ],
+   "statement": "Find the rule. 2, 3, 5, 8, 12, □ — what number goes in the box?",
+   "choices": [
+    "12",
+    "17",
+    "18",
+    "16"
+   ],
+   "answerIndex": 1,
+   "explanation": "Write the gaps between neighbors: 1, 2, 3, 4. The gap grows by 1 each time, so the next gap is 5, and 12+5=17.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap isn’t constant, look at the 'gap of the gaps'. Here the gap grows by 1 each time (a difference sequence). Such numbers show up in triangular numbers (1,3,6,10…) as a shape grows a row at a time. Seeing the 'change of the change' is the key to cracking harder rules."
+  },
+  {
+   "id": "gen-seq2-3",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "difference sequences",
+    "the rule of the differences"
+   ],
+   "statement": "Find the rule. 1, 3, 6, 10, 15, □ — what number goes in the box?",
+   "choices": [
+    "15",
+    "21",
+    "20",
+    "22"
+   ],
+   "answerIndex": 1,
+   "explanation": "Write the gaps between neighbors: 2, 3, 4, 5. The gap grows by 1 each time, so the next gap is 6, and 15+6=21.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap isn’t constant, look at the 'gap of the gaps'. Here the gap grows by 1 each time (a difference sequence). Such numbers show up in triangular numbers (1,3,6,10…) as a shape grows a row at a time. Seeing the 'change of the change' is the key to cracking harder rules."
+  },
+  {
+   "id": "gen-seq2-4",
+   "area": "CHANGE_RELATION",
+   "difficulty": 3,
+   "groupId": "g-gen-seq2-3",
+   "concepts": [
+    "difference sequences",
+    "the rule of the differences"
+   ],
+   "statement": "Find the rule. 3, 4, 6, 9, 13, □ — what number goes in the box?",
+   "choices": [
+    "17",
+    "19",
+    "13",
+    "18"
+   ],
+   "answerIndex": 3,
+   "explanation": "Write the gaps between neighbors: 1, 2, 3, 4. The gap grows by 1 each time, so the next gap is 5, and 13+5=18.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "The gap isn’t constant — it’s growing. Take the next gap 1 larger."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "When the gap isn’t constant, look at the 'gap of the gaps'. Here the gap grows by 1 each time (a difference sequence). Such numbers show up in triangular numbers (1,3,6,10…) as a shape grows a row at a time. Seeing the 'change of the change' is the key to cracking harder rules."
   },
   {
    "id": "gen-tri-1",
@@ -2391,16 +2607,16 @@
    ],
    "statement": "You join 3 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
-    "8 matchsticks",
+    "9 matchsticks",
     "6 matchsticks",
-    "7 matchsticks",
-    "9 matchsticks"
+    "8 matchsticks",
+    "7 matchsticks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 3 triangles need 3 + 2×2 = 7.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2426,15 +2642,15 @@
    "statement": "You join 4 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
     "8 matchsticks",
+    "11 matchsticks",
     "12 matchsticks",
-    "9 matchsticks",
-    "11 matchsticks"
+    "9 matchsticks"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 4 triangles need 3 + 2×3 = 9.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 2,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2459,12 +2675,12 @@
    ],
    "statement": "You join 5 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
-    "14 matchsticks",
     "11 matchsticks",
+    "14 matchsticks",
     "15 matchsticks",
     "10 matchsticks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 0,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 5 triangles need 3 + 2×4 = 11.",
    "mistakes": [
     {
@@ -2493,16 +2709,16 @@
    ],
    "statement": "You join 6 equal equilateral triangles in a row with matchsticks (alternating up and down). How many matchsticks do you need in all?",
    "choices": [
-    "12 matchsticks",
-    "18 matchsticks",
     "17 matchsticks",
-    "13 matchsticks"
+    "13 matchsticks",
+    "12 matchsticks",
+    "18 matchsticks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 1,
    "explanation": "One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. So 6 triangles need 3 + 2×5 = 13.",
    "mistakes": [
     {
-     "choiceIndex": 1,
+     "choiceIndex": 3,
      "misconception": "Counting 3 per triangle double-counts the shared sides between neighbors."
     }
    ],
@@ -2527,12 +2743,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
+    "1 block",
     "4 blocks",
     "3 blocks",
-    "1 block",
     "2 blocks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Add each column’s height: 1 + 2 = 3. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
@@ -2565,16 +2781,16 @@
    ],
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
+    "3 blocks",
     "2 blocks",
-    "4 blocks",
     "5 blocks",
-    "3 blocks"
+    "4 blocks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Add each column’s height: 1 + 1 + 1 + 1 = 4. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
-     "choiceIndex": 3,
+     "choiceIndex": 0,
      "misconception": "Count the blocks hidden behind the front ones too."
     }
    ],
@@ -2605,16 +2821,16 @@
    ],
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
+    "5 blocks",
     "2 blocks",
     "4 blocks",
-    "3 blocks",
-    "5 blocks"
+    "3 blocks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 2,
    "explanation": "Add each column’s height: 1 + 2 + 1 = 4. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
-     "choiceIndex": 2,
+     "choiceIndex": 3,
      "misconception": "Count the blocks hidden behind the front ones too."
     }
    ],
@@ -2644,16 +2860,16 @@
    ],
    "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
    "choices": [
+    "5 blocks",
     "4 blocks",
     "6 blocks",
-    "3 blocks",
-    "5 blocks"
+    "3 blocks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Add each column’s height: 2 + 1 + 1 + 1 = 5. Even hidden behind the front ones, the back and bottom are filled in.",
    "mistakes": [
     {
-     "choiceIndex": 0,
+     "choiceIndex": 1,
      "misconception": "Count the blocks hidden behind the front ones too."
     }
    ],
@@ -2685,11 +2901,11 @@
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
     "1 block",
-    "3 blocks",
     "4 blocks",
-    "2 blocks"
+    "2 blocks",
+    "3 blocks"
    ],
-   "answerIndex": 3,
+   "answerIndex": 2,
    "explanation": "Count how many high each column is and add them: 1 + 1 = 2.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2717,9 +2933,9 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
-    "4 blocks",
     "5 blocks",
     "2 blocks",
+    "4 blocks",
     "3 blocks"
    ],
    "answerIndex": 3,
@@ -2752,9 +2968,9 @@
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
     "3 blocks",
+    "4 blocks",
     "5 blocks",
-    "2 blocks",
-    "4 blocks"
+    "2 blocks"
    ],
    "answerIndex": 0,
    "explanation": "Count how many high each column is and add them: 2 + 1 = 3.",
@@ -2784,12 +3000,12 @@
    ],
    "statement": "How many stacking blocks are there in the picture?",
    "choices": [
+    "3 blocks",
     "6 blocks",
-    "4 blocks",
     "5 blocks",
-    "3 blocks"
+    "4 blocks"
    ],
-   "answerIndex": 1,
+   "answerIndex": 3,
    "explanation": "Count how many high each column is and add them: 1 + 2 + 1 = 4.",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2818,12 +3034,12 @@
    ],
    "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
    "choices": [
-    "5 cm²",
     "4 cm²",
-    "3 cm²",
-    "2 cm²"
+    "5 cm²",
+    "2 cm²",
+    "3 cm²"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Count the shaded cells one by one → 3 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2862,12 +3078,12 @@
    ],
    "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
    "choices": [
-    "3 cm²",
-    "6 cm²",
+    "4 cm²",
     "5 cm²",
-    "4 cm²"
+    "6 cm²",
+    "3 cm²"
    ],
-   "answerIndex": 3,
+   "answerIndex": 0,
    "explanation": "Count the shaded cells one by one → 4 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2906,12 +3122,12 @@
    ],
    "statement": "How many grid cells is the shaded shape? (each cell is 1 cm²)",
    "choices": [
-    "6 cm²",
     "7 cm²",
-    "5 cm²",
-    "4 cm²"
+    "4 cm²",
+    "6 cm²",
+    "5 cm²"
    ],
-   "answerIndex": 2,
+   "answerIndex": 3,
    "explanation": "Count the shaded cells one by one → 5 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2950,12 +3166,12 @@
    ],
    "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
    "choices": [
-    "5 cm²",
     "4 cm²",
-    "6 cm²",
-    "7 cm²"
+    "7 cm²",
+    "5 cm²",
+    "6 cm²"
    ],
-   "answerIndex": 0,
+   "answerIndex": 2,
    "explanation": "Count the cells, or split into rectangles → 5 cm².",
    "mistakes": [],
    "source": "generated:v1(template+brute-force-verified)",
@@ -2994,10 +3210,10 @@
    ],
    "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
    "choices": [
-    "4 cm²",
     "7 cm²",
+    "6 cm²",
     "5 cm²",
-    "6 cm²"
+    "4 cm²"
    ],
    "answerIndex": 2,
    "explanation": "Count the cells, or split into rectangles → 5 cm².",
@@ -3039,8 +3255,8 @@
    "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
    "choices": [
     "10 cm²",
-    "7 cm²",
     "9 cm²",
+    "7 cm²",
     "8 cm²"
    ],
    "answerIndex": 3,
@@ -3084,8 +3300,8 @@
    "choices": [
     "5 cm²",
     "6 cm²",
-    "7 cm²",
-    "4 cm²"
+    "4 cm²",
+    "7 cm²"
    ],
    "answerIndex": 0,
    "explanation": "Count the cells, or split into rectangles → 5 cm².",

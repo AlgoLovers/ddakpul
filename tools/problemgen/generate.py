@@ -757,6 +757,17 @@ def gen_sequence_advanced():
             f"이웃한 수의 차이를 적어 보면 {difftxt}로, 차이가 1씩 커지고 있어요. 그러니 다음 차이는 {nxt_diff}이고, {seq[-1]}+{nxt_diff}={nxt}{_copula(nxt)}.",
             [(str(seq[-1] + diffs[-1]), "차이가 그대로가 아니라 점점 커지고 있어요. 다음 차이를 1 더 크게 잡아요.")],
             detail="차이가 일정하지 않을 땐 '차이의 차이'를 봐요. 여기선 차이가 1씩 커지죠(계차수열). 이런 수는 삼각수(1,3,6,10…)처럼 도형이 한 줄씩 커지는 상황에서 자주 나와요. 한 단계 더 파고들어 '변화의 변화'를 보는 눈이 어려운 규칙을 뚫는 열쇠예요.",
+            en={
+                "statement": f"Find the rule. {seqtxt}, □ — what number goes in the box?",
+                "answer": str(nxt),
+                "distractors": [str(seq[-1] + diffs[-1]), str(nxt + 1), str(seq[-1])],
+                "explanation": f"Write the gaps between neighbors: {difftxt}. The gap grows by 1 each time, so the next gap is {nxt_diff}, "
+                               f"and {seq[-1]}+{nxt_diff}={nxt}.",
+                "mistakes": [(str(seq[-1] + diffs[-1]), "The gap isn’t constant — it’s growing. Take the next gap 1 larger.")],
+                "detail": "When the gap isn’t constant, look at the 'gap of the gaps'. Here the gap grows by 1 each time (a difference "
+                          "sequence). Such numbers show up in triangular numbers (1,3,6,10…) as a shape grows a row at a time. Seeing the "
+                          "'change of the change' is the key to cracking harder rules.",
+            },
         )
 
 
@@ -1782,6 +1793,16 @@ def gen_consecutive_sum():
             f"연속한 수는 가운데를 기준으로 양쪽이 대칭이에요. 가운데를 □라 하면 {pattern}처럼 되죠. 그러면 −와 +가 서로 지워져서 합이 '가운데 × 개수'가 돼요. 그러니 가운데 = {total} ÷ {count} = {mid}이에요.",
             [(str(total // 2), f"2로 나누는 게 아니라, 개수({count})로 나눠야 가운데가 나와요.")],
             detail=f"'가운데 기준으로 대칭 상쇄'는 개수가 홀수일 때 특히 깔끔해요(가운데가 딱 하나). 짝수 개면 가운데가 두 수 사이라 합은 '가운데 두 수의 평균 × 개수'가 되고요. 이 눈은 1부터 100까지 더하기(가우스의 방법)로도 이어져요.",
+            en={
+                "statement": f"You add {count} consecutive whole numbers and get {total}. What is the 'middle' number of the {count}?",
+                "answer": str(mid),
+                "distractors": [str(total // 2), str(mid - 1), str(mid + count)],
+                "explanation": f"Consecutive numbers are symmetric about the middle. Call the middle □; then they are {pattern}. The − and + "
+                               f"cancel, so the sum equals 'middle × count'. So the middle = {total} ÷ {count} = {mid}.",
+                "mistakes": [(str(total // 2), f"Divide by the count ({count}), not by 2, to get the middle.")],
+                "detail": "'Symmetric cancellation about the middle' is cleanest with an odd count (one exact middle). With an even count the "
+                          "middle sits between two numbers, so the sum is 'average of the middle two × count'. This eye also gives Gauss’s trick for 1+…+100.",
+            },
         )
 
 
