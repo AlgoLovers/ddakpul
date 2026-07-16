@@ -417,6 +417,14 @@ def gen_train():
             f"기차 맨 앞을 기준으로 따라가 봐요. 맨 앞이 터널 {bridge}m를 다 지나도 아직 기차 몸통이 터널 안에 있어요. 맨 뒤까지 나오려면 기차 길이 {train_len}m를 더 가야 하니 모두 {bridge}+{train_len}={bridge + train_len}m를 달려요. 1초에 {speed}m씩 가니 {bridge + train_len}÷{speed}={t}초예요.",
             [(f"{bridge // speed}초", f"기차 자신의 길이 {train_len}m를 잊었어요.")],
             detail=f"핵심은 '기차가 실제로 지나간 거리'예요. 다리 {bridge}m만이 아니라 기차 자신의 길이 {train_len}m까지 더한 {train_len + bridge}m를 지나야 꼬리까지 완전히 건너요. 그래서 시간 = ({train_len}+{bridge})÷{speed}={t}초. '터널을 완전히 빠져나오기'도 똑같이 자기 길이를 더해요.",
+            en={
+                "statement": f"A train {train_len}m long runs at {speed}m per second. How many seconds does it take to pass completely through a tunnel {bridge}m long (from the moment the front enters until the tail comes out)?",
+                "answer": f"{t} seconds",
+                "distractors": [f"{bridge // speed} seconds", f"{t + 5} seconds", f"{train_len // speed if train_len % speed == 0 else t - 3} seconds"],
+                "explanation": f"Follow the front of the train. Even after the front has passed all {bridge}m of the tunnel, the body of the train is still inside. For the tail to come out too, the train must travel its own length {train_len}m more, so it covers {bridge}+{train_len}={bridge + train_len}m in all. At {speed}m per second, that is {bridge + train_len}÷{speed}={t} seconds.",
+                "mistakes": [(f"{bridge // speed} seconds", f"You forgot the train's own length of {train_len}m.")],
+                "detail": f"The key is 'the distance the train actually travels'. It must cover not just the {bridge}m tunnel but also its own length {train_len}m, a total of {train_len + bridge}m, before the tail is fully through. So time = ({train_len}+{bridge})÷{speed}={t} seconds. 'Coming completely out of a tunnel' adds the train's own length the same way.",
+            },
         )
 
 
@@ -617,6 +625,14 @@ def gen_candle():
             f"두 초의 길이 차이에 집중해 봐요. 처음 차이는 {l1}−{l2}={l1 - l2}cm인데, 1시간마다 긴 초가 {r1 - r2}cm씩 더 타서 차이가 그만큼 줄어요. {l1 - l2}÷{r1 - r2}={t}시간 뒤에 차이가 0이 되고, 그때 두 초 모두 {l1 - r1 * t}cm예요.",
             [(f"{l1 - l2}시간", f"차이 {l1 - l2}cm를 '1시간에 줄어드는 양 {r1 - r2}cm'로 나눠야 해요.")],
             detail=f"'차이'만 따로 떼어 보는 게 핵심이에요. 두 초의 길이 차는 매시간 (빨리 타는 속도 − 느리게 타는 속도)만큼 줄어요. 그래서 같아지는 시간 = 처음 차이 ÷ 속도 차. 이건 '따라잡기(만나기)'와 완전히 같은 구조예요 — 거리를 길이로, 속력을 타는 속도로 바꿨을 뿐이죠.",
+            en={
+                "statement": f"A {l1}cm candle burns {r1}cm each hour, and a {l2}cm candle burns {r2}cm each hour. If you light them at the same time, after how many hours will the two candles be the same length?",
+                "answer": f"{t} hours",
+                "distractors": [f"{t - 2} hours", f"{t + 2} hours", f"{l1 - l2} hours"],
+                "explanation": f"Focus on the difference in length between the two candles. At the start the difference is {l1}−{l2}={l1 - l2}cm, and each hour the longer candle burns {r1 - r2}cm more, shrinking the difference by that much. After {l1 - l2}÷{r1 - r2}={t} hours the difference reaches 0, and at that moment both candles are {l1 - r1 * t}cm.",
+                "mistakes": [(f"{l1 - l2} hours", f"You have to divide the difference of {l1 - l2}cm by 'the amount it shrinks each hour, {r1 - r2}cm'.")],
+                "detail": "The key is looking at the 'difference' on its own. The gap between the two candle lengths shrinks each hour by (faster burn rate − slower burn rate). So the time to become equal = starting difference ÷ difference in rates. This is exactly the same structure as 'catching up (meeting)' — only distance becomes length and speed becomes burn rate.",
+            },
         )
 
 
@@ -2213,6 +2229,14 @@ def gen_ratio_share():
             f"비 {r1}:{r2}는 전체를 똑같은 묶음 {r1}+{r2}={r1 + r2}묶음으로 나눈 거예요. 한 묶음은 {total}÷{r1 + r2}={unit}개. 형은 그중 {r1}묶음을 가지니 {unit}×{r1}={part}개예요.",
             [(f"{total - part}개", "그건 동생 몫이에요."), (f"{total // 2}개", "비가 같지 않으면 절반이 아니에요. 묶음 수로 나눠요.")],
             detail="비 문제의 핵심은 '한 묶음(단위량)'을 먼저 구하는 거예요. 전체를 (비의 합)으로 나누면 한 묶음이 나오고, 각자는 자기 몫만큼 곱하면 끝. 이 '단위량 먼저' 사고는 축척·농도·환율에도 똑같이 통해요.",
+            en={
+                "statement": f"{total} marbles are shared between child A and child B in the ratio {r1}:{r2}. How many marbles does A get?",
+                "answer": f"{part} marbles",
+                "distractors": [f"{r1} marbles", f"{total // 2} marbles", f"{total - part} marbles"],
+                "explanation": f"The ratio {r1}:{r2} splits the whole into {r1}+{r2}={r1 + r2} equal groups. One group is {total}÷{r1 + r2}={unit} marbles. A takes {r1} of those groups, so {unit}×{r1}={part} marbles.",
+                "mistakes": [(f"{total - part} marbles", "That's B's share."), (f"{total // 2} marbles", "It's not half unless the ratio is equal. Divide by the number of groups.")],
+                "detail": "The key to ratio problems is finding 'one group (the unit amount)' first. Divide the whole by (the sum of the ratio) to get one group, then multiply by each share — done. This 'unit amount first' thinking works the same for scale, concentration, and exchange rates.",
+            },
         )
 
 
@@ -2388,6 +2412,14 @@ def gen_frog_well():
             f"하루가 지나면 실제로는 {up}−{down}={net}m씩 오르지만, '밖으로 나오는 낮'에는 미끄러지지 않아요. 그래서 마지막 도약({up}m) 전까지, 즉 {depth - up}m까지만 {net}m씩 오르면 되죠. 하루하루 따라가 보면 {ans}일째 낮에 {up}m를 올라 {depth}m를 넘어서 탈출해요.",
             [(f"{ans + 1}일째", f"마지막 날 낮엔 미끄러지지 않아요 — 순증가({net}m)로만 계산하면 하루 더 걸리는 것처럼 보여요.")],
             detail="'며칠에 목표 도달'류는 마지막 한 걸음이 늘 예외예요. 순증가로 쭉 세다가 '처음 닿는 순간'은 미끄러지기 전이라는 걸 놓치면 하루가 어긋나요. 안전한 방법: 마지막 도약분을 먼저 빼고 남은 거리를 순증가로 나눈 뒤 1일을 더해요.",
+            en={
+                "statement": f"A frog is at the bottom of a well {depth}m deep. During the day it climbs {up}m, and at night it slips down {down}m. On the daytime of which day does the frog first get out of the well?",
+                "answer": f"day {ans}",
+                "distractors": [f"day {ans + 1}", f"day {ans - 1}", f"day {ans + 2}"],
+                "explanation": f"Over a full day it really rises {up}−{down}={net}m, but on the 'day it climbs out' it doesn't slip back. So until that last leap ({up}m), it only needs to reach {depth - up}m, climbing {net}m at a time. Following day by day, on the daytime of day {ans} it climbs {up}m past {depth}m and escapes.",
+                "mistakes": [(f"day {ans + 1}", f"On the final day it doesn't slip — counting only by the net gain ({net}m) makes it look like one extra day.")],
+                "detail": "In 'how many days to reach the goal' problems, the last step is always the exception. If you keep counting by the net gain and forget that the 'first moment it reaches' is before the slip, you'll be off by a day. Safe method: subtract the last leap first, divide the remaining distance by the net gain, then add 1 day.",
+            },
         )
 
 
@@ -2653,6 +2685,14 @@ def gen_gear_ratio():
             f"맞물린 두 바퀴는 '지나간 톱니 수'가 똑같아요. 톱니 {t1}개 바퀴가 {turns1}바퀴 돌면 {t1}×{turns1}={t1 * turns1}개의 톱니가 지나가요. 상대 바퀴도 같은 {t1 * turns1}개가 지나가야 하니 {t1 * turns1}÷{t2}={turns2}바퀴. 톱니가 많은 바퀴는 천천히 돌죠.",
             [(f"{turns1}바퀴", "톱니 수가 다르면 회전수도 달라요. 지나간 톱니 수가 같다는 걸 이용해요.")],
             detail="맞물린 톱니바퀴는 '톱니수 × 회전수'가 일정해요(반비례). 톱니가 2배면 회전은 절반. 자전거 기어·시계 톱니가 다 이 원리예요. 반비례는 '두 양의 곱이 일정'으로 보면 늘 쉬워져요(속력×시간=거리 일정도 같은 결).",
+            en={
+                "statement": f"A wheel with {t1} teeth meshes with a wheel with {t2} teeth. While the {t1}-tooth wheel makes {turns1} turns, how many turns does the {t2}-tooth wheel make?",
+                "answer": f"{turns2} turns",
+                "distractors": [f"{turns1} turns", f"{turns1 * t2 // t1} turns", f"{turns2 - 1} turns"],
+                "explanation": f"Two meshed wheels pass the exact same 'number of teeth'. When the {t1}-tooth wheel makes {turns1} turns, {t1}×{turns1}={t1 * turns1} teeth go by. The other wheel must pass the same {t1 * turns1} teeth, so {t1 * turns1}÷{t2}={turns2} turns. A wheel with more teeth turns more slowly.",
+                "mistakes": [(f"{turns1} turns", "Different tooth counts mean different numbers of turns. Use the fact that the same number of teeth pass by.")],
+                "detail": "For meshed gears, 'number of teeth × number of turns' stays constant (inverse proportion). Twice the teeth, half the turns. Bicycle gears and clock cogs all work this way. Inverse proportion always gets easier when you see it as 'the product of the two quantities stays constant' (speed×time=distance is the same idea).",
+            },
         )
 
 
@@ -2668,6 +2708,14 @@ def gen_seesaw():
             f"시소는 '무게 × 받침점까지의 거리'가 양쪽이 같을 때 균형을 이뤄요. 형 쪽은 {w1}×{d1}={w1 * d1}. 동생 쪽도 {w1 * d1}이 되어야 하니 {w1 * d1}÷{w2}={d2}m. 가벼운 사람이 더 멀리 앉아야 하죠.",
             [(f"{d1}m", "같은 거리에 앉으면 무거운 쪽으로 기울어요. 가벼우면 더 멀리 앉아요.")],
             detail="시소 균형의 비밀은 '무게 × 거리(모멘트)'가 양쪽 같아야 한다는 거예요. 그래서 무게와 거리는 반비례 — 몸무게가 절반이면 두 배 멀리. 지레·저울·병따개가 다 이 지렛대 원리예요.",
+            en={
+                "statement": f"On a seesaw, child A weighing {w1}kg sits {d1}m from the pivot. Child B weighs {w2}kg. How many metres from the pivot must B sit for the seesaw to balance?",
+                "answer": f"{d2}m",
+                "distractors": [f"{d1}m", f"{w2 * d1 // w1}m", f"{d2 + 1}m"],
+                "explanation": f"A seesaw balances when 'weight × distance from the pivot' is the same on both sides. A's side is {w1}×{d1}={w1 * d1}. B's side must also be {w1 * d1}, so {w1 * d1}÷{w2}={d2}m. The lighter person has to sit farther out.",
+                "mistakes": [(f"{d1}m", "Sitting at the same distance tips it toward the heavier side. The lighter one sits farther out.")],
+                "detail": "The secret to seesaw balance is that 'weight × distance (the moment)' must be equal on both sides. So weight and distance are inversely proportional — half the weight, twice the distance. Levers, scales, and bottle openers all use this lever principle.",
+            },
         )
 
 
@@ -2724,6 +2772,14 @@ def gen_ratio_three():
             f"비 {ra}:{rb}:{rc}는 전체를 똑같은 묶음 {ra}+{rb}+{rc}={s}묶음으로 나눈 거예요. 한 묶음은 {total}÷{s}={unit}개. C는 {rc}묶음이니 {unit}×{rc}={ans}개예요.",
             [(f"{total // 3}개", "셋이 똑같이 나누는 게 아니에요. 비가 다르니 묶음 수로 나눠요.")],
             detail="세 항의 비도 방법은 같아요 — '한 묶음(단위량) = 전체 ÷ 비의 합'을 먼저 구하고 각자 몫만큼 곱하면 끝. 항이 몇 개든 통해요. 비는 '전체를 몇 조각으로, 각자 몇 조각'의 그림으로 보면 늘 쉬워요.",
+            en={
+                "statement": f"{total} candies are shared among three people A, B, C in the ratio {ra}:{rb}:{rc}. How many candies does C get?",
+                "answer": f"{ans} candies",
+                "distractors": [f"{rc} candies", f"{unit * ra} candies", f"{total // 3} candies"],
+                "explanation": f"The ratio {ra}:{rb}:{rc} splits the whole into {ra}+{rb}+{rc}={s} equal groups. One group is {total}÷{s}={unit} candies. C has {rc} groups, so {unit}×{rc}={ans} candies.",
+                "mistakes": [(f"{total // 3} candies", "The three don't split it equally. The ratios differ, so divide by the number of groups.")],
+                "detail": "A three-term ratio uses the same method — find 'one group (the unit amount) = whole ÷ sum of the ratio' first, then multiply by each share. It works for any number of terms. Ratios are always easy when you picture 'the whole in so many slices, and how many slices each'.",
+            },
         )
 
 
@@ -2731,6 +2787,7 @@ def gen_ratio_three():
 def gen_marble_transfer():
     for give, ctx in [(3, "구슬"), (5, "사탕"), (4, "딱지"), (2, "스티커")]:
         ans = 2 * give
+        en_item = {"구슬": "marbles", "사탕": "candies", "딱지": "cards", "스티커": "stickers"}[ctx]
         add(
             "transfer", "CHANGE_RELATION", 5, ["차이 사고", "주고받기"],
             f"형과 동생이 {ctx}{_eul(ctx)} 가지고 있어요. 형이 동생에게 {ctx} {give}개를 주면 둘의 개수가 똑같아진대요. 원래 형은 동생보다 {ctx}{_eul(ctx)} 몇 개 더 가지고 있었을까요?",
@@ -2738,6 +2795,14 @@ def gen_marble_transfer():
             f"형이 {give}개를 주면 형은 {give} 줄고 동생은 {give} 늘어요. 그러면 둘 사이 차이는 한 번에 {give}+{give}={ans}만큼 줄어요. 주고 나서 '같아졌다'(차이 0)니 원래 차이는 딱 그만큼인 {ans}개였어요.",
             [(f"{give}개", f"준 개수 그대로가 아니에요 — 주는 쪽은 줄고 받는 쪽은 늘어 차이는 {give}의 두 배만큼 줄어요.")],
             detail="주고받기는 '차이가 어떻게 변하나'를 보면 쉬워요. 한 명이 상대에게 k개를 주면 차이는 2k만큼 줄어요(주는 쪽 −k, 받는 쪽 +k). 반대로 '얼마를 줘야 같아질까?'는 차이의 절반을 주면 되고요. 전체 합은 주고받아도 안 변한다는 것도 함께 기억하면 든든해요.",
+            en={
+                "statement": f"Child A and child B each have some {en_item}. If A gives B {give} {en_item}, they end up with the same number. How many more {en_item} did A originally have than B?",
+                "answer": f"{ans} {en_item}",
+                "distractors": [f"{give} {en_item}", f"{give * 3} {en_item}", f"{ans - 1} {en_item}"],
+                "explanation": f"When A gives away {give}, A goes down by {give} and B goes up by {give}. So the gap between them shrinks all at once by {give}+{give}={ans}. Since after giving they became 'equal' (gap 0), the original gap was exactly that much: {ans} {en_item}.",
+                "mistakes": [(f"{give} {en_item}", f"It's not simply the number given — the giver loses and the receiver gains, so the gap shrinks by twice {give}.")],
+                "detail": "Giving and taking is easy once you watch 'how the difference changes'. When one person gives k to the other, the difference shrinks by 2k (giver −k, receiver +k). Conversely, 'how much to give to make them equal?' is to give half the difference. It also helps to remember the total sum never changes with giving and taking.",
+            },
         )
 
 
@@ -3056,6 +3121,14 @@ def gen_geometric_nth():
             f"이웃한 수가 {ratio}배씩 커지는 등비수열이에요. 첫 수 {first}에 {ratio}를 {n}−1={n - 1}번 곱해요. {first}×{ratio}를 {n - 1}번 = {ans}이에요.",
             [(str(ans // ratio), f"한 번 덜 곱했어요 — {n}번째는 {ratio}를 {n}−1번 곱해요.")],
             detail="등비수열의 n번째 항 = (첫 항)×(공비)^(n−1)이에요. 등차가 '일정하게 더하기'라면 등비는 '일정하게 곱하기' — 곱이라 훨씬 빨리 커져요(2,4,8,16…). 세균 번식·복리·종이접기가 다 등비예요.",
+            en={
+                "statement": f"Here is a sequence that grows by a factor of {ratio} each time: {first}, {first * ratio}, {first * ratio * ratio}, … If it keeps going like this, what is the {n}th number?",
+                "answer": str(ans),
+                "distractors": [str(first * ratio * n), str(ans * ratio), str(ans // ratio)],
+                "explanation": f"This is a geometric sequence where each number is {ratio} times the one before. Start from the first number {first} and multiply by {ratio} a total of {n}−1={n - 1} times: {first}×{ratio} done {n - 1} times = {ans}.",
+                "mistakes": [(str(ans // ratio), f"You multiplied one time too few — the {n}th number multiplies by {ratio} {n}−1 times.")],
+                "detail": "The nth term of a geometric sequence = (first term)×(common ratio)^(n−1). If an arithmetic sequence is 'adding a fixed amount', a geometric one is 'multiplying by a fixed amount' — because it multiplies, it grows much faster (2,4,8,16…). Bacteria growth, compound interest, and paper folding are all geometric.",
+            },
         )
 
 
@@ -3109,6 +3182,14 @@ def gen_train_pass_person():
             f"사람은 크기가 거의 없으니, 기차가 '자기 길이만큼' 지나가면 사람을 완전히 지나친 거예요. 그러니 기차는 {length}m를 가야 하고, 초속 {speed}m이니 {length}÷{speed}={ans}초 걸려요.",
             [(f"{length}초", f"{length}는 거리(m)예요. 시간은 거리÷속력이에요.")],
             detail="'기차가 무언가를 지나가는' 문제는 '실제로 이동한 거리'를 정확히 잡는 게 전부예요. 점 같은 사람은 기차 길이만큼, 다리·터널은 (기차 길이 + 다리 길이)만큼. 시간 = 거리 ÷ 속력. 무엇을 지나가느냐에 따라 '거리'만 달라져요.",
+            en={
+                "statement": f"A train {length}m long runs at {speed}m per second. How many seconds does it take to pass completely by one person standing beside the track?",
+                "answer": f"{ans} seconds",
+                "distractors": [f"{length} seconds", f"{ans * 2} seconds", f"{ans - 1} seconds"],
+                "explanation": f"A person takes up almost no space, so once the train has gone by 'its own length' it has completely passed the person. The train must travel {length}m, and at {speed}m per second that takes {length}÷{speed}={ans} seconds.",
+                "mistakes": [(f"{length} seconds", f"{length} is a distance (m). Time is distance ÷ speed.")],
+                "detail": "In 'a train passing something' problems, everything comes down to pinning down 'the distance actually travelled'. For a point-like person it's the train's length; for a bridge or tunnel it's (train length + bridge length). Time = distance ÷ speed. Only the 'distance' changes with what is being passed.",
+            },
         )
 
 
@@ -3196,6 +3277,14 @@ def gen_fibonacci():
             f"이웃한 수의 관계를 봐요: {seq[0]}+{seq[1]}={seq[2]}, {seq[1]}+{seq[2]}={seq[3]}… '앞의 두 수를 더하면 다음 수'예요. 그러니 □ = {seq[-2]}+{seq[-1]} = {ans}이에요.",
             [(str(seq[-1] * 2), "마지막 수의 2배가 아니라, '앞의 두 수의 합'이에요.")],
             detail="이런 수열을 '피보나치 수열'이라 해요(1,1,2,3,5,8,13,…). 앞의 두 수를 더해 다음을 만들죠. 신기하게 해바라기 씨앗·솔방울·꽃잎 수에서 이 수들이 자주 나타나고, 이웃한 두 수의 비는 '황금비'에 점점 가까워져요.",
+            en={
+                "statement": f"Find the rule and work out the number that goes in the □: {', '.join(map(str, seq))}, □",
+                "answer": str(ans),
+                "distractors": [str(seq[-1] * 2), str(ans + 1), str(seq[-1] + 1)],
+                "explanation": f"Look at how neighbouring numbers relate: {seq[0]}+{seq[1]}={seq[2]}, {seq[1]}+{seq[2]}={seq[3]}… 'add the two numbers before to get the next'. So □ = {seq[-2]}+{seq[-1]} = {ans}.",
+                "mistakes": [(str(seq[-1] * 2), "It's not double the last number, but 'the sum of the two before it'.")],
+                "detail": "A sequence like this is called a 'Fibonacci sequence' (1,1,2,3,5,8,13,…). Each next number is the sum of the two before. Remarkably, these numbers show up often in sunflower seeds, pinecones, and petal counts, and the ratio of neighbouring numbers gets closer and closer to the 'golden ratio'.",
+            },
         )
 
 
@@ -3369,6 +3458,14 @@ def gen_sum_arithmetic_series():
             f"양 끝을 짝지어요: (첫 항 {first} + 끝 항 {last}) = {first + last}. 이런 짝이 항 {n}개에 대해 {n}÷2쌍만큼 생기니 합 = (첫+끝)×개수÷2 = ({first}+{last})×{n}÷2 = {ans}이에요.",
             [(str(first + last), "그건 첫 항과 끝 항의 합이에요 — 개수를 곱하고 2로 나눠야 전체 합이에요.")],
             detail="등차수열의 합 = (첫 항 + 끝 항) × 항의 수 ÷ 2예요. 가우스가 1~100을 순식간에 더한 방법(양 끝 짝짓기)과 똑같아요. 짝의 합이 모두 같다는 대칭이 핵심이라, 항이 홀수 개여도 '가운데 항 × 개수'로 같은 결과가 나와요.",
+            en={
+                "statement": f"For the arithmetic sequence {first}, {first + diff}, {first + 2 * diff}, …, what do you get if you add up the first {n} terms? (The last, {n}th term is {last}.)",
+                "answer": str(ans),
+                "distractors": [str(n * first), str(first + last), str(ans + diff)],
+                "explanation": f"Pair the two ends: (first term {first} + last term {last}) = {first + last}. There are {n}÷2 such pairs among the {n} terms, so the sum = (first+last)×count÷2 = ({first}+{last})×{n}÷2 = {ans}.",
+                "mistakes": [(str(first + last), "That's the sum of the first and last terms — multiply by the count and divide by 2 for the whole sum.")],
+                "detail": "The sum of an arithmetic sequence = (first term + last term) × number of terms ÷ 2. It's the same method Gauss used to add 1 to 100 in a flash (pairing the two ends). The symmetry — every pair summing to the same value — is the key, so even with an odd number of terms 'middle term × count' gives the same result.",
+            },
         )
 
 
