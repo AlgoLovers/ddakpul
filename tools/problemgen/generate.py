@@ -539,6 +539,14 @@ def gen_average():
             f"평균 대신 총점으로 바꿔 생각해요. 원래 {n}명의 총점은 {n}×{m}={n * m}점이고, {n + 1}명이 평균 {m + d}점이 되려면 총점이 {n + 1}×{m + d}={(n + 1) * (m + d)}점이어야 해요. 그 차이 {(n + 1) * (m + d)}−{n * m}={newcomer}점이 새로 온 사람의 점수예요.",
             [(f"{m + d}점", "새 평균만큼 받아서는 평균이 오르지 않아요. 모두의 평균을 끌어올려야 해요.")],
             detail=f"평균 문제는 '합'으로 바꿔 생각해요. 처음 {n}명의 합은 {n}×{m}={n * m}점. 새 평균 {m + d}점이 되려면 {n + 1}명의 합이 {n + 1}×{m + d}={(n + 1) * (m + d)}점이어야 하니, 새 사람 점수 = 그 차이 = {newcomer}점. 새 사람은 자기 몫 {m + d}점에 더해 나머지 {n}명을 각각 {d}점씩 끌어올릴 몫까지 가져와야 해서 훨씬 높아요.",
+            en={
+                "statement": f"{n} people had an average score of {m} points. When one more person joined, the average rose to {m + d} points. What was the new person's score?",
+                "answer": f"{newcomer} points",
+                "distractors": [f"{m + d} points", f"{m + 2 * d} points", f"{newcomer - d} points"],
+                "explanation": f"Switch from averages to totals. The original total for {n} people is {n}×{m}={n * m} points, and for {n + 1} people to average {m + d} points the total must be {n + 1}×{m + d}={(n + 1) * (m + d)} points. That difference {(n + 1) * (m + d)}−{n * m}={newcomer} points is the new person's score.",
+                "mistakes": [(f"{m + d} points", "Scoring just the new average won't raise the average — you have to pull everyone's average up.")],
+                "detail": f"Average problems are easier as 'totals'. The first {n} people sum to {n}×{m}={n * m} points. For the new average {m + d} points the {n + 1} people must sum to {n + 1}×{m + d}={(n + 1) * (m + d)} points, so the new person's score = that difference = {newcomer} points. The newcomer must bring their own share of {m + d} points plus enough to lift each of the other {n} people by {d} points, so it is much higher.",
+            },
         )
 
 
@@ -897,6 +905,14 @@ def gen_true_false():
             else:
                 texts.append(f'{people[i]}: "{people[st[1]]}이(가) 깼어."')
         body = " / ".join(texts)
+        en_people = ["A", "B", "C"]
+        en_texts = []
+        for j, st2 in enumerate(cfg):
+            if st2 == "innocent":
+                en_texts.append(f'{en_people[j]}: "I did not break it."')
+            else:
+                en_texts.append(f'{en_people[j]}: "{en_people[st2[1]]} broke it."')
+        en_body = " / ".join(en_texts)
         add(
             "truthone", "DATA_POSSIBILITY", 4, ["진실과 거짓", "경우 따져보기"],
             f"꽃병이 깨졌어요. 세 사람 중 한 명만 진실을 말하고 나머지 둘은 거짓말을 해요. {body} 꽃병을 깬 사람은 누구일까요?",
@@ -904,6 +920,14 @@ def gen_true_false():
             f"한 사람씩 '이 사람이 범인이라면?' 하고 가정해 진술들의 참·거짓을 세어 봐요. 참말한 사람이 정확히 한 명이 되는 경우는 {people[culprit]}이(가) 범인일 때뿐이에요. 그래서 답은 {people[culprit]}{_copula(people[culprit])}.",
             [("알 수 없다", "모든 경우를 하나씩 따져 보면 답은 하나로 정해져요.")],
             detail="'한 명만 진실'이 열쇠예요. 범인을 한 사람씩 가정하고, 그때 각자의 말이 참인지 세어 보세요. 진실을 말한 사람이 '정확히 한 명'이 되는 가정만 정답이에요. 이렇게 모든 경우를 표로 만들어 '조건에 맞는 하나'만 남기는 게 논리 퍼즐의 정석이에요.",
+            en={
+                "statement": f"A vase got broken. Among the three people, only one tells the truth and the other two lie. {en_body} Who broke the vase?",
+                "answer": en_people[culprit],
+                "distractors": [en_people[(culprit + 1) % 3], en_people[(culprit + 2) % 3], "unknown"],
+                "explanation": f"Take each person in turn and suppose 'what if this person did it?', then count how many statements come out true. The only case where exactly one person tells the truth is when {en_people[culprit]} is the culprit. So the answer is {en_people[culprit]}.",
+                "mistakes": [("unknown", "Work through every case one by one and the answer is pinned down to a single person.")],
+                "detail": "'Only one tells the truth' is the key. Suppose each person is the culprit and count whether each person's statement is true. Only the assumption that makes 'exactly one' person truthful is correct. Building a table of all cases and keeping just the 'one that fits the condition' is the classic way to crack logic puzzles.",
+            },
         )
 
 
@@ -1833,6 +1857,13 @@ def gen_coin_combinations():
             f"{ans}가지", [f"{ans - 1}가지", f"{ans + 1}가지", f"{ans + 2}가지"],
             f"큰 동전({coins[0]}원)을 0개, 1개, 2개… 넣어 보고 나머지를 작은 동전({coins[1]}원)으로 딱 채울 수 있는지 세어요. 빠짐없이·겹치지 않게 세면 {ans}가지예요.",
             detail=f"{coins[0]}원을 몇 개 쓸지 정하면 나머지는 자동으로 정해져요. 그러니 {coins[0]}원 개수만 0,1,2…로 늘려 가며 {coins[1]}원으로 딱 떨어지는 경우만 세면 빠짐도 겹침도 없죠. '한 가지를 고정하고 나머지를 따지기'는 경우의 수의 기본기예요.",
+            en={
+                "statement": f"You want to make {amount} using coins worth {coins[0]} and {coins[1]}. (You may use any number of each coin, or none.) How many ways are there in all?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(ans - 1, "way"), _en_plural(ans + 1, "way"), _en_plural(ans + 2, "way")],
+                "explanation": f"Try using 0, 1, 2… of the bigger coin ({coins[0]}) and check whether the rest can be filled exactly with the smaller coin ({coins[1]}). Counting with no gaps and no overlaps gives {ans} ways.",
+                "detail": f"Once you fix how many {coins[0]} coins to use, the rest is decided automatically. So just raise the number of {coins[0]} coins 0, 1, 2… and count only the cases that fill up exactly with {coins[1]} coins — no gaps, no overlaps. 'Fix one thing and work out the rest' is a basic skill of counting problems.",
+            },
         )
 
 
@@ -2437,6 +2468,14 @@ def gen_coin_flips():
             f"한 번 던질 때마다 '앞' 또는 '뒤' 2가지예요. 던질 때마다 경우가 2배로 갈라지니 {n}번이면 2를 {n}번 곱한 {ans}가지예요.",
             [(f"{2 * n}가지", "2씩 더하는 게 아니라 매번 2배로 갈라져요(곱의 원리).")],
             detail=f"각 던지기가 서로 영향을 안 주니 2를 {n}번 곱해요(곱의 원리). '갈림길마다 몇 갈래인지 곱하기'는 경우의 수의 기본이에요. '앞면이 딱 2번' 같은 조건이면 그 안에서 자리를 고르는 조합으로 또 세면 되고요.",
+            en={
+                "statement": f"You flip one coin {n} times. How many possible heads/tails outcomes (e.g. heads-tails-heads…) are there in all?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(2 * n, "way"), _en_plural(ans - 1, "way"), _en_plural(ans + 1, "way")],
+                "explanation": f"Each flip is one of 2 things — 'heads' or 'tails'. Every flip splits the cases into 2, so {n} flips give 2 multiplied {n} times, {ans} ways.",
+                "mistakes": [(_en_plural(2 * n, "way"), "You don't add 2 each time — each flip splits into twice as many cases (the multiplication principle).")],
+                "detail": f"Because each flip does not affect the others, multiply 2 a total of {n} times (the multiplication principle). 'At each fork, multiply by how many branches' is the basis of counting. For a condition like 'exactly 2 heads', you then count by choosing which positions with a combination.",
+            },
         )
 
 
@@ -2644,6 +2683,14 @@ def gen_average_needed():
             f"평균을 '총합'으로 바꿔요. {n}과목 평균 {target_avg}점이 되려면 총점이 {n}×{target_avg}={n * target_avg}점이어야 해요. 지금까지 {done}과목 총점은 {done}×{cur_avg}={done * cur_avg}점이니, 다음 과목은 {n * target_avg}−{done * cur_avg}={needed}점 받아야 해요.",
             [(f"{target_avg}점", f"목표 평균({target_avg}점)만 받아선 평균이 안 올라가요 — 지난 과목들 몫까지 끌어올려야 해요.")],
             detail="'목표 평균을 위해 필요한 값'은 (목표 총합) − (지금 총합)이에요. 목표보다 지금 평균이 낮으면 목표보다 더 높은 점수가 필요하고, 이미 높으면 목표보다 낮아도 돼요. 평균 문제는 늘 '총합'으로 돌아가면 안전해요.",
+            en={
+                "statement": f"So far you have taken {done} subject exams with an average of {cur_avg} points. To take one more subject and make the {n}-subject average {target_avg} points, what score do you need on the next subject?",
+                "answer": f"{needed} points",
+                "distractors": [f"{target_avg} points", f"{needed - 5} points", f"{needed + 5} points"],
+                "explanation": f"Turn the average into a 'total'. For the {n}-subject average to be {target_avg}, the total must be {n}×{target_avg}={n * target_avg} points. Your total so far over {done} subjects is {done}×{cur_avg}={done * cur_avg} points, so the next subject needs {n * target_avg}−{done * cur_avg}={needed} points.",
+                "mistakes": [(f"{target_avg} points", f"Just scoring the target average ({target_avg} points) won't raise your average — you have to make up for the earlier subjects too.")],
+                "detail": "The 'value needed to reach a target average' is (target total) − (current total). If your current average is below the target, you need a score above the target; if it is already high, a lower score is fine. With average problems it is always safe to go back to the 'total'.",
+            },
         )
 
 
@@ -2937,6 +2984,14 @@ def gen_median():
             f"중앙값은 '크기 순으로 줄 세운 뒤 한가운데'예요. 정렬하면 {', '.join(map(str, s))}. {n}개의 한가운데({n // 2 + 1}번째)는 {ans}이에요. (평균과 달리 아주 크거나 작은 값에 덜 흔들려요.)",
             [(str(sum(nums) // n), "그건 평균이에요. 중앙값은 '정렬 후 한가운데' 값이에요.")],
             detail="중앙값은 자료를 순서대로 놓고 딱 가운데 값을 고르는 거예요(개수가 짝수면 가운데 두 값의 평균). 평균은 극단값 하나에 크게 흔들리지만 중앙값은 안 흔들려서, 소득·집값처럼 한쪽으로 치우친 자료의 '대표값'으로 더 자주 써요.",
+            en={
+                "statement": f"Find the 'median' (the number that comes right in the middle when the numbers are lined up in order of size) of these numbers: {', '.join(map(str, nums))}.",
+                "answer": str(ans),
+                "distractors": [str(sum(nums) // n), str(max(nums)), str(min(nums))],
+                "explanation": f"The median is 'the middle after lining everything up in order of size'. Sorted, they are {', '.join(map(str, s))}. The middle of {n} numbers (position {n // 2 + 1}) is {ans}. (Unlike the average, it is barely swayed by very large or small values.)",
+                "mistakes": [(str(sum(nums) // n), "That's the average. The median is the 'middle after sorting' value.")],
+                "detail": "The median is found by putting the data in order and taking the exact middle value (if the count is even, the average of the two middle values). The average is thrown off a lot by a single extreme value, but the median isn't, so it is used more often as the 'representative value' for lopsided data like incomes or house prices.",
+            },
         )
 
 
@@ -3783,6 +3838,15 @@ def gen_electpair():
              (f"{n * n}가지", "한 사람이 두 자리를 겸할 순 없어요. 부반장은 한 명 적은 {}가지예요.".format(n - 1))],
             detail="반장·부반장처럼 뽑은 뒤 '자리(순서)가 구별되는' 선택은 순열 nP2 = n×(n−1)이에요. 두 명을 그냥 '대표'로 "
             "뽑는 조합(÷2)과 달리, 자리가 다르면 순서를 구별해 나누지 않아요.",
+            en={
+                "statement": f"From {n} people you pick 1 class president and 1 vice president. One person cannot hold both. How many ways are there in all?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [n * n, n * (n - 1) // 2, n, ans + 2])],
+                "explanation": f"The president can be any of the {n} people, so {n} ways; the vice president is picked from the remaining {n - 1}, so {n - 1} ways. Multiplying, {n}×{n - 1} = {ans} ways.",
+                "mistakes": [(f"{n * (n - 1) // 2} ways", "The president and vice president are different posts, so order matters. Don't divide by 2."),
+                             (f"{n * n} ways", "One person can't hold both posts. The vice president has one fewer — {} ways.".format(n - 1))],
+                "detail": "A choice where the 'posts (order) are distinguished' after picking — like president and vice president — is a permutation nP2 = n×(n−1). Unlike a combination that just picks two 'representatives' (÷2), when the posts differ you keep the order and do not divide.",
+            },
         )
 
 
@@ -4264,6 +4328,15 @@ def gen_avgbasic():
             [(str(total), "합만 구하면 안 돼요. 개수로 나눠야 평균이에요."),
              (str(max(vals)), "가장 큰 값이 아니라, 전체를 고르게 나눈 값이 평균이에요.")],
             detail="평균은 여러 값을 '고르게 나눈' 대푯값으로, 모두 더해 개수로 나눠요. 자료를 하나의 수로 요약하는 통계의 기본이에요.",
+            en={
+                "statement": f"Four scores are {vs}. What is the average of these scores?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
+                "explanation": f"To find the average, add everything up and divide by the count. {vs} add up to {total}, and dividing by 4 gives {ans}.",
+                "mistakes": [(str(total), "Don't stop at the sum. You have to divide by the count to get the average."),
+                             (str(max(vals)), "It isn't the largest value — the average is the value that spreads everything out evenly.")],
+                "detail": "The average is a representative value that 'spreads things out evenly': add up all the values and divide by the count. It's the basis of statistics — summarizing data into a single number.",
+            },
         )
 
 
@@ -4280,6 +4353,14 @@ def gen_lineup():
             [(f"{n * n}가지", "자리마다 사람이 '한 명씩 줄어들어요'. 같은 수를 곱하는 게 아니라 {}×{}×…예요.".format(n, n - 1))],
             detail="서로 다른 것을 한 줄로 배열하는 방법의 수는 n! = n×(n−1)×…×1이에요. 앞자리부터 채울 때 쓸 수 있는 것이 "
             "하나씩 줄어들기 때문이에요. 순서가 있는 세기(순열)의 기본이에요.",
+            en={
+                "statement": f"In how many different ways can {n} different people stand in a single line?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [n * n, factorial(n - 1), n * (n - 1), ans + n])],
+                "explanation": f"The person at the front has {n} ways, the next spot has the remaining {n - 1}, then {n - 2}… Multiplying these, {'×'.join(str(k) for k in range(n, 0, -1))} = {ans} ways.",
+                "mistakes": [(f"{n * n} ways", "The people available 'drop by one' at each spot. You aren't multiplying the same number — it's {}×{}×…".format(n, n - 1))],
+                "detail": "The number of ways to arrange distinct things in a line is n! = n×(n−1)×…×1, because what is left to place drops by one as you fill from the front. It is the basis of ordered counting (permutations).",
+            },
         )
 
 
@@ -4297,6 +4378,14 @@ def gen_mode():
             [(str(max(vals)), "가장 '큰' 수가 아니라 가장 '자주 나온' 수가 최빈값이에요.")],
             detail="최빈값은 자료에서 가장 자주 나타나는 값이에요. 평균·중앙값과 함께 자료를 대표하는 값 중 하나로, 개수를 "
             "세어 가장 많은 것을 찾으면 돼요.",
+            en={
+                "statement": f"You have the data {vs}. What is the number that appears most often (the mode)?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [second, max(vals), min(vals), ans + 1])],
+                "explanation": f"Count how many times each number appears. {ans} appears {vals.count(ans)} times — the most — so the mode is {ans}.",
+                "mistakes": [(str(max(vals)), "The mode is not the 'largest' number but the one that appears most 'often'.")],
+                "detail": "The mode is the value that appears most often in the data. Along with the average and median, it is one of the values that represent a data set; just count and pick whichever occurs the most.",
+            },
         )
 
 
@@ -4322,6 +4411,15 @@ def gen_simpleprob():
             [(f"{r}/{b}", "분모는 파란 공 수가 아니라 '전체' 공 수예요.")],
             detail="확률은 (원하는 경우의 수)÷(전체 경우의 수)예요. 여기선 빨간 공 수를 전체 공 수로 나눠요. 분모를 '전체'로 "
             "두는 것과 기약분수로 나타내는 게 핵심이에요.",
+            en={
+                "statement": f"A bag holds {r} red balls and {b} blue balls. With your eyes closed you take out one ball. What is the probability of getting a red ball?",
+                "answer": ans,
+                "distractors": distract[:3],
+                "explanation": f"There are {r}+{b}={total} balls in all, of which {r} are red. The probability is (red balls)÷(all balls) = {r}/{total}"
+                + (f" = {ans}" if ans != f"{r}/{total}" else "") + ".",
+                "mistakes": [(f"{r}/{b}", "The denominator isn't the number of blue balls — it's the number of 'all' balls.")],
+                "detail": "Probability is (favorable cases)÷(total cases). Here you divide the number of red balls by the total number of balls. The keys are putting 'all' in the denominator and giving the answer as a fully reduced fraction.",
+            },
         )
 
 
