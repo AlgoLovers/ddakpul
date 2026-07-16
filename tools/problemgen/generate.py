@@ -4860,6 +4860,7 @@ def gen_sigma():
         ans = sum(divisors)
         div_str = " + ".join(map(str, divisors))
         note = " (자기 자신과 같아 '완전수'예요)" if ans == n else ""
+        note_en = " (it equals the number itself, so it's a 'perfect number')" if ans == n else ""
         add(
             "sigma", "NUMBER_OPERATION", 10, ["약수", "진약수의 합"],
             f"{n}의 진약수(자기 자신 {n}{_eul(str(n))} 뺀 약수)를 모두 더하면 얼마일까요?",
@@ -4868,6 +4869,14 @@ def gen_sigma():
             [(str(ans + n), f"자기 자신 {n}{_eun(str(n))} 진약수가 아니에요(빼고 더해요).")],
             detail="자기 자신을 뺀 약수(진약수)의 합으로 수를 분류해요 — 합이 자신과 같으면 완전수(6, 28…), 작으면 부족수, "
             "크면 과잉수예요. 약수를 빠짐없이 찾아 더하는 정수론의 고전 주제예요.",
+            en={
+                "statement": f"What is the sum of all proper divisors of {n} (the divisors of {n} excluding {n} itself)?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [ans + n, ans - 1, ans + 1, n])],
+                "explanation": f"The proper divisors of {n} are {div_str}. Adding them all gives {ans}{note_en}.",
+                "mistakes": [(str(ans + n), f"{n} itself is not a proper divisor (leave it out when adding).")],
+                "detail": "We classify numbers by the sum of their divisors excluding themselves (the proper divisors) — if the sum equals the number it's a perfect number (6, 28…), if smaller a deficient number, if larger an abundant number. It's a classic number-theory topic of finding and adding every divisor.",
+            },
         )
 
 
@@ -4890,6 +4899,15 @@ def gen_recur():
              (str(p * ans + q), "그건 {}번째(한 항 더 간) 값이에요.".format(t + 1))],
             detail="앞 항으로 다음 항을 정하는 규칙이 점화식이에요. 규칙을 한 항씩 적용해 원하는 항까지 이어 가면 돼요. "
             "이자·인구·알고리즘 등 '이전 상태로 다음을 정하는' 수많은 현상의 뼈대예요.",
+            en={
+                "statement": f"The first term of a sequence is {a1}, and each next term is 'the previous term times {p}, plus {q}'. What is the {t}th term of this sequence?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [p * ans + q, seq[-2], ans + q, ans - q])],
+                "explanation": f"Applying the rule '×{p}, +{q}' term by term: {steps}. The {t}th term is {ans}.",
+                "mistakes": [(str(seq[-2]), f"You went one term short. Apply the rule up to the {t}th term."),
+                             (str(p * ans + q), f"That's the {t + 1}th value (one term too far).")],
+                "detail": "A recurrence is a rule that decides the next term from the previous one. Just apply the rule one term at a time until you reach the term you want. It's the backbone of countless phenomena — interest, populations, algorithms — that 'decide the next state from the previous one'.",
+            },
         )
 
 
@@ -4905,6 +4923,14 @@ def gen_conevolume():
             [(f"{base * h}cm³", "그건 같은 밑면·높이 '기둥'의 부피예요. 뿔은 그 3분의 1이라 ÷3 해요.")],
             detail="같은 밑넓이·높이라면 뿔의 부피는 기둥의 정확히 1/3이에요. 그래서 (밑넓이×높이)÷3으로 구해요. "
             "물을 부어 옮기면 세 번에 꽉 차는 걸로도 확인되는 입체 측정의 핵심이에요.",
+            en={
+                "statement": f"A cone or pyramid has a base area of {base} cm² and a height of {h} cm. What is its volume, in cm³?",
+                "answer": f"{ans}cm³",
+                "distractors": [f"{c}cm³" for c in _pick_distractors(ans, [base * h, base * h // 2, ans + 2, ans - 2])],
+                "explanation": f"A cone or pyramid's volume is exactly one third of the prism with the same base and height. Base area × height ÷ 3 = {base} × {h} ÷ 3 = {ans}cm³.",
+                "mistakes": [(f"{base * h}cm³", "That's the volume of the 'prism' with the same base and height. A cone/pyramid is one third of it, so ÷3.")],
+                "detail": "For the same base area and height, a cone/pyramid's volume is exactly 1/3 of the prism's. So you find it with (base area × height)÷3. It's a key fact of solid measurement — pouring water shows it fills up in exactly three pours.",
+            },
         )
 
 
@@ -4923,6 +4949,14 @@ def gen_setpartition():
             [(f"{2 ** (n - 1)}가지", "한쪽이 텅 비는 경우를 아직 안 뺐어요. (전체−2)를 반으로 나눠요.")],
             detail="서로 다른 것을 두 묶음으로 가르는 수는, 각자가 두 곳 중 하나를 고르는 2^n에서 '한쪽이 빈' 2가지를 빼고 "
             "묶음의 이름을 구별하지 않아 2로 나눈 2^(n−1)−1이에요. 여집합 쌍의 중복을 다루는 세기예요.",
+            en={
+                "statement": f"You split {n} distinct people into two non-empty groups. When the two groups are not distinguished (no A/B labels), how many ways are there in all?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [2 ** (n - 1), whole, ans + 1, ans - 1])],
+                "explanation": f"Each person belongs to one of the two groups, giving {whole} ways, but subtract the 2 cases where one side is empty (everyone in one group), and divide by 2 because the two groups aren't distinguished → ({whole}−2)÷2 = {ans} ways.",
+                "mistakes": [(f"{2 ** (n - 1)} ways", "You haven't yet removed the case where one side is completely empty. Take (total−2) and halve it.")],
+                "detail": "The number of ways to split distinct items into two piles is 2^n (each item picks one of two places), minus the 2 'one side empty' cases, divided by 2 because the piles' names aren't distinguished — giving 2^(n−1)−1. It's counting that handles the double-counting of complementary pairs.",
+            },
         )
 
 
@@ -4999,6 +5033,15 @@ def gen_diagregions():
             figure={"type": "POLYGON", "params": {"n": n, "diagonals": 1}},
             detail="대각선이 나누는 조각 수는 오일러 공식(꼭짓점−변+면=2)으로 세요 — 꼭짓점=원래 n개+교점 C(n,4)개, 변은 각 "
             "대각선·변이 교점마다 쪼개진 수예요. 정리하면 조각 수 = 1 + n(n−3)/2 + C(n,4). 교점 세기(C(n,4))에서 한 걸음 더 나간 문제예요.",
+            en={
+                "statement": f"All the diagonals of a convex {n}-gon are drawn. If no three diagonals meet at a single interior point, into how many pieces (regions) do the diagonals divide the interior of the polygon?",
+                "answer": f"{ans} regions",
+                "distractors": [f"{c} regions" for c in _pick_distractors(ans, [cross, diag, ans - 1, ans + 2])],
+                "explanation": f"You start with 1 piece (the polygon). Each time you draw a diagonal, the number of pieces grows by 'the number of crossing points it passes + 1'. Adding it all up: 1 + ({diag} diagonals) + ({cross} crossing points) = {ans} regions.",
+                "mistakes": [(f"{cross} regions", "That's the number of 'crossing points' where diagonals meet. The number of pieces is 1 + diagonals + crossing points."),
+                             (f"{diag} regions", "That's the 'number' of diagonals. There are more pieces than that (they split apart at the crossing points).")],
+                "detail": "The number of pieces the diagonals make is counted with Euler's formula (vertices − edges + faces = 2) — vertices = the original n plus C(n,4) crossing points, and edges = the number of pieces each diagonal and side is cut into at the crossings. Simplified, the number of pieces = 1 + n(n−3)/2 + C(n,4). It's one step beyond counting crossing points (C(n,4)).",
+            },
         )
 
 
@@ -5676,6 +5719,17 @@ def gen_lasttwo():
             [(str((ans + 1) % 100), "끝 자리 하나만 보지 말고, 100으로 나눈 나머지(두 자리)를 오일러 정리로 줄여 구하세요.")],
             detail="아주 큰 거듭제곱의 끝 두 자리는 100으로 나눈 나머지예요. 밑이 100과 서로소면 오일러 정리로 base^40≡1(mod 100)이라, "
             "지수를 40으로 나눈 나머지까지 줄여 손으로 계산할 수 있어요. 나머지 세계에서 거듭제곱의 주기를 쓰는 정수론의 핵심 도구예요.",
+            en={
+                "statement": f"What are the last two digits of {base} multiplied {exp} times (that is, {base}^{exp})?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [(ans + 1) % 100, (ans + 10) % 100, (ans * base) % 100, ans - 1])],
+                "explanation": f"The last two digits are the remainder mod 100. {base} is coprime to 100, so by Euler's theorem {base}^40 ≡ 1 (mod 100) "
+                f"(there are 40 numbers up to 100 coprime to 100, so φ(100)=40). So we reduce the exponent {exp} to its remainder {reduced} mod 40, and "
+                f"{base}^{reduced} gives the last two digits {ans}.",
+                "mistakes": [(str((ans + 1) % 100), "Don't look at just the last single digit — reduce the remainder mod 100 (two digits) using Euler's theorem.")],
+                "detail": "The last two digits of a very large power are its remainder mod 100. If the base is coprime to 100, Euler's theorem gives base^40≡1 (mod 100), "
+                "so you can reduce the exponent to its remainder mod 40 and compute by hand. It's a key number-theory tool using the cycle of powers in the world of remainders.",
+            },
         )
 
 
@@ -5695,6 +5749,17 @@ def gen_cubesum():
              (str(tri), "삼각수 그 자체가 아니라, 삼각수를 '제곱'한 값이에요.")],
             detail="1³+2³+…+n³ = (1+2+…+n)² = (n(n+1)/2)²이에요. 세제곱을 하나씩 더한 값이 '합을 통째로 제곱한 값'과 같다는 "
             "아름다운 관계로, 그림(정사각형을 계단식으로 쌓기)으로도 증명돼요. 겉보기 다른 두 양의 숨은 관계를 발견하는 문제예요.",
+            en={
+                "statement": f"What is the value of 1³ + 2³ + 3³ + … + {n}³? (cube each number and add them)",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [sq_sum, tri, n ** 3, ans - tri])],
+                "explanation": f"Amazingly, the sum of the cubes equals the square of '1 plus 2 up to that number (the triangular number)'. "
+                f"1+2+…+{n} = {tri}, and its square {tri}² = {ans}.",
+                "mistakes": [(str(sq_sum), "That's the sum of the 'squares' (1²+…+n²). Here it's the sum of the 'cubes', which is the square of the triangular number."),
+                             (str(tri), "It's not the triangular number itself, but the triangular number 'squared'.")],
+                "detail": "1³+2³+…+n³ = (1+2+…+n)² = (n(n+1)/2)². It's the beautiful fact that adding the cubes one by one equals 'squaring the whole sum', "
+                "which can even be proved with a picture (stacking squares in a staircase). It's a problem about discovering the hidden relationship between two seemingly different quantities.",
+            },
         )
 
 
@@ -5713,6 +5778,18 @@ def gen_pick():
              (str(inner + boundary // 2), "마지막에 −1을 빼먹었어요. 넓이 = 내부 + 둘레÷2 − 1 이에요.")],
             detail="픽의 정리는 격자점 위 다각형의 넓이를 '내부 격자점 수 + 둘레 격자점 수÷2 − 1'로 구해요. 자로 재지 않고 점만 세어 넓이를 "
             "정확히 얻는 놀라운 정리로, 삼각형으로 쪼개 더해도 성립함을 보일 수 있어요. 측정과 세기를 잇는 기하의 보석이에요.",
+            en={
+                "statement": f"A polygon has its vertices on the lattice points of grid paper. There are {inner} lattice points 'inside' the polygon and "
+                f"{boundary} lattice points on its 'boundary (edges)'. What is the area of this polygon? (each grid square has area 1)",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [inner + boundary, inner + boundary // 2, ans + 1, ans + 2])],
+                "explanation": f"By Pick's theorem, area = (interior lattice points) + (boundary lattice points)÷2 − 1. "
+                f"= {inner} + {boundary}÷2 − 1 = {inner} + {boundary // 2} − 1 = {ans}.",
+                "mistakes": [(str(inner + boundary), "You can't just add the interior and boundary points. Pick's theorem counts the boundary as half and subtracts 1."),
+                             (str(inner + boundary // 2), "You forgot to subtract 1 at the end. Area = interior + boundary÷2 − 1.")],
+                "detail": "Pick's theorem finds the area of a polygon on lattice points as 'number of interior lattice points + number of boundary lattice points÷2 − 1'. "
+                "It's a remarkable theorem that gives the exact area by just counting points without measuring, and it can be shown to hold by splitting into triangles and adding. It's a gem of geometry connecting measurement and counting.",
+            },
         )
 
 
@@ -5731,6 +5808,17 @@ def gen_catalan():
             [(f"{whole}가지", "괄호 위치만 고른 전체 경우예요. '닫는 괄호가 앞서면 안 됨' 조건으로 걸러야 해요.")],
             detail="카탈란 수 Cn = (2n)!/(n!(n+1)!) = C(2n,n)/(n+1)은 올바른 괄호 짝, 격자 대각선 아래 경로, 이진트리 모양처럼 "
             "'중간에 규칙이 깨지면 안 되는' 배열을 세는 수예요. 전체에서 규칙을 어긴 경우를 반사 원리로 덜어내 구해요. 조합론의 스타 수열이에요.",
+            en={
+                "statement": f"You place {n} opening brackets '(' and {n} closing brackets ')', {2 * n} in total, in a row. In how many ways can you arrange them so that, "
+                f"counting from the left up to any position, the number of closing brackets never exceeds the number of opening brackets (a valid bracket matching)?",
+                "answer": f"{ans} ways",
+                "distractors": [f"{c} ways" for c in _pick_distractors(ans, [whole, whole // 2, ans + 2, ans * 2])],
+                "explanation": f"With no constraint, choosing {n} of the {2 * n} positions for the opening brackets gives C({2 * n},{n}) = {whole} ways. Removing the 'invalid' "
+                f"arrangements where a closing bracket gets ahead, by the reflection principle, leaves the Catalan number C{n} = {whole}÷{n + 1} = {ans} ways.",
+                "mistakes": [(f"{whole} ways", "That's the total counting only the bracket positions. You have to filter by the condition 'a closing bracket must not get ahead'.")],
+                "detail": "The Catalan number Cn = (2n)!/(n!(n+1)!) = C(2n,n)/(n+1) counts arrangements where 'the rule must not break partway' — valid bracket matchings, "
+                "lattice paths below the diagonal, binary tree shapes. You find it by using the reflection principle to remove the rule-breaking cases from the total. It's the star sequence of combinatorics.",
+            },
         )
 
 
