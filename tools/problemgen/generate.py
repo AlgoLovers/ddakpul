@@ -260,6 +260,14 @@ def gen_age():
                         f"표를 만들어 하나씩 확인해 봐요. 딸이 {child}살이면 어머니는 {k}배인 {parent}살이에요. {t}년 뒤에는 두 사람 모두 {t}살씩 늘어 딸 {child + t}살, 어머니 {parent + t}살 — 정확히 {m}배가 되니 조건에 딱 맞아요. 답은 {child}살.",
                         [(f"{parent}살", "그건 어머니의 지금 나이예요.")],
                         detail=f"나이 문제의 열쇠는 '변하지 않는 것'이에요. 두 사람은 해마다 똑같이 나이를 먹으니 '나이 차이'는 절대 안 변해요. 지금 차이 {parent}−{child}={parent - child}살은 {t}년 뒤에도 그대로죠. 이 고정된 차이와 배수 관계를 함께 쓰면 방정식 없이도 풀려요.",
+                        en={
+                            "statement": f"The mother's age now is {k} times the daughter's age. In {t} years it will be {m} times. How old is the daughter now?",
+                            "answer": f"{child} years old",
+                            "distractors": [f"{child - 2} years old", f"{child + 2} years old", f"{parent} years old"],
+                            "explanation": f"Make a table and check step by step. If the daughter is {child}, the mother is {k} times that, {parent}. In {t} years both grow by {t}: daughter {child + t}, mother {parent + t} — exactly {m} times, which fits perfectly. The answer is {child} years old.",
+                            "mistakes": [(f"{parent} years old", "That's the mother's age right now.")],
+                            "detail": f"The key to age problems is 'what does not change'. Both people age the same amount every year, so the 'age difference' never changes. Today's difference {parent}−{child}={parent - child} stays the same {t} years later. Using this fixed difference together with the multiple relationship solves it without any equation.",
+                        },
                     )
 
 
@@ -341,6 +349,14 @@ def gen_meeting():
             f"서로 반대로 걸으면 두 사람이 걸은 거리를 합쳐 트랙 한 바퀴 {track}m가 되는 순간 처음 만나요. 1분마다 둘이 합쳐 {va}+{vb}={va + vb}m씩 걸으니, {track}÷{va + vb}={t}분 뒤에 만나요.",
             [(f"{t * 2}분", "속력을 더하지 않고 한 사람 속력만 쓴 건 아닌지 확인해요.")],
             detail=f"서로를 향해 가면 둘 사이 거리가 매분 (두 속력의 합)만큼 줄어요. 그래서 만나는 시간 = 거리 ÷ 속력의 합 = {track}÷({va}+{vb})={t}분. 반대로 같은 방향으로 쫓아갈 땐 '속력의 차'로 나눠요. '합이냐 차냐'가 만나기·따라잡기 문제의 갈림길이에요.",
+            en={
+                "statement": f"On a circular track {track} m around, A and B start from the same spot at the same time, walking in opposite directions. A walks {va} m per minute and B walks {vb} m per minute. After how many minutes do they first meet?",
+                "answer": f"{t} minutes",
+                "distractors": [f"{t * 2} minutes", f"{t + 1} minutes", f"{track // max(va, vb)} minutes"],
+                "explanation": f"Walking in opposite directions, they first meet the moment their combined distance equals one full lap, {track} m. Together they cover {va}+{vb}={va + vb} m each minute, so they meet after {track}÷{va + vb}={t} minutes.",
+                "mistakes": [(f"{t * 2} minutes", "Check whether you added the two speeds instead of using just one person's speed.")],
+                "detail": f"When two people move toward each other, the distance between them shrinks by (the sum of the two speeds) every minute. So meeting time = distance ÷ sum of speeds = {track}÷({va}+{vb})={t} minutes. When chasing in the same direction, you divide by the 'difference' of the speeds instead. 'Sum or difference' is the fork between meeting and catching-up problems.",
+            },
         )
 
 
@@ -359,6 +375,14 @@ def gen_work():
             f"일 전체를 {lcm}칸이라고 생각해 봐요. 한 사람은 하루에 {lcm}÷{a}={lcm // a}칸, 다른 친구는 {lcm}÷{b}={lcm // b}칸을 해요. 둘이 함께면 하루에 {lcm // a}+{lcm // b}={lcm // a + lcm // b}칸이니 {lcm}÷{lcm // a + lcm // b}={t}일 만에 끝나요.",
             [(f"{(a + b) // 2}일", "평균이 아니에요. 함께하면 혼자 빠른 사람보다도 빨라져야 해요.")],
             detail=f"핵심은 '하루에 하는 양(일률)'이에요. 혼자 {a}일이면 하루에 1/{a}, 다른 친구는 1/{b}만큼 해요. 함께면 그 둘을 더한 만큼 하루에 하니, 걸리는 날 = 1÷(1/{a}+1/{b}) = {t}일. 전체를 최소공배수 칸으로 두면 분수 없이 같은 계산이 되죠. 물탱크 채우기·인쇄 속도도 다 이 '일률 더하기'랍니다.",
+            en={
+                "statement": f"A certain job takes A {a} days alone and another child {b} days alone. Working together, in how many days can they finish?",
+                "answer": f"{t} days",
+                "distractors": [f"{(a + b) // 2} days", f"{t + 2} days", f"{abs(b - a)} days"],
+                "explanation": f"Think of the whole job as {lcm} parts. One person does {lcm}÷{a}={lcm // a} parts a day, the other does {lcm}÷{b}={lcm // b} parts a day. Together they do {lcm // a}+{lcm // b}={lcm // a + lcm // b} parts a day, so {lcm}÷{lcm // a + lcm // b}={t} days to finish.",
+                "mistakes": [(f"{(a + b) // 2} days", "It's not the average. Working together must be faster than even the quicker person alone.")],
+                "detail": f"The key is 'how much gets done in a day (the work rate)'. Alone in {a} days means 1/{a} per day, the other does 1/{b}. Together they do the sum each day, so days needed = 1÷(1/{a}+1/{b}) = {t} days. Setting the whole job as a least-common-multiple number of parts gives the same calculation without fractions. Filling a tank or printing speed are all this same 'adding of work rates'.",
+            },
         )
 
 
@@ -1115,6 +1139,14 @@ def gen_geometric_seq():
             f"이웃한 수가 몇 배로 커지는지 봐요. {seq[1]}÷{seq[0]}={r}, {seq[2]}÷{seq[1]}={r} — 매번 {r}배예요. 그러니 {seq[-1]} 다음은 {seq[-1]}×{r}={nxt}{_copula(nxt)}.",
             [(str(seq[-1] + (seq[-1] - seq[-2])), "일정하게 더해지는 게 아니라 일정하게 곱해지고 있어요(등비).")],
             detail=f"등차(일정하게 더하기)와 등비(일정하게 곱하기)를 구별하는 게 핵심이에요. 여기선 매번 ×{r}이니 등비죠. 등비는 처음엔 등차와 비슷해 보여도 곧 폭발적으로 커져요(2,4,8,16…). 접는 종이 두께나 소문 퍼지기처럼, '곱해지는 변화'는 우리 직관보다 훨씬 빨라요.",
+            en={
+                "statement": f"Find the rule. {seqtxt}, □ — what number goes in □?",
+                "answer": str(nxt),
+                "distractors": [str(seq[-1] + (seq[-1] - seq[-2])), str(nxt + r), str(nxt + seq[-1])],
+                "explanation": f"Look at how many times each number grows. {seq[1]}÷{seq[0]}={r}, {seq[2]}÷{seq[1]}={r} — it is ×{r} every time. So after {seq[-1]} comes {seq[-1]}×{r}={nxt}.",
+                "mistakes": [(str(seq[-1] + (seq[-1] - seq[-2])), "It is not a constant amount being added — a constant amount is being multiplied (geometric).")],
+                "detail": f"The key is telling apart arithmetic (adding a constant) and geometric (multiplying by a constant). Here it is ×{r} every time, so it is geometric. A geometric sequence looks like an arithmetic one at first but soon explodes (2, 4, 8, 16…). Like the thickness of folded paper or a rumor spreading, 'multiplied change' is far faster than our intuition.",
+            },
         )
 
 
@@ -1882,6 +1914,14 @@ def gen_lcm_together():
             f"파란 버스가 출발하는 시각은 {a}, {a * 2}, {a * 3}…분처럼 {a}의 배수예요. 빨간 버스는 {b}, {b * 2}…분처럼 {b}의 배수고요. 두 버스가 함께 출발하려면 두 배수가 겹쳐야 하니 '공배수'를 찾고, 그중 가장 이른 시각이 '최소공배수'예요. {a}와 {b}의 최소공배수는 {lcm}이라 {lcm}분 뒤에 처음으로 다시 만나요.",
             [(f"{a + b}분", "두 시간을 더하는 게 아니라, 공통으로 겹치는 배수(최소공배수)를 찾아야 해요.")],
             detail=f"최소공배수는 두 수의 곱을 최대공약수로 나눠 빠르게 구해요: {a}×{b}÷{gcd(a, b)}={lcm}. 소인수분해로 '각 소수를 더 많이 나온 쪽만큼' 곱해도 같아요. 신호등·톱니바퀴·행성의 주기가 겹치는 순간이 모두 이 최소공배수예요.",
+            en={
+                "statement": f"Two buses leave the same stop at the same time. The blue bus leaves every {a} minutes and the red bus every {b} minutes. After how many minutes will the two buses next leave 'together again'?",
+                "answer": f"{lcm} minutes",
+                "distractors": [f"{a + b} minutes", f"{lcm // 2} minutes", f"{lcm + a} minutes"],
+                "explanation": f"The blue bus leaves at {a}, {a * 2}, {a * 3}… minutes — multiples of {a}. The red bus leaves at {b}, {b * 2}… minutes — multiples of {b}. For both to leave together, their multiples must overlap, so find a 'common multiple', and the earliest one is the 'least common multiple'. The least common multiple of {a} and {b} is {lcm}, so they first meet again after {lcm} minutes.",
+                "mistakes": [(f"{a + b} minutes", "Don't add the two times — find the common multiple (least common multiple) where they overlap.")],
+                "detail": f"Find the least common multiple quickly by dividing the product by the greatest common divisor: {a}×{b}÷{gcd(a, b)}={lcm}. Prime factorization (multiply each prime to whichever side has more of it) gives the same. Traffic lights, gears, and planetary periods all line up at this least common multiple.",
+            },
         )
 
 
@@ -2123,6 +2163,15 @@ def gen_recipe_ratio():
     ]:
         assert new_qty * base_ing % base_qty == 0
         ans = new_qty * base_ing // base_qty
+        en_item = {"쿠키": "cookies", "팬케이크": "pancakes", "주스": "cups of juice", "빵": "loaves of bread"}[item]
+        en_item1 = {"쿠키": "cookie", "팬케이크": "pancake", "주스": "cup of juice", "빵": "loaf of bread"}[item]
+        en_word = {"설탕": "spoon", "우유": "cup", "오렌지": "orange", "버터": "spoon"}[ing]
+        en_amt = {
+            "설탕": lambda q: f"{q} spoons of sugar",
+            "우유": lambda q: f"{q} cups of milk",
+            "오렌지": lambda q: _en_plural(q, "orange"),
+            "버터": lambda q: f"{q} spoons of butter",
+        }[ing]
         add(
             "recipe", "CHANGE_RELATION", 4, ["비례", "단위량"],
             f"{item} {base_qty}개를 만들려면 {ing} {base_ing}{unit}{_iga(unit)} 필요해요. 같은 맛으로 {item} {new_qty}개를 만들려면 {ing}{_eun(ing)} 몇 {unit} 필요할까요?",
@@ -2130,6 +2179,14 @@ def gen_recipe_ratio():
             f"먼저 {item} 1개당 {ing}이 얼마인지 봐요: {base_ing}÷{base_qty}. {item} {new_qty}개면 그 {new_qty}배니 {base_ing}×{new_qty}÷{base_qty}={ans}{unit}이에요. (비례식 {base_qty}:{base_ing}={new_qty}:□로 풀어도 □={ans}.)",
             [(f"{base_ing + (new_qty - base_qty)}{unit}", "개수 차이만큼 '더하는' 게 아니라, 몇 배인지(비율)로 늘려야 해요.")],
             detail="비례는 '한 개당 얼마(단위량)'를 구하면 다 풀려요. 또는 비례식 a:b=c:□에서 '바깥끼리 곱 = 안끼리 곱'(교차곱)으로 □를 구해도 돼요. 요리·지도 축척·환율·농도가 전부 이 비례 위에 있어요.",
+            en={
+                "statement": f"To make {base_qty} {en_item} you need {en_amt(base_ing)}. To make {new_qty} {en_item} with the same taste, how many {en_word}s do you need?",
+                "answer": _en_plural(ans, en_word),
+                "distractors": [_en_plural(base_ing + (new_qty - base_qty), en_word), _en_plural(new_qty, en_word), _en_plural(ans + base_ing, en_word)],
+                "explanation": f"First find the amount for one {en_item1}: {base_ing}÷{base_qty}. For {new_qty} {en_item}, that is {new_qty} times as much, so {base_ing}×{new_qty}÷{base_qty}={ans} {en_word}s. (Solving the proportion {base_qty}:{base_ing}={new_qty}:□ also gives □={ans}.)",
+                "mistakes": [(_en_plural(base_ing + (new_qty - base_qty), en_word), "Don't 'add' the difference in count — scale up by the ratio (how many times as much).")],
+                "detail": "Proportion problems are all solved once you find 'how much per one (the unit amount)'. Or in a proportion a:b=c:□, find □ by 'product of the outers = product of the inners' (cross-multiplying). Cooking, map scales, exchange rates, and concentration all rest on this same proportion.",
+            },
         )
 
 
@@ -2159,6 +2216,7 @@ def gen_square_area():
 # ── 78. N일 뒤 요일 — 나머지 (난4, 변화와관계) ───────────────────────────────
 def gen_day_of_week():
     days = ["일", "월", "화", "수", "목", "금", "토"]
+    days_en = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     for start, ahead in [(1, 100), (3, 50), (5, 30), (2, 365)]:
         end = (start + ahead) % 7
         add(
@@ -2168,6 +2226,14 @@ def gen_day_of_week():
             f"요일은 7일마다 똑같이 반복돼요. 그러니 {ahead}일 중 '7의 배수'만큼은 제자리로 돌아오고, {ahead}÷7의 나머지인 {ahead % 7}일만 더 가면 돼요. {days[start]}요일에서 {ahead % 7}일 뒤는 {days[end]}요일이에요.",
             [(f"{days[(end + 1) % 7]}요일", f"하루 차이로 어긋났어요. {ahead}÷7의 나머지({ahead % 7}일)를 정확히 세었는지 봐요.")],
             detail=f"'주기 7 + 나머지'는 요일 계산의 전부예요. {ahead}일 = 7×{ahead // 7} + {ahead % 7}이니, 7의 배수 부분은 무시하고 나머지 {ahead % 7}만 세면 끝. 1000일 뒤 같은 큰 수도 나머지만 보면 되고, 이 modular 사고는 시계·달력·거듭제곱 끝자리와 똑같아요.",
+            en={
+                "statement": f"Today is {days_en[start]}. What day of the week will it be {ahead} days from today?",
+                "answer": days_en[end],
+                "distractors": [days_en[(end + 1) % 7], days_en[(end + 2) % 7], days_en[(end + 4) % 7]],
+                "explanation": f"The days of the week repeat every 7 days. So out of {ahead} days, whole multiples of 7 land back on the same day, and you only move forward the remainder of {ahead}÷7, which is {ahead % 7} days. {ahead % 7} days after {days_en[start]} is {days_en[end]}.",
+                "mistakes": [(days_en[(end + 1) % 7], f"You're off by a day. Check that you counted the remainder of {ahead}÷7 ({ahead % 7} days) exactly.")],
+                "detail": f"'A cycle of 7 plus a remainder' is all there is to day-of-week problems. {ahead} days = 7×{ahead // 7} + {ahead % 7}, so ignore the multiple-of-7 part and count only the remainder {ahead % 7}. Even a big number like 1000 days later needs only the remainder, and this modular thinking is the same as clocks, calendars, and the last digit of powers.",
+            },
         )
 
 
@@ -2268,6 +2334,14 @@ def gen_square_numbers():
             f"규칙을 보면 n번째는 한 변이 n개인 정사각형이라 n×n개예요. 그러니 {k}번째는 {k}×{k}={ans}개예요.",
             [(f"{k * 2}개", "2배가 아니라, 한 변을 두 번 곱해요(정사각형이니까).")],
             detail="이런 수(1,4,9,16,25…)를 '사각수(제곱수)'라 해요. 이웃한 사각수의 차는 3,5,7,9…처럼 홀수로 늘어나요(정사각형을 ㄱ자로 키울 때 덧대는 점의 수). 그래서 '홀수를 차례로 더하면 제곱수'와도 이어져요. 점을 그림으로 배열하면 규칙이 눈에 보여요.",
+            en={
+                "statement": f"You lay out stones in square shapes. The 1st is 1 stone (1×1), the 2nd is 4 stones (2×2), the 3rd is 9 stones (3×3)… how many stones are in the {k}th picture?",
+                "answer": _en_plural(ans, "stone"),
+                "distractors": [_en_plural(k * 2, "stone"), _en_plural((k - 1) * (k - 1), "stone"), _en_plural(ans + k, "stone")],
+                "explanation": f"By the rule, the nth picture is a square with n stones on each side, so n×n stones. So the {k}th is {k}×{k}={ans} stones.",
+                "mistakes": [(_en_plural(k * 2, "stone"), "It is not doubling — multiply one side by itself (it is a square).")],
+                "detail": "These numbers (1, 4, 9, 16, 25…) are called 'square numbers'. The gaps between neighboring square numbers grow by odd numbers 3, 5, 7, 9… (the dots added when you grow a square by an L-shape). That is why 'adding odd numbers in order gives a square number' connects here too. Arrange dots as a picture and the rule becomes visible.",
+            },
         )
 
 
@@ -2282,6 +2356,14 @@ def gen_triangular():
             f"{k}층까지면 1+2+3+…+{k}를 더하는 거예요. 양 끝을 짝지으면 (1+{k}), (2+{k - 1})…처럼 합이 {k + 1}인 짝이 생겨, {k}×({k}+1)÷2={ans}개예요.",
             [(f"{k * (k + 1)}개", "짝지어 더한 다음 ÷2 하는 걸 빠뜨렸어요.")],
             detail="이런 수(1,3,6,10,15…)를 '삼각수'라 해요. n번째 삼각수 = n×(n+1)÷2로 1부터 n까지의 합과 똑같아요(가우스의 방법). 삼각수 두 개를 이어 붙이면 직사각형이 되는 걸 그림으로 보면 왜 ÷2인지 보여요. 볼링핀·당구공 배열이 삼각수예요.",
+            en={
+                "statement": f"You stack balls into a triangle. Row 1 has 1 ball, up to row 2 has 1+2=3, up to row 3 has 1+2+3=6… stacking up to row {k}, how many balls are there in all?",
+                "answer": _en_plural(ans, "ball"),
+                "distractors": [_en_plural(k * k, "ball"), _en_plural(ans - k, "ball"), _en_plural(k * (k + 1), "ball")],
+                "explanation": f"Up to row {k} means adding 1+2+3+…+{k}. Pairing the two ends gives (1+{k}), (2+{k - 1})… pairs that each add up to {k + 1}, so {k}×({k}+1)÷2={ans} balls.",
+                "mistakes": [(_en_plural(k * (k + 1), "ball"), "You forgot to divide by 2 after pairing.")],
+                "detail": "These numbers (1, 3, 6, 10, 15…) are called 'triangular numbers'. The nth triangular number = n×(n+1)÷2, exactly the sum from 1 to n (Gauss's trick). Joining two triangular numbers makes a rectangle — draw it and you see why the ÷2. Bowling pins and racked billiard balls form triangular numbers.",
+            },
         )
 
 
@@ -2462,6 +2544,14 @@ def gen_clock_strikes():
             f"함정은 '치는 횟수'가 아니라 '소리 사이 간격 수'예요. {h1}번 치면 사이 간격은 {h1}−1={h1 - 1}개. 그 {h1 - 1}개에 {sec1}초가 걸리니 간격 하나는 {sec1}÷{h1 - 1}={gap}초. {h2}번 치면 간격이 {h2}−1={h2 - 1}개니 {h2 - 1}×{gap}={ans}초예요.",
             [(f"{gap * h2}초", "횟수에 그대로 비례하지 않아요 — '사이 간격'의 수로 따져야 해요.")],
             detail="'종을 n번 친다'와 '간격이 n−1개다'의 차이가 핵심이에요(나무 심기·자르기와 같은 간격 함정). 첫 소리엔 시간이 안 걸리고, 소리와 소리 '사이'에만 시간이 흘러요. 이 1 차이를 놓치면 답이 어긋나요.",
+            en={
+                "statement": f"A wall clock takes {sec1} seconds to strike '{h1} times' at {h1} o'clock. Then how many seconds does it take to strike '{h2} times' at {h2} o'clock?",
+                "answer": f"{ans} seconds",
+                "distractors": [f"{gap * h2} seconds", f"{ans - gap} seconds", f"{sec1} seconds"],
+                "explanation": f"The trap is not the 'number of strikes' but the 'number of gaps between sounds'. Striking {h1} times makes {h1}−1={h1 - 1} gaps. Those {h1 - 1} gaps take {sec1} seconds, so one gap is {sec1}÷{h1 - 1}={gap} seconds. Striking {h2} times makes {h2}−1={h2 - 1} gaps, so {h2 - 1}×{gap}={ans} seconds.",
+                "mistakes": [(f"{gap * h2} seconds", "It is not directly proportional to the number of strikes — count the number of gaps in between.")],
+                "detail": "The difference between 'strike n times' and 'there are n−1 gaps' is the key (the same interval trap as planting trees or cutting a log). The first sound takes no time; time passes only 'between' one sound and the next. Miss this off-by-one and your answer is wrong.",
+            },
         )
 
 
@@ -2568,6 +2658,14 @@ def gen_stacking_cups():
             f"첫 컵은 {base}cm. 두 번째부터는 {add_each}cm씩만 더해져요. 컵이 {n}개면 처음 {base}에 {add_each}씩 {n}−1={n - 1}번 더하니 {base}+{add_each}×{n - 1}={ans}cm예요.",
             [(f"{base * n}cm", f"컵마다 {base}cm씩 곱하면 안 돼요 — 겹치니까 두 번째부터는 {add_each}cm씩만 늘어요.")],
             detail=f"'처음 값 + 일정하게 더하기'가 등차수열이에요. n번째 = 첫 값 + (n−1)×(매번 더하는 양). 함정은 '몇 번 더하나' — {n}개면 {n}−1번만 더해요(첫 컵엔 안 더함). 계단·나무 심기와 같은 '간격' 감각이에요.",
+            en={
+                "statement": f"One cup is {base} cm tall. Stacking identical cups one at a time, each new cup raises the height by only {add_each} cm (the overlap is subtracted). Stacking {n} cups, what is the total height in cm?",
+                "answer": f"{ans} cm",
+                "distractors": [f"{base * n} cm", f"{base + add_each * n} cm", f"{ans - add_each} cm"],
+                "explanation": f"The first cup is {base} cm. From the second on, each adds only {add_each} cm. With {n} cups you add {add_each} a total of {n}−1={n - 1} times onto the first {base}, so {base}+{add_each}×{n - 1}={ans} cm.",
+                "mistakes": [(f"{base * n} cm", f"Don't multiply {base} cm by every cup — because they overlap, from the second cup on the height grows by only {add_each} cm.")],
+                "detail": f"'A starting value plus adding a constant' is an arithmetic sequence. The nth = first value + (n−1)×(the amount added each time). The trap is 'how many times you add' — with {n} cups you add only {n}−1 times (nothing is added for the first cup). It is the same 'interval' sense as stairs and planting trees.",
+            },
         )
 
 
@@ -2582,6 +2680,14 @@ def gen_number_line_jump():
             f"한 번 반복하면 실제로는 앞으로 {fwd}−{back}={fwd - back}칸씩 나아가요. {rounds}번 반복하면 {fwd - back}×{rounds}={(fwd - back) * rounds}칸 나아가니, {start}에서 출발해 {ans}에 도착해요.",
             [(str(start + fwd * rounds), "뒤로 오는 것도 세어야 해요 — 한 번에 순수하게 나아가는 건 (앞−뒤)칸이에요.")],
             detail="'앞으로 갔다 뒤로'를 반복하면 한 번당 순 이동은 (앞−뒤)예요. 이 순이동에 횟수를 곱하면 끝. 뒤로가 앞으로보다 크면 오히려 뒷걸음질치고요. 우물 개구리·따라잡기와 같은 '순 변화량' 사고예요.",
+            en={
+                "statement": f"A frog jumps from {start} on a number line. Going forward {fwd} steps then back {back} steps counts as one round; repeating this {rounds} times, where is the frog?",
+                "answer": str(ans),
+                "distractors": [str(start + fwd * rounds), str(ans + fwd), str(start + (fwd - back) * (rounds - 1))],
+                "explanation": f"One round actually advances {fwd}−{back}={fwd - back} steps. Repeating {rounds} times advances {fwd - back}×{rounds}={(fwd - back) * rounds} steps, so starting from {start} the frog ends at {ans}.",
+                "mistakes": [(str(start + fwd * rounds), "You have to count the steps back too — one round nets (forward − back) steps.")],
+                "detail": "Repeating 'go forward then back' nets (forward − back) per round. Multiply that net move by the number of rounds and you're done. If back is bigger than forward, it actually moves backward. It is the same 'net change' thinking as the frog in the well or catching-up problems.",
+            },
         )
 
 
@@ -2748,6 +2854,14 @@ def gen_arithmetic_nth():
             f"이웃한 수의 차이가 항상 {diff}인 등차수열이에요. 첫 수 {first}에서 {diff}씩 더하는데, {n}번째까지는 {diff}를 {n}−1={n - 1}번 더해요. 그래서 {first}+{diff}×{n - 1}={ans}이에요.",
             [(str(first + diff * n), f"{diff}를 {n}번이 아니라 {n}−1번 더해요(첫 수엔 안 더함).")],
             detail="등차수열의 n번째 항 = (첫 항) + (n−1)×(공차)예요. 함정은 '몇 번 더하나' — n번째면 n−1번. 하나씩 안 세고 공식으로 100번째, 1000번째도 바로 구해요. 컵 쌓기·계단·나무 심기가 다 같은 '간격' 구조예요.",
+            en={
+                "statement": f"A number pattern that grows regularly: {first}, {first + diff}, {first + 2 * diff}, {first + 3 * diff}, … Continuing like this, what is the {n}th number?",
+                "answer": str(ans),
+                "distractors": [str(first + diff * n), str(ans - diff), str(first * n)],
+                "explanation": f"This is an arithmetic sequence where neighbors always differ by {diff}. Starting from the first number {first}, you add {diff} each step, and to reach the {n}th number you add {diff} {n}−1={n - 1} times. So {first}+{diff}×{n - 1}={ans}.",
+                "mistakes": [(str(first + diff * n), f"Add {diff} {n}−1 times, not {n} times (nothing is added to the first number).")],
+                "detail": "The nth term of an arithmetic sequence = (first term) + (n−1)×(common difference). The trap is 'how many times you add' — for the nth term, n−1 times. Instead of counting one by one, the formula gives the 100th or 1000th term at once. Stacking cups, stairs, and planting trees all share this same 'interval' structure.",
+            },
         )
 
 
@@ -3014,6 +3128,14 @@ def gen_two_sum_diff():
             f"합과 차를 알 땐 '더하고 빼기'가 지름길이에요. 합({s})에 차({diff})를 더하면 큰 수의 2배가 돼요: ({s}+{diff})÷2={big}. (작은 수는 ({s}−{diff})÷2={small}.) 큰 수는 {big}이에요.",
             [(str(s // 2), "두 수가 같지 않으니 절반이 아니에요 — 합에 차를 더해 2로 나눠요.")],
             detail="합차법: 큰 수 = (합+차)÷2, 작은 수 = (합−차)÷2. 합과 차를 막대 두 개로 그리면 차만큼 삐져나온 부분을 맞춰 생각할 수 있어요. 나이·개수·거리처럼 두 미지수가 '합과 차'로 주어지면 늘 통해요.",
+            en={
+                "statement": f"Two numbers have a sum of {s} and a difference of {diff}. What is the 'bigger' of the two numbers?",
+                "answer": str(big),
+                "distractors": [str(small), str(s // 2), str(big + diff)],
+                "explanation": f"When you know the sum and the difference, 'add then halve' is the shortcut. Adding the difference ({diff}) to the sum ({s}) gives twice the bigger number: ({s}+{diff})÷2={big}. (The smaller is ({s}−{diff})÷2={small}.) The bigger number is {big}.",
+                "mistakes": [(str(s // 2), "The two numbers are not equal, so it is not just half — add the difference to the sum, then divide by 2.")],
+                "detail": "The sum-and-difference method: bigger = (sum+difference)÷2, smaller = (sum−difference)÷2. Draw the sum and difference as two bars and you can line up the part that sticks out by the difference. Whenever two unknowns are given by their 'sum and difference' — ages, counts, distances — this always works.",
+            },
         )
 
 
