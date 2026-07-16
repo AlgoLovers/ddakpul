@@ -305,8 +305,7 @@
     <string name="settings_tts_desc">Choose the voice that reads problems out loud.</string>
     <string name="settings_tts_korean_tip">💡 Uses your device\'s voice. You can add or change voices in your device\'s text-to-speech settings.</string>
     <string name="settings_tts_engine">Engine</string>
-    <string name="settings_tts_engine_default">Device default</string>
-    <string name="settings_tts_engine_default_named">Device default · %1$s</string>
+    <string name="settings_tts_engine_default">Default voice</string>
     <string name="settings_tts_speed">Speed</string>
     <string name="settings_tts_slow">Slow</string>
     <string name="settings_tts_normal">Normal</string>
@@ -314,6 +313,8 @@
     <string name="settings_tts_test">🔊 Preview</string>
     <string name="settings_tts_stop">⏹ Stop</string>
     <string name="settings_tts_active">Reading with this voice now · %1$s</string>
+    <string name="settings_tts_neural_hint">💡 The high-quality voice takes 1–2 sec to prepare the first sentence.</string>
+    <string name="settings_tts_neural_remove">🗑 Remove high-quality voice · frees about %1$dMB</string>
     <string name="settings_tts_system">System voice settings</string>
     <string name="settings_tts_sample">DdakPul will read thinking problems in this voice.</string>
 
@@ -330,11 +331,6 @@
     <string name="settings_neural_desc">A neural voice that sounds more natural. Download about %1$dMB once and use it offline.</string>
     <string name="settings_neural_download">Download (about %1$dMB)</string>
     <string name="settings_neural_downloading">Downloading… %1$d%%</string>
-    <string name="settings_neural_done">Downloaded ✓ · Tap the button below to read with this voice. (First sentence takes 1–2 sec to prepare)</string>
-    <string name="settings_neural_use">▶ Read with this voice</string>
-    <string name="settings_neural_inuse">In use ✓</string>
-    <string name="settings_neural_use_default">Back to default voice</string>
-    <string name="settings_neural_delete">Delete</string>
     <string name="settings_neural_failed">Download failed: %1$s</string>
 
     <string name="settings_reset">Reset learning records</string>

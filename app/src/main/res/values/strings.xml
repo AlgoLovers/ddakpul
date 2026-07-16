@@ -305,8 +305,7 @@
     <string name="settings_tts_desc">문제를 읽어 주는 목소리를 골라요.</string>
     <string name="settings_tts_korean_tip">💡 한국어는 아래 \'고품질 음성 (Supertonic)\'이 가장 자연스러워요. (삼성 음성은 안드로이드 15부터 다른 앱에서 쓸 수 없게 막혔어요.)</string>
     <string name="settings_tts_engine">엔진</string>
-    <string name="settings_tts_engine_default">기기 기본</string>
-    <string name="settings_tts_engine_default_named">기기 기본 · %1$s</string>
+    <string name="settings_tts_engine_default">기본 음성</string>
     <string name="settings_tts_speed">속도</string>
     <string name="settings_tts_slow">느리게</string>
     <string name="settings_tts_normal">보통</string>
@@ -314,6 +313,8 @@
     <string name="settings_tts_test">🔊 미리 듣기</string>
     <string name="settings_tts_stop">⏹ 정지</string>
     <string name="settings_tts_active">지금 이 음성으로 읽어요 · %1$s</string>
+    <string name="settings_tts_neural_hint">💡 고품질 음성은 첫 문장 준비에 1~2초 걸려요.</string>
+    <string name="settings_tts_neural_remove">🗑 고품질 음성 삭제 · 약 %1$dMB 회수</string>
     <string name="settings_tts_system">시스템 음성 설정</string>
     <string name="settings_tts_sample">딱풀에서 사고력 문제를 이 목소리로 읽어 줄게요.</string>
 
@@ -330,11 +331,6 @@
     <string name="settings_neural_desc">삼성·구글보다 더 자연스러운 한국어 신경망 음성이에요. 약 %1$dMB를 한 번 받으면 오프라인으로 쓸 수 있어요.</string>
     <string name="settings_neural_download">다운로드 (약 %1$dMB)</string>
     <string name="settings_neural_downloading">받는 중… %1$d%%</string>
-    <string name="settings_neural_done">받음 ✓ · 이 음성으로 읽으려면 아래 버튼을 눌러요. (첫 문장은 준비에 1~2초)</string>
-    <string name="settings_neural_use">▶ 이 음성으로 읽기</string>
-    <string name="settings_neural_inuse">사용 중 ✓</string>
-    <string name="settings_neural_use_default">기본 음성으로</string>
-    <string name="settings_neural_delete">삭제</string>
     <string name="settings_neural_failed">다운로드 실패: %1$s</string>
 
     <string name="settings_reset">학습 기록 초기화</string>

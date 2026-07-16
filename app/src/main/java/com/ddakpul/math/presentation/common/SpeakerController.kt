@@ -74,16 +74,21 @@ fun rememberSpeaker(): SpeakerController {
     val rate by SpeechSettings.rate.collectAsState()
     val savedLabel by SpeechSettings.engineLabel.collectAsState()
 
-    val defaultLabel = stringResource(R.string.settings_tts_engine_default)
-    val label = savedLabel ?: defaultLabel
+    // 기기 기본을 골랐을 때 표시할 실제 엔진명("Google 음성 인식 및 합성" 등). 엔진이 초기화되며
+    // 자기 이름을 돌려주면 채워진다. 그 전(또는 못 알아낼 때)엔 아래 중립 문구를 쓴다.
+    var resolvedDefaultLabel by remember { mutableStateOf<String?>(null) }
+    val fallbackLabel = stringResource(R.string.settings_tts_engine_default)
+    val label = savedLabel ?: resolvedDefaultLabel ?: fallbackLabel
 
     // 선택값이 신경망 모델이고 실제로 받아져 있으면 신경망 엔진, 아니면 시스템 TTS.
     val neuralModel = TtsModels.neuralOf(enginePackage)?.takeIf { it.isDownloaded(context) }
 
     val controller = remember { SpeakerController() }
+    // label은 표시용이라 엔진을 새로 붙일 필요 없이 매 recomposition마다 갱신한다(엔진명이 늦게
+    // 확정돼도 즉시 반영). 그래서 아래 DisposableEffect의 key에는 label을 넣지 않는다.
     controller.engineLabel = label
 
-    DisposableEffect(enginePackage, rate, label, neuralModel) {
+    DisposableEffect(enginePackage, rate, neuralModel) {
         val onSpeaking = { speaking: Boolean -> controller.isSpeaking = speaking }
         val engine: SpeechEngine =
             if (neuralModel != null) {
@@ -105,6 +110,13 @@ fun rememberSpeaker(): SpeakerController {
                     rate = rate,
                     label = label,
                     onSpeakingChanged = onSpeaking,
+                    // 기기 기본(systemPkg == null)일 때만 실제 엔진명을 받아 표시에 쓴다.
+                    onEngineLabelResolved =
+                        if (systemPkg == null) {
+                            { resolved -> resolvedDefaultLabel = resolved }
+                        } else {
+                            null
+                        },
                 )
             }
         controller.attach(engine)

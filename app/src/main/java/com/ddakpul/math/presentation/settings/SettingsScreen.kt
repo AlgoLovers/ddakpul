@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -103,10 +104,13 @@ fun SettingsScreen(
         val neuralDownloaded by viewModel.ttsDownloaded.collectAsStateWithLifecycle()
         LaunchedEffect(Unit) { viewModel.refreshTtsDownloaded(TtsModels.SUPERTONIC) }
         val downloadedNeural = if (neuralDownloaded) TtsModels.ALL else emptyList()
-        TtsCard(neuralModels = downloadedNeural)
+        TtsCard(neuralModels = downloadedNeural, onDeleteNeural = viewModel::deleteTtsModel)
 
-        // 고품질 신경망 음성 — 런타임 다운로드(선택). 받은 뒤엔 위 '엔진'에서 골라 쓴다.
-        NeuralVoiceCard(viewModel)
+        // 고품질 신경망 음성 — 런타임 다운로드(선택). '받기 전'에만 보여 주는 획득용 카드다.
+        // 받고 나면 이 카드는 사라지고, 위 '읽어주기 음성' 목록의 칩으로 선택/삭제한다.
+        if (!neuralDownloaded) {
+            NeuralVoiceCard(viewModel)
+        }
 
         // 별로였던 문제 내보내기 — 부모가 개발 채널로 보내면 다음 업데이트에 반영된다.
         FeedbackExportCard(
@@ -265,14 +269,16 @@ private fun DailyGoalCard(
     }
 }
 
-/** 고품질 신경망 음성(Supertonic) — 런타임 다운로드(모델+.so) + 진행률, 받으면 바로 선택 가능. */
+/**
+ * 고품질 신경망 음성(Supertonic) **획득용** 카드 — 모델(+.so) 다운로드와 진행률만 담당한다.
+ * '받기 전'에만 보이고(부모가 `!downloaded`일 때만 렌더), 받고 나면 사라진다. 받은 뒤의 선택·
+ * 삭제는 위 [TtsCard]의 칩/삭제 버튼으로 옮겼다 — 같은 음성을 두 군데서 관리하던 중복을 없앴다.
+ */
 @Composable
 private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
     val model = TtsModels.SUPERTONIC
     val downloadState by viewModel.ttsDownloadState.collectAsStateWithLifecycle()
-    val downloaded by viewModel.ttsDownloaded.collectAsStateWithLifecycle()
     val sizeMb = (model.totalBytes / 1024 / 1024).toInt()
-    LaunchedEffect(Unit) { viewModel.refreshTtsDownloaded(model) }
 
     SettingsCard {
         Text(
@@ -286,79 +292,27 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         val state = downloadState
-        when {
-            state is DownloadState.Downloading -> {
-                LinearProgressIndicator(
-                    progress = { state.percent / 100f },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = stringResource(R.string.settings_neural_downloading, state.percent),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            downloaded -> {
-                NeuralDownloadedActions(model = model, onDelete = { viewModel.deleteTtsModel(model) })
-            }
-
-            else -> {
-                if (state is DownloadState.Failed) {
-                    Text(
-                        text = stringResource(R.string.settings_neural_failed, state.message),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                }
-                Button(onClick = { viewModel.downloadTtsModel(model) }) {
-                    Text(stringResource(R.string.settings_neural_download, sizeMb))
-                }
-            }
-        }
-    }
-}
-
-/**
- * 받아둔 신경망 음성의 액션 — **받은 그 자리에서 바로 선택/해제**(엔진 목록까지 안 내려가도 됨).
- * 지금 이 음성으로 읽는 중이면 '사용 중'을 보여 주고, 아니면 '이 음성으로 읽기' 버튼을 준다.
- */
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun NeuralDownloadedActions(
-    model: TtsModel,
-    onDelete: () -> Unit,
-) {
-    val context = LocalContext.current
-    val selectedEngine by SpeechSettings.engine.collectAsStateWithLifecycle()
-    val engineValue = TtsModels.engineValue(model)
-    val isSelected = selectedEngine == engineValue
-
-    Text(
-        text = stringResource(R.string.settings_neural_done),
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.primary,
-    )
-    if (isSelected) {
-        Text(
-            text = stringResource(R.string.settings_neural_inuse),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold,
-        )
-    }
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        if (isSelected) {
-            OutlinedButton(onClick = { SpeechSettings.setEngine(context, null, null) }) {
-                Text(stringResource(R.string.settings_neural_use_default))
-            }
+        if (state is DownloadState.Downloading) {
+            LinearProgressIndicator(
+                progress = { state.percent / 100f },
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Text(
+                text = stringResource(R.string.settings_neural_downloading, state.percent),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         } else {
-            Button(onClick = { SpeechSettings.setEngine(context, engineValue, model.displayName(context)) }) {
-                Text(stringResource(R.string.settings_neural_use))
+            if (state is DownloadState.Failed) {
+                Text(
+                    text = stringResource(R.string.settings_neural_failed, state.message),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
-        }
-        OutlinedButton(onClick = onDelete) {
-            Text(stringResource(R.string.settings_neural_delete))
+            Button(onClick = { viewModel.downloadTtsModel(model) }) {
+                Text(stringResource(R.string.settings_neural_download, sizeMb))
+            }
         }
     }
 }
@@ -369,7 +323,10 @@ private fun NeuralDownloadedActions(
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TtsCard(neuralModels: List<TtsModel>) {
+private fun TtsCard(
+    neuralModels: List<TtsModel>,
+    onDeleteNeural: (TtsModel) -> Unit,
+) {
     val context = LocalContext.current
     var engines by remember { mutableStateOf<List<TextToSpeech.EngineInfo>>(emptyList()) }
     var defaultEngine by remember { mutableStateOf<String?>(null) }
@@ -404,47 +361,12 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
         )
         if (engines.isNotEmpty()) {
             Text(stringResource(R.string.settings_tts_engine), style = MaterialTheme.typography.labelLarge)
-            // 줄바꿈으로 모든 엔진 칩을 한눈에(가로 스크롤에 숨지 않게).
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                FilterChip(
-                    selected = selectedEngine == null,
-                    onClick = { SpeechSettings.setEngine(context, null, null) },
-                    label = {
-                        Text(
-                            if (defaultLabel != null) {
-                                stringResource(R.string.settings_tts_engine_default_named, defaultLabel)
-                            } else {
-                                stringResource(R.string.settings_tts_engine_default)
-                            },
-                        )
-                    },
-                )
-                // 기본 엔진과 같은 엔진은 명시 칩을 숨긴다('기기 기본 · X'와 'X' 중복 방지).
-                engines.filter { it.name != defaultEngine }.forEach { e ->
-                    FilterChip(
-                        selected = selectedEngine == e.name,
-                        onClick = { SpeechSettings.setEngine(context, e.name, e.label) },
-                        label = { Text(e.label) },
-                    )
-                }
-                // 받아둔 신경망 음성(Supertonic 등)도 같은 목록에서 선택.
-                neuralModels.forEach { m ->
-                    val value = TtsModels.engineValue(m)
-                    FilterChip(
-                        selected = selectedEngine == value,
-                        onClick = { SpeechSettings.setEngine(context, value, m.displayName(context)) },
-                        label = { Text(stringResource(m.displayNameRes)) },
-                    )
-                }
-            }
+            TtsEnginePicker(engines, defaultEngine, defaultLabel, selectedEngine, neuralModels)
         }
-        // 지금 어떤 음성으로 읽는지 명확히 — 사용자 혼동 방지.
+        // 지금 어떤 음성으로 읽는지 명확히 — 사용자 혼동 방지. 기기 기본이면 실제 엔진명을 쓴다.
+        val activeLabel = if (selectedEngine == null) defaultLabel ?: speaker.engineLabel else speaker.engineLabel
         Text(
-            text = stringResource(R.string.settings_tts_active, speaker.engineLabel),
+            text = stringResource(R.string.settings_tts_active, activeLabel),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold,
@@ -455,6 +377,27 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        // 받아둔 고품질 음성의 관리 — 선택 중이면 준비시간 안내, 그리고 삭제(용량 회수) 버튼.
+        // 선택은 위 엔진 칩으로 하므로 여기엔 삭제만 둔다(별도 카드 없이 한곳에서 관리).
+        neuralModels.forEach { m ->
+            if (selectedEngine == TtsModels.engineValue(m)) {
+                Text(
+                    text = stringResource(R.string.settings_tts_neural_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            TextButton(
+                onClick = { onDeleteNeural(m) },
+                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_tts_neural_remove, (m.totalBytes / 1024 / 1024).toInt()),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
         Text(stringResource(R.string.settings_tts_speed), style = MaterialTheme.typography.labelLarge)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf(
@@ -470,6 +413,50 @@ private fun TtsCard(neuralModels: List<TtsModel>) {
             }
         }
         TtsPreviewRow(speaker = speaker, context = context)
+    }
+}
+
+/** 시스템 TTS 엔진 + 받아둔 신경망 음성을 한 목록의 칩으로 고른다. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun TtsEnginePicker(
+    engines: List<TextToSpeech.EngineInfo>,
+    defaultEngine: String?,
+    defaultLabel: String?,
+    selectedEngine: String?,
+    neuralModels: List<TtsModel>,
+) {
+    val context = LocalContext.current
+    // 줄바꿈으로 모든 엔진 칩을 한눈에(가로 스크롤에 숨지 않게).
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        FilterChip(
+            selected = selectedEngine == null,
+            onClick = { SpeechSettings.setEngine(context, null, null) },
+            // '기기 기본' 워딩 대신 실제로 쓰는 엔진 이름을 그대로 보여준다("Google 음성
+            // 인식 및 합성" 등). 이름이 아직 안 잡혔을 때만 중립 문구로 대체.
+            label = { Text(defaultLabel ?: stringResource(R.string.settings_tts_engine_default)) },
+        )
+        // 기본 엔진과 같은 엔진은 명시 칩을 숨긴다(기본 칩과 중복 방지).
+        engines.filter { it.name != defaultEngine }.forEach { e ->
+            FilterChip(
+                selected = selectedEngine == e.name,
+                onClick = { SpeechSettings.setEngine(context, e.name, e.label) },
+                label = { Text(e.label) },
+            )
+        }
+        // 받아둔 신경망 음성(Supertonic 등)도 같은 목록에서 선택.
+        neuralModels.forEach { m ->
+            val value = TtsModels.engineValue(m)
+            FilterChip(
+                selected = selectedEngine == value,
+                onClick = { SpeechSettings.setEngine(context, value, m.displayName(context)) },
+                label = { Text(stringResource(m.displayNameRes)) },
+            )
+        }
     }
 }
 

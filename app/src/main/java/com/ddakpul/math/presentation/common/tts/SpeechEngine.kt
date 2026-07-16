@@ -36,10 +36,13 @@ interface SpeechEngine {
  */
 class SystemSpeechEngine(
     context: Context,
-    enginePackage: String?,
+    private val enginePackage: String?,
     private val rate: Float,
     override val label: String,
     private val onSpeakingChanged: (Boolean) -> Unit,
+    // 실제로 붙은 엔진의 사람이 읽는 이름을 알려준다(기기 기본을 골랐을 때 "기기 기본" 대신
+    // "Google 음성 인식 및 합성" 같은 실제 엔진명을 표시하기 위함). 알아내지 못하면 호출 안 함.
+    private val onEngineLabelResolved: ((String) -> Unit)? = null,
 ) : SpeechEngine {
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -62,6 +65,11 @@ class SystemSpeechEngine(
         tts.setSpeechRate(rate)
         tts.setOnUtteranceProgressListener(progressListener)
         ready = true
+        // 실제 사용 중인 엔진(기기 기본 선택 시 defaultEngine)의 표시 이름을 UI에 돌려준다.
+        val activePkg = enginePackage ?: tts.defaultEngine
+        tts.engines.firstOrNull { it.name == activePkg }?.label?.let { resolved ->
+            mainHandler.post { onEngineLabelResolved?.invoke(resolved) }
+        }
     }
 
     private val progressListener =

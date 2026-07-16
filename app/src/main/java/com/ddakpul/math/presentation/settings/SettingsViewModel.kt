@@ -11,9 +11,11 @@ import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveExcludedCountUseCase
 import com.ddakpul.math.domain.usecase.ResetProgressUseCase
 import com.ddakpul.math.domain.usecase.SetDailyGoalUseCase
+import com.ddakpul.math.presentation.common.SpeechSettings
 import com.ddakpul.math.presentation.common.tts.DownloadState
 import com.ddakpul.math.presentation.common.tts.TtsModel
 import com.ddakpul.math.presentation.common.tts.TtsModelManager
+import com.ddakpul.math.presentation.common.tts.TtsModels
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,13 +67,21 @@ class SettingsViewModel
         fun downloadTtsModel(model: TtsModel) {
             viewModelScope.launch {
                 ttsModelManager.download(model)
-                _ttsDownloaded.value = ttsModelManager.isDownloaded(model)
+                val ok = ttsModelManager.isDownloaded(model)
+                _ttsDownloaded.value = ok
+                // 받자마자 이 음성으로 바로 읽어 준다 — 다운로드 카드가 사라진 뒤에도 "받은 게
+                // 켜졌다"는 걸 위 '읽어주기 음성' 칩/안내로 즉시 확인시켜 준다(따로 안 눌러도 됨).
+                if (ok) SpeechSettings.setEngine(context, TtsModels.engineValue(model), model.displayName(context))
             }
         }
 
         fun deleteTtsModel(model: TtsModel) {
             ttsModelManager.delete(model)
             _ttsDownloaded.value = false
+            // 지금 이 음성으로 읽는 중이었다면 기기 기본으로 되돌린다(사라진 음성을 계속 가리키지 않게).
+            if (SpeechSettings.engine.value == TtsModels.engineValue(model)) {
+                SpeechSettings.setEngine(context, null, null)
+            }
         }
 
         val uiState: StateFlow<SettingsUiState> =
