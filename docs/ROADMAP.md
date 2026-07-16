@@ -48,7 +48,7 @@
 
 ## 유료 전환 트랙 (사업 방향 2026-07-17 — 무료는 한시 이벤트)
 
-- [ ] 무료 창 마감일 확정 (`Monetization.LAUNCH_FREE_UNTIL_MILLIS`, 현재 KST 2026-11-01)
+- [x] 무료 창 마감일 확정 — **KST 2026-11-01** (2026-07-17 오너 결정)
 - [ ] Play Billing 실연동 (`BILLING_ENABLED=true` 전환, LAUNCH.md §6)
 - [ ] **멀티 디바이스 정책 결정**: 한 결제 = 동시 몇 대?
       (기술 현실: Play 일회성 구매는 Google 계정 단위 복원 — 서버 없이는 대수 제한 불가.
