@@ -200,6 +200,30 @@ def cube_net(d, fig, box):
             d.ellipse([cx - pr, cy - pr, cx + pr, cy + pr], fill=INK)
 
 
+def bar_chart(d, fig, box):
+    vals = fig.get("heights", [])
+    if not vals:
+        return
+    x0, y0, x1, y1 = box
+    n = len(vals); mx = max(vals) or 1
+    base = y1 - 22
+    ch = (base - y0) * 0.82
+    slot = (x1 - x0) / n
+    bw = slot * 0.54
+    hi = fig["params"].get("highlight", -1)
+    d.line([(x0, base), (x1, base)], fill=INK, width=3)
+    labels = "가나다라마바사아"
+    for i, v in enumerate(vals):
+        cx = x0 + slot * (i + 0.5)
+        bh = ch * v / mx
+        col = INK if i == hi else ACCENT
+        d.rectangle([cx - bw/2, base - bh, cx + bw/2, base], fill=col)
+        f = font(15)
+        d.text((cx, base - bh - 16), str(v), fill=INK, font=f, anchor="mm")
+        d.text((cx, base + 11), labels[i] if i < len(labels) else str(i+1), fill=INK, font=f, anchor="mm")
+
+
+
 def matchstick(d, fig, box):
     n = min(max(fig["params"].get("n", 3), 1), 8)
     is_tri = fig["params"].get("tri", 0) == 1
@@ -235,7 +259,7 @@ def matchstick(d, fig, box):
             stick(c, a)
 
 
-RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan, "CUBE_NET": cube_net, "MATCHSTICK": matchstick}
+RENDERERS = {"CLOCK": clock, "POLYGON": polygon, "GRID": grid, "DOT_BORDER": dot_border, "CUBE_STACK": cube_stack, "GRID_POLYGON": grid_polygon, "TRIANGLE_FAN": triangle_fan, "CUBE_NET": cube_net, "MATCHSTICK": matchstick, "BAR_CHART": bar_chart}
 TW, FH, LH = 300, 210, 96
 
 
@@ -268,7 +292,7 @@ def sheet(problems, name):
 def main():
     data = json.load(open(ROOT / "app/src/main/assets/problems_generated.json"))["problems"]
     figs = [p for p in data if "figure" in p]
-    order = {t: i for i, t in enumerate(["CUBE_NET", "GRID_POLYGON", "TRIANGLE_FAN", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK"])}
+    order = {t: i for i, t in enumerate(["CUBE_NET", "GRID_POLYGON", "TRIANGLE_FAN", "CUBE_STACK", "POLYGON", "GRID", "L_SHAPE", "DOT_BORDER", "CLOCK", "BAR_CHART"])}
     figs.sort(key=lambda p: order.get(p["figure"]["type"], 99))
     sheet(figs, "figures_all.png")
 

@@ -3363,6 +3363,25 @@ def gen_setpartition():
         )
 
 
+def gen_barchart():
+    # 막대그래프 읽기 — 둘째로 많은 값 찾기(자료를 크기 순으로 읽는 힘). (자료와가능성 난3)
+    for vals in [[3, 5, 2, 6], [4, 7, 3, 8], [6, 2, 9, 5], [5, 10, 7, 4]]:
+        ordered = sorted(vals, reverse=True)
+        ans = ordered[1]
+        add(
+            "barchart", "DATA_POSSIBILITY", 3, ["자료 읽기", "크기 순 비교"],
+            "아래 그래프는 가·나·다·라 네 반이 모은 화분 수예요. 둘째로 많이 모은 반은 화분을 몇 개 모았을까요?",
+            f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [ordered[0], ordered[2], min(vals), ans + 1])],
+            f"막대를 높은 순으로 읽으면 {ordered[0]}, {ordered[1]}, {ordered[2]}, {ordered[3]}이에요. 가장 높은 막대는 "
+            f"{ordered[0]}개이고, 그다음(둘째)이 {ans}개예요.",
+            [(f"{ordered[0]}개", "그건 '가장' 많은 반이에요. 그다음(둘째)으로 높은 막대를 읽어요."),
+             (f"{min(vals)}개", "가장 적은 게 아니라 둘째로 '많은' 것을 찾아요.")],
+            figure={"type": "BAR_CHART", "heights": vals, "params": {"highlight": -1}},
+            detail="막대그래프는 막대의 높이로 크기를 한눈에 비교해요. '둘째로 많은 것'은 가장 높은 막대를 뺀 나머지 중 가장 "
+            "높은 것이에요. 자료를 크기 순으로 정리해 읽는 연습이에요.",
+        )
+
+
 def gen_diagregions():
     # 볼록 n각형의 대각선이 내부를 나누는 조각(영역) 수 = 1 + 대각선수 + 교점수. (도형과측정 난10)
     for n in [6, 7, 5, 8]:
@@ -3997,7 +4016,7 @@ GENERATORS = [
     gen_avgbasic, gen_lineup, gen_mode, gen_simpleprob,
     gen_geosum, gen_dist3d, gen_necklace, gen_boxsurface, gen_passcode, gen_symaxis,
     gen_rectdiag, gen_electpair,
-    gen_diagregions,
+    gen_diagregions, gen_barchart,
     gen_foldcut, gen_knockout,
     gen_makesquare, gen_compose, gen_euler, gen_atleastprob,
     gen_sigma, gen_recur, gen_conevolume, gen_setpartition,

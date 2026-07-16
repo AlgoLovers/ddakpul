@@ -47,6 +47,12 @@ enum class FigureType {
      * tri(1이면 정삼각형을 위아래 번갈아, 그 외/없으면 정사각형을 나란히).
      */
     MATCHSTICK,
+
+    /**
+     * 막대그래프(자료 읽기). heights: 막대 값들(왼쪽부터, 가·나·다… 순). 각 막대 위에 값을 표시한다.
+     * params: highlight(강조할 막대 index, 없으면 −1). 범주 라벨은 가·나·다·라…로 자동.
+     */
+    BAR_CHART,
 }
 
 data class ProblemFigure(

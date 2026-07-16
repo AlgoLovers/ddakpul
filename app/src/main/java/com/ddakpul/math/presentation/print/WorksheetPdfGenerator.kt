@@ -308,6 +308,56 @@ private fun drawFigure(
         FigureType.TRIANGLE_FAN -> drawPdfTriangleFan(canvas, figure, centerX, top, size, ink)
         FigureType.CUBE_NET -> drawPdfCubeNet(canvas, figure, centerX, top, size, ink, fill)
         FigureType.MATCHSTICK -> drawPdfMatchstick(canvas, figure, centerX, top, size, ink)
+        FigureType.BAR_CHART -> drawPdfBarChart(canvas, figure, centerX, top, size, ink)
+    }
+}
+
+/** 막대그래프 — heights의 값을 막대로, 위에 값·아래에 범주(가·나·다…)를 찍는다. */
+private fun drawPdfBarChart(
+    canvas: Canvas,
+    figure: ProblemFigure,
+    centerX: Float,
+    top: Float,
+    size: Float,
+    ink: Paint,
+) {
+    val values = figure.heights
+    if (values.isEmpty()) return
+    val n = values.size
+    val maxV = (values.maxOrNull() ?: 1).coerceAtLeast(1)
+    val highlight = figure.params["highlight"] ?: -1
+    val left = centerX - size / 2f
+    val base = top + size * 0.86f
+    val chartH = size * 0.66f
+    val slot = size / n
+    val barW = slot * 0.54f
+    canvas.drawLine(left, base, left + size, base, ink)
+    val barPaint =
+        Paint().apply {
+            color = Color.rgb(70, 100, 200)
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+    val hiPaint =
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+    val labelPaint =
+        TextPaint().apply {
+            textSize = 9f
+            color = Color.DKGRAY
+            isAntiAlias = true
+            textAlign = Paint.Align.CENTER
+        }
+    val labels = "가나다라마바사아"
+    for (i in 0 until n) {
+        val cx = left + slot * (i + 0.5f)
+        val barH = chartH * values[i] / maxV
+        canvas.drawRect(cx - barW / 2f, base - barH, cx + barW / 2f, base, if (i == highlight) hiPaint else barPaint)
+        canvas.drawText(values[i].toString(), cx, base - barH - 4f, labelPaint)
+        canvas.drawText(if (i < labels.length) labels[i].toString() else "${i + 1}", cx, base + 12f, labelPaint)
     }
 }
 

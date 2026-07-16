@@ -89,9 +89,51 @@ fun ProblemFigureView(
             FigureType.MATCHSTICK -> {
                 drawMatchstick(figure, ink, left, top, side)
             }
+
+            FigureType.BAR_CHART -> {
+                drawBarChart(figure, ink, accent, left, top, side) { text, x, y ->
+                    val measured = textMeasurer.measure(text, labelStyle)
+                    drawText(measured, topLeft = Offset(x - measured.size.width / 2f, y - measured.size.height / 2f))
+                }
+            }
         }
     }
 }
+
+/** 막대그래프 — heights의 값들을 막대로 그리고 각 막대 위에 값, 아래에 범주(가·나·다…)를 쓴다. */
+private fun DrawScope.drawBarChart(
+    figure: ProblemFigure,
+    ink: Color,
+    accent: Color,
+    left: Float,
+    top: Float,
+    side: Float,
+    label: DrawScope.(String, Float, Float) -> Unit,
+) {
+    val values = figure.heights
+    if (values.isEmpty()) return
+    val n = values.size
+    val maxV = (values.maxOrNull() ?: 1).coerceAtLeast(1)
+    val highlight = figure.params["highlight"] ?: -1
+    val baseY = top + side * 0.86f
+    val chartH = side * 0.66f
+    val slot = side / n
+    val barW = slot * 0.54f
+    drawLine(ink, Offset(left, baseY), Offset(left + side, baseY), strokeWidth = 3f)
+    for (i in 0 until n) {
+        val cx = left + slot * (i + 0.5f)
+        val barH = chartH * values[i] / maxV
+        drawRect(
+            color = if (i == highlight) ink else accent,
+            topLeft = Offset(cx - barW / 2f, baseY - barH),
+            size = Size(barW, barH),
+        )
+        label(values[i].toString(), cx, baseY - barH - 12f)
+        label(BAR_LABELS.getOrElse(i) { "${i + 1}" }, cx, baseY + 16f)
+    }
+}
+
+private val BAR_LABELS = listOf("가", "나", "다", "라", "마", "바", "사", "아")
 
 /** 성냥개비로 한 줄로 이어 붙인 정사각형(기본) 또는 정삼각형(tri=1, 위아래 번갈아). */
 private fun DrawScope.drawMatchstick(
