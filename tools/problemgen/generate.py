@@ -421,6 +421,17 @@ def gen_cycle():
             f"{ans}색", [f"{wrongs[0]}색", f"{wrongs[1]}색", wrongs[2]],
             f"{k}개가 한 묶음으로 계속 반복되니 {n}을 {k}로 나누는 게 열쇠예요. {n}÷{k}를 하면 몫이 {n // k}이고 나머지가 {n % k}이니, 완전한 묶음 뒤 {n % k if n % k else k}번째 구슬 차례예요. 묶음의 {n % k if n % k else k}번째는 {ans}색이에요.",
             detail=f"반복되는 문제는 '나머지'가 열쇠예요. {k}개가 한 묶음이니 {n}번째가 묶음 안 어디인지는 {n}÷{k}의 나머지로 정해져요(나머지가 0이면 묶음의 맨 끝 {k}번째). 요일(7일), 시계(12시간), 달력이 모두 이 '나머지 세계'로 돌아가요 — 큰 수도 나머지만 보면 돼요.",
+            en=(lambda cm, pg: {
+                "statement": f"Beads in the order {' · '.join(cm.get(c, c) for c in colors)} are strung over and over. "
+                             f"What color is the {n}th bead?",
+                "answer": cm.get(ans, ans),
+                "distractors": [cm.get(wrongs[0], wrongs[0]), cm.get(wrongs[1], wrongs[1]), "can’t tell"],
+                "explanation": f"Since {k} beads repeat as one group, dividing {n} by {k} is the key. {n}÷{k} gives quotient {n // k} and "
+                               f"remainder {n % k}, so it lands on bead #{pg} within a group — and #{pg} in the group is {cm.get(ans, ans)}.",
+                "detail": f"For repeating problems, the remainder is the key. With {k} per group, where the {n}th lands is set by the remainder "
+                          f"of {n}÷{k} (remainder 0 means the last, #{k}). Weekdays (7), clocks (12), and calendars all run on this 'remainder world'.",
+            })({"빨간": "red", "노란": "yellow", "파란": "blue", "초록": "green", "보라": "purple", "주황": "orange", "분홍": "pink"},
+               n % k if n % k else k),
         )
 
 
@@ -651,6 +662,17 @@ def gen_broken_arithmetic():
             f"□{ones}{_eun(ones)} {result}에서 {addend}를 뺀 수예요. {result}−{addend}={unknown}이니 십의 자리 □는 {tens}{_copula(tens)}. 일의 자리 {ones}도 딱 맞죠.",
             [(str(result // 10), "합의 십의 자리를 그대로 답하면 안 돼요. 빼서 확인해요.")],
             detail=f"덧셈의 빈칸은 뺄셈으로 되돌리면 바로 보여요. □{ones}는 결과 {result}에서 {addend}를 뺀 {unknown}. 이렇게 '거꾸로 셈(역연산)'으로 미지수를 드러내는 건 방정식의 씨앗이에요. 자리마다 올림이 있었는지도 함께 확인하면 더 큰 벌레먹은셈도 풀 수 있어요.",
+            en={
+                "statement": f"□{ones} + {addend} = {result}. What digit goes in the box? (□ is a single digit)",
+                "answer": str(tens),
+                "distractors": [str((tens + 1) % 10), str(result // 10), str(max(0, tens - 1))],
+                "explanation": f"□{ones} is {result} minus {addend}. Since {result} − {addend} = {unknown}, the tens digit □ is {tens}. "
+                               f"The ones digit {ones} matches too.",
+                "mistakes": [(str(result // 10), "Don’t just answer the tens digit of the sum — subtract to check.")],
+                "detail": f"A blank in an addition shows up right away when you undo it with subtraction. □{ones} is {result} minus "
+                          f"{addend} = {unknown}. Revealing an unknown with the inverse operation is the seed of equations. Checking for "
+                          "carries at each place lets you solve bigger puzzles too.",
+            },
         )
 
 
@@ -658,12 +680,16 @@ def gen_broken_arithmetic():
 def gen_cases():
     from itertools import product
     scenarios = [
-        ("동전 3개를 동시에 던질 때 나오는 경우(앞·뒤를 구별해요)", [["앞", "뒤"]] * 3),
-        ("주사위 1개와 동전 1개를 함께 던질 때 나오는 경우", [[1, 2, 3, 4, 5, 6], ["앞", "뒤"]]),
-        ("두 사람이 가위바위보를 한 판 할 때 나오는 경우(누가 무엇을 냈는지 구별해요)", [["가위", "바위", "보"]] * 2),
-        ("김밥 3종류와 음료 2종류 중 하나씩 고르는 경우", [["김밥1", "김밥2", "김밥3"], ["음료1", "음료2"]]),
+        ("동전 3개를 동시에 던질 때 나오는 경우(앞·뒤를 구별해요)", [["앞", "뒤"]] * 3,
+         "tossing 3 coins at once (heads/tails distinguished)"),
+        ("주사위 1개와 동전 1개를 함께 던질 때 나오는 경우", [[1, 2, 3, 4, 5, 6], ["앞", "뒤"]],
+         "rolling one die and tossing one coin together"),
+        ("두 사람이 가위바위보를 한 판 할 때 나오는 경우(누가 무엇을 냈는지 구별해요)", [["가위", "바위", "보"]] * 2,
+         "two people playing one round of rock-paper-scissors (who threw what is distinguished)"),
+        ("김밥 3종류와 음료 2종류 중 하나씩 고르는 경우", [["김밥1", "김밥2", "김밥3"], ["음료1", "음료2"]],
+         "picking one of 3 kinds of sandwiches and one of 2 kinds of drinks"),
     ]
-    for desc, spaces in scenarios:
+    for desc, spaces, en_desc in scenarios:
         n = 1
         for s in spaces:
             n *= len(s)
@@ -677,6 +703,17 @@ def gen_cases():
             f"각 단계에서 갈라지는 경우의 수를 곱해요. {' × '.join(str(len(s)) for s in spaces)} = {n}가지예요. 빠짐없이 하나씩 나열해도 {n}가지가 나와요.",
             [(f"{wrong_sum}가지", "더하는 게 아니라 곱해요. 첫 경우마다 다음 경우가 다시 갈라져요.")],
             detail="곱의 원리는 '각 단계의 선택이 서로 영향을 안 줄 때(그리고, and)' 써요. 반대로 '이것 또는 저것'처럼 동시에 못 일어나는 경우(또는, or)는 더해요(합의 원리). 곱할지 더할지는 '그리고냐 또는이냐'로 판단해요. 이 둘을 자유롭게 섞어 쓰는 게 경우의 수의 핵심이에요.",
+            en={
+                "statement": f"How many different outcomes are there for {en_desc}?",
+                "answer": _en_plural(n, "way"),
+                "distractors": [_en_plural(wrong_sum, "way"), _en_plural(n - 1, "way"), _en_plural(n + 2, "way")],
+                "explanation": f"Multiply the number of choices at each step: {' × '.join(str(len(s)) for s in spaces)} = {n}. "
+                               f"Listing them all one by one also gives {n}.",
+                "mistakes": [(_en_plural(wrong_sum, "way"), "Don’t add — multiply. Each first case branches into the next again.")],
+                "detail": "The multiplication principle applies when each step’s choice doesn’t affect the others ('and'). By contrast, "
+                          "mutually exclusive cases ('this or that', 'or') are added (the addition principle). Multiply vs. add = 'and' vs. 'or'. "
+                          "Mixing the two freely is the heart of counting.",
+            },
         )
 
 
@@ -777,6 +814,17 @@ def gen_triangles_match():
             [(f"{3 * n}개", "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요.")],
             figure={"type": "MATCHSTICK", "params": {"n": n, "tri": 1}},
             detail=f"정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×({n}−1)={matches}개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요.",
+            en={
+                "statement": f"You join {n} equal equilateral triangles in a row with matchsticks (alternating up and down). "
+                             f"How many matchsticks do you need in all?",
+                "answer": _en_plural(matches, "matchstick"),
+                "distractors": [_en_plural(3 * n, "matchstick"), _en_plural(2 * n, "matchstick"), _en_plural(3 * n - 1, "matchstick")],
+                "explanation": f"One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. "
+                               f"So {n} triangles need 3 + 2×{n - 1} = {matches}.",
+                "mistakes": [(_en_plural(3 * n, "matchstick"), "Counting 3 per triangle double-counts the shared sides between neighbors.")],
+                "detail": "One triangle has 3 sides, but joining another shares one touching side. So the first needs 3 and each next adds only "
+                          "2, giving 3+2×(n−1). 'Count a shared part once' also drives joining squares and figure perimeters.",
+            },
         )
 
 
@@ -1182,6 +1230,16 @@ def gen_cube_stack_easy():
             [(f"{ans - 1}개", "앞에 가려 안 보이는 나무도 빠짐없이 세어요.")],
             figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
             detail=f"쌓기나무 개수는 '위에서 본 그림'의 각 칸에 적힌 층수를 모두 더한 값과 같아요. 앞·위에 가려 안 보여도 각 기둥의 높이만 알면 정확히 셀 수 있죠. 층수를 하나씩 더하면 {ans}개예요. 이렇게 '위에서 보기'로 생각하면 아무리 복잡해도 빠짐없이 셀 수 있어요.",
+            en={
+                "statement": "How many stacking blocks are there in the picture? (count the ones hidden behind, too)",
+                "answer": _en_plural(ans, "block"),
+                "distractors": [_en_plural(ans - 1, "block"), _en_plural(ans + 1, "block"), _en_plural(max(1, ans - 2), "block")],
+                "explanation": f"Add each column’s height: {' + '.join(str(h) for h in heights)} = {ans}. Even hidden behind the front ones, "
+                               f"the back and bottom are filled in.",
+                "mistakes": [(_en_plural(ans - 1, "block"), "Count the blocks hidden behind the front ones too.")],
+                "detail": "The number of blocks equals the sum of the heights on each cell of the top-view. Even when some are hidden, "
+                          "knowing each column’s height lets you count exactly. Thinking 'from the top' works no matter how complex.",
+            },
         )
 
 
@@ -1470,6 +1528,14 @@ def gen_grid_area_easy():
             f"칸을 세거나 직사각형으로 나눠 구해요. {detail} → {area}㎠.",
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "What is the area of the shaded shape? (each grid cell is 1 cm²)",
+                "answer": f"{area} cm²",
+                "distractors": [f"{area - 1} cm²", f"{area + 1} cm²", f"{area + 2} cm²"],
+                "explanation": f"Count the cells, or split into rectangles → {area} cm².",
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split into pieces and add'. "
+                          "Getting the same answer both ways catches mistakes. The key is imagining how to cut and rearrange, not memorizing formulas.",
+            },
         )
 
 
@@ -1677,6 +1743,16 @@ def gen_height_order():
             f"힌트로 '누가 누구보다 큰지' 화살표를 이어 보면 {p0}→{p1}→{p2}→{p3} 순서가 나와요. 아무도 자기보다 크지 않은 {p0}{_iga(p0)} 가장 커요.",
             [(p1, "한 힌트만 보면 안 돼요. 모든 힌트를 이어 붙여 전체 순서를 만들어요.")],
             detail=f"순서 문제는 '한 줄로 세우기'가 핵심이에요. 흩어진 비교를 이어 붙이면 전체 순서가 하나로 정해져요({p0}>{p1}이고 {p1}>{p2}면 {p0}>{p2} — 추이성). 표나 화살표로 정리하면 헷갈리지 않아요. 등수·토너먼트도 같은 방법으로 풀려요.",
+            en={
+                "statement": "Four people’s heights were compared. B is taller than C, A is taller than B, and C is taller than D. "
+                             "Who is the tallest of the four?",
+                "answer": "A",
+                "distractors": ["B", "C", "D"],
+                "explanation": "Chain the 'taller than' hints into arrows: A→B→C→D. A, with no one above them, is the tallest.",
+                "mistakes": [("B", "Don’t use just one hint — chain them all into the full order.")],
+                "detail": "Order problems come down to 'lining everyone up'. Chaining scattered comparisons pins down one full order "
+                          "(A>B and B>C means A>C — transitivity). Arrows or a table keep it straight. Rankings and tournaments work the same way.",
+            },
         )
 
 
@@ -2850,6 +2926,18 @@ def gen_position_count():
             f"민수를 두 번 세지 않게 조심해요. 앞에서 {front}번째면 민수 앞에 {front - 1}명, 뒤에서 {back}번째면 민수 뒤에 {back - 1}명. 앞({front - 1}) + 민수(1) + 뒤({back - 1}) = {ans}명이에요. (또는 {front}+{back}−1={ans}, 겹치는 민수를 한 번 빼요.)",
             [(f"{front + back}명", f"{front}+{back}로 세면 민수를 두 번 센 거예요 — 한 번 빼야 해요.")],
             detail="'앞에서 몇째 + 뒤에서 몇째'로 전체를 셀 땐 그 사람을 양쪽에서 한 번씩, 두 번 세게 돼요. 그래서 −1을 해요. 나무 심기·자르기처럼 '겹치거나 사이를 세는' 문제의 한 갈래예요. 동그라미를 그려 보면 확실해져요.",
+            en={
+                "statement": f"Children stand in a line. One child is {front}th from the front and, at the same time, {back}th from the "
+                             f"back. How many children are in the line?",
+                "answer": f"{ans} children",
+                "distractors": [f"{front + back} children", f"{ans - 1} children", f"{front + back + 1} children"],
+                "explanation": f"Be careful not to count that child twice. {front}th from the front means {front - 1} in front; {back}th from "
+                               f"the back means {back - 1} behind. Front({front - 1}) + the child(1) + behind({back - 1}) = {ans}. "
+                               f"(Or {front}+{back}−1={ans}, subtracting the doubly-counted child once.)",
+                "mistakes": [(f"{front + back} children", f"Counting {front}+{back} counts that child twice — subtract one.")],
+                "detail": "When you total using 'Nth from the front + Mth from the back', that person gets counted once from each side — "
+                          "twice. So subtract 1. It’s a cousin of tree-planting and cutting problems ('overlaps or gaps'). Drawing dots makes it clear.",
+            },
         )
 
 
@@ -2956,6 +3044,15 @@ def gen_io_rule():
             f"넣은 수와 나온 수를 비교하면 규칙은 (넣은 수){rule} 예요. 세 쌍 모두 맞아요. 그러니 {q}{rule.replace('×', '×').replace('＋', '＋')} = {ans}{_copula(ans)}.",
             [(str(a * q) if b else str(ans + a), "곱하기만 하고 더하는 걸 빼먹었어요." if b else "규칙을 다시 확인해요.")],
             detail="입력→출력 표에서 규칙을 찾을 땐 ①차이가 일정한가(더하기) ②몇 배인가(곱하기) ③곱하고 더했나(×▲＋●) 순서로 확인해요. 여러 쌍에서 '모두' 맞는 규칙이 진짜 규칙이에요 — 한 쌍만 보고 정하면 틀리기 쉬워요.",
+            en=(lambda er: {
+                "statement": f"A magic box changes a number by a fixed rule, like {pairs}. So if you put in {q}, what comes out?",
+                "answer": str(ans),
+                "distractors": [str(ans + 1), str(ans - 1), str(a * q if b else ans + a)],
+                "explanation": f"Comparing inputs and outputs, the rule is (input){er}. All three pairs fit, so {q}{er} = {ans}.",
+                "mistakes": [(str(a * q) if b else str(ans + a), "You multiplied but forgot to add." if b else "Check the rule again.")],
+                "detail": "To find a rule in an input→output table, check in order: ① is the difference constant (add)? ② how many times "
+                          "bigger (multiply)? ③ multiply then add (×▲+●)? The real rule fits every pair — deciding from just one is risky.",
+            })(f"×{a}" + (f"+{b}" if b else "")),
         )
 
 
@@ -2971,6 +3068,16 @@ def gen_midpoint():
             f"한가운데 수는 {a}에서 {b}까지 거리({b - a})의 절반만큼 떨어져 있어요. {a}에서 {(b - a) // 2}만큼 가면 {mid}, {b}에서 {(b - a) // 2}만큼 와도 {mid} — 양쪽에서 똑같이 {(b - a) // 2}칸이라 답은 {mid}{_copula(mid)}.",
             [(str(a + b), "두 수를 더하기만 하면 안 돼요. 한가운데는 더한 뒤 절반이에요.")],
             detail="두 수의 '한가운데'는 두 수의 합을 반으로 나눈 값(평균)이에요. 수직선에서 양 끝에서 같은 칸만큼 떨어진 자리를 찾는 것과 같아요. 이 '가운데=평균' 감각은 나중에 평균·대칭·중점에서 계속 쓰여요.",
+            en={
+                "statement": f"On a number line, {a} and {b} are marked. What number lies exactly halfway between them?",
+                "answer": str(mid),
+                "distractors": [str(mid + 1), str(mid - 1), str(a + b)],
+                "explanation": f"The halfway number sits half of the distance ({b - a}) from each end. Going {(b - a) // 2} up from {a} gives "
+                               f"{mid}, and coming {(b - a) // 2} down from {b} also gives {mid} — same steps from both sides, so {mid}.",
+                "mistakes": [(str(a + b), "Don’t just add the two numbers. The middle is the sum, then halved.")],
+                "detail": "The 'halfway' point of two numbers is their sum halved (their average). On a number line it’s the spot equally far "
+                          "from both ends. This 'middle = average' sense returns in averages, symmetry, and midpoints.",
+            },
         )
 
 
@@ -2985,6 +3092,16 @@ def gen_consecutive_middle():
             f"연속하는 세 수는 (가운데−1), 가운데, (가운데＋1)이라 더하면 −1과 ＋1이 없어져 '가운데 수의 3배'가 돼요. 그래서 가운데 수는 {total}÷3＝{mid}{_copula(mid)}.",
             [(str(total // 2), "둘이 아니라 셋으로 나눠요. 세 수의 합이니까요.")],
             detail="연속하는 세 수의 합은 언제나 '가운데 수 × 3'이에요(양옆의 −1, ＋1이 서로 상쇄되니까). 그래서 합을 3으로 나누면 바로 가운데 수가 나와요. 연속수의 이 성질은 합·평균 문제에서 계속 쓰여요.",
+            en={
+                "statement": f"Three consecutive numbers add up to {total}. What is the middle one?",
+                "answer": str(mid),
+                "distractors": [str(mid + 1), str(mid - 1), str(total // 2)],
+                "explanation": f"Three consecutive numbers are (middle−1), middle, (middle+1). Adding them, the −1 and +1 cancel, giving "
+                               f"3× the middle. So the middle is {total}÷3 = {mid}.",
+                "mistakes": [(str(total // 2), "Divide by 3, not 2 — it’s the sum of three numbers.")],
+                "detail": "The sum of three consecutive numbers is always 'the middle × 3' (the −1 and +1 on the sides cancel). So dividing "
+                          "the sum by 3 gives the middle directly. This property of consecutive numbers keeps helping in sum and average problems.",
+            },
         )
 
 
@@ -3299,6 +3416,16 @@ def gen_unitprice():
             [(f"{ans + unit}원", "자루 수를 하나 더 세었는지 확인하세요. 한 자루 값 × 자루 수예요.")],
             detail="개수가 늘면 값도 같은 비율로 느는 '비례'예요. 먼저 한 개(단위량)의 값을 구하고, 필요한 개수만큼 곱하면 돼요. "
             "'한 개 값 구하기'는 비례 문제를 푸는 가장 튼튼한 방법이에요.",
+            en={
+                "statement": f"{cnt0} pencils cost {price0} coins. How much do {cnt1} of the same pencils cost?",
+                "answer": f"{ans} coins",
+                "distractors": [f"{c} coins" for c in _pick_distractors(ans, [ans + unit, ans - unit, price0 + cnt1 * unit, ans + 2 * unit])],
+                "explanation": f"First find the price of one pencil — {price0}÷{cnt0}={unit} coins. Then {cnt1} pencils cost "
+                               f"{unit}×{cnt1}={ans} coins.",
+                "mistakes": [(f"{ans + unit} coins", "Check you didn’t count one pencil too many. It’s (price of one) × (number of pencils).")],
+                "detail": "When the count grows, the cost grows in the same ratio — that’s proportion. Find the price of one (the unit "
+                          "amount) first, then multiply by how many you need. 'Find the unit price' is the sturdiest way to do proportion problems.",
+            },
         )
 
 
@@ -3381,6 +3508,18 @@ def gen_knockout():
              (f"{n}경기", "탈락해야 할 사람은 우승자를 뺀 {}명이에요. 그만큼만 경기해요.".format(ans))],
             detail="'경기 수'를 직접 세는 대신 '탈락하는 사람 수'로 바꿔 생각하면 쉬워요. 우승자 1명을 뺀 나머지가 다 탈락해야 "
             "하고 경기마다 딱 한 명이 지므로, 경기 수는 언제나 (참가자−1)이에요. 거꾸로 보는 사고의 힘이에요.",
+            en={
+                "statement": f"{n} players compete in a knockout tournament. Once you lose, you’re out. How many games are played "
+                             f"before a champion is decided?",
+                "answer": _en_plural(ans, "game"),
+                "distractors": [_en_plural(c, "game") for c in _pick_distractors(ans, [n, n // 2, n - 2, ans + 1])],
+                "explanation": f"For one champion to remain, the other {ans} players must all be eliminated. Each game knocks out exactly "
+                               f"one, so {n}−1 = {ans} games.",
+                "mistakes": [(_en_plural(n // 2, "game"), "That’s only the first round. Count every game up to the win."),
+                             (_en_plural(n, "game"), f"Only {ans} need to be eliminated (everyone but the champion) — that many games.")],
+                "detail": "Instead of counting games directly, switch to counting who is eliminated — everyone but the one champion must be "
+                          "knocked out, and each game eliminates exactly one, so it’s always (players − 1). The power of thinking in reverse.",
+            },
         )
 
 
