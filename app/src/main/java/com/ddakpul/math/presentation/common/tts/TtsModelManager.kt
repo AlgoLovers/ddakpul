@@ -2,6 +2,7 @@ package com.ddakpul.math.presentation.common.tts
 
 import android.content.Context
 import android.os.Build
+import com.ddakpul.math.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,7 +72,7 @@ class TtsModelManager
                     ensureNativeLib(model, dir, done, total)
                     _state.value = DownloadState.Done
                 }.onFailure { e ->
-                    _state.value = DownloadState.Failed(e.message ?: "다운로드 실패")
+                    _state.value = DownloadState.Failed(e.message ?: context.getString(R.string.tts_error_download_failed))
                 }
             }
 
@@ -85,7 +86,7 @@ class TtsModelManager
             val so = model.soFile(context)
             if (so.exists() && so.length() > 0) return startDone + model.nativeAarBytes
             so.parentFile?.mkdirs()
-            val abi = Build.SUPPORTED_ABIS.firstOrNull() ?: error("지원 ABI를 찾을 수 없어요")
+            val abi = Build.SUPPORTED_ABIS.firstOrNull() ?: error(context.getString(R.string.tts_error_no_abi))
             val aar = File(dir, "sherpa.aar")
             val done = downloadFile(model.nativeAarUrl, File(dir, "sherpa.aar.part"), aar, startDone, total)
             extractSo(aar, "jni/$abi/${model.nativeSoName}", so)
@@ -100,7 +101,7 @@ class TtsModelManager
             target: File,
         ) {
             ZipFile(aar).use { zip ->
-                val entry = zip.getEntry(entryPath) ?: error("이 기기($entryPath)용 음성 라이브러리가 없어요")
+                val entry = zip.getEntry(entryPath) ?: error(context.getString(R.string.tts_error_no_lib, entryPath))
                 zip.getInputStream(entry).use { input -> writeToFile(input, target) }
             }
         }
@@ -111,7 +112,7 @@ class TtsModelManager
         ) {
             val tmp = File(target.parentFile, "${target.name}.part")
             FileOutputStream(tmp).use { out -> input.copyTo(out) }
-            check(tmp.renameTo(target)) { "저장 실패: ${target.name}" }
+            check(tmp.renameTo(target)) { context.getString(R.string.tts_error_save_failed, target.name) }
         }
 
         /** 파일 하나를 .part로 받아 완료 시 이름 바꿈. 반환값은 갱신된 누적 바이트. */
@@ -134,7 +135,7 @@ class TtsModelManager
                 } finally {
                     conn.disconnect()
                 }
-            check(tmp.renameTo(target)) { "저장 실패: ${target.name}" }
+            check(tmp.renameTo(target)) { context.getString(R.string.tts_error_save_failed, target.name) }
             return done
         }
 

@@ -323,6 +323,10 @@
 
     <!-- 설정 · 고품질 신경망 음성(런타임 다운로드) -->
     <string name="tts_supertonic_name">고품질 음성 (Supertonic)</string>
+    <string name="tts_error_download_failed">다운로드에 실패했어요</string>
+    <string name="tts_error_no_abi">지원하는 기기 종류를 찾을 수 없어요</string>
+    <string name="tts_error_no_lib">이 기기(%1$s)용 음성 라이브러리가 없어요</string>
+    <string name="tts_error_save_failed">저장에 실패했어요: %1$s</string>
     <string name="settings_neural_desc">삼성·구글보다 더 자연스러운 한국어 신경망 음성이에요. 약 %1$dMB를 한 번 받으면 오프라인으로 쓸 수 있어요.</string>
     <string name="settings_neural_download">다운로드 (약 %1$dMB)</string>
     <string name="settings_neural_downloading">받는 중… %1$d%%</string>

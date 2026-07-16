@@ -323,6 +323,10 @@
 
     <!-- Settings · high-quality neural voice (runtime download) -->
     <string name="tts_supertonic_name">High-quality voice (Supertonic)</string>
+    <string name="tts_error_download_failed">Download failed</string>
+    <string name="tts_error_no_abi">Couldn\'t find a supported device type</string>
+    <string name="tts_error_no_lib">No voice library for this device (%1$s)</string>
+    <string name="tts_error_save_failed">Couldn\'t save: %1$s</string>
     <string name="settings_neural_desc">A neural voice that sounds more natural. Download about %1$dMB once and use it offline.</string>
     <string name="settings_neural_download">Download (about %1$dMB)</string>
     <string name="settings_neural_downloading">Downloading… %1$d%%</string>
