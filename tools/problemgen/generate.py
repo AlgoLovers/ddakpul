@@ -1333,6 +1333,14 @@ def gen_inclusion_exclusion():
             f"먼저 {a}의 배수 {cnt_a}개와 {b}의 배수 {cnt_b}개를 빼요. 그런데 {lcm}의 배수({cnt_lcm}개)는 양쪽에서 두 번 빠졌으니 한 번 도로 더해요. {total_n}−{cnt_a}−{cnt_b}+{cnt_lcm}={ans}개예요.",
             [(f"{total_n - cnt_a - cnt_b}개", f"{lcm}의 배수를 두 번 뺐어요 — 한 번 도로 더해야 해요(포함배제).")],
             detail=f"{a}의 배수를 빼고 {b}의 배수도 빼면, 둘 다의 배수({lcm}의 배수)는 두 번 빠져요. 그래서 한 번 도로 더해요: {total_n}−{cnt_a}−{cnt_b}+{cnt_lcm}={ans}. 이 '겹친 건 도로 더한다'가 포함배제의 핵심이고, 벤 다이어그램으로 그리면 왜 그런지 눈에 보여요.",
+            en={
+                "statement": f"Among the whole numbers from 1 to {total_n}, how many are divisible by neither {a} nor {b}?",
+                "answer": _en_plural(ans, "number"),
+                "distractors": [_en_plural(total_n - cnt_a - cnt_b, "number"), _en_plural(cnt_a + cnt_b, "number"), _en_plural(ans + 2, "number")],
+                "explanation": f"First subtract the {cnt_a} multiples of {a} and the {cnt_b} multiples of {b}. But the multiples of {lcm} ({cnt_lcm} of them) were subtracted twice, so add them back once. {total_n}−{cnt_a}−{cnt_b}+{cnt_lcm}={ans}.",
+                "mistakes": [(_en_plural(total_n - cnt_a - cnt_b, "number"), f"You subtracted the multiples of {lcm} twice — you have to add them back once (inclusion-exclusion).")],
+                "detail": f"If you subtract the multiples of {a} and also the multiples of {b}, the numbers that are multiples of both (multiples of {lcm}) get subtracted twice. So add them back once: {total_n}−{cnt_a}−{cnt_b}+{cnt_lcm}={ans}. This 'add back what overlaps' is the heart of inclusion-exclusion, and drawing a Venn diagram shows you why.",
+            },
         )
 
 
@@ -1465,6 +1473,14 @@ def gen_cube_surface():
             [(f"{volume}㎠", "그건 부피(쌓은 정육면체 개수)예요. 겉넓이는 바깥 면들의 넓이 합이에요.")],
             figure={"type": "CUBE_STACK", "params": {"w": a, "d": b}, "heights": [c] * (a * b)},
             detail=f"겉넓이는 '마주 보는 세 쌍'으로 봐요: 앞뒤({b}×{c}), 좌우({a}×{c}), 위아래({a}×{b}) 각 2개씩이라 2×({a * b}+{b * c}+{a * c})={ans}㎠. 부피(속을 채우는 칸 수)와 겉넓이(겉을 감싸는 넓이)를 헷갈리지 않는 게 중요해요 — 상자를 포장하는 종이가 겉넓이랍니다.",
+            en={
+                "statement": f"Small 1cm cubes are stacked with no gaps to build a rectangular box that is {a} cubes wide, {b} cubes deep, and {c} cubes tall. What is the surface area of this box, in cm²?",
+                "answer": f"{ans}cm²",
+                "distractors": [f"{volume}cm²", f"{a * b + b * c + a * c}cm²", f"{ans + 4}cm²"],
+                "explanation": f"A rectangular box has three pairs of opposite faces. The three kinds of faces have areas {a}×{b}={a * b}, {b}×{c}={b * c}, {a}×{c}={a * c}. There are two of each, so 2×({a * b}+{b * c}+{a * c})={ans}cm².",
+                "mistakes": [(f"{volume}cm²", "That's the volume (the number of cubes stacked). Surface area is the sum of the areas of the outer faces.")],
+                "detail": f"Think of surface area as 'three pairs of opposite faces': front-back ({b}×{c}), left-right ({a}×{c}), top-bottom ({a}×{b}), two of each, so 2×({a * b}+{b * c}+{a * c})={ans}cm². The key is not to confuse volume (the number of cells filling the inside) with surface area (the area wrapping the outside) — the paper that wraps a box is its surface area.",
+            },
         )
 
 
@@ -1701,6 +1717,14 @@ def gen_grid_area():
             [(f"{box}㎠", "둘러싼 직사각형에서 모서리 삼각형들을 빼야 도형의 넓이예요.")],
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "This is a tilted shape on a grid. What is the area of the shaded part, in cm²? (each grid square is 1 cm²)",
+                "answer": f"{area}cm²",
+                "distractors": [f"{box}cm²", f"{area + 2}cm²", f"{area - 2}cm²"],
+                "explanation": f"For a tilted shape that doesn't fit the squares neatly, use 'boxing it in'. From the surrounding rectangle {cols}×{rows}={box}cm², subtract the total area of the four leftover right triangles at the corners, {tri}cm². {box}−{tri}={area}cm².",
+                "mistakes": [(f"{box}cm²", "You have to subtract the corner triangles from the surrounding rectangle to get the shape's area.")],
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split it into pieces and add them up'. Finding it both ways and checking the answers match catches mistakes. Rather than memorizing formulas, the key to area is picturing 'how to cut and paste'. (Triangle = half a rectangle; parallelogram = cut off one side and paste it to make a rectangle; trapezoid = flip and paste to make half a parallelogram.)",
+            },
         )
 
 
@@ -1712,8 +1736,8 @@ def gen_shape_count():
             lines = k + 2                       # 밑변으로 가는 선(양옆 2 + 내부 k)
             ans = lines * (lines - 1) // 2       # 선 2개를 고를 때마다 삼각형 1개
             small = k + 1                        # 가장 작은 삼각형 개수
-            # trianglefan(난4)만 영어 뱅크에 넣는다. trianglefanx(난6)는 같은 add를 공유하므로 en=None.
-            en_fan = ({
+            # trianglefan(난4)·trianglefanx(난6) 둘 다 영어 뱅크에 넣는다(문항 구조가 같아 같은 영어 dict 재사용).
+            en_fan = {
                 "statement": "How many triangles can you find in the picture? (count larger triangles made of several small ones too)",
                 "answer": _en_plural(ans, "triangle"),
                 "distractors": [_en_plural(small, "triangle"), _en_plural(ans - 2, "triangle"), _en_plural(ans + 3, "triangle")],
@@ -1721,7 +1745,7 @@ def gen_shape_count():
                                f"Choosing 2 from {lines} = {lines}×{lines - 1}÷2 = {ans}. (From the {small} smallest triangles up to those made of two or three joined, none missed.)",
                 "mistakes": [(_en_plural(small, "triangle"), "Don't count only the smallest triangles — count the larger ones made of several joined together too.")],
                 "detail": f"A triangle appears each time you choose '2 lines going to the base'. So with {lines} lines the number of triangles = choosing 2 from {lines} = {lines}×{lines - 1}÷2 = {ans}. Each extra line adds (number of lines−1) more triangles. It's easy to miss some counting one by one, so recasting it as 'choose 2' keeps it accurate.",
-            } if diff == 4 else None)
+            }
             add(
                 fam, "SHAPE_MEASUREMENT", diff, ["삼각형 개수", "체계적 세기"],
                 "그림에서 찾을 수 있는 삼각형은 모두 몇 개일까요? (작은 삼각형을 여러 개 합친 큰 삼각형도 세어요)",
@@ -2037,6 +2061,14 @@ def gen_grid_blocked():
             [(f"{total}가지", "그건 막힌 곳이 없을 때 수예요. ✕를 지나는 길을 빼야 해요.")],
             figure={"type": "GRID", "params": {"w": w, "h": h, "mark": 1, "blockX": bx, "blockY": by}},
             detail=f"두 방법으로 풀려요. ①전체({total}) − ✕를 지나는 길. ✕를 지나는 길 = (출발→✕)×(✕→도착)처럼 앞·뒤를 곱해요. ②각 교차점에 오는 길 수를 더해 나가되 ✕만 0. 두 방법의 답이 같은지 맞춰 보면 실수를 잡아요. '거쳐 가는 길 = 앞부분 × 뒷부분'은 경로 문제의 핵심 도구예요.",
+            en={
+                "statement": f"On a grid road {w} squares wide and {h} squares tall, you go from the bottom-left (●) to the top-right (◯), moving only right and up. But the intersections marked ✕ are under construction and cannot be passed. How many different shortest paths are there?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(total, "way"), _en_plural(ans - 1, "way"), _en_plural(ans + 2, "way")],
+                "explanation": f"With nothing blocked, there are {total} shortest paths. Adding (paths from the left)+(paths from below) at each intersection in turn, but keeping the ✕ intersections at 0 so they are never passed, the destination comes out to {ans}.",
+                "mistakes": [(_en_plural(total, "way"), "That's the count with nothing blocked. You have to subtract the paths that go through ✕.")],
+                "detail": f"You can solve it two ways. ① total ({total}) − paths through ✕. Paths through ✕ = (start→✕)×(✕→end), multiplying the front and back parts. ② add up the number of paths reaching each intersection, keeping only ✕ at 0. Checking that both ways give the same answer catches mistakes. 'Paths through a point = front part × back part' is a key tool for route problems.",
+            },
         )
 
 
@@ -2280,6 +2312,14 @@ def gen_units_cycle():
             f"큰 수를 다 계산할 필요 없이 '일의 자리'만 따라가면 돼요. {base}의 거듭제곱은 일의 자리가 {', '.join(map(str, cycle))} 이렇게 {period}개씩 반복돼요(주기 {period}). {exp}번째가 주기 안 어디인지는 {exp}÷{period}의 나머지로 정해지고(나머지가 0이면 맨 끝), 그 자리 숫자가 {ans}예요.",
             [(distractors[0], "그 자리 숫자는 '몇 번째로 곱했나'에 따라 달라져요. 주기 안 위치를 정확히 세었는지 봐요.")],
             detail="거듭제곱의 일의 자리는 반드시 '주기'를 이뤄요(일의 자리는 0~9뿐이라 언젠가 반복). 그래서 지수를 주기로 나눈 '나머지'만 보면 끝이에요. 이 '주기+나머지'(modular) 사고는 요일·시계·달력 계산과 완전히 같은 도구예요.",
+            en={
+                "statement": f"What digit is in the 'ones place' of {base} raised to the power of {exp}?",
+                "answer": str(ans),
+                "distractors": distractors,
+                "explanation": f"You don't need to compute the whole big number — just track the 'ones digit'. The powers of {base} have ones digits {', '.join(map(str, cycle))}, repeating every {period} (a cycle of length {period}). Which spot in the cycle the {exp}th power lands on is set by the remainder of {exp}÷{period} (if the remainder is 0, it is the last spot), and that digit is {ans}.",
+                "mistakes": [(distractors[0], "That digit changes depending on 'which power it is'. Check that you counted the position within the cycle correctly.")],
+                "detail": "The ones digit of a power always forms a 'cycle' (there are only the digits 0–9, so it must eventually repeat). So you only need the 'remainder' of the exponent divided by the cycle length. This 'cycle + remainder' (modular) thinking is exactly the same tool as day-of-week, clock, and calendar calculations.",
+            },
         )
 
 
@@ -2674,6 +2714,14 @@ def gen_leftover_crt():
             f"한 조건씩 좁혀 가요. {d2}씩 묶어 {r2}개 남는 수는 {r2}, {r2 + d2}, {r2 + 2 * d2}, …예요. 이 중 {d1}씩 묶어 {r1}개 남는 것을 찾으면 {ans}이에요.",
             [(str(r1 + r2), "두 나머지를 더하는 게 아니에요. 두 조건을 '동시에' 만족하는 수를 찾아요.")],
             detail=f"'여러 나머지 조건을 동시에'는 한 조건의 후보(등차수열)를 쭉 적고 다른 조건으로 거르는 게 기본이에요. 큰 수 쪽 조건부터 후보를 만들면 더 빨라요. 답들은 {d1}, {d2}의 최소공배수 {period}마다 반복돼서, 다음 답은 {ans}+{period}={ans + period}이에요.",
+            en={
+                "statement": f"When a certain number is grouped by {d1}s, {r1} are left over, and when grouped by {d2}s, {r2} are left over. What is the smallest whole number like this?",
+                "answer": str(ans),
+                "distractors": [str(ans + period), str(r1 + r2), str(ans - 1)],
+                "explanation": f"Narrow it down one condition at a time. Numbers that leave {r2} when grouped by {d2}s are {r2}, {r2 + d2}, {r2 + 2 * d2}, …. Finding one among these that leaves {r1} when grouped by {d1}s gives {ans}.",
+                "mistakes": [(str(r1 + r2), "You don't add the two remainders. Find a number that satisfies both conditions 'at the same time'.")],
+                "detail": f"For 'several remainder conditions at once', the basic approach is to write out the candidates for one condition (an arithmetic sequence) and filter with the other. Starting the candidates from the condition with the larger divisor is faster. The answers repeat every {period}, the least common multiple of {d1} and {d2}, so the next answer is {ans}+{period}={ans + period}.",
+            },
         )
 
 
@@ -3656,6 +3704,14 @@ def gen_gcd_lcm_product():
             f"신기한 관계가 있어요: '두 수의 곱 = 최대공약수 × 최소공배수'. 그래서 두 수를 몰라도 곱은 바로 나와요: {g}×{lcm}={ans}이에요.",
             [(str(g + lcm), "더하는 게 아니라, 최대공약수와 최소공배수를 '곱해요'.")],
             detail="어떤 두 수든 '두 수의 곱 = 최대공약수 × 최소공배수'가 늘 성립해요. 최대공약수는 공통 부분, 최소공배수는 그 공통 부분에 각자 남은 부분을 곱한 것이라 둘을 곱하면 두 수의 곱이 되거든요. 한쪽을 알면 다른 쪽을 바로 구할 수 있어요(LCM=곱÷GCD).",
+            en={
+                "statement": f"Two whole numbers have a greatest common divisor of {g} and a least common multiple of {lcm}. What do you get if you 'multiply' these two numbers?",
+                "answer": str(ans),
+                "distractors": [str(g + lcm), str(lcm), str(ans // 2)],
+                "explanation": f"There is a neat relationship: 'the product of two numbers = their GCD × their LCM'. So even without knowing the two numbers, the product comes right out: {g}×{lcm}={ans}.",
+                "mistakes": [(str(g + lcm), "Don't add — 'multiply' the greatest common divisor and the least common multiple.")],
+                "detail": "For any two numbers, 'the product of the two numbers = GCD × LCM' always holds. The GCD is the shared part, and the LCM is that shared part times each number's leftover part, so multiplying them gives the product of the two numbers. Knowing one lets you find the other right away (LCM = product ÷ GCD).",
+            },
         )
 
 
@@ -3697,6 +3753,14 @@ def gen_sum_product_pair():
             f"합이 {s}가 되는 짝(1과 {s - 1}, 2와 {s - 2}, …)을 하나씩 곱해 보면 {x}×{y}={p}인 짝을 만나요. 그중 큰 수는 {y}예요.",
             [(str(x), "그건 두 수 중 작은 쪽이에요. '더 큰' 수를 골라요.")],
             detail="'합과 곱을 아는 두 수 찾기'는 합이 되는 짝을 차례로 곱해 보는 게 기본이에요. 사실 이 두 수는 x²−(합)x+(곱)=0의 두 해 — 중학교에서 배울 이차방정식의 씨앗이죠. 합이 정해졌을 때 곱이 클수록 두 수가 가깝다는 것도 함께 보면 재미있어요.",
+            en={
+                "statement": f"Two whole numbers add up to {s} and multiply to {p}. What is the 'bigger' of the two numbers?",
+                "answer": str(y),
+                "distractors": [str(x), str(s), str(y + 1)],
+                "explanation": f"Multiply out the pairs that sum to {s} (1 and {s - 1}, 2 and {s - 2}, …) one by one, and you meet the pair {x}×{y}={p}. The bigger of those is {y}.",
+                "mistakes": [(str(x), "That's the smaller of the two numbers. Pick the 'bigger' one.")],
+                "detail": "'Finding two numbers from their sum and product' is basically multiplying out the pairs that make the sum, one after another. In fact these two numbers are the two solutions of x²−(sum)x+(product)=0 — the seed of the quadratic equation you will learn in middle school. It is also fun to notice that for a fixed sum, a larger product means the two numbers are closer together.",
+            },
         )
 
 
@@ -3735,6 +3799,14 @@ def gen_squares_in_grid():
             [(f"{k * k}개", "1×1짜리 작은 칸만 센 거예요 — 2×2, 3×3처럼 큰 정사각형도 세요.")],
             figure={"type": "GRID", "params": {"w": k, "h": k}},
             detail="n×n 격자 속 정사각형 개수 = 1²+2²+…+n²이에요(크기 s×s는 (n−s+1)²자리). 이 '제곱수의 합'엔 n(n+1)(2n+1)÷6 공식도 있어요. 직사각형까지 세면 또 달라지죠 — '무엇을 세는가'를 정확히 하는 게 세기의 핵심이에요.",
+            en={
+                "statement": f"You have a {k}×{k} grid of paper ({k * k} small squares). How many 'squares' of all different sizes (1×1, 2×2, …) can you find inside it?",
+                "answer": _en_plural(ans, "square"),
+                "distractors": [_en_plural(k * k, "square"), _en_plural(ans + 1, "square"), _en_plural(k * k * k, "square")],
+                "explanation": f"Count size by size. There are {k}×{k}={k * k} of the 1×1 squares, {k - 1}×{k - 1}={(k - 1) ** 2} of the 2×2 squares… the bigger the square, the fewer places it fits. Adding them all up: 1²+2²+…+{k}²={ans}.",
+                "mistakes": [(_en_plural(k * k, "square"), "You only counted the small 1×1 cells — count the bigger squares like 2×2 and 3×3 too.")],
+                "detail": "The number of squares in an n×n grid = 1²+2²+…+n² (a size s×s square has (n−s+1)² positions). This 'sum of squares' even has a formula, n(n+1)(2n+1)÷6. Counting rectangles too gives a different answer — being exact about 'what you are counting' is the heart of counting.",
+            },
         )
 
 
@@ -3772,6 +3844,14 @@ def gen_gcd_three():
             f"세 수의 최대공약수는 '두 개씩 차례로' 구하면 돼요. 먼저 {a}와 {b}의 최대공약수는 {gcd(a, b)}. 그 결과와 {c}의 최대공약수를 구하면 {ans}이에요.",
             [(str(gcd(a, b)), f"{a}, {b}만 본 게 아니라 {c}까지 모두 나누어떨어지는 수여야 해요.")],
             detail="세 수 이상의 최대공약수는 두 개씩 짝지어 차례로 구하거나, 각 수를 소인수분해해 '공통으로 든 소수를 가장 적게 나온 만큼' 곱해 구해요. 최소공배수는 반대로 '가장 많이 나온 만큼'이고요.",
+            en={
+                "statement": f"What is the greatest common divisor of the three numbers {a}, {b}, {c} (the largest number that divides all three evenly)?",
+                "answer": str(ans),
+                "distractors": [str(gcd(a, b)), str(ans + 1), str(min(a, b, c))],
+                "explanation": f"Find the GCD of three numbers 'two at a time'. First, the GCD of {a} and {b} is {gcd(a, b)}. Taking the GCD of that result and {c} gives {ans}.",
+                "mistakes": [(str(gcd(a, b)), f"It has to divide {c} evenly too, not just {a} and {b}.")],
+                "detail": "The GCD of three or more numbers is found by pairing them two at a time in turn, or by prime-factorizing each number and multiplying 'the common primes, each to the smallest power it appears'. The LCM is the opposite — 'to the largest power each appears'.",
+            },
         )
 
 
@@ -4802,6 +4882,15 @@ def gen_boxsurface():
              (f"{a * b + b * c + c * a}cm²", "세 면만 더했어요. 마주 보는 면까지 각각 2개씩이라 ×2 해요.")],
             detail="직육면체 겉넓이는 마주 보는 세 쌍의 면 넓이를 더한 2(ab+bc+ca)예요. 부피(abc)와 헷갈리지 않고, "
             "면을 빠짐없이 세는 게 핵심이에요.",
+            en={
+                "statement": f"What is the surface area of a rectangular box that is {a}cm wide, {b}cm deep, and {c}cm tall, in cm²?",
+                "answer": f"{ans}cm²",
+                "distractors": [f"{v}cm²" for v in _pick_distractors(ans, [a * b * c, a * b + b * c + c * a, ans + 4, ans - 4])],
+                "explanation": f"A rectangular box has three pairs of opposite faces. Each pair has area {a}×{b}, {b}×{c}, {c}×{a}, and there are two of each, so 2×({a * b}+{b * c}+{c * a}) = {ans}cm².",
+                "mistakes": [(f"{a * b * c}cm²", "That's the volume (width×depth×height). Surface area is the sum of the areas of the six faces."),
+                             (f"{a * b + b * c + c * a}cm²", "You added only three faces. With the opposite faces there are two of each, so ×2.")],
+                "detail": "A rectangular box's surface area is 2(ab+bc+ca), the sum of the areas of its three pairs of opposite faces. The key is not to confuse it with volume (abc) and to count every face without missing any.",
+            },
         )
 
 
