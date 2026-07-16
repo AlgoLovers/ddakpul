@@ -471,6 +471,14 @@ def gen_stairs():
             f"작은 계단부터 세어 봐요. 1칸은 1가지, 2칸은 2가지예요. 마지막 걸음이 1칸이었는지 2칸이었는지로 나누면 '{n}칸 방법 수 = {n - 1}칸 방법 수 + {n - 2}칸 방법 수'가 돼요. 1, 2, 3, 5, 8…로 쌓아 올리면 {n}칸은 {w}가지예요.",
             [(f"{n * 2}가지", "직접 나열하기 어려우면 작은 계단부터 규칙을 찾아요.")],
             detail=f"이건 그 유명한 '피보나치'예요. 마지막 걸음이 1칸이었다면 그 전엔 {n - 1}칸을, 2칸이었다면 {n - 2}칸을 오른 거예요. 두 경우가 겹치지 않으니 더해요: (n칸)=(n−1칸)+(n−2칸). 그래서 1,2,3,5,8,13…처럼 앞의 두 수를 더해 나가면 {n}칸은 {w}가지. 큰 문제를 '한 걸음 작은 문제들'로 쪼개 푸는 이 방법을 점화식이라고 해요.",
+            en={
+                "statement": f"There's a staircase of {n} steps, and you can climb 1 or 2 steps at a time. In how many different ways can you climb the staircase?",
+                "answer": _en_plural(w, "way"),
+                "distractors": [_en_plural(w - 1, "way"), _en_plural(w + 2, "way"), _en_plural(n * 2, "way")],
+                "explanation": f"Count from small staircases. 1 step has 1 way, 2 steps have 2 ways. Splitting by whether the last move was 1 step or 2 steps gives 'ways for {n} steps = ways for {n - 1} steps + ways for {n - 2} steps'. Building up 1, 2, 3, 5, 8… gives {w} ways for {n} steps.",
+                "mistakes": [(_en_plural(n * 2, "way"), "If listing them directly is hard, find the pattern starting from smaller staircases.")],
+                "detail": f"This is the famous 'Fibonacci'. If the last move was 1 step, you had climbed {n - 1} steps before; if 2 steps, {n - 2} steps. The two cases don't overlap, so you add them: (n steps)=(n−1 steps)+(n−2 steps). So adding the previous two numbers as in 1,2,3,5,8,13… gives {w} ways for {n} steps. Breaking a big problem into 'one-step-smaller problems' like this is called a recurrence.",
+            },
         )
     # 검산: n=5 무차별 나열
     from itertools import product
@@ -1091,6 +1099,7 @@ def gen_pigeonhole():
                    ["검정", "흰색"], ["빨강", "주황", "노랑", "초록", "파랑"]]:
         c = len(colors)
         ans = c + 1  # 최악의 경우 색마다 1짝(c짝)까지 다 다를 수 있으니 한 짝 더
+        colors_en = ", ".join({"빨강": "red", "파랑": "blue", "노랑": "yellow", "초록": "green", "검정": "black", "흰색": "white"}[x] for x in colors)
         add(
             "pigeon", "DATA_POSSIBILITY", 5, ["비둘기집", "최악의 경우"],
             f"서랍에 {c}가지 색({', '.join(colors)}) 양말이 잔뜩 섞여 있어요. 어두워서 색이 안 보일 때, 같은 색 한 켤레(2짝)를 확실히 꺼내려면 최소 몇 짝을 꺼내야 할까요?",
@@ -1098,6 +1107,14 @@ def gen_pigeonhole():
             f"운이 가장 나쁠 때를 생각해요. {c}짝을 꺼냈는데 공교롭게 색이 모두 다를 수도 있어요({c}가지니까). 하지만 한 짝만 더 꺼내면({ans}짝) 반드시 이미 나온 색과 겹쳐 한 켤레가 완성돼요. 그래서 {ans}짝이에요.",
             [(f"{c}짝", f"{c}짝이면 운 나쁘게 색이 다 다를 수 있어요. 한 짝을 더 꺼내야 확실해요.")],
             detail=f"이게 바로 '비둘기집 원리'예요: 서랍(색)이 {c}칸인데 {c}+1={ans}짝을 넣으면 반드시 한 칸에 2짝이 겹쳐요. 규칙을 바꿔 '같은 색 3짝'을 원하면, 색마다 2짝까지 다를 수 있으니 2×{c}+1짝이 필요해요. 항상 '가장 운 나쁜 경우를 먼저 그린 뒤 +1'로 생각하면 이런 '확실히 보장' 문제는 다 풀려요.",
+            en={
+                "statement": f"A drawer has {c} colors of socks ({colors_en}) all jumbled together. In the dark where you can't see the colors, at least how many socks must you pull out to be sure of getting a matching pair (2 socks of the same color)?",
+                "answer": _en_plural(ans, "sock"),
+                "distractors": [_en_plural(c, "sock"), _en_plural(c * 2, "sock"), _en_plural(ans + 1, "sock")],
+                "explanation": f"Think of the unluckiest case. You could pull {c} socks and happen to get all different colors (since there are {c} of them). But pulling just one more ({ans} socks) must match a color already out, completing a pair. So the answer is {ans} socks.",
+                "mistakes": [(_en_plural(c, "sock"), f"With {c} socks you could unluckily get all different colors. You need one more sock to be sure.")],
+                "detail": f"This is exactly the 'pigeonhole principle': with {c} drawers (colors), putting in {c}+1={ans} socks forces two into one drawer. Change the rule to '3 socks of the same color' and, since each color can differ up to 2 socks, you'd need 2×{c}+1 socks. Always thinking 'draw the worst case first, then +1' solves these 'guaranteed' problems.",
+            },
         )
 
 
@@ -2095,6 +2112,7 @@ def gen_pigeonhole():
         colors = len(names)
         ans = colors + 1
         colortxt = "·".join(names)
+        colortxt_en = ", ".join({"빨강": "red", "파랑": "blue", "노랑": "yellow", "초록": "green", "검정": "black", "흰색": "white"}[x] for x in names)
         add(
             "pigeon", "DATA_POSSIBILITY", 5, ["비둘기집 원리", "최악의 경우"],
             f"서랍 안에 {colortxt} 양말이 마구 섞여 있어요(각 색이 넉넉히 있어요). 불을 끄고 색을 안 보고 꺼낼 때, '같은 색 2짝'을 반드시 갖게 되려면 최소 몇 짝을 꺼내야 할까요?",
@@ -2102,6 +2120,14 @@ def gen_pigeonhole():
             f"'반드시'를 물으니 가장 운이 나쁜 경우를 생각해요. 최악이면 색깔마다 딱 한 짝씩 뽑혀 {colors}짝까진 전부 다른 색일 수 있어요. 하지만 한 짝을 '더' 꺼내면 이미 나온 {colors}가지 색 중 하나와 반드시 겹쳐요. 그래서 {colors}+1={ans}짝이면 같은 색 2짝이 확실해요.",
             [(f"{colors}짝", "그 수까진 모두 다른 색일 수 있어요. '반드시'가 되려면 한 짝 더 필요해요.")],
             detail=f"이게 '비둘기집 원리'예요: 비둘기(꺼낸 양말)가 집({colors}가지 색)보다 많으면 어느 한 집엔 둘 이상이 들어가요. '최악의 경우를 먼저 그리고 거기서 하나 더'가 핵심 기술이에요. 반에서 생일이 같은 달인 친구 찾기도 같은 원리예요.",
+            en={
+                "statement": f"A drawer has {colortxt_en} socks all mixed together (plenty of each color). With the lights off, drawing without seeing the colors, at least how many socks must you pull out to be sure of getting 2 socks of the same color?",
+                "answer": _en_plural(ans, "sock"),
+                "distractors": [_en_plural(colors, "sock"), _en_plural(ans + 1, "sock"), _en_plural(ans + 2, "sock")],
+                "explanation": f"Since it asks for 'certain', think of the unluckiest case. At worst you pull exactly one of each color, so up to {colors} socks could all be different colors. But pull one 'more' and it must match one of the {colors} colors already out. So {colors}+1={ans} socks guarantees 2 socks of the same color.",
+                "mistakes": [(_en_plural(colors, "sock"), "Up to that number they could all be different colors. To make it 'certain' you need one more sock.")],
+                "detail": f"This is the 'pigeonhole principle': if there are more pigeons (socks pulled) than holes ({colors} colors), some one hole must hold two or more. 'Picture the worst case first, then one more' is the key trick. Finding classmates born in the same month works by the same principle.",
+            },
         )
 
 
@@ -2161,6 +2187,14 @@ def gen_set_both():
             f"둘 다 안 하는 {neither}명을 빼면, 적어도 하나는 좋아하는 사람이 {total}−{neither}={total - neither}명이에요. 그런데 축구({a}) + 농구({b}) = {a + b}명으로 세면 '둘 다' 좋아하는 사람을 두 번 센 셈이에요. 그래서 두 번 센 만큼이 겹치는 사람: {a + b}−{total - neither}={both}명이에요.",
             [(f"{both - neither}명", "'둘 다 안 하는 사람'을 도로 반영하는 걸 빠뜨렸어요."), (f"{total - neither}명", "그건 '적어도 하나'를 좋아하는 사람 수예요.")],
             detail="이게 포함배제의 기본 그림이에요: (A 또는 B) = A + B − (A 그리고 B). 여기서 'A 또는 B'는 전체에서 '아무것도 안 함'을 뺀 수고요. 벤 다이어그램 두 원을 그려 '겹치는 부분을 두 번 세었으니 한 번 뺀다'만 기억하면 어떤 두 집합 문제도 풀려요.",
+            en={
+                "statement": f"A class of {total} students was surveyed. {a} like soccer, {b} like basketball, and {neither} like neither. How many students like 'both' soccer and basketball?",
+                "answer": _en_plural(both, "student"),
+                "distractors": [_en_plural(both - neither, "student"), _en_plural(both + neither, "student"), _en_plural(total - neither, "student")],
+                "explanation": f"Taking away the {neither} who like neither, the number who like at least one is {total}−{neither}={total - neither}. But counting soccer ({a}) + basketball ({b}) = {a + b} counts the 'both' people twice. So the overlap equals that double-count minus the rest: {a + b}−{total - neither}={both}.",
+                "mistakes": [(_en_plural(both - neither, "student"), "You forgot to account back for the 'like neither' group."), (_en_plural(total - neither, "student"), "That's the number who like 'at least one'.")],
+                "detail": "This is the basic picture of inclusion-exclusion: (A or B) = A + B − (A and B). Here 'A or B' is the whole minus 'none'. Draw two overlapping Venn circles and just remember 'the overlap got counted twice, so subtract it once' — and any two-set problem works out.",
+            },
         )
 
 
@@ -2191,6 +2225,14 @@ def gen_handshake():
             f"한 사람은 자기를 뺀 {n - 1}명과 악수해요. {n}명이 각자 {n - 1}번이면 {n}×{n - 1}={n * (n - 1)}번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눠요: {n * (n - 1)}÷2={ans}번.",
             [(f"{n * (n - 1)}번", "같은 악수를 두 사람이 각각 세서 두 번씩 세었어요. 2로 나눠야 해요.")],
             detail=f"이건 '{n}명 중 2명을 뽑는' 경우의 수 C({n},2)와 똑같아요. 두 개를 짝짓는 모든 문제(악수·리그전 경기·점끼리 잇는 선분·삼각형 개수)가 여기에 해당해요. '두 번 세고 2로 나누기'는 세기의 단골 기술이에요.",
+            en={
+                "statement": f"{n} people gather and each pair shakes hands exactly once. How many handshakes happen in all?",
+                "answer": _en_plural(ans, "handshake"),
+                "distractors": [_en_plural(n * (n - 1), "handshake"), _en_plural(n * n, "handshake"), _en_plural(ans - n + 1, "handshake")],
+                "explanation": f"Each person shakes hands with the {n - 1} others besides themselves. With {n} people each shaking {n - 1} times, that's {n}×{n - 1}={n * (n - 1)}, but this counts 'the handshake between A and B' twice — once from A's side, once from B's. So divide by 2: {n * (n - 1)}÷2={ans}.",
+                "mistakes": [(_en_plural(n * (n - 1), "handshake"), "The same handshake got counted by both people, so it's counted twice. You have to divide by 2.")],
+                "detail": f"This is exactly the number of ways to choose 2 people from {n}, C({n},2). Every problem that pairs two things (handshakes, round-robin games, line segments joining points, counting triangles) fits here. 'Count twice, then divide by 2' is a go-to counting trick.",
+            },
         )
 
 
@@ -2274,6 +2316,14 @@ def gen_tournament():
             f"경기 수를 하나하나 세는 대신 '탈락자'에 주목해요. 한 경기가 열릴 때마다 딱 한 명이 탈락해요. 우승자 1명만 남기려면 나머지 {n}−1={ans}명이 전부 탈락해야 하니, 경기도 정확히 {ans}번이에요.",
             [(f"{n // 2}번", "1라운드 경기 수만 센 거예요. 모든 라운드를 합쳐야 해요.")],
             detail=f"'무엇이 하나씩 사라지는가'를 보면 복잡한 대진표를 안 그려도 돼요 — 경기 1번 = 탈락 1명이니 우승자 빼고 모두 탈락 = {n}−1번. 이 '변하는 양을 세는' 관점은 대진 방식이 바뀌어도 그대로 통해요.",
+            en={
+                "statement": f"{n} players compete in a tournament (a loser is eliminated immediately) to decide a single champion. How many games are played in all before the champion is decided?",
+                "answer": _en_plural(ans, "game"),
+                "distractors": [_en_plural(n, "game"), _en_plural(n // 2, "game"), _en_plural(ans - 1, "game")],
+                "explanation": f"Instead of counting games one by one, focus on the 'eliminated players'. Each game eliminates exactly one player. To leave just 1 champion, the other {n}−1={ans} players must all be eliminated, so there are exactly {ans} games.",
+                "mistakes": [(_en_plural(n // 2, "game"), "That only counts the first-round games. You have to add up all the rounds.")],
+                "detail": f"Looking at 'what disappears one at a time' means you don't need to draw the whole bracket — 1 game = 1 elimination, so everyone except the champion is eliminated = {n}−1 games. This 'count the changing quantity' viewpoint still works even if the tournament format changes.",
+            },
         )
 
 
@@ -2442,6 +2492,7 @@ def gen_odd_sum_square():
 def gen_permutation():
     for n, ctx in [(4, "책"), (5, "인형"), (6, "색연필"), (4, "컵")]:
         ans = factorial(n)
+        ctx_en = {"책": "book", "인형": "doll", "색연필": "colored pencil", "컵": "cup"}[ctx]
         add(
             "perm", "DATA_POSSIBILITY", 5, ["경우의 수", "순서 정하기"],
             f"서로 다른 {ctx} {n}개를 한 줄로 나란히 놓는 방법은 모두 몇 가지일까요?",
@@ -2449,6 +2500,14 @@ def gen_permutation():
             f"첫 자리에 올 수 있는 건 {n}가지. 그걸 정하면 둘째 자리는 남은 {n - 1}가지, 셋째는 {n - 2}가지… 자리마다 줄어드는 가짓수를 모두 곱해요: {'×'.join(str(k) for k in range(n, 0, -1))} = {ans}가지.",
             [(f"{n * n}가지", "n×n이 아니라, 자리마다 하나씩 줄어드는 가짓수를 1까지 곱해요.")],
             detail=f"이걸 '{n}의 계승({n}!)'이라 하고 {n}!={ans}예요. 순서를 정하는(줄 세우기·순위 매기기) 문제의 기본이에요. 몇 개만 골라 세우면 {n}부터 그 개수만큼만 곱하고요. '자리마다 남은 선택지를 곱한다'가 핵심 그림이에요.",
+            en={
+                "statement": f"In how many ways can you line up {n} different {ctx_en}s in a row?",
+                "answer": _en_plural(ans, "way"),
+                "distractors": [_en_plural(n * n, "way"), _en_plural(2 * n, "way"), _en_plural(ans + n, "way")],
+                "explanation": f"The first spot can be any of {n}. Once that's fixed, the second spot has the remaining {n - 1}, the third {n - 2}… multiply the shrinking counts at each spot: {'×'.join(str(k) for k in range(n, 0, -1))} = {ans} ways.",
+                "mistakes": [(_en_plural(n * n, "way"), "It's not n×n — multiply the counts that shrink by one at each spot, all the way down to 1.")],
+                "detail": f"This is called '{n} factorial ({n}!)', and {n}!={ans}. It's the basis of problems about setting an order (lining up, ranking). If you only pick and arrange a few, you multiply starting from {n} for just that many terms. 'At each spot, multiply the remaining choices' is the key picture.",
+            },
         )
 
 
@@ -2594,6 +2653,14 @@ def gen_weighted_average():
             f"두 평균을 그냥 더해 반으로 나누면 안 돼요(사람 수가 다르니까). '총점'으로 돌아가요: 남학생 {n1}×{avg1}={n1 * avg1}점, 여학생 {n2}×{avg2}={n2 * avg2}점. 전체 총점 {total}점을 전체 인원 {n1 + n2}명으로 나누면 {ans}점이에요.",
             [(f"{(avg1 + avg2) // 2}점", "두 평균의 평균이 아니에요 — 인원이 다르면 많은 쪽으로 치우쳐요.")],
             detail="여러 그룹의 전체 평균은 '가중 평균'이라 인원이 많은 쪽 평균에 더 가까워요. 늘 '총합 ÷ 전체 개수'로 돌아가면 안전해요. 두 그룹 인원이 같을 때만 단순 평균과 일치하고요. 타율·평점·물가지수가 다 가중 평균이에요.",
+            en={
+                "statement": f"The {n1} boys average {avg1} points and the {n2} girls average {avg2} points. What is the average for the whole class ({n1 + n2} students)?",
+                "answer": _en_plural(ans, "point"),
+                "distractors": [_en_plural((avg1 + avg2) // 2, "point"), _en_plural(ans + 3, "point"), _en_plural(ans - 3, "point")],
+                "explanation": f"You can't just add the two averages and halve them (the group sizes differ). Go back to 'total points': boys {n1}×{avg1}={n1 * avg1} points, girls {n2}×{avg2}={n2 * avg2} points. Dividing the overall total {total} points by the total of {n1 + n2} students gives {ans} points.",
+                "mistakes": [(_en_plural((avg1 + avg2) // 2, "point"), "It's not the average of the two averages — with different group sizes it leans toward the larger group.")],
+                "detail": "The overall average of several groups is a 'weighted average', so it lands closer to the average of the larger group. Always going back to 'total sum ÷ total count' is safe. It equals the simple average only when the two groups are the same size. Batting averages, ratings, and price indexes are all weighted averages.",
+            },
         )
 
 
@@ -2631,6 +2698,14 @@ def gen_dice_product():
             f"두 주사위는 구별되니 순서가 다르면 다른 경우예요. 곱이 {target}이 되는 짝을 빠짐없이 찾으면 {', '.join(f'({a},{b})' for a, b in pairs)} — 모두 {cnt}가지예요.",
             [(f"{cnt - 1}가지", "순서가 다른 짝(예: (2,6)과 (6,2))을 빠뜨리지 않았는지 봐요.")],
             detail=f"두 주사위 문제는 6×6=36칸 표를 떠올리면 빠짐없이 셀 수 있어요. 곱이 {target}인 칸을 찾는 거죠. (a,b)와 (b,a)는 주사위를 구별하니 서로 다른 경우예요(단, a=b면 하나뿐). 곱셈표 감각이 있으면 약수 짝을 빠르게 찾아요.",
+            en={
+                "statement": f"You roll two dice and multiply the two numbers that come up, and the product is {target}. In how many ways (first die, second die) can this happen?",
+                "answer": _en_plural(cnt, "way"),
+                "distractors": [_en_plural(cnt - 1, "way"), _en_plural(cnt + 1, "way"), _en_plural(cnt + 2, "way")],
+                "explanation": f"The two dice are distinct, so a different order is a different case. Finding every pair whose product is {target} gives {', '.join(f'({a},{b})' for a, b in pairs)} — {cnt} ways in all.",
+                "mistakes": [(_en_plural(cnt - 1, "way"), "Check that you didn't miss a pair in the other order (e.g. (2,6) and (6,2)).")],
+                "detail": f"For a two-dice problem, picturing the 6×6=36-cell table lets you count with nothing missed — you look for the cells whose product is {target}. (a,b) and (b,a) are different cases because the dice are distinct (but if a=b there is only one). A feel for the multiplication table helps you find divisor pairs quickly.",
+            },
         )
 
 
@@ -2971,6 +3046,14 @@ def gen_gift_exchange():
             f"한 사람은 자기를 뺀 {n - 1}명에게 선물을 보내요. {n}명이 각자 {n - 1}개씩 보내니 {n}×{n - 1}={ans}개예요. 악수와 달리 '주는 것'과 '받는 것'은 방향이 달라서 두 번 세지 않고 그대로 곱해요.",
             [(f"{n * (n - 1) // 2}개", "이건 악수(한 번)가 아니라 '보내는 방향'이 있는 선물이에요 — 2로 나누지 않아요.")],
             detail=f"방향이 있으면(A→B와 B→A가 다르면) {n}×({n}−1)로 그대로, 방향이 없으면(악수처럼 A-B 한 번) ÷2 해요. '순서(방향)를 구별하나?'가 세기의 갈림길이고, 이 차이가 곧 순열과 조합의 차이예요.",
+            en={
+                "statement": f"{n} people each send one gift to every other person (nobody sends to themselves). How many gifts are sent in all?",
+                "answer": _en_plural(ans, "gift"),
+                "distractors": [_en_plural(n * (n - 1) // 2, "gift"), _en_plural(n, "gift"), _en_plural(ans + n, "gift")],
+                "explanation": f"Each person sends a gift to the {n - 1} others besides themselves. With {n} people each sending {n - 1}, that's {n}×{n - 1}={ans} gifts. Unlike a handshake, 'giving' and 'receiving' have a direction, so you don't count twice — you just multiply.",
+                "mistakes": [(_en_plural(n * (n - 1) // 2, "gift"), "This isn't a handshake (counted once) — a gift has a direction of sending, so you don't divide by 2.")],
+                "detail": f"When there's a direction (A→B differs from B→A), it's just {n}×({n}−1); when there's no direction (like a handshake A-B once), you divide by 2. 'Does order (direction) matter?' is the fork in counting, and that difference is exactly the difference between permutations and combinations.",
+            },
         )
 
 
@@ -4365,6 +4448,15 @@ def gen_chartavg():
             figure={"type": "BAR_CHART", "heights": vals, "params": {"highlight": -1}},
             detail="막대그래프에서 평균은 모든 막대 값을 더해 막대 개수로 나눠요. 그래프를 정확히 읽어 수로 옮긴 뒤 계산하는, "
             "자료 해석과 평균을 잇는 문제예요.",
+            en={
+                "statement": "The graph below shows the number of potatoes dug up by four groups A, B, C, and D. What is the average number of potatoes the four groups dug up?",
+                "answer": f"{ans} potatoes",
+                "distractors": [f"{c} potatoes" for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
+                "explanation": f"Reading all the bar values and adding them gives {'+'.join(map(str, vals))}={total} potatoes. There are 4 groups, so the average is {total}÷4={ans} potatoes.",
+                "mistakes": [(f"{total} potatoes", "Don't stop at the sum. Divide by the number of groups (4) to get the average."),
+                             (f"{max(vals)} potatoes", "The average isn't the tallest bar — it's the value when the total is shared out evenly.")],
+                "detail": "In a bar chart, the average is found by adding all the bar values and dividing by the number of bars. You read the graph accurately, turn it into numbers, then compute — a problem connecting data interpretation with averages.",
+            },
         )
 
 
