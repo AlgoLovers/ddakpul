@@ -1308,6 +1308,8 @@ def gen_parity_invariant():
                     nums.pop(idx)
                 nums.append(abs(a - b))
             assert nums[0] % 2 == total % 2, "불변량 검산 실패"
+        parity_en = "odd" if total % 2 == 1 else "even"
+        other_en = "even" if total % 2 == 1 else "odd"
         add(
             "parity", "DATA_POSSIBILITY", 7, ["불변량", "홀짝 보존"],
             f"칠판에 1부터 {n}까지의 수가 적혀 있어요. 매번 두 수를 지우고 대신 두 수의 차를 적어요. 이걸 계속 반복하면 마지막에 수 하나만 남아요. 이 수는 홀수일까요, 짝수일까요?",
@@ -1315,6 +1317,14 @@ def gen_parity_invariant():
             f"두 수 a, b를 지우고 |a−b|를 적으면 전체 합은 (a+b)−|a−b|, 즉 작은 수의 2배만큼 줄어요 — 항상 짝수만큼! 그래서 '전체 합의 홀짝'은 절대 변하지 않아요(불변량). 1부터 {n}까지의 합은 {total}({parity})이니 마지막 한 수도 {parity}예요.",
             [("지우는 순서에 따라 달라져요", "신기하게도 순서와 상관없이 항상 같아요 — 처음 합의 홀짝으로 정해지는 불변량이에요.")],
             detail=f"두 수 a, b를 지우고 |a−b|를 적어도 전체 합의 '홀짝'은 안 변해요(a+b와 |a−b|는 홀짝이 같으니까). 그래서 마지막 수의 홀짝은 처음 1부터 {n}까지 합의 홀짝으로 이미 정해져 있어요. 이렇게 '과정이 변해도 안 변하는 값(불변량)'을 찾으면, 모든 경우를 따라가지 않고도 결과를 알 수 있어요 — 고학년 수학의 강력한 무기예요.",
+            en={
+                "statement": f"The numbers from 1 to {n} are written on a board. Each turn you erase two numbers and write their difference instead. Repeating this until only one number remains, is that number odd or even?",
+                "answer": parity_en,
+                "distractors": [other_en, "It depends on the order you erase them", "It's always 0"],
+                "explanation": f"When you erase two numbers a, b and write |a−b|, the total sum drops by (a+b)−|a−b|, which is twice the smaller number — always an even amount! So the 'parity of the total sum' never changes (an invariant). The sum from 1 to {n} is {total} ({parity_en}), so the last remaining number is also {parity_en}.",
+                "mistakes": [("It depends on the order you erase them", "Surprisingly it's always the same regardless of order — it's an invariant fixed by the parity of the starting sum.")],
+                "detail": f"Even after you erase a, b and write |a−b|, the 'parity' of the total sum does not change (a+b and |a−b| have the same parity). So the parity of the last number is already fixed by the parity of the sum from 1 to {n}. Finding a 'value that stays unchanged even as the process changes (an invariant)' lets you know the result without following every case — a powerful weapon in higher math.",
+            },
         )
 
 
@@ -1359,6 +1369,14 @@ def gen_nim():
             f"핵심은 상대에게 '{k + 1}의 배수'를 남기는 거예요. 그러면 상대가 1~{k}개 중 몇 개를 가져가든 내가 합쳐서 {k + 1}개를 맞춰 다시 {k + 1}의 배수를 남길 수 있어요. {total_stones}÷{k + 1}의 나머지가 {ans}이니, 처음에 {ans}개를 가져가 {total_stones - ans}개({k + 1}의 배수)를 남기면 반드시 이겨요.",
             [(f"{k}개", "무작정 최대로 가져가면 안 돼요. 상대에게 '배수'를 남기는 게 핵심이에요.")],
             detail=f"왜 '{k + 1}의 배수 남기기'가 필승일까요? 내가 그 배수를 남기면, 상대가 t개(1~{k}) 가져갈 때 나는 {k + 1}−t개를 가져와 매 라운드 정확히 {k + 1}개씩 지울 수 있어요. 그러면 배수→배수→…→0이 되어 마지막 돌은 늘 내 차지! 반대로 처음부터 돌 수가 {k + 1}의 배수면(나머지 0) 먼저 두는 사람이 져요. 이렇게 '상대 수를 되받아 합을 일정하게 맞추는' 방법을 대칭 전략이라고 해요.",
+            en={
+                "statement": f"There are {total_stones} go stones. Two players take turns removing 1 to {k} stones at a time, and whoever takes the last stone wins. To be sure of winning, how many stones should the first player take on the very first move?",
+                "answer": _en_plural(ans, "stone"),
+                "distractors": [_en_plural(k, "stone"), _en_plural(ans - 1, "stone"), _en_plural(ans + 2, "stone")],
+                "explanation": f"The key is to leave your opponent a 'multiple of {k + 1}'. Then whatever number from 1 to {k} they take, you take the rest to make {k + 1} together, again leaving a multiple of {k + 1}. {total_stones} divided by {k + 1} leaves remainder {ans}, so taking {ans} first leaves {total_stones - ans} (a multiple of {k + 1}) and you are sure to win.",
+                "mistakes": [(_en_plural(k, "stone"), "Grabbing the maximum blindly is wrong. The key is leaving your opponent a 'multiple'.")],
+                "detail": f"Why is 'leaving a multiple of {k + 1}' a guaranteed win? If you leave that multiple, then when the opponent takes t stones (1 to {k}) you take {k + 1}−t, erasing exactly {k + 1} each round. So it goes multiple→multiple→…→0, and the last stone is always yours! Conversely, if the stone count starts as a multiple of {k + 1} (remainder 0), the first player loses. This method of 'answering the opponent's move to keep the sum constant' is called a symmetry strategy.",
+            },
         )
 
 
@@ -2026,6 +2044,14 @@ def gen_factorial_zeros():
             f"끝자리 0은 10=2×5에서 생겨요. 곱에는 2가 5보다 훨씬 많으니 '5가 몇 번 곱해졌나'가 0의 개수를 정해요. 5의 배수마다 5가 하나씩({n}÷5={n // 5}개), 25의 배수는 5가 하나 더, … 이렇게 더하면 {z}개예요.",
             [(f"{n // 5}개", "5의 배수만 세면 부족해요. 25·125의 배수는 5를 더 품고 있어요.")],
             detail=f"정확히는 (5의 배수 수)+(25의 배수 수)+(125의 배수 수)+… = ⌊{n}/5⌋+⌊{n}/25⌋+… = {z}. 25=5×5는 5를 두 개 품으니 한 번 더 세는 거예요. '2와 5의 쌍이 10을 만드는데 5가 병목'이라는 생각은, 자릿수·약수 문제에서 두루 쓰이는 강력한 도구랍니다.",
+            en={
+                "statement": f"How many zeros are at the end of the number you get by multiplying all the numbers from 1 to {n} together?",
+                "answer": _en_plural(z, "zero"),
+                "distractors": [_en_plural(n // 5, "zero"), _en_plural(z + 1, "zero"), _en_plural(z - 1, "zero")],
+                "explanation": f"A trailing zero comes from 10=2×5. The product has far more 2s than 5s, so 'how many times 5 is multiplied in' decides the number of zeros. Each multiple of 5 gives one 5 ({n}÷5={n // 5}), each multiple of 25 gives one more, … adding these up gives {z}.",
+                "mistakes": [(_en_plural(n // 5, "zero"), "Counting only the multiples of 5 falls short. Multiples of 25 and 125 carry extra 5s.")],
+                "detail": f"Precisely, (count of multiples of 5)+(count of multiples of 25)+(count of multiples of 125)+… = ⌊{n}/5⌋+⌊{n}/25⌋+… = {z}. 25=5×5 carries two 5s, so it is counted once more. The idea that '2s and 5s make 10s but 5 is the bottleneck' is a powerful tool used all across digit and divisor problems.",
+            },
         )
 
 
@@ -3312,6 +3338,14 @@ def gen_hanoi():
             f"원반 {n}개를 옮기려면 먼저 위 {n - 1}개를 옆 기둥에 옮기고, 맨 아래 큰 원반 1개를 목표 기둥에 옮긴 뒤, 다시 {n - 1}개를 그 위에 얹어야 해요. 그래서 (n개) = 2×(n−1개) + 1. 1개는 1번, 2개는 3번, 3개는 7번… {n}개는 {ans}번이에요.",
             [(f"{2 ** n}번", "마지막에 1을 빼요 — 2를 {n}번 곱한 수에서 1 작은 값이에요.".replace("{n}", str(n)))],
             detail=f"하노이탑은 '큰 문제를 한 단계 작은 문제로 쪼개는(점화식)' 대표 예예요: T(n)=2·T(n−1)+1. 원반이 하나 늘 때마다 두 배+1로 폭발해서, 64개(전설의 탑)면 우주 나이보다 오래 걸려요. 재귀·분할정복 사고의 출발점이에요.",
+            en={
+                "statement": f"Tower of Hanoi: {n} disks of different sizes are stacked on a peg, largest at the bottom. Moving one disk at a time and never placing a larger disk on a smaller one, what is the 'minimum' number of moves to shift them all onto another peg?",
+                "answer": _en_plural(ans, "move"),
+                "distractors": [_en_plural(2 * n, "move"), _en_plural(2 ** n, "move"), _en_plural(ans - 2, "move")],
+                "explanation": f"To move {n} disks, first move the top {n - 1} disks to another peg, move the single largest bottom disk to the target peg, then stack the {n - 1} disks back on top. So (n disks) = 2×(n−1 disks) + 1. 1 disk takes 1, 2 disks take 3, 3 disks take 7… {n} disks take {ans}.",
+                "mistakes": [(_en_plural(2 ** n, "move"), f"Subtract 1 at the end — it's one less than 2 multiplied together {n} times.")],
+                "detail": f"The Tower of Hanoi is the classic example of 'breaking a big problem into a problem one step smaller (a recurrence)': T(n)=2·T(n−1)+1. Each extra disk makes it explode by double+1, so 64 disks (the legendary tower) would take longer than the age of the universe. It's the starting point of recursive, divide-and-conquer thinking.",
+            },
         )
 
 
@@ -3350,6 +3384,14 @@ def gen_similar_area_ratio():
             f"길이가 {r1}:{r2}로 닮으면 넓이는 그 '제곱'인 {r1}²:{r2}² = {r1 * r1}:{r2 * r2}로 커져요(가로도 세로도 늘어나니까). 작은 넓이 {area1}에 {r2 * r2}/{r1 * r1}을 곱하면 {area2}㎠예요.",
             [(f"{area1 * r2 // r1}㎠", f"넓이는 길이 비({r1}:{r2}) 그대로가 아니라 '제곱' 비로 커져요.")],
             detail="닮음에서 길이가 k배면 넓이는 k²배, 부피는 k³배예요(차원마다 하나씩 곱해지니까). 지도 축척이 2배면 넓이는 4배, 인형이 3배 크면 무게(부피)는 27배. 이 '차원의 제곱·세제곱'은 실생활에서 자주 헷갈리는 부분이에요.",
+            en={
+                "statement": f"Two shapes are similar, with a similarity ratio (ratio of corresponding side lengths) of {r1}:{r2}. If the smaller shape has area {area1} cm², what is the area of the larger shape, in cm²?",
+                "answer": f"{area2}cm²",
+                "distractors": [f"{area1 * r2 // r1}cm²", f"{area1 * (r2 - r1)}cm²", f"{area2 + area1}cm²"],
+                "explanation": f"When lengths are similar in the ratio {r1}:{r2}, areas grow by the 'square' of that, {r1}²:{r2}² = {r1 * r1}:{r2 * r2} (because both width and height stretch). Multiplying the small area {area1} by {r2 * r2}/{r1 * r1} gives {area2}cm².",
+                "mistakes": [(f"{area1 * r2 // r1}cm²", f"Area doesn't grow by the length ratio ({r1}:{r2}) directly but by the 'squared' ratio.")],
+                "detail": "In similar figures, if length is k times, area is k² times and volume is k³ times (one factor per dimension). If a map's scale doubles, area becomes 4 times; if a doll is 3 times bigger, its weight (volume) is 27 times. This 'square and cube of dimensions' is a spot people often get confused about in real life.",
+            },
         )
 
 
@@ -3411,6 +3453,14 @@ def gen_diagonal_cells():
             [(f"{m + n}칸", f"대각선이 격자 점을 지나며 칸을 건너뛰어요 — 최대공약수({gcd(m, n)})만큼 빼야 해요.")],
             figure={"type": "GRID", "params": {"w": m, "h": n, "diag": 1}},
             detail="m×n 격자의 대각선이 지나는 칸 수 = m + n − gcd(m,n)이에요. 대각선은 세로선을 넘고 가로선을 넘으며 칸을 하나씩 늘리는데, 격자 점(두 선이 겹치는 곳)을 지날 땐 한꺼번에 넘어 한 칸만 늘어요. 그 겹치는 횟수 때문에 gcd를 빼요.",
+            en={
+                "statement": f"There is a rectangular grid {m} cells wide and {n} cells tall. If you draw a straight line from one corner to the opposite corner, how many grid cells does the line pass through in all?",
+                "answer": _en_plural(ans, "cell"),
+                "distractors": [_en_plural(m + n, "cell"), _en_plural(m * n, "cell"), _en_plural(ans - 1, "cell")],
+                "explanation": f"There's a formula for the number of cells a diagonal passes through: width + height − (gcd of width and height) = {m}+{n}−{gcd(m, n)}={ans}. You subtract the gcd because when the diagonal passes through a grid 'point' it skips into two cells at once.",
+                "mistakes": [(_en_plural(m + n, "cell"), f"The diagonal passes through grid points and skips cells — you have to subtract the gcd ({gcd(m, n)}).")],
+                "detail": "The number of cells a diagonal of an m×n grid passes through = m + n − gcd(m,n). The diagonal adds one cell each time it crosses a vertical or a horizontal line, but when it passes through a grid point (where two lines meet) it crosses both at once and adds only one cell. Because of those overlaps you subtract the gcd.",
+            },
         )
 
 
@@ -3428,6 +3478,14 @@ def gen_mixture():
             f"섞을 때 변하지 않는 건 '소금의 양'이에요. 첫 소금물의 소금은 {w1}×{c1}÷100={w1 * c1 // 100}g, 둘째는 {w2}×{c2}÷100={w2 * c2 // 100}g. 합치면 소금 {salt}g, 전체 {total}g이니 농도 = {salt}÷{total}×100 = {ans}%예요.",
             [(f"{(c1 + c2) // 2}%", "두 농도의 평균이 아니에요 — 양이 다르면 많은 쪽으로 치우쳐요(가중평균).")],
             detail="섞기 문제의 열쇠는 '녹아 있는 양(소금·알코올)은 섞어도 총량이 그대로'라는 거예요. 각각의 양을 구해 더하고 전체로 다시 나누면 끝. 결국 농도의 '가중평균'이라 양이 많은 쪽 농도에 더 가까워져요.",
+            en={
+                "statement": f"You mix {w1} g of salt water at {c1}% concentration with {w2} g of salt water at {c2}% concentration. What is the concentration of the mixed salt water, in %?",
+                "answer": f"{ans}%",
+                "distractors": [f"{(c1 + c2) // 2}%", f"{c1 + c2}%", f"{ans + 2}%"],
+                "explanation": f"What doesn't change when mixing is the 'amount of salt'. The first has {w1}×{c1}÷100={w1 * c1 // 100} g of salt, the second {w2}×{c2}÷100={w2 * c2 // 100} g. Together that's {salt} g of salt in {total} g total, so the concentration = {salt}÷{total}×100 = {ans}%.",
+                "mistakes": [(f"{(c1 + c2) // 2}%", "It's not the average of the two concentrations — when the amounts differ it leans toward the larger side (a weighted average).")],
+                "detail": "The key to mixing problems is that 'the dissolved amount (salt, alcohol) keeps the same total even when mixed'. Find each amount, add them, and divide by the whole. In the end it's a 'weighted average' of the concentrations, so it comes out closer to the concentration of whichever amount is larger.",
+            },
         )
 
 
@@ -3734,6 +3792,14 @@ def gen_grid_area_hard():
             [(f"{area + 2}㎠", "비스듬한 변의 칸을 대충 세면 안 돼요 — 둘러싼 정사각형에서 모서리 직각삼각형을 정확히 빼요.")],
             figure=_grid_fig(pts),
             detail="비스듬히 놓인 도형의 넓이는 '둘러싼 직사각형 − 모서리 직각삼각형들'로 정확히 구해요. 격자점을 잇는 도형이라면 '피크의 정리'가 강력해요: 넓이 = (도형 안쪽 격자점 수) + (경계 위 격자점 수)÷2 − 1. 점만 세면 넓이가 나오죠. 두 방법으로 각각 구해 답이 같은지 확인하면 실수가 없어요.",
+            en={
+                "statement": "What is the area of the shaded shape, in cm²? (each grid square is 1 cm²)",
+                "answer": f"{area}cm²",
+                "distractors": [f"{area + 2}cm²", f"{area - 2}cm²", f"{area + 4}cm²"],
+                "explanation": f"For a slanted shape, draw the 'tightest surrounding square' and then subtract the right triangles left outside — that's exact. Subtracting the four corner triangles (each base×height÷2) from the surrounding square gives {area}cm². (Since it joins grid points, you can also use 'Pick's theorem' from the deeper note below.)",
+                "mistakes": [(f"{area + 2}cm²", "Don't roughly count the cells along a slanted edge — precisely subtract the corner right triangles from the surrounding square.")],
+                "detail": "The area of a slanted shape is found exactly by 'surrounding rectangle − corner right triangles'. For a shape that joins grid points, 'Pick's theorem' is powerful: area = (interior grid points) + (boundary grid points)÷2 − 1. Just counting points gives the area. Finding it both ways and checking that the answers match leaves no room for mistakes.",
+            },
         )
 
 
@@ -3917,6 +3983,14 @@ def gen_toggle_lights():
             f"어떤 전구가 눌린 횟수 = 그 번호의 '약수의 개수'예요. 켜진 채로 남으려면 홀수 번 눌려야 하는데, 약수 개수가 홀수인 수는 '제곱수'뿐이에요(약수가 짝을 이루는데 제곱수만 √n×√n으로 짝이 없거든요). {n}까지의 제곱수는 1,4,9,…로 모두 {ans}개예요.",
             [(f"{n // 2}개", "절반이 아니에요 — 약수 개수가 홀수인 수(제곱수)만 켜져 있어요.")],
             detail=f"각 전구는 '자기 번호의 약수'인 사람들에게 눌려요. 약수는 보통 짝(12 → 1·12, 2·6, 3·4)을 이뤄 개수가 짝수인데, 제곱수만 √n이 자기 자신과 짝이라 홀수예요. 그래서 켜진 전구 = {n} 이하 제곱수 개수 = √{n}의 정수 부분 = {ans}개. 유명한 '전구 문제'랍니다.",
+            en={
+                "statement": f"There are {n} light bulbs in a row, all off. Person 1 presses the switches at positions that are multiples of 1 (all of them), person 2 at multiples of 2, … person {n} at multiples of {n} (turning off if on, on if off). After everyone has passed, how many bulbs are 'on'?",
+                "answer": _en_plural(ans, "bulb"),
+                "distractors": [_en_plural(ans + 1, "bulb"), _en_plural(n // 2, "bulb"), _en_plural(ans - 1, "bulb")],
+                "explanation": f"The number of times a bulb is pressed = the 'number of divisors' of its number. To end up on, it must be pressed an odd number of times, and the only numbers with an odd number of divisors are 'perfect squares' (divisors pair up, but a square alone has √n×√n with no partner). The perfect squares up to {n} are 1, 4, 9, … — {ans} in all.",
+                "mistakes": [(_en_plural(n // 2, "bulb"), "It's not half — only numbers with an odd number of divisors (perfect squares) stay on.")],
+                "detail": f"Each bulb is pressed by the people who are 'divisors of its number'. Divisors usually come in pairs (12 → 1·12, 2·6, 3·4), giving an even count, but only a perfect square has √n paired with itself, giving an odd count. So the bulbs left on = the number of perfect squares up to {n} = the integer part of √{n} = {ans}. It's the famous 'lights problem'.",
+            },
         )
 
 
@@ -4201,6 +4275,7 @@ def gen_aliquot():
         divs = [d for d in range(1, n) if n % d == 0]
         s = sum(divs)
         extra = f" 진약수 합이 자기 자신과 같으니 {n}{_eun(str(n))} '완전수'예요!" if s == n else ""
+        extra_en = f" The proper divisors sum to the number itself, so {n} is a 'perfect number'!" if s == n else ""
         add(
             "aliquot", "NUMBER_OPERATION", 7, ["약수", "완전수"],
             f"어떤 수의 '진약수'는 자기 자신을 뺀 약수예요(예: 6의 진약수는 1, 2, 3). {n}의 진약수를 모두 더하면 얼마일까요?",
@@ -4208,6 +4283,14 @@ def gen_aliquot():
             f"{n}의 진약수는 {', '.join(map(str, divs))}이고, 모두 더하면 {'＋'.join(map(str, divs))}={s}예요.{extra}",
             [(str(s + n), "약수에 자기 자신까지 더하면 안 돼요. 진약수는 자기 자신을 빼요.")],
             detail="진약수(자기 제외 약수)의 합으로 수를 나눠요: 합＝자신이면 완전수(6, 28…), 합＞자신이면 과잉수, 합＜자신이면 부족수예요. 약수를 빠짐없이 찾으려면 1부터 짝을 지어(1과 n, 2와 n÷2…) 세는 게 확실해요.",
+            en={
+                "statement": f"The 'proper divisors' of a number are its divisors excluding itself (for example, the proper divisors of 6 are 1, 2, 3). What do you get when you add up all the proper divisors of {n}?",
+                "answer": str(s),
+                "distractors": [str(s + n), str(s + 1), str(s - 1)],
+                "explanation": f"The proper divisors of {n} are {', '.join(map(str, divs))}, and adding them all gives {'+'.join(map(str, divs))}={s}.{extra_en}",
+                "mistakes": [(str(s + n), "Don't add the number itself to its divisors. Proper divisors exclude the number itself.")],
+                "detail": "You can sort numbers by the sum of their proper divisors (divisors excluding itself): if the sum equals the number it's a perfect number (6, 28…), if greater an abundant number, if less a deficient number. To find every divisor without missing any, pairing up from 1 (1 with n, 2 with n÷2…) is the reliable way.",
+            },
         )
 
 
@@ -4227,6 +4310,14 @@ def gen_narcissistic():
             f"{t}의 각 자리 {', '.join(map(str, td))}을 세제곱해 더하면 {'＋'.join(str(x ** 3) for x in td)}＝{t}이라 자기 자신과 같아요. 나머지 보기는 세제곱 합이 자신과 달라요.",
             [(distractors[0], f"{distractors[0]}의 세제곱 합은 {sum(int(c) ** 3 for c in distractors[0])}(이)라 자기 자신과 달라요.")],
             detail="각 자리 숫자를 세제곱해 더한 값이 자기 자신과 같은 수를 '아름스트롱 수(수선화 수)'라고 해요. 세 자리에선 153, 370, 371, 407 넷뿐이에요. 자릿값과 거듭제곱을 함께 다루는 좋은 연습이에요.",
+            en={
+                "statement": f"There are three-digit numbers that equal the sum of the cubes of their own digits. For example, {ex} = {'+'.join(f'{x}³' for x in exd)} = {'+'.join(str(x ** 3) for x in exd)} = {ex}. There are a few more such numbers — which of the following is one?",
+                "answer": str(t),
+                "distractors": distractors,
+                "explanation": f"Cubing the digits of {t}, namely {', '.join(map(str, td))}, and adding them gives {'+'.join(str(x ** 3) for x in td)}={t}, equal to the number itself. The other choices have a cube-sum different from themselves.",
+                "mistakes": [(distractors[0], f"The cube-sum of {distractors[0]} is {sum(int(c) ** 3 for c in distractors[0])}, which differs from the number itself.")],
+                "detail": "A number equal to the sum of the cubes of its digits is called an 'Armstrong number (narcissistic number)'. For three digits there are only four: 153, 370, 371, 407. It's good practice at handling place value and powers together.",
+            },
         )
 
 
@@ -5269,6 +5360,18 @@ def gen_prodsum():
             detail="1·2+2·3+…+n(n+1)처럼 연속한 두 수의 곱을 더하면 n(n+1)(n+2)/3이 돼요. 각 항 k(k+1)을 "
             "[k(k+1)(k+2)−(k−1)k(k+1)]/3으로 바꾸면 앞뒤 항이 사슬처럼 지워지고(텔레스코핑) 맨 끝 n(n+1)(n+2)/3만 남기 때문이에요. "
             "많은 항을 규칙 하나로 한꺼번에 더하는 수열 합의 대표 문제예요.",
+            en={
+                "statement": f"What is the value of {terms}?",
+                "answer": str(ans),
+                "distractors": [str(c) for c in _pick_distractors(ans, [last, ans // 2, ans + last, n * (n + 1) // 2])],
+                "explanation": f"A sum of products of two consecutive numbers follows a rule even as the terms grow — 1·2+2·3+…+n·(n+1) = n(n+1)(n+2)÷3. "
+                               f"Here that's {n}×{n + 1}×{n + 2}÷3 = {ans}. (Rewriting each term as the 'difference of a 3-step staircase' makes neighbours cancel, leaving only the last.)",
+                "mistakes": [(str(last), "This is the sum of all the terms, not just the last one."),
+                             (str(n * (n + 1) // 2), "Don't confuse this with the triangular number summed from 1. Here you add 'products of two numbers'.")],
+                "detail": "Adding products of two consecutive numbers like 1·2+2·3+…+n(n+1) gives n(n+1)(n+2)/3. Rewriting each term k(k+1) as "
+                          "[k(k+1)(k+2)−(k−1)k(k+1)]/3 makes the terms cancel in a chain (telescoping), leaving only the final n(n+1)(n+2)/3. "
+                          "It's a classic sequence-sum problem of adding many terms all at once with a single rule.",
+            },
         )
 
 
