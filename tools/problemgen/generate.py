@@ -1140,6 +1140,17 @@ def gen_painted_cube():
         else:
             assert ans == (n - 2) ** 3, "색칠정육면체 검산 실패"
             expl = f"어느 면도 안 칠해진 조각은 속에 숨은 덩어리예요. {n - 2}×{n - 2}×{n - 2}={ans}개예요."
+        label_en = {
+            "정확히 두 면만 색칠된": "with exactly two faces painted",
+            "정확히 한 면만 색칠된": "with exactly one face painted",
+            "어느 면도 색칠되지 않은": "with no face painted",
+        }[label]
+        if k == 2:
+            expl_en = f"Pieces with two painted faces sit on the cube's 'edges'. Removing the corner (three-face) pieces leaves {n - 2} on each edge, and there are 12 edges. 12×{n - 2}={ans}."
+        elif k == 1:
+            expl_en = f"Pieces with only one painted face gather inside each face. Each face has {n - 2}×{n - 2}={(n - 2) ** 2}, and there are 6 faces. 6×{(n - 2) ** 2}={ans}."
+        else:
+            expl_en = f"Pieces with no painted face are the hidden block inside. {n - 2}×{n - 2}×{n - 2}={ans}."
         add(
             "cube", "SHAPE_MEASUREMENT", 5, ["쌓기나무", "공간 추론"],
             f"한 모서리가 {n}칸인 정육면체의 겉면을 모두 색칠한 뒤 1칸짜리 작은 정육면체로 잘랐어요. {label} 작은 정육면체는 몇 개일까요?",
@@ -1147,6 +1158,14 @@ def gen_painted_cube():
             expl,
             [(f"{n ** 3}개", "전체 조각 수가 아니라, 조건에 맞는 조각만 세어야 해요.")],
             detail=f"작은 조각은 '위치'로 종류가 갈려요: 꼭짓점(3면 칠해짐) 8개, 모서리(2면) 각 {n - 2}개씩 12줄, 면 안쪽(1면) 각 {(n - 2) ** 2}개씩 6면, 속(0면) {(n - 2) ** 3}개. 위치별로 나눠 세면 어떤 조건이 와도 빠짐없이 셀 수 있어요. 3D를 '겉·모서리·꼭짓점·속'으로 분해하는 눈이 공간 감각의 핵심이에요.",
+            en={
+                "statement": f"You paint all the outer faces of a cube that is {n} cells along each edge, then cut it into unit (1-cell) cubes. How many of the small cubes {label_en} are there?",
+                "answer": _en_plural(ans, "cube"),
+                "distractors": [_en_plural(ans + 6, "cube"), _en_plural(n ** 3, "cube"), _en_plural(max(1, ans - 4), "cube")],
+                "explanation": expl_en,
+                "mistakes": [(_en_plural(n ** 3, "cube"), "Don't count the total number of pieces — count only the pieces that fit the condition.")],
+                "detail": f"The small pieces split into kinds by 'position': 8 corners (three faces painted), {n - 2} on each of the 12 edges (two faces), {(n - 2) ** 2} inside each of the 6 faces (one face), and {(n - 2) ** 3} inside (no faces). Counting position by position lets you count without missing any, whatever the condition. Seeing 3D as 'surface, edge, corner, inside' is the heart of spatial sense.",
+            },
         )
 
 
@@ -1372,6 +1391,14 @@ def gen_polygon_diagonals():
             [(f"{n * (n - 3)}개", "대각선 하나를 양쪽 꼭짓점에서 두 번 셌어요. 2로 나눠요.")],
             figure={"type": "POLYGON", "params": {"n": n, "diagonals": 1}},
             detail=f"대각선은 '두 꼭짓점을 잇는 선분 중 변이 아닌 것'이에요. {n}개 꼭짓점에서 2개를 고르는 방법은 C({n},2)={n * (n - 1) // 2}가지, 그중 변 {n}개를 빼면 {n * (n - 1) // 2}−{n}={ans}개. 앞의 '한 꼭짓점 {n - 3}개씩 세고 2로 나누기'와 답이 같죠 — 세는 길이 달라도 같은 답이 나오는지 확인하는 습관이 실수를 줄여요.",
+            en={
+                "statement": f"How many diagonals can be drawn in a regular {n}-gon in all?",
+                "answer": _en_plural(ans, "diagonal"),
+                "distractors": [_en_plural(n * (n - 3), "diagonal"), _en_plural(n - 3, "diagonal"), _en_plural(n * (n - 1) // 2, "diagonal")],
+                "explanation": f"From one vertex you draw diagonals to {n}−3={n - 3} vertices — every vertex except itself and its two neighbors (which make sides). With {n} vertices that gives {n}×{n - 3}, but each diagonal was counted twice, once from each end, so divide by 2. {n}×{n - 3}÷2={ans}.",
+                "mistakes": [(_en_plural(n * (n - 3), "diagonal"), "You counted each diagonal twice, once at each of its two vertices. Divide by 2.")],
+                "detail": f"A diagonal is 'a segment joining two vertices that is not a side'. Choosing 2 of the {n} vertices can be done in C({n},2)={n * (n - 1) // 2} ways, and taking away the {n} sides leaves {n * (n - 1) // 2}−{n}={ans}. That matches the earlier '{n - 3} from each vertex, then divide by 2' — building the habit of checking that different ways of counting give the same answer reduces mistakes.",
+            },
         )
 
 
@@ -1389,6 +1416,14 @@ def gen_clock_minutes():
             [(f"{ans + 15}도", "분침이 움직인 만큼 시침도 조금 움직였다는 걸 빠뜨리지 않았는지 확인해요.")],
             figure={"type": "CLOCK", "params": {"hour": h, "minute": m}},
             detail=f"핵심은 '시침도 분마다 움직인다'예요. 시침은 60분에 30도, 즉 1분에 0.5도씩 나아가요. 그래서 {h}시 {m}분 시침은 {30 * h}+{m}×0.5={hour_pos}도. 분침은 1분에 6도라 {m}분엔 {m * 6}도. 두 각의 차가 사이 각이에요. 두 바늘의 '속도'를 알면 어떤 시각의 각도도 계산할 수 있어요.",
+            en={
+                "statement": f"At {h}:{m:02d}, what is the smaller angle formed by the hour hand and the minute hand, in degrees?",
+                "answer": f"{ans}°",
+                "distractors": [f"{ans + 15}°", f"{ans + 30}°", f"{ans + 45}°"],
+                "explanation": f"At {m} minutes the minute hand points at the 6, the 180° position. The hour hand has moved past {h} o'clock by {m} minutes, to {30 * h}+{m // 2}={hour_pos}°. The gap between the two positions, |{hour_pos}−180|={ans}°, is the angle between them.",
+                "mistakes": [(f"{ans + 15}°", "Check you didn't forget that the hour hand also moved a little as the minute hand moved.")],
+                "detail": f"The key is that 'the hour hand moves every minute too'. It moves 30° in 60 minutes, that is 0.5° per minute. So at {h}:{m:02d} the hour hand is at {30 * h}+{m}×0.5={hour_pos}°. The minute hand moves 6° per minute, so at {m} minutes it is at {m * 6}°. The difference between the two angles is the angle between them. Once you know each hand's 'speed', you can compute the angle at any time.",
+            },
         )
 
 
@@ -1406,6 +1441,14 @@ def gen_rect_area_max():
             f"둘레가 {p}면 가로+세로={p}÷2={half}{_euro(half)} 고정돼요. 두 수의 합이 일정할 때는 두 수가 같을수록 곱(넓이)이 커져요. 가로=세로={half}÷2={side}일 때 최대라, 넓이는 {side}×{side}={best}㎠예요.",
             [(f"{half}㎠", "가로+세로 값이 아니라 가로×세로(넓이)를 구해야 해요.")],
             detail=f"합이 정해진 두 수는 서로 가까울수록 곱이 커지고, 같을 때 최대예요(정사각형!). 가로+세로={half}로 고정이니 {half}÷2={side}씩 똑같이 나눈 정사각형이 넓이 최대 {best}㎠. 반대로 넓이가 정해졌을 땐 정사각형일 때 둘레가 최소예요. 이 '같을 때 극단'은 자연·경제 곳곳에 나타나는 원리랍니다.",
+            en={
+                "statement": f"Among rectangles with a perimeter of {p}cm, when the area is largest, what is that area in cm²? (the width and height are whole numbers)",
+                "answer": f"{best}cm²",
+                "distractors": [f"{half}cm²", f"{best + side}cm²", f"{best - side}cm²"],
+                "explanation": f"With a perimeter of {p}, width+height={p}÷2={half} is fixed. When the sum of two numbers is fixed, the product (area) grows the closer the two are, so it is largest when width=height={half}÷2={side}. The area is then {side}×{side}={best}cm².",
+                "mistakes": [(f"{half}cm²", "You need width×height (the area), not the value of width+height.")],
+                "detail": f"Two numbers with a fixed sum have a larger product the closer they are, and the largest when equal (a square!). Since width+height={half} is fixed, the square split equally into {half}÷2={side} each has the maximum area {best}cm². Conversely, for a fixed area the perimeter is smallest when it is a square. This 'extreme when equal' is a principle that shows up all over nature and economics.",
+            },
         )
 
 
@@ -1471,6 +1514,14 @@ def gen_cube_stack():
             [(f"{max(1, ans - 2)}개", "앞이나 위에 가려 안 보이는 나무도 빠짐없이 세어요.")],
             figure={"type": "CUBE_STACK", "params": {"w": w, "d": d}, "heights": heights},
             detail=f"쌓기나무 개수는 '위에서 본 그림'의 각 칸에 적힌 층수를 모두 더한 값과 같아요. 앞·위에 가려 안 보여도 각 기둥의 높이만 알면 정확히 셀 수 있죠. 층수를 하나씩 더하면 {ans}개예요. 이렇게 '위에서 보기'로 생각하면 아무리 복잡해도 빠짐없이 셀 수 있어요.",
+            en={
+                "statement": "How many stacking blocks are there in the picture? (count the hidden blocks behind and below, too)",
+                "answer": _en_plural(ans, "block"),
+                "distractors": [_en_plural(ans - 1, "block"), _en_plural(ans + 1, "block"), _en_plural(max(1, ans - 2), "block")],
+                "explanation": f"Count how many layers each column has and add them: {' + '.join(str(h) for h in heights)} = {ans}. Even hidden behind the front ones, the ones below are filled in.",
+                "mistakes": [(_en_plural(max(1, ans - 2), "block"), "Count the blocks hidden behind or above the front ones too.")],
+                "detail": f"The number of stacking blocks equals the sum of the layer counts written on each cell of the 'top-view'. Even hidden behind or above, knowing each column's height lets you count exactly. Adding the layer counts one by one gives {ans}. Thinking 'from the top' lets you count without missing any, no matter how complex.",
+            },
         )
 
 
@@ -1594,6 +1645,14 @@ def gen_grid_area():
             [(f"{boxw * height}㎠", f"둘러싼 직사각형({boxw}×{height})이 아니라, 밑변×수직높이로 구해요.")],
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "What is the area of the shaded parallelogram, in cm²? (each grid square is 1 cm²)",
+                "answer": f"{area}cm²",
+                "distractors": [f"{boxw * height}cm²", f"{area + 3}cm²", f"{area - 2}cm²"],
+                "explanation": f"A parallelogram's area = base×height even when it is slanted. Base {base} squares, (perpendicular) height {height} squares → {base}×{height} = {area}cm².",
+                "mistakes": [(f"{boxw * height}cm²", f"Use base×perpendicular height, not the surrounding rectangle ({boxw}×{height}).")],
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split it into pieces and add them up'. Finding it both ways and checking the answers match catches mistakes. Rather than memorizing formulas, the key to area is picturing 'how to cut and paste'. (Triangle = half a rectangle; parallelogram = cut off one side and paste it to make a rectangle; trapezoid = flip and paste to make half a parallelogram.)",
+            },
         )
     # (d) 난5 — 사다리꼴: (윗변+아랫변)×높이÷2
     # a=윗변(화면 위·작은 y쪽), bb=아랫변 — 렌더가 y-down이라 그림과 일치하도록 맞춤
@@ -1612,6 +1671,14 @@ def gen_grid_area():
             [(f"{(a + bb) * h}㎠", "(윗변+아랫변)×높이 다음에 꼭 ÷2 하세요.")],
             figure=_grid_fig(pts),
             detail="넓이는 '큰 도형에서 빈 부분 빼기'와 '여러 조각으로 나눠 더하기' — 두 방법으로 구할 수 있어요. 두 방법으로 각각 구해 답이 같은지 확인하면 실수를 잡을 수 있죠. 공식을 외우기보다 '어떻게 자르고 붙일까'를 떠올리는 게 도형 넓이의 핵심이에요. (삼각형=직사각형의 반, 평행사변형=한쪽을 잘라 붙이면 직사각형, 사다리꼴=뒤집어 붙이면 평행사변형의 반.)",
+            en={
+                "statement": "What is the area of the shaded trapezoid, in cm²? (each grid square is 1 cm²)",
+                "answer": f"{area}cm²",
+                "distractors": [f"{(a + bb) * h}cm²", f"{area + 3}cm²", f"{area - 2}cm²"],
+                "explanation": f"Trapezoid area = (top side+bottom side)×height÷2 = ({a}+{bb})×{h}÷2 = {area}cm².",
+                "mistakes": [(f"{(a + bb) * h}cm²", "After (top side+bottom side)×height, be sure to ÷2.")],
+                "detail": "Area can be found two ways — 'subtract the empty part from a bigger shape' and 'split it into pieces and add them up'. Finding it both ways and checking the answers match catches mistakes. Rather than memorizing formulas, the key to area is picturing 'how to cut and paste'. (Triangle = half a rectangle; parallelogram = cut off one side and paste it to make a rectangle; trapezoid = flip and paste to make half a parallelogram.)",
+            },
         )
     # (e) 난6 — 기울어진 도형: 둘러싼 직사각형 − 모서리 삼각형
     for pts in [
@@ -1739,6 +1806,15 @@ def gen_cube_net():
             [(f"{adj[0]}", "전개도에서 바로 붙어 있는 면은 접으면 옆면이에요 — 마주 보는 면이 아니에요.")],
             figure={"type": "CUBE_NET", "params": {"cols": cols, "rows": rows, "query": q}, "heights": flat},
             detail=f"전개도를 접을 때, 색칠한 면과 변을 맞대고 붙은 면은 90도로 꺾여 '옆면'이 돼요. 그래서 마주 보는 면은 붙어 있지 않은 면 중 하나({ans})예요. 요령: 일자로 늘어선 네 면에서는 '한 칸 건너뛴 면'끼리 마주 봐요. 머릿속으로 상자를 접기 어렵다면, 붙은 면(옆면)부터 하나씩 지워 나가면 남는 면이 정답이에요.",
+            en={
+                "statement": "This is the net of a cube (dice-shaped) box. When you fold it into the box, how many pips are on the face opposite the shaded face?",
+                "answer": f"{ans}",
+                "distractors": pool[:3],
+                "explanation": f"Folding the net up in your head, the face opposite the shaded face (which has {q} pips) has {ans} pips. "
+                               f"The faces that share an edge with the shaded face ({', '.join(str(a) for a in adj)}) become side faces when folded, so they are not opposite it.",
+                "mistakes": [(f"{adj[0]}", "A face directly attached in the net becomes a side face when folded — it is not the opposite face.")],
+                "detail": f"When you fold the net, a face sharing an edge with the shaded face bends 90° and becomes a 'side face'. So the opposite face is one of the faces not attached to it ({ans}). Tip: in a straight row of four faces, faces 'one apart' are opposite each other. If folding the box in your head is hard, cross off the attached (side) faces one by one, and the face left over is the answer.",
+            },
         )
     assert idx >= 3, f"유효 전개도 부족({idx})"
 
@@ -2013,6 +2089,14 @@ def gen_gcd_tiles():
             [(f"{min(a, b)}칸", "짧은 변으로는 긴 변이 딱 안 나눠질 수 있어요. 두 변을 모두 나눠야 해요.")],
             figure={"type": "GRID", "params": {"w": a, "h": b}},
             detail=f"'두 수를 모두 나누는 가장 큰 수'가 최대공약수(GCD)예요. 이 타일이면 가로 {a}÷{g}={a // g}개, 세로 {b}÷{g}={b // g}개, 모두 {a // g * (b // g)}개가 필요해요. 거꾸로 '두 길이를 겹쳐 만드는 가장 작은 정사각형'은 최소공배수랍니다.",
+            en={
+                "statement": f"You want to tile a rectangular floor {a} cells wide and {b} cells tall with identical square tiles, with no gaps or overlaps. How many cells is the side of the 'largest' square tile you can use?",
+                "answer": _en_plural(g, "cell"),
+                "distractors": [_en_plural(min(a, b), "cell"), _en_plural(g - 1, "cell"), _en_plural(g + 1, "cell")],
+                "explanation": f"The tile's side has to divide both the width and the height exactly, or there will be gaps. The largest such number is the greatest common divisor. The GCD of {a} and {b} is {g}, so the largest tile has a side of {g} cells.",
+                "mistakes": [(_en_plural(min(a, b), "cell"), "The shorter side may not divide the longer side exactly. It has to divide both sides.")],
+                "detail": f"The 'largest number that divides both numbers' is the greatest common divisor (GCD). With this tile you need {a}÷{g}={a // g} across, {b}÷{g}={b // g} down, {a // g * (b // g)} in all. Conversely, 'the smallest square you make by overlapping two lengths' is the least common multiple.",
+            },
         )
 
 
@@ -3399,6 +3483,14 @@ def gen_lcm_square():
             f"정사각형의 한 변은 가로 {w}로도, 세로 {h}로도 딱 나누어떨어져야 타일이 맞아요. 그런 수 중 '가장 작은' 것이 최소공배수예요. {w}와 {h}의 최소공배수는 {lcm}이니 한 변 {lcm}cm 정사각형(타일 {lcm // w}×{lcm // h}={lcm // w * (lcm // h)}장)이에요.",
             [(f"{w * h}cm", "가로×세로가 아니에요 — 두 변으로 모두 나누어떨어지는 가장 작은 수(최소공배수)예요.")],
             detail=f"'두 길이로 정사각형(둘 다의 배수)' = 최소공배수. '두 개수를 똑같이 나눠담기(둘 다의 약수)' = 최대공약수. 방향이 반대죠 — 배수로 커지느냐, 약수로 나누느냐. {w}×{h}÷최대공약수={lcm}로도 구할 수 있어요.",
+            en={
+                "statement": f"You want to join rectangular tiles {w}cm wide and {h}cm tall with no gaps to make a 'square'. How many cm is the side of the 'smallest' square you can make?",
+                "answer": f"{lcm}cm",
+                "distractors": [f"{w * h}cm", f"{w + h}cm", f"{gcd(w, h)}cm"],
+                "explanation": f"The square's side must be divisible by both the width {w} and the height {h} for the tiles to fit. The 'smallest' such number is the least common multiple. The LCM of {w} and {h} is {lcm}, so it is a square with side {lcm}cm ({lcm // w}×{lcm // h}={lcm // w * (lcm // h)} tiles).",
+                "mistakes": [(f"{w * h}cm", "It is not width×height — it is the smallest number divisible by both sides (the least common multiple).")],
+                "detail": f"'A square from two lengths (a multiple of both)' = least common multiple. 'Splitting two counts equally into bags (a divisor of both)' = greatest common divisor. The directions are opposite — growing by multiples, or splitting by divisors. You can also find it as {w}×{h}÷(GCD)={lcm}.",
+            },
         )
 
 
