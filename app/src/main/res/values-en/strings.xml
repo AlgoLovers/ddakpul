@@ -385,4 +385,12 @@
     <string name="area_change_relation">Patterns &amp; Relationships</string>
     <string name="area_shape_measurement">Shapes &amp; Measurement</string>
     <string name="area_data_possibility">Data &amp; Probability</string>
+    <string name="settings_video_demo_title">Video explanation preview (beta)</string>
+    <string name="settings_video_demo_desc">A sneak peek of what video explanations could look like, with one sample problem.</string>
+    <string name="settings_video_demo_open">Open preview</string>
+    <string name="video_demo_title">Video explanation (beta)</string>
+    <string name="video_demo_problem_label">Problem · Shapes &amp; Measurement · Level 6</string>
+    <string name="video_demo_statement">A tilted shape sits on a grid. What is the area of the shaded part in cm²? (Each grid cell is 1 cm².)</string>
+    <string name="video_demo_note">This screen is a quality-evaluation preview. In the full feature, problems with a ready video get a ‘Watch video solution’ button on the explanation screen.</string>
+    <string name="video_demo_back">Back</string>
 </resources>
