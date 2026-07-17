@@ -81,6 +81,6 @@ app/src/main/java/com/ddakpul/math/
 
 - **수직 슬라이스**(한 기능 관통) 단위로 진행, 단계마다 커밋.
 - Domain UseCase는 반드시 단위 테스트 동반 — 특히 추천 규칙 1~8은 규칙별 테스트 필수.
-- UI 변경은 `/emu-qa`로 스크린샷 자가 검증(실기기 버그를 에뮬에서 먼저 잡은 전례 다수).
+- UI 변경은 `/emu-qa`로 스크린샷 자가 검증 — **라이트/다크 둘 다**(테마 규칙: `docs/DESIGN.md`).
 - 새 학습 기능은 `pedagogy-researcher`로 근거 조사 후 설계(근거 대장: `docs/PEDAGOGY.md`).
 - 출시·수익화 실무는 `docs/LAUNCH.md`, 방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
