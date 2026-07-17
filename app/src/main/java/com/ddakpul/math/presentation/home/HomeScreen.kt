@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
+import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
@@ -116,7 +116,7 @@ private fun HomeContent(
             )
         }
 
-        Button(
+        GradientPrimaryButton(
             onClick = onStartLearning,
             modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth(),
         ) {
@@ -124,6 +124,7 @@ private fun HomeContent(
             Text(
                 text = stringResource(R.string.home_start),
                 style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 8.dp),
             )
         }
