@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "note": "방법코드(AA-BB-CC) → 해설 영상. 앱 내장은 asset, 원격(R2)은 url. 코드 파일명 규약.",
+ "videos": [
+  {
+   "method": "30-01-11",
+   "title": "기울어진 도형의 넓이 · 둘러싸기",
+   "asset": "videos/30-01-11.mp4",
+   "durationSec": 56
+  },
+  {
+   "method": "20-06-04",
+   "title": "바둑돌 게임 · 4의 배수 전략",
+   "asset": "videos/20-06-04.mp4",
+   "durationSec": 71
+  },
+  {
+   "method": "10-05-01",
+   "title": "1부터 10까지 더하기 · 짝지어 더하기",
+   "asset": "videos/10-05-01.mp4",
+   "durationSec": 55
+  },
+  {
+   "method": "40-03-02",
+   "title": "악수 세기 · 두 번 세고 반으로",
+   "asset": "videos/40-03-02.mp4",
+   "durationSec": 54
+  },
+  {
+   "method": "30-03-03",
+   "title": "정오각형 내각 · 삼각형으로 쪼개기",
+   "asset": "videos/30-03-03.mp4",
+   "durationSec": 62
+  },
+  {
+   "method": "20-04-02",
+   "title": "우물 속 개구리 · 마지막 날은 안 미끄러진다",
+   "asset": "videos/20-04-02.mp4",
+   "durationSec": 64
+  }
+ ]
+}

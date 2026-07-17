@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.GradingResult
+import com.ddakpul.math.domain.model.SolutionVideo
 
 /** 이만큼 연속 정답이면 "연속 정답" 칭찬 풀에서 뽑는다. */
 private const val STREAK_PRAISE_THRESHOLD = 3
@@ -49,11 +51,13 @@ fun ResultView(
     sessionStreak: Int,
     softCutSuggested: Boolean,
     isPremium: Boolean,
+    solutionVideo: SolutionVideo?,
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
     onExcludeRequest: () -> Unit,
     onReportAnswer: () -> Unit,
     onUpgrade: () -> Unit,
+    onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -107,6 +111,11 @@ fun ResultView(
                 label = stringResource(R.string.result_mistake_label),
                 body = mistake.misconception,
             )
+        }
+
+        // 동영상 풀이 — 이 방법에 준비된 해설 영상이 있을 때만. 문자 해설보다 먼저 권한다(직관적).
+        if (solutionVideo != null) {
+            WatchVideoButton(onClick = { onWatchVideo(solutionVideo) })
         }
 
         // 1차 풀이 — 오답이면 바로 펼쳐 교정 학습을 돕고, 정답이면 '풀이 보기'로 원할 때 펼친다.
@@ -163,6 +172,22 @@ fun ResultView(
                 color = colors.onSurfaceVariant,
             )
         }
+    }
+}
+
+/** '동영상 풀이 보기' 버튼 — 해당 방법에 영상이 준비된 문제에서만 보인다. */
+@Composable
+private fun WatchVideoButton(onClick: () -> Unit) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Icon(
+            imageVector = Icons.Filled.PlayCircle,
+            contentDescription = null,
+            modifier = Modifier.padding(end = 8.dp),
+        )
+        Text(stringResource(R.string.result_watch_video))
     }
 }
 

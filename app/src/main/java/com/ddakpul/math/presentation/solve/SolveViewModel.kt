@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.domain.model.Attempt
+import com.ddakpul.math.domain.repository.SolutionVideoRepository
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
@@ -30,6 +31,7 @@ class SolveViewModel
         private val getNextProblem: GetNextProblemUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
         private val excludeProblem: ExcludeProblemUseCase,
+        private val solutionVideoRepository: SolutionVideoRepository,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
         observeEntitlement: ObserveEntitlementUseCase,
@@ -81,6 +83,7 @@ class SolveViewModel
                     is AppResult.Success -> {
                         val recommendation = result.data
                         questionStartMillis = System.currentTimeMillis()
+                        val video = solutionVideoRepository.videoForMethod(recommendation.problem.methodCode)
                         _uiState.update { current ->
                             current.copy(
                                 phase = SolvePhase.SOLVING,
@@ -93,6 +96,7 @@ class SolveViewModel
                                 showExplanation = recommendation.showExplanation,
                                 reason = recommendation.reason,
                                 premiumSuggested = recommendation.premiumSuggested,
+                                solutionVideo = video,
                             )
                         }
                     }

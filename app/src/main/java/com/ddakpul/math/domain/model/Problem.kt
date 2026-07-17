@@ -32,4 +32,17 @@ data class Problem(
     val figure: ProblemFigure? = null,
     /** 2차(심화) 풀이 — 더 깊은 개념·다른 풀이법. 이용권 전용. 없는 문제도 있어 nullable. */
     val detailedExplanation: String? = null,
-)
+    /**
+     * 계층 관리 코드 AA-BB-CC-DD-SS (영역·유형·방법·난이도·일련). 없으면 null(구 데이터).
+     * 앞 8자(AA-BB-CC = [methodCode])가 '풀이 방법' 단위 — 동영상 해설이 이 단위로 붙는다.
+     */
+    val code: String? = null,
+) {
+    /** 동영상 해설이 붙는 '방법' 단위 코드(AA-BB-CC). 코드가 없으면 null. */
+    val methodCode: String? get() = code?.takeIf { it.length >= METHOD_CODE_LEN }?.substring(0, METHOD_CODE_LEN)
+
+    companion object {
+        /** "AA-BB-CC" = 8자. */
+        const val METHOD_CODE_LEN = 8
+    }
+}

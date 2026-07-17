@@ -6,6 +6,7 @@ import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.domain.model.SolutionVideo
 
 /** 문제 풀이 화면의 진행 단계. */
 enum class SolvePhase { LOADING, SOLVING, GRADED, EMPTY }
@@ -31,6 +32,8 @@ data class SolveUiState(
     val sessionStreak: Int = 0,
     /** 오늘 풀이에 쓴 총 시간(초). */
     val todayTimeSpentSec: Int = 0,
+    /** 현재 문제의 방법에 준비된 해설 영상(있을 때만 '동영상 풀이 보기' 노출). */
+    val solutionVideo: SolutionVideo? = null,
 ) {
     val canSubmit: Boolean get() = phase == SolvePhase.SOLVING && selectedIndex != null
 

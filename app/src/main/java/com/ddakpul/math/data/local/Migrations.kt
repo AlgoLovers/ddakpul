@@ -91,3 +91,12 @@ val MIGRATION_7_8 =
             db.execSQL("DELETE FROM problem")
         }
     }
+
+val MIGRATION_8_9 =
+    object : Migration(8, 9) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE problem ADD COLUMN code TEXT")
+            // 계층 코드는 시드에만 있으므로 비워서 최신 콘텐츠(code 포함)로 강제 재시딩.
+            db.execSQL("DELETE FROM problem")
+        }
+    }

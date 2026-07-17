@@ -48,13 +48,13 @@ private data class DemoVideo(
 private val DEMO_VIDEOS =
     listOf(
         DemoVideo(
-            uri = "asset:///videos/demo_gridtilt.mp4",
+            uri = "asset:///videos/30-01-11.mp4",
             pickLabelRes = R.string.video_demo_pick1,
             problemLabelRes = R.string.video_demo_problem_label,
             statementRes = R.string.video_demo_statement,
         ),
         DemoVideo(
-            uri = "asset:///videos/demo_nim.mp4",
+            uri = "asset:///videos/20-06-04.mp4",
             pickLabelRes = R.string.video_demo_pick2,
             problemLabelRes = R.string.video_demo_problem_label2,
             statementRes = R.string.video_demo_statement2,

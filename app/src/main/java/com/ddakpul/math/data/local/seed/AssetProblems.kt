@@ -22,6 +22,7 @@ data class AssetMistakeDto(
 @Serializable
 data class AssetProblemDto(
     val id: String,
+    val code: String? = null,
     val area: String,
     val difficulty: Int,
     val groupId: String,
@@ -60,5 +61,6 @@ fun parseAssetProblems(text: String): List<Problem> =
             commonMistakes = dto.mistakes.map { Mistake(it.choiceIndex, it.misconception) },
             figure = dto.figure?.toDomain(),
             detailedExplanation = dto.detailedExplanation,
+            code = dto.code,
         )
     }

@@ -52,6 +52,7 @@ fun ProblemEntity.toDomain(): Problem =
                 .map { Mistake(it.choiceIndex, it.misconception) },
         figure = figureJson?.let { json.decodeFromString(FigureDto.serializer(), it).toDomain() },
         detailedExplanation = detailedExplanation,
+        code = code,
     )
 
 fun Problem.toEntity(): ProblemEntity =
@@ -72,4 +73,5 @@ fun Problem.toEntity(): ProblemEntity =
             ),
         figureJson = figure?.let { json.encodeToString(FigureDto.serializer(), it.toDto()) },
         detailedExplanation = detailedExplanation,
+        code = code,
     )
