@@ -2,60 +2,54 @@ package com.ddakpul.math.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
-// 딱풀 팔레트 — 아이가 쓰는 학습 앱답게 밝고 친근한 톤.
-// - Primary: 경쾌한 바이올렛-블루(집중을 돕는 시원한 색)
-// - Secondary: 민트/틸(정답·긍정 피드백)
-// - Tertiary: 따뜻한 앰버(포인트·별/보상 느낌)
-// 숫자 접미사는 Material3 톤(0=검정 ~ 100=흰색)을 대략 따른다.
+// 딱풀 밝은 팔레트(2026-07 리디자인) — 토스·카카오식 "밝고 깨끗".
+// 원리: 부드러운 연회색 캔버스 + 흰 카드(눈부시지 않게 뜬다) + 밝은 포인트색 하나 + 차콜 텍스트.
+// 채색 큰 블록·무거운 그림자·탁한 색을 피해 '칙칙함'을 없앤다. 색은 CTA·핵심 강조에만 아껴 쓴다.
 
-// Primary — Violet-Blue
-val Violet10 = Color(0xFF14134A)
-val Violet20 = Color(0xFF23226E)
-val Violet30 = Color(0xFF343399)
-val Violet40 = Color(0xFF4A49C4)
-val Violet80 = Color(0xFFC1C0FF)
-val Violet90 = Color(0xFFE3E1FF)
+// ── 포인트색(Primary) — 밝은 인디고-바이올렛 ──
+val Accent = Color(0xFF5B5EF0)
+val AccentSoft = Color(0xFFECEDFF) // primaryContainer(연한 강조 배경)
+val AccentDark = Color(0xFF2C2F9E) // onPrimaryContainer(연배경 위 글자)
+val AccentLight = Color(0xFFAFB0FF) // 다크 테마 primary
 
-// Secondary — Mint / Teal
-val Mint10 = Color(0xFF00201A)
-val Mint20 = Color(0xFF00382E)
-val Mint30 = Color(0xFF005141)
-val Mint40 = Color(0xFF1C7A63)
-val Mint80 = Color(0xFF7EF3D3)
-val Mint90 = Color(0xFF9FFCE0)
+// ── 정답/성공(Secondary) — 민트 ──
+val Mint = Color(0xFF12B26E)
+val MintSoft = Color(0xFFDBF6EA)
+val MintDark = Color(0xFF05663F)
+val MintLight = Color(0xFF6FE0B0)
 
-// Tertiary — Amber
-val Amber10 = Color(0xFF2B1700)
-val Amber20 = Color(0xFF472A00)
-val Amber30 = Color(0xFF684200)
-val Amber40 = Color(0xFF8A5A00)
-val Amber80 = Color(0xFFFFB955)
-val Amber90 = Color(0xFFFFDDB3)
+// ── 안내·프로모(Tertiary) — 앰버 ──
+val Amber = Color(0xFFC77D0E)
+val AmberSoft = Color(0xFFFFF2DC)
+val AmberDark = Color(0xFF5E3B00)
+val AmberLight = Color(0xFFFFC46A)
 
-// Error — Red
-val Red10 = Color(0xFF410002)
-val Red20 = Color(0xFF690005)
-val Red30 = Color(0xFF93000A)
-val Red40 = Color(0xFFBA1A1A)
-val Red80 = Color(0xFFFFB4AB)
-val Red90 = Color(0xFFFFDAD6)
+// ── 오답·오류(Error) — 코랄 ──
+val Coral = Color(0xFFE84C46)
+val CoralSoft = Color(0xFFFDEBEA)
+val CoralDark = Color(0xFF7A1712)
+val CoralLight = Color(0xFFFFB4AD)
 
-// Neutral — 배경/표면/본문
-val Neutral06 = Color(0xFF121318)
-val Neutral10 = Color(0xFF1B1B21)
-val Neutral90 = Color(0xFFE4E1E9)
-val Neutral99 = Color(0xFFFDFBFF)
+// ── 무채색: 라이트(연회색 캔버스 + 흰 카드) ──
+val CanvasLight = Color(0xFFF6F7F9) // 배경(부드러운 연회색 — 순백보다 덜 눈부심)
+val CardLight = Color(0xFFFFFFFF) // surfaceContainer(카드가 흰색으로 뜬다)
+val CardHighLight = Color(0xFFEFF1F4) // surfaceContainerHigh
+val BorderLight = Color(0xFFE5E8EB) // outlineVariant(옅은 테두리)
+val OutlineLight = Color(0xFFB4BAC4) // outline
+val InkLight = Color(0xFF191F28) // onSurface(차콜 — 순수 검정보다 부드럽다)
+val BodyLight = Color(0xFF5B6675) // onSurfaceVariant(본문·캡션)
 
-val NeutralVariant30 = Color(0xFF45464F)
-val NeutralVariant50 = Color(0xFF767680)
-val NeutralVariant80 = Color(0xFFC6C5D0)
-val NeutralVariant90 = Color(0xFFE3E1EC)
+// ── 무채색: 다크 ──
+val CanvasDark = Color(0xFF121318)
+val CardDark = Color(0xFF20222A)
+val CardHighDark = Color(0xFF2A2C35)
+val BorderDark = Color(0xFF34363F)
+val OutlineDark = Color(0xFF6B7280)
+val InkDark = Color(0xFFE6E8EC)
+val BodyDark = Color(0xFFAAB2BD)
 
-// 라이트 캔버스 — 순백 대신 은은한 라벤더 틴트(눈부심 완화). 카드가 이 위에 밝게 뜬다.
-val CanvasLight = Color(0xFFEDEBF7)
-
-// 표면 컨테이너 단계 — 틴트 캔버스 위에 '떠 있는' 밝은 카드(입체 레이어링).
-val SurfaceContainerLight = Color(0xFFFCFBFF)
-val SurfaceContainerHighLight = Color(0xFFF4F2FC)
-val SurfaceContainerDark = Color(0xFF25252C)
-val SurfaceContainerHighDark = Color(0xFF303038)
+// ── 4개 영역 색코딩(리포트·숙달 지도) — 알록달록하되 절제 ──
+val AreaNumber = Color(0xFF4C8DF6) // 수와 연산 = 파랑
+val AreaChange = Color(0xFF12B26E) // 변화와 관계 = 민트
+val AreaShape = Color(0xFFE84C46) // 도형과 측정 = 코랄
+val AreaData = Color(0xFFC77D0E) // 자료와 가능성 = 앰버
