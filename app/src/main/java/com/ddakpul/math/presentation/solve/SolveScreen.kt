@@ -22,13 +22,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -107,6 +110,13 @@ private fun SolveContent(
     var showExcludeDialog by remember { mutableStateOf(false) }
     // 연습장은 본문 폭 제한과 무관하게 콘텐츠 영역 전체를 덮어야 해, 상태를 여기(fillMaxSize Box)로 올려 오버레이로 띄운다.
     var showScratchpad by remember { mutableStateOf(false) }
+
+    // 채점 순간 미세 촉각 피드백 — 답이 처리됐다는 확인일 뿐, 정오답에 따른 보상이 아니다
+    // (과정 칭찬·물질 보상 금지 원칙, docs/PEDAGOGY.md). 정답/오답 같은 신호를 준다.
+    val haptics = LocalHapticFeedback.current
+    LaunchedEffect(uiState.result) {
+        if (uiState.result != null) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+    }
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when (uiState.phase) {
