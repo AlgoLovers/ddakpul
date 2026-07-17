@@ -63,6 +63,8 @@ internal fun buildLearningStats(
     zoneOffsetMillis: Long,
     nowMillis: Long,
 ): LearningStats {
+    @Suppress("NAME_SHADOWING")
+    val attempts = normalizeAttempts(attempts, problemsById)
     val today = epochDay(nowMillis, zoneOffsetMillis)
 
     val areaStats =
@@ -167,6 +169,25 @@ internal fun buildLearningStats(
         recentMistakes = recentMistakes,
     )
 }
+
+/**
+ * 일관성 불변식: 모든 통계는 '현재 문제은행에 있는 문제'의 시도만 센다 —
+ * 은행에서 제거된 문제(blocklist 등)의 옛 시도가 전체 합계에만 남으면 표끼리 합이 안 맞는다.
+ * 시간은 기록 상한으로 clamp — 상한 도입 전 기록된 이상치(밤새 열어둔 문제) 방어.
+ */
+private fun normalizeAttempts(
+    attempts: List<Attempt>,
+    problemsById: Map<String, Problem>,
+): List<Attempt> =
+    attempts
+        .filter { it.problemId in problemsById }
+        .map { attempt ->
+            if (attempt.timeSpentSec > Attempt.MAX_TIME_SPENT_SEC) {
+                attempt.copy(timeSpentSec = Attempt.MAX_TIME_SPENT_SEC)
+            } else {
+                attempt
+            }
+        }
 
 /** 한 번이라도 틀린 문제 중, 첫 오답 이후 다시 풀어 맞힌 문제의 비율. [attempts]는 시간 오름차순. */
 private fun computeErrorRecoveryRate(attempts: List<Attempt>): Float? {

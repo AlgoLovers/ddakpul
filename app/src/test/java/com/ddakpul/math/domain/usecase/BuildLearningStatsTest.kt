@@ -287,4 +287,41 @@ class BuildLearningStatsTest {
         const val HOUR = 3_600_000L
         const val DAY = 86_400_000L
     }
+
+    @Test
+    fun unknownProblemAttempts_excludedFromAllStatsConsistently() {
+        // 문제은행에서 제거된 문제(ghost)의 옛 시도는 전체·오늘·일별·영역 어디에도 안 센다 —
+        // 합계와 부분 표가 항상 일치해야 한다(blocklist 제거 시나리오).
+        val stats =
+            build(
+                listOf(
+                    attempt("ghost", true, timestamp = DAY * 100),
+                    attempt("num1", true, timestamp = DAY * 100),
+                ),
+            )
+
+        assertThat(stats.totalSolved).isEqualTo(1)
+        assertThat(stats.correctCount).isEqualTo(1)
+        assertThat(stats.todaySolved).isEqualTo(1)
+        assertThat(stats.areaStats.sumOf { it.solved }).isEqualTo(stats.totalSolved)
+        assertThat(stats.dailyStats.sumOf { it.solved }).isEqualTo(stats.totalSolved)
+    }
+
+    @Test
+    fun timeSpent_clampedToMaxForLegacyOutliers() {
+        // 상한 도입 전 기록된 '밤새 열어둔' 시도(예: 8시간)는 집계 시점에 30분으로 clamp —
+        // 난이도별 평균 시간·오늘 학습 시간이 한 번의 사고로 왜곡되지 않는다.
+        val overnight = 8 * 3600
+        val stats =
+            build(
+                listOf(
+                    attempt("num1", true, timestamp = DAY * 100, timeSpentSec = overnight),
+                    attempt("num1", true, timestamp = DAY * 100, timeSpentSec = 60),
+                ),
+            )
+
+        val max = com.ddakpul.math.domain.model.Attempt.MAX_TIME_SPENT_SEC
+        assertThat(stats.avgTimeSecByDifficulty[2]).isEqualTo((max + 60) / 2)
+        assertThat(stats.todayTimeSpentSec).isEqualTo(max + 60)
+    }
 }
