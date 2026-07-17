@@ -19,6 +19,7 @@ serialization = "1.7.3"
 coroutinesTest = "1.9.0"
 turbine = "1.2.0"
 truth = "1.4.4"
+composeLints = "1.4.2"
 media3 = "1.4.1"
 
 [libraries]
@@ -53,6 +54,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+compose-lints = { group = "com.slack.lint.compose", name = "compose-lint-checks", version.ref = "composeLints" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

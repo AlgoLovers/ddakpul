@@ -85,6 +85,8 @@ private val dayFormatter = DateTimeFormatter.ofPattern("M/d")
 /** 리포트 PDF 상단의 '기준일' 표기. */
 private val exportDateFormatter = DateTimeFormatter.ofPattern("yyyy. M. d.")
 
+// modifier가 두 번 쓰이지만 빈 상태 Column과 ReportContent는 상호배타 분기(early return)라 한 번만 적용된다.
+@Suppress("ComposeModifierReused")
 @Composable
 fun ReportScreen(
     onPrintClick: () -> Unit,
