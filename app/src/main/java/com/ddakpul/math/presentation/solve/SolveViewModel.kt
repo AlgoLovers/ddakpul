@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.solve
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
+import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
@@ -130,10 +131,12 @@ class SolveViewModel
             if (current.phase != SolvePhase.SOLVING) return
 
             viewModelScope.launch {
+                // 상한 필수: 문제를 열어둔 채 기기가 잠들면(저녁·밤새) 경과 시간이 통째로 기록돼
+                // 평균 통계를 영구히 왜곡한다. 사고력 문제 기준 30분이면 충분히 관대한 상한.
                 val elapsedSec =
                     ((System.currentTimeMillis() - questionStartMillis) / MILLIS_PER_SECOND)
                         .toInt()
-                        .coerceAtLeast(0)
+                        .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
                 val gradingResult =
                     submitAnswer(
                         problem = problem,
