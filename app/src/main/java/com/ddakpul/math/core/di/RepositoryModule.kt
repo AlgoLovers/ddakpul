@@ -5,11 +5,13 @@ import com.ddakpul.math.data.repository.LearnerRepositoryImpl
 import com.ddakpul.math.data.repository.OnboardingRepositoryImpl
 import com.ddakpul.math.data.repository.ProblemFeedbackRepositoryImpl
 import com.ddakpul.math.data.repository.ProblemRepositoryImpl
+import com.ddakpul.math.data.repository.SolutionVideoRepositoryImpl
 import com.ddakpul.math.domain.repository.EntitlementRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.OnboardingRepository
 import com.ddakpul.math.domain.repository.ProblemFeedbackRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
+import com.ddakpul.math.domain.repository.SolutionVideoRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -32,4 +34,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindProblemFeedbackRepository(impl: ProblemFeedbackRepositoryImpl): ProblemFeedbackRepository
+
+    @Binds
+    abstract fun bindSolutionVideoRepository(impl: SolutionVideoRepositoryImpl): SolutionVideoRepository
 }

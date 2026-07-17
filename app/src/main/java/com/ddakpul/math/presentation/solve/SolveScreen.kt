@@ -40,6 +40,7 @@ import com.ddakpul.math.core.designsystem.component.ChoiceOption
 import com.ddakpul.math.core.designsystem.component.ChoiceState
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
 import com.ddakpul.math.domain.model.GradingResult
+import com.ddakpul.math.domain.model.SolutionVideo
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.result.ResultView
@@ -48,6 +49,7 @@ import com.ddakpul.math.presentation.result.ResultView
 fun SolveScreen(
     onGoHome: () -> Unit,
     onUpgrade: () -> Unit,
+    onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SolveViewModel = hiltViewModel(),
 ) {
@@ -62,6 +64,7 @@ fun SolveScreen(
         onGoHome = onGoHome,
         onUpgrade = onUpgrade,
         onReportAnswer = { result -> shareAnswerReport(context, result) },
+        onWatchVideo = onWatchVideo,
         modifier = modifier,
     )
 }
@@ -98,6 +101,7 @@ private fun SolveContent(
     onGoHome: () -> Unit,
     onUpgrade: () -> Unit,
     onReportAnswer: (GradingResult) -> Unit,
+    onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showExcludeDialog by remember { mutableStateOf(false) }
@@ -137,11 +141,13 @@ private fun SolveContent(
                         sessionStreak = uiState.sessionStreak,
                         softCutSuggested = uiState.softCutSuggested,
                         isPremium = uiState.isPremium,
+                        solutionVideo = uiState.solutionVideo,
                         onNext = onNext,
                         onFinishToday = onGoHome,
                         onExcludeRequest = { showExcludeDialog = true },
                         onReportAnswer = { onReportAnswer(result) },
                         onUpgrade = onUpgrade,
+                        onWatchVideo = onWatchVideo,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }

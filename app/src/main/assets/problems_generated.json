@@ -3,6 +3,7 @@
  "problems": [
   {
    "id": "gen-crt3-1",
+   "code": "10-04-01-09-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-crt3-9",
@@ -34,6 +35,7 @@
   },
   {
    "id": "gen-crt3-2",
+   "code": "10-04-01-09-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-crt3-9",
@@ -65,6 +67,7 @@
   },
   {
    "id": "gen-crt3-3",
+   "code": "10-04-01-09-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-crt3-9",
@@ -96,6 +99,7 @@
   },
   {
    "id": "gen-crt3-4",
+   "code": "10-04-01-09-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-crt3-9",
@@ -127,6 +131,7 @@
   },
   {
    "id": "gen-fibsum-1",
+   "code": "20-01-04-09-01",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-fibsum-9",
@@ -158,6 +163,7 @@
   },
   {
    "id": "gen-fibsum-2",
+   "code": "20-01-04-09-02",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-fibsum-9",
@@ -189,6 +195,7 @@
   },
   {
    "id": "gen-fibsum-3",
+   "code": "20-01-04-09-03",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-fibsum-9",
@@ -220,6 +227,7 @@
   },
   {
    "id": "gen-fibsum-4",
+   "code": "20-01-04-09-04",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-fibsum-9",
@@ -251,6 +259,7 @@
   },
   {
    "id": "gen-diagcross-1",
+   "code": "30-06-01-09-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-diagcross-9",
@@ -289,6 +298,7 @@
   },
   {
    "id": "gen-diagcross-2",
+   "code": "30-06-01-09-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-diagcross-9",
@@ -323,6 +333,7 @@
   },
   {
    "id": "gen-diagcross-3",
+   "code": "30-06-01-09-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-diagcross-9",
@@ -361,6 +372,7 @@
   },
   {
    "id": "gen-diagcross-4",
+   "code": "30-06-01-09-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-diagcross-9",
@@ -395,6 +407,7 @@
   },
   {
    "id": "gen-partition-1",
+   "code": "40-02-09-09-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-partition-9",
@@ -426,6 +439,7 @@
   },
   {
    "id": "gen-partition-2",
+   "code": "40-02-09-09-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-partition-9",
@@ -457,6 +471,7 @@
   },
   {
    "id": "gen-partition-3",
+   "code": "40-02-09-09-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-partition-9",
@@ -488,6 +503,7 @@
   },
   {
    "id": "gen-partition-4",
+   "code": "40-02-09-09-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-partition-9",
@@ -519,6 +535,7 @@
   },
   {
    "id": "gen-league-1",
+   "code": "40-03-03-03-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-league-3",
@@ -546,6 +563,7 @@
   },
   {
    "id": "gen-league-2",
+   "code": "40-03-03-03-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-league-3",
@@ -573,6 +591,7 @@
   },
   {
    "id": "gen-league-3",
+   "code": "40-03-03-03-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-league-3",
@@ -600,6 +619,7 @@
   },
   {
    "id": "gen-league-4",
+   "code": "40-03-03-03-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-league-3",
@@ -627,6 +647,7 @@
   },
   {
    "id": "gen-twodigit-1",
+   "code": "40-01-10-03-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-twodigit-3",
@@ -654,6 +675,7 @@
   },
   {
    "id": "gen-twodigit-2",
+   "code": "40-01-10-03-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-twodigit-3",
@@ -681,6 +703,7 @@
   },
   {
    "id": "gen-twodigit-3",
+   "code": "40-01-10-03-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-twodigit-3",
@@ -708,6 +731,7 @@
   },
   {
    "id": "gen-twodigit-4",
+   "code": "40-01-10-03-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-twodigit-3",
@@ -735,6 +759,7 @@
   },
   {
    "id": "gen-tablediff-1",
+   "code": "40-04-09-03-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-tablediff-3",
@@ -766,6 +791,7 @@
   },
   {
    "id": "gen-tablediff-2",
+   "code": "40-04-09-03-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-tablediff-3",
@@ -797,6 +823,7 @@
   },
   {
    "id": "gen-tablediff-3",
+   "code": "40-04-09-03-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-tablediff-3",
@@ -828,6 +855,7 @@
   },
   {
    "id": "gen-tablediff-4",
+   "code": "40-04-09-03-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-tablediff-3",
@@ -859,6 +887,7 @@
   },
   {
    "id": "gen-unitprice-1",
+   "code": "20-03-11-02-01",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-unitprice-2",
@@ -886,6 +915,7 @@
   },
   {
    "id": "gen-unitprice-2",
+   "code": "20-03-11-02-02",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-unitprice-2",
@@ -913,6 +943,7 @@
   },
   {
    "id": "gen-unitprice-3",
+   "code": "20-03-11-02-03",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-unitprice-2",
@@ -940,6 +971,7 @@
   },
   {
    "id": "gen-unitprice-4",
+   "code": "20-03-11-02-04",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-unitprice-2",
@@ -967,6 +999,7 @@
   },
   {
    "id": "gen-rectperim-1",
+   "code": "30-02-03-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectperim-4",
@@ -998,6 +1031,7 @@
   },
   {
    "id": "gen-rectperim-2",
+   "code": "30-02-03-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectperim-4",
@@ -1029,6 +1063,7 @@
   },
   {
    "id": "gen-rectperim-3",
+   "code": "30-02-03-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectperim-4",
@@ -1060,6 +1095,7 @@
   },
   {
    "id": "gen-rectperim-4",
+   "code": "30-02-03-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectperim-4",
@@ -1091,6 +1127,7 @@
   },
   {
    "id": "gen-interiorangle-1",
+   "code": "30-03-03-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-interiorangle-4",
@@ -1119,6 +1156,7 @@
   },
   {
    "id": "gen-interiorangle-2",
+   "code": "30-03-03-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-interiorangle-4",
@@ -1147,6 +1185,7 @@
   },
   {
    "id": "gen-interiorangle-3",
+   "code": "30-03-03-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-interiorangle-4",
@@ -1175,6 +1214,7 @@
   },
   {
    "id": "gen-interiorangle-4",
+   "code": "30-03-03-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-interiorangle-4",
@@ -1203,6 +1243,7 @@
   },
   {
    "id": "gen-prismparts-1",
+   "code": "30-04-07-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-prismparts-4",
@@ -1234,6 +1275,7 @@
   },
   {
    "id": "gen-prismparts-2",
+   "code": "30-04-07-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-prismparts-4",
@@ -1265,6 +1307,7 @@
   },
   {
    "id": "gen-prismparts-3",
+   "code": "30-04-07-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-prismparts-4",
@@ -1296,6 +1339,7 @@
   },
   {
    "id": "gen-prismparts-4",
+   "code": "30-04-07-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-prismparts-4",
@@ -1327,6 +1371,7 @@
   },
   {
    "id": "gen-triangleangle-1",
+   "code": "30-02-05-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-triangleangle-4",
@@ -1354,6 +1399,7 @@
   },
   {
    "id": "gen-triangleangle-2",
+   "code": "30-02-05-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-triangleangle-4",
@@ -1381,6 +1427,7 @@
   },
   {
    "id": "gen-triangleangle-3",
+   "code": "30-02-05-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-triangleangle-4",
@@ -1408,6 +1455,7 @@
   },
   {
    "id": "gen-triangleangle-4",
+   "code": "30-02-05-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-triangleangle-4",
@@ -1435,6 +1483,7 @@
   },
   {
    "id": "gen-avgbasic-1",
+   "code": "40-04-01-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgbasic-4",
@@ -1466,6 +1515,7 @@
   },
   {
    "id": "gen-avgbasic-2",
+   "code": "40-04-01-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgbasic-4",
@@ -1497,6 +1547,7 @@
   },
   {
    "id": "gen-avgbasic-3",
+   "code": "40-04-01-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgbasic-4",
@@ -1528,6 +1579,7 @@
   },
   {
    "id": "gen-avgbasic-4",
+   "code": "40-04-01-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgbasic-4",
@@ -1559,6 +1611,7 @@
   },
   {
    "id": "gen-lineup-1",
+   "code": "40-02-06-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-lineup-4",
@@ -1586,6 +1639,7 @@
   },
   {
    "id": "gen-lineup-2",
+   "code": "40-02-06-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-lineup-4",
@@ -1613,6 +1667,7 @@
   },
   {
    "id": "gen-lineup-3",
+   "code": "40-02-06-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-lineup-4",
@@ -1640,6 +1695,7 @@
   },
   {
    "id": "gen-lineup-4",
+   "code": "40-02-06-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-lineup-4",
@@ -1667,6 +1723,7 @@
   },
   {
    "id": "gen-mode-1",
+   "code": "40-04-08-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-mode-4",
@@ -1694,6 +1751,7 @@
   },
   {
    "id": "gen-mode-2",
+   "code": "40-04-08-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-mode-4",
@@ -1721,6 +1779,7 @@
   },
   {
    "id": "gen-mode-3",
+   "code": "40-04-08-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-mode-4",
@@ -1743,6 +1802,7 @@
   },
   {
    "id": "gen-mode-4",
+   "code": "40-04-08-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-mode-4",
@@ -1770,6 +1830,7 @@
   },
   {
    "id": "gen-simpleprob-1",
+   "code": "40-05-02-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-simpleprob-4",
@@ -1797,6 +1858,7 @@
   },
   {
    "id": "gen-simpleprob-2",
+   "code": "40-05-02-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-simpleprob-4",
@@ -1824,6 +1886,7 @@
   },
   {
    "id": "gen-simpleprob-3",
+   "code": "40-05-02-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-simpleprob-4",
@@ -1851,6 +1914,7 @@
   },
   {
    "id": "gen-simpleprob-4",
+   "code": "40-05-02-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-simpleprob-4",
@@ -1878,6 +1942,7 @@
   },
   {
    "id": "gen-geosum-1",
+   "code": "20-02-06-08-01",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-geosum-8",
@@ -1909,6 +1974,7 @@
   },
   {
    "id": "gen-geosum-2",
+   "code": "20-02-06-08-02",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-geosum-8",
@@ -1940,6 +2006,7 @@
   },
   {
    "id": "gen-geosum-3",
+   "code": "20-02-06-08-03",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-geosum-8",
@@ -1971,6 +2038,7 @@
   },
   {
    "id": "gen-geosum-4",
+   "code": "20-02-06-08-04",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-geosum-8",
@@ -2002,6 +2070,7 @@
   },
   {
    "id": "gen-dist3d-1",
+   "code": "30-04-04-08-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-dist3d-8",
@@ -2029,6 +2098,7 @@
   },
   {
    "id": "gen-dist3d-2",
+   "code": "30-04-04-08-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-dist3d-8",
@@ -2056,6 +2126,7 @@
   },
   {
    "id": "gen-dist3d-3",
+   "code": "30-04-04-08-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-dist3d-8",
@@ -2083,6 +2154,7 @@
   },
   {
    "id": "gen-dist3d-4",
+   "code": "30-04-04-08-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-dist3d-8",
@@ -2110,6 +2182,7 @@
   },
   {
    "id": "gen-necklace-1",
+   "code": "40-02-08-08-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-necklace-8",
@@ -2137,6 +2210,7 @@
   },
   {
    "id": "gen-necklace-2",
+   "code": "40-02-08-08-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-necklace-8",
@@ -2164,6 +2238,7 @@
   },
   {
    "id": "gen-necklace-3",
+   "code": "40-02-08-08-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-necklace-8",
@@ -2191,6 +2266,7 @@
   },
   {
    "id": "gen-necklace-4",
+   "code": "40-02-08-08-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-necklace-8",
@@ -2218,6 +2294,7 @@
   },
   {
    "id": "gen-boxsurface-1",
+   "code": "30-01-02-06-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-boxsurface-6",
@@ -2249,6 +2326,7 @@
   },
   {
    "id": "gen-boxsurface-2",
+   "code": "30-01-02-06-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-boxsurface-6",
@@ -2280,6 +2358,7 @@
   },
   {
    "id": "gen-boxsurface-3",
+   "code": "30-01-02-06-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-boxsurface-6",
@@ -2311,6 +2390,7 @@
   },
   {
    "id": "gen-boxsurface-4",
+   "code": "30-01-02-06-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-boxsurface-6",
@@ -2342,6 +2422,7 @@
   },
   {
    "id": "gen-passcode-1",
+   "code": "40-01-09-06-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-passcode-6",
@@ -2369,6 +2450,7 @@
   },
   {
    "id": "gen-passcode-2",
+   "code": "40-01-09-06-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-passcode-6",
@@ -2396,6 +2478,7 @@
   },
   {
    "id": "gen-passcode-3",
+   "code": "40-01-09-06-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-passcode-6",
@@ -2423,6 +2506,7 @@
   },
   {
    "id": "gen-passcode-4",
+   "code": "40-01-09-06-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-passcode-6",
@@ -2450,6 +2534,7 @@
   },
   {
    "id": "gen-symaxis-1",
+   "code": "30-07-03-03-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-symaxis-3",
@@ -2487,6 +2572,7 @@
   },
   {
    "id": "gen-symaxis-2",
+   "code": "30-07-03-03-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-symaxis-3",
@@ -2520,6 +2606,7 @@
   },
   {
    "id": "gen-symaxis-3",
+   "code": "30-07-03-03-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-symaxis-3",
@@ -2553,6 +2640,7 @@
   },
   {
    "id": "gen-symaxis-4",
+   "code": "30-07-03-03-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-symaxis-3",
@@ -2586,6 +2674,7 @@
   },
   {
    "id": "gen-rectdiag-1",
+   "code": "30-06-06-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectdiag-4",
@@ -2613,6 +2702,7 @@
   },
   {
    "id": "gen-rectdiag-2",
+   "code": "30-06-06-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectdiag-4",
@@ -2640,6 +2730,7 @@
   },
   {
    "id": "gen-rectdiag-3",
+   "code": "30-06-06-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectdiag-4",
@@ -2667,6 +2758,7 @@
   },
   {
    "id": "gen-rectdiag-4",
+   "code": "30-06-06-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectdiag-4",
@@ -2694,6 +2786,7 @@
   },
   {
    "id": "gen-electpair-1",
+   "code": "40-01-06-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-electpair-4",
@@ -2725,6 +2818,7 @@
   },
   {
    "id": "gen-electpair-2",
+   "code": "40-01-06-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-electpair-4",
@@ -2756,6 +2850,7 @@
   },
   {
    "id": "gen-electpair-3",
+   "code": "40-01-06-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-electpair-4",
@@ -2787,6 +2882,7 @@
   },
   {
    "id": "gen-electpair-4",
+   "code": "40-01-06-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-electpair-4",
@@ -2818,6 +2914,7 @@
   },
   {
    "id": "gen-diagregions-1",
+   "code": "30-04-03-10-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-diagregions-10",
@@ -2856,6 +2953,7 @@
   },
   {
    "id": "gen-diagregions-2",
+   "code": "30-04-03-10-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-diagregions-10",
@@ -2894,6 +2992,7 @@
   },
   {
    "id": "gen-diagregions-3",
+   "code": "30-04-03-10-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-diagregions-10",
@@ -2932,6 +3031,7 @@
   },
   {
    "id": "gen-diagregions-4",
+   "code": "30-04-03-10-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-diagregions-10",
@@ -2970,6 +3070,7 @@
   },
   {
    "id": "gen-barchart-1",
+   "code": "40-04-04-03-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-barchart-3",
@@ -3013,6 +3114,7 @@
   },
   {
    "id": "gen-barchart-2",
+   "code": "40-04-04-03-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-barchart-3",
@@ -3056,6 +3158,7 @@
   },
   {
    "id": "gen-barchart-3",
+   "code": "40-04-04-03-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-barchart-3",
@@ -3099,6 +3202,7 @@
   },
   {
    "id": "gen-barchart-4",
+   "code": "40-04-04-03-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-barchart-3",
@@ -3142,6 +3246,7 @@
   },
   {
    "id": "gen-chartavg-1",
+   "code": "40-04-05-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-chartavg-5",
@@ -3185,6 +3290,7 @@
   },
   {
    "id": "gen-chartavg-2",
+   "code": "40-04-05-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-chartavg-5",
@@ -3228,6 +3334,7 @@
   },
   {
    "id": "gen-chartavg-3",
+   "code": "40-04-05-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-chartavg-5",
@@ -3271,6 +3378,7 @@
   },
   {
    "id": "gen-chartavg-4",
+   "code": "40-04-05-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-chartavg-5",
@@ -3314,6 +3422,7 @@
   },
   {
    "id": "gen-foldcut-1",
+   "code": "30-07-01-01-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-foldcut-1",
@@ -3341,6 +3450,7 @@
   },
   {
    "id": "gen-foldcut-2",
+   "code": "30-07-01-01-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-foldcut-1",
@@ -3372,6 +3482,7 @@
   },
   {
    "id": "gen-foldcut-3",
+   "code": "30-07-01-01-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-foldcut-1",
@@ -3403,6 +3514,7 @@
   },
   {
    "id": "gen-foldcut-4",
+   "code": "30-07-01-01-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-foldcut-1",
@@ -3434,6 +3546,7 @@
   },
   {
    "id": "gen-knockout-1",
+   "code": "40-06-05-02-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-knockout-2",
@@ -3465,6 +3578,7 @@
   },
   {
    "id": "gen-knockout-2",
+   "code": "40-06-05-02-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-knockout-2",
@@ -3496,6 +3610,7 @@
   },
   {
    "id": "gen-knockout-3",
+   "code": "40-06-05-02-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-knockout-2",
@@ -3527,6 +3642,7 @@
   },
   {
    "id": "gen-knockout-4",
+   "code": "40-06-05-02-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-knockout-2",
@@ -3558,6 +3674,7 @@
   },
   {
    "id": "gen-makesquare-1",
+   "code": "10-02-09-09-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-makesquare-9",
@@ -3585,6 +3702,7 @@
   },
   {
    "id": "gen-makesquare-2",
+   "code": "10-02-09-09-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-makesquare-9",
@@ -3612,6 +3730,7 @@
   },
   {
    "id": "gen-makesquare-3",
+   "code": "10-02-09-09-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-makesquare-9",
@@ -3639,6 +3758,7 @@
   },
   {
    "id": "gen-makesquare-4",
+   "code": "10-02-09-09-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-makesquare-9",
@@ -3666,6 +3786,7 @@
   },
   {
    "id": "gen-compose-1",
+   "code": "20-01-01-09-01",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-compose-9",
@@ -3693,6 +3814,7 @@
   },
   {
    "id": "gen-compose-2",
+   "code": "20-01-01-09-02",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-compose-9",
@@ -3720,6 +3842,7 @@
   },
   {
    "id": "gen-compose-3",
+   "code": "20-01-01-09-03",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-compose-9",
@@ -3747,6 +3870,7 @@
   },
   {
    "id": "gen-compose-4",
+   "code": "20-01-01-09-04",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-compose-9",
@@ -3774,6 +3898,7 @@
   },
   {
    "id": "gen-euler-1",
+   "code": "30-04-05-09-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-euler-9",
@@ -3801,6 +3926,7 @@
   },
   {
    "id": "gen-euler-2",
+   "code": "30-04-05-09-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-euler-9",
@@ -3828,6 +3954,7 @@
   },
   {
    "id": "gen-euler-3",
+   "code": "30-04-05-09-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-euler-9",
@@ -3855,6 +3982,7 @@
   },
   {
    "id": "gen-euler-4",
+   "code": "30-04-05-09-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-euler-9",
@@ -3882,6 +4010,7 @@
   },
   {
    "id": "gen-atleastprob-1",
+   "code": "40-05-01-09-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-atleastprob-9",
@@ -3909,6 +4038,7 @@
   },
   {
    "id": "gen-atleastprob-2",
+   "code": "40-05-01-09-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-atleastprob-9",
@@ -3936,6 +4066,7 @@
   },
   {
    "id": "gen-atleastprob-3",
+   "code": "40-05-01-09-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-atleastprob-9",
@@ -3963,6 +4094,7 @@
   },
   {
    "id": "gen-atleastprob-4",
+   "code": "40-05-01-09-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-atleastprob-9",
@@ -3990,6 +4122,7 @@
   },
   {
    "id": "gen-sigma-1",
+   "code": "10-02-11-10-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-sigma-10",
@@ -4017,6 +4150,7 @@
   },
   {
    "id": "gen-sigma-2",
+   "code": "10-02-11-10-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-sigma-10",
@@ -4044,6 +4178,7 @@
   },
   {
    "id": "gen-sigma-3",
+   "code": "10-02-11-10-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-sigma-10",
@@ -4071,6 +4206,7 @@
   },
   {
    "id": "gen-sigma-4",
+   "code": "10-02-11-10-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-sigma-10",
@@ -4098,6 +4234,7 @@
   },
   {
    "id": "gen-recur-1",
+   "code": "20-02-09-10-01",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-recur-10",
@@ -4129,6 +4266,7 @@
   },
   {
    "id": "gen-recur-2",
+   "code": "20-02-09-10-02",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-recur-10",
@@ -4160,6 +4298,7 @@
   },
   {
    "id": "gen-recur-3",
+   "code": "20-02-09-10-03",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-recur-10",
@@ -4191,6 +4330,7 @@
   },
   {
    "id": "gen-recur-4",
+   "code": "20-02-09-10-04",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-recur-10",
@@ -4222,6 +4362,7 @@
   },
   {
    "id": "gen-conevolume-1",
+   "code": "30-04-01-10-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-conevolume-10",
@@ -4249,6 +4390,7 @@
   },
   {
    "id": "gen-conevolume-2",
+   "code": "30-04-01-10-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-conevolume-10",
@@ -4276,6 +4418,7 @@
   },
   {
    "id": "gen-conevolume-3",
+   "code": "30-04-01-10-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-conevolume-10",
@@ -4303,6 +4446,7 @@
   },
   {
    "id": "gen-conevolume-4",
+   "code": "30-04-01-10-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-conevolume-10",
@@ -4330,6 +4474,7 @@
   },
   {
    "id": "gen-setpartition-1",
+   "code": "40-03-05-10-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-setpartition-10",
@@ -4357,6 +4502,7 @@
   },
   {
    "id": "gen-setpartition-2",
+   "code": "40-03-05-10-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-setpartition-10",
@@ -4384,6 +4530,7 @@
   },
   {
    "id": "gen-setpartition-3",
+   "code": "40-03-05-10-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-setpartition-10",
@@ -4411,6 +4558,7 @@
   },
   {
    "id": "gen-setpartition-4",
+   "code": "40-03-05-10-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-setpartition-10",
@@ -4438,6 +4586,7 @@
   },
   {
    "id": "gen-lasttwo-1",
+   "code": "10-04-02-10-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-lasttwo-10",
@@ -4465,6 +4614,7 @@
   },
   {
    "id": "gen-lasttwo-2",
+   "code": "10-04-02-10-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-lasttwo-10",
@@ -4492,6 +4642,7 @@
   },
   {
    "id": "gen-lasttwo-3",
+   "code": "10-04-02-10-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-lasttwo-10",
@@ -4519,6 +4670,7 @@
   },
   {
    "id": "gen-lasttwo-4",
+   "code": "10-04-02-10-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 10,
    "groupId": "g-gen-lasttwo-10",
@@ -4546,6 +4698,7 @@
   },
   {
    "id": "gen-cubesum-1",
+   "code": "20-02-03-10-01",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-cubesum-10",
@@ -4577,6 +4730,7 @@
   },
   {
    "id": "gen-cubesum-2",
+   "code": "20-02-03-10-02",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-cubesum-10",
@@ -4608,6 +4762,7 @@
   },
   {
    "id": "gen-cubesum-3",
+   "code": "20-02-03-10-03",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-cubesum-10",
@@ -4639,6 +4794,7 @@
   },
   {
    "id": "gen-cubesum-4",
+   "code": "20-02-03-10-04",
    "area": "CHANGE_RELATION",
    "difficulty": 10,
    "groupId": "g-gen-cubesum-10",
@@ -4670,6 +4826,7 @@
   },
   {
    "id": "gen-pick-1",
+   "code": "30-01-15-10-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-pick-10",
@@ -4701,6 +4858,7 @@
   },
   {
    "id": "gen-pick-2",
+   "code": "30-01-15-10-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-pick-10",
@@ -4732,6 +4890,7 @@
   },
   {
    "id": "gen-pick-3",
+   "code": "30-01-15-10-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-pick-10",
@@ -4763,6 +4922,7 @@
   },
   {
    "id": "gen-pick-4",
+   "code": "30-01-15-10-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 10,
    "groupId": "g-gen-pick-10",
@@ -4794,6 +4954,7 @@
   },
   {
    "id": "gen-catalan-1",
+   "code": "40-06-02-10-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-catalan-10",
@@ -4821,6 +4982,7 @@
   },
   {
    "id": "gen-catalan-2",
+   "code": "40-06-02-10-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-catalan-10",
@@ -4848,6 +5010,7 @@
   },
   {
    "id": "gen-catalan-3",
+   "code": "40-06-02-10-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-catalan-10",
@@ -4875,6 +5038,7 @@
   },
   {
    "id": "gen-catalan-4",
+   "code": "40-06-02-10-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 10,
    "groupId": "g-gen-catalan-10",
@@ -4902,6 +5066,7 @@
   },
   {
    "id": "gen-totient-1",
+   "code": "10-02-12-09-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-totient-9",
@@ -4933,6 +5098,7 @@
   },
   {
    "id": "gen-totient-2",
+   "code": "10-02-12-09-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-totient-9",
@@ -4964,6 +5130,7 @@
   },
   {
    "id": "gen-totient-3",
+   "code": "10-02-12-09-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-totient-9",
@@ -4995,6 +5162,7 @@
   },
   {
    "id": "gen-totient-4",
+   "code": "10-02-12-09-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 9,
    "groupId": "g-gen-totient-9",
@@ -5026,6 +5194,7 @@
   },
   {
    "id": "gen-josephus-1",
+   "code": "20-06-03-09-01",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-josephus-9",
@@ -5053,6 +5222,7 @@
   },
   {
    "id": "gen-josephus-2",
+   "code": "20-06-03-09-02",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-josephus-9",
@@ -5080,6 +5250,7 @@
   },
   {
    "id": "gen-josephus-3",
+   "code": "20-06-03-09-03",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-josephus-9",
@@ -5111,6 +5282,7 @@
   },
   {
    "id": "gen-josephus-4",
+   "code": "20-06-03-09-04",
    "area": "CHANGE_RELATION",
    "difficulty": 9,
    "groupId": "g-gen-josephus-9",
@@ -5142,6 +5314,7 @@
   },
   {
    "id": "gen-spacediag-1",
+   "code": "30-05-08-09-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-spacediag-9",
@@ -5173,6 +5346,7 @@
   },
   {
    "id": "gen-spacediag-2",
+   "code": "30-05-08-09-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-spacediag-9",
@@ -5204,6 +5378,7 @@
   },
   {
    "id": "gen-spacediag-3",
+   "code": "30-05-08-09-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-spacediag-9",
@@ -5235,6 +5410,7 @@
   },
   {
    "id": "gen-spacediag-4",
+   "code": "30-05-08-09-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 9,
    "groupId": "g-gen-spacediag-9",
@@ -5266,6 +5442,7 @@
   },
   {
    "id": "gen-derange-1",
+   "code": "40-02-04-09-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-derange-9",
@@ -5297,6 +5474,7 @@
   },
   {
    "id": "gen-derange-2",
+   "code": "40-02-04-09-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-derange-9",
@@ -5328,6 +5506,7 @@
   },
   {
    "id": "gen-derange-3",
+   "code": "40-02-04-09-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-derange-9",
@@ -5359,6 +5538,7 @@
   },
   {
    "id": "gen-derange-4",
+   "code": "40-02-04-09-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 9,
    "groupId": "g-gen-derange-9",
@@ -5390,6 +5570,7 @@
   },
   {
    "id": "gen-prodsum-1",
+   "code": "20-02-08-07-01",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-prodsum-7",
@@ -5417,6 +5598,7 @@
   },
   {
    "id": "gen-prodsum-2",
+   "code": "20-02-08-07-02",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-prodsum-7",
@@ -5444,6 +5626,7 @@
   },
   {
    "id": "gen-prodsum-3",
+   "code": "20-02-08-07-03",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-prodsum-7",
@@ -5475,6 +5658,7 @@
   },
   {
    "id": "gen-prodsum-4",
+   "code": "20-02-08-07-04",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-prodsum-7",
@@ -5502,6 +5686,7 @@
   },
   {
    "id": "gen-quadseq-1",
+   "code": "20-01-09-08-01",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-quadseq-8",
@@ -5529,6 +5714,7 @@
   },
   {
    "id": "gen-quadseq-2",
+   "code": "20-01-09-08-02",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-quadseq-8",
@@ -5556,6 +5742,7 @@
   },
   {
    "id": "gen-quadseq-3",
+   "code": "20-01-09-08-03",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-quadseq-8",
@@ -5583,6 +5770,7 @@
   },
   {
    "id": "gen-quadseq-4",
+   "code": "20-01-09-08-04",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-quadseq-8",
@@ -5610,6 +5798,7 @@
   },
   {
    "id": "gen-polyhedron-1",
+   "code": "30-04-06-08-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-polyhedron-8",
@@ -5637,6 +5826,7 @@
   },
   {
    "id": "gen-polyhedron-2",
+   "code": "30-04-06-08-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-polyhedron-8",
@@ -5664,6 +5854,7 @@
   },
   {
    "id": "gen-polyhedron-3",
+   "code": "30-04-06-08-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-polyhedron-8",
@@ -5691,6 +5882,7 @@
   },
   {
    "id": "gen-polyhedron-4",
+   "code": "30-04-06-08-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-polyhedron-8",
@@ -5718,6 +5910,7 @@
   },
   {
    "id": "gen-multiperm-1",
+   "code": "40-02-07-08-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-multiperm-8",
@@ -5749,6 +5942,7 @@
   },
   {
    "id": "gen-multiperm-2",
+   "code": "40-02-07-08-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-multiperm-8",
@@ -5780,6 +5974,7 @@
   },
   {
    "id": "gen-multiperm-3",
+   "code": "40-02-07-08-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-multiperm-8",
@@ -5811,6 +6006,7 @@
   },
   {
    "id": "gen-multiperm-4",
+   "code": "40-02-07-08-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-multiperm-8",
@@ -5842,6 +6038,7 @@
   },
   {
    "id": "gen-diophantine-1",
+   "code": "20-06-02-08-01",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-diophantine-8",
@@ -5873,6 +6070,7 @@
   },
   {
    "id": "gen-diophantine-2",
+   "code": "20-06-02-08-02",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-diophantine-8",
@@ -5904,6 +6102,7 @@
   },
   {
    "id": "gen-diophantine-3",
+   "code": "20-06-02-08-03",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-diophantine-8",
@@ -5935,6 +6134,7 @@
   },
   {
    "id": "gen-diophantine-4",
+   "code": "20-06-02-08-04",
    "area": "CHANGE_RELATION",
    "difficulty": 8,
    "groupId": "g-gen-diophantine-8",
@@ -5966,6 +6166,7 @@
   },
   {
    "id": "gen-paintcube-1",
+   "code": "30-05-07-08-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-paintcube-8",
@@ -5997,6 +6198,7 @@
   },
   {
    "id": "gen-paintcube-2",
+   "code": "30-05-07-08-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-paintcube-8",
@@ -6028,6 +6230,7 @@
   },
   {
    "id": "gen-paintcube-3",
+   "code": "30-05-07-08-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-paintcube-8",
@@ -6059,6 +6262,7 @@
   },
   {
    "id": "gen-paintcube-4",
+   "code": "30-05-07-08-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 8,
    "groupId": "g-gen-paintcube-8",
@@ -6090,6 +6294,7 @@
   },
   {
    "id": "gen-starsbars-1",
+   "code": "40-03-07-08-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-starsbars-8",
@@ -6121,6 +6326,7 @@
   },
   {
    "id": "gen-starsbars-2",
+   "code": "40-03-07-08-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-starsbars-8",
@@ -6152,6 +6358,7 @@
   },
   {
    "id": "gen-starsbars-3",
+   "code": "40-03-07-08-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-starsbars-8",
@@ -6183,6 +6390,7 @@
   },
   {
    "id": "gen-starsbars-4",
+   "code": "40-03-07-08-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 8,
    "groupId": "g-gen-starsbars-8",
@@ -6214,6 +6422,7 @@
   },
   {
    "id": "gen-trans-1",
+   "code": "20-06-07-01-01",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-trans-1",
@@ -6241,6 +6450,7 @@
   },
   {
    "id": "gen-trans-2",
+   "code": "20-06-07-01-02",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-trans-1",
@@ -6268,6 +6478,7 @@
   },
   {
    "id": "gen-trans-3",
+   "code": "20-06-07-01-03",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-trans-1",
@@ -6295,6 +6506,7 @@
   },
   {
    "id": "gen-trans-4",
+   "code": "20-06-07-01-04",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-trans-1",
@@ -6322,6 +6534,7 @@
   },
   {
    "id": "gen-pattern-1",
+   "code": "20-01-08-01-01",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
@@ -6344,6 +6557,7 @@
   },
   {
    "id": "gen-pattern-2",
+   "code": "20-01-08-01-02",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
@@ -6371,6 +6585,7 @@
   },
   {
    "id": "gen-pattern-3",
+   "code": "20-01-08-01-03",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
@@ -6398,6 +6613,7 @@
   },
   {
    "id": "gen-pattern-4",
+   "code": "20-01-08-01-04",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-pattern-1",
@@ -6425,6 +6641,7 @@
   },
   {
    "id": "gen-iorule-1",
+   "code": "20-01-06-02-01",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-iorule-2",
@@ -6452,6 +6669,7 @@
   },
   {
    "id": "gen-iorule-2",
+   "code": "20-01-06-02-02",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-iorule-2",
@@ -6479,6 +6697,7 @@
   },
   {
    "id": "gen-iorule-3",
+   "code": "20-01-06-02-03",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-iorule-2",
@@ -6506,6 +6725,7 @@
   },
   {
    "id": "gen-iorule-4",
+   "code": "20-01-06-02-04",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-iorule-2",
@@ -6533,6 +6753,7 @@
   },
   {
    "id": "gen-midpt-1",
+   "code": "10-06-08-02-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-midpt-2",
@@ -6560,6 +6781,7 @@
   },
   {
    "id": "gen-midpt-2",
+   "code": "10-06-08-02-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-midpt-2",
@@ -6587,6 +6809,7 @@
   },
   {
    "id": "gen-midpt-3",
+   "code": "10-06-08-02-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-midpt-2",
@@ -6614,6 +6837,7 @@
   },
   {
    "id": "gen-midpt-4",
+   "code": "10-06-08-02-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-midpt-2",
@@ -6641,6 +6865,7 @@
   },
   {
    "id": "gen-consecmid-1",
+   "code": "10-06-04-02-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-consecmid-2",
@@ -6668,6 +6893,7 @@
   },
   {
    "id": "gen-consecmid-2",
+   "code": "10-06-04-02-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-consecmid-2",
@@ -6695,6 +6921,7 @@
   },
   {
    "id": "gen-consecmid-3",
+   "code": "10-06-04-02-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-consecmid-2",
@@ -6722,6 +6949,7 @@
   },
   {
    "id": "gen-consecmid-4",
+   "code": "10-06-04-02-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-consecmid-2",
@@ -6749,6 +6977,7 @@
   },
   {
    "id": "gen-multcond-1",
+   "code": "10-03-04-01-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
@@ -6780,6 +7009,7 @@
   },
   {
    "id": "gen-multcond-2",
+   "code": "10-03-04-01-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
@@ -6811,6 +7041,7 @@
   },
   {
    "id": "gen-multcond-3",
+   "code": "10-03-04-01-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
@@ -6842,6 +7073,7 @@
   },
   {
    "id": "gen-multcond-4",
+   "code": "10-03-04-01-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-multcond-1",
@@ -6873,6 +7105,7 @@
   },
   {
    "id": "gen-choose2-1",
+   "code": "40-02-01-01-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-choose2-1",
@@ -6900,6 +7133,7 @@
   },
   {
    "id": "gen-choose2-2",
+   "code": "40-02-01-01-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-choose2-1",
@@ -6927,6 +7161,7 @@
   },
   {
    "id": "gen-choose2-3",
+   "code": "40-02-01-01-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-choose2-1",
@@ -6954,6 +7189,7 @@
   },
   {
    "id": "gen-choose2-4",
+   "code": "40-02-01-01-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-choose2-1",
@@ -6981,6 +7217,7 @@
   },
   {
    "id": "gen-dataread-1",
+   "code": "40-02-03-01-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-dataread-1",
@@ -7008,6 +7245,7 @@
   },
   {
    "id": "gen-dataread-2",
+   "code": "40-02-03-01-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-dataread-1",
@@ -7035,6 +7273,7 @@
   },
   {
    "id": "gen-dataread-3",
+   "code": "40-02-03-01-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-dataread-1",
@@ -7062,6 +7301,7 @@
   },
   {
    "id": "gen-dataread-4",
+   "code": "40-02-03-01-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-dataread-1",
@@ -7089,6 +7329,7 @@
   },
   {
    "id": "gen-aliquot-1",
+   "code": "10-02-01-07-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-aliquot-7",
@@ -7116,6 +7357,7 @@
   },
   {
    "id": "gen-aliquot-2",
+   "code": "10-02-01-07-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-aliquot-7",
@@ -7143,6 +7385,7 @@
   },
   {
    "id": "gen-aliquot-3",
+   "code": "10-02-01-07-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-aliquot-7",
@@ -7170,6 +7413,7 @@
   },
   {
    "id": "gen-aliquot-4",
+   "code": "10-02-01-07-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-aliquot-7",
@@ -7197,6 +7441,7 @@
   },
   {
    "id": "gen-narciss-1",
+   "code": "10-01-04-07-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-narciss-7",
@@ -7224,6 +7469,7 @@
   },
   {
    "id": "gen-narciss-2",
+   "code": "10-01-04-07-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-narciss-7",
@@ -7251,6 +7497,7 @@
   },
   {
    "id": "gen-narciss-3",
+   "code": "10-01-04-07-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-narciss-7",
@@ -7278,6 +7525,7 @@
   },
   {
    "id": "gen-narciss-4",
+   "code": "10-01-04-07-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-narciss-7",
@@ -7305,6 +7553,7 @@
   },
   {
    "id": "gen-modpow-1",
+   "code": "10-04-05-08-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-modpow-8",
@@ -7332,6 +7581,7 @@
   },
   {
    "id": "gen-modpow-2",
+   "code": "10-04-05-08-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-modpow-8",
@@ -7354,6 +7604,7 @@
   },
   {
    "id": "gen-modpow-3",
+   "code": "10-04-05-08-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-modpow-8",
@@ -7381,6 +7632,7 @@
   },
   {
    "id": "gen-modpow-4",
+   "code": "10-04-05-08-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-modpow-8",
@@ -7408,6 +7660,7 @@
   },
   {
    "id": "gen-lattice-1",
+   "code": "10-07-01-08-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-lattice-8",
@@ -7443,6 +7696,7 @@
   },
   {
    "id": "gen-lattice-2",
+   "code": "10-07-01-08-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-lattice-8",
@@ -7478,6 +7732,7 @@
   },
   {
    "id": "gen-lattice-3",
+   "code": "10-07-01-08-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-lattice-8",
@@ -7513,6 +7768,7 @@
   },
   {
    "id": "gen-lattice-4",
+   "code": "10-07-01-08-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-lattice-8",
@@ -7548,6 +7804,7 @@
   },
   {
    "id": "gen-weigh-1",
+   "code": "10-07-02-08-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-weigh-8",
@@ -7575,6 +7832,7 @@
   },
   {
    "id": "gen-weigh-2",
+   "code": "10-07-02-08-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-weigh-8",
@@ -7602,6 +7860,7 @@
   },
   {
    "id": "gen-weigh-3",
+   "code": "10-07-02-08-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-weigh-8",
@@ -7629,6 +7888,7 @@
   },
   {
    "id": "gen-weigh-4",
+   "code": "10-07-02-08-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 8,
    "groupId": "g-gen-weigh-8",
@@ -7660,6 +7920,7 @@
   },
   {
    "id": "gen-numsplit-1",
+   "code": "40-03-04-01-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-numsplit-1",
@@ -7687,6 +7948,7 @@
   },
   {
    "id": "gen-numsplit-2",
+   "code": "40-03-04-01-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-numsplit-1",
@@ -7714,6 +7976,7 @@
   },
   {
    "id": "gen-numsplit-3",
+   "code": "40-03-04-01-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-numsplit-1",
@@ -7741,6 +8004,7 @@
   },
   {
    "id": "gen-numsplit-4",
+   "code": "40-03-04-01-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-numsplit-1",
@@ -7768,6 +8032,7 @@
   },
   {
    "id": "gen-htorder-1",
+   "code": "40-02-05-02-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-htorder-2",
@@ -7795,6 +8060,7 @@
   },
   {
    "id": "gen-htorder-2",
+   "code": "40-02-05-02-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-htorder-2",
@@ -7822,6 +8088,7 @@
   },
   {
    "id": "gen-htorder-3",
+   "code": "40-02-05-02-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-htorder-2",
@@ -7849,6 +8116,7 @@
   },
   {
    "id": "gen-position-1",
+   "code": "40-02-11-02-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-position-2",
@@ -7876,6 +8144,7 @@
   },
   {
    "id": "gen-position-2",
+   "code": "40-02-11-02-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-position-2",
@@ -7903,6 +8172,7 @@
   },
   {
    "id": "gen-position-3",
+   "code": "40-02-11-02-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-position-2",
@@ -7930,6 +8200,7 @@
   },
   {
    "id": "gen-position-4",
+   "code": "40-02-11-02-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-position-2",
@@ -7957,6 +8228,7 @@
   },
   {
    "id": "gen-addend-1",
+   "code": "10-06-01-01-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
@@ -7984,6 +8256,7 @@
   },
   {
    "id": "gen-addend-2",
+   "code": "10-06-01-01-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
@@ -8011,6 +8284,7 @@
   },
   {
    "id": "gen-addend-3",
+   "code": "10-06-01-01-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
@@ -8038,6 +8312,7 @@
   },
   {
    "id": "gen-addend-4",
+   "code": "10-06-01-01-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-addend-1",
@@ -8065,6 +8340,7 @@
   },
   {
    "id": "gen-lcmbus-1",
+   "code": "20-05-04-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-lcmbus-4",
@@ -8092,6 +8368,7 @@
   },
   {
    "id": "gen-lcmbus-2",
+   "code": "20-05-04-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-lcmbus-4",
@@ -8119,6 +8396,7 @@
   },
   {
    "id": "gen-lcmbus-3",
+   "code": "20-05-04-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-lcmbus-4",
@@ -8146,6 +8424,7 @@
   },
   {
    "id": "gen-lcmbus-4",
+   "code": "20-05-04-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-lcmbus-4",
@@ -8173,6 +8452,7 @@
   },
   {
    "id": "gen-consec-1",
+   "code": "10-06-03-03-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-consec-3",
@@ -8200,6 +8480,7 @@
   },
   {
    "id": "gen-consec-2",
+   "code": "10-06-03-03-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-consec-3",
@@ -8227,6 +8508,7 @@
   },
   {
    "id": "gen-consec-3",
+   "code": "10-06-03-03-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-consec-3",
@@ -8254,6 +8536,7 @@
   },
   {
    "id": "gen-consec-4",
+   "code": "10-06-03-03-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-consec-3",
@@ -8281,6 +8564,7 @@
   },
   {
    "id": "gen-pigeon-1",
+   "code": "40-06-08-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-pigeon-5",
@@ -8308,6 +8592,7 @@
   },
   {
    "id": "gen-pigeon-2",
+   "code": "40-06-08-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-pigeon-5",
@@ -8335,6 +8620,7 @@
   },
   {
    "id": "gen-pigeon-3",
+   "code": "40-06-08-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-pigeon-5",
@@ -8362,6 +8648,7 @@
   },
   {
    "id": "gen-pigeon-4",
+   "code": "40-06-08-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-pigeon-5",
@@ -8389,6 +8676,7 @@
   },
   {
    "id": "gen-missscore-1",
+   "code": "40-04-07-03-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-missscore-3",
@@ -8416,6 +8704,7 @@
   },
   {
    "id": "gen-missscore-2",
+   "code": "40-04-07-03-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-missscore-3",
@@ -8443,6 +8732,7 @@
   },
   {
    "id": "gen-missscore-3",
+   "code": "40-04-07-03-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-missscore-3",
@@ -8470,6 +8760,7 @@
   },
   {
    "id": "gen-missscore-4",
+   "code": "40-04-07-03-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-missscore-3",
@@ -8497,6 +8788,7 @@
   },
   {
    "id": "gen-unitcycle-1",
+   "code": "10-04-07-06-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-unitcycle-6",
@@ -8524,6 +8816,7 @@
   },
   {
    "id": "gen-unitcycle-2",
+   "code": "10-04-07-06-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-unitcycle-6",
@@ -8551,6 +8844,7 @@
   },
   {
    "id": "gen-unitcycle-3",
+   "code": "10-04-07-06-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-unitcycle-6",
@@ -8578,6 +8872,7 @@
   },
   {
    "id": "gen-unitcycle-4",
+   "code": "10-04-07-06-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-unitcycle-6",
@@ -8605,6 +8900,7 @@
   },
   {
    "id": "gen-setboth-1",
+   "code": "40-06-09-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-setboth-5",
@@ -8636,6 +8932,7 @@
   },
   {
    "id": "gen-setboth-2",
+   "code": "40-06-09-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-setboth-5",
@@ -8667,6 +8964,7 @@
   },
   {
    "id": "gen-setboth-3",
+   "code": "40-06-09-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-setboth-5",
@@ -8698,6 +8996,7 @@
   },
   {
    "id": "gen-setboth-4",
+   "code": "40-06-09-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-setboth-5",
@@ -8729,6 +9028,7 @@
   },
   {
    "id": "gen-roundtrip-1",
+   "code": "20-04-04-06-01",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-roundtrip-6",
@@ -8756,6 +9056,7 @@
   },
   {
    "id": "gen-roundtrip-2",
+   "code": "20-04-04-06-02",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-roundtrip-6",
@@ -8783,6 +9084,7 @@
   },
   {
    "id": "gen-roundtrip-3",
+   "code": "20-04-04-06-03",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-roundtrip-6",
@@ -8810,6 +9112,7 @@
   },
   {
    "id": "gen-roundtrip-4",
+   "code": "20-04-04-06-04",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-roundtrip-6",
@@ -8837,6 +9140,7 @@
   },
   {
    "id": "gen-handshake-1",
+   "code": "40-03-02-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-handshake-5",
@@ -8864,6 +9168,7 @@
   },
   {
    "id": "gen-handshake-2",
+   "code": "40-03-02-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-handshake-5",
@@ -8891,6 +9196,7 @@
   },
   {
    "id": "gen-handshake-3",
+   "code": "40-03-02-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-handshake-5",
@@ -8918,6 +9224,7 @@
   },
   {
    "id": "gen-handshake-4",
+   "code": "40-03-02-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-handshake-5",
@@ -8945,6 +9252,7 @@
   },
   {
    "id": "gen-gauss-1",
+   "code": "10-05-01-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-gauss-4",
@@ -8972,6 +9280,7 @@
   },
   {
    "id": "gen-gauss-2",
+   "code": "10-05-01-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-gauss-4",
@@ -8999,6 +9308,7 @@
   },
   {
    "id": "gen-gauss-3",
+   "code": "10-05-01-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-gauss-4",
@@ -9026,6 +9336,7 @@
   },
   {
    "id": "gen-gauss-4",
+   "code": "10-05-01-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-gauss-4",
@@ -9053,6 +9364,7 @@
   },
   {
    "id": "gen-ratioshare-1",
+   "code": "20-03-07-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratioshare-5",
@@ -9084,6 +9396,7 @@
   },
   {
    "id": "gen-ratioshare-2",
+   "code": "20-03-07-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratioshare-5",
@@ -9115,6 +9428,7 @@
   },
   {
    "id": "gen-ratioshare-3",
+   "code": "20-03-07-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratioshare-5",
@@ -9146,6 +9460,7 @@
   },
   {
    "id": "gen-ratioshare-4",
+   "code": "20-03-07-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratioshare-5",
@@ -9177,6 +9492,7 @@
   },
   {
    "id": "gen-fracwhole-1",
+   "code": "10-06-06-03-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-fracwhole-3",
@@ -9204,6 +9520,7 @@
   },
   {
    "id": "gen-fracwhole-2",
+   "code": "10-06-06-03-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-fracwhole-3",
@@ -9231,6 +9548,7 @@
   },
   {
    "id": "gen-fracwhole-3",
+   "code": "10-06-06-03-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-fracwhole-3",
@@ -9258,6 +9576,7 @@
   },
   {
    "id": "gen-fracwhole-4",
+   "code": "10-06-06-03-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-fracwhole-3",
@@ -9285,6 +9604,7 @@
   },
   {
    "id": "gen-tourney-1",
+   "code": "40-06-10-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-tourney-5",
@@ -9312,6 +9632,7 @@
   },
   {
    "id": "gen-tourney-2",
+   "code": "40-06-10-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-tourney-5",
@@ -9339,6 +9660,7 @@
   },
   {
    "id": "gen-tourney-3",
+   "code": "40-06-10-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-tourney-5",
@@ -9366,6 +9688,7 @@
   },
   {
    "id": "gen-tourney-4",
+   "code": "40-06-10-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-tourney-5",
@@ -9393,6 +9716,7 @@
   },
   {
    "id": "gen-mincoin-1",
+   "code": "10-06-09-03-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-mincoin-3",
@@ -9420,6 +9744,7 @@
   },
   {
    "id": "gen-mincoin-2",
+   "code": "10-06-09-03-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-mincoin-3",
@@ -9447,6 +9772,7 @@
   },
   {
    "id": "gen-mincoin-3",
+   "code": "10-06-09-03-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-mincoin-3",
@@ -9474,6 +9800,7 @@
   },
   {
    "id": "gen-mincoin-4",
+   "code": "10-06-09-03-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-mincoin-3",
@@ -9501,6 +9828,7 @@
   },
   {
    "id": "gen-recipe-1",
+   "code": "20-03-08-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-recipe-4",
@@ -9528,6 +9856,7 @@
   },
   {
    "id": "gen-recipe-2",
+   "code": "20-03-08-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-recipe-4",
@@ -9555,6 +9884,7 @@
   },
   {
    "id": "gen-recipe-3",
+   "code": "20-03-08-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-recipe-4",
@@ -9582,6 +9912,7 @@
   },
   {
    "id": "gen-recipe-4",
+   "code": "20-03-08-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-recipe-4",
@@ -9609,6 +9940,7 @@
   },
   {
    "id": "gen-sqarea-1",
+   "code": "30-01-17-03-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-sqarea-3",
@@ -9636,6 +9968,7 @@
   },
   {
    "id": "gen-sqarea-2",
+   "code": "30-01-17-03-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-sqarea-3",
@@ -9663,6 +9996,7 @@
   },
   {
    "id": "gen-sqarea-3",
+   "code": "30-01-17-03-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-sqarea-3",
@@ -9690,6 +10024,7 @@
   },
   {
    "id": "gen-sqarea-4",
+   "code": "30-01-17-03-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-sqarea-3",
@@ -9717,6 +10052,7 @@
   },
   {
    "id": "gen-dow-1",
+   "code": "20-05-03-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-dow-4",
@@ -9744,6 +10080,7 @@
   },
   {
    "id": "gen-dow-2",
+   "code": "20-05-03-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-dow-4",
@@ -9771,6 +10108,7 @@
   },
   {
    "id": "gen-dow-3",
+   "code": "20-05-03-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-dow-4",
@@ -9798,6 +10136,7 @@
   },
   {
    "id": "gen-dow-4",
+   "code": "20-05-03-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-dow-4",
@@ -9825,6 +10164,7 @@
   },
   {
    "id": "gen-frog-1",
+   "code": "20-04-02-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-frog-5",
@@ -9852,6 +10192,7 @@
   },
   {
    "id": "gen-frog-2",
+   "code": "20-04-02-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-frog-5",
@@ -9879,6 +10220,7 @@
   },
   {
    "id": "gen-frog-3",
+   "code": "20-04-02-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-frog-5",
@@ -9906,6 +10248,7 @@
   },
   {
    "id": "gen-frog-4",
+   "code": "20-04-02-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-frog-5",
@@ -9933,6 +10276,7 @@
   },
   {
    "id": "gen-oddsum-1",
+   "code": "10-05-03-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-oddsum-5",
@@ -9960,6 +10304,7 @@
   },
   {
    "id": "gen-oddsum-2",
+   "code": "10-05-03-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-oddsum-5",
@@ -9987,6 +10332,7 @@
   },
   {
    "id": "gen-oddsum-3",
+   "code": "10-05-03-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-oddsum-5",
@@ -10014,6 +10360,7 @@
   },
   {
    "id": "gen-oddsum-4",
+   "code": "10-05-03-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-oddsum-5",
@@ -10041,6 +10388,7 @@
   },
   {
    "id": "gen-perm-1",
+   "code": "40-02-10-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-perm-5",
@@ -10068,6 +10416,7 @@
   },
   {
    "id": "gen-perm-2",
+   "code": "40-02-10-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-perm-5",
@@ -10095,6 +10444,7 @@
   },
   {
    "id": "gen-perm-3",
+   "code": "40-02-10-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-perm-5",
@@ -10122,6 +10472,7 @@
   },
   {
    "id": "gen-perm-4",
+   "code": "40-02-10-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-perm-5",
@@ -10149,6 +10500,7 @@
   },
   {
    "id": "gen-revdiff-1",
+   "code": "10-01-05-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-revdiff-5",
@@ -10176,6 +10528,7 @@
   },
   {
    "id": "gen-revdiff-2",
+   "code": "10-01-05-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-revdiff-5",
@@ -10203,6 +10556,7 @@
   },
   {
    "id": "gen-revdiff-3",
+   "code": "10-01-05-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-revdiff-5",
@@ -10230,6 +10584,7 @@
   },
   {
    "id": "gen-revdiff-4",
+   "code": "10-01-05-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-revdiff-5",
@@ -10257,6 +10612,7 @@
   },
   {
    "id": "gen-leftover-1",
+   "code": "10-04-04-06-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-leftover-6",
@@ -10284,6 +10640,7 @@
   },
   {
    "id": "gen-leftover-2",
+   "code": "10-04-04-06-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-leftover-6",
@@ -10311,6 +10668,7 @@
   },
   {
    "id": "gen-leftover-3",
+   "code": "10-04-04-06-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-leftover-6",
@@ -10338,6 +10696,7 @@
   },
   {
    "id": "gen-leftover-4",
+   "code": "10-04-04-06-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-leftover-6",
@@ -10365,6 +10724,7 @@
   },
   {
    "id": "gen-squarenum-1",
+   "code": "20-01-12-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-squarenum-4",
@@ -10392,6 +10752,7 @@
   },
   {
    "id": "gen-squarenum-2",
+   "code": "20-01-12-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-squarenum-4",
@@ -10419,6 +10780,7 @@
   },
   {
    "id": "gen-squarenum-3",
+   "code": "20-01-12-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-squarenum-4",
@@ -10446,6 +10808,7 @@
   },
   {
    "id": "gen-squarenum-4",
+   "code": "20-01-12-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-squarenum-4",
@@ -10473,6 +10836,7 @@
   },
   {
    "id": "gen-trinum-1",
+   "code": "20-01-13-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-trinum-4",
@@ -10500,6 +10864,7 @@
   },
   {
    "id": "gen-trinum-2",
+   "code": "20-01-13-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-trinum-4",
@@ -10527,6 +10892,7 @@
   },
   {
    "id": "gen-trinum-3",
+   "code": "20-01-13-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-trinum-4",
@@ -10554,6 +10920,7 @@
   },
   {
    "id": "gen-trinum-4",
+   "code": "20-01-13-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-trinum-4",
@@ -10581,6 +10948,7 @@
   },
   {
    "id": "gen-pow2-1",
+   "code": "20-02-07-06-01",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-pow2-6",
@@ -10608,6 +10976,7 @@
   },
   {
    "id": "gen-pow2-2",
+   "code": "20-02-07-06-02",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-pow2-6",
@@ -10635,6 +11004,7 @@
   },
   {
    "id": "gen-pow2-3",
+   "code": "20-02-07-06-03",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-pow2-6",
@@ -10662,6 +11032,7 @@
   },
   {
    "id": "gen-pow2-4",
+   "code": "20-02-07-06-04",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-pow2-6",
@@ -10689,6 +11060,7 @@
   },
   {
    "id": "gen-multrange-1",
+   "code": "10-03-05-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-multrange-4",
@@ -10716,6 +11088,7 @@
   },
   {
    "id": "gen-multrange-2",
+   "code": "10-03-05-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-multrange-4",
@@ -10743,6 +11116,7 @@
   },
   {
    "id": "gen-multrange-3",
+   "code": "10-03-05-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-multrange-4",
@@ -10770,6 +11144,7 @@
   },
   {
    "id": "gen-multrange-4",
+   "code": "10-03-05-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-multrange-4",
@@ -10797,6 +11172,7 @@
   },
   {
    "id": "gen-commrange-1",
+   "code": "10-03-01-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-commrange-5",
@@ -10824,6 +11200,7 @@
   },
   {
    "id": "gen-commrange-2",
+   "code": "10-03-01-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-commrange-5",
@@ -10851,6 +11228,7 @@
   },
   {
    "id": "gen-commrange-3",
+   "code": "10-03-01-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-commrange-5",
@@ -10878,6 +11256,7 @@
   },
   {
    "id": "gen-commrange-4",
+   "code": "10-03-01-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-commrange-5",
@@ -10905,6 +11284,7 @@
   },
   {
    "id": "gen-wavg-1",
+   "code": "40-04-10-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-wavg-5",
@@ -10932,6 +11312,7 @@
   },
   {
    "id": "gen-wavg-2",
+   "code": "40-04-10-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-wavg-5",
@@ -10959,6 +11340,7 @@
   },
   {
    "id": "gen-wavg-3",
+   "code": "40-04-10-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-wavg-5",
@@ -10986,6 +11368,7 @@
   },
   {
    "id": "gen-wavg-4",
+   "code": "40-04-10-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-wavg-5",
@@ -11013,6 +11396,7 @@
   },
   {
    "id": "gen-coinflip-1",
+   "code": "40-01-03-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coinflip-4",
@@ -11040,6 +11424,7 @@
   },
   {
    "id": "gen-coinflip-2",
+   "code": "40-01-03-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coinflip-4",
@@ -11067,6 +11452,7 @@
   },
   {
    "id": "gen-coinflip-3",
+   "code": "40-01-03-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coinflip-4",
@@ -11094,6 +11480,7 @@
   },
   {
    "id": "gen-coinflip-4",
+   "code": "40-01-03-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coinflip-4",
@@ -11121,6 +11508,7 @@
   },
   {
    "id": "gen-diceprod-1",
+   "code": "40-01-04-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-diceprod-5",
@@ -11148,6 +11536,7 @@
   },
   {
    "id": "gen-diceprod-2",
+   "code": "40-01-04-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-diceprod-5",
@@ -11175,6 +11564,7 @@
   },
   {
    "id": "gen-diceprod-3",
+   "code": "40-01-04-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-diceprod-5",
@@ -11202,6 +11592,7 @@
   },
   {
    "id": "gen-diceprod-4",
+   "code": "40-01-04-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-diceprod-5",
@@ -11229,6 +11620,7 @@
   },
   {
    "id": "gen-concn-1",
+   "code": "20-03-02-06-01",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-concn-6",
@@ -11256,6 +11648,7 @@
   },
   {
    "id": "gen-concn-2",
+   "code": "20-03-02-06-02",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-concn-6",
@@ -11283,6 +11676,7 @@
   },
   {
    "id": "gen-concn-3",
+   "code": "20-03-02-06-03",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-concn-6",
@@ -11310,6 +11704,7 @@
   },
   {
    "id": "gen-concn-4",
+   "code": "20-03-02-06-04",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-concn-6",
@@ -11337,6 +11732,7 @@
   },
   {
    "id": "gen-percentof-1",
+   "code": "10-06-10-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-percentof-4",
@@ -11364,6 +11760,7 @@
   },
   {
    "id": "gen-percentof-2",
+   "code": "10-06-10-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-percentof-4",
@@ -11391,6 +11788,7 @@
   },
   {
    "id": "gen-percentof-3",
+   "code": "10-06-10-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-percentof-4",
@@ -11418,6 +11816,7 @@
   },
   {
    "id": "gen-percentof-4",
+   "code": "10-06-10-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-percentof-4",
@@ -11445,6 +11844,7 @@
   },
   {
    "id": "gen-gear-1",
+   "code": "20-03-04-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-gear-5",
@@ -11472,6 +11872,7 @@
   },
   {
    "id": "gen-gear-2",
+   "code": "20-03-04-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-gear-5",
@@ -11499,6 +11900,7 @@
   },
   {
    "id": "gen-gear-3",
+   "code": "20-03-04-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-gear-5",
@@ -11526,6 +11928,7 @@
   },
   {
    "id": "gen-gear-4",
+   "code": "20-03-04-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-gear-5",
@@ -11553,6 +11956,7 @@
   },
   {
    "id": "gen-seesaw-1",
+   "code": "20-03-09-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-seesaw-5",
@@ -11580,6 +11984,7 @@
   },
   {
    "id": "gen-seesaw-2",
+   "code": "20-03-09-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-seesaw-5",
@@ -11607,6 +12012,7 @@
   },
   {
    "id": "gen-seesaw-3",
+   "code": "20-03-09-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-seesaw-5",
@@ -11634,6 +12040,7 @@
   },
   {
    "id": "gen-seesaw-4",
+   "code": "20-03-09-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-seesaw-5",
@@ -11661,6 +12068,7 @@
   },
   {
    "id": "gen-divsum-1",
+   "code": "10-02-04-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divsum-5",
@@ -11688,6 +12096,7 @@
   },
   {
    "id": "gen-divsum-2",
+   "code": "10-02-04-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divsum-5",
@@ -11715,6 +12124,7 @@
   },
   {
    "id": "gen-divsum-3",
+   "code": "10-02-04-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divsum-5",
@@ -11742,6 +12152,7 @@
   },
   {
    "id": "gen-divsum-4",
+   "code": "10-02-04-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divsum-5",
@@ -11769,6 +12180,7 @@
   },
   {
    "id": "gen-clockstrike-1",
+   "code": "20-05-02-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-clockstrike-4",
@@ -11796,6 +12208,7 @@
   },
   {
    "id": "gen-clockstrike-2",
+   "code": "20-05-02-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-clockstrike-4",
@@ -11823,6 +12236,7 @@
   },
   {
    "id": "gen-clockstrike-3",
+   "code": "20-05-02-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-clockstrike-4",
@@ -11850,6 +12264,7 @@
   },
   {
    "id": "gen-clockstrike-4",
+   "code": "20-05-02-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-clockstrike-4",
@@ -11877,6 +12292,7 @@
   },
   {
    "id": "gen-ratio3-1",
+   "code": "20-03-06-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratio3-5",
@@ -11904,6 +12320,7 @@
   },
   {
    "id": "gen-ratio3-2",
+   "code": "20-03-06-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratio3-5",
@@ -11931,6 +12348,7 @@
   },
   {
    "id": "gen-ratio3-3",
+   "code": "20-03-06-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratio3-5",
@@ -11958,6 +12376,7 @@
   },
   {
    "id": "gen-ratio3-4",
+   "code": "20-03-06-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-ratio3-5",
@@ -11985,6 +12404,7 @@
   },
   {
    "id": "gen-transfer-1",
+   "code": "20-06-08-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-transfer-5",
@@ -12012,6 +12432,7 @@
   },
   {
    "id": "gen-transfer-2",
+   "code": "20-06-08-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-transfer-5",
@@ -12039,6 +12460,7 @@
   },
   {
    "id": "gen-transfer-3",
+   "code": "20-06-08-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-transfer-5",
@@ -12066,6 +12488,7 @@
   },
   {
    "id": "gen-transfer-4",
+   "code": "20-06-08-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-transfer-5",
@@ -12093,6 +12516,7 @@
   },
   {
    "id": "gen-leasttoshare-1",
+   "code": "10-04-03-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-leasttoshare-4",
@@ -12120,6 +12544,7 @@
   },
   {
    "id": "gen-leasttoshare-2",
+   "code": "10-04-03-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-leasttoshare-4",
@@ -12147,6 +12572,7 @@
   },
   {
    "id": "gen-leasttoshare-3",
+   "code": "10-04-03-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-leasttoshare-4",
@@ -12174,6 +12600,7 @@
   },
   {
    "id": "gen-leasttoshare-4",
+   "code": "10-04-03-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-leasttoshare-4",
@@ -12201,6 +12628,7 @@
   },
   {
    "id": "gen-tank-1",
+   "code": "20-06-06-06-01",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-tank-6",
@@ -12228,6 +12656,7 @@
   },
   {
    "id": "gen-tank-2",
+   "code": "20-06-06-06-02",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-tank-6",
@@ -12255,6 +12684,7 @@
   },
   {
    "id": "gen-tank-3",
+   "code": "20-06-06-06-03",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-tank-6",
@@ -12282,6 +12712,7 @@
   },
   {
    "id": "gen-tank-4",
+   "code": "20-06-06-06-04",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-tank-6",
@@ -12309,6 +12740,7 @@
   },
   {
    "id": "gen-leapyear-1",
+   "code": "10-03-03-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-leapyear-5",
@@ -12336,6 +12768,7 @@
   },
   {
    "id": "gen-leapyear-2",
+   "code": "10-03-03-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-leapyear-5",
@@ -12363,6 +12796,7 @@
   },
   {
    "id": "gen-leapyear-3",
+   "code": "10-03-03-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-leapyear-5",
@@ -12390,6 +12824,7 @@
   },
   {
    "id": "gen-leapyear-4",
+   "code": "10-03-03-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-leapyear-5",
@@ -12417,6 +12852,7 @@
   },
   {
    "id": "gen-avgneed-1",
+   "code": "40-04-03-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgneed-4",
@@ -12444,6 +12880,7 @@
   },
   {
    "id": "gen-avgneed-2",
+   "code": "40-04-03-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgneed-4",
@@ -12471,6 +12908,7 @@
   },
   {
    "id": "gen-avgneed-3",
+   "code": "40-04-03-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgneed-4",
@@ -12498,6 +12936,7 @@
   },
   {
    "id": "gen-avgneed-4",
+   "code": "40-04-03-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgneed-4",
@@ -12525,6 +12964,7 @@
   },
   {
    "id": "gen-cups-1",
+   "code": "20-02-04-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-cups-4",
@@ -12552,6 +12992,7 @@
   },
   {
    "id": "gen-cups-2",
+   "code": "20-02-04-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-cups-4",
@@ -12579,6 +13020,7 @@
   },
   {
    "id": "gen-cups-3",
+   "code": "20-02-04-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-cups-4",
@@ -12606,6 +13048,7 @@
   },
   {
    "id": "gen-cups-4",
+   "code": "20-02-04-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-cups-4",
@@ -12633,6 +13076,7 @@
   },
   {
    "id": "gen-numline-1",
+   "code": "20-01-07-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-numline-4",
@@ -12660,6 +13104,7 @@
   },
   {
    "id": "gen-numline-2",
+   "code": "20-01-07-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-numline-4",
@@ -12687,6 +13132,7 @@
   },
   {
    "id": "gen-numline-3",
+   "code": "20-01-07-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-numline-4",
@@ -12714,6 +13160,7 @@
   },
   {
    "id": "gen-numline-4",
+   "code": "20-01-07-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-numline-4",
@@ -12741,6 +13188,7 @@
   },
   {
    "id": "gen-dblsale-1",
+   "code": "20-03-03-06-01",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-dblsale-6",
@@ -12768,6 +13216,7 @@
   },
   {
    "id": "gen-dblsale-2",
+   "code": "20-03-03-06-02",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-dblsale-6",
@@ -12795,6 +13244,7 @@
   },
   {
    "id": "gen-dblsale-3",
+   "code": "20-03-03-06-03",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-dblsale-6",
@@ -12822,6 +13272,7 @@
   },
   {
    "id": "gen-dblsale-4",
+   "code": "20-03-03-06-04",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-dblsale-6",
@@ -12849,6 +13300,7 @@
   },
   {
    "id": "gen-maxprod-1",
+   "code": "10-05-02-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-maxprod-5",
@@ -12876,6 +13328,7 @@
   },
   {
    "id": "gen-maxprod-2",
+   "code": "10-05-02-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-maxprod-5",
@@ -12903,6 +13356,7 @@
   },
   {
    "id": "gen-maxprod-3",
+   "code": "10-05-02-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-maxprod-5",
@@ -12930,6 +13384,7 @@
   },
   {
    "id": "gen-maxprod-4",
+   "code": "10-05-02-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-maxprod-5",
@@ -12957,6 +13412,7 @@
   },
   {
    "id": "gen-gift-1",
+   "code": "40-01-07-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-gift-5",
@@ -12984,6 +13440,7 @@
   },
   {
    "id": "gen-gift-2",
+   "code": "40-01-07-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-gift-5",
@@ -13011,6 +13468,7 @@
   },
   {
    "id": "gen-gift-3",
+   "code": "40-01-07-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-gift-5",
@@ -13038,6 +13496,7 @@
   },
   {
    "id": "gen-gift-4",
+   "code": "40-01-07-05-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-gift-5",
@@ -13065,6 +13524,7 @@
   },
   {
    "id": "gen-hanoi-1",
+   "code": "40-06-04-07-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-hanoi-7",
@@ -13092,6 +13552,7 @@
   },
   {
    "id": "gen-hanoi-2",
+   "code": "40-06-04-07-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-hanoi-7",
@@ -13119,6 +13580,7 @@
   },
   {
    "id": "gen-hanoi-3",
+   "code": "40-06-04-07-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-hanoi-7",
@@ -13146,6 +13608,7 @@
   },
   {
    "id": "gen-hanoi-4",
+   "code": "40-06-04-07-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-hanoi-7",
@@ -13173,6 +13636,7 @@
   },
   {
    "id": "gen-gridhard-1",
+   "code": "30-01-07-07-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-gridhard-7",
@@ -13218,6 +13682,7 @@
   },
   {
    "id": "gen-gridhard-2",
+   "code": "30-01-07-07-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-gridhard-7",
@@ -13263,6 +13728,7 @@
   },
   {
    "id": "gen-gridhard-3",
+   "code": "30-01-07-07-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-gridhard-7",
@@ -13308,6 +13774,7 @@
   },
   {
    "id": "gen-gridhard-4",
+   "code": "30-01-07-07-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-gridhard-7",
@@ -13353,6 +13820,7 @@
   },
   {
    "id": "gen-median-1",
+   "code": "40-04-06-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-median-4",
@@ -13380,6 +13848,7 @@
   },
   {
    "id": "gen-median-2",
+   "code": "40-04-06-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-median-4",
@@ -13407,6 +13876,7 @@
   },
   {
    "id": "gen-median-3",
+   "code": "40-04-06-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-median-4",
@@ -13434,6 +13904,7 @@
   },
   {
    "id": "gen-median-4",
+   "code": "40-04-06-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-median-4",
@@ -13461,6 +13932,7 @@
   },
   {
    "id": "gen-gcdbags-1",
+   "code": "10-02-07-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-gcdbags-5",
@@ -13488,6 +13960,7 @@
   },
   {
    "id": "gen-gcdbags-2",
+   "code": "10-02-07-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-gcdbags-5",
@@ -13515,6 +13988,7 @@
   },
   {
    "id": "gen-gcdbags-3",
+   "code": "10-02-07-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-gcdbags-5",
@@ -13542,6 +14016,7 @@
   },
   {
    "id": "gen-gcdbags-4",
+   "code": "10-02-07-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-gcdbags-5",
@@ -13569,6 +14044,7 @@
   },
   {
    "id": "gen-lcmsquare-1",
+   "code": "30-06-03-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-lcmsquare-5",
@@ -13596,6 +14072,7 @@
   },
   {
    "id": "gen-lcmsquare-2",
+   "code": "30-06-03-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-lcmsquare-5",
@@ -13623,6 +14100,7 @@
   },
   {
    "id": "gen-lcmsquare-3",
+   "code": "30-06-03-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-lcmsquare-5",
@@ -13650,6 +14128,7 @@
   },
   {
    "id": "gen-lcmsquare-4",
+   "code": "30-06-03-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-lcmsquare-5",
@@ -13677,6 +14156,7 @@
   },
   {
    "id": "gen-collatz-1",
+   "code": "40-06-03-06-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-collatz-6",
@@ -13704,6 +14184,7 @@
   },
   {
    "id": "gen-collatz-2",
+   "code": "40-06-03-06-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-collatz-6",
@@ -13731,6 +14212,7 @@
   },
   {
    "id": "gen-collatz-3",
+   "code": "40-06-03-06-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-collatz-6",
@@ -13758,6 +14240,7 @@
   },
   {
    "id": "gen-collatz-4",
+   "code": "40-06-03-06-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-collatz-6",
@@ -13785,6 +14268,7 @@
   },
   {
    "id": "gen-fib-1",
+   "code": "20-01-03-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-fib-5",
@@ -13812,6 +14296,7 @@
   },
   {
    "id": "gen-fib-2",
+   "code": "20-01-03-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-fib-5",
@@ -13839,6 +14324,7 @@
   },
   {
    "id": "gen-fib-3",
+   "code": "20-01-03-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-fib-5",
@@ -13866,6 +14352,7 @@
   },
   {
    "id": "gen-fib-4",
+   "code": "20-01-03-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-fib-5",
@@ -13893,6 +14380,7 @@
   },
   {
    "id": "gen-primepick-1",
+   "code": "10-02-10-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-primepick-4",
@@ -13920,6 +14408,7 @@
   },
   {
    "id": "gen-primepick-2",
+   "code": "10-02-10-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-primepick-4",
@@ -13947,6 +14436,7 @@
   },
   {
    "id": "gen-primepick-3",
+   "code": "10-02-10-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-primepick-4",
@@ -13974,6 +14464,7 @@
   },
   {
    "id": "gen-primepick-4",
+   "code": "10-02-10-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-primepick-4",
@@ -14001,6 +14492,7 @@
   },
   {
    "id": "gen-gcdlcm-1",
+   "code": "10-02-08-06-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcdlcm-6",
@@ -14028,6 +14520,7 @@
   },
   {
    "id": "gen-gcdlcm-2",
+   "code": "10-02-08-06-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcdlcm-6",
@@ -14055,6 +14548,7 @@
   },
   {
    "id": "gen-gcdlcm-3",
+   "code": "10-02-08-06-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcdlcm-6",
@@ -14082,6 +14576,7 @@
   },
   {
    "id": "gen-gcdlcm-4",
+   "code": "10-02-08-06-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcdlcm-6",
@@ -14109,6 +14604,7 @@
   },
   {
    "id": "gen-mixture-1",
+   "code": "20-03-05-07-01",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-mixture-7",
@@ -14136,6 +14632,7 @@
   },
   {
    "id": "gen-mixture-2",
+   "code": "20-03-05-07-02",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-mixture-7",
@@ -14163,6 +14660,7 @@
   },
   {
    "id": "gen-mixture-3",
+   "code": "20-03-05-07-03",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-mixture-7",
@@ -14190,6 +14688,7 @@
   },
   {
    "id": "gen-mixture-4",
+   "code": "20-03-05-07-04",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-mixture-7",
@@ -14217,6 +14716,7 @@
   },
   {
    "id": "gen-arithnth-1",
+   "code": "20-02-01-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-arithnth-4",
@@ -14244,6 +14744,7 @@
   },
   {
    "id": "gen-arithnth-2",
+   "code": "20-02-01-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-arithnth-4",
@@ -14271,6 +14772,7 @@
   },
   {
    "id": "gen-arithnth-3",
+   "code": "20-02-01-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-arithnth-4",
@@ -14298,6 +14800,7 @@
   },
   {
    "id": "gen-arithnth-4",
+   "code": "20-02-01-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-arithnth-4",
@@ -14325,6 +14828,7 @@
   },
   {
    "id": "gen-geonth-1",
+   "code": "20-02-05-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-geonth-5",
@@ -14352,6 +14856,7 @@
   },
   {
    "id": "gen-geonth-2",
+   "code": "20-02-05-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-geonth-5",
@@ -14379,6 +14884,7 @@
   },
   {
    "id": "gen-geonth-3",
+   "code": "20-02-05-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-geonth-5",
@@ -14406,6 +14912,7 @@
   },
   {
    "id": "gen-geonth-4",
+   "code": "20-02-05-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-geonth-5",
@@ -14433,6 +14940,7 @@
   },
   {
    "id": "gen-clockgain-1",
+   "code": "20-03-01-06-01",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-clockgain-6",
@@ -14460,6 +14968,7 @@
   },
   {
    "id": "gen-clockgain-2",
+   "code": "20-03-01-06-02",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-clockgain-6",
@@ -14487,6 +14996,7 @@
   },
   {
    "id": "gen-clockgain-3",
+   "code": "20-03-01-06-03",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-clockgain-6",
@@ -14514,6 +15024,7 @@
   },
   {
    "id": "gen-clockgain-4",
+   "code": "20-03-01-06-04",
    "area": "CHANGE_RELATION",
    "difficulty": 6,
    "groupId": "g-gen-clockgain-6",
@@ -14541,6 +15052,7 @@
   },
   {
    "id": "gen-bookread-1",
+   "code": "10-06-02-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-bookread-4",
@@ -14568,6 +15080,7 @@
   },
   {
    "id": "gen-bookread-2",
+   "code": "10-06-02-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-bookread-4",
@@ -14595,6 +15108,7 @@
   },
   {
    "id": "gen-bookread-3",
+   "code": "10-06-02-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-bookread-4",
@@ -14622,6 +15136,7 @@
   },
   {
    "id": "gen-bookread-4",
+   "code": "10-06-02-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-bookread-4",
@@ -14649,6 +15164,7 @@
   },
   {
    "id": "gen-trainperson-1",
+   "code": "20-04-06-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-trainperson-5",
@@ -14676,6 +15192,7 @@
   },
   {
    "id": "gen-trainperson-2",
+   "code": "20-04-06-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-trainperson-5",
@@ -14703,6 +15220,7 @@
   },
   {
    "id": "gen-trainperson-3",
+   "code": "20-04-06-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-trainperson-5",
@@ -14730,6 +15248,7 @@
   },
   {
    "id": "gen-trainperson-4",
+   "code": "20-04-06-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-trainperson-5",
@@ -14757,6 +15276,7 @@
   },
   {
    "id": "gen-reverseop-1",
+   "code": "10-06-13-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-reverseop-4",
@@ -14784,6 +15304,7 @@
   },
   {
    "id": "gen-reverseop-2",
+   "code": "10-06-13-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-reverseop-4",
@@ -14811,6 +15332,7 @@
   },
   {
    "id": "gen-reverseop-3",
+   "code": "10-06-13-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-reverseop-4",
@@ -14838,6 +15360,7 @@
   },
   {
    "id": "gen-reverseop-4",
+   "code": "10-06-13-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-reverseop-4",
@@ -14865,6 +15388,7 @@
   },
   {
    "id": "gen-simarea-1",
+   "code": "30-01-16-07-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-simarea-7",
@@ -14892,6 +15416,7 @@
   },
   {
    "id": "gen-simarea-2",
+   "code": "30-01-16-07-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-simarea-7",
@@ -14919,6 +15444,7 @@
   },
   {
    "id": "gen-simarea-3",
+   "code": "30-01-16-07-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-simarea-7",
@@ -14946,6 +15472,7 @@
   },
   {
    "id": "gen-simarea-4",
+   "code": "30-01-16-07-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-simarea-7",
@@ -14973,6 +15500,7 @@
   },
   {
    "id": "gen-handrev-1",
+   "code": "40-03-01-06-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-handrev-6",
@@ -15000,6 +15528,7 @@
   },
   {
    "id": "gen-handrev-2",
+   "code": "40-03-01-06-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-handrev-6",
@@ -15027,6 +15556,7 @@
   },
   {
    "id": "gen-handrev-3",
+   "code": "40-03-01-06-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-handrev-6",
@@ -15054,6 +15584,7 @@
   },
   {
    "id": "gen-handrev-4",
+   "code": "40-03-01-06-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-handrev-6",
@@ -15081,6 +15612,7 @@
   },
   {
    "id": "gen-divrem-1",
+   "code": "10-02-03-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divrem-5",
@@ -15108,6 +15640,7 @@
   },
   {
    "id": "gen-divrem-2",
+   "code": "10-02-03-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divrem-5",
@@ -15135,6 +15668,7 @@
   },
   {
    "id": "gen-divrem-3",
+   "code": "10-02-03-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divrem-5",
@@ -15162,6 +15696,7 @@
   },
   {
    "id": "gen-divrem-4",
+   "code": "10-02-03-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-divrem-5",
@@ -15189,6 +15724,7 @@
   },
   {
    "id": "gen-diagcells-1",
+   "code": "30-05-06-07-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-diagcells-7",
@@ -15224,6 +15760,7 @@
   },
   {
    "id": "gen-diagcells-2",
+   "code": "30-05-06-07-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-diagcells-7",
@@ -15259,6 +15796,7 @@
   },
   {
    "id": "gen-diagcells-3",
+   "code": "30-05-06-07-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-diagcells-7",
@@ -15294,6 +15832,7 @@
   },
   {
    "id": "gen-diagcells-4",
+   "code": "30-05-06-07-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 7,
    "groupId": "g-gen-diagcells-7",
@@ -15329,6 +15868,7 @@
   },
   {
    "id": "gen-gcd3-1",
+   "code": "10-02-06-06-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcd3-6",
@@ -15356,6 +15896,7 @@
   },
   {
    "id": "gen-gcd3-2",
+   "code": "10-02-06-06-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcd3-6",
@@ -15383,6 +15924,7 @@
   },
   {
    "id": "gen-gcd3-3",
+   "code": "10-02-06-06-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcd3-6",
@@ -15410,6 +15952,7 @@
   },
   {
    "id": "gen-gcd3-4",
+   "code": "10-02-06-06-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-gcd3-6",
@@ -15437,6 +15980,7 @@
   },
   {
    "id": "gen-arithsum-1",
+   "code": "20-02-02-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-arithsum-5",
@@ -15464,6 +16008,7 @@
   },
   {
    "id": "gen-arithsum-2",
+   "code": "20-02-02-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-arithsum-5",
@@ -15491,6 +16036,7 @@
   },
   {
    "id": "gen-arithsum-3",
+   "code": "20-02-02-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-arithsum-5",
@@ -15518,6 +16064,7 @@
   },
   {
    "id": "gen-arithsum-4",
+   "code": "20-02-02-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-arithsum-5",
@@ -15545,6 +16092,7 @@
   },
   {
    "id": "gen-tribstairs-1",
+   "code": "40-03-08-06-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-tribstairs-6",
@@ -15572,6 +16120,7 @@
   },
   {
    "id": "gen-tribstairs-2",
+   "code": "40-03-08-06-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-tribstairs-6",
@@ -15599,6 +16148,7 @@
   },
   {
    "id": "gen-tribstairs-3",
+   "code": "40-03-08-06-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-tribstairs-6",
@@ -15626,6 +16176,7 @@
   },
   {
    "id": "gen-tribstairs-4",
+   "code": "40-03-08-06-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-tribstairs-6",
@@ -15653,6 +16204,7 @@
   },
   {
    "id": "gen-lights-1",
+   "code": "40-06-06-07-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-lights-7",
@@ -15680,6 +16232,7 @@
   },
   {
    "id": "gen-lights-2",
+   "code": "40-06-06-07-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-lights-7",
@@ -15707,6 +16260,7 @@
   },
   {
    "id": "gen-lights-3",
+   "code": "40-06-06-07-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-lights-7",
@@ -15734,6 +16288,7 @@
   },
   {
    "id": "gen-lights-4",
+   "code": "40-06-06-07-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-lights-7",
@@ -15761,6 +16316,7 @@
   },
   {
    "id": "gen-sumprod-1",
+   "code": "10-05-04-06-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-sumprod-6",
@@ -15788,6 +16344,7 @@
   },
   {
    "id": "gen-sumprod-2",
+   "code": "10-05-04-06-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-sumprod-6",
@@ -15815,6 +16372,7 @@
   },
   {
    "id": "gen-sumprod-3",
+   "code": "10-05-04-06-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-sumprod-6",
@@ -15842,6 +16400,7 @@
   },
   {
    "id": "gen-sumprod-4",
+   "code": "10-05-04-06-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-sumprod-6",
@@ -15869,6 +16428,7 @@
   },
   {
    "id": "gen-timedur-1",
+   "code": "20-05-06-03-01",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-timedur-3",
@@ -15896,6 +16456,7 @@
   },
   {
    "id": "gen-timedur-2",
+   "code": "20-05-06-03-02",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-timedur-3",
@@ -15923,6 +16484,7 @@
   },
   {
    "id": "gen-timedur-3",
+   "code": "20-05-06-03-03",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-timedur-3",
@@ -15950,6 +16512,7 @@
   },
   {
    "id": "gen-timedur-4",
+   "code": "20-05-06-03-04",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-timedur-3",
@@ -15977,6 +16540,7 @@
   },
   {
    "id": "gen-gridsquares-1",
+   "code": "30-01-10-06-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridsquares-6",
@@ -16011,6 +16575,7 @@
   },
   {
    "id": "gen-gridsquares-2",
+   "code": "30-01-10-06-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridsquares-6",
@@ -16045,6 +16610,7 @@
   },
   {
    "id": "gen-gridsquares-3",
+   "code": "30-01-10-06-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridsquares-6",
@@ -16079,6 +16645,7 @@
   },
   {
    "id": "gen-gridsquares-4",
+   "code": "30-01-10-06-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridsquares-6",
@@ -16113,6 +16680,7 @@
   },
   {
    "id": "gen-sumdiff-1",
+   "code": "20-06-05-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-sumdiff-4",
@@ -16140,6 +16708,7 @@
   },
   {
    "id": "gen-sumdiff-2",
+   "code": "20-06-05-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-sumdiff-4",
@@ -16167,6 +16736,7 @@
   },
   {
    "id": "gen-sumdiff-3",
+   "code": "20-06-05-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-sumdiff-4",
@@ -16194,6 +16764,7 @@
   },
   {
    "id": "gen-sumdiff-4",
+   "code": "20-06-05-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-sumdiff-4",
@@ -16221,6 +16792,7 @@
   },
   {
    "id": "gen-crypt-1",
+   "code": "10-01-03-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-crypt-4",
@@ -16243,6 +16815,7 @@
   },
   {
    "id": "gen-crypt-2",
+   "code": "10-01-03-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-crypt-4",
@@ -16270,6 +16843,7 @@
   },
   {
    "id": "gen-crypt-3",
+   "code": "10-01-03-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-crypt-4",
@@ -16297,6 +16871,7 @@
   },
   {
    "id": "gen-crypt-4",
+   "code": "10-01-03-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-crypt-4",
@@ -16324,6 +16899,7 @@
   },
   {
    "id": "gen-legs-1",
+   "code": "10-06-07-03-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-legs-3",
@@ -16351,6 +16927,7 @@
   },
   {
    "id": "gen-legs-2",
+   "code": "10-06-07-03-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-legs-3",
@@ -16378,6 +16955,7 @@
   },
   {
    "id": "gen-legs-3",
+   "code": "10-06-07-03-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-legs-3",
@@ -16405,6 +16983,7 @@
   },
   {
    "id": "gen-legs-4",
+   "code": "10-06-07-03-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-legs-3",
@@ -16432,6 +17011,7 @@
   },
   {
    "id": "gen-excess-1",
+   "code": "10-06-05-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-excess-4",
@@ -16454,6 +17034,7 @@
   },
   {
    "id": "gen-excess-2",
+   "code": "10-06-05-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-excess-4",
@@ -16481,6 +17062,7 @@
   },
   {
    "id": "gen-excess-3",
+   "code": "10-06-05-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-excess-4",
@@ -16503,6 +17085,7 @@
   },
   {
    "id": "gen-excess-4",
+   "code": "10-06-05-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-excess-4",
@@ -16530,6 +17113,7 @@
   },
   {
    "id": "gen-age-1",
+   "code": "20-06-01-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-age-4",
@@ -16557,6 +17141,7 @@
   },
   {
    "id": "gen-age-2",
+   "code": "20-06-01-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-age-4",
@@ -16584,6 +17169,7 @@
   },
   {
    "id": "gen-age-3",
+   "code": "20-06-01-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-age-4",
@@ -16611,6 +17197,7 @@
   },
   {
    "id": "gen-age-4",
+   "code": "20-06-01-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-age-4",
@@ -16638,6 +17225,7 @@
   },
   {
    "id": "gen-tree-1",
+   "code": "20-05-07-03-01",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-tree-3",
@@ -16665,6 +17253,7 @@
   },
   {
    "id": "gen-tree-2",
+   "code": "20-05-07-03-02",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-tree-3",
@@ -16692,6 +17281,7 @@
   },
   {
    "id": "gen-tree-3",
+   "code": "20-05-07-03-03",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-tree-3",
@@ -16719,6 +17309,7 @@
   },
   {
    "id": "gen-tree-4",
+   "code": "20-05-07-03-04",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-tree-3",
@@ -16746,6 +17337,7 @@
   },
   {
    "id": "gen-log-1",
+   "code": "20-05-05-03-01",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-log-3",
@@ -16773,6 +17365,7 @@
   },
   {
    "id": "gen-log-2",
+   "code": "20-05-05-03-02",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-log-3",
@@ -16800,6 +17393,7 @@
   },
   {
    "id": "gen-log-3",
+   "code": "20-05-05-03-03",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-log-3",
@@ -16827,6 +17421,7 @@
   },
   {
    "id": "gen-log-4",
+   "code": "20-05-05-03-04",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-log-3",
@@ -16854,6 +17449,7 @@
   },
   {
    "id": "gen-meet-1",
+   "code": "20-04-03-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-meet-4",
@@ -16881,6 +17477,7 @@
   },
   {
    "id": "gen-meet-2",
+   "code": "20-04-03-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-meet-4",
@@ -16908,6 +17505,7 @@
   },
   {
    "id": "gen-meet-3",
+   "code": "20-04-03-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-meet-4",
@@ -16935,6 +17533,7 @@
   },
   {
    "id": "gen-meet-4",
+   "code": "20-04-03-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-meet-4",
@@ -16962,6 +17561,7 @@
   },
   {
    "id": "gen-work-1",
+   "code": "20-05-08-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-work-4",
@@ -16989,6 +17589,7 @@
   },
   {
    "id": "gen-work-2",
+   "code": "20-05-08-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-work-4",
@@ -17016,6 +17617,7 @@
   },
   {
    "id": "gen-work-3",
+   "code": "20-05-08-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-work-4",
@@ -17043,6 +17645,7 @@
   },
   {
    "id": "gen-work-4",
+   "code": "20-05-08-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-work-4",
@@ -17070,6 +17673,7 @@
   },
   {
    "id": "gen-train-1",
+   "code": "20-04-05-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-train-5",
@@ -17097,6 +17701,7 @@
   },
   {
    "id": "gen-train-2",
+   "code": "20-04-05-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-train-5",
@@ -17124,6 +17729,7 @@
   },
   {
    "id": "gen-train-3",
+   "code": "20-04-05-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-train-5",
@@ -17151,6 +17757,7 @@
   },
   {
    "id": "gen-train-4",
+   "code": "20-04-05-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-train-5",
@@ -17178,6 +17785,7 @@
   },
   {
    "id": "gen-pyramid-1",
+   "code": "10-06-12-03-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-pyramid-3",
@@ -17205,6 +17813,7 @@
   },
   {
    "id": "gen-pyramid-2",
+   "code": "10-06-12-03-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-pyramid-3",
@@ -17232,6 +17841,7 @@
   },
   {
    "id": "gen-pyramid-3",
+   "code": "10-06-12-03-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-pyramid-3",
@@ -17259,6 +17869,7 @@
   },
   {
    "id": "gen-pyramid-4",
+   "code": "10-06-12-03-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-pyramid-3",
@@ -17286,6 +17897,7 @@
   },
   {
    "id": "gen-stairs-1",
+   "code": "40-03-06-05-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-stairs-5",
@@ -17313,6 +17925,7 @@
   },
   {
    "id": "gen-stairs-2",
+   "code": "40-03-06-05-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-stairs-5",
@@ -17340,6 +17953,7 @@
   },
   {
    "id": "gen-stairs-3",
+   "code": "40-03-06-05-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 5,
    "groupId": "g-gen-stairs-5",
@@ -17367,6 +17981,7 @@
   },
   {
    "id": "gen-grid-1",
+   "code": "30-01-04-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-grid-4",
@@ -17402,6 +18017,7 @@
   },
   {
    "id": "gen-grid-2",
+   "code": "30-01-04-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-grid-4",
@@ -17437,6 +18053,7 @@
   },
   {
    "id": "gen-grid-3",
+   "code": "30-01-04-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-grid-4",
@@ -17472,6 +18089,7 @@
   },
   {
    "id": "gen-cycle-1",
+   "code": "20-01-02-02-01",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-cycle-2",
@@ -17494,6 +18112,7 @@
   },
   {
    "id": "gen-cycle-2",
+   "code": "20-01-02-02-02",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-cycle-2",
@@ -17516,6 +18135,7 @@
   },
   {
    "id": "gen-cycle-3",
+   "code": "20-01-02-02-03",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-cycle-2",
@@ -17538,6 +18158,7 @@
   },
   {
    "id": "gen-cycle-4",
+   "code": "20-01-02-02-04",
    "area": "CHANGE_RELATION",
    "difficulty": 2,
    "groupId": "g-gen-cycle-2",
@@ -17560,6 +18181,7 @@
   },
   {
    "id": "gen-calweek-1",
+   "code": "20-05-01-03-01",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-calweek-3",
@@ -17587,6 +18209,7 @@
   },
   {
    "id": "gen-calweek-2",
+   "code": "20-05-01-03-02",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-calweek-3",
@@ -17614,6 +18237,7 @@
   },
   {
    "id": "gen-calweek-3",
+   "code": "20-05-01-03-03",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-calweek-3",
@@ -17641,6 +18265,7 @@
   },
   {
    "id": "gen-calweek-4",
+   "code": "20-05-01-03-04",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-calweek-3",
@@ -17668,6 +18293,7 @@
   },
   {
    "id": "gen-avgchg-1",
+   "code": "40-04-02-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgchg-4",
@@ -17695,6 +18321,7 @@
   },
   {
    "id": "gen-avgchg-2",
+   "code": "40-04-02-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgchg-4",
@@ -17722,6 +18349,7 @@
   },
   {
    "id": "gen-avgchg-3",
+   "code": "40-04-02-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgchg-4",
@@ -17749,6 +18377,7 @@
   },
   {
    "id": "gen-avgchg-4",
+   "code": "40-04-02-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-avgchg-4",
@@ -17776,6 +18405,7 @@
   },
   {
    "id": "gen-border-1",
+   "code": "30-02-01-03-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-border-3",
@@ -17813,6 +18443,7 @@
   },
   {
    "id": "gen-border-2",
+   "code": "30-02-01-03-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-border-3",
@@ -17850,6 +18481,7 @@
   },
   {
    "id": "gen-border-3",
+   "code": "30-02-01-03-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-border-3",
@@ -17887,6 +18519,7 @@
   },
   {
    "id": "gen-border-4",
+   "code": "30-02-01-03-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-border-3",
@@ -17924,6 +18557,7 @@
   },
   {
    "id": "gen-candle-1",
+   "code": "20-04-01-05-01",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-candle-5",
@@ -17946,6 +18580,7 @@
   },
   {
    "id": "gen-candle-2",
+   "code": "20-04-01-05-02",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-candle-5",
@@ -17973,6 +18608,7 @@
   },
   {
    "id": "gen-candle-3",
+   "code": "20-04-01-05-03",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-candle-5",
@@ -17995,6 +18631,7 @@
   },
   {
    "id": "gen-candle-4",
+   "code": "20-04-01-05-04",
    "area": "CHANGE_RELATION",
    "difficulty": 5,
    "groupId": "g-gen-candle-5",
@@ -18022,6 +18659,7 @@
   },
   {
    "id": "gen-mirror-1",
+   "code": "30-07-02-03-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-mirror-3",
@@ -18056,6 +18694,7 @@
   },
   {
    "id": "gen-mirror-2",
+   "code": "30-07-02-03-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-mirror-3",
@@ -18090,6 +18729,7 @@
   },
   {
    "id": "gen-mirror-3",
+   "code": "30-07-02-03-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-mirror-3",
@@ -18124,6 +18764,7 @@
   },
   {
    "id": "gen-mirror-4",
+   "code": "30-07-02-03-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-mirror-3",
@@ -18158,6 +18799,7 @@
   },
   {
    "id": "gen-cards-1",
+   "code": "10-01-02-01-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-cards-1",
@@ -18185,6 +18827,7 @@
   },
   {
    "id": "gen-cards-2",
+   "code": "10-01-02-01-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-cards-1",
@@ -18212,6 +18855,7 @@
   },
   {
    "id": "gen-cards-3",
+   "code": "10-01-02-01-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-cards-1",
@@ -18239,6 +18883,7 @@
   },
   {
    "id": "gen-cards-4",
+   "code": "10-01-02-01-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 1,
    "groupId": "g-gen-cards-1",
@@ -18266,6 +18911,7 @@
   },
   {
    "id": "gen-seq1-1",
+   "code": "20-01-10-01-01",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
@@ -18293,6 +18939,7 @@
   },
   {
    "id": "gen-seq1-2",
+   "code": "20-01-10-01-02",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
@@ -18320,6 +18967,7 @@
   },
   {
    "id": "gen-seq1-3",
+   "code": "20-01-10-01-03",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
@@ -18347,6 +18995,7 @@
   },
   {
    "id": "gen-seq1-4",
+   "code": "20-01-10-01-04",
    "area": "CHANGE_RELATION",
    "difficulty": 1,
    "groupId": "g-gen-seq1-1",
@@ -18374,6 +19023,7 @@
   },
   {
    "id": "gen-match-1",
+   "code": "30-02-02-01-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-match-1",
@@ -18407,6 +19057,7 @@
   },
   {
    "id": "gen-match-2",
+   "code": "30-02-02-01-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-match-1",
@@ -18440,6 +19091,7 @@
   },
   {
    "id": "gen-match-3",
+   "code": "30-02-02-01-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-match-1",
@@ -18473,6 +19125,7 @@
   },
   {
    "id": "gen-match-4",
+   "code": "30-02-02-01-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-match-1",
@@ -18506,6 +19159,7 @@
   },
   {
    "id": "gen-outfit-1",
+   "code": "40-01-08-01-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
@@ -18533,6 +19187,7 @@
   },
   {
    "id": "gen-outfit-2",
+   "code": "40-01-08-01-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
@@ -18560,6 +19215,7 @@
   },
   {
    "id": "gen-outfit-3",
+   "code": "40-01-08-01-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
@@ -18582,6 +19238,7 @@
   },
   {
    "id": "gen-outfit-4",
+   "code": "40-01-08-01-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 1,
    "groupId": "g-gen-outfit-1",
@@ -18609,6 +19266,7 @@
   },
   {
    "id": "gen-brokensum-1",
+   "code": "10-01-01-02-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-brokensum-2",
@@ -18636,6 +19294,7 @@
   },
   {
    "id": "gen-brokensum-2",
+   "code": "10-01-01-02-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-brokensum-2",
@@ -18663,6 +19322,7 @@
   },
   {
    "id": "gen-brokensum-3",
+   "code": "10-01-01-02-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-brokensum-2",
@@ -18690,6 +19350,7 @@
   },
   {
    "id": "gen-brokensum-4",
+   "code": "10-01-01-02-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 2,
    "groupId": "g-gen-brokensum-2",
@@ -18717,6 +19378,7 @@
   },
   {
    "id": "gen-cases-1",
+   "code": "40-01-01-02-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-cases-2",
@@ -18744,6 +19406,7 @@
   },
   {
    "id": "gen-cases-2",
+   "code": "40-01-01-02-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-cases-2",
@@ -18771,6 +19434,7 @@
   },
   {
    "id": "gen-cases-3",
+   "code": "40-01-01-02-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-cases-2",
@@ -18798,6 +19462,7 @@
   },
   {
    "id": "gen-cases-4",
+   "code": "40-01-01-02-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 2,
    "groupId": "g-gen-cases-2",
@@ -18825,6 +19490,7 @@
   },
   {
    "id": "gen-promise-1",
+   "code": "10-06-11-03-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-promise-3",
@@ -18852,6 +19518,7 @@
   },
   {
    "id": "gen-promise-2",
+   "code": "10-06-11-03-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-promise-3",
@@ -18879,6 +19546,7 @@
   },
   {
    "id": "gen-promise-3",
+   "code": "10-06-11-03-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-promise-3",
@@ -18906,6 +19574,7 @@
   },
   {
    "id": "gen-promise-4",
+   "code": "10-06-11-03-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 3,
    "groupId": "g-gen-promise-3",
@@ -18933,6 +19602,7 @@
   },
   {
    "id": "gen-seq2-1",
+   "code": "20-01-11-03-01",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-seq2-3",
@@ -18960,6 +19630,7 @@
   },
   {
    "id": "gen-seq2-2",
+   "code": "20-01-11-03-02",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-seq2-3",
@@ -18987,6 +19658,7 @@
   },
   {
    "id": "gen-seq2-3",
+   "code": "20-01-11-03-03",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-seq2-3",
@@ -19014,6 +19686,7 @@
   },
   {
    "id": "gen-seq2-4",
+   "code": "20-01-11-03-04",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-seq2-3",
@@ -19041,6 +19714,7 @@
   },
   {
    "id": "gen-truthone-1",
+   "code": "40-06-11-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-truthone-4",
@@ -19068,6 +19742,7 @@
   },
   {
    "id": "gen-truthone-2",
+   "code": "40-06-11-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-truthone-4",
@@ -19095,6 +19770,7 @@
   },
   {
    "id": "gen-truthone-3",
+   "code": "40-06-11-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-truthone-4",
@@ -19122,6 +19798,7 @@
   },
   {
    "id": "gen-truthone-4",
+   "code": "40-06-11-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-truthone-4",
@@ -19149,6 +19826,7 @@
   },
   {
    "id": "gen-tri-1",
+   "code": "30-02-04-02-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-tri-2",
@@ -19183,6 +19861,7 @@
   },
   {
    "id": "gen-tri-2",
+   "code": "30-02-04-02-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-tri-2",
@@ -19217,6 +19896,7 @@
   },
   {
    "id": "gen-tri-3",
+   "code": "30-02-04-02-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-tri-2",
@@ -19251,6 +19931,7 @@
   },
   {
    "id": "gen-tri-4",
+   "code": "30-02-04-02-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-tri-2",
@@ -19285,6 +19966,7 @@
   },
   {
    "id": "gen-dicesum-1",
+   "code": "40-01-05-03-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-dicesum-3",
@@ -19312,6 +19994,7 @@
   },
   {
    "id": "gen-dicesum-2",
+   "code": "40-01-05-03-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-dicesum-3",
@@ -19339,6 +20022,7 @@
   },
   {
    "id": "gen-dicesum-3",
+   "code": "40-01-05-03-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-dicesum-3",
@@ -19366,6 +20050,7 @@
   },
   {
    "id": "gen-dicesum-4",
+   "code": "40-01-05-03-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 3,
    "groupId": "g-gen-dicesum-3",
@@ -19393,6 +20078,7 @@
   },
   {
    "id": "gen-remain-1",
+   "code": "10-04-06-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-remain-4",
@@ -19420,6 +20106,7 @@
   },
   {
    "id": "gen-remain-2",
+   "code": "10-04-06-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-remain-4",
@@ -19447,6 +20134,7 @@
   },
   {
    "id": "gen-remain-3",
+   "code": "10-04-06-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-remain-4",
@@ -19474,6 +20162,7 @@
   },
   {
    "id": "gen-remain-4",
+   "code": "10-04-06-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-remain-4",
@@ -19501,6 +20190,7 @@
   },
   {
    "id": "gen-cube-1",
+   "code": "30-05-01-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cube-5",
@@ -19528,6 +20218,7 @@
   },
   {
    "id": "gen-cube-2",
+   "code": "30-05-01-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cube-5",
@@ -19555,6 +20246,7 @@
   },
   {
    "id": "gen-cube-3",
+   "code": "30-05-01-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cube-5",
@@ -19582,6 +20274,7 @@
   },
   {
    "id": "gen-cube-4",
+   "code": "30-05-01-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cube-5",
@@ -19609,6 +20302,7 @@
   },
   {
    "id": "gen-divcount-1",
+   "code": "10-02-02-04-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-divcount-4",
@@ -19636,6 +20330,7 @@
   },
   {
    "id": "gen-divcount-2",
+   "code": "10-02-02-04-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-divcount-4",
@@ -19663,6 +20358,7 @@
   },
   {
    "id": "gen-divcount-3",
+   "code": "10-02-02-04-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-divcount-4",
@@ -19690,6 +20386,7 @@
   },
   {
    "id": "gen-divcount-4",
+   "code": "10-02-02-04-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 4,
    "groupId": "g-gen-divcount-4",
@@ -19717,6 +20414,7 @@
   },
   {
    "id": "gen-riddle-1",
+   "code": "10-01-06-05-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-riddle-5",
@@ -19744,6 +20442,7 @@
   },
   {
    "id": "gen-riddle-2",
+   "code": "10-01-06-05-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-riddle-5",
@@ -19771,6 +20470,7 @@
   },
   {
    "id": "gen-riddle-3",
+   "code": "10-01-06-05-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-riddle-5",
@@ -19798,6 +20498,7 @@
   },
   {
    "id": "gen-riddle-4",
+   "code": "10-01-06-05-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 5,
    "groupId": "g-gen-riddle-5",
@@ -19825,6 +20526,7 @@
   },
   {
    "id": "gen-clockang-1",
+   "code": "30-03-01-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-clockang-4",
@@ -19859,6 +20561,7 @@
   },
   {
    "id": "gen-clockang-2",
+   "code": "30-03-01-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-clockang-4",
@@ -19893,6 +20596,7 @@
   },
   {
    "id": "gen-clockang-3",
+   "code": "30-03-01-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-clockang-4",
@@ -19927,6 +20631,7 @@
   },
   {
    "id": "gen-clockang-4",
+   "code": "30-03-01-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-clockang-4",
@@ -19961,6 +20666,7 @@
   },
   {
    "id": "gen-rectcount-1",
+   "code": "30-06-05-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectcount-4",
@@ -19995,6 +20701,7 @@
   },
   {
    "id": "gen-rectcount-2",
+   "code": "30-06-05-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectcount-4",
@@ -20029,6 +20736,7 @@
   },
   {
    "id": "gen-rectcount-3",
+   "code": "30-06-05-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectcount-4",
@@ -20063,6 +20771,7 @@
   },
   {
    "id": "gen-rectcount-4",
+   "code": "30-06-05-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-rectcount-4",
@@ -20097,6 +20806,7 @@
   },
   {
    "id": "gen-geoseq-1",
+   "code": "20-01-05-04-01",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-geoseq-4",
@@ -20124,6 +20834,7 @@
   },
   {
    "id": "gen-geoseq-2",
+   "code": "20-01-05-04-02",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-geoseq-4",
@@ -20151,6 +20862,7 @@
   },
   {
    "id": "gen-geoseq-3",
+   "code": "20-01-05-04-03",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-geoseq-4",
@@ -20178,6 +20890,7 @@
   },
   {
    "id": "gen-geoseq-4",
+   "code": "20-01-05-04-04",
    "area": "CHANGE_RELATION",
    "difficulty": 4,
    "groupId": "g-gen-geoseq-4",
@@ -20205,6 +20918,7 @@
   },
   {
    "id": "gen-parity-1",
+   "code": "40-06-07-07-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-parity-7",
@@ -20232,6 +20946,7 @@
   },
   {
    "id": "gen-parity-2",
+   "code": "40-06-07-07-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-parity-7",
@@ -20259,6 +20974,7 @@
   },
   {
    "id": "gen-parity-3",
+   "code": "40-06-07-07-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-parity-7",
@@ -20286,6 +21002,7 @@
   },
   {
    "id": "gen-parity-4",
+   "code": "40-06-07-07-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 7,
    "groupId": "g-gen-parity-7",
@@ -20313,6 +21030,7 @@
   },
   {
    "id": "gen-incexc-1",
+   "code": "10-03-02-06-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-incexc-6",
@@ -20340,6 +21058,7 @@
   },
   {
    "id": "gen-incexc-2",
+   "code": "10-03-02-06-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-incexc-6",
@@ -20367,6 +21086,7 @@
   },
   {
    "id": "gen-incexc-3",
+   "code": "10-03-02-06-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-incexc-6",
@@ -20394,6 +21114,7 @@
   },
   {
    "id": "gen-incexc-4",
+   "code": "10-03-02-06-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 6,
    "groupId": "g-gen-incexc-6",
@@ -20421,6 +21142,7 @@
   },
   {
    "id": "gen-nim-1",
+   "code": "20-06-04-07-01",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-nim-7",
@@ -20448,6 +21170,7 @@
   },
   {
    "id": "gen-nim-2",
+   "code": "20-06-04-07-02",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-nim-7",
@@ -20475,6 +21198,7 @@
   },
   {
    "id": "gen-nim-3",
+   "code": "20-06-04-07-03",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-nim-7",
@@ -20502,6 +21226,7 @@
   },
   {
    "id": "gen-nim-4",
+   "code": "20-06-04-07-04",
    "area": "CHANGE_RELATION",
    "difficulty": 7,
    "groupId": "g-gen-nim-7",
@@ -20529,6 +21254,7 @@
   },
   {
    "id": "gen-polyang-1",
+   "code": "30-03-04-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyang-4",
@@ -20562,6 +21288,7 @@
   },
   {
    "id": "gen-polyang-2",
+   "code": "30-03-04-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyang-4",
@@ -20595,6 +21322,7 @@
   },
   {
    "id": "gen-polyang-3",
+   "code": "30-03-04-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyang-4",
@@ -20628,6 +21356,7 @@
   },
   {
    "id": "gen-polyang-4",
+   "code": "30-03-04-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyang-4",
@@ -20661,6 +21390,7 @@
   },
   {
    "id": "gen-polydiag-1",
+   "code": "30-06-04-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-polydiag-5",
@@ -20695,6 +21425,7 @@
   },
   {
    "id": "gen-polydiag-2",
+   "code": "30-06-04-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-polydiag-5",
@@ -20729,6 +21460,7 @@
   },
   {
    "id": "gen-polydiag-3",
+   "code": "30-06-04-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-polydiag-5",
@@ -20763,6 +21495,7 @@
   },
   {
    "id": "gen-polydiag-4",
+   "code": "30-06-04-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-polydiag-5",
@@ -20797,6 +21530,7 @@
   },
   {
    "id": "gen-clockmin-1",
+   "code": "30-03-02-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-clockmin-5",
@@ -20831,6 +21565,7 @@
   },
   {
    "id": "gen-clockmin-2",
+   "code": "30-03-02-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-clockmin-5",
@@ -20865,6 +21600,7 @@
   },
   {
    "id": "gen-clockmin-3",
+   "code": "30-03-02-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-clockmin-5",
@@ -20899,6 +21635,7 @@
   },
   {
    "id": "gen-clockmin-4",
+   "code": "30-03-02-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-clockmin-5",
@@ -20933,6 +21670,7 @@
   },
   {
    "id": "gen-areamax-1",
+   "code": "30-01-01-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-areamax-5",
@@ -20960,6 +21698,7 @@
   },
   {
    "id": "gen-areamax-2",
+   "code": "30-01-01-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-areamax-5",
@@ -20987,6 +21726,7 @@
   },
   {
    "id": "gen-areamax-3",
+   "code": "30-01-01-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-areamax-5",
@@ -21014,6 +21754,7 @@
   },
   {
    "id": "gen-areamax-4",
+   "code": "30-01-01-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-areamax-5",
@@ -21041,6 +21782,7 @@
   },
   {
    "id": "gen-cubesurf-1",
+   "code": "30-01-03-06-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-cubesurf-6",
@@ -21083,6 +21825,7 @@
   },
   {
    "id": "gen-cubesurf-2",
+   "code": "30-01-03-06-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-cubesurf-6",
@@ -21128,6 +21871,7 @@
   },
   {
    "id": "gen-cubesurf-3",
+   "code": "30-01-03-06-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-cubesurf-6",
@@ -21168,6 +21912,7 @@
   },
   {
    "id": "gen-cubesurf-4",
+   "code": "30-01-03-06-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-cubesurf-6",
@@ -21207,6 +21952,7 @@
   },
   {
    "id": "gen-polyext-1",
+   "code": "30-03-05-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyext-4",
@@ -21240,6 +21986,7 @@
   },
   {
    "id": "gen-polyext-2",
+   "code": "30-03-05-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyext-4",
@@ -21273,6 +22020,7 @@
   },
   {
    "id": "gen-polyext-3",
+   "code": "30-03-05-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyext-4",
@@ -21306,6 +22054,7 @@
   },
   {
    "id": "gen-polyext-4",
+   "code": "30-03-05-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-polyext-4",
@@ -21339,6 +22088,7 @@
   },
   {
    "id": "gen-cubestack-1",
+   "code": "30-05-03-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21378,6 +22128,7 @@
   },
   {
    "id": "gen-cubestack-2",
+   "code": "30-05-03-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21418,6 +22169,7 @@
   },
   {
    "id": "gen-cubestack-3",
+   "code": "30-05-03-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21460,6 +22212,7 @@
   },
   {
    "id": "gen-cubestack-4",
+   "code": "30-05-03-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21502,6 +22255,7 @@
   },
   {
    "id": "gen-cubestack-5",
+   "code": "30-05-03-05-05",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21544,6 +22298,7 @@
   },
   {
    "id": "gen-cubestack-6",
+   "code": "30-05-03-05-06",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21584,6 +22339,7 @@
   },
   {
    "id": "gen-cubestack-7",
+   "code": "30-05-03-05-07",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21629,6 +22385,7 @@
   },
   {
    "id": "gen-cubestack-8",
+   "code": "30-05-03-05-08",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubestack-5",
@@ -21671,6 +22428,7 @@
   },
   {
    "id": "gen-cubestackeasy-1",
+   "code": "30-05-04-02-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-cubestackeasy-2",
@@ -21709,6 +22467,7 @@
   },
   {
    "id": "gen-cubestackeasy-2",
+   "code": "30-05-04-02-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-cubestackeasy-2",
@@ -21749,6 +22508,7 @@
   },
   {
    "id": "gen-cubestackeasy-3",
+   "code": "30-05-04-02-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-cubestackeasy-2",
@@ -21788,6 +22548,7 @@
   },
   {
    "id": "gen-cubestackeasy-4",
+   "code": "30-05-04-02-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-cubestackeasy-2",
@@ -21828,6 +22589,7 @@
   },
   {
    "id": "gen-cubetiny-1",
+   "code": "30-05-05-01-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
@@ -21861,6 +22623,7 @@
   },
   {
    "id": "gen-cubetiny-2",
+   "code": "30-05-05-01-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
@@ -21895,6 +22658,7 @@
   },
   {
    "id": "gen-cubetiny-3",
+   "code": "30-05-05-01-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
@@ -21928,6 +22692,7 @@
   },
   {
    "id": "gen-cubetiny-4",
+   "code": "30-05-05-01-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-cubetiny-1",
@@ -21962,6 +22727,7 @@
   },
   {
    "id": "gen-gridtiny-1",
+   "code": "30-01-12-01-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-gridtiny-1",
@@ -22006,6 +22772,7 @@
   },
   {
    "id": "gen-gridtiny-2",
+   "code": "30-01-12-01-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-gridtiny-1",
@@ -22050,6 +22817,7 @@
   },
   {
    "id": "gen-gridtiny-3",
+   "code": "30-01-12-01-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 1,
    "groupId": "g-gen-gridtiny-1",
@@ -22094,6 +22862,7 @@
   },
   {
    "id": "gen-grideasy-1",
+   "code": "30-01-06-02-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-grideasy-2",
@@ -22138,6 +22907,7 @@
   },
   {
    "id": "gen-grideasy-2",
+   "code": "30-01-06-02-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-grideasy-2",
@@ -22182,6 +22952,7 @@
   },
   {
    "id": "gen-grideasy-3",
+   "code": "30-01-06-02-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-grideasy-2",
@@ -22226,6 +22997,7 @@
   },
   {
    "id": "gen-grideasy-4",
+   "code": "30-01-06-02-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 2,
    "groupId": "g-gen-grideasy-2",
@@ -22270,6 +23042,7 @@
   },
   {
    "id": "gen-cubemid-1",
+   "code": "30-05-02-03-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-cubemid-3",
@@ -22310,6 +23083,7 @@
   },
   {
    "id": "gen-cubemid-2",
+   "code": "30-05-02-03-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-cubemid-3",
@@ -22350,6 +23124,7 @@
   },
   {
    "id": "gen-cubemid-3",
+   "code": "30-05-02-03-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-cubemid-3",
@@ -22392,6 +23167,7 @@
   },
   {
    "id": "gen-cubemid-4",
+   "code": "30-05-02-03-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-cubemid-3",
@@ -22434,6 +23210,7 @@
   },
   {
    "id": "gen-gridrect-1",
+   "code": "30-01-09-03-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-gridrect-3",
@@ -22478,6 +23255,7 @@
   },
   {
    "id": "gen-gridrect-2",
+   "code": "30-01-09-03-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-gridrect-3",
@@ -22522,6 +23300,7 @@
   },
   {
    "id": "gen-gridrect-3",
+   "code": "30-01-09-03-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 3,
    "groupId": "g-gen-gridrect-3",
@@ -22566,6 +23345,7 @@
   },
   {
    "id": "gen-gridtri-1",
+   "code": "30-01-14-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-gridtri-4",
@@ -22609,6 +23389,7 @@
   },
   {
    "id": "gen-gridtri-2",
+   "code": "30-01-14-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-gridtri-4",
@@ -22652,6 +23433,7 @@
   },
   {
    "id": "gen-gridtri-3",
+   "code": "30-01-14-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-gridtri-4",
@@ -22695,6 +23477,7 @@
   },
   {
    "id": "gen-gridtri-4",
+   "code": "30-01-14-04-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-gridtri-4",
@@ -22738,6 +23521,7 @@
   },
   {
    "id": "gen-gridpara-1",
+   "code": "30-01-08-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridpara-5",
@@ -22783,6 +23567,7 @@
   },
   {
    "id": "gen-gridpara-2",
+   "code": "30-01-08-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridpara-5",
@@ -22828,6 +23613,7 @@
   },
   {
    "id": "gen-gridpara-3",
+   "code": "30-01-08-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridpara-5",
@@ -22873,6 +23659,7 @@
   },
   {
    "id": "gen-gridpara-4",
+   "code": "30-01-08-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridpara-5",
@@ -22918,6 +23705,7 @@
   },
   {
    "id": "gen-gridtrap-1",
+   "code": "30-01-13-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridtrap-5",
@@ -22963,6 +23751,7 @@
   },
   {
    "id": "gen-gridtrap-2",
+   "code": "30-01-13-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridtrap-5",
@@ -23008,6 +23797,7 @@
   },
   {
    "id": "gen-gridtrap-3",
+   "code": "30-01-13-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gridtrap-5",
@@ -23053,6 +23843,7 @@
   },
   {
    "id": "gen-gridtilt-1",
+   "code": "30-01-11-06-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridtilt-6",
@@ -23099,6 +23890,7 @@
   },
   {
    "id": "gen-gridtilt-2",
+   "code": "30-01-11-06-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridtilt-6",
@@ -23145,6 +23937,7 @@
   },
   {
    "id": "gen-gridtilt-3",
+   "code": "30-01-11-06-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridtilt-6",
@@ -23191,6 +23984,7 @@
   },
   {
    "id": "gen-gridtilt-4",
+   "code": "30-01-11-06-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridtilt-6",
@@ -23237,6 +24031,7 @@
   },
   {
    "id": "gen-trianglefan-1",
+   "code": "30-02-06-04-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-trianglefan-4",
@@ -23270,6 +24065,7 @@
   },
   {
    "id": "gen-trianglefan-2",
+   "code": "30-02-06-04-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-trianglefan-4",
@@ -23303,6 +24099,7 @@
   },
   {
    "id": "gen-trianglefan-3",
+   "code": "30-02-06-04-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 4,
    "groupId": "g-gen-trianglefan-4",
@@ -23336,6 +24133,7 @@
   },
   {
    "id": "gen-trianglefanx-1",
+   "code": "30-02-07-06-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-trianglefanx-6",
@@ -23369,6 +24167,7 @@
   },
   {
    "id": "gen-trianglefanx-2",
+   "code": "30-02-07-06-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-trianglefanx-6",
@@ -23402,6 +24201,7 @@
   },
   {
    "id": "gen-trianglefanx-3",
+   "code": "30-02-07-06-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-trianglefanx-6",
@@ -23435,6 +24235,7 @@
   },
   {
    "id": "gen-cubenet-1",
+   "code": "30-04-02-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubenet-5",
@@ -23490,6 +24291,7 @@
   },
   {
    "id": "gen-cubenet-2",
+   "code": "30-04-02-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubenet-5",
@@ -23545,6 +24347,7 @@
   },
   {
    "id": "gen-cubenet-3",
+   "code": "30-04-02-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubenet-5",
@@ -23600,6 +24403,7 @@
   },
   {
    "id": "gen-cubenet-4",
+   "code": "30-04-02-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-cubenet-5",
@@ -23655,6 +24459,7 @@
   },
   {
    "id": "gen-balance-1",
+   "code": "40-06-01-06-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-balance-6",
@@ -23683,6 +24488,7 @@
   },
   {
    "id": "gen-balance-2",
+   "code": "40-06-01-06-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-balance-6",
@@ -23711,6 +24517,7 @@
   },
   {
    "id": "gen-balance-3",
+   "code": "40-06-01-06-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-balance-6",
@@ -23739,6 +24546,7 @@
   },
   {
    "id": "gen-balance-4",
+   "code": "40-06-01-06-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-balance-6",
@@ -23767,6 +24575,7 @@
   },
   {
    "id": "gen-circperm-1",
+   "code": "40-02-02-06-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-circperm-6",
@@ -23794,6 +24603,7 @@
   },
   {
    "id": "gen-circperm-2",
+   "code": "40-02-02-06-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-circperm-6",
@@ -23821,6 +24631,7 @@
   },
   {
    "id": "gen-circperm-3",
+   "code": "40-02-02-06-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 6,
    "groupId": "g-gen-circperm-6",
@@ -23848,6 +24659,7 @@
   },
   {
    "id": "gen-factzero-1",
+   "code": "10-02-05-07-01",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-factzero-7",
@@ -23875,6 +24687,7 @@
   },
   {
    "id": "gen-factzero-2",
+   "code": "10-02-05-07-02",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-factzero-7",
@@ -23902,6 +24715,7 @@
   },
   {
    "id": "gen-factzero-3",
+   "code": "10-02-05-07-03",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-factzero-7",
@@ -23929,6 +24743,7 @@
   },
   {
    "id": "gen-factzero-4",
+   "code": "10-02-05-07-04",
    "area": "NUMBER_OPERATION",
    "difficulty": 7,
    "groupId": "g-gen-factzero-7",
@@ -23956,6 +24771,7 @@
   },
   {
    "id": "gen-gridblock-1",
+   "code": "30-01-05-06-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridblock-6",
@@ -23994,6 +24810,7 @@
   },
   {
    "id": "gen-gridblock-2",
+   "code": "30-01-05-06-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridblock-6",
@@ -24032,6 +24849,7 @@
   },
   {
    "id": "gen-gridblock-3",
+   "code": "30-01-05-06-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridblock-6",
@@ -24070,6 +24888,7 @@
   },
   {
    "id": "gen-gridblock-4",
+   "code": "30-01-05-06-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 6,
    "groupId": "g-gen-gridblock-6",
@@ -24108,6 +24927,7 @@
   },
   {
    "id": "gen-subst-1",
+   "code": "20-03-10-03-01",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-subst-3",
@@ -24135,6 +24955,7 @@
   },
   {
    "id": "gen-subst-2",
+   "code": "20-03-10-03-02",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-subst-3",
@@ -24162,6 +24983,7 @@
   },
   {
    "id": "gen-subst-3",
+   "code": "20-03-10-03-03",
    "area": "CHANGE_RELATION",
    "difficulty": 3,
    "groupId": "g-gen-subst-3",
@@ -24189,6 +25011,7 @@
   },
   {
    "id": "gen-coincomb-1",
+   "code": "40-01-02-04-01",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coincomb-4",
@@ -24211,6 +25034,7 @@
   },
   {
    "id": "gen-coincomb-2",
+   "code": "40-01-02-04-02",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coincomb-4",
@@ -24233,6 +25057,7 @@
   },
   {
    "id": "gen-coincomb-3",
+   "code": "40-01-02-04-03",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coincomb-4",
@@ -24255,6 +25080,7 @@
   },
   {
    "id": "gen-coincomb-4",
+   "code": "40-01-02-04-04",
    "area": "DATA_POSSIBILITY",
    "difficulty": 4,
    "groupId": "g-gen-coincomb-4",
@@ -24277,6 +25103,7 @@
   },
   {
    "id": "gen-gcdtile-1",
+   "code": "30-06-02-05-01",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gcdtile-5",
@@ -24311,6 +25138,7 @@
   },
   {
    "id": "gen-gcdtile-2",
+   "code": "30-06-02-05-02",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gcdtile-5",
@@ -24345,6 +25173,7 @@
   },
   {
    "id": "gen-gcdtile-3",
+   "code": "30-06-02-05-03",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gcdtile-5",
@@ -24379,6 +25208,7 @@
   },
   {
    "id": "gen-gcdtile-4",
+   "code": "30-06-02-05-04",
    "area": "SHAPE_MEASUREMENT",
    "difficulty": 5,
    "groupId": "g-gen-gcdtile-5",
