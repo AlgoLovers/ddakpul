@@ -37,6 +37,7 @@ import com.ddakpul.math.presentation.privacy.PrivacyScreen
 import com.ddakpul.math.presentation.report.ReportScreen
 import com.ddakpul.math.presentation.settings.SettingsScreen
 import com.ddakpul.math.presentation.solve.SolveScreen
+import com.ddakpul.math.presentation.videodemo.VideoDemoScreen
 
 private enum class DdakPulDestination(
     val route: String,
@@ -53,6 +54,7 @@ private enum class DdakPulDestination(
 private const val PRINT_ROUTE = "print"
 private const val PAYWALL_ROUTE = "paywall"
 private const val PRIVACY_ROUTE = "privacy"
+private const val VIDEO_DEMO_ROUTE = "videodemo"
 
 @Composable
 fun DdakPulApp(
@@ -109,11 +111,13 @@ private fun AppNavHost(
             SettingsScreen(
                 onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) },
                 onOpenPrivacy = { navController.navigate(PRIVACY_ROUTE) },
+                onOpenVideoDemo = { navController.navigate(VIDEO_DEMO_ROUTE) },
             )
         }
         composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
         composable(PAYWALL_ROUTE) { PaywallScreen(onClose = { navController.popBackStack() }) }
         composable(PRIVACY_ROUTE) { PrivacyScreen(onBack = { navController.popBackStack() }) }
+        composable(VIDEO_DEMO_ROUTE) { VideoDemoScreen(onBack = { navController.popBackStack() }) }
     }
 }
 

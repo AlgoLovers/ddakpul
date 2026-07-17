@@ -8,6 +8,8 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # nightly 릴리스에 APK 업로드
     env:
       # 시크릿을 잡 레벨 env로 올려, 아래 텔레그램 스텝의 if 조건에서 존재 여부를 검사할 수 있게 한다.
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -43,19 +45,30 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
 
-      # 텔레그램 시크릿이 설정된 경우에만 실행된다(미설정 저장소에서 CI가 붉어지지 않도록).
-      # main 푸시(릴리스 머지)에만 전송 — develop까지 보내면 같은 코드가 두 번씩 배달된다.
+      # APK가 텔레그램 봇 업로드 한도(50MB)를 넘어서(TTS 동봉 후 ~111MB),
+      # 파일 직접 전송 대신 'nightly' 프리릴리스 자산으로 올리고 링크를 보낸다(공개 저장소라 로그인 없이 다운로드 가능).
+      # main 푸시(릴리스 머지)에만 — develop까지 보내면 같은 코드가 두 번씩 배달된다.
+      - name: Publish debug APK to nightly release
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view nightly >/dev/null 2>&1 || \
+            gh release create nightly --prerelease --title "Nightly debug build" \
+              --notes "main 브랜치 최신 디버그 빌드(자동 갱신). 스토어 배포용이 아닙니다."
+          gh release upload nightly app/build/outputs/apk/debug/app-debug.apk --clobber
+
       # 전송 실패(예: 사용자가 봇을 아직 Start 안 함)는 빌드 실패가 아니므로 경고만 남긴다.
-      - name: Send debug APK to Telegram
+      - name: Send APK link to Telegram
         if: ${{ github.event_name == 'push' && github.ref_name == 'main' && env.TELEGRAM_BOT_TOKEN != '' }}
         run: |
           response=$(curl -sS \
-            -F chat_id="${TELEGRAM_CHAT_ID}" \
-            -F caption="🧮 DdakPul debug APK — ${GITHUB_REF_NAME}@${GITHUB_SHA::7}" \
-            -F document=@app/build/outputs/apk/debug/app-debug.apk \
-            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument")
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            --data-urlencode text="🧮 DdakPul debug APK — ${GITHUB_REF_NAME}@${GITHUB_SHA::7}
+          다운로드: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/nightly/app-debug.apk" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage")
           if echo "$response" | grep -q '"ok":true'; then
-            echo "APK delivered to Telegram."
+            echo "APK link delivered to Telegram."
           else
             echo "::warning::Telegram delivery failed (bot not started yet?): $response"
           fi

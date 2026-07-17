@@ -24,3 +24,6 @@ __pycache__/
 *.pyc
 keystore.properties
 /ddakpul-upload.keystore
+
+# Claude Code 워크트리 (병렬 세션 격리)
+.claude/worktrees/
