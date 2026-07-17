@@ -10,6 +10,9 @@ naming:
     ignoreAnnotated: ["Composable"]
 
 style:
+  UnusedPrivateMember:
+    # @Preview 컴포저블은 도구가 호출하므로 '미사용'이 아니다.
+    ignoreAnnotated: ["Preview", "Composable"]
   MagicNumber:
     active: false # noisy for Compose dp/sp/color literals
   ReturnCount:

@@ -80,6 +80,15 @@ android {
     namespace = "com.ddakpul.math"
     compileSdk = 36
 
+    lint {
+        // compose-lints는 가드레일 — 위반은 보되 릴리스 빌드를 막지는 않는다(솔로·프리런치).
+        // 성능 권고(불안정 컬렉션/리시버 등)는 출시 후 백로그. 진짜 문제는 리뷰에서 대응한다.
+        warningsAsErrors = false
+        abortOnError = false
+        // 의존성 최신버전 안내는 소음이라 뺀다(업그레이드는 의도적으로 관리).
+        disable += setOf("GradleDependency", "NewerVersionAvailable", "AndroidGradlePluginVersion")
+    }
+
     defaultConfig {
         applicationId = "com.ddakpul.math"
         minSdk = 26
@@ -195,6 +204,10 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.kotlinx.serialization.json)
+
+    // Compose 디자인/안정성 린트 — 모디파이어 순서·하드코딩 파라미터·상태 안정성 등 위험 패턴을
+    // Android Lint 단계에서 잡는다(런타임 비용 0, 코드 변경 불필요한 드롭인 가드레일).
+    lintChecks(libs.compose.lints)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
