@@ -49,7 +49,29 @@
 - 실행: `/emu-qa` 스킬 — 다크 전환은 `adb shell cmd uimode night yes|no`.
 - 핵심 화면: 홈 · 풀이 · 결과 · 리포트 · 설정.
 - 릴리스 전: Accessibility Scanner 1회(대비·타겟 크기).
-- 도입 후보(미구현): Compose Preview Screenshot Testing으로 커밋 단위 자동 매트릭스.
+
+## 디자인 도구 (2026-07 리서치 → 채택/보류)
+
+리서치 2건(디자인 QA 하네스 · 세련된 룩 리소스)에서 도출. AI 에이전트로 Compose 앱을
+개발할 때 쓰이는 도구들 중 딱풀(솔로·프리런치)에 맞는 것만 채택.
+
+**적용됨**
+- **compose-lints**(slackhq, `lintChecks`) — 모디파이어 재사용·하드코딩 파라미터·불안정 컬렉션 등
+  위험 패턴을 Lint에서 잡는 가드레일. `abortOnError=false`로 릴리스는 안 막고 표시만.
+- **Pretendard 서체**(OFL) — 실사용 글자만 서브셋(≈0.4MB, `tools/fonts/subset.py`). 콘텐츠 바꾸면 재실행.
+- **@Preview** — 디자인 시스템 컴포넌트에 라이트/다크 미리보기(`ComponentPreviews.kt`). Android Studio
+  디자인 반복 + 스크린샷 테스트의 전제조건.
+
+**출시 후 도입 후보 (지금은 미적용)**
+- **스크린샷 회귀 테스트** — Paparazzi(JVM·CI에 에뮬 불필요) 또는 Google 공식 Compose Preview
+  Screenshot Testing. `@Preview`가 이미 있어 붙이면 라이트/다크×폰트스케일이 자동 회귀 테스트가 됨.
+  ⚠️ 현재 AGP 8.11이 최신이라 서드파티 플러그인 버전 정합에 주의 — 한 번에 집중해서 붙일 것.
+  ComposablePreviewScanner(sergio-sastre)로 프리뷰→테스트 자동 수집 결합이 표준.
+- **Compose 접근성 체크** — 테스트에서 `composeTestRule.enableAccessibilityChecks()`(대비·48dp 터치·라벨).
+- **M3 Expressive**(셰이프 모핑·스프링 모션) — material3 1.5.0 정식화 후. 지금은 alpha·실험 API라 보류.
+- **비주얼 격상**(오너 취향: 3D 클레이·그라데이션·마스코트): 3dicons(CC0)·Fluent 3D 이모지(MIT) 아이콘,
+  Lottie(마스코트/정답 축하), Konfetti+햅틱, 네이티브 그라데이션/소프트 섀도우. 되돌리기 쉬운 것부터.
+- **제외**: 무거운 서드파티 UI 킷 통째 채택(버전 종속·방치 리스크), Google Relay(2025 종료).
 
 ## do / don't 박제 (실사고)
 
