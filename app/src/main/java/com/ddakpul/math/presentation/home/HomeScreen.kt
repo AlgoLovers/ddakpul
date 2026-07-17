@@ -124,7 +124,7 @@ private fun HomeContent(
             Text(
                 text = stringResource(R.string.home_start),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
     }
