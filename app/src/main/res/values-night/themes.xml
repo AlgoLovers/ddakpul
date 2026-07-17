@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 다크 창 테마 — 시스템 다크 모드에서 창 배경·시스템 바 기본을 어둡게(흰 배경 비침 방지). -->
+    <style name="Theme.DdakPul" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">#121318</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+</resources>
