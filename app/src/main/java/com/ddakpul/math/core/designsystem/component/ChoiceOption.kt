@@ -67,6 +67,12 @@ fun ChoiceOption(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(14.dp),
         ) {
+            // 배지 글자색은 배지 배경과 짝으로 — 기본 상태의 옅은 회색 원에 흰 글자는 대비 미달.
+            val badgeContent =
+                when (state) {
+                    ChoiceState.DEFAULT, ChoiceState.DIMMED -> colors.onSurfaceVariant
+                    else -> Color.White
+                }
             Surface(
                 color = border,
                 shape = CircleShape,
@@ -75,7 +81,7 @@ fun ChoiceOption(
                 Box(contentAlignment = Alignment.Center) {
                     Text(
                         text = ('A' + index).toString(),
-                        color = Color.White,
+                        color = badgeContent,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.titleMedium,
                     )
