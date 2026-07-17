@@ -3,7 +3,7 @@
 
     <!--
       핵심 기능(문제 풀이·채점·추천·리포트)은 인터넷 없이 완결된다. INTERNET 권한은 오직
-      '선택적 고품질 음성(신경망 TTS) 모델'을 사용자가 원할 때 1회 내려받기 위해서만 쓴다.
+      '선택적 고품질 음성(신경망 TTS) 모델·해설 영상'을 사용자가 원할 때 내려받기 위해서만 쓴다.
       아동 학습 데이터는 어떤 경우에도 기기 밖으로 나가지 않는다.
     -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,7 +18,8 @@
         android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DdakPul">
+        android:theme="@style/Theme.DdakPul"
+        android:usesCleartextTraffic="false">
         <activity
             android:name=".MainActivity"
             android:exported="true"
