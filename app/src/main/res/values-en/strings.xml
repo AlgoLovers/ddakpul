@@ -393,4 +393,8 @@
     <string name="video_demo_statement">A tilted shape sits on a grid. What is the area of the shaded part in cm²? (Each grid cell is 1 cm².)</string>
     <string name="video_demo_note">This screen is a quality-evaluation preview. In the full feature, problems with a ready video get a ‘Watch video solution’ button on the explanation screen.</string>
     <string name="video_demo_back">Back</string>
+    <string name="video_demo_pick1">① Tilted shape · Area</string>
+    <string name="video_demo_pick2">② Stone game · Strategy</string>
+    <string name="video_demo_problem_label2">Problem · Patterns &amp; Relations · Level 7</string>
+    <string name="video_demo_statement2">There are 10 stones. Two players take turns removing 1–3 stones, and whoever takes the last stone wins. How many stones should the first player take to guarantee a win?</string>
 </resources>
