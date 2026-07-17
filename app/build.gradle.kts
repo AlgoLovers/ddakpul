@@ -131,6 +131,19 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    // 텔레그램 배달용 단일 ABI 빌드(-PabiSplit): 4개 ABI 동봉 시 111MB로 봇 한도(50MB) 초과.
+    // 평소 빌드에는 영향 없음 — CI의 배달 스텝만 이 속성을 켠다.
+    if (project.hasProperty("abiSplit")) {
+        splits {
+            abi {
+                isEnable = true
+                reset()
+                include("arm64-v8a")
+                isUniversalApk = false
+            }
+        }
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
