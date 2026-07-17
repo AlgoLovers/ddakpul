@@ -51,8 +51,11 @@ val NeutralVariant50 = Color(0xFF767680)
 val NeutralVariant80 = Color(0xFFC6C5D0)
 val NeutralVariant90 = Color(0xFFE3E1EC)
 
-// 표면 컨테이너 단계 — 카드가 배경에 묻히지 않도록 직접 정의한다.
-val SurfaceContainerLight = Color(0xFFF1EEF6)
-val SurfaceContainerHighLight = Color(0xFFEBE8F1)
+// 라이트 캔버스 — 순백 대신 은은한 라벤더 틴트(눈부심 완화). 카드가 이 위에 밝게 뜬다.
+val CanvasLight = Color(0xFFEDEBF7)
+
+// 표면 컨테이너 단계 — 틴트 캔버스 위에 '떠 있는' 밝은 카드(입체 레이어링).
+val SurfaceContainerLight = Color(0xFFFCFBFF)
+val SurfaceContainerHighLight = Color(0xFFF4F2FC)
 val SurfaceContainerDark = Color(0xFF25252C)
 val SurfaceContainerHighDark = Color(0xFF303038)
