@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
@@ -27,6 +29,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.core.designsystem.component.StatTile
+import com.ddakpul.math.core.designsystem.theme.AreaData
+import com.ddakpul.math.core.designsystem.theme.AreaNumber
+import com.ddakpul.math.core.designsystem.theme.AreaShape
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.SessionGoals
@@ -58,7 +63,7 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
+        modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
@@ -100,18 +105,21 @@ private fun HomeContent(
                 icon = "📚",
                 label = stringResource(R.string.home_stat_solved),
                 value = stringResource(R.string.home_unit_count, solved),
+                iconTint = AreaNumber,
                 modifier = Modifier.weight(1f),
             )
             StatTile(
                 icon = "🎯",
                 label = stringResource(R.string.home_stat_accuracy),
                 value = stringResource(R.string.home_unit_percent, accuracyPercent),
+                iconTint = AreaShape,
                 modifier = Modifier.weight(1f),
             )
             StatTile(
                 icon = "🏆",
                 label = stringResource(R.string.home_stat_difficulty),
                 value = stringResource(R.string.home_unit_level, level),
+                iconTint = AreaData,
                 modifier = Modifier.weight(1f),
             )
         }

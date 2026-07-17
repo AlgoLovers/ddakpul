@@ -59,6 +59,10 @@ import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
 import com.ddakpul.math.core.designsystem.component.TrendLineChart
 import com.ddakpul.math.core.designsystem.component.masteryStageOf
+import com.ddakpul.math.core.designsystem.theme.AreaChange
+import com.ddakpul.math.core.designsystem.theme.AreaData
+import com.ddakpul.math.core.designsystem.theme.AreaNumber
+import com.ddakpul.math.core.designsystem.theme.AreaShape
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.ConceptStat
 import com.ddakpul.math.domain.model.Difficulty
@@ -565,17 +569,26 @@ private fun durationText(sec: Int): String =
         stringResource(R.string.report_avgtime_sec, sec)
     }
 
+/** 4개 영역을 고정 색으로 구분(밝은 디자인 · 알록달록하되 절제). */
+private fun areaColor(area: MathArea) =
+    when (area) {
+        MathArea.NUMBER_OPERATION -> AreaNumber
+        MathArea.CHANGE_RELATION -> AreaChange
+        MathArea.SHAPE_MEASUREMENT -> AreaShape
+        MathArea.DATA_POSSIBILITY -> AreaData
+    }
+
 /** 네 영역별 성취 — 어디가 강하고 어디를 보강할지 한눈에(기본 지표). 시도 없는 영역은 빈 막대로. */
 @Composable
 private fun AreaBreakdown(areaStats: List<AreaStat>) {
     val byArea = areaStats.associateBy { it.area }
     val barBg = MaterialTheme.colorScheme.surfaceVariant
-    val barFg = MaterialTheme.colorScheme.primary
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
         MathArea.entries.forEach { area ->
             val stat = byArea[area]
             val solved = stat?.solved ?: 0
             val accuracy = stat?.accuracy ?: 0f
+            val barFg = areaColor(area)
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
