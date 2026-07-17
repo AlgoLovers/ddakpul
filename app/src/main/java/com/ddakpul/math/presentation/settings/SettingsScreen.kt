@@ -55,7 +55,6 @@ import com.ddakpul.math.presentation.common.tts.TtsModels
 fun SettingsScreen(
     onOpenPaywall: () -> Unit,
     onOpenPrivacy: () -> Unit,
-    onOpenVideoDemo: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -123,9 +122,6 @@ fun SettingsScreen(
 
         // 개인정보·데이터 안전 — 스토어 요건이자 신뢰 메시지.
         PrivacyCard(onOpenPrivacy = onOpenPrivacy)
-
-        // 동영상 해설 품질 평가용 미리보기(베타) — 정식 채택 전 프로토타입 진입점.
-        VideoDemoCard(onOpenVideoDemo = onOpenVideoDemo)
 
         Text(
             // 버전 표기 — 어떤 빌드가 설치됐는지 확인용(업데이트 반영 여부 진단).
@@ -222,25 +218,6 @@ private fun LanguageCard() {
                 onClick = { LocaleManagerCompat.apply(context, LocaleManagerCompat.ENGLISH) },
                 label = { Text(stringResource(R.string.settings_language_en)) },
             )
-        }
-    }
-}
-
-@Composable
-private fun VideoDemoCard(onOpenVideoDemo: () -> Unit) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_video_demo_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
-        Text(
-            text = stringResource(R.string.settings_video_demo_desc),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        OutlinedButton(onClick = onOpenVideoDemo) {
-            Text(stringResource(R.string.settings_video_demo_open))
         }
     }
 }

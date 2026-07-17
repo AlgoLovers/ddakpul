@@ -5,4 +5,5 @@
 -->
 <full-backup-content>
     <exclude domain="file" path="tts" />
+    <exclude domain="file" path="videos" />
 </full-backup-content>
