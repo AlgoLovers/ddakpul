@@ -484,7 +484,8 @@ def gen_ratio_share():
         unit = total // (r1 + r2)
         part = unit * r1
         add(
-            "ratioshare", "CHANGE_RELATION", 5, ["비", "단위량 먼저"],
+            # 난이도 재조정(5→4, 2026-07 d1~5 스캔): 2항 비는 ratio3보다 한 단계 아래.
+            "ratioshare", "CHANGE_RELATION", 4, ["비", "단위량 먼저"],
             f"구슬 {total}개를 형과 동생이 {r1}:{r2}로 나눠 가져요. 형이 갖는 구슬은 몇 개일까요?",
             f"{part}개", [f"{r1}개", f"{total // 2}개", f"{total - part}개"],
             f"비 {r1}:{r2}는 전체를 똑같은 묶음 {r1}+{r2}={r1 + r2}묶음으로 나눈 거예요. 한 묶음은 {total}÷{r1 + r2}={unit}개. 형은 그중 {r1}묶음을 가지니 {unit}×{r1}={part}개예요.",
@@ -612,7 +613,8 @@ def gen_square_numbers():
             dots += 2 * i - 1
         assert dots == ans, f"squarenum 검산 실패: {dots} != {ans}"
         add(
-            "squarenum", "CHANGE_RELATION", 4, ["규칙", "사각수"],
+            # 난이도 재조정(4→2, 2026-07 d1~5 스캔): 규칙 n×n이 지문에 명시 — 발견 요소 없음.
+            "squarenum", "CHANGE_RELATION", 2, ["규칙", "사각수"],
             f"바둑돌을 정사각형 모양으로 놓아요. 1번째는 1개(1×1), 2번째는 4개(2×2), 3번째는 9개(3×3)… {k}번째 그림의 바둑돌은 몇 개일까요?",
             f"{ans}개", [f"{k * 2}개", f"{(k - 1) * (k - 1)}개", f"{ans + k}개"],
             f"규칙을 보면 n번째는 한 변이 n개인 정사각형이라 n×n개예요. 그러니 {k}번째는 {k}×{k}={ans}개예요.",
@@ -813,7 +815,8 @@ def gen_marble_transfer():
         assert sols == [ans], f"transfer 검산 실패: {sols} != [{ans}]"
         en_item = {"구슬": "marbles", "사탕": "candies", "딱지": "cards", "스티커": "stickers"}[ctx]
         add(
-            "transfer", "CHANGE_RELATION", 5, ["차이 사고", "주고받기"],
+            # 난이도 재조정(5→4, 2026-07 d1~5 스캔): '주면 차이가 2배로' 단일 통찰.
+            "transfer", "CHANGE_RELATION", 4, ["차이 사고", "주고받기"],
             f"형과 동생이 {ctx}{_eul(ctx)} 가지고 있어요. 형이 동생에게 {ctx} {give}개를 주면 둘의 개수가 똑같아진대요. 원래 형은 동생보다 {ctx}{_eul(ctx)} 몇 개 더 가지고 있었을까요?",
             f"{ans}개", [f"{give}개", f"{give * 3}개", f"{ans - 1}개"],
             f"형이 {give}개를 주면 형은 {give} 줄고 동생은 {give} 늘어요. 그러면 둘 사이 차이는 한 번에 {give}+{give}={ans}만큼 줄어요. 주고 나서 '같아졌다'(차이 0)니 원래 차이는 딱 그만큼인 {ans}개였어요.",
@@ -1052,7 +1055,8 @@ def gen_train_pass_person():
         assert length % speed == 0
         ans = length // speed
         add(
-            "trainperson", "CHANGE_RELATION", 5, ["거속시", "숨은 길이"],
+            # 난이도 재조정(5→4, 2026-07 d1~5 스캔): train의 퇴화 케이스.
+            "trainperson", "CHANGE_RELATION", 4, ["거속시", "숨은 길이"],
             f"길이 {length}m인 기차가 초속 {speed}m로 달려요. 선로 옆에 서 있는 사람 한 명을 완전히 지나치는 데 몇 초가 걸릴까요?",
             f"{ans}초", [f"{length}초", f"{ans * 2}초", f"{ans - 1}초"],
             f"사람은 크기가 거의 없으니, 기차가 '자기 길이만큼' 지나가면 사람을 완전히 지나친 거예요. 그러니 기차는 {length}m를 가야 하고, 초속 {speed}m이니 {length}÷{speed}={ans}초 걸려요.",

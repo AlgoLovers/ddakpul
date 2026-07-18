@@ -652,7 +652,8 @@ def gen_percent_of():
         assert (whole * pct) % 100 == 0
         ans = whole * pct // 100
         add(
-            "percentof", "NUMBER_OPERATION", 4, ["백분율", "전체의 일부"],
+            # 난이도 재조정(4→3, 2026-07 d1~5 스캔): 1단계 백분율 계산.
+            "percentof", "NUMBER_OPERATION", 3, ["백분율", "전체의 일부"],
             f"어느 학교 학생 {whole}명 중 {pct}%가 안경을 썼어요. 안경 쓴 학생은 몇 명일까요?",
             f"{ans}명", [f"{pct}명", f"{whole - ans}명", f"{ans + pct}명"],
             f"{pct}%는 '전체를 100으로 봤을 때 {pct}만큼'이라는 뜻이에요. 그러니 {whole}명의 {pct}% = {whole}×{pct}÷100 = {ans}명이에요. (또는 1%가 {whole}÷100={whole // 100 if whole % 100 == 0 else whole / 100:g}명이니 {pct}배 해도 {ans}.)",
@@ -841,7 +842,8 @@ def gen_book_reading():
         ans = total - read
         assert ans > 0
         add(
-            "bookread", "NUMBER_OPERATION", 4, ["곱셈과 뺄셈", "남은 양"],
+            # 난이도 재조정(4→2, 2026-07 d1~5 스캔): 300−25×8 — 발견 요소 0의 2단계 연산.
+            "bookread", "NUMBER_OPERATION", 2, ["곱셈과 뺄셈", "남은 양"],
             f"{total}쪽짜리 책을 매일 {perday}쪽씩 읽어요. {days}일 동안 읽으면 몇 쪽이 남을까요?",
             f"{ans}쪽", [f"{read}쪽", f"{total - perday}쪽", f"{ans - perday}쪽"],
             f"먼저 {days}일 동안 읽은 양을 구해요: {perday}×{days}={read}쪽. 전체 {total}쪽에서 읽은 {read}쪽을 빼면 {total}−{read}={ans}쪽이 남아요.",

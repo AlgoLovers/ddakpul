@@ -494,7 +494,8 @@ def gen_cube_stack():
         assert len(heights) == w * d
         ans = sum(heights)
         add(
-            "cubestack", "SHAPE_MEASUREMENT", 5, ["쌓기나무", "공간 지각"],
+            # 난이도 재조정(5→4, 2026-07 d1~5 스캔): 쌓기나무 사다리(d1→2→3)에서 d5는 과대.
+            "cubestack", "SHAPE_MEASUREMENT", 4, ["쌓기나무", "공간 지각"],
             "그림처럼 쌓은 쌓기나무는 모두 몇 개일까요? (보이지 않는 뒤·아래 나무도 세어요)",
             f"{ans}개", [f"{ans - 1}개", f"{ans + 1}개", f"{max(1, ans - 2)}개"],
             f"기둥마다 몇 층인지 세어 더해요: {' + '.join(str(h) for h in heights)} = {ans}개. 앞 나무에 가려 안 보여도 아래는 채워져 있다고 봐요.",
@@ -1402,7 +1403,9 @@ def gen_rectperim():
         walk = sum(abs(x2 - x1) + abs(y2 - y1) for (x1, y1), (x2, y2) in zip(corners, corners[1:] + corners[:1]))
         assert walk == ans, f"rectperim 검산실패: {a}x{b}"
         add(
-            "rectperim", "SHAPE_MEASUREMENT", 4, ["둘레", "측정"],
+            # 난이도 재조정(4→2, 2026-07 d1~5 스캔): (가로+세로)×2 공식 1단계 — sqarea(d3)보다
+            # 쉬운데 위에 있던 역전 해소.
+            "rectperim", "SHAPE_MEASUREMENT", 2, ["둘레", "측정"],
             f"가로 {a}cm, 세로 {b}cm인 직사각형이 있어요. 이 직사각형의 둘레는 몇 cm일까요?",
             f"{ans}cm", [f"{c}cm" for c in _pick_distractors(ans, [a * b, a + b, ans + 2, ans - 2])],
             f"직사각형은 가로 두 변, 세로 두 변이에요. 둘레 = (가로+세로)×2 = ({a}+{b})×2 = {ans}cm예요.",

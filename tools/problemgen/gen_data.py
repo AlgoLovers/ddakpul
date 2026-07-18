@@ -478,7 +478,8 @@ def gen_handshake():
         from itertools import combinations
         assert sum(1 for _ in combinations(range(n), 2)) == ans, "handshake 검산 실패"
         add(
-            "handshake", "DATA_POSSIBILITY", 5, ["경우의 수", "두 번 세고 나누기"],
+            # 난이도 재조정(5→4, 2026-07 d1~5 스캔): league(d3)와 같은 C(n,2) 계열 — 층 정렬.
+            "handshake", "DATA_POSSIBILITY", 4, ["경우의 수", "두 번 세고 나누기"],
             f"{n}명이 모여 서로 한 번씩 빠짐없이 악수를 해요. 악수는 모두 몇 번 일어날까요?",
             f"{ans}번", [f"{n * (n - 1)}번", f"{n * n}번", f"{ans - n + 1}번"],
             f"한 사람은 자기를 뺀 {n - 1}명과 악수해요. {n}명이 각자 {n - 1}번이면 {n}×{n - 1}={n * (n - 1)}번인데, 이러면 'A와 B의 악수'를 A쪽·B쪽에서 두 번 센 거예요. 그래서 2로 나눠요: {n * (n - 1)}÷2={ans}번.",
@@ -750,7 +751,8 @@ def gen_median():
         assert n % 2 == 1 and len(set(nums)) == n, "median 검산 실패: 전제(홀수 개·서로 다름)"
         assert ans in nums and sum(1 for v in nums if v < ans) == n // 2 and sum(1 for v in nums if v > ans) == n // 2, "median 검산 실패"
         add(
-            "median", "DATA_POSSIBILITY", 4, ["중앙값", "정렬"],
+            # 난이도 재조정(4→3, 2026-07 d1~5 스캔): 정렬 후 가운데 — 정의 적용.
+            "median", "DATA_POSSIBILITY", 3, ["중앙값", "정렬"],
             f"다음 수들의 '중앙값'(크기 순으로 늘어놓았을 때 한가운데 오는 수)을 구하세요: {', '.join(map(str, nums))}.",
             str(ans), [str(sum(nums) // n), str(max(nums)), str(min(nums))],
             f"중앙값은 '크기 순으로 줄 세운 뒤 한가운데'예요. 정렬하면 {', '.join(map(str, s))}. {n}개의 한가운데({n // 2 + 1}번째)는 {ans}이에요. (평균과 달리 아주 크거나 작은 값에 덜 흔들려요.)",
@@ -898,7 +900,9 @@ def gen_choose_two():
         from itertools import combinations
         assert sum(1 for _ in combinations(names, 2)) == ans, "choose2 검산 실패"
         add(
-            "choose2", "DATA_POSSIBILITY", 1, ["조합", "순서 무관"],
+            # 난이도 재조정(1→2 상향, 2026-07 d1~5 스캔): C(n,2)를 d1 유아층에 두는 건 과중
+            # (같은 방법의 league가 d3). 유일한 상향 사례.
+            "choose2", "DATA_POSSIBILITY", 2, ["조합", "순서 무관"],
             f"서로 다른 {n}가지({', '.join(names)}) 중에서 2가지를 고르려고 해요. 고르는 순서는 상관없어요({names[0]}·{names[1]} = {names[1]}·{names[0]}). 고르는 방법은 모두 몇 가지일까요?",
             f"{ans}가지", [f"{n * (n - 1)}가지", f"{ans + 1}가지", f"{ans - 1}가지"],
             f"한 개를 먼저 고르는 방법 {n}가지, 남은 것 중 하나 더 {n - 1}가지 → {n}×{n - 1}={n * (n - 1)}가지. 그런데 순서를 안 따지니 ({names[0]},{names[1]})와 ({names[1]},{names[0]})가 같아 2로 나눠요: {n * (n - 1)}÷2={ans}가지예요.",
@@ -1066,7 +1070,8 @@ def gen_tablediff():
         from itertools import combinations
         assert max(abs(x - y) for x, y in combinations(vals, 2)) == ans, "tablediff 검산 실패"
         add(
-            "tablediff", "DATA_POSSIBILITY", 3, ["자료 읽기", "최댓값·최솟값"],
+            # 난이도 재조정(3→2, 2026-07 d1~5 스캔): max−min 1단계 — dataread(d1)보다 쉬운 역전 해소.
+            "tablediff", "DATA_POSSIBILITY", 2, ["자료 읽기", "최댓값·최솟값"],
             f"월·화·수·목요일에 읽은 책이 각각 {a}권, {b}권, {c}권, {d}권이에요. 가장 많이 읽은 날과 가장 적게 읽은 날의 "
             f"책 수 차이는 몇 권일까요?",
             f"{ans}권", [f"{v}권" for v in _pick_distractors(ans, [max(vals), sum(vals), ans + 1, ans - 1])],
@@ -1228,7 +1233,8 @@ def gen_barchart():
         assert len(set(vals)) == len(vals), "barchart 검산 실패: 막대 동률"
         assert ans in vals and sum(1 for v in vals if v > ans) == 1, "barchart 검산 실패"
         add(
-            "barchart", "DATA_POSSIBILITY", 3, ["자료 읽기", "크기 순 비교"],
+            # 난이도 재조정(3→2, 2026-07 d1~5 스캔): dataread(d1)와 동일 과제 + 막대 읽기.
+            "barchart", "DATA_POSSIBILITY", 2, ["자료 읽기", "크기 순 비교"],
             "아래 그래프는 가·나·다·라 네 반이 모은 화분 수예요. 둘째로 많이 모은 반은 화분을 몇 개 모았을까요?",
             f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [ordered[0], ordered[2], min(vals), ans + 1])],
             f"막대를 높은 순으로 읽으면 {ordered[0]}, {ordered[1]}, {ordered[2]}, {ordered[3]}이에요. 가장 높은 막대는 "
@@ -1259,7 +1265,8 @@ def gen_chartavg():
         assert total % len(vals) == 0, "chartavg 검산 실패: 평균이 정수가 아님"
         assert sum(v - ans for v in vals) == 0, "chartavg 검산 실패"
         add(
-            "chartavg", "DATA_POSSIBILITY", 5, ["자료 읽기", "평균"],
+            # 난이도 재조정(5→4, 2026-07 d1~5 스캔): avgbasic+막대 읽기 — avgchg(d4)보다 쉬움.
+            "chartavg", "DATA_POSSIBILITY", 4, ["자료 읽기", "평균"],
             "아래 그래프는 가·나·다·라 네 모둠이 캔 감자 수예요. 네 모둠이 캔 감자의 평균은 몇 개일까요?",
             f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
             f"막대 값을 모두 읽어 더하면 {'+'.join(map(str, vals))}={total}개예요. 모둠이 4개니 평균은 {total}÷4={ans}개예요.",
@@ -1356,7 +1363,8 @@ def gen_avgbasic():
         assert sum(v - ans for v in vals) == 0, "avgbasic 검산 실패"
         vs = ", ".join(str(v) for v in vals)
         add(
-            "avgbasic", "DATA_POSSIBILITY", 4, ["평균", "합 나누기"],
+            # 난이도 재조정(4→2, 2026-07 d1~5 스캔): '더해서 나누기' 정의 적용 그 자체.
+            "avgbasic", "DATA_POSSIBILITY", 2, ["평균", "합 나누기"],
             f"네 번의 점수가 {vs}이에요. 이 점수들의 평균은 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
             f"평균은 모두 더해 개수로 나눠요. {vs}을 더하면 {total}, 4로 나누면 {ans}예요.",
@@ -1413,7 +1421,8 @@ def gen_mode():
         assert vals.count(ans) == top, "mode 검산 실패"
         assert sum(1 for v in set(vals) if vals.count(v) == top) == 1, "mode 검산 실패: 최빈값 동률"
         add(
-            "mode", "DATA_POSSIBILITY", 4, ["최빈값", "자료 정리"],
+            # 난이도 재조정(4→2, 2026-07 d1~5 스캔): 가장 잦은 값 고르기 — 정의 적용.
+            "mode", "DATA_POSSIBILITY", 2, ["최빈값", "자료 정리"],
             f"자료 {vs} 가 있어요. 가장 많이 나온 수(최빈값)는 무엇일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [second, max(vals), min(vals), ans + 1])],
             f"각 수가 몇 번 나왔는지 세어 봐요. {ans}이(가) {vals.count(ans)}번으로 가장 많이 나왔으니 최빈값은 {ans}이에요.",

@@ -759,10 +759,10 @@
   },
   {
    "id": "gen-tablediff-1",
-   "code": "40-04-09-03-01",
+   "code": "40-04-09-02-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-tablediff-3",
+   "difficulty": 2,
+   "groupId": "g-gen-tablediff-2",
    "concepts": [
     "자료 읽기",
     "최댓값·최솟값"
@@ -791,10 +791,10 @@
   },
   {
    "id": "gen-tablediff-2",
-   "code": "40-04-09-03-02",
+   "code": "40-04-09-02-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-tablediff-3",
+   "difficulty": 2,
+   "groupId": "g-gen-tablediff-2",
    "concepts": [
     "자료 읽기",
     "최댓값·최솟값"
@@ -823,10 +823,10 @@
   },
   {
    "id": "gen-tablediff-3",
-   "code": "40-04-09-03-03",
+   "code": "40-04-09-02-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-tablediff-3",
+   "difficulty": 2,
+   "groupId": "g-gen-tablediff-2",
    "concepts": [
     "자료 읽기",
     "최댓값·최솟값"
@@ -855,10 +855,10 @@
   },
   {
    "id": "gen-tablediff-4",
-   "code": "40-04-09-03-04",
+   "code": "40-04-09-02-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-tablediff-3",
+   "difficulty": 2,
+   "groupId": "g-gen-tablediff-2",
    "concepts": [
     "자료 읽기",
     "최댓값·최솟값"
@@ -999,10 +999,10 @@
   },
   {
    "id": "gen-rectperim-1",
-   "code": "30-02-03-04-01",
+   "code": "30-02-03-02-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-rectperim-4",
+   "difficulty": 2,
+   "groupId": "g-gen-rectperim-2",
    "concepts": [
     "둘레",
     "측정"
@@ -1031,10 +1031,10 @@
   },
   {
    "id": "gen-rectperim-2",
-   "code": "30-02-03-04-02",
+   "code": "30-02-03-02-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-rectperim-4",
+   "difficulty": 2,
+   "groupId": "g-gen-rectperim-2",
    "concepts": [
     "둘레",
     "측정"
@@ -1063,10 +1063,10 @@
   },
   {
    "id": "gen-rectperim-3",
-   "code": "30-02-03-04-03",
+   "code": "30-02-03-02-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-rectperim-4",
+   "difficulty": 2,
+   "groupId": "g-gen-rectperim-2",
    "concepts": [
     "둘레",
     "측정"
@@ -1095,10 +1095,10 @@
   },
   {
    "id": "gen-rectperim-4",
-   "code": "30-02-03-04-04",
+   "code": "30-02-03-02-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-rectperim-4",
+   "difficulty": 2,
+   "groupId": "g-gen-rectperim-2",
    "concepts": [
     "둘레",
     "측정"
@@ -1483,10 +1483,10 @@
   },
   {
    "id": "gen-avgbasic-1",
-   "code": "40-04-01-04-01",
+   "code": "40-04-01-02-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-avgbasic-4",
+   "difficulty": 2,
+   "groupId": "g-gen-avgbasic-2",
    "concepts": [
     "평균",
     "합 나누기"
@@ -1515,10 +1515,10 @@
   },
   {
    "id": "gen-avgbasic-2",
-   "code": "40-04-01-04-02",
+   "code": "40-04-01-02-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-avgbasic-4",
+   "difficulty": 2,
+   "groupId": "g-gen-avgbasic-2",
    "concepts": [
     "평균",
     "합 나누기"
@@ -1547,10 +1547,10 @@
   },
   {
    "id": "gen-avgbasic-3",
-   "code": "40-04-01-04-03",
+   "code": "40-04-01-02-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-avgbasic-4",
+   "difficulty": 2,
+   "groupId": "g-gen-avgbasic-2",
    "concepts": [
     "평균",
     "합 나누기"
@@ -1579,10 +1579,10 @@
   },
   {
    "id": "gen-avgbasic-4",
-   "code": "40-04-01-04-04",
+   "code": "40-04-01-02-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-avgbasic-4",
+   "difficulty": 2,
+   "groupId": "g-gen-avgbasic-2",
    "concepts": [
     "평균",
     "합 나누기"
@@ -1723,10 +1723,10 @@
   },
   {
    "id": "gen-mode-1",
-   "code": "40-04-08-04-01",
+   "code": "40-04-08-02-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-mode-4",
+   "difficulty": 2,
+   "groupId": "g-gen-mode-2",
    "concepts": [
     "최빈값",
     "자료 정리"
@@ -1751,10 +1751,10 @@
   },
   {
    "id": "gen-mode-2",
-   "code": "40-04-08-04-02",
+   "code": "40-04-08-02-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-mode-4",
+   "difficulty": 2,
+   "groupId": "g-gen-mode-2",
    "concepts": [
     "최빈값",
     "자료 정리"
@@ -1779,10 +1779,10 @@
   },
   {
    "id": "gen-mode-3",
-   "code": "40-04-08-04-03",
+   "code": "40-04-08-02-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-mode-4",
+   "difficulty": 2,
+   "groupId": "g-gen-mode-2",
    "concepts": [
     "최빈값",
     "자료 정리"
@@ -1802,10 +1802,10 @@
   },
   {
    "id": "gen-mode-4",
-   "code": "40-04-08-04-04",
+   "code": "40-04-08-02-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-mode-4",
+   "difficulty": 2,
+   "groupId": "g-gen-mode-2",
    "concepts": [
     "최빈값",
     "자료 정리"
@@ -2846,10 +2846,10 @@
   },
   {
    "id": "gen-barchart-1",
-   "code": "40-04-04-03-01",
+   "code": "40-04-04-02-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-barchart-3",
+   "difficulty": 2,
+   "groupId": "g-gen-barchart-2",
    "concepts": [
     "자료 읽기",
     "크기 순 비교"
@@ -2890,10 +2890,10 @@
   },
   {
    "id": "gen-barchart-2",
-   "code": "40-04-04-03-02",
+   "code": "40-04-04-02-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-barchart-3",
+   "difficulty": 2,
+   "groupId": "g-gen-barchart-2",
    "concepts": [
     "자료 읽기",
     "크기 순 비교"
@@ -2934,10 +2934,10 @@
   },
   {
    "id": "gen-barchart-3",
-   "code": "40-04-04-03-03",
+   "code": "40-04-04-02-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-barchart-3",
+   "difficulty": 2,
+   "groupId": "g-gen-barchart-2",
    "concepts": [
     "자료 읽기",
     "크기 순 비교"
@@ -2978,10 +2978,10 @@
   },
   {
    "id": "gen-barchart-4",
-   "code": "40-04-04-03-04",
+   "code": "40-04-04-02-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 3,
-   "groupId": "g-gen-barchart-3",
+   "difficulty": 2,
+   "groupId": "g-gen-barchart-2",
    "concepts": [
     "자료 읽기",
     "크기 순 비교"
@@ -3022,10 +3022,10 @@
   },
   {
    "id": "gen-chartavg-1",
-   "code": "40-04-05-05-01",
+   "code": "40-04-05-04-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-chartavg-5",
+   "difficulty": 4,
+   "groupId": "g-gen-chartavg-4",
    "concepts": [
     "자료 읽기",
     "평균"
@@ -3066,10 +3066,10 @@
   },
   {
    "id": "gen-chartavg-2",
-   "code": "40-04-05-05-02",
+   "code": "40-04-05-04-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-chartavg-5",
+   "difficulty": 4,
+   "groupId": "g-gen-chartavg-4",
    "concepts": [
     "자료 읽기",
     "평균"
@@ -3110,10 +3110,10 @@
   },
   {
    "id": "gen-chartavg-3",
-   "code": "40-04-05-05-03",
+   "code": "40-04-05-04-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-chartavg-5",
+   "difficulty": 4,
+   "groupId": "g-gen-chartavg-4",
    "concepts": [
     "자료 읽기",
     "평균"
@@ -3154,10 +3154,10 @@
   },
   {
    "id": "gen-chartavg-4",
-   "code": "40-04-05-05-04",
+   "code": "40-04-05-04-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-chartavg-5",
+   "difficulty": 4,
+   "groupId": "g-gen-chartavg-4",
    "concepts": [
     "자료 읽기",
     "평균"
@@ -6881,10 +6881,10 @@
   },
   {
    "id": "gen-choose2-1",
-   "code": "40-02-01-01-01",
+   "code": "40-02-01-02-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 1,
-   "groupId": "g-gen-choose2-1",
+   "difficulty": 2,
+   "groupId": "g-gen-choose2-2",
    "concepts": [
     "조합",
     "순서 무관"
@@ -6909,10 +6909,10 @@
   },
   {
    "id": "gen-choose2-2",
-   "code": "40-02-01-01-02",
+   "code": "40-02-01-02-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 1,
-   "groupId": "g-gen-choose2-1",
+   "difficulty": 2,
+   "groupId": "g-gen-choose2-2",
    "concepts": [
     "조합",
     "순서 무관"
@@ -6937,10 +6937,10 @@
   },
   {
    "id": "gen-choose2-3",
-   "code": "40-02-01-01-03",
+   "code": "40-02-01-02-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 1,
-   "groupId": "g-gen-choose2-1",
+   "difficulty": 2,
+   "groupId": "g-gen-choose2-2",
    "concepts": [
     "조합",
     "순서 무관"
@@ -6965,10 +6965,10 @@
   },
   {
    "id": "gen-choose2-4",
-   "code": "40-02-01-01-04",
+   "code": "40-02-01-02-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 1,
-   "groupId": "g-gen-choose2-1",
+   "difficulty": 2,
+   "groupId": "g-gen-choose2-2",
    "concepts": [
     "조합",
     "순서 무관"
@@ -8916,10 +8916,10 @@
   },
   {
    "id": "gen-handshake-1",
-   "code": "40-03-02-05-01",
+   "code": "40-03-02-04-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-handshake-5",
+   "difficulty": 4,
+   "groupId": "g-gen-handshake-4",
    "concepts": [
     "경우의 수",
     "두 번 세고 나누기"
@@ -8944,10 +8944,10 @@
   },
   {
    "id": "gen-handshake-2",
-   "code": "40-03-02-05-02",
+   "code": "40-03-02-04-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-handshake-5",
+   "difficulty": 4,
+   "groupId": "g-gen-handshake-4",
    "concepts": [
     "경우의 수",
     "두 번 세고 나누기"
@@ -8972,10 +8972,10 @@
   },
   {
    "id": "gen-handshake-3",
-   "code": "40-03-02-05-03",
+   "code": "40-03-02-04-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-handshake-5",
+   "difficulty": 4,
+   "groupId": "g-gen-handshake-4",
    "concepts": [
     "경우의 수",
     "두 번 세고 나누기"
@@ -9000,10 +9000,10 @@
   },
   {
    "id": "gen-handshake-4",
-   "code": "40-03-02-05-04",
+   "code": "40-03-02-04-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 5,
-   "groupId": "g-gen-handshake-5",
+   "difficulty": 4,
+   "groupId": "g-gen-handshake-4",
    "concepts": [
     "경우의 수",
     "두 번 세고 나누기"
@@ -9140,10 +9140,10 @@
   },
   {
    "id": "gen-ratioshare-1",
-   "code": "20-03-07-05-01",
+   "code": "20-03-07-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-ratioshare-5",
+   "difficulty": 4,
+   "groupId": "g-gen-ratioshare-4",
    "concepts": [
     "비",
     "단위량 먼저"
@@ -9172,10 +9172,10 @@
   },
   {
    "id": "gen-ratioshare-2",
-   "code": "20-03-07-05-02",
+   "code": "20-03-07-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-ratioshare-5",
+   "difficulty": 4,
+   "groupId": "g-gen-ratioshare-4",
    "concepts": [
     "비",
     "단위량 먼저"
@@ -9204,10 +9204,10 @@
   },
   {
    "id": "gen-ratioshare-3",
-   "code": "20-03-07-05-03",
+   "code": "20-03-07-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-ratioshare-5",
+   "difficulty": 4,
+   "groupId": "g-gen-ratioshare-4",
    "concepts": [
     "비",
     "단위량 먼저"
@@ -9236,10 +9236,10 @@
   },
   {
    "id": "gen-ratioshare-4",
-   "code": "20-03-07-05-04",
+   "code": "20-03-07-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-ratioshare-5",
+   "difficulty": 4,
+   "groupId": "g-gen-ratioshare-4",
    "concepts": [
     "비",
     "단위량 먼저"
@@ -10500,10 +10500,10 @@
   },
   {
    "id": "gen-squarenum-1",
-   "code": "20-01-12-04-01",
+   "code": "20-01-12-02-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 4,
-   "groupId": "g-gen-squarenum-4",
+   "difficulty": 2,
+   "groupId": "g-gen-squarenum-2",
    "concepts": [
     "규칙",
     "사각수"
@@ -10528,10 +10528,10 @@
   },
   {
    "id": "gen-squarenum-2",
-   "code": "20-01-12-04-02",
+   "code": "20-01-12-02-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 4,
-   "groupId": "g-gen-squarenum-4",
+   "difficulty": 2,
+   "groupId": "g-gen-squarenum-2",
    "concepts": [
     "규칙",
     "사각수"
@@ -10556,10 +10556,10 @@
   },
   {
    "id": "gen-squarenum-3",
-   "code": "20-01-12-04-03",
+   "code": "20-01-12-02-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 4,
-   "groupId": "g-gen-squarenum-4",
+   "difficulty": 2,
+   "groupId": "g-gen-squarenum-2",
    "concepts": [
     "규칙",
     "사각수"
@@ -10584,10 +10584,10 @@
   },
   {
    "id": "gen-squarenum-4",
-   "code": "20-01-12-04-04",
+   "code": "20-01-12-02-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 4,
-   "groupId": "g-gen-squarenum-4",
+   "difficulty": 2,
+   "groupId": "g-gen-squarenum-2",
    "concepts": [
     "규칙",
     "사각수"
@@ -11508,10 +11508,10 @@
   },
   {
    "id": "gen-percentof-1",
-   "code": "10-06-10-04-01",
+   "code": "10-06-10-03-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-percentof-4",
+   "difficulty": 3,
+   "groupId": "g-gen-percentof-3",
    "concepts": [
     "백분율",
     "전체의 일부"
@@ -11536,10 +11536,10 @@
   },
   {
    "id": "gen-percentof-2",
-   "code": "10-06-10-04-02",
+   "code": "10-06-10-03-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-percentof-4",
+   "difficulty": 3,
+   "groupId": "g-gen-percentof-3",
    "concepts": [
     "백분율",
     "전체의 일부"
@@ -11564,10 +11564,10 @@
   },
   {
    "id": "gen-percentof-3",
-   "code": "10-06-10-04-03",
+   "code": "10-06-10-03-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-percentof-4",
+   "difficulty": 3,
+   "groupId": "g-gen-percentof-3",
    "concepts": [
     "백분율",
     "전체의 일부"
@@ -11592,10 +11592,10 @@
   },
   {
    "id": "gen-percentof-4",
-   "code": "10-06-10-04-04",
+   "code": "10-06-10-03-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-percentof-4",
+   "difficulty": 3,
+   "groupId": "g-gen-percentof-3",
    "concepts": [
     "백분율",
     "전체의 일부"
@@ -12180,10 +12180,10 @@
   },
   {
    "id": "gen-transfer-1",
-   "code": "20-06-08-05-01",
+   "code": "20-06-08-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-transfer-5",
+   "difficulty": 4,
+   "groupId": "g-gen-transfer-4",
    "concepts": [
     "차이 사고",
     "주고받기"
@@ -12208,10 +12208,10 @@
   },
   {
    "id": "gen-transfer-2",
-   "code": "20-06-08-05-02",
+   "code": "20-06-08-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-transfer-5",
+   "difficulty": 4,
+   "groupId": "g-gen-transfer-4",
    "concepts": [
     "차이 사고",
     "주고받기"
@@ -12236,10 +12236,10 @@
   },
   {
    "id": "gen-transfer-3",
-   "code": "20-06-08-05-03",
+   "code": "20-06-08-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-transfer-5",
+   "difficulty": 4,
+   "groupId": "g-gen-transfer-4",
    "concepts": [
     "차이 사고",
     "주고받기"
@@ -12264,10 +12264,10 @@
   },
   {
    "id": "gen-transfer-4",
-   "code": "20-06-08-05-04",
+   "code": "20-06-08-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-transfer-5",
+   "difficulty": 4,
+   "groupId": "g-gen-transfer-4",
    "concepts": [
     "차이 사고",
     "주고받기"
@@ -13596,10 +13596,10 @@
   },
   {
    "id": "gen-median-1",
-   "code": "40-04-06-04-01",
+   "code": "40-04-06-03-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-median-4",
+   "difficulty": 3,
+   "groupId": "g-gen-median-3",
    "concepts": [
     "중앙값",
     "정렬"
@@ -13624,10 +13624,10 @@
   },
   {
    "id": "gen-median-2",
-   "code": "40-04-06-04-02",
+   "code": "40-04-06-03-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-median-4",
+   "difficulty": 3,
+   "groupId": "g-gen-median-3",
    "concepts": [
     "중앙값",
     "정렬"
@@ -13652,10 +13652,10 @@
   },
   {
    "id": "gen-median-3",
-   "code": "40-04-06-04-03",
+   "code": "40-04-06-03-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-median-4",
+   "difficulty": 3,
+   "groupId": "g-gen-median-3",
    "concepts": [
     "중앙값",
     "정렬"
@@ -13680,10 +13680,10 @@
   },
   {
    "id": "gen-median-4",
-   "code": "40-04-06-04-04",
+   "code": "40-04-06-03-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 4,
-   "groupId": "g-gen-median-4",
+   "difficulty": 3,
+   "groupId": "g-gen-median-3",
    "concepts": [
     "중앙값",
     "정렬"
@@ -14828,10 +14828,10 @@
   },
   {
    "id": "gen-bookread-1",
-   "code": "10-06-02-04-01",
+   "code": "10-06-02-02-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-bookread-4",
+   "difficulty": 2,
+   "groupId": "g-gen-bookread-2",
    "concepts": [
     "곱셈과 뺄셈",
     "남은 양"
@@ -14856,10 +14856,10 @@
   },
   {
    "id": "gen-bookread-2",
-   "code": "10-06-02-04-02",
+   "code": "10-06-02-02-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-bookread-4",
+   "difficulty": 2,
+   "groupId": "g-gen-bookread-2",
    "concepts": [
     "곱셈과 뺄셈",
     "남은 양"
@@ -14884,10 +14884,10 @@
   },
   {
    "id": "gen-bookread-3",
-   "code": "10-06-02-04-03",
+   "code": "10-06-02-02-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-bookread-4",
+   "difficulty": 2,
+   "groupId": "g-gen-bookread-2",
    "concepts": [
     "곱셈과 뺄셈",
     "남은 양"
@@ -14912,10 +14912,10 @@
   },
   {
    "id": "gen-bookread-4",
-   "code": "10-06-02-04-04",
+   "code": "10-06-02-02-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 4,
-   "groupId": "g-gen-bookread-4",
+   "difficulty": 2,
+   "groupId": "g-gen-bookread-2",
    "concepts": [
     "곱셈과 뺄셈",
     "남은 양"
@@ -14940,10 +14940,10 @@
   },
   {
    "id": "gen-trainperson-1",
-   "code": "20-04-06-05-01",
+   "code": "20-04-06-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-trainperson-5",
+   "difficulty": 4,
+   "groupId": "g-gen-trainperson-4",
    "concepts": [
     "거속시",
     "숨은 길이"
@@ -14968,10 +14968,10 @@
   },
   {
    "id": "gen-trainperson-2",
-   "code": "20-04-06-05-02",
+   "code": "20-04-06-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-trainperson-5",
+   "difficulty": 4,
+   "groupId": "g-gen-trainperson-4",
    "concepts": [
     "거속시",
     "숨은 길이"
@@ -14996,10 +14996,10 @@
   },
   {
    "id": "gen-trainperson-3",
-   "code": "20-04-06-05-03",
+   "code": "20-04-06-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-trainperson-5",
+   "difficulty": 4,
+   "groupId": "g-gen-trainperson-4",
    "concepts": [
     "거속시",
     "숨은 길이"
@@ -15024,10 +15024,10 @@
   },
   {
    "id": "gen-trainperson-4",
-   "code": "20-04-06-05-04",
+   "code": "20-04-06-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 5,
-   "groupId": "g-gen-trainperson-5",
+   "difficulty": 4,
+   "groupId": "g-gen-trainperson-4",
    "concepts": [
     "거속시",
     "숨은 길이"
@@ -21694,10 +21694,10 @@
   },
   {
    "id": "gen-cubestack-1",
-   "code": "30-05-03-05-01",
+   "code": "30-05-03-04-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21734,10 +21734,10 @@
   },
   {
    "id": "gen-cubestack-2",
-   "code": "30-05-03-05-02",
+   "code": "30-05-03-04-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21775,10 +21775,10 @@
   },
   {
    "id": "gen-cubestack-3",
-   "code": "30-05-03-05-03",
+   "code": "30-05-03-04-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21818,10 +21818,10 @@
   },
   {
    "id": "gen-cubestack-4",
-   "code": "30-05-03-05-04",
+   "code": "30-05-03-04-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21861,10 +21861,10 @@
   },
   {
    "id": "gen-cubestack-5",
-   "code": "30-05-03-05-05",
+   "code": "30-05-03-04-05",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21904,10 +21904,10 @@
   },
   {
    "id": "gen-cubestack-6",
-   "code": "30-05-03-05-06",
+   "code": "30-05-03-04-06",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21945,10 +21945,10 @@
   },
   {
    "id": "gen-cubestack-7",
-   "code": "30-05-03-05-07",
+   "code": "30-05-03-04-07",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
@@ -21991,10 +21991,10 @@
   },
   {
    "id": "gen-cubestack-8",
-   "code": "30-05-03-05-08",
+   "code": "30-05-03-04-08",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 5,
-   "groupId": "g-gen-cubestack-5",
+   "difficulty": 4,
+   "groupId": "g-gen-cubestack-4",
    "concepts": [
     "쌓기나무",
     "공간 지각"
