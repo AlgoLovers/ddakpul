@@ -5,3 +5,13 @@ gen-dist3d-1
 gen-dist3d-2
 gen-dist3d-3
 gen-dist3d-4
+# 2026-07-18 d6 감사: cubesurf = boxsurface와 동일 개념(직육면체 겉넓이) 중복
+gen-cubesurf-1
+gen-cubesurf-2
+gen-cubesurf-3
+gen-cubesurf-4
+# 2026-07-18 d1~5 스캔: rectdiag = 피타고라스(초등 범위 밖 정리) 요구 — 제거 선례 확정 family가 파일에 잔존해 있었음
+gen-rectdiag-1
+gen-rectdiag-2
+gen-rectdiag-3
+gen-rectdiag-4
