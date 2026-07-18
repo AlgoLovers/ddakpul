@@ -1675,3 +1675,416 @@ def gen_fibsum():
                 "detail": "The Fibonacci partial sum F1+F2+…+Fn = F(n+2)−1. Rewriting each term as a difference of neighbors (F(k) = F(k+2)−F(k+1)) makes them cancel in a chain (telescoping), leaving only F(n+2)−1. A problem about the hidden relationship between a sum of terms and a single term.",
             },
         )
+
+
+# ═══ 천장 보충(CEILING_SPECS 2026-07) + 신규 슬롯 — 변화와관계 7 family ═══════════
+# 스펙 4(stampfrob·mergecandy·digitpos·cubesumfar) + 신규 설계 3(seqcommon·pyramidmax·funcinv).
+# 전부 결정적 파라미터(랜덤 분기 없음) — 전역 rng/rng_en 소비 없음.
+
+
+def gen_stampfrob():
+    # 만들 수 없는 가장 큰 우편 요금 — 프로베니우스. '연속 a개 가능이면 종료' 정지 논법 발견. (변화와관계 난10, CEILING_SPECS 3.1)
+    # 발견형 근거: 풀이법이 문제문에 없고, '가장 큰' 불가능 금액의 확정에는 정지 논법 발견이 필수라 유한 나열만으론 답을 못 정한다.
+    for a, b in [(5, 8), (4, 7), (5, 7), (3, 8)]:
+        # 검산(stampfrob) 경로1: DP로 가능/불가능 표를 만들어 최대 불가능 금액을 직접 탐색
+        LIM = a * b + a + b
+        ok = [False] * (LIM + 1)
+        ok[0] = True
+        for v in range(1, LIM + 1):
+            ok[v] = (v >= a and ok[v - a]) or (v >= b and ok[v - b])
+        assert all(ok[v] for v in range(a * b, LIM + 1)), f"stampfrob: {a},{b} 곱 이후에 불가능 금액 존재"
+        impossible = [v for v in range(1, LIM + 1) if not ok[v]]
+        ans = max(impossible)
+        # 검산 경로2: 프로베니우스 폐형식 a·b−a−b와 대조 (서로소 확인 포함)
+        assert gcd(a, b) == 1 and ans == a * b - a - b, f"stampfrob 검산 실패: {ans} != {a * b - a - b}"
+        # 정지 논법 확인: 정답 바로 다음부터 a개 연속 가능 / 정답은 b장 몇 장을 빼도 a로 안 나눠짐
+        assert all(ok[ans + 1 + i] for i in range(a)), f"stampfrob: {ans}+1부터 연속 {a}개 가능이 아님"
+        assert all((ans - b * j) % a != 0 for j in range(ans // b + 1)), f"stampfrob: {ans}이 실은 가능"
+        second = max(v for v in impossible if v != ans)  # 그다음으로 큰 불가능 금액(오답용)
+        assert ok[ans + a], f"stampfrob: 오답 {ans + a}가 실은 불가능"
+        add(
+            "stampfrob", "CHANGE_RELATION", 10, ["동전·우표 문제", "나머지로 분류"],
+            f"한 장에 {a}원짜리 우표와 {b}원짜리 우표가 아주 많이 있어요. 두 우표를 몇 장씩이든 자유롭게 붙일 수 있어요"
+            f"(한 종류만 붙여도 되고, 안 붙이는 종류가 있어도 돼요). 이렇게 해서 만들 수 없는 우편 요금 중 가장 큰 금액은 얼마일까요?",
+            f"{ans}원", [f"{a * b}원", f"{second}원", f"{ans + a}원"],
+            f"작은 금액부터 '되는지/안 되는지' 표를 만들어요. 가능한 금액에 {a}원 우표 한 장을 더 붙이면 계속 가능하니, "
+            f"연속 {a}개 금액이 가능해지는 순간 그 뒤는 전부 가능해요. 표를 채우면 {ans + 1}원부터 {ans + a}원까지 {a}개가 연속으로 가능해지고, "
+            f"그 직전의 {ans}원은 {b}원 우표를 0장, 1장, 2장… 어떻게 잡아도 남는 금액이 {a}원 단위로 채워지지 않아 불가능 — "
+            f"그래서 만들 수 없는 가장 큰 금액은 {ans}원이에요.",
+            [(f"{a * b}원", f"두 값의 곱까지는 다 안 될 거라고 뭉뚱그렸어요. 작은 수부터 하나씩 확인하면 곱보다 훨씬 앞에서 끝나요."),
+             (f"{second}원", "만들 수 없는 금액을 찾긴 했지만, 그보다 더 큰 불가능 금액이 남아 있는지 확인하지 않았어요."),
+             (f"{ans + a}원", f"불가능한 금액에 {a}를 더하면 계속 불가능할 거라 착각했어요. 거꾸로예요 — 가능한 금액에 {a}를 더하면 계속 가능해요.")],
+            detail=f"왜 '연속 {a}개'가 끝의 신호일까요? 가능한 금액에 {a}원을 더하면 계속 가능하니, 연속 {a}개가 가능해지는 순간 "
+            f"모든 경우가 덮여 그 뒤는 영원히 가능해요 — 불가능 금액은 유한 개뿐이에요. 되돌아보기: {ans}원이 정말 불가능한지 "
+            f"{b}원 우표 0장·1장·2장…으로 나눠 직접 확인해 보세요. 일반화: (3,5)나 (2,7) 같은 작은 짝으로 실험하면 규칙이 보여요 — "
+            f"실은 이 값, 두 수의 곱에서 두 수를 뺀 것({a}×{b}−{a}−{b}={ans})과 같아요. 두 우표 값에 공약수가 있으면(예: 4와 6) "
+            f"이야기가 완전히 달라진다는 것도 재미있는 갈래예요.",
+            en={
+                "concepts": ["coin and stamp problem", "classifying by remainders"],
+                "statement": f"You have plenty of {a}-won stamps and {b}-won stamps. You may use any number of each kind "
+                f"(including none of one kind). What is the largest postage amount that can NOT be made this way?",
+                "answer": f"{ans} won",
+                "distractors": [f"{a * b} won", f"{second} won", f"{ans + a} won"],
+                "explanation": f"Make a table from small amounts up, marking 'possible / impossible'. Adding one {a}-won stamp to any possible amount keeps it possible, "
+                f"so the moment {a} amounts in a row become possible, everything after is possible. Filling the table, the amounts {ans + 1} to {ans + a} won are {a} in a row possible, "
+                f"and the amount just before, {ans} won, fails no matter how many {b}-won stamps (0, 1, 2, …) you try — the rest never fills up in steps of {a} won. "
+                f"So the largest impossible amount is {ans} won.",
+                "mistakes": [(f"{a * b} won", "Don't lump everything up to the product together as impossible. Checking from small amounts up, the impossibles end far before the product."),
+                             (f"{second} won", "You found an impossible amount, but didn't check whether an even larger impossible amount remains."),
+                             (f"{ans + a} won", f"You assumed adding {a} to an impossible amount stays impossible. It's the other way round — adding {a} to a POSSIBLE amount stays possible.")],
+                "detail": f"Why is '{a} in a row' the stopping signal? Adding {a} won to a possible amount keeps it possible, so once {a} consecutive amounts work, "
+                f"every case is covered and everything after works forever — only finitely many amounts are impossible. Check back: split {ans} won by 0, 1, 2, … stamps of {b} won "
+                f"to confirm it really is impossible. Generalize: experimenting with small pairs like (3,5) or (2,7) reveals the rule — this value in fact equals the product minus both numbers "
+                f"({a}×{b}−{a}−{b}={ans}). And if the two stamp values share a common factor (say 4 and 6), the story changes completely — a fun branch to explore.",
+            },
+        )
+
+
+def gen_mergecandy():
+    # 봉지 합치기 — 순서 무관 불변량(사탕 −1·봉지 −1). (변화와관계 난10, CEILING_SPECS 3.2)
+    # 발견형 근거: '순서와 무관하다'는 사실 자체가 문제문에 없어 스스로 발견해야 하고, n≥25면 손 시뮬레이션이 비현실적이다.
+    import random as _stdrandom  # 전역 rng/rng_en 금지 규약 — 시뮬레이션은 고정시드 별도 인스턴스만 사용
+    for n in [40, 30, 25, 50]:
+        S = n * (n + 1) // 2
+        # 검산(mergecandy) 경로1: 무작위 순서 300회 시뮬레이션이 전부 같은 값 = 순서 무관 불변량
+        outcomes = set()
+        for t in range(300):
+            r = _stdrandom.Random(1000 + t)
+            bags = list(range(1, n + 1))
+            while len(bags) > 1:
+                i, j = r.sample(range(len(bags)), 2)
+                merged = bags[i] + bags[j] - 1
+                bags = [bags[idx] for idx in range(len(bags)) if idx not in (i, j)] + [merged]
+            outcomes.add(bags[0])
+        assert len(outcomes) == 1, f"mergecandy: n={n} 순서에 따라 결과가 달라짐 {outcomes}"
+        ans = outcomes.pop()
+        # 검산 경로2: 불변량 폐형식 S−(n−1)과 대조
+        assert ans == S - (n - 1), f"mergecandy 검산 실패: {ans} != {S - (n - 1)}"
+        add(
+            "mergecandy", "CHANGE_RELATION", 10, ["불변량", "순서와 무관한 양"],
+            f"사탕이 1개, 2개, 3개, …, {n}개 들어 있는 봉지 {n}개가 있어요. 두 봉지를 골라 하나로 합칠 때마다 사탕을 딱 1개 꺼내 먹어요. "
+            f"어떤 순서로 합치든 봉지가 하나만 남을 때까지 반복하면, 마지막 봉지에는 사탕이 몇 개 남을까요?",
+            f"{ans}개", [f"{S}개", f"{S - n}개", f"{S - (n - 2)}개"],
+            f"봉지 3개(1, 2, 3개)로 실험하면 어떤 순서로 합쳐도 결과가 같아요. 비밀은 '변하지 않는 규칙' — 한 번 합칠 때마다 "
+            f"봉지는 정확히 1개 줄고 사탕도 정확히 1개 줄어요. 봉지 {n}개가 1개가 되려면 꼭 {n}−1={n - 1}번 합쳐야 하니, "
+            f"사탕은 처음 총합 1+2+…+{n}={S}개에서 {n - 1}개가 사라져 {S}−{n - 1}={ans}개 남아요. 순서는 결과에 아무 영향을 못 줘요.",
+            [(f"{S}개", "합칠 때마다 1개씩 먹은 사탕을 빼지 않았어요. 사탕 총합은 합칠 때마다 정확히 1개씩 줄어요."),
+             (f"{S - n}개", f"합침 횟수를 {n}회로 셌어요. 봉지 {n}개가 1개가 되려면 횟수는 {n}−1회예요(한 번 합칠 때마다 봉지가 딱 1개 줄어요)."),
+             (f"{S - (n - 2)}개", f"합침 횟수를 한 번 적게 셌어요. 봉지 수 변화({n}→1)로 횟수를 다시 세어 보세요.")],
+            detail=f"과정이 아무리 복잡해도 '매 단계 똑같이 변하는 양(불변량)'을 찾으면 한 번에 끝나요 — 여기선 '봉지 −1, 사탕 −1'이 그 불변 규칙이에요. "
+            f"되돌아보기: 봉지 3개(1, 2, 3개)로 두 순서를 직접 해 보세요 — (1+2)−1=2를 3과 합치면 2+3−1=4, (2+3)−1=4를 1과 합치면 4+1−1=4로 똑같아요. "
+            f"일반화: 합칠 때마다 사탕을 2개씩 먹는다면 답은 총합 − 2×({n}−1)이 돼요.",
+            en={
+                "concepts": ["invariants", "order-independent quantity"],
+                "statement": f"There are {n} bags holding 1, 2, 3, …, {n} candies. Each time you merge two bags into one, you take out and eat exactly 1 candy. "
+                f"If you repeat this in any order until a single bag remains, how many candies are left in it?",
+                "answer": f"{ans} candies",
+                "distractors": [f"{S} candies", f"{S - n} candies", f"{S - (n - 2)} candies"],
+                "explanation": f"Experiment with 3 bags (1, 2, 3 candies): every merging order gives the same result. The secret is an unchanging rule — "
+                f"each merge reduces the bags by exactly 1 and the candies by exactly 1. Turning {n} bags into 1 takes exactly {n}−1={n - 1} merges, "
+                f"so from the initial total 1+2+…+{n}={S} candies, {n - 1} disappear, leaving {S}−{n - 1}={ans}. The order cannot affect the result.",
+                "mistakes": [(f"{S} candies", "You didn't subtract the candy eaten at each merge. The total drops by exactly 1 per merge."),
+                             (f"{S - n} candies", f"You counted {n} merges. Turning {n} bags into 1 takes {n}−1 merges (each merge reduces the bag count by exactly 1)."),
+                             (f"{S - (n - 2)} candies", f"You counted one merge too few. Recount the merges from the change in bag count ({n}→1).")],
+                "detail": f"However complicated the process, finding a quantity that changes the same way at every step (an invariant) finishes it in one stroke — here the invariant rule is 'bags −1, candies −1'. "
+                f"Check back: try two orders with 3 bags (1, 2, 3 candies) — merge (1+2)−1=2 with 3 to get 2+3−1=4, or merge (2+3)−1=4 with 1 to get 4+1−1=4, the same. "
+                f"Generalize: if you ate 2 candies per merge, the answer would be the total − 2×({n}−1).",
+            },
+        )
+
+
+def gen_digitpos():
+    # 이어 쓴 수 123456…의 k번째 자리 — 자릿수 블록 구조 발견. (변화와관계 난9, CEILING_SPECS 3.3)
+    # 발견형 근거: 블록 분해 전략이 문제문에 없고, k≥500이면 수백 자리를 직접 쓰는 우회가 비현실적이다.
+    ord_ko = {1: "첫째", 2: "둘째", 3: "셋째"}
+    ord_en = {1: "1st", 2: "2nd", 3: "3rd"}
+    # 오답 셋째 값(블록 경계 실수)은 스펙 표 그대로 — 블록을 빼먹거나 몫·나머지가 한 칸 밀린 계산값
+    for k, w3 in [(100, 9), (500, 3), (1000, 7), (2026, 6)]:
+        # 검산(digitpos) 경로1: 긴 수를 실제로 구성해 직접 인덱싱
+        s = "".join(str(i) for i in range(1, 3000))
+        ans = int(s[k - 1])
+        # 검산 경로2: 자릿수 블록 산법으로 독립 재계산 후 대조
+        rem, digits, start, prev = k, 1, 1, 0
+        while rem > 9 * start * digits:
+            rem -= 9 * start * digits
+            prev += 9 * start * digits
+            start *= 10
+            digits += 1
+        num = start + (rem - 1) // digits
+        pos = (rem - 1) % digits + 1
+        assert int(str(num)[pos - 1]) == ans, f"digitpos 검산 실패: k={k} 블록 산법 {num}/{pos} != {ans}"
+        w1 = int(str(k)[0])  # k라는 '수'의 첫 자리(자리↔수 혼동)
+        w2 = int(s[k - 2])   # k−1번째 자리(한 자리 어긋남)
+        assert len({ans, w1, w2, w3}) == 4, f"digitpos: k={k} 보기 겹침 {ans},{w1},{w2},{w3}"
+        q, rr = (rem - 1) // digits, (rem - 1) % digits + 1
+        add(
+            "digitpos", "CHANGE_RELATION", 9, ["자릿수 블록", "위치 계산"],
+            f"자연수를 1부터 차례로 빈틈없이 이어 써서 긴 수를 만들어요: 123456789101112131415… "
+            f"이렇게 쓸 때, 앞에서부터 {k}번째 자리에 오는 숫자는 무엇일까요?",
+            str(ans), [str(w1), str(w2), str(w3)],
+            f"자리를 블록으로 정리해요 — 한 자리 수 9개가 9자리, 두 자리 수 90개가 180자리(누적 189자리), "
+            f"세 자리 수 900개가 2700자리(누적 2889자리)를 차지해요. {k}번째 자리는 누적 {prev}자리를 지나 "
+            f"{digits}자리 수 블록의 {rem}번째 자리예요. {rem} = {digits}×{q} + {rr}이니 블록의 {q + 1}번째 수, "
+            f"곧 {num}의 {ord_ko[pos]} 자리 — 답은 {ans}예요.",
+            [(str(w1), f"{k}번째 '자리'와 {k}{'이' if _has_batchim(k) else ''}라는 '수'를 혼동했어요. 한 수가 여러 자리를 차지해요."),
+             (str(w2), "한 자리 어긋났어요. 한 자리 수 9개·두 자리 수 90개가 차지하는 자리 수를 정확히 빼고 세요."),
+             (str(w3), "9·189·2889 같은 블록 경계에서 나머지 계산이 한 칸 밀렸어요. 나머지가 0일 때를 조심하세요.")],
+            detail=f"수는 하나씩 커지지만 '자리'는 자릿수만큼 뭉텅이로 늘어나요 — 이 어긋남을 블록 표(9·189·2889…)로 정리하는 게 열쇠예요. "
+            f"되돌아보기: 찾아낸 수의 근방({num - 1}, {num}, {num + 1})을 직접 이어 써 보면 {k}번째 자리가 정말 {ans}인지 손으로 확인할 수 있어요. "
+            f"일반화: 같은 표로 10000번째 자리도 즉시 구할 수 있어요 — 블록 경계에서 한 칸 밀리지 않게만 조심하세요.",
+            en={
+                "concepts": ["digit-count blocks", "position arithmetic"],
+                "statement": f"Write the natural numbers in order without gaps to form one long string: 123456789101112131415… "
+                f"What digit is in position {k} from the front?",
+                "answer": str(ans),
+                "distractors": [str(w1), str(w2), str(w3)],
+                "explanation": f"Organize the positions into blocks — the 9 one-digit numbers take 9 positions, the 90 two-digit numbers take 180 (189 cumulative), "
+                f"and the 900 three-digit numbers take 2700 (2889 cumulative). Position {k} falls past the first {prev} positions, "
+                f"at position {rem} within the {digits}-digit block. Since {rem} = {digits}×{q} + {rr}, it lands on number {q + 1} of that block, "
+                f"namely {num}, at its {ord_en[pos]} digit — the answer is {ans}.",
+                "mistakes": [(str(w1), f"You confused position {k} (a 'place') with the number {k} itself. One number occupies several places."),
+                             (str(w2), "Off by one place. Subtract exactly the places taken by the 9 one-digit and 90 two-digit numbers."),
+                             (str(w3), "Your quotient-remainder slipped by one at a block boundary like 9, 189, or 2889. Watch out for the remainder-0 case.")],
+                "detail": f"Numbers grow one at a time, but 'places' grow in chunks equal to the digit count — organizing that mismatch with the block table (9, 189, 2889, …) is the key. "
+                f"Check back: write out the neighborhood of the found number ({num - 1}, {num}, {num + 1}) and confirm by hand that position {k} really is {ans}. "
+                f"Generalize: the same table instantly gives the 10000th digit too — just don't slip by one at the block boundaries.",
+            },
+        )
+
+
+def gen_cubesumfar():
+    # 먼 항까지의 세제곱합 1³+…+n³ (n=12~25) — 직접 덧셈 봉쇄, (삼각수)² 관계 발견 강제. (변화와관계 난8, CEILING_SPECS 3.B2)
+    # 발견형 근거: 항등식을 문제문에 주지 않고, n≥12에선 다섯 자리 수 덧셈 십수 회가 비현실적이라 관계 발견이 사실상 유일한 경로다.
+    for n in [12, 15, 20, 25]:
+        tri = n * (n + 1) // 2
+        ans = tri * tri
+        sq_sum = n * (n + 1) * (2 * n + 1) // 6  # 제곱합(혼동 오답)
+        # 검산(cubesumfar): 세제곱을 정말 하나씩 다 더해 (삼각수)² 항등식과 대조
+        direct = 0
+        for i in range(1, n + 1):
+            direct += i ** 3
+        assert direct == ans, f"cubesumfar 검산 실패: {direct} != {ans}"
+        assert len({ans, sq_sum, tri, n ** 3}) == 4, f"cubesumfar: n={n} 보기 겹침"
+        add(
+            "cubesumfar", "CHANGE_RELATION", 8, ["세제곱의 합", "숨은 관계 발견"],
+            f"1³ + 2³ + 3³ + … + {n}³ 의 값은 얼마일까요? (각 수를 세제곱해 더한 값이에요 — 처음 몇 항의 합을 관찰하면 지름길이 보여요)",
+            str(ans), [str(sq_sum), str(tri), str(n ** 3)],
+            f"처음 몇 항을 직접 계산해요 — 1, 1+8=9, 9+27=36, 36+64=100. 어디서 본 수들이죠? 1=1², 9=3², 36=6², 100=10² — "
+            f"모두 제곱수, 그것도 1, 3, 6, 10이라는 삼각수(1, 1+2, 1+2+3, …)의 제곱이에요! 한 항 더 확인하면 100+125=225=15²으로 규칙이 이어져요. "
+            f"그러니 {n}까지의 합은 (1+2+…+{n})² = {tri}² = {ans}예요.",
+            [(str(sq_sum), "그건 '제곱'의 합(1²+…+n²)이에요. 세제곱의 합은 전혀 다른 관계를 따라요."),
+             (str(tri), f"1+2+…+{n}까지만 구하고 멈췄어요. 발견한 관계는 그 값을 '제곱'해요."),
+             (str(n ** 3), "마지막 항 하나가 아니라 전부의 합이에요. 합은 마지막 항보다 훨씬 커요.")],
+            detail=f"세제곱 k³은 k×k 정사각형을 k겹 쌓은 것 — 이를 ㄱ자(그노몬) 모양으로 펼쳐 붙이면 큰 정사각형이 계단식으로 자라나, "
+            f"세제곱의 합 전체가 (1+2+…+n)² 정사각형과 정확히 포개져요. 되돌아보기: n=4로 검산하면 1+8+27+64=100=10²이에요. "
+            f"일반화 도전: 홀수만의 세제곱합(1³+3³+5³+…)은 어떤 규칙을 따를까요? 직접 실험으로 찾아보세요.",
+            en={
+                "concepts": ["sum of cubes", "discovering hidden relationships"],
+                "statement": f"What is the value of 1³ + 2³ + 3³ + … + {n}³? (Cube each number and add. Watching the first few partial sums reveals a shortcut.)",
+                "answer": str(ans),
+                "distractors": [str(sq_sum), str(tri), str(n ** 3)],
+                "explanation": f"Compute the first few partial sums — 1, 1+8=9, 9+27=36, 36+64=100. Seen these before? 1=1², 9=3², 36=6², 100=10² — "
+                f"all perfect squares, and of the triangular numbers 1, 3, 6, 10 (1, 1+2, 1+2+3, …) at that! One more term confirms it: 100+125=225=15². "
+                f"So the sum up to {n} is (1+2+…+{n})² = {tri}² = {ans}.",
+                "mistakes": [(str(sq_sum), "That's the sum of the 'squares' (1²+…+n²). The sum of cubes follows an entirely different relationship."),
+                             (str(tri), f"You stopped at 1+2+…+{n}. The discovered relationship SQUARES that value."),
+                             (str(n ** 3), "It's the sum of all the terms, not the last term alone. The sum is far larger than the last term.")],
+                "detail": f"A cube k³ is a k×k square stacked k layers deep — unfolding it into an L-shaped gnomon and wrapping it on, the big square grows step by step, "
+                f"so the whole sum of cubes tiles exactly the (1+2+…+n)² square. Check back: for n=4, 1+8+27+64=100=10². "
+                f"A challenge to generalize: what rule does the sum of only the odd cubes (1³+3³+5³+…) follow? Find out by experiment.",
+            },
+        )
+
+
+def gen_seqcommon():
+    # 두 등차 패턴의 공통 항 — 공통 항 자체가 '간격 = 최소공배수'인 새 등차를 이룸을 발견. (변화와관계 난7, 신규 설계)
+    # 발견형 근거: 공통 수를 찾는 방법이 문제문에 없고, k번째까지 직접 나열은 두 수열 합계 100항 이상이라 봉쇄 —
+    # 공통 항의 간격이 (두 간격의 곱이 아니라) 최소공배수라는 구조 발견이 필수다.
+    for a1, d1, a2, d2, k in [(2, 6, 8, 8, 15), (1, 4, 3, 6, 20), (5, 9, 2, 12, 12), (3, 10, 7, 4, 25)]:
+        assert gcd(d1, d2) > 1, f"seqcommon: ({d1},{d2}) 곱≠최소공배수 함정이 죽어 있음"
+        step = d1 * d2 // gcd(d1, d2)
+        # 검산(seqcommon) 경로1: 두 수열을 대량 생성해 교집합에서 k번째를 직접 추출 + 간격 균일성 확인
+        N = 3000
+        common = sorted({a1 + d1 * i for i in range(N)} & {a2 + d2 * i for i in range(N)})[: k + 3]
+        first = common[0]
+        ans = common[k - 1]
+        assert {common[i + 1] - common[i] for i in range(len(common) - 1)} == {step}, f"seqcommon: 간격이 lcm이 아님"
+        assert ans == first + (k - 1) * step, f"seqcommon 검산 실패: {ans} != {first + (k - 1) * step}"
+        # 검산 경로2: 작은 수부터 나머지 조건 두 개를 하나씩 검사하며 k번째까지 세기
+        v, cnt = 0, 0
+        while cnt < k:
+            v += 1
+            if v >= a1 and (v - a1) % d1 == 0 and v >= a2 and (v - a2) % d2 == 0:
+                cnt += 1
+        assert v == ans, f"seqcommon 검산 실패(경로2): {v} != {ans}"
+        w1 = first + (k - 1) * d1 * d2   # 간격을 곱으로 착각
+        w2 = first + k * step            # 한 항 더 건넘
+        w3 = first + (k - 1) * (d1 + d2)  # 간격을 합으로 착각
+        assert len({ans, w1, w2, w3}) == 4, f"seqcommon: 보기 겹침 {ans},{w1},{w2},{w3}"
+        add(
+            "seqcommon", "CHANGE_RELATION", 7, ["공통 항", "최소공배수 간격"],
+            f"두 수 배열이 있어요. 배열 A는 {a1}에서 시작해 {d1}씩 커져요: {a1}, {a1 + d1}, {a1 + 2 * d1}, {a1 + 3 * d1}, … "
+            f"배열 B는 {a2}에서 시작해 {d2}씩 커져요: {a2}, {a2 + d2}, {a2 + 2 * d2}, … "
+            f"두 배열에 모두 나오는 수를 작은 것부터 차례로 찾을 때, {k}번째 수는 얼마일까요?",
+            str(ans), [str(w1), str(w2), str(w3)],
+            f"두 배열을 나란히 나열해 공통 수를 몇 개 찾아봐요 — {first}, {first + step}, {first + 2 * step}, … 간격이 {step}으로 일정해요. "
+            f"우연이 아니에요: 공통 수에서 다음 공통 수로 가려면 A에서도 B에서도 '정확히 같은 거리'를 걸어야 하니, 그 거리는 "
+            f"{d1}의 배수이면서 {d2}의 배수 — 곧 최소공배수 {step}이에요({d1}×{d2}={d1 * d2}가 아니에요!). "
+            f"그래서 {k}번째 공통 수는 {first} + {k - 1}×{step} = {ans}예요.",
+            [(str(w1), f"간격을 두 수의 곱 {d1}×{d2}={d1 * d2}로 잡았어요. 실제 간격은 최소공배수 {step}이에요 — 공통 수를 두세 개 직접 찾아 간격을 확인하세요."),
+             (str(w2), f"첫 공통 수 {first}에서 {k}번째까지 가려면 간격을 {k}−1번만 건너요. 한 번 더 건넜어요."),
+             (str(w3), f"간격을 {d1}+{d2}={d1 + d2}로 잡았어요. 두 배열이 다시 만나려면 각자 '같은 거리'를 가야 하니 합이 아니라 공배수예요.")],
+            detail=f"두 등차 패턴의 공통 항은 그 자체로 새로운 등차 패턴이 돼요 — 간격은 두 간격의 최소공배수예요. "
+            f"되돌아보기: {ans}가 정말 두 배열 모두에 있는지 확인해 보세요 — ({ans}−{a1})÷{d1}과 ({ans}−{a2})÷{d2}가 모두 나누어떨어져요. "
+            f"일반화: 시작 수에 따라 공통 수가 하나도 없을 수도 있어요 — 예를 들어 짝수만 나오는 배열과 홀수만 나오는 배열은 영원히 안 만나요.",
+            en={
+                "concepts": ["common terms of sequences", "least-common-multiple gap"],
+                "statement": f"There are two number sequences. Sequence A starts at {a1} and grows by {d1}: {a1}, {a1 + d1}, {a1 + 2 * d1}, {a1 + 3 * d1}, … "
+                f"Sequence B starts at {a2} and grows by {d2}: {a2}, {a2 + d2}, {a2 + 2 * d2}, … "
+                f"Listing the numbers that appear in both sequences from smallest to largest, what is the {k}th one?",
+                "answer": str(ans),
+                "distractors": [str(w1), str(w2), str(w3)],
+                "explanation": f"List both sequences side by side and find a few common numbers — {first}, {first + step}, {first + 2 * step}, …: the gap is a steady {step}. "
+                f"No accident: to get from one common number to the next you must walk 'exactly the same distance' in both A and B, so that distance is "
+                f"a multiple of {d1} and of {d2} — the least common multiple, {step} (NOT {d1}×{d2}={d1 * d2}!). "
+                f"So the {k}th common number is {first} + {k - 1}×{step} = {ans}.",
+                "mistakes": [(str(w1), f"You took the gap to be the product {d1}×{d2}={d1 * d2}. The real gap is the least common multiple {step} — find two or three common numbers and check the gap."),
+                             (str(w2), f"From the first common number {first}, reaching the {k}th takes only {k}−1 jumps of the gap. You jumped once too many."),
+                             (str(w3), f"You took the gap to be {d1}+{d2}={d1 + d2}. To meet again, both sequences must each cover the SAME distance — a common multiple, not a sum.")],
+                "detail": f"The common terms of two arithmetic patterns form a new arithmetic pattern of their own — with gap equal to the least common multiple of the two gaps. "
+                f"Check back: confirm {ans} really is in both sequences — ({ans}−{a1})÷{d1} and ({ans}−{a2})÷{d2} both divide evenly. "
+                f"Generalize: depending on the starting numbers there may be no common number at all — a sequence of only evens and a sequence of only odds never meet.",
+            },
+        )
+
+
+def gen_pyramidmax():
+    # 수 피라미드 바닥 배치 최적화 — 칸마다 꼭대기에 더해지는 횟수(1·4·6·4·1)가 다름을 발견. (변화와관계 난7, 신규 설계)
+    # 발견형 근거: 배치 전략·기여 횟수가 문제문에 없고, 5!=120가지 전수 시도는 비현실적이라
+    # '칸마다 꼭대기에 더해지는 횟수가 다르다'는 숨은 대응을 스스로 발견해야만 한다.
+    from itertools import permutations as _perms
+
+    def _top(row):
+        while len(row) > 1:
+            row = [x + y for x, y in zip(row, row[1:])]
+        return row[0]
+
+    W = [1, 4, 6, 4, 1]  # 각 바닥 칸이 꼭대기에 더해지는 횟수(경로 수)
+    for vals, goal in [((1, 2, 3, 4, 5), "max"), ((1, 2, 3, 4, 5), "min"), ((2, 3, 4, 5, 6), "max"), ((1, 3, 5, 7, 9), "min")]:
+        # 검산(pyramidmax) 경로1: 120가지 배치 전수 시도로 최적값을 직접 탐색
+        tops = [_top(list(p)) for p in _perms(vals)]
+        ans = max(tops) if goal == "max" else min(tops)
+        # 검산 경로2: 가중치(1,4,6,4,1) 탐욕 배치를 실제로 쌓아 전수 결과와 대조
+        a, b, c, d, e = sorted(vals)
+        greedy = [b, d, e, c, a] if goal == "max" else [d, b, a, c, e]
+        assert _top(greedy[:]) == ans == sum(w * v for w, v in zip(W, greedy)), f"pyramidmax 검산 실패: {goal} {vals}"
+        if goal == "max":
+            m1, m2, m3 = _top([a, b, c, d, e]), _top([a, b, e, c, d]), _top([e, a, b, c, d])
+            why1 = "수를 그냥 크기 순서대로 놓고 쌓은 값이에요. 칸마다 꼭대기에 더해지는 횟수(1·4·6·4·1)가 달라서, 어디에 놓느냐가 결과를 바꿔요."
+            why2 = "가장 큰 수를 가운데 둔 것까진 좋았지만, 그 양옆 칸도 4번씩 더해져요 — 다음으로 큰 수들을 양옆에 두어야 해요."
+            why3 = "가장 큰 수를 양 끝에 두면 딱 1번밖에 안 더해져요. 여러 갈래로 겹쳐 올라가는 가운데 칸에 두어야 해요."
+            ew1 = "This is the top when the numbers are simply placed in size order. Each cell is added into the top a different number of times (1·4·6·4·1), so placement changes the result."
+            ew2 = "Putting the largest number in the middle was right, but the two cells beside it are also added 4 times each — the next-largest numbers must go there."
+            ew3 = "Placed at an end, the largest number is added only once. It must go in the middle cell, whose copies pile up along many paths."
+        else:
+            m1, m2, m3 = _top([a, b, c, d, e]), _top([e, d, a, c, b]), _top([a, e, d, c, b])
+            why1 = "수를 그냥 크기 순서대로 놓고 쌓은 값이에요. 배치에 따라 꼭대기가 달라져요 — 더 작게 만들 수 있어요."
+            why2 = "가장 작은 수를 가운데 둔 것까진 좋았지만, 4번씩 더해지는 양옆 칸에도 작은 수들을 두어야 해요."
+            why3 = "양 끝은 원래 1번씩만 더해지는 자리예요. 작은 수는 여러 번 더해지는 가운데 쪽에, 큰 수를 양 끝에 두어야 꼭대기가 작아져요."
+            ew1 = "This is the top when the numbers are simply placed in size order. Placement changes the top — it can be made smaller."
+            ew2 = "Putting the smallest number in the middle was right, but the small numbers must also fill the two cells beside it, which are added 4 times each."
+            ew3 = "The end cells are only added once each anyway. Small numbers belong toward the middle where copies pile up, and the LARGE numbers at the ends, to shrink the top."
+        assert len({ans, m1, m2, m3}) == 4, f"pyramidmax: 보기 겹침 {ans},{m1},{m2},{m3}"
+        vtxt = ", ".join(str(v) for v in vals)
+        goal_ko = "크게" if goal == "max" else "작게"
+        mid, side1, side2, end1, end2 = (e, d, c, b, a) if goal == "max" else (a, b, c, d, e)
+        add(
+            "pyramidmax", "CHANGE_RELATION", 7, ["수 피라미드", "기여 횟수 발견"],
+            f"수 피라미드는 위 칸이 바로 아래 두 칸의 합이에요. 맨 아랫줄이 다섯 칸인 피라미드의 아랫줄에 {vtxt}를 한 번씩만 알맞게 놓아, "
+            f"꼭대기 수를 가장 {goal_ko} 만들려고 해요. 이때 꼭대기 수는 얼마일까요?",
+            str(ans), [str(m1), str(m2), str(m3)],
+            f"아랫줄 3칸짜리 미니 피라미드로 실험하면 꼭대기 = (왼쪽 끝) + 2×(가운데) + (오른쪽 끝) — 가운데 칸만 2번 더해져요. "
+            f"같은 눈으로 보면 다섯 칸일 때 각 칸이 꼭대기에 더해지는 횟수는 왼쪽부터 1, 4, 6, 4, 1번이에요. "
+            f"그러니 많이 더해지는 칸에 {'큰' if goal == 'max' else '작은'} 수를 — {mid}{_eul(mid)} 가운데(6번), {side1}{_gwa(side1)} {side2}{_eul(side2)} 그 양옆(4번씩), "
+            f"{end1}{_gwa(end1)} {end2}{_eul(end2)} 양 끝(1번씩)에 놓으면 꼭대기는 6×{mid}+4×{side1}+4×{side2}+1×{end1}+1×{end2} = {ans}예요.",
+            [(str(m1), why1), (str(m2), why2), (str(m3), why3)],
+            detail=f"각 칸의 기여 횟수 1, 4, 6, 4, 1은 그 칸에서 꼭대기까지 올라가는 길의 수예요 — 한 층 오를 때마다 왼쪽 위·오른쪽 위 두 갈래가 생겨서, "
+            f"아랫줄이 3칸이면 1, 2, 1 / 4칸이면 1, 3, 3, 1처럼 파스칼 삼각형의 줄과 똑같이 자라요. "
+            f"되돌아보기: 최적 배치를 실제로 한 층씩 쌓아 꼭대기 {ans}{_eul(ans)} 확인하고, 크기 순서대로 놓은 배치({m1})와 비교해 보세요. "
+            f"일반화: 아랫줄이 6칸이면 기여 횟수는 1, 5, 10, 10, 5, 1 — 같은 눈으로 어디에 무엇을 놓을지 정할 수 있어요.",
+            en={
+                "concepts": ["number pyramid", "discovering contribution counts"],
+                "statement": f"In a number pyramid, each cell is the sum of the two cells directly below it. Place {vtxt} exactly once each in the five bottom cells "
+                f"so that the top number is as {'large' if goal == 'max' else 'small'} as possible. What is that top number?",
+                "answer": str(ans),
+                "distractors": [str(m1), str(m2), str(m3)],
+                "explanation": f"Experiment with a mini pyramid of 3 bottom cells: top = (left end) + 2×(middle) + (right end) — only the middle cell is added twice. "
+                f"Seen the same way, with five cells the counts of how many times each cell is added into the top are 1, 4, 6, 4, 1 from the left. "
+                f"So put the {'large' if goal == 'max' else 'small'} numbers where they are added most — {mid} in the middle (6 times), {side1} and {side2} beside it (4 times each), "
+                f"{end1} and {end2} at the ends (once each): the top is 6×{mid}+4×{side1}+4×{side2}+1×{end1}+1×{end2} = {ans}.",
+                "mistakes": [(str(m1), ew1), (str(m2), ew2), (str(m3), ew3)],
+                "detail": f"The contribution counts 1, 4, 6, 4, 1 are the numbers of paths from each cell up to the top — every level up splits into upper-left and upper-right, "
+                f"so they grow exactly like rows of Pascal's triangle (1, 2, 1 for 3 cells; 1, 3, 3, 1 for 4). "
+                f"Check back: actually build the optimal arrangement level by level to confirm the top is {ans}, and compare with the size-order arrangement ({m1}). "
+                f"Generalize: with 6 bottom cells the counts are 1, 5, 10, 10, 5, 1 — the same eye tells you where everything goes.",
+            },
+        )
+
+
+def gen_funcinv():
+    # 규칙이 숨겨진 함수 기계 역추적 — 곱 구조(n×(n+off)) 발견 후 출력→입력. (변화와관계 난6, 신규 설계)
+    # 발견형 근거: 상자의 규칙이 문제문에 없어 여러 쌍 대조로 스스로 발견해야 하고('몇 배' 가설은 쌍마다 배율이 달라 무너짐),
+    # 규칙 발견 없이는 출력→입력 역추적을 시작할 수조차 없다.
+    from math import isqrt as _isqrt
+    for off, pairs, out in [(1, [(2, 6), (3, 12), (5, 30)], 90), (1, [(3, 12), (6, 42), (8, 72)], 132),
+                            (2, [(2, 8), (4, 24), (5, 35)], 80), (2, [(3, 15), (6, 48), (8, 80)], 120)]:
+        (x1, y1), (x2, y2), (x3, y3) = pairs
+        assert all(y == x * (x + off) for x, y in pairs), f"funcinv: 쌍이 규칙과 불일치 {pairs}"
+        # 검산(funcinv) 경로1: '×a+b' 선형 규칙 완전탐색 — 세 쌍을 동시에 맞추는 선형 규칙이 없어야 곱 구조 발견이 강제됨
+        linear = [(aa, bb) for aa in range(0, 30) for bb in range(-60, 61) if all(aa * x + bb == y for x, y in pairs)]
+        assert linear == [], f"funcinv: 선형 규칙이 통함 {linear}"
+        # 검산 경로2: 입력 후보 전 범위 완전탐색으로 답의 존재·유일성
+        sols = [m for m in range(1, 500) if m * (m + off) == out]
+        assert len(sols) == 1, f"funcinv: 해가 유일하지 않음 {sols}"
+        ans = sols[0]
+        # 검산 경로3: 정수 제곱근 근방 역산 — 다른 경로로 같은 답
+        assert _isqrt(out) in (ans, ans + off) and ans * (ans + off) == out, f"funcinv 검산 실패: {ans}"
+        r1 = y1 // x1
+        assert y1 % x1 == 0 and out % r1 == 0, f"funcinv: ×배 함정 오답이 정수가 아님"
+        w1, w2, w3 = out // r1, ans + off, ans - 1
+        assert len({ans, w1, w2, w3}) == 4, f"funcinv: 보기 겹침 {ans},{w1},{w2},{w3}"
+        add(
+            "funcinv", "CHANGE_RELATION", 6, ["대응 규칙 발견", "거꾸로 추적"],
+            f"마법 상자는 수를 넣으면 정해진 규칙으로 바꿔서 내보내요. {x1}{_eul(x1)} 넣으면 {y1}{_iga(y1)}, {x2}{_eul(x2)} 넣으면 {y2}{_iga(y2)}, "
+            f"{x3}{_eul(x3)} 넣으면 {y3}{_iga(y3)} 나와요. 이 상자에서 {out}{_iga(out)} 나왔다면, 넣은 수는 얼마였을까요?",
+            str(ans), [str(w1), str(w2), str(w3)],
+            f"먼저 상자의 규칙부터 찾아야 해요. '몇 배' 가설은 무너져요 — {x1}→{y1}은 {r1}배지만 {x2}→{y2}는 {y2 // x2}배예요. "
+            f"각 출력을 곱으로 쪼개 보면 {y1}={x1}×{x1 + off}, {y2}={x2}×{x2 + off}, {y3}={x3}×{x3 + off} — "
+            f"넣은 수에 (넣은 수+{off}){_eul(off)} 곱하는 규칙이에요. 이제 거꾸로: {out}{_eul(out)} 차가 {off}인 두 수의 곱으로 나타내면 "
+            f"{out}={ans}×{ans + off}. 넣은 수는 {ans}예요.",
+            [(str(w1), f"첫 쌍({x1}→{y1})만 보고 '×{r1}' 규칙이라 여겨 {out}÷{r1}을 했어요. 다른 쌍에 대면 배율이 달라져요 — 규칙은 모든 쌍에 맞아야 해요."),
+             (str(w2), f"{out}={ans}×{ans + off}까지 갔는데 큰 쪽 수를 답했어요. 상자에 '넣은' 수는 작은 쪽 {ans}예요 — {ans + off}{_eul(ans + off)} 넣으면 {(ans + off) * (ans + 2 * off)}{_iga((ans + off) * (ans + 2 * off))} 나와요."),
+             (str(w3), f"거의 다 왔어요. 후보를 규칙에 다시 넣어 검산하세요 — {ans - 1}{_eul(ans - 1)} 넣으면 {(ans - 1) * (ans - 1 + off)}{_iga((ans - 1) * (ans - 1 + off))} 나오지, {out}{_iga(out)} 아니에요.")],
+            detail=f"입력→출력 표에서 규칙을 찾을 땐 '몇 배'·'얼마 더하기' 같은 한 단계 가설이 모든 쌍에 맞는지 반드시 대조하고, 무너지면 "
+            f"출력을 '입력과 관련된 두 수의 곱'으로 쪼개 보는 것이 강력한 다음 수예요. 규칙을 찾으면 거꾸로 가기는 곱 분해 — "
+            f"차가 {off}인 두 수의 곱이 {out}{_iga(out)} 되는 짝은 {ans}×{ans + off} 하나뿐이라 답이 유일해요. "
+            f"되돌아보기: 찾은 규칙이 보여 준 세 쌍 모두에 맞는지, 그리고 {ans}{_eul(ans)} 넣으면 정말 {out}{_iga(out)} 나오는지 검산하세요.",
+            en={
+                "concepts": ["discovering a mapping rule", "working backward"],
+                "statement": f"A magic box changes any number you put in, always by the same fixed rule. Putting in {x1} gives {y1}, putting in {x2} gives {y2}, "
+                f"and putting in {x3} gives {y3}. The box just put out {out} — what number was put in?",
+                "answer": str(ans),
+                "distractors": [str(w1), str(w2), str(w3)],
+                "explanation": f"First discover the box's rule. The 'times what' guess collapses — {x1}→{y1} is ×{r1}, but {x2}→{y2} is ×{y2 // x2}. "
+                f"Splitting each output into a product: {y1}={x1}×{x1 + off}, {y2}={x2}×{x2 + off}, {y3}={x3}×{x3 + off} — "
+                f"the rule multiplies the input by (input+{off}). Now go backward: writing {out} as a product of two numbers differing by {off}, "
+                f"{out}={ans}×{ans + off}. The number put in was {ans}.",
+                "mistakes": [(str(w1), f"Looking only at the first pair ({x1}→{y1}) you took the rule as '×{r1}' and computed {out}÷{r1}. The other pairs give different multipliers — the rule must fit every pair."),
+                             (str(w2), f"You reached {out}={ans}×{ans + off} but answered the larger number. The number PUT IN is the smaller one, {ans} — putting in {ans + off} would give {(ans + off) * (ans + 2 * off)}."),
+                             (str(w3), f"So close — check the candidate by feeding it back through the rule: putting in {ans - 1} gives {(ans - 1) * (ans - 1 + off)}, not {out}.")],
+                "detail": f"When hunting a rule in an input→output table, always test one-step guesses ('times what', 'plus what') against every pair; when they collapse, "
+                f"splitting the output into a product of two numbers related to the input is a powerful next move. Once the rule is found, going backward is factoring — "
+                f"only one pair of numbers differing by {off} multiplies to {out}, namely {ans}×{ans + off}, so the answer is unique. "
+                f"Check back: confirm the rule fits all three shown pairs, and that putting in {ans} really gives {out}.",
+            },
+        )
