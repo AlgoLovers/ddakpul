@@ -2182,10 +2182,10 @@
   },
   {
    "id": "gen-boxsurface-1",
-   "code": "30-01-02-06-01",
+   "code": "30-01-02-04-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 6,
-   "groupId": "g-gen-boxsurface-6",
+   "difficulty": 4,
+   "groupId": "g-gen-boxsurface-4",
    "concepts": [
     "겉넓이",
     "면 세기"
@@ -2214,10 +2214,10 @@
   },
   {
    "id": "gen-boxsurface-2",
-   "code": "30-01-02-06-02",
+   "code": "30-01-02-04-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 6,
-   "groupId": "g-gen-boxsurface-6",
+   "difficulty": 4,
+   "groupId": "g-gen-boxsurface-4",
    "concepts": [
     "겉넓이",
     "면 세기"
@@ -2246,10 +2246,10 @@
   },
   {
    "id": "gen-boxsurface-3",
-   "code": "30-01-02-06-03",
+   "code": "30-01-02-04-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 6,
-   "groupId": "g-gen-boxsurface-6",
+   "difficulty": 4,
+   "groupId": "g-gen-boxsurface-4",
    "concepts": [
     "겉넓이",
     "면 세기"
@@ -2278,10 +2278,10 @@
   },
   {
    "id": "gen-boxsurface-4",
-   "code": "30-01-02-06-04",
+   "code": "30-01-02-04-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 6,
-   "groupId": "g-gen-boxsurface-6",
+   "difficulty": 4,
+   "groupId": "g-gen-boxsurface-4",
    "concepts": [
     "겉넓이",
     "면 세기"
@@ -2310,10 +2310,10 @@
   },
   {
    "id": "gen-passcode-1",
-   "code": "40-01-09-06-01",
+   "code": "40-01-09-04-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-passcode-6",
+   "difficulty": 4,
+   "groupId": "g-gen-passcode-4",
    "concepts": [
     "곱의 법칙",
     "반복 허용"
@@ -2338,10 +2338,10 @@
   },
   {
    "id": "gen-passcode-2",
-   "code": "40-01-09-06-02",
+   "code": "40-01-09-04-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-passcode-6",
+   "difficulty": 4,
+   "groupId": "g-gen-passcode-4",
    "concepts": [
     "곱의 법칙",
     "반복 허용"
@@ -2366,10 +2366,10 @@
   },
   {
    "id": "gen-passcode-3",
-   "code": "40-01-09-06-03",
+   "code": "40-01-09-04-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-passcode-6",
+   "difficulty": 4,
+   "groupId": "g-gen-passcode-4",
    "concepts": [
     "곱의 법칙",
     "반복 허용"
@@ -2394,10 +2394,10 @@
   },
   {
    "id": "gen-passcode-4",
-   "code": "40-01-09-06-04",
+   "code": "40-01-09-04-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-passcode-6",
+   "difficulty": 4,
+   "groupId": "g-gen-passcode-4",
    "concepts": [
     "곱의 법칙",
     "반복 허용"
@@ -5458,10 +5458,10 @@
   },
   {
    "id": "gen-prodsum-1",
-   "code": "20-02-08-07-01",
+   "code": "20-02-08-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-prodsum-7",
+   "difficulty": 4,
+   "groupId": "g-gen-prodsum-4",
    "concepts": [
     "수열의 합",
     "규칙으로 한꺼번에"
@@ -5486,10 +5486,10 @@
   },
   {
    "id": "gen-prodsum-2",
-   "code": "20-02-08-07-02",
+   "code": "20-02-08-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-prodsum-7",
+   "difficulty": 4,
+   "groupId": "g-gen-prodsum-4",
    "concepts": [
     "수열의 합",
     "규칙으로 한꺼번에"
@@ -5514,10 +5514,10 @@
   },
   {
    "id": "gen-prodsum-3",
-   "code": "20-02-08-07-03",
+   "code": "20-02-08-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-prodsum-7",
+   "difficulty": 4,
+   "groupId": "g-gen-prodsum-4",
    "concepts": [
     "수열의 합",
     "규칙으로 한꺼번에"
@@ -5546,10 +5546,10 @@
   },
   {
    "id": "gen-prodsum-4",
-   "code": "20-02-08-07-04",
+   "code": "20-02-08-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-prodsum-7",
+   "difficulty": 4,
+   "groupId": "g-gen-prodsum-4",
    "concepts": [
     "수열의 합",
     "규칙으로 한꺼번에"
@@ -7217,10 +7217,10 @@
   },
   {
    "id": "gen-aliquot-1",
-   "code": "10-02-01-07-01",
+   "code": "10-02-01-03-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-aliquot-7",
+   "difficulty": 3,
+   "groupId": "g-gen-aliquot-3",
    "concepts": [
     "약수",
     "완전수"
@@ -7245,10 +7245,10 @@
   },
   {
    "id": "gen-aliquot-2",
-   "code": "10-02-01-07-02",
+   "code": "10-02-01-03-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-aliquot-7",
+   "difficulty": 3,
+   "groupId": "g-gen-aliquot-3",
    "concepts": [
     "약수",
     "완전수"
@@ -7273,10 +7273,10 @@
   },
   {
    "id": "gen-aliquot-3",
-   "code": "10-02-01-07-03",
+   "code": "10-02-01-03-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-aliquot-7",
+   "difficulty": 3,
+   "groupId": "g-gen-aliquot-3",
    "concepts": [
     "약수",
     "완전수"
@@ -7301,10 +7301,10 @@
   },
   {
    "id": "gen-aliquot-4",
-   "code": "10-02-01-07-04",
+   "code": "10-02-01-03-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-aliquot-7",
+   "difficulty": 3,
+   "groupId": "g-gen-aliquot-3",
    "concepts": [
     "약수",
     "완전수"
@@ -7329,10 +7329,10 @@
   },
   {
    "id": "gen-narciss-1",
-   "code": "10-01-04-07-01",
+   "code": "10-01-04-03-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-narciss-7",
+   "difficulty": 3,
+   "groupId": "g-gen-narciss-3",
    "concepts": [
     "자릿값",
     "세제곱 합"
@@ -7357,10 +7357,10 @@
   },
   {
    "id": "gen-narciss-2",
-   "code": "10-01-04-07-02",
+   "code": "10-01-04-03-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-narciss-7",
+   "difficulty": 3,
+   "groupId": "g-gen-narciss-3",
    "concepts": [
     "자릿값",
     "세제곱 합"
@@ -7385,10 +7385,10 @@
   },
   {
    "id": "gen-narciss-3",
-   "code": "10-01-04-07-03",
+   "code": "10-01-04-03-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-narciss-7",
+   "difficulty": 3,
+   "groupId": "g-gen-narciss-3",
    "concepts": [
     "자릿값",
     "세제곱 합"
@@ -7413,10 +7413,10 @@
   },
   {
    "id": "gen-narciss-4",
-   "code": "10-01-04-07-04",
+   "code": "10-01-04-03-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 7,
-   "groupId": "g-gen-narciss-7",
+   "difficulty": 3,
+   "groupId": "g-gen-narciss-3",
    "concepts": [
     "자릿값",
     "세제곱 합"
@@ -10836,10 +10836,10 @@
   },
   {
    "id": "gen-pow2-1",
-   "code": "20-02-07-06-01",
+   "code": "20-02-07-03-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-pow2-6",
+   "difficulty": 3,
+   "groupId": "g-gen-pow2-3",
    "concepts": [
     "거듭제곱",
     "2배씩 커지기"
@@ -10864,10 +10864,10 @@
   },
   {
    "id": "gen-pow2-2",
-   "code": "20-02-07-06-02",
+   "code": "20-02-07-03-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-pow2-6",
+   "difficulty": 3,
+   "groupId": "g-gen-pow2-3",
    "concepts": [
     "거듭제곱",
     "2배씩 커지기"
@@ -10892,10 +10892,10 @@
   },
   {
    "id": "gen-pow2-3",
-   "code": "20-02-07-06-03",
+   "code": "20-02-07-03-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-pow2-6",
+   "difficulty": 3,
+   "groupId": "g-gen-pow2-3",
    "concepts": [
     "거듭제곱",
     "2배씩 커지기"
@@ -10920,10 +10920,10 @@
   },
   {
    "id": "gen-pow2-4",
-   "code": "20-02-07-06-04",
+   "code": "20-02-07-03-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-pow2-6",
+   "difficulty": 3,
+   "groupId": "g-gen-pow2-3",
    "concepts": [
     "거듭제곱",
     "2배씩 커지기"
@@ -11508,10 +11508,10 @@
   },
   {
    "id": "gen-concn-1",
-   "code": "20-03-02-06-01",
+   "code": "20-03-02-03-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-concn-6",
+   "difficulty": 3,
+   "groupId": "g-gen-concn-3",
    "concepts": [
     "농도",
     "비율"
@@ -11536,10 +11536,10 @@
   },
   {
    "id": "gen-concn-2",
-   "code": "20-03-02-06-02",
+   "code": "20-03-02-03-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-concn-6",
+   "difficulty": 3,
+   "groupId": "g-gen-concn-3",
    "concepts": [
     "농도",
     "비율"
@@ -11564,10 +11564,10 @@
   },
   {
    "id": "gen-concn-3",
-   "code": "20-03-02-06-03",
+   "code": "20-03-02-03-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-concn-6",
+   "difficulty": 3,
+   "groupId": "g-gen-concn-3",
    "concepts": [
     "농도",
     "비율"
@@ -11592,10 +11592,10 @@
   },
   {
    "id": "gen-concn-4",
-   "code": "20-03-02-06-04",
+   "code": "20-03-02-03-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-concn-6",
+   "difficulty": 3,
+   "groupId": "g-gen-concn-3",
    "concepts": [
     "농도",
     "비율"
@@ -14044,10 +14044,10 @@
   },
   {
    "id": "gen-collatz-1",
-   "code": "40-06-03-06-01",
+   "code": "40-06-03-04-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-collatz-6",
+   "difficulty": 4,
+   "groupId": "g-gen-collatz-4",
    "concepts": [
     "규칙 따라가기",
     "콜라츠"
@@ -14072,10 +14072,10 @@
   },
   {
    "id": "gen-collatz-2",
-   "code": "40-06-03-06-02",
+   "code": "40-06-03-04-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-collatz-6",
+   "difficulty": 4,
+   "groupId": "g-gen-collatz-4",
    "concepts": [
     "규칙 따라가기",
     "콜라츠"
@@ -14100,10 +14100,10 @@
   },
   {
    "id": "gen-collatz-3",
-   "code": "40-06-03-06-03",
+   "code": "40-06-03-04-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-collatz-6",
+   "difficulty": 4,
+   "groupId": "g-gen-collatz-4",
    "concepts": [
     "규칙 따라가기",
     "콜라츠"
@@ -14128,10 +14128,10 @@
   },
   {
    "id": "gen-collatz-4",
-   "code": "40-06-03-06-04",
+   "code": "40-06-03-04-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 6,
-   "groupId": "g-gen-collatz-6",
+   "difficulty": 4,
+   "groupId": "g-gen-collatz-4",
    "concepts": [
     "규칙 따라가기",
     "콜라츠"
@@ -14492,10 +14492,10 @@
   },
   {
    "id": "gen-mixture-1",
-   "code": "20-03-05-07-01",
+   "code": "20-03-05-05-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-mixture-7",
+   "difficulty": 5,
+   "groupId": "g-gen-mixture-5",
    "concepts": [
     "농도",
     "섞기"
@@ -14520,10 +14520,10 @@
   },
   {
    "id": "gen-mixture-2",
-   "code": "20-03-05-07-02",
+   "code": "20-03-05-05-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-mixture-7",
+   "difficulty": 5,
+   "groupId": "g-gen-mixture-5",
    "concepts": [
     "농도",
     "섞기"
@@ -14548,10 +14548,10 @@
   },
   {
    "id": "gen-mixture-3",
-   "code": "20-03-05-07-03",
+   "code": "20-03-05-05-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-mixture-7",
+   "difficulty": 5,
+   "groupId": "g-gen-mixture-5",
    "concepts": [
     "농도",
     "섞기"
@@ -14576,10 +14576,10 @@
   },
   {
    "id": "gen-mixture-4",
-   "code": "20-03-05-07-04",
+   "code": "20-03-05-05-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 7,
-   "groupId": "g-gen-mixture-7",
+   "difficulty": 5,
+   "groupId": "g-gen-mixture-5",
    "concepts": [
     "농도",
     "섞기"
@@ -14828,10 +14828,10 @@
   },
   {
    "id": "gen-clockgain-1",
-   "code": "20-03-01-06-01",
+   "code": "20-03-01-03-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-clockgain-6",
+   "difficulty": 3,
+   "groupId": "g-gen-clockgain-3",
    "concepts": [
     "비례",
     "누적"
@@ -14856,10 +14856,10 @@
   },
   {
    "id": "gen-clockgain-2",
-   "code": "20-03-01-06-02",
+   "code": "20-03-01-03-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-clockgain-6",
+   "difficulty": 3,
+   "groupId": "g-gen-clockgain-3",
    "concepts": [
     "비례",
     "누적"
@@ -14884,10 +14884,10 @@
   },
   {
    "id": "gen-clockgain-3",
-   "code": "20-03-01-06-03",
+   "code": "20-03-01-03-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-clockgain-6",
+   "difficulty": 3,
+   "groupId": "g-gen-clockgain-3",
    "concepts": [
     "비례",
     "누적"
@@ -14912,10 +14912,10 @@
   },
   {
    "id": "gen-clockgain-4",
-   "code": "20-03-01-06-04",
+   "code": "20-03-01-03-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 6,
-   "groupId": "g-gen-clockgain-6",
+   "difficulty": 3,
+   "groupId": "g-gen-clockgain-3",
    "concepts": [
     "비례",
     "누적"
@@ -15276,10 +15276,10 @@
   },
   {
    "id": "gen-simarea-1",
-   "code": "30-01-16-07-01",
+   "code": "30-01-16-05-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 7,
-   "groupId": "g-gen-simarea-7",
+   "difficulty": 5,
+   "groupId": "g-gen-simarea-5",
    "concepts": [
     "닮음",
     "넓이비"
@@ -15304,10 +15304,10 @@
   },
   {
    "id": "gen-simarea-2",
-   "code": "30-01-16-07-02",
+   "code": "30-01-16-05-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 7,
-   "groupId": "g-gen-simarea-7",
+   "difficulty": 5,
+   "groupId": "g-gen-simarea-5",
    "concepts": [
     "닮음",
     "넓이비"
@@ -15332,10 +15332,10 @@
   },
   {
    "id": "gen-simarea-3",
-   "code": "30-01-16-07-03",
+   "code": "30-01-16-05-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 7,
-   "groupId": "g-gen-simarea-7",
+   "difficulty": 5,
+   "groupId": "g-gen-simarea-5",
    "concepts": [
     "닮음",
     "넓이비"
@@ -15360,10 +15360,10 @@
   },
   {
    "id": "gen-simarea-4",
-   "code": "30-01-16-07-04",
+   "code": "30-01-16-05-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 7,
-   "groupId": "g-gen-simarea-7",
+   "difficulty": 5,
+   "groupId": "g-gen-simarea-5",
    "concepts": [
     "닮음",
     "넓이비"
@@ -15756,10 +15756,10 @@
   },
   {
    "id": "gen-gcd3-1",
-   "code": "10-02-06-06-01",
+   "code": "10-02-06-04-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 6,
-   "groupId": "g-gen-gcd3-6",
+   "difficulty": 4,
+   "groupId": "g-gen-gcd3-4",
    "concepts": [
     "최대공약수",
     "세 수"
@@ -15784,10 +15784,10 @@
   },
   {
    "id": "gen-gcd3-2",
-   "code": "10-02-06-06-02",
+   "code": "10-02-06-04-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 6,
-   "groupId": "g-gen-gcd3-6",
+   "difficulty": 4,
+   "groupId": "g-gen-gcd3-4",
    "concepts": [
     "최대공약수",
     "세 수"
@@ -15812,10 +15812,10 @@
   },
   {
    "id": "gen-gcd3-3",
-   "code": "10-02-06-06-03",
+   "code": "10-02-06-04-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 6,
-   "groupId": "g-gen-gcd3-6",
+   "difficulty": 4,
+   "groupId": "g-gen-gcd3-4",
    "concepts": [
     "최대공약수",
     "세 수"
@@ -15840,10 +15840,10 @@
   },
   {
    "id": "gen-gcd3-4",
-   "code": "10-02-06-06-04",
+   "code": "10-02-06-04-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 6,
-   "groupId": "g-gen-gcd3-6",
+   "difficulty": 4,
+   "groupId": "g-gen-gcd3-4",
    "concepts": [
     "최대공약수",
     "세 수"

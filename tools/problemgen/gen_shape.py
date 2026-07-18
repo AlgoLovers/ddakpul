@@ -961,7 +961,8 @@ def gen_similar_area_ratio():
         assert (area1 * r2 * r2) % (r1 * r1) == 0
         area2 = area1 * r2 * r2 // (r1 * r1)
         add(
-            "simarea", "SHAPE_MEASUREMENT", 7, ["닮음", "넓이비"],
+            # 난이도 재조정(7→5, 2026-07 d7 감사): 넓이비=길이비² 1스텝 적용 — 발견 없음.
+            "simarea", "SHAPE_MEASUREMENT", 5, ["닮음", "넓이비"],
             f"두 도형이 서로 닮았고 닮음비(대응 변의 길이 비)가 {r1}:{r2}예요. 작은 도형의 넓이가 {area1}㎠일 때, 큰 도형의 넓이는 몇 ㎠일까요?",
             f"{area2}㎠", [f"{area1 * r2 // r1}㎠", f"{area1 * (r2 - r1)}㎠", f"{area2 + area1}㎠"],
             f"길이가 {r1}:{r2}로 닮으면 넓이는 그 '제곱'인 {r1}²:{r2}² = {r1 * r1}:{r2 * r2}로 커져요(가로도 세로도 늘어나니까). 작은 넓이 {area1}에 {r2 * r2}/{r1 * r1}을 곱하면 {area2}㎠예요.",
@@ -1336,7 +1337,8 @@ def gen_boxsurface():
         )
         assert exposed == ans, f"boxsurface 검산실패: {a}x{b}x{c}"
         add(
-            "boxsurface", "SHAPE_MEASUREMENT", 6, ["겉넓이", "면 세기"],
+            # 난이도 재조정(6→4, 2026-07 d6 감사): 2(ab+bc+ca) 공식 적용.
+            "boxsurface", "SHAPE_MEASUREMENT", 4, ["겉넓이", "면 세기"],
             f"가로 {a}cm, 세로 {b}cm, 높이 {c}cm인 직육면체의 겉넓이는 몇 cm²일까요?",
             f"{ans}cm²", [f"{v}cm²" for v in _pick_distractors(ans, [a * b * c, a * b + b * c + c * a, ans + 4, ans - 4])],
             f"직육면체는 마주 보는 면이 세 쌍이에요. 한 쌍씩 넓이는 {a}×{b}, {b}×{c}, {c}×{a}이고, 각각 2개씩이라 "

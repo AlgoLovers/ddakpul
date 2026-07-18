@@ -666,7 +666,8 @@ def gen_power_of_two():
             layers *= 2
         assert layers == ans, f"pow2 검산 실패: {layers} != {ans}"
         add(
-            "pow2", "CHANGE_RELATION", 6, ["거듭제곱", "2배씩 커지기"],
+            # 난이도 재조정(6→3, 2026-07 d6 감사): 2^n 단일 거듭제곱.
+            "pow2", "CHANGE_RELATION", 3, ["거듭제곱", "2배씩 커지기"],
             f"종이를 반으로 접으면 두께가 2겹, 또 접으면 4겹, 또 접으면 8겹… 이렇게 {n}번 접으면 몇 겹이 될까요?",
             f"{ans}겹", [f"{2 * n}겹", f"{ans // 2}겹", f"{ans + 2}겹"],
             f"한 번 접을 때마다 겹이 '2배'가 돼요. 1번에 2겹, 2번에 4겹, 3번에 8겹… {n}번이면 2를 {n}번 곱한 값 = {ans}겹이에요.",
@@ -690,7 +691,8 @@ def gen_salt_concentration():
         assert (salt * 100) % total == 0
         ans = salt * 100 // total
         add(
-            "concn", "CHANGE_RELATION", 6, ["농도", "비율"],
+            # 난이도 재조정(6→3, 2026-07 d6 감사): 소금/전체 단일 나눗셈 — 기초 백분율.
+            "concn", "CHANGE_RELATION", 3, ["농도", "비율"],
             f"물 {water}g에 소금 {salt}g을 완전히 녹였어요. 이 소금물의 농도(진하기)는 몇 %일까요?",
             f"{ans}%", [f"{salt * 100 // water}%", f"{ans + 3}%", f"{ans - 3}%"],
             f"농도는 '소금물 전체 중 소금이 차지하는 비율'이에요. 소금물 전체는 물+소금 = {water}+{salt}={total}g. 그중 소금이 {salt}g이니 농도 = {salt}÷{total}×100 = {ans}%예요.",
@@ -944,7 +946,8 @@ def gen_mixture():
         assert (salt * 100) % total == 0
         ans = salt * 100 // total
         add(
-            "mixture", "CHANGE_RELATION", 7, ["농도", "섞기"],
+            # 난이도 재조정(7→5, 2026-07 d7 감사): 소금양 보존 가중평균 적용 — 다단계지만 공식 적용.
+            "mixture", "CHANGE_RELATION", 5, ["농도", "섞기"],
             f"농도 {c1}%인 소금물 {w1}g과 농도 {c2}%인 소금물 {w2}g을 섞었어요. 섞은 소금물의 농도는 몇 %일까요?",
             f"{ans}%", [f"{(c1 + c2) // 2}%", f"{c1 + c2}%", f"{ans + 2}%"],
             f"섞을 때 변하지 않는 건 '소금의 양'이에요. 첫 소금물의 소금은 {w1}×{c1}÷100={w1 * c1 // 100}g, 둘째는 {w2}×{c2}÷100={w2 * c2 // 100}g. 합치면 소금 {salt}g, 전체 {total}g이니 농도 = {salt}÷{total}×100 = {ans}%예요.",
@@ -1025,7 +1028,8 @@ def gen_clock_gain():
             total += gain
         assert total == ans, f"clockgain 검산 실패: {total} != {ans}"
         add(
-            "clockgain", "CHANGE_RELATION", 6, ["비례", "누적"],
+            # 난이도 재조정(6→3, 2026-07 d6 감사): 비율×날수 단일 곱셈.
+            "clockgain", "CHANGE_RELATION", 3, ["비례", "누적"],
             f"어떤 시계는 하루에 {gain}분씩 빨라져요. 정확한 시각에 맞춰 둔 뒤 {days}일이 지나면, 이 시계는 실제 시각보다 몇 분 빨라져 있을까요?",
             f"{ans}분", [f"{gain + days}분", f"{gain * days // 2}분", f"{ans + gain}분"],
             f"하루에 {gain}분씩 '쌓여요'. {days}일이면 {gain}×{days}={ans}분 빨라져요. 매일 같은 양이 더해지니 곱셈으로 한 번에 구해요.",
@@ -1518,7 +1522,8 @@ def gen_prodsum():
         assert total == ans, f"prodsum 검산 실패: {total} != {ans}"
         terms = " + ".join(f"{k}×{k + 1}" for k in range(1, min(n, 3) + 1)) + (f" + … + {n}×{n + 1}" if n > 3 else "")
         add(
-            "prodsum", "CHANGE_RELATION", 7, ["수열의 합", "규칙으로 한꺼번에"],
+            # 난이도 재조정(7→4, 2026-07 d7 감사): 항 ≤7개 직접 덧셈으로 답 — fibsum/geosum 선례.
+            "prodsum", "CHANGE_RELATION", 4, ["수열의 합", "규칙으로 한꺼번에"],
             f"{terms} 의 값은 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [last, ans // 2, ans + last, n * (n + 1) // 2])],
             f"연속한 두 수의 곱을 더하는 합은 항이 늘어도 규칙이 있어요 — 1·2+2·3+…+n·(n+1) = n(n+1)(n+2)÷3. "

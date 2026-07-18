@@ -977,7 +977,8 @@ def gen_gcd_three():
         brute = max(d for d in range(1, min(a, b, c) + 1) if a % d == 0 and b % d == 0 and c % d == 0)
         assert brute == ans, f"gcd_three 검산 불일치: {ans} != {brute}"
         add(
-            "gcd3", "NUMBER_OPERATION", 6, ["최대공약수", "세 수"],
+            # 난이도 재조정(6→4, 2026-07 d6 감사): statement가 GCD 정의 제공, 소수 계산.
+            "gcd3", "NUMBER_OPERATION", 4, ["최대공약수", "세 수"],
             f"{a}, {b}, {c} 세 수의 최대공약수(세 수를 모두 나누어떨어지게 하는 가장 큰 수)는 무엇일까요?",
             str(ans), [str(gcd(a, b)), str(ans + 1), str(min(a, b, c))],
             f"세 수의 최대공약수는 '두 개씩 차례로' 구하면 돼요. 먼저 {a}와 {b}의 최대공약수는 {gcd(a, b)}. 그 결과와 {c}의 최대공약수를 구하면 {ans}이에요.",
@@ -1122,7 +1123,8 @@ def gen_aliquot():
         extra = f" 진약수 합이 자기 자신과 같으니 {n}{_eun(str(n))} '완전수'예요!" if s == n else ""
         extra_en = f" The proper divisors sum to the number itself, so {n} is a 'perfect number'!" if s == n else ""
         add(
-            "aliquot", "NUMBER_OPERATION", 7, ["약수", "완전수"],
+            # 난이도 재조정(7→3, 2026-07 d7 감사): ≤28 약수 나열+덧셈 — 전략 없음.
+            "aliquot", "NUMBER_OPERATION", 3, ["약수", "완전수"],
             f"어떤 수의 '진약수'는 자기 자신을 뺀 약수예요(예: 6의 진약수는 1, 2, 3). {n}의 진약수를 모두 더하면 얼마일까요?",
             str(s), [str(s + n), str(s + 1), str(s - 1)],
             f"{n}의 진약수는 {', '.join(map(str, divs))}이고, 모두 더하면 {'＋'.join(map(str, divs))}={s}예요.{extra}",
@@ -1152,7 +1154,8 @@ def gen_narcissistic():
         # 오답은 아름스트롱 수가 아니어야 한다(370·371처럼 이웃한 아름스트롱 수를 피한다).
         distractors = [str(x) for x in (t + 2, t - 2, t + 5, t - 5, t + 11) if x not in narc][:3]
         add(
-            "narciss", "NUMBER_OPERATION", 7, ["자릿값", "세제곱 합"],
+            # 난이도 재조정(7→3, 2026-07 d7 감사): 규칙+예시를 statement가 다 줌 — 검산만.
+            "narciss", "NUMBER_OPERATION", 3, ["자릿값", "세제곱 합"],
             f"각 자리 숫자를 세제곱해서 더하면 자기 자신이 되는 세 자리 수가 있어요. 예를 들어 {ex}＝{'＋'.join(f'{x}³' for x in exd)}＝{'＋'.join(str(x ** 3) for x in exd)}＝{ex} 처럼요. 이런 수가 몇 개 더 있는데, 다음 중 그런 수는 무엇일까요?",
             str(t), distractors,
             f"{t}의 각 자리 {', '.join(map(str, td))}을 세제곱해 더하면 {'＋'.join(str(x ** 3) for x in td)}＝{t}이라 자기 자신과 같아요. 나머지 보기는 세제곱 합이 자신과 달라요.",

@@ -782,7 +782,8 @@ def gen_collatz():
             chk_seq.append(chk_seq[-1] // 2 if chk_seq[-1] % 2 == 0 else 3 * chk_seq[-1] + 1)
         assert len(chk_seq) - 1 == steps and 1 not in chk_seq[:-1], "collatz 검산 실패"
         add(
-            "collatz", "DATA_POSSIBILITY", 6, ["규칙 따라가기", "콜라츠"],
+            # 난이도 재조정(6→4, 2026-07 d6 감사): 규칙 전문 제공, 시뮬레이션 실행뿐.
+            "collatz", "DATA_POSSIBILITY", 4, ["규칙 따라가기", "콜라츠"],
             f"어떤 수에 규칙을 반복해요: 짝수면 2로 나누고, 홀수면 3을 곱한 뒤 1을 더해요. {n}에서 시작하면 '1'이 될 때까지 규칙을 몇 번 적용해야 할까요?",
             f"{steps}번", [f"{steps - 1}번", f"{steps + 1}번", f"{steps + 2}번"],
             f"직접 따라가 봐요: {n}에서 규칙(짝수→÷2, 홀수→×3+1)을 적용하면 {steps}번 만에 1에 도착해요. 규칙은 단순하지만 커졌다 작아졌다 하는 길이 재미있어요.",
@@ -1324,7 +1325,8 @@ def gen_passcode():
         from itertools import product
         assert sum(1 for _ in product(range(base), repeat=dig)) == ans, "passcode 검산 실패"
         add(
-            "passcode", "DATA_POSSIBILITY", 6, ["곱의 법칙", "반복 허용"],
+            # 난이도 재조정(6→4, 2026-07 d6 감사): 곱의 법칙 단일 지수화.
+            "passcode", "DATA_POSSIBILITY", 4, ["곱의 법칙", "반복 허용"],
             f"0부터 {base - 1}까지 {base}가지 숫자로 {dig}자리 비밀번호를 만들어요. 같은 숫자를 여러 번 써도 될 때, "
             f"만들 수 있는 비밀번호는 모두 몇 가지일까요?",
             f"{ans}가지", [f"{c}가지" for c in _pick_distractors(ans, [base * dig, base ** (dig - 1), ans + base, ans - base])],
