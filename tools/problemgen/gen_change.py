@@ -1219,7 +1219,9 @@ def gen_unitprice():
 
 
 def gen_compose():
-    # 함수(수 기계)를 여러 번 반복 적용. f(x)=ax+b를 d번. (변화와관계 난9)
+    # 함수(수 기계)를 여러 번 반복 적용. f(x)=ax+b를 d번. (변화와관계 난5)
+    # 난이도 재조정(난9→5, 2026-07 d9 감사): 규칙을 statement가 그대로 주고 반복 계산만 —
+    # 강등된 recur(d5)와 동일 패턴.
     for a, b, x0, d in [(2, 1, 1, 3), (2, 3, 1, 3), (3, 1, 2, 3), (2, 5, 0, 3)]:
         seq = [x0]
         x = x0
@@ -1229,7 +1231,7 @@ def gen_compose():
         ans = x
         steps = " → ".join(str(v) for v in seq)
         add(
-            "compose", "CHANGE_RELATION", 9, ["함수 반복", "규칙 적용"],
+            "compose", "CHANGE_RELATION", 5, ["함수 반복", "규칙 적용"],
             f"어떤 기계에 수를 넣으면 '{a}배 하고 {b}{_eul(str(b))} 더한' 수가 나와요. {x0}{_eul(str(x0))} 넣어 나온 수를 "
             f"다시 넣는 식으로, 이 기계에 모두 {d}번 통과시켰어요. 마지막에 나오는 수는 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [a * ans, ans + b, seq[-2], ans + a])],
@@ -1282,12 +1284,13 @@ def gen_recur():
 
 
 def gen_geosum():
-    # 등비수열 합 1+2+4+…+2^(k-1) = 2^k − 1. 2배씩 커지는 수의 합 규칙. (변화와관계 난8)
+    # 등비수열 합 1+2+4+…+2^(k-1) = 2^k − 1. 2배씩 커지는 수의 합 규칙. (변화와관계 난4)
+    # 난이도 재조정(난8→4, 2026-07 d8 감사): 항 8~10개 직접 덧셈으로 끝 — cubesum(d4) 동류.
     for k in [8, 6, 10, 7]:
         last = 2 ** (k - 1)
         ans = 2 ** k - 1
         add(
-            "geosum", "CHANGE_RELATION", 8, ["등비수열", "합의 규칙"],
+            "geosum", "CHANGE_RELATION", 4, ["등비수열", "합의 규칙"],
             f"1 + 2 + 4 + 8 + … 처럼 앞의 수의 2배씩 커지는 수를, 1부터 {last}까지 모두 더하면 합은 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [2 ** k, last, ans + 1, ans - 1])],
             f"2배씩 커지는 수를 다 더하면 신기하게도 '마지막 수의 2배보다 1 작은 수'가 돼요. 마지막이 {last}이니 "
@@ -1447,13 +1450,15 @@ def gen_cubesum():
 
 
 def gen_fibsum():
-    # 피보나치 부분합 F1+…+Fn = F(n+2)−1. 합과 한 항의 숨은 관계. (변화와관계 난9)
+    # 피보나치 부분합 F1+…+Fn = F(n+2)−1. 합과 한 항의 숨은 관계. (변화와관계 난4)
+    # 난이도 재조정(난9→4, 2026-07 d9 감사): 항 6~10개 직접 덧셈으로 끝(항등식 불필요) —
+    # cubesum(d4) 동류.
     for n in [6, 8, 10, 7]:
         terms = [_fib(k) for k in range(1, 6)]
         total = sum(_fib(k) for k in range(1, n + 1))
         fplus2 = _fib(n + 2)
         add(
-            "fibsum", "CHANGE_RELATION", 9, ["피보나치", "합의 숨은 규칙"],
+            "fibsum", "CHANGE_RELATION", 4, ["피보나치", "합의 숨은 규칙"],
             f"{terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, … 처럼 앞의 두 수를 더해 만드는 "
             f"피보나치 수열이 있어요. 첫째 항부터 {n}째 항까지 모두 더하면 얼마일까요?",
             str(total), [str(c) for c in _pick_distractors(total, [fplus2, _fib(n + 1), total + 1, total - 1])],

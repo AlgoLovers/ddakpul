@@ -3,6 +3,8 @@
  "_원칙": "'규칙·공식을 받아서 적용만' < '규칙을 스스로 발견'. 2026-07 리뷰 사례: recur(점화식 적용, d10→5 강등)는 hanoi(점화식 발견, d7)·tribstairs(점화식 세우기, d6)보다 반드시 낮다.",
  "constraints": [
   ["recur", "tribstairs"],
-  ["recur", "hanoi"]
+  ["recur", "hanoi"],
+  ["compose", "tribstairs"],
+  ["compose", "hanoi"]
  ]
 }

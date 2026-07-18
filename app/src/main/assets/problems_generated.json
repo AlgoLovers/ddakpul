@@ -131,10 +131,10 @@
   },
   {
    "id": "gen-fibsum-1",
-   "code": "20-01-04-09-01",
+   "code": "20-01-04-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-fibsum-9",
+   "difficulty": 4,
+   "groupId": "g-gen-fibsum-4",
    "concepts": [
     "피보나치",
     "합의 숨은 규칙"
@@ -163,10 +163,10 @@
   },
   {
    "id": "gen-fibsum-2",
-   "code": "20-01-04-09-02",
+   "code": "20-01-04-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-fibsum-9",
+   "difficulty": 4,
+   "groupId": "g-gen-fibsum-4",
    "concepts": [
     "피보나치",
     "합의 숨은 규칙"
@@ -195,10 +195,10 @@
   },
   {
    "id": "gen-fibsum-3",
-   "code": "20-01-04-09-03",
+   "code": "20-01-04-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-fibsum-9",
+   "difficulty": 4,
+   "groupId": "g-gen-fibsum-4",
    "concepts": [
     "피보나치",
     "합의 숨은 규칙"
@@ -227,10 +227,10 @@
   },
   {
    "id": "gen-fibsum-4",
-   "code": "20-01-04-09-04",
+   "code": "20-01-04-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-fibsum-9",
+   "difficulty": 4,
+   "groupId": "g-gen-fibsum-4",
    "concepts": [
     "피보나치",
     "합의 숨은 규칙"
@@ -1942,10 +1942,10 @@
   },
   {
    "id": "gen-geosum-1",
-   "code": "20-02-06-08-01",
+   "code": "20-02-06-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 8,
-   "groupId": "g-gen-geosum-8",
+   "difficulty": 4,
+   "groupId": "g-gen-geosum-4",
    "concepts": [
     "등비수열",
     "합의 규칙"
@@ -1974,10 +1974,10 @@
   },
   {
    "id": "gen-geosum-2",
-   "code": "20-02-06-08-02",
+   "code": "20-02-06-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 8,
-   "groupId": "g-gen-geosum-8",
+   "difficulty": 4,
+   "groupId": "g-gen-geosum-4",
    "concepts": [
     "등비수열",
     "합의 규칙"
@@ -2006,10 +2006,10 @@
   },
   {
    "id": "gen-geosum-3",
-   "code": "20-02-06-08-03",
+   "code": "20-02-06-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 8,
-   "groupId": "g-gen-geosum-8",
+   "difficulty": 4,
+   "groupId": "g-gen-geosum-4",
    "concepts": [
     "등비수열",
     "합의 규칙"
@@ -2038,10 +2038,10 @@
   },
   {
    "id": "gen-geosum-4",
-   "code": "20-02-06-08-04",
+   "code": "20-02-06-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 8,
-   "groupId": "g-gen-geosum-8",
+   "difficulty": 4,
+   "groupId": "g-gen-geosum-4",
    "concepts": [
     "등비수열",
     "합의 규칙"
@@ -2070,10 +2070,10 @@
   },
   {
    "id": "gen-dist3d-1",
-   "code": "30-04-04-08-01",
+   "code": "30-04-04-04-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 8,
-   "groupId": "g-gen-dist3d-8",
+   "difficulty": 4,
+   "groupId": "g-gen-dist3d-4",
    "concepts": [
     "공간 좌표",
     "피타고라스"
@@ -2098,10 +2098,10 @@
   },
   {
    "id": "gen-dist3d-2",
-   "code": "30-04-04-08-02",
+   "code": "30-04-04-04-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 8,
-   "groupId": "g-gen-dist3d-8",
+   "difficulty": 4,
+   "groupId": "g-gen-dist3d-4",
    "concepts": [
     "공간 좌표",
     "피타고라스"
@@ -2126,10 +2126,10 @@
   },
   {
    "id": "gen-dist3d-3",
-   "code": "30-04-04-08-03",
+   "code": "30-04-04-04-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 8,
-   "groupId": "g-gen-dist3d-8",
+   "difficulty": 4,
+   "groupId": "g-gen-dist3d-4",
    "concepts": [
     "공간 좌표",
     "피타고라스"
@@ -2154,10 +2154,10 @@
   },
   {
    "id": "gen-dist3d-4",
-   "code": "30-04-04-08-04",
+   "code": "30-04-04-04-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 8,
-   "groupId": "g-gen-dist3d-8",
+   "difficulty": 4,
+   "groupId": "g-gen-dist3d-4",
    "concepts": [
     "공간 좌표",
     "피타고라스"
@@ -3786,10 +3786,10 @@
   },
   {
    "id": "gen-compose-1",
-   "code": "20-01-01-09-01",
+   "code": "20-01-01-05-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-compose-9",
+   "difficulty": 5,
+   "groupId": "g-gen-compose-5",
    "concepts": [
     "함수 반복",
     "규칙 적용"
@@ -3814,10 +3814,10 @@
   },
   {
    "id": "gen-compose-2",
-   "code": "20-01-01-09-02",
+   "code": "20-01-01-05-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-compose-9",
+   "difficulty": 5,
+   "groupId": "g-gen-compose-5",
    "concepts": [
     "함수 반복",
     "규칙 적용"
@@ -3842,10 +3842,10 @@
   },
   {
    "id": "gen-compose-3",
-   "code": "20-01-01-09-03",
+   "code": "20-01-01-05-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-compose-9",
+   "difficulty": 5,
+   "groupId": "g-gen-compose-5",
    "concepts": [
     "함수 반복",
     "규칙 적용"
@@ -3870,10 +3870,10 @@
   },
   {
    "id": "gen-compose-4",
-   "code": "20-01-01-09-04",
+   "code": "20-01-01-05-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 9,
-   "groupId": "g-gen-compose-9",
+   "difficulty": 5,
+   "groupId": "g-gen-compose-5",
    "concepts": [
     "함수 반복",
     "규칙 적용"
@@ -3898,10 +3898,10 @@
   },
   {
    "id": "gen-euler-1",
-   "code": "30-04-05-09-01",
+   "code": "30-04-05-05-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 9,
-   "groupId": "g-gen-euler-9",
+   "difficulty": 5,
+   "groupId": "g-gen-euler-5",
    "concepts": [
     "오일러 공식",
     "다면체"
@@ -3926,10 +3926,10 @@
   },
   {
    "id": "gen-euler-2",
-   "code": "30-04-05-09-02",
+   "code": "30-04-05-05-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 9,
-   "groupId": "g-gen-euler-9",
+   "difficulty": 5,
+   "groupId": "g-gen-euler-5",
    "concepts": [
     "오일러 공식",
     "다면체"
@@ -3954,10 +3954,10 @@
   },
   {
    "id": "gen-euler-3",
-   "code": "30-04-05-09-03",
+   "code": "30-04-05-05-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 9,
-   "groupId": "g-gen-euler-9",
+   "difficulty": 5,
+   "groupId": "g-gen-euler-5",
    "concepts": [
     "오일러 공식",
     "다면체"
@@ -3982,10 +3982,10 @@
   },
   {
    "id": "gen-euler-4",
-   "code": "30-04-05-09-04",
+   "code": "30-04-05-05-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 9,
-   "groupId": "g-gen-euler-9",
+   "difficulty": 5,
+   "groupId": "g-gen-euler-5",
    "concepts": [
     "오일러 공식",
     "다면체"
