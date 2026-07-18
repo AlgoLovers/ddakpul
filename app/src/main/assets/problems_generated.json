@@ -2069,118 +2069,6 @@
    "detailedExplanation": "1+2+4+…+2^(k−1) = 2^k − 1이에요. 각 항이 그 앞까지의 합보다 1 큰 성질(1, 1+2=3, 1+2+4=7…)이라, 합은 항상 다음 2의 거듭제곱보다 1 작아요. 이진법·배수 사고와 이어지는 등비수열 합의 기본이에요."
   },
   {
-   "id": "gen-dist3d-1",
-   "code": "30-04-04-04-01",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "공간 좌표",
-    "피타고라스"
-   ],
-   "statement": "공간에서 점 (0, 0, 0)부터 점 (2, 3, 6)까지의 거리는 얼마일까요?",
-   "choices": [
-    "8",
-    "11",
-    "6",
-    "7"
-   ],
-   "answerIndex": 3,
-   "explanation": "공간에서 거리는 √(가로²+세로²+높이²)로 구해요(피타고라스의 공간판). √(2²+3²+6²) = √49 = 7이에요.",
-   "mistakes": [
-    {
-     "choiceIndex": 1,
-     "misconception": "좌표를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "평면의 거리 √(x²+y²)를 공간으로 넓히면 √(x²+y²+z²)예요. 직육면체의 대각선을 두 번의 피타고라스로 구하는 것과 같아요. 좌표와 길이를 잇는 공간 측정의 핵심이에요."
-  },
-  {
-   "id": "gen-dist3d-2",
-   "code": "30-04-04-04-02",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "공간 좌표",
-    "피타고라스"
-   ],
-   "statement": "공간에서 점 (0, 0, 0)부터 점 (1, 2, 2)까지의 거리는 얼마일까요?",
-   "choices": [
-    "3",
-    "5",
-    "4",
-    "2"
-   ],
-   "answerIndex": 0,
-   "explanation": "공간에서 거리는 √(가로²+세로²+높이²)로 구해요(피타고라스의 공간판). √(1²+2²+2²) = √9 = 3이에요.",
-   "mistakes": [
-    {
-     "choiceIndex": 1,
-     "misconception": "좌표를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "평면의 거리 √(x²+y²)를 공간으로 넓히면 √(x²+y²+z²)예요. 직육면체의 대각선을 두 번의 피타고라스로 구하는 것과 같아요. 좌표와 길이를 잇는 공간 측정의 핵심이에요."
-  },
-  {
-   "id": "gen-dist3d-3",
-   "code": "30-04-04-04-03",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "공간 좌표",
-    "피타고라스"
-   ],
-   "statement": "공간에서 점 (0, 0, 0)부터 점 (2, 6, 9)까지의 거리는 얼마일까요?",
-   "choices": [
-    "10",
-    "12",
-    "11",
-    "17"
-   ],
-   "answerIndex": 2,
-   "explanation": "공간에서 거리는 √(가로²+세로²+높이²)로 구해요(피타고라스의 공간판). √(2²+6²+9²) = √121 = 11이에요.",
-   "mistakes": [
-    {
-     "choiceIndex": 3,
-     "misconception": "좌표를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "평면의 거리 √(x²+y²)를 공간으로 넓히면 √(x²+y²+z²)예요. 직육면체의 대각선을 두 번의 피타고라스로 구하는 것과 같아요. 좌표와 길이를 잇는 공간 측정의 핵심이에요."
-  },
-  {
-   "id": "gen-dist3d-4",
-   "code": "30-04-04-04-04",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "공간 좌표",
-    "피타고라스"
-   ],
-   "statement": "공간에서 점 (0, 0, 0)부터 점 (6, 6, 7)까지의 거리는 얼마일까요?",
-   "choices": [
-    "10",
-    "11",
-    "12",
-    "19"
-   ],
-   "answerIndex": 1,
-   "explanation": "공간에서 거리는 √(가로²+세로²+높이²)로 구해요(피타고라스의 공간판). √(6²+6²+7²) = √121 = 11이에요.",
-   "mistakes": [
-    {
-     "choiceIndex": 3,
-     "misconception": "좌표를 그냥 더하면 안 돼요. 각각 제곱해 더한 뒤 제곱근을 씌워요."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "평면의 거리 √(x²+y²)를 공간으로 넓히면 √(x²+y²+z²)예요. 직육면체의 대각선을 두 번의 피타고라스로 구하는 것과 같아요. 좌표와 길이를 잇는 공간 측정의 핵심이에요."
-  },
-  {
    "id": "gen-necklace-1",
    "code": "40-02-08-08-01",
    "area": "DATA_POSSIBILITY",
@@ -3674,10 +3562,10 @@
   },
   {
    "id": "gen-makesquare-1",
-   "code": "10-02-09-09-01",
+   "code": "10-02-09-06-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "소인수분해",
     "완전제곱수"
@@ -3702,10 +3590,10 @@
   },
   {
    "id": "gen-makesquare-2",
-   "code": "10-02-09-09-02",
+   "code": "10-02-09-06-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "소인수분해",
     "완전제곱수"
@@ -3730,10 +3618,10 @@
   },
   {
    "id": "gen-makesquare-3",
-   "code": "10-02-09-09-03",
+   "code": "10-02-09-06-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "소인수분해",
     "완전제곱수"
@@ -3758,10 +3646,10 @@
   },
   {
    "id": "gen-makesquare-4",
-   "code": "10-02-09-09-04",
+   "code": "10-02-09-06-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "소인수분해",
     "완전제곱수"
@@ -4010,10 +3898,10 @@
   },
   {
    "id": "gen-atleastprob-1",
-   "code": "40-05-01-09-01",
+   "code": "40-05-01-06-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "여사건",
     "적어도"
@@ -4038,10 +3926,10 @@
   },
   {
    "id": "gen-atleastprob-2",
-   "code": "40-05-01-09-02",
+   "code": "40-05-01-06-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "여사건",
     "적어도"
@@ -4066,10 +3954,10 @@
   },
   {
    "id": "gen-atleastprob-3",
-   "code": "40-05-01-09-03",
+   "code": "40-05-01-06-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "여사건",
     "적어도"
@@ -4094,10 +3982,10 @@
   },
   {
    "id": "gen-atleastprob-4",
-   "code": "40-05-01-09-04",
+   "code": "40-05-01-06-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "여사건",
     "적어도"
@@ -5066,10 +4954,10 @@
   },
   {
    "id": "gen-totient-1",
-   "code": "10-02-12-09-01",
+   "code": "10-02-12-05-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "오일러 피 함수",
     "서로소 개수"
@@ -5098,10 +4986,10 @@
   },
   {
    "id": "gen-totient-2",
-   "code": "10-02-12-09-02",
+   "code": "10-02-12-05-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "오일러 피 함수",
     "서로소 개수"
@@ -5130,10 +5018,10 @@
   },
   {
    "id": "gen-totient-3",
-   "code": "10-02-12-09-03",
+   "code": "10-02-12-05-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "오일러 피 함수",
     "서로소 개수"
@@ -5162,10 +5050,10 @@
   },
   {
    "id": "gen-totient-4",
-   "code": "10-02-12-09-04",
+   "code": "10-02-12-05-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "오일러 피 함수",
     "서로소 개수"

@@ -1139,7 +1139,8 @@ def gen_coin_weighing():
 
 
 def gen_makesquare():
-    # 완전제곱수로 만드는 최소 곱수 = 소인수분해에서 지수가 홀수인 소인수들의 곱. (수와연산 난9)
+    # 완전제곱수로 만드는 최소 곱수 = 소인수분해에서 지수가 홀수인 소인수들의 곱. (수와연산 난6)
+    # 난이도 재조정(난9→6, 2026-07 d9 감사): 진짜 정수론 통찰이나 수가 작고 표준 기법 — 심화 상단.
     for n in [72, 48, 50, 12]:
         m, res, p = n, 1, 2
         odd_primes = []
@@ -1157,7 +1158,7 @@ def gen_makesquare():
             odd_primes.append(m)
         root = int((n * res) ** 0.5)
         add(
-            "makesquare", "NUMBER_OPERATION", 9, ["소인수분해", "완전제곱수"],
+            "makesquare", "NUMBER_OPERATION", 6, ["소인수분해", "완전제곱수"],
             f"{n}에 자연수를 곱해서 어떤 수의 제곱(완전제곱수)이 되게 하려고 해요. 곱해야 하는 가장 작은 자연수는 무엇일까요?",
             str(res), [str(c) for c in _pick_distractors(res, [res + 1, res * 2, res + 2, res + 3])],
             f"{n} = {_prime_factor_str(n)}예요. 완전제곱수는 모든 소인수의 지수가 짝수여야 해요. 지수가 홀수인 소인수 "
@@ -1207,13 +1208,14 @@ def gen_sigma():
 
 
 def gen_totient():
-    # 오일러 피 함수 φ(n): n 이하에서 n과 서로소인 수의 개수 = n×∏(1−1/p). (수와연산 난9)
+    # 오일러 피 함수 φ(n): n 이하에서 n과 서로소인 수의 개수 = n×∏(1−1/p). (수와연산 난5)
+    # 난이도 재조정(난9→5, 2026-07 d9 감사): 작은 n의 서로소 열거/공식 대입 — sigma 동류.
     for n in [12, 20, 30, 36]:
         primes = sorted({p for p in range(2, n + 1) if n % p == 0 and all(p % q for q in range(2, p))})
         ans = sum(1 for k in range(1, n + 1) if gcd(k, n) == 1)
         prod = "×".join([str(n)] + [f"(1−1/{p})" for p in primes])
         add(
-            "totient", "NUMBER_OPERATION", 9, ["오일러 피 함수", "서로소 개수"],
+            "totient", "NUMBER_OPERATION", 5, ["오일러 피 함수", "서로소 개수"],
             f"1부터 {n}까지의 자연수 중에서 {n}{_gwa(str(n))} 서로소인(공약수가 1뿐인) 수는 모두 몇 개일까요?",
             f"{ans}개", [f"{c}개" for c in _pick_distractors(ans, [n // 2, ans + 1, ans - 1, ans + 2])],
             f"{n}{_eun(str(n))} {_prime_factor_str(n)}이라, 각 소인수 {', '.join(map(str, primes))}의 배수를 걸러내요. "

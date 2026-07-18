@@ -2070,118 +2070,6 @@
    "detailedExplanation": "1+2+4+…+2^(k−1) = 2^k − 1. Each term is 1 more than the sum before it (1, 1+2=3, 1+2+4=7…), so the sum is always 1 less than the next power of 2. It's the basis of geometric-series sums, connected to binary and multiple thinking."
   },
   {
-   "id": "gen-dist3d-1",
-   "code": "30-04-04-04-01",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "space coordinates",
-    "Pythagorean theorem"
-   ],
-   "statement": "In space, what is the distance from the point (0, 0, 0) to the point (2, 3, 6)?",
-   "choices": [
-    "8",
-    "6",
-    "11",
-    "7"
-   ],
-   "answerIndex": 3,
-   "explanation": "In space, distance is found by √(width²+depth²+height²) (the spatial version of Pythagoras). √(2²+3²+6²) = √49 = 7.",
-   "mistakes": [
-    {
-     "choiceIndex": 2,
-     "misconception": "You can't just add the coordinates. Square each, add them, then take the square root."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "Extending the planar distance √(x²+y²) into space gives √(x²+y²+z²). It's the same as finding a rectangular box's diagonal with two applications of Pythagoras. It's the heart of spatial measurement, linking coordinates and length."
-  },
-  {
-   "id": "gen-dist3d-2",
-   "code": "30-04-04-04-02",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "space coordinates",
-    "Pythagorean theorem"
-   ],
-   "statement": "In space, what is the distance from the point (0, 0, 0) to the point (1, 2, 2)?",
-   "choices": [
-    "4",
-    "2",
-    "3",
-    "5"
-   ],
-   "answerIndex": 2,
-   "explanation": "In space, distance is found by √(width²+depth²+height²) (the spatial version of Pythagoras). √(1²+2²+2²) = √9 = 3.",
-   "mistakes": [
-    {
-     "choiceIndex": 3,
-     "misconception": "You can't just add the coordinates. Square each, add them, then take the square root."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "Extending the planar distance √(x²+y²) into space gives √(x²+y²+z²). It's the same as finding a rectangular box's diagonal with two applications of Pythagoras. It's the heart of spatial measurement, linking coordinates and length."
-  },
-  {
-   "id": "gen-dist3d-3",
-   "code": "30-04-04-04-03",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "space coordinates",
-    "Pythagorean theorem"
-   ],
-   "statement": "In space, what is the distance from the point (0, 0, 0) to the point (2, 6, 9)?",
-   "choices": [
-    "10",
-    "12",
-    "11",
-    "17"
-   ],
-   "answerIndex": 2,
-   "explanation": "In space, distance is found by √(width²+depth²+height²) (the spatial version of Pythagoras). √(2²+6²+9²) = √121 = 11.",
-   "mistakes": [
-    {
-     "choiceIndex": 3,
-     "misconception": "You can't just add the coordinates. Square each, add them, then take the square root."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "Extending the planar distance √(x²+y²) into space gives √(x²+y²+z²). It's the same as finding a rectangular box's diagonal with two applications of Pythagoras. It's the heart of spatial measurement, linking coordinates and length."
-  },
-  {
-   "id": "gen-dist3d-4",
-   "code": "30-04-04-04-04",
-   "area": "SHAPE_MEASUREMENT",
-   "difficulty": 4,
-   "groupId": "g-gen-dist3d-4",
-   "concepts": [
-    "space coordinates",
-    "Pythagorean theorem"
-   ],
-   "statement": "In space, what is the distance from the point (0, 0, 0) to the point (6, 6, 7)?",
-   "choices": [
-    "19",
-    "10",
-    "11",
-    "12"
-   ],
-   "answerIndex": 2,
-   "explanation": "In space, distance is found by √(width²+depth²+height²) (the spatial version of Pythagoras). √(6²+6²+7²) = √121 = 11.",
-   "mistakes": [
-    {
-     "choiceIndex": 0,
-     "misconception": "You can't just add the coordinates. Square each, add them, then take the square root."
-    }
-   ],
-   "source": "generated:v1(template+brute-force-verified)",
-   "detailedExplanation": "Extending the planar distance √(x²+y²) into space gives √(x²+y²+z²). It's the same as finding a rectangular box's diagonal with two applications of Pythagoras. It's the heart of spatial measurement, linking coordinates and length."
-  },
-  {
    "id": "gen-necklace-1",
    "code": "40-02-08-08-01",
    "area": "DATA_POSSIBILITY",
@@ -3666,10 +3554,10 @@
   },
   {
    "id": "gen-makesquare-1",
-   "code": "10-02-09-09-01",
+   "code": "10-02-09-06-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "prime factorization",
     "perfect squares"
@@ -3694,10 +3582,10 @@
   },
   {
    "id": "gen-makesquare-2",
-   "code": "10-02-09-09-02",
+   "code": "10-02-09-06-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "prime factorization",
     "perfect squares"
@@ -3722,10 +3610,10 @@
   },
   {
    "id": "gen-makesquare-3",
-   "code": "10-02-09-09-03",
+   "code": "10-02-09-06-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "prime factorization",
     "perfect squares"
@@ -3750,10 +3638,10 @@
   },
   {
    "id": "gen-makesquare-4",
-   "code": "10-02-09-09-04",
+   "code": "10-02-09-06-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-makesquare-9",
+   "difficulty": 6,
+   "groupId": "g-gen-makesquare-6",
    "concepts": [
     "prime factorization",
     "perfect squares"
@@ -4002,10 +3890,10 @@
   },
   {
    "id": "gen-atleastprob-1",
-   "code": "40-05-01-09-01",
+   "code": "40-05-01-06-01",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "complementary events",
     "at least"
@@ -4030,10 +3918,10 @@
   },
   {
    "id": "gen-atleastprob-2",
-   "code": "40-05-01-09-02",
+   "code": "40-05-01-06-02",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "complementary events",
     "at least"
@@ -4058,10 +3946,10 @@
   },
   {
    "id": "gen-atleastprob-3",
-   "code": "40-05-01-09-03",
+   "code": "40-05-01-06-03",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "complementary events",
     "at least"
@@ -4086,10 +3974,10 @@
   },
   {
    "id": "gen-atleastprob-4",
-   "code": "40-05-01-09-04",
+   "code": "40-05-01-06-04",
    "area": "DATA_POSSIBILITY",
-   "difficulty": 9,
-   "groupId": "g-gen-atleastprob-9",
+   "difficulty": 6,
+   "groupId": "g-gen-atleastprob-6",
    "concepts": [
     "complementary events",
     "at least"
@@ -5058,10 +4946,10 @@
   },
   {
    "id": "gen-totient-1",
-   "code": "10-02-12-09-01",
+   "code": "10-02-12-05-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "Euler's totient function",
     "count of coprimes"
@@ -5090,10 +4978,10 @@
   },
   {
    "id": "gen-totient-2",
-   "code": "10-02-12-09-02",
+   "code": "10-02-12-05-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "Euler's totient function",
     "count of coprimes"
@@ -5122,10 +5010,10 @@
   },
   {
    "id": "gen-totient-3",
-   "code": "10-02-12-09-03",
+   "code": "10-02-12-05-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "Euler's totient function",
     "count of coprimes"
@@ -5154,10 +5042,10 @@
   },
   {
    "id": "gen-totient-4",
-   "code": "10-02-12-09-04",
+   "code": "10-02-12-05-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 9,
-   "groupId": "g-gen-totient-9",
+   "difficulty": 5,
+   "groupId": "g-gen-totient-5",
    "concepts": [
     "Euler's totient function",
     "count of coprimes"
