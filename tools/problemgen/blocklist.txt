@@ -15,3 +15,29 @@ gen-rectdiag-1
 gen-rectdiag-2
 gen-rectdiag-3
 gen-rectdiag-4
+# 2026-07-18 d1~5 스캔: 사실상 완전 중복 6쌍 — 한쪽 제거(가역). 흡수처: polyang→interiorangle,
+# gift→electpair, perm→lineup, tourney→knockout, divsum→sigma, compose→recur
+gen-polyang-1
+gen-polyang-2
+gen-polyang-3
+gen-polyang-4
+gen-gift-1
+gen-gift-2
+gen-gift-3
+gen-gift-4
+gen-perm-1
+gen-perm-2
+gen-perm-3
+gen-perm-4
+gen-tourney-1
+gen-tourney-2
+gen-tourney-3
+gen-tourney-4
+gen-divsum-1
+gen-divsum-2
+gen-divsum-3
+gen-divsum-4
+gen-compose-1
+gen-compose-2
+gen-compose-3
+gen-compose-4
