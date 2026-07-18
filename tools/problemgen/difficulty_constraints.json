@@ -5,6 +5,22 @@
   ["recur", "tribstairs"],
   ["recur", "hanoi"],
   ["compose", "tribstairs"],
-  ["compose", "hanoi"]
+  ["compose", "hanoi"],
+  ["consec", "consecways"],
+  ["cards", "permsum"],
+  ["divcount", "threediv"],
+  ["weigh", "ternweight"],
+  ["balance", "ternweight"],
+  ["diophantine", "stampfrob"],
+  ["parity", "mergecandy"],
+  ["cubesum", "cubesumfar"],
+  ["lcmbus", "seqcommon"],
+  ["pyramid", "pyramidmax"],
+  ["iorule", "funcinv"],
+  ["truthone", "liarcount"],
+  ["league", "winsum"],
+  ["simpleprob", "fairgame"],
+  ["surepick", "pigeon"],
+  ["fairgame", "fairsplit"]
  ]
 }

@@ -91,6 +91,15 @@ GENERATORS = [
     gen_grid_blocked,
     # v5.0 확충 — 콘텐츠 볼륨: 저울 치환·동전 조합·최대공약수 타일(그림)
     gen_balance_substitution, gen_coin_combinations, gen_gcd_tiles,
+    # v6.0 확충(2026-07 증산) — 발견형 27 family: 천장(CEILING_SPECS 12) + 얇은 슬롯 15.
+    # 수와연산: 균형삼진법·소수제곱·연속합가짓수·순열전체합·마방진중앙·repunit
+    gen_ternweight, gen_threediv, gen_consecways, gen_permsum, gen_magiccenter, gen_repunit,
+    # 변화와관계: 프로베니우스·불변량·자릿수블록·세제곱합개편·공통항·수피라미드·함수역추적
+    gen_stampfrob, gen_mergecandy, gen_digitpos, gen_cubesumfar, gen_seqcommon, gen_pyramidmax, gen_funcinv,
+    # 도형과측정: 삼각격자·당구반사·픽발견형·시점추론·계단둘레·접어자르기
+    gen_tricount, gen_billiard, gen_pickfig, gen_cubeviews, gen_stairperim, gen_foldpieces,
+    # 자료와가능성: 논리소거·최악보장·공정놀이·승수불변량·공정분배·교대배열·자기지시·파스칼홀짝
+    gen_logic_grid, gen_sure_pick, gen_fair_game, gen_winsum, gen_fair_split, gen_zigzag, gen_liarcount, gen_pascalodd,
 ]
 
 for g in GENERATORS:
