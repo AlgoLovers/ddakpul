@@ -20,6 +20,9 @@ def gen_age():
                     picked += 1
                     if picked > 4:
                         return
+                    # 검산(age): 딸 나이 후보 전 범위 완전탐색으로 해를 재발견 — 조건 만족 해가 child 하나뿐인지
+                    full = [c for c in range(1, 200) if k * c + t == m * (c + t)]
+                    assert full == [child] and parent == k * child, f"age 검산 실패: {full} != [{child}]"
                     add(
                         "age", "CHANGE_RELATION", 4, ["나이 문제", "배 관계 변화"],
                         f"지금 어머니 나이는 딸 나이의 {k}배예요. {t}년 뒤에는 {m}배가 돼요. 지금 딸은 몇 살일까요?",
@@ -42,6 +45,9 @@ def gen_age():
 def gen_trees():
     for length, gap in [(24, 4), (30, 6), (28, 7)]:
         g = length // gap
+        # 검산(tree): 0m부터 끝까지 가로등 위치를 실제로 나열해 개수 세기(양 끝 포함)
+        posts = list(range(0, length + 1, gap))
+        assert length % gap == 0 and posts[-1] == length and len(posts) == g + 1, f"tree 검산 실패: {len(posts)}"
         add(
             "tree", "CHANGE_RELATION", 3, ["간격 문제", "양 끝 포함"],
             f"길이 {length}m인 길 한쪽에 처음부터 끝까지 {gap}m 간격으로 가로등을 세워요. 가로등은 몇 개 필요할까요?",
@@ -61,6 +67,9 @@ def gen_trees():
     # 둘레(원형) 변형 — 시작점과 끝점이 만나므로 간격 수 = 나무 수
     length, gap = 36, 6
     g = length // gap
+    # 검산(tree·원형): 둘레 위 심는 지점(0~둘레 직전)을 실제로 나열 — 끝이 곧 처음이라 간격 수 = 나무 수
+    ring = list(range(0, length, gap))
+    assert length % gap == 0 and len(ring) == g, f"tree 원형 검산 실패: {len(ring)}"
     add(
         "tree", "CHANGE_RELATION", 3, ["간격 문제", "둘레는 다르다"],
         f"둘레가 {length}m인 원 모양 연못 둘레에 {gap}m 간격으로 나무를 심어요. 나무는 몇 그루 필요할까요?",
@@ -83,6 +92,12 @@ def gen_trees():
 def gen_log():
     for pieces, per in [(6, 2), (7, 3), (8, 4), (9, 2)]:
         ans = (pieces - 1) * per
+        # 검산(log): 한 번 자를 때마다 도막이 1개 늘어나는 과정을 실제로 시뮬레이션
+        pcs, minutes = 1, 0
+        while pcs < pieces:
+            pcs += 1
+            minutes += per
+        assert minutes == ans, f"log 검산 실패: {minutes} != {ans}"
         add(
             "log", "CHANGE_RELATION", 3, ["자르기 횟수", "간격 사고"],
             f"긴 통나무를 {pieces}도막으로 자르려고 해요. 한 번 자르는 데 {per}분이 걸리면 모두 몇 분 걸릴까요?",
@@ -185,6 +200,12 @@ def gen_cycle():
         pos = (n - 1) % k
         ans = colors[pos]
         wrongs = [c for c in colors if c != ans][:2] + ["알 수 없다"]
+        # 검산(cycle): 1번째부터 n번째까지 구슬을 실제로 하나씩 꿰어 n번째 색 확인
+        idx = 0
+        for _ in range(n):
+            bead = colors[idx]
+            idx = (idx + 1) % k
+        assert bead == ans, f"cycle 검산 실패: {bead} != {ans}"
         add(
             "cycle", "CHANGE_RELATION", 2, ["반복 주기", "나머지 사고"],
             f"{'·'.join(colors)} 구슬을 이 순서대로 계속 꿰어요. {n}번째 구슬은 무슨 색일까요?",
@@ -382,6 +403,11 @@ def gen_balance_substitution():
         ("상자", "봉지", "낱개", 2, 4),
     ]:
         ans = k1 * k2
+        # 검산(subst): A 1개 = B k1개의 B 하나하나를 C k2개로 바꿔 가며 실제로 세기(반복 덧셈)
+        c_total = 0
+        for _ in range(k1):
+            c_total += k2
+        assert c_total == ans, f"subst 검산 실패: {c_total} != {ans}"
         add(
             "subst", "CHANGE_RELATION", 3, ["치환", "단위 바꾸기"],
             f"{a_name} 1개는 {b_name} {k1}개와 같고, {b_name} 1개는 {c_name} {k2}개와 같아요. 그러면 {a_name} 1개는 {c_name} 몇 개와 같을까요?",
@@ -404,6 +430,11 @@ def gen_balance_substitution():
 def gen_lcm_together():
     for a, b in [(4, 6), (6, 8), (9, 12), (10, 15)]:
         lcm = a * b // gcd(a, b)
+        # 검산(lcmbus): 1분씩 시간을 흘려 두 배수가 처음 겹치는 시각을 직접 탐색
+        t = 1
+        while t % a != 0 or t % b != 0:
+            t += 1
+        assert t == lcm, f"lcmbus 검산 실패: {t} != {lcm}"
         add(
             "lcmbus", "CHANGE_RELATION", 4, ["최소공배수", "주기"],
             f"버스 두 대가 같은 정류장에서 동시에 출발했어요. 파란 버스는 {a}분마다, 빨간 버스는 {b}분마다 출발해요. 다음에 두 버스가 '다시 동시에' 출발하는 건 몇 분 뒤일까요?",
@@ -513,6 +544,11 @@ def gen_day_of_week():
     days_en = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     for start, ahead in [(1, 100), (3, 50), (5, 30), (2, 365)]:
         end = (start + ahead) % 7
+        # 검산(dow): 하루씩 ahead일을 실제로 세어 도착 요일 확인
+        d = start
+        for _ in range(ahead):
+            d = (d + 1) % 7
+        assert d == end, f"dow 검산 실패: {d} != {end}"
         add(
             "dow", "CHANGE_RELATION", 4, ["요일", "나머지"],
             f"오늘은 {days[start]}요일이에요. 오늘부터 {ahead}일 뒤는 무슨 요일일까요?",
@@ -544,6 +580,10 @@ def gen_frog_well():
                 break
             pos -= down
         ans = days
+        # 검산(frog): 시뮬레이션과 별도로 '마지막 도약 먼저 빼기' 공식으로 재계산
+        assert up > down and depth > up, f"frog 전제 위반: {depth}m/{up}m/{down}m"
+        formula = (depth - up + net - 1) // net + 1
+        assert formula == ans, f"frog 검산 실패: {formula} != {ans}"
         add(
             "frog", "CHANGE_RELATION", 5, ["따라잡기", "마지막 날 함정"],
             f"깊이 {depth}m 우물 바닥에 개구리가 있어요. 낮에는 {up}m 올라가고 밤에는 {down}m 미끄러져요. 개구리가 우물 밖으로 처음 나오는 건 며칠째 낮일까요?",
@@ -566,6 +606,11 @@ def gen_frog_well():
 def gen_square_numbers():
     for k in [5, 6, 7, 8]:
         ans = k * k
+        # 검산(squarenum): 정사각형을 ㄱ자(홀수)씩 실제로 키워 가며 세기 — 1+3+5+…
+        dots = 0
+        for i in range(1, k + 1):
+            dots += 2 * i - 1
+        assert dots == ans, f"squarenum 검산 실패: {dots} != {ans}"
         add(
             "squarenum", "CHANGE_RELATION", 4, ["규칙", "사각수"],
             f"바둑돌을 정사각형 모양으로 놓아요. 1번째는 1개(1×1), 2번째는 4개(2×2), 3번째는 9개(3×3)… {k}번째 그림의 바둑돌은 몇 개일까요?",
@@ -588,6 +633,11 @@ def gen_square_numbers():
 def gen_triangular():
     for k in [5, 6, 8, 10]:
         ans = k * (k + 1) // 2
+        # 검산(trinum): 1층부터 k층까지 실제로 한 층씩 더해 보기
+        balls = 0
+        for i in range(1, k + 1):
+            balls += i
+        assert balls == ans, f"trinum 검산 실패: {balls} != {ans}"
         add(
             "trinum", "CHANGE_RELATION", 4, ["규칙", "삼각수"],
             f"공을 삼각형으로 쌓아요. 1층은 1개, 2층까지는 1+2=3개, 3층까지는 1+2+3=6개… {k}층까지 쌓으면 공은 모두 몇 개일까요?",
@@ -610,6 +660,11 @@ def gen_triangular():
 def gen_power_of_two():
     for n in [5, 8, 10, 6]:
         ans = 2 ** n
+        # 검산(pow2): 한 번 접을 때마다 2배가 되는 과정을 실제로 n번 반복
+        layers = 1
+        for _ in range(n):
+            layers *= 2
+        assert layers == ans, f"pow2 검산 실패: {layers} != {ans}"
         add(
             "pow2", "CHANGE_RELATION", 6, ["거듭제곱", "2배씩 커지기"],
             f"종이를 반으로 접으면 두께가 2겹, 또 접으면 4겹, 또 접으면 8겹… 이렇게 {n}번 접으면 몇 겹이 될까요?",
@@ -751,6 +806,9 @@ def gen_ratio_three():
 def gen_marble_transfer():
     for give, ctx in [(3, "구슬"), (5, "사탕"), (4, "딱지"), (2, "스티커")]:
         ans = 2 * give
+        # 검산(transfer): 처음 차이 dd를 전 범위 탐색 — give개 준 뒤 같아지는 dd를 재발견(유일성 포함)
+        sols = [dd for dd in range(0, 10 * give + 1) if (100 + dd) - give == 100 + give]
+        assert sols == [ans], f"transfer 검산 실패: {sols} != [{ans}]"
         en_item = {"구슬": "marbles", "사탕": "candies", "딱지": "cards", "스티커": "stickers"}[ctx]
         add(
             "transfer", "CHANGE_RELATION", 5, ["차이 사고", "주고받기"],
@@ -798,6 +856,11 @@ def gen_tank_fill_drain():
 def gen_stacking_cups():
     for base, add_each, n in [(10, 3, 5), (12, 4, 6), (8, 2, 10), (15, 5, 4)]:
         ans = base + add_each * (n - 1)
+        # 검산(cups): 컵을 실제로 하나씩 포개며 높이 누적
+        height = base
+        for _ in range(n - 1):
+            height += add_each
+        assert height == ans, f"cups 검산 실패: {height} != {ans}"
         add(
             "cups", "CHANGE_RELATION", 4, ["등차", "규칙 세우기"],
             f"컵 하나의 높이는 {base}cm예요. 똑같은 컵을 하나씩 포개면 겹치는 만큼 빼고 {add_each}cm씩만 높아져요. 컵 {n}개를 포개면 전체 높이는 몇 cm일까요?",
@@ -820,6 +883,12 @@ def gen_stacking_cups():
 def gen_number_line_jump():
     for start, fwd, back, rounds in [(0, 5, 2, 4), (0, 4, 1, 6), (10, 3, 5, 3), (0, 6, 2, 5)]:
         ans = start + (fwd - back) * rounds
+        # 검산(numline): 앞으로·뒤로 뛰기를 rounds회 실제로 시뮬레이션
+        pos = start
+        for _ in range(rounds):
+            pos += fwd
+            pos -= back
+        assert pos == ans, f"numline 검산 실패: {pos} != {ans}"
         add(
             "numline", "CHANGE_RELATION", 4, ["규칙", "반복 변화"],
             f"수직선의 {start}에서 개구리가 뛰어요. 앞으로 {fwd}칸 갔다가 뒤로 {back}칸 오는 걸 한 번으로 쳐서, 이걸 {rounds}번 반복하면 개구리는 어디에 있을까요?",
@@ -844,6 +913,11 @@ def gen_double_discount():
         after1 = price * (100 - d1) // 100
         ans = after1 * (100 - d2) // 100
         naive = price * (100 - d1 - d2) // 100
+        # 검산(dblsale): 할인액을 각각 구해 빼는 다른 경로로 재계산 + 정수 나눗셈 버림 없음 확인
+        assert price * (100 - d1) % 100 == 0 and after1 * (100 - d2) % 100 == 0, "dblsale 검산 실패: 버림 발생"
+        step1 = price - price * d1 // 100
+        step2 = step1 - step1 * d2 // 100
+        assert step2 == ans, f"dblsale 검산 실패: {step2} != {ans}"
         add(
             "dblsale", "CHANGE_RELATION", 6, ["백분율", "연속 할인"],
             f"{price}원짜리 물건을 {d1}% 할인한 뒤, 그 가격에서 다시 {d2}%를 더 할인했어요. 최종 가격은 얼마일까요?",
@@ -891,6 +965,11 @@ def gen_mixture():
 def gen_arithmetic_nth():
     for first, diff, n in [(3, 4, 10), (5, 3, 8), (2, 5, 12), (10, 7, 6)]:
         ans = first + diff * (n - 1)
+        # 검산(arithnth): 첫 항부터 n번째 항까지 실제로 하나씩 더해 가기
+        x = first
+        for _ in range(n - 1):
+            x += diff
+        assert x == ans, f"arithnth 검산 실패: {x} != {ans}"
         add(
             "arithnth", "CHANGE_RELATION", 4, ["등차수열", "n번째 항"],
             f"규칙적으로 커지는 수예요: {first}, {first + diff}, {first + 2 * diff}, {first + 3 * diff}, … 이렇게 계속될 때 {n}번째 수는 얼마일까요?",
@@ -913,6 +992,11 @@ def gen_arithmetic_nth():
 def gen_geometric_nth():
     for first, ratio, n in [(2, 2, 6), (1, 3, 5), (3, 2, 5), (1, 2, 8)]:
         ans = first * ratio ** (n - 1)
+        # 검산(geonth): 첫 항부터 n번째 항까지 실제로 하나씩 곱해 가기
+        x = first
+        for _ in range(n - 1):
+            x *= ratio
+        assert x == ans, f"geonth 검산 실패: {x} != {ans}"
         add(
             "geonth", "CHANGE_RELATION", 5, ["등비수열", "n번째 항"],
             f"매번 {ratio}배로 커지는 수예요: {first}, {first * ratio}, {first * ratio * ratio}, … 이렇게 계속될 때 {n}번째 수는 얼마일까요?",
@@ -935,6 +1019,11 @@ def gen_geometric_nth():
 def gen_clock_gain():
     for gain, days in [(3, 10), (2, 15), (5, 8), (4, 12)]:
         ans = gain * days
+        # 검산(clockgain): 하루씩 days일을 실제로 누적
+        total = 0
+        for _ in range(days):
+            total += gain
+        assert total == ans, f"clockgain 검산 실패: {total} != {ans}"
         add(
             "clockgain", "CHANGE_RELATION", 6, ["비례", "누적"],
             f"어떤 시계는 하루에 {gain}분씩 빨라져요. 정확한 시각에 맞춰 둔 뒤 {days}일이 지나면, 이 시계는 실제 시각보다 몇 분 빨라져 있을까요?",
@@ -983,6 +1072,9 @@ def gen_fibonacci():
         while len(seq) < count:
             seq.append(seq[-1] + seq[-2])
         ans = seq[-1] + seq[-2]
+        # 검산(fib): 항 잇기와 다른 경로 — 일반화 피보나치 닫힌꼴 a₁·F(count−1) + a₂·F(count)
+        closed = pair[0] * _fib(count - 1) + pair[1] * _fib(count)
+        assert closed == ans, f"fib 검산 실패: {closed} != {ans}"
         add(
             "fib", "CHANGE_RELATION", 5, ["규칙", "앞 두 수의 합"],
             f"규칙을 찾아 □에 들어갈 수를 구하세요: {', '.join(map(str, seq))}, □",
@@ -1006,6 +1098,14 @@ def gen_time_duration():
     for h, m, dh, dm in [(3, 40, 1, 50), (2, 20, 2, 55), (9, 45, 1, 30), (7, 50, 2, 20)]:
         tot = (h * 60 + m) + (dh * 60 + dm)
         eh, em = (tot // 60) % 24, tot % 60
+        # 검산(timedur): 시작 시각부터 1분씩 실제로 세어 끝 시각 확인
+        hh, mm = h, m
+        for _ in range(dh * 60 + dm):
+            mm += 1
+            if mm == 60:
+                mm = 0
+                hh = (hh + 1) % 24
+        assert (hh, mm) == (eh, em), f"timedur 검산 실패: {hh}:{mm} != {eh}:{em}"
         add(
             "timedur", "CHANGE_RELATION", 3, ["시간 계산", "60 받아올림"],
             f"어떤 일을 {h}시 {m}분에 시작해서 {dh}시간 {dm}분 동안 했어요. 끝난 시각은 몇 시 몇 분일까요?",
@@ -1029,6 +1129,9 @@ def gen_two_sum_diff():
     for s, diff in [(20, 4), (30, 6), (50, 10), (18, 2)]:
         big = (s + diff) // 2
         small = (s - diff) // 2
+        # 검산(sumdiff): 합·차를 만족하는 두 수 쌍을 전 범위 완전탐색으로 재발견(유일성 포함)
+        sols = [(x, y) for x in range(s + 1) for y in range(s + 1) if x + y == s and x - y == diff]
+        assert sols == [(big, small)], f"sumdiff 검산 실패: {sols} != [({big}, {small})]"
         add(
             "sumdiff", "CHANGE_RELATION", 4, ["합과 차", "합차법"],
             f"두 수의 합이 {s}, 차가 {diff}예요. 두 수 중 '큰' 수는 무엇일까요?",
@@ -1052,6 +1155,12 @@ def gen_sum_arithmetic_series():
     for first, diff, n in [(2, 3, 10), (5, 2, 8), (1, 4, 12), (3, 5, 6)]:
         last = first + diff * (n - 1)
         ans = n * (first + last) // 2
+        # 검산(arithsum): n개 항을 실제로 하나씩 더하고, 마지막 항이 last인지도 확인
+        total, x = 0, first
+        for _ in range(n):
+            total += x
+            x += diff
+        assert total == ans and x - diff == last, f"arithsum 검산 실패: {total} != {ans}"
         add(
             "arithsum", "CHANGE_RELATION", 5, ["등차수열 합", "짝지어 더하기"],
             f"등차수열 {first}, {first + diff}, {first + 2 * diff}, … 의 첫 {n}개 항을 모두 더하면 얼마일까요? (마지막 {n}번째 항은 {last}예요.)",
@@ -1082,6 +1191,18 @@ def gen_transitivity():
     for ctx, verb, ask, names, en_ctx, en_comp, en_super in scenes:
         a, b, c, d = names
         ea, eb, ec, ed = "A", "B", "C", "D"
+        # 검산(trans): 비교 그래프의 이행적 폐포를 만들어 '모두에게 지는' 사람을 독립 재계산
+        beats = {a: {b}, b: {c}, c: {d}, d: set()}
+        changed = True
+        while changed:
+            changed = False
+            for x in names:
+                for y in list(beats[x]):
+                    if beats[y] - beats[x]:
+                        beats[x] |= beats[y]
+                        changed = True
+        losers = [x for x in names if all(x in beats[y] for y in names if y != x)]
+        assert losers == [d], f"trans 검산 실패: {losers} != [{d}]"
         add(
             "trans", "CHANGE_RELATION", 1, ["순서 추론", "이행성"],
             f"{ctx}에서 {a}{_iga(a)} {b}보다, {b}{_iga(b)} {c}보다, {c}{_iga(c)} {d}보다 {verb}. {ask} 사람은 누구일까요?",
@@ -1110,6 +1231,11 @@ def gen_repeating_pattern():
         r = n % p  # 묶음(주기) 안에서 몇 번째인지 — 나머지 0이면 맨 끝
         position = r if r != 0 else p
         color = pat[position - 1]
+        # 검산(pattern): 구슬 n개를 실제로 순서대로 놓아 n번째 색 확인
+        laid = []
+        while len(laid) < n:
+            laid.extend(pat)
+        assert laid[n - 1] == color, f"pattern 검산 실패: {laid[n - 1]} != {color}"
         others = [c for c in palette if c != color][:3]
         where = f"나머지는 0, 곧 한 묶음의 맨 끝({p}번째)" if r == 0 else f"나머지는 {r}, 곧 한 묶음의 {r}번째"
         add(
@@ -1141,6 +1267,9 @@ def gen_io_rule():
     for a, b, inputs, q in cases:
         pairs = ", ".join(f"{x} → {a * x + b}" for x in inputs)
         ans = a * q + b
+        # 검산(iorule): 보여 준 쌍들만으로 규칙(×▲＋●)을 완전탐색 재발견 — 유일해야 문제가 성립
+        rules = [(aa, bb) for aa in range(11) for bb in range(11) if all(aa * x + bb == a * x + b for x in inputs)]
+        assert rules == [(a, b)], f"iorule 검산 실패: {rules} != [({a}, {b})]"
         rule = f"×{a}" + (f"＋{b}" if b else "")
         add(
             "iorule", "CHANGE_RELATION", 2, ["대응 규칙", "규칙 찾기"],
@@ -1166,6 +1295,15 @@ def gen_diophantine():
     for ua, ub, total in [(300, 500, 3800), (400, 300, 4300), (200, 700, 6500), (500, 600, 7100)]:
         sols = [(a, b) for a in range(1, total // ua + 1) for b in range(1, total // ub + 1) if ua * a + ub * b == total]
         ans = len(sols)
+        # 검산(diophantine): 다른 경로(사탕 수만 훑으며 나머지 금액의 나눠떨어짐 확인)로 해집합 재구성
+        sols2 = []
+        aa = 1
+        while ua * aa + ub <= total:
+            rest = total - ua * aa
+            if rest % ub == 0:
+                sols2.append((aa, rest // ub))
+            aa += 1
+        assert sols2 == sols and len(sols2) == ans, f"diophantine 검산 실패: {sols2} != {sols}"
         add(
             "diophantine", "CHANGE_RELATION", 8, ["일차부정방정식", "빠짐없이 경우 세기"],
             f"한 개 {ua}원짜리 사탕과 한 개 {ub}원짜리 초콜릿을 각각 1개 이상 사서 정확히 {total}원을 쓰려고 해요. "
@@ -1197,6 +1335,9 @@ def gen_unitprice():
     for cnt0, price0, cnt1 in [(3, 600, 5), (4, 800, 7), (2, 500, 6), (5, 1500, 8)]:
         unit = price0 // cnt0
         ans = unit * cnt1
+        # 검산(unitprice): 한 자루 값이 딱 떨어지는지 + 교차곱(비례식 cnt0:price0 = cnt1:ans)으로 재확인
+        assert price0 % cnt0 == 0, f"unitprice 검산 실패: {price0}÷{cnt0} 안 떨어짐"
+        assert ans * cnt0 == price0 * cnt1, f"unitprice 검산 실패: 교차곱 {ans * cnt0} != {price0 * cnt1}"
         add(
             "unitprice", "CHANGE_RELATION", 2, ["비례 관계", "한 개 값 구하기"],
             f"연필 {cnt0}자루가 {price0}원이에요. 같은 연필 {cnt1}자루는 얼마일까요?",
@@ -1230,6 +1371,10 @@ def gen_compose():
             seq.append(x)
         ans = x
         steps = " → ".join(str(v) for v in seq)
+        # 검산(compose): 반복 계산과 별도로 아핀 반복 닫힌꼴 aᵈ·x₀ + b(aᵈ−1)/(a−1)로 재계산
+        assert a != 1, "compose 검산 실패: a=1이면 닫힌꼴 불가"
+        closed = a ** d * x0 + b * (a ** d - 1) // (a - 1)
+        assert closed == ans, f"compose 검산 실패: {closed} != {ans}"
         add(
             "compose", "CHANGE_RELATION", 5, ["함수 반복", "규칙 적용"],
             f"어떤 기계에 수를 넣으면 '{a}배 하고 {b}{_eul(str(b))} 더한' 수가 나와요. {x0}{_eul(str(x0))} 넣어 나온 수를 "
@@ -1262,6 +1407,10 @@ def gen_recur():
             seq.append(a)
         ans = a
         steps = ", ".join(str(v) for v in seq)
+        # 검산(recur): 항 잇기와 별도로 닫힌꼴 p^(t−1)·a₁ + q(p^(t−1)−1)/(p−1)로 재계산
+        assert p != 1, "recur 검산 실패: p=1이면 닫힌꼴 불가"
+        closed = p ** (t - 1) * a1 + q * (p ** (t - 1) - 1) // (p - 1)
+        assert closed == ans, f"recur 검산 실패: {closed} != {ans}"
         add(
             "recur", "CHANGE_RELATION", 5, ["점화식", "수열의 항"],
             f"수열의 첫째 항이 {a1}이고, 다음 항은 '앞 항의 {p}배에 {q}{_eul(str(q))} 더한' 값이에요. 이 수열의 {t}번째 항은 얼마일까요?",
@@ -1289,6 +1438,12 @@ def gen_geosum():
     for k in [8, 6, 10, 7]:
         last = 2 ** (k - 1)
         ans = 2 ** k - 1
+        # 검산(geosum): 1부터 last까지 2배씩 커지는 항을 실제로 하나씩 더해 보기
+        total, term = 0, 1
+        while term <= last:
+            total += term
+            term *= 2
+        assert total == ans, f"geosum 검산 실패: {total} != {ans}"
         add(
             "geosum", "CHANGE_RELATION", 4, ["등비수열", "합의 규칙"],
             f"1 + 2 + 4 + 8 + … 처럼 앞의 수의 2배씩 커지는 수를, 1부터 {last}까지 모두 더하면 합은 얼마일까요?",
@@ -1319,6 +1474,13 @@ def gen_josephus():
         power = 1 << (n.bit_length() - 1)  # n 이하 최대 2의 거듭제곱
         leftover = n - power
         ans = 2 * leftover + 1
+        # 검산(josephus): 원탁 제거를 실제로 시뮬레이션 — 한 명 남기고(회전) 다음 사람 제거를 반복
+        from collections import deque
+        dq = deque(range(1, n + 1))
+        while len(dq) > 1:
+            dq.rotate(-1)
+            dq.popleft()
+        assert dq[0] == ans, f"josephus 검산 실패: {dq[0]} != {ans}"
         add(
             "josephus", "CHANGE_RELATION", 9, ["2의 거듭제곱", "규칙 찾아 일반화"],
             f"{n}명이 동그랗게 둘러앉아 1번부터 차례로 번호를 붙였어요. 1번은 남기고 2번을 빼고, 3번은 남기고 4번을 빼고… "
@@ -1349,6 +1511,11 @@ def gen_prodsum():
     for n in [5, 6, 4, 7]:
         ans = n * (n + 1) * (n + 2) // 3
         last = n * (n + 1)
+        # 검산(prodsum): k(k+1) 항을 실제로 하나씩 더해 텔레스코핑 공식과 대조
+        total = 0
+        for k in range(1, n + 1):
+            total += k * (k + 1)
+        assert total == ans, f"prodsum 검산 실패: {total} != {ans}"
         terms = " + ".join(f"{k}×{k + 1}" for k in range(1, min(n, 3) + 1)) + (f" + … + {n}×{n + 1}" if n > 3 else "")
         add(
             "prodsum", "CHANGE_RELATION", 7, ["수열의 합", "규칙으로 한꺼번에"],
@@ -1389,6 +1556,14 @@ def gen_quadseq():
         diffs = [terms[i + 1] - terms[i] for i in range(4)]
         ans = f(pos)
         naive = terms[-1] + (pos - 5) * diffs[-1]  # 계차가 일정하다고 착각한 값(대표 오답)
+        # 검산(quadseq): 닫힌꼴과 별도로 계차를 규칙대로 늘려 가며 pos번째 항까지 실제로 이어 가기
+        dd = diffs[1] - diffs[0]
+        assert all(diffs[i + 1] - diffs[i] == dd for i in range(3)), f"quadseq 검산 실패: 계차 {diffs} 불규칙"
+        t_val, d_cur = terms[-1], diffs[-1]
+        for _ in range(pos - 5):
+            d_cur += dd
+            t_val += d_cur
+        assert t_val == ans, f"quadseq 검산 실패: {t_val} != {ans}"
         add(
             "quadseq", "CHANGE_RELATION", 8, ["계차수열", "규칙의 규칙"],
             f"어떤 수열이 {terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, … 로 이어져요. "
@@ -1425,6 +1600,11 @@ def gen_cubesum():
         tri = n * (n + 1) // 2
         ans = tri * tri
         sq_sum = n * (n + 1) * (2 * n + 1) // 6  # 제곱의 합(헷갈리기 쉬운 값)
+        # 검산(cubesum): 세제곱을 실제로 하나씩 더해 (삼각수)² 항등식과 대조
+        total = 0
+        for i in range(1, n + 1):
+            total += i * i * i
+        assert total == ans, f"cubesum 검산 실패: {total} != {ans}"
         add(
             "cubesum", "CHANGE_RELATION", 4, ["수열의 합", "숨은 관계 발견"],
             f"1³ + 2³ + 3³ + … + {n}³ 의 값은 얼마일까요? (각 수를 세제곱해서 더해요)",
@@ -1457,6 +1637,12 @@ def gen_fibsum():
         terms = [_fib(k) for k in range(1, 6)]
         total = sum(_fib(k) for k in range(1, n + 1))
         fplus2 = _fib(n + 2)
+        # 검산(fibsum): 항을 자체 루프로 다시 만들며 부분합을 누적하고, F(n+2)−1 항등식과 대조
+        x, y, total2 = 1, 1, 0
+        for _ in range(n):
+            total2 += x
+            x, y = y, x + y
+        assert total2 == total and y == fplus2 and total == fplus2 - 1, f"fibsum 검산 실패: {total2} != {total}"
         add(
             "fibsum", "CHANGE_RELATION", 4, ["피보나치", "합의 숨은 규칙"],
             f"{terms[0]}, {terms[1]}, {terms[2]}, {terms[3]}, {terms[4]}, … 처럼 앞의 두 수를 더해 만드는 "
