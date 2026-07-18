@@ -150,3 +150,8 @@ for p in problems:
 print(f"생성 {stats['generated']}문항 / 기각 {stats['rejected']} / 그룹 {len(groups)}개")
 print(f"난이도 분포: {dict(sorted(by_diff.items()))}")
 print(f"→ {OUT}")
+
+# ── 품질 게이트(checks.py) — 치명 위반(중복정의·등록누락·한/영 비대칭·난이도 제약)이면 빌드 실패 ──
+from checks import run_checks  # noqa: E402 — 데이터 확정 후 검사
+
+run_checks(problems, problems_en, GENERATORS)
