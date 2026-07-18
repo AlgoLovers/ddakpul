@@ -18318,7 +18318,7 @@
    "figure": {
     "type": "DOT_BORDER",
     "params": {
-     "side": 12
+     "side": 15
     }
    },
    "detailedExplanation": "'Counting a border' is all about how you handle the overlaps. Another way: 15 on the top and bottom rows (15×2=30), then the two remaining sides have 13 each without the corners (total 26). Adding gives 30+26=56 — the same. Either 'subtract' the overlap or split so there's 'no overlap' — seeing both roads give the same answer is reassuring."

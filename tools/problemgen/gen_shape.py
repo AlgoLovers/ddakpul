@@ -109,7 +109,9 @@ def gen_border():
             f"{ans}개", [f"{4 * side}개", f"{ans - 2}개", f"{side * side}개"],
             f"네 변에 {side}개씩 있다고 {side}×4={4 * side}개로 세면 함정에 빠져요. 네 꼭짓점의 돌은 두 변에 걸쳐 있어서 두 번씩 세어졌거든요. 두 번 센 4개를 빼면 {4 * side}−4={ans}개예요.",
             [(f"{4 * side}개", "꼭짓점 돌 4개를 두 번 센 거예요."), (f"{side * side}개", "속이 꽉 찬 정사각형이 아니라 테두리만이에요.")],
-            figure={"type": "DOT_BORDER", "params": {"side": min(side, 12)}},
+            # 그림-지문 일치 필수: 렌더러(ProblemFigureView·preview)는 side 20까지 지원 —
+            # 과거 min(side,12) 캡이 border-4(한 변 15)에서 그림(12)≠지문(15) 버그를 만들었다.
+            figure={"type": "DOT_BORDER", "params": {"side": side}},
             detail=f"'테두리 세기'는 겹치는 부분을 어떻게 처리하느냐가 전부예요. 다르게도 셀 수 있어요: 위·아래 줄에 {side}개씩({side}×2={side * 2}), 남은 양옆은 꼭짓점을 뺀 {side - 2}개씩(합 {(side - 2) * 2}). 더하면 {side * 2}+{(side - 2) * 2}={ans}개로 똑같죠. 겹침을 '빼거나' 아예 '겹치지 않게 나누거나' — 두 길의 답이 같은지 보면 든든해요.",
             en={
                 "statement": f"You want to lay go stones in a hollow square shape with {side} stones on each side, as in the picture. How many stones are needed in all?",
