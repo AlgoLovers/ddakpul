@@ -4881,7 +4881,9 @@ def gen_sigma():
 
 
 def gen_recur():
-    # 점화식 a_{n+1}=p·a_n+q의 특정 항. (변화와관계 난10)
+    # 점화식 a_{n+1}=p·a_n+q의 특정 항. (변화와관계 난5)
+    # 난이도 재조정(난10→5): 규칙을 '받아서' 4번 반복만 하는 문제라 통찰이 없다.
+    # 같은 점화식을 '스스로 발견'하는 하노이(난7)·계단(난6)보다 반드시 낮아야 한다.
     for a1, p, q, t in [(1, 2, 3, 5), (2, 2, 1, 5), (1, 3, 1, 4), (2, 3, 1, 4)]:
         seq = [a1]
         a = a1
@@ -4891,7 +4893,7 @@ def gen_recur():
         ans = a
         steps = ", ".join(str(v) for v in seq)
         add(
-            "recur", "CHANGE_RELATION", 10, ["점화식", "수열의 항"],
+            "recur", "CHANGE_RELATION", 5, ["점화식", "수열의 항"],
             f"수열의 첫째 항이 {a1}이고, 다음 항은 '앞 항의 {p}배에 {q}{_eul(str(q))} 더한' 값이에요. 이 수열의 {t}번째 항은 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [p * ans + q, seq[-2], ans + q, ans - q])],
             f"규칙 '×{p}, +{q}'로 항을 이어 가요: {steps}. {t}번째 항은 {ans}예요.",

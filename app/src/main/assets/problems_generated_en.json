@@ -4226,10 +4226,10 @@
   },
   {
    "id": "gen-recur-1",
-   "code": "20-02-09-10-01",
+   "code": "20-02-09-05-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-recur-10",
+   "difficulty": 5,
+   "groupId": "g-gen-recur-5",
    "concepts": [
     "recurrence relations",
     "terms of a sequence"
@@ -4258,10 +4258,10 @@
   },
   {
    "id": "gen-recur-2",
-   "code": "20-02-09-10-02",
+   "code": "20-02-09-05-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-recur-10",
+   "difficulty": 5,
+   "groupId": "g-gen-recur-5",
    "concepts": [
     "recurrence relations",
     "terms of a sequence"
@@ -4290,10 +4290,10 @@
   },
   {
    "id": "gen-recur-3",
-   "code": "20-02-09-10-03",
+   "code": "20-02-09-05-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-recur-10",
+   "difficulty": 5,
+   "groupId": "g-gen-recur-5",
    "concepts": [
     "recurrence relations",
     "terms of a sequence"
@@ -4322,10 +4322,10 @@
   },
   {
    "id": "gen-recur-4",
-   "code": "20-02-09-10-04",
+   "code": "20-02-09-05-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-recur-10",
+   "difficulty": 5,
+   "groupId": "g-gen-recur-5",
    "concepts": [
     "recurrence relations",
     "terms of a sequence"

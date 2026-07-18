@@ -39,6 +39,16 @@ class AssetProblemSource
                 prefs().edit().putString(KEY_SEEDED_LANG, value).apply()
             }
 
+        /**
+         * DB에 마지막으로 시딩한 문제 '내용' 버전. 문항 수가 그대로여도 기존 문제의 난이도·풀이·코드
+         * 같은 값이 바뀌면 이 값이 [CONTENT_VERSION]과 어긋나 재시딩된다(문제 id는 불변이라 학습 기록 유지).
+         */
+        var seededContentVersion: Int
+            get() = prefs().getInt(KEY_SEEDED_VERSION, 0)
+            set(value) {
+                prefs().edit().putInt(KEY_SEEDED_VERSION, value).apply()
+            }
+
         private fun prefs() = context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
 
         private fun readAsset(name: String): String =
@@ -50,7 +60,15 @@ class AssetProblemSource
         companion object {
             const val FILE_NAME = "problems_generated.json"
             const val FILE_NAME_EN = "problems_generated_en.json"
+
+            /**
+             * 문제은행 '내용' 버전. 문항 수가 그대로여도 기존 문제의 난이도·풀이·코드 등이 바뀌면
+             * 이 값을 올린다 → 기존 설치가 다음 실행 때 재시딩된다.
+             * v2: 점화식 4형제(gen-recur-1~4) 난이도 10→5 재조정.
+             */
+            const val CONTENT_VERSION = 2
             private const val PREF = "ddakpul_seed"
             private const val KEY_SEEDED_LANG = "seeded_lang"
+            private const val KEY_SEEDED_VERSION = "seeded_content_version"
         }
     }
