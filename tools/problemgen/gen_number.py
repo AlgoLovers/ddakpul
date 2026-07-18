@@ -248,6 +248,18 @@ def gen_divisor_count():
     for num in [36, 48, 60, 72]:
         divisors = [d for d in range(1, num + 1) if num % d == 0]
         ans = len(divisors)
+        # 검산: 소인수분해 지수 공식 (지수+1)들의 곱으로 개수를 독립 재계산해 완전열거와 대조
+        m, formula, p = num, 1, 2
+        while p * p <= m:
+            e = 0
+            while m % p == 0:
+                m //= p
+                e += 1
+            formula *= e + 1
+            p += 1
+        if m > 1:
+            formula *= 2
+        assert formula == ans, f"divisor_count 검산 불일치: {ans} != {formula}"
         add(
             "divcount", "NUMBER_OPERATION", 4, ["약수", "짝지어 세기"],
             f"{num}의 약수는 모두 몇 개일까요?",
@@ -355,6 +367,10 @@ def gen_consecutive_sum():
     for count, mid in [(3, 8), (5, 12), (3, 20), (5, 30)]:
         total = count * mid
         pattern = "□−1, □, □+1" if count == 3 else "□−2, □−1, □, □+1, □+2"
+        # 검산: 가운데 mid 기준 연속 count개를 실제로 나열해 더한 값이 total인지 대조
+        h = count // 2
+        brute = sum(range(mid - h, mid + h + 1))
+        assert mid - h >= 1 and brute == total, f"consecutive_sum 검산 불일치: {total} != {brute}"
         add(
             "consec", "NUMBER_OPERATION", 3, ["연속한 수", "가운데 기준"],
             f"연속한 자연수 {count}개를 더했더니 {total}이 됐어요. 이 {count}개 중 '가운데' 수는 얼마일까요?",
@@ -385,6 +401,13 @@ def gen_units_cycle():
             cycle.append(x)
             x = x * base % 10
         period = len(cycle)
+        # 검산: 일의 자리만 exp번 실제로 곱해 가는 시뮬레이션으로 pow 결과와 대조
+        sim = 1
+        for _ in range(exp):
+            sim = sim * base % 10
+        assert sim == ans, f"units_cycle 검산 불일치: {ans} != {sim}"
+        # 해설의 주기 논리 검산: 주기 안 위치의 값이 정답과 같아야
+        assert cycle[(exp % period or period) - 1] == ans, f"units_cycle 주기 해설 불일치: {base}^{exp}"
         distractors = [str(d) for d in cycle if d != ans][:3]
         add(
             "unitcycle", "NUMBER_OPERATION", 6, ["일의 자리", "주기"],
@@ -408,6 +431,9 @@ def gen_units_cycle():
 def gen_gauss_sum():
     for n in [10, 20, 50, 100]:
         ans = n * (n + 1) // 2
+        # 검산: 1부터 n까지 실제로 다 더해 가우스 공식과 대조
+        brute = sum(range(1, n + 1))
+        assert brute == ans, f"gauss_sum 검산 불일치: {ans} != {brute}"
         add(
             "gauss", "NUMBER_OPERATION", 4, ["연속 자연수 합", "짝지어 더하기"],
             f"1부터 {n}까지 모든 자연수를 더하면 얼마일까요?",
@@ -462,6 +488,13 @@ def gen_change_coins():
                 breakdown.append(f"{c}원 {k}개")
             cnt += k
             rem %= c
+        # 검산: DP 완전탐색으로 최소 동전 수를 독립 계산해 그리디 결과와 대조
+        dp = [0] + [amount + 1] * amount
+        for v in range(1, amount + 1):
+            for coin in coins:
+                if coin <= v and dp[v - coin] + 1 < dp[v]:
+                    dp[v] = dp[v - coin] + 1
+        assert dp[amount] == cnt, f"change_coins 검산 불일치: {cnt} != {dp[amount]}"
         add(
             "mincoin", "NUMBER_OPERATION", 3, ["거스름돈", "욕심쟁이 방법"],
             f"거스름돈 {amount}원을 500·100·50·10원 동전으로 거슬러 줄 때, 동전 개수를 '가장 적게' 하려면 모두 몇 개가 필요할까요?",
@@ -485,6 +518,9 @@ def gen_odd_sum_square():
     for n in [5, 7, 10, 8]:
         last = 2 * n - 1
         ans = n * n
+        # 검산: 홀수 1, 3, …, last를 실제로 나열해 개수와 합을 제곱 공식과 대조
+        odds = list(range(1, last + 1, 2))
+        assert len(odds) == n and sum(odds) == ans, f"odd_sum_square 검산 불일치: {ans} != {sum(odds)}"
         add(
             "oddsum", "NUMBER_OPERATION", 5, ["홀수의 합", "제곱수"],
             f"1부터 시작하는 홀수 {n}개(1, 3, 5, …, {last})를 모두 더하면 얼마일까요?",
@@ -509,6 +545,9 @@ def gen_reverse_diff():
         num = tens * 10 + ones
         rev = ones * 10 + tens
         ans = num - rev
+        # 검산: 문자열 뒤집기로 rev를 독립 구성하고, 해설의 9×(자리 차) 공식과도 대조
+        assert rev == int(str(num)[::-1]), f"reverse_diff 뒤집기 불일치: {num}"
+        assert ans == 9 * (tens - ones), f"reverse_diff 검산 불일치: {ans} != {9 * (tens - ones)}"
         add(
             "revdiff", "NUMBER_OPERATION", 5, ["자리값", "불변의 규칙"],
             f"두 자리 수 {num}에서, 십의 자리와 일의 자리 숫자를 바꾼 수({rev})를 빼면 얼마일까요?",
@@ -535,6 +574,9 @@ def gen_leftover_crt():
             n += 1
         ans = n
         period = d1 * d2 // gcd(d1, d2)
+        # 검산: 한 주기(1..period)를 완전열거 — 두 조건을 동시 만족하는 수는 정확히 하나(=ans)
+        sols = [x for x in range(1, period + 1) if x % d1 == r1 and x % d2 == r2]
+        assert sols == [ans], f"leftover_crt 검산 불일치: {ans} != {sols}"
         add(
             "leftover", "NUMBER_OPERATION", 6, ["나머지", "조건 맞추기"],
             f"어떤 수를 {d1}씩 묶으면 {r1}개가 남고, {d2}씩 묶으면 {r2}개가 남아요. 이런 수 중에서 가장 작은 자연수는 무엇일까요?",
@@ -557,6 +599,9 @@ def gen_leftover_crt():
 def gen_multiples_in_range():
     for limit, div in [(100, 7), (100, 3), (50, 4), (200, 9)]:
         ans = limit // div
+        # 검산: 1..limit 완전열거로 배수를 직접 세어 몫 공식과 대조
+        brute = sum(1 for x in range(1, limit + 1) if x % div == 0)
+        assert brute == ans, f"multiples_in_range 검산 불일치: {ans} != {brute}"
         add(
             "multrange", "NUMBER_OPERATION", 4, ["배수", "개수 세기"],
             f"1부터 {limit}까지의 자연수 중에서 {div}의 배수는 모두 몇 개일까요?",
@@ -580,6 +625,9 @@ def gen_common_mult_range():
     for limit, a, b in [(100, 3, 4), (100, 2, 5), (60, 3, 4), (200, 4, 6)]:
         lcm = a * b // gcd(a, b)
         ans = limit // lcm
+        # 검산: 1..limit 완전열거 — 두 수로 모두 나누어떨어지는 수를 직접 세어 대조
+        brute = sum(1 for x in range(1, limit + 1) if x % a == 0 and x % b == 0)
+        assert brute == ans, f"common_mult_range 검산 불일치: {ans} != {brute}"
         add(
             "commrange", "NUMBER_OPERATION", 5, ["공배수", "최소공배수"],
             f"1부터 {limit}까지의 자연수 중에서 {a}, {b} 두 수로 모두 나누어떨어지는 수는 몇 개일까요?",
@@ -626,6 +674,19 @@ def gen_divisor_sum():
     for num in [12, 18, 28, 24]:
         divs = [x for x in range(1, num + 1) if num % x == 0]
         ans = sum(divs)
+        # 검산: 시그마 공식 ∏(p^(e+1)−1)/(p−1)로 약수 합을 독립 재계산해 완전열거와 대조
+        m, sig, p = num, 1, 2
+        while p * p <= m:
+            if m % p == 0:
+                pk = 1
+                while m % p == 0:
+                    m //= p
+                    pk *= p
+                sig *= (pk * p - 1) // (p - 1)
+            p += 1
+        if m > 1:
+            sig *= m + 1
+        assert sig == ans, f"divisor_sum 검산 불일치: {ans} != {sig}"
         add(
             "divsum", "NUMBER_OPERATION", 5, ["약수", "약수의 합"],
             f"{num}의 약수를 모두 찾아 더하면 얼마일까요?",
@@ -673,6 +734,11 @@ def gen_least_to_share():
 def gen_leap_year_count():
     for y1, y2 in [(2001, 2020), (1997, 2016), (2004, 2024), (2010, 2040)]:
         cnt = sum(1 for y in range(y1, y2 + 1) if (y % 4 == 0 and y % 100 != 0) or y % 400 == 0)
+        # 검산: 구간 배수 산술(⌊/4⌋−⌊/100⌋+⌊/400⌋의 구간 차)로 해마다 판정과 독립 대조
+        c4 = y2 // 4 - (y1 - 1) // 4
+        c100 = y2 // 100 - (y1 - 1) // 100
+        c400 = y2 // 400 - (y1 - 1) // 400
+        assert c4 - c100 + c400 == cnt, f"leap_year_count 검산 불일치: {cnt} != {c4 - c100 + c400}"
         add(
             "leapyear", "NUMBER_OPERATION", 5, ["배수", "윤년 규칙"],
             f"{y1}년부터 {y2}년까지 중에서 윤년(2월이 29일까지 있는 해)은 모두 몇 번일까요? 윤년은 4로 나누어떨어지는 해예요(단, 100으로 나누어떨어지면 제외, 400으로 나누어떨어지면 다시 윤년).",
@@ -697,6 +763,9 @@ def gen_max_product():
         a = s // 2
         b = s - a
         ans = a * b
+        # 검산: 합이 s인 두 자연수 쌍을 완전열거해 곱의 최댓값과 대조
+        brute = max(x * (s - x) for x in range(1, s))
+        assert brute == ans, f"max_product 검산 불일치: {ans} != {brute}"
         add(
             "maxprod", "NUMBER_OPERATION", 5, ["합이 일정", "곱 최대"],
             f"두 자연수를 더하면 {s}가 돼요. 이 두 수의 '곱'이 가장 클 때, 그 곱은 얼마일까요?",
@@ -744,6 +813,9 @@ def gen_divisor_from_remainder():
         target = num - rem
         divs = [d for d in range(1, target + 1) if target % d == 0 and d > rem]
         cnt = len(divs)
+        # 검산: 나누는 수 후보를 완전열거 — num을 실제로 나눠 나머지가 rem이 되는 수들과 대조
+        brute = [d for d in range(rem + 1, num + 1) if num % d == rem]
+        assert brute == divs and len(brute) == cnt, f"divisor_from_remainder 검산 불일치: {cnt} != {len(brute)}"
         add(
             "divrem", "NUMBER_OPERATION", 5, ["나머지", "약수 추론"],
             f"{num}을 어떤 수로 나누었더니 나머지가 {rem}이었어요. 나누는 수가 될 수 있는 수는 모두 몇 가지일까요? (나누는 수는 나머지 {rem}보다 커야 해요.)",
@@ -790,6 +862,9 @@ def gen_book_reading():
 def gen_gcd_bags():
     for a, b, ia, ib in [(24, 36, "사과", "귤"), (18, 30, "빨간 구슬", "파란 구슬"), (40, 60, "사탕", "초콜릿"), (16, 24, "연필", "지우개")]:
         g = gcd(a, b)
+        # 검산: 1..min(a,b) 완전열거로 공약수의 최댓값을 직접 찾아 gcd와 대조
+        brute = max(k for k in range(1, min(a, b) + 1) if a % k == 0 and b % k == 0)
+        assert brute == g, f"gcd_bags 검산 불일치: {g} != {brute}"
         _item_en = {"사과": "apples", "귤": "tangerines", "빨간 구슬": "red marbles", "파란 구슬": "blue marbles", "사탕": "candies", "초콜릿": "chocolates", "연필": "pencils", "지우개": "erasers"}
         ia_en, ib_en = _item_en[ia], _item_en[ib]
         add(
@@ -820,6 +895,9 @@ def gen_prime_pick():
 
     for prime, others in [(17, [15, 21, 27]), (23, [25, 33, 35]), (13, [9, 21, 25]), (29, [27, 33, 39])]:
         sm = sd(others[0])
+        # 검산: 시도 나눗셈 완전열거 — 정답은 소수, 오답 셋은 모두 합성수여야
+        assert prime > 1 and all(prime % i for i in range(2, prime)), f"prime_pick 검산 실패: {prime} 소수 아님"
+        assert all(any(o % i == 0 for i in range(2, o)) for o in others), f"prime_pick 검산 실패: 합성수 아닌 오답 {others}"
         add(
             "primepick", "NUMBER_OPERATION", 4, ["소수", "약수 판별"],
             f"다음 네 수 중에서 '소수'(1과 자기 자신으로만 나누어떨어지는 수)는 무엇일까요? {prime}, {others[0]}, {others[1]}, {others[2]}",
@@ -842,6 +920,10 @@ def gen_prime_pick():
 def gen_gcd_lcm_product():
     for g, lcm in [(4, 24), (6, 36), (5, 30), (8, 40)]:
         ans = g * lcm
+        # 검산: gcd=g·lcm=lcm인 두 수 쌍을 완전탐색으로 실제 찾아, 모든 쌍의 곱이 ans인지 확인
+        pairs = [(x, y) for x in range(1, lcm + 1) for y in range(x, lcm + 1)
+                 if gcd(x, y) == g and x * y // gcd(x, y) == lcm]
+        assert pairs and all(x * y == ans for x, y in pairs), f"gcd_lcm_product 검산 실패: g={g}, lcm={lcm}"
         add(
             "gcdlcm", "NUMBER_OPERATION", 6, ["최대공약수", "최소공배수 관계"],
             f"두 자연수의 최대공약수가 {g}, 최소공배수가 {lcm}이에요. 이 두 수를 '곱하면' 얼마일까요?",
@@ -891,6 +973,9 @@ def gen_sum_product_pair():
 def gen_gcd_three():
     for a, b, c in [(12, 18, 20), (24, 36, 20), (30, 45, 50), (16, 40, 28)]:
         ans = gcd(gcd(a, b), c)
+        # 검산: 1..min 완전열거로 세 수 공통 약수의 최댓값을 직접 찾아 대조
+        brute = max(d for d in range(1, min(a, b, c) + 1) if a % d == 0 and b % d == 0 and c % d == 0)
+        assert brute == ans, f"gcd_three 검산 불일치: {ans} != {brute}"
         add(
             "gcd3", "NUMBER_OPERATION", 6, ["최대공약수", "세 수"],
             f"{a}, {b}, {c} 세 수의 최대공약수(세 수를 모두 나누어떨어지게 하는 가장 큰 수)는 무엇일까요?",
@@ -913,6 +998,9 @@ def gen_gcd_three():
 def gen_missing_addend():
     for a, total in [(7, 15), (8, 20), (6, 13), (9, 16)]:
         ans = total - a
+        # 검산: 0..total 완전열거 — □+a=total을 만족하는 수는 유일하게 ans여야
+        sols = [x for x in range(total + 1) if x + a == total]
+        assert sols == [ans], f"missing_addend 검산 불일치: {ans} != {sols}"
         add(
             "addend", "NUMBER_OPERATION", 1, ["거꾸로 생각하기", "가르기"],
             f"어떤 수에 {a}을 더했더니 {total}이 됐어요. 처음 수는 얼마일까요?",
@@ -962,6 +1050,9 @@ def gen_consecutive_middle():
     # 연속하는 세 수의 합 = 가운데 수 × 3 (양옆 −1·+1 상쇄). 계산이 아닌 구조 통찰.
     for mid in [7, 10, 6, 12]:
         total = 3 * mid
+        # 검산: 가운데 수 후보를 완전열거 — 연속 세 수의 합이 total이 되는 수는 유일하게 mid
+        sols = [m for m in range(1, total) if (m - 1) + m + (m + 1) == total]
+        assert sols == [mid], f"consecutive_middle 검산 불일치: {mid} != {sols}"
         add(
             "consecmid", "NUMBER_OPERATION", 2, ["연속수", "합과 가운데"],
             f"연속하는 세 수를 더했더니 {total}{_iga(str(total))} 됐어요. 이 세 수의 가운데 수는 얼마일까요?",
@@ -986,6 +1077,9 @@ def gen_multiple_condition():
     # 조건(어떤 수보다 작은)을 만족하는 최대 배수 — 배수 감각 + 조건 따지기.
     for limit, k in [(30, 5), (40, 7), (25, 4), (50, 8)]:
         ans = ((limit - 1) // k) * k
+        # 검산: limit 미만 완전열거로 k의 배수 최댓값을 직접 찾아 몫 공식과 대조
+        brute = max(x for x in range(1, limit) if x % k == 0)
+        assert brute == ans, f"multiple_condition 검산 불일치: {ans} != {brute}"
         add(
             "multcond", "NUMBER_OPERATION", 1, ["배수", "조건 따지기"],
             f"{limit}보다 작은 수 중에서 {k}{_euro(str(k))} 나누어떨어지는(={k}단에 나오는) 가장 큰 수는 얼마일까요?",
@@ -1012,6 +1106,19 @@ def gen_aliquot():
     for n in [6, 28, 12, 8]:
         divs = [d for d in range(1, n) if n % d == 0]
         s = sum(divs)
+        # 검산: 시그마 공식(소인수분해)으로 약수 전체 합을 독립 재계산 — 진약수 합은 σ(n)−n
+        m, sig, p = n, 1, 2
+        while p * p <= m:
+            if m % p == 0:
+                pk = 1
+                while m % p == 0:
+                    m //= p
+                    pk *= p
+                sig *= (pk * p - 1) // (p - 1)
+            p += 1
+        if m > 1:
+            sig *= m + 1
+        assert sig - n == s, f"aliquot 검산 불일치: {s} != {sig - n}"
         extra = f" 진약수 합이 자기 자신과 같으니 {n}{_eun(str(n))} '완전수'예요!" if s == n else ""
         extra_en = f" The proper divisors sum to the number itself, so {n} is a 'perfect number'!" if s == n else ""
         add(
@@ -1035,6 +1142,9 @@ def gen_aliquot():
 def gen_narcissistic():
     # 아름스트롱 수 — 각 자리 세제곱 합 = 자신. 자릿값과 거듭제곱을 함께 다루는 사고.
     narc = [153, 370, 371, 407]
+    # 검산: 100~999 완전열거로 세 자리 아름스트롱 수를 전부 재발견 — 하드코딩 목록과 일치해야
+    found = [x for x in range(100, 1000) if sum(int(c) ** 3 for c in str(x)) == x]
+    assert found == narc, f"narcissistic 검산 불일치: {found} != {narc}"
     for i, t in enumerate(narc):
         ex = narc[(i + 1) % len(narc)]
         exd = [int(c) for c in str(ex)]
@@ -1068,6 +1178,11 @@ def gen_mod_power():
         cyc = [pow(base, k, m) for k in range(1, period + 1)]
         pos = exp % period or period
         ans = cyc[pos - 1]
+        # 검산: 곱셈을 exp번 실제 시뮬레이션한 나머지로 주기 논리와 대조
+        sim = 1
+        for _ in range(exp):
+            sim = sim * base % m
+        assert sim == ans, f"mod_power 검산 불일치: {ans} != {sim}"
         add(
             "modpow", "NUMBER_OPERATION", 8, ["거듭제곱", "나머지 주기"],
             f"{base}{_eul(str(base))} {exp}번 곱한 수(즉 {base}^{exp})를 {m}{_euro(str(m))} 나눈 나머지는 얼마일까요?",
@@ -1090,6 +1205,12 @@ def gen_lattice_paths():
     # 격자 최단 경로 수 = 오른쪽·위 이동을 섞는 조합.
     for w, h in [(3, 2), (2, 2), (3, 3), (4, 2)]:
         ans = comb(w + h, w)
+        # 검산: 파스칼식 DP(각 꼭짓점까지 경로 수 누적)로 조합 공식과 다른 경로로 재계산
+        dp = [[1] * (w + 1) for _ in range(h + 1)]
+        for r in range(1, h + 1):
+            for c in range(1, w + 1):
+                dp[r][c] = dp[r - 1][c] + dp[r][c - 1]
+        assert dp[h][w] == ans, f"lattice_paths 검산 불일치: {ans} != {dp[h][w]}"
         add(
             "lattice", "NUMBER_OPERATION", 8, ["조합", "최단 경로"],
             f"가로 {w}칸, 세로 {h}칸짜리 격자가 있어요. 왼쪽 아래 꼭짓점에서 오른쪽 위 꼭짓점까지 오른쪽 또는 위로만 갈 때, 서로 다른 최단 경로는 모두 몇 가지일까요?",
@@ -1120,6 +1241,13 @@ def gen_coin_weighing():
         while cap2 < n:
             cap2 *= 2
             w2 += 1
+        # 검산: '세 무더기 최대한 균등 분할' 전략을 실제 시뮬레이션 — 최악의 무더기가 1개가 될 때까지
+        sim, k = 0, n
+        while k > 1:
+            k = (k + 2) // 3
+            sim += 1
+        assert sim == w, f"coin_weighing 검산 불일치: {w} != {sim}"
+        assert 3 ** w >= n > 3 ** (w - 1), f"coin_weighing 하한 검산 실패: n={n}"
         add(
             "weigh", "NUMBER_OPERATION", 8, ["3분할 전략", "최악의 경우"],
             f"똑같이 생긴 동전 {n}개 중에 딱 하나만 무거워요. 양팔 저울로 무게만 비교할 수 있을 때, 무거운 동전을 반드시 찾으려면 최소 몇 번 재야 할까요?",
@@ -1157,6 +1285,10 @@ def gen_makesquare():
             res *= m
             odd_primes.append(m)
         root = int((n * res) ** 0.5)
+        # 검산: k=1부터 완전탐색 — n×k가 완전제곱수가 되는 최소 k가 res, 표시용 root도 정확해야
+        brute = next(k for k in range(1, res + 1) if int((n * k) ** 0.5 + 0.5) ** 2 == n * k)
+        assert brute == res, f"makesquare 검산 불일치: {res} != {brute}"
+        assert root * root == n * res, f"makesquare 제곱근 표시 불일치: {root}² != {n * res}"
         add(
             "makesquare", "NUMBER_OPERATION", 6, ["소인수분해", "완전제곱수"],
             f"{n}에 자연수를 곱해서 어떤 수의 제곱(완전제곱수)이 되게 하려고 해요. 곱해야 하는 가장 작은 자연수는 무엇일까요?",
@@ -1185,6 +1317,19 @@ def gen_sigma():
     for n in [28, 12, 24, 18]:
         divisors = [d for d in range(1, n) if n % d == 0]
         ans = sum(divisors)
+        # 검산: 시그마 공식(소인수분해)으로 약수 전체 합을 독립 재계산 — 진약수 합은 σ(n)−n
+        m, sig, p = n, 1, 2
+        while p * p <= m:
+            if m % p == 0:
+                pk = 1
+                while m % p == 0:
+                    m //= p
+                    pk *= p
+                sig *= (pk * p - 1) // (p - 1)
+            p += 1
+        if m > 1:
+            sig *= m + 1
+        assert sig - n == ans, f"sigma 검산 불일치: {ans} != {sig - n}"
         div_str = " + ".join(map(str, divisors))
         note = " (자기 자신과 같아 '완전수'예요)" if ans == n else ""
         note_en = " (it equals the number itself, so it's a 'perfect number')" if ans == n else ""
@@ -1213,6 +1358,17 @@ def gen_totient():
     for n in [12, 20, 30, 36]:
         primes = sorted({p for p in range(2, n + 1) if n % p == 0 and all(p % q for q in range(2, p))})
         ans = sum(1 for k in range(1, n + 1) if gcd(k, n) == 1)
+        # 검산: 오일러 곱 공식 φ(n)=n×∏(1−1/p)을 정수 연산으로 독립 재계산해 gcd 세기와 대조
+        phi, m, p = n, n, 2
+        while p * p <= m:
+            if m % p == 0:
+                phi = phi // p * (p - 1)
+                while m % p == 0:
+                    m //= p
+            p += 1
+        if m > 1:
+            phi = phi // m * (m - 1)
+        assert phi == ans, f"totient 검산 불일치: {ans} != {phi}"
         prod = "×".join([str(n)] + [f"(1−1/{p})" for p in primes])
         add(
             "totient", "NUMBER_OPERATION", 5, ["오일러 피 함수", "서로소 개수"],
@@ -1242,6 +1398,12 @@ def gen_lasttwo():
     for base, exp in [(3, 99), (7, 55), (13, 77), (17, 33)]:
         ans = pow(base, exp, 100)
         reduced = exp % 40 or 40
+        # 검산: 곱셈을 exp번 실제 시뮬레이션(mod 100) + 해설의 오일러 축약 지수도 함께 대조
+        sim = 1
+        for _ in range(exp):
+            sim = sim * base % 100
+        assert sim == ans, f"lasttwo 검산 불일치: {ans} != {sim}"
+        assert gcd(base, 100) == 1 and pow(base, reduced, 100) == ans, f"lasttwo 오일러 축약 불일치: {base}^{exp}"
         add(
             "lasttwo", "NUMBER_OPERATION", 10, ["오일러 정리", "나머지로 거듭제곱"],
             f"{base}{_eul(str(base))} {exp}번 곱한 수(즉 {base}^{exp})의 끝 두 자리 수는 무엇일까요?",
@@ -1278,6 +1440,11 @@ def gen_crt3():
         period = 1
         for _, m in rem_mod:
             period *= m
+        # 검산: 1..period 완전열거 — 세 조건을 동시 만족하는 수는 주기 안에 정확히 하나(=n)
+        sols = [x for x in range(1, period + 1) if all(x % mm == rr for rr, mm in rem_mod)]
+        assert sols == [n], f"crt3 검산 불일치: {n} != {sols}"
+        # 해설의 전제(서로소) 검산: 세 나눗수는 쌍마다 서로소여야 주기가 곱이 된다
+        assert all(gcd(rem_mod[i][1], rem_mod[j][1]) == 1 for i in range(3) for j in range(i + 1, 3)), f"crt3 서로소 전제 위반: {rem_mod}"
         conds_en = [f"{r} when divided by {m}" for r, m in rem_mod]
         cond_en = ", ".join(conds_en[:-1]) + ", and " + conds_en[-1]
         mods_en = ", ".join(str(m) for _, m in rem_mod)
