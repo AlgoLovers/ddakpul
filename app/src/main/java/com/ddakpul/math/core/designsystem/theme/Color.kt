@@ -21,7 +21,10 @@ val MintLight = Color(0xFF6FE0B0)
 // ── 안내·프로모(Tertiary) — 앰버 ──
 val Amber = Color(0xFFC77D0E)
 val AmberSoft = Color(0xFFFFF2DC)
-val AmberDark = Color(0xFF5E3B00)
+
+// 크림 배경 위 앰버 텍스트(라이트 onTertiaryContainer). 이전 #5E3B00은 진갈색이라 칙칙 →
+// 따뜻한 앰버-캐러멜로 밝힘(대비 ~4.9:1로 AA 유지). 다크 테마 앰버 텍스트는 별도 색.
+val AmberDark = Color(0xFF9A5B00)
 val AmberLight = Color(0xFFFFC46A)
 
 // ── 오답·오류(Error) — 코랄 ──
