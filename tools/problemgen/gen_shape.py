@@ -5,11 +5,78 @@
 from core import *  # noqa: F401,F403 — 공용 인프라(add·rng·헬퍼·상수)
 
 
+# ── 검산 전용 헬퍼 — 순수 결정론 계산만, rng를 절대 소비하지 않는다 ────────────────
+def _seg_intersection(p1, p2, p3, p4):
+    """선분 p1p2와 p3p4의 내부 교점(양 끝점 제외). 없으면 None. 분수 좌표면 오차 0."""
+    dx1, dy1 = p2[0] - p1[0], p2[1] - p1[1]
+    dx2, dy2 = p4[0] - p3[0], p4[1] - p3[1]
+    den = dx1 * dy2 - dy1 * dx2
+    if den == 0:
+        return None
+    t = ((p3[0] - p1[0]) * dy2 - (p3[1] - p1[1]) * dx2) / den
+    u = ((p3[0] - p1[0]) * dy1 - (p3[1] - p1[1]) * dx1) / den
+    if 0 < t < 1 and 0 < u < 1:
+        return (p1[0] + t * dx1, p1[1] + t * dy1)
+    return None
+
+
+def _convex_diag_geometry(n):
+    """일반 위치 볼록 n각형(포물선 위 점 — 어느 세 대각선도 한 점에서 안 만남)에
+    대각선을 전부 긋고 (내부 교점 수, 내부 영역 수)를 실제 선분 교차 계산으로 센다.
+    diagcross·diagregions 검산용 — 조합 공식과 완전히 독립인 기하 경로."""
+    from fractions import Fraction
+
+    ts = [0, 1, 3, 7, 12, 20, 30, 45][:n]
+    pts = [(Fraction(t), Fraction(t * t)) for t in ts]
+    diags = [(i, j) for i in range(n) for j in range(i + 1, n) if (j - i) not in (1, n - 1)]
+    on_diag = {d: set() for d in diags}
+    points = set()
+    for a in range(len(diags)):
+        for b in range(a + 1, len(diags)):
+            i1, j1 = diags[a]
+            i2, j2 = diags[b]
+            if len({i1, j1, i2, j2}) < 4:
+                continue  # 꼭짓점을 공유하는 두 대각선은 볼록 다각형 내부에서 안 만남
+            p = _seg_intersection(pts[i1], pts[j1], pts[i2], pts[j2])
+            if p is not None:
+                points.add(p)
+                on_diag[diags[a]].add(p)
+                on_diag[diags[b]].add(p)
+    # 평면 그래프 V−E+F=2 → 내부 영역 = E−V+1 (변·대각선을 교점에서 실제로 쪼갠 조각 수로)
+    v_cnt = n + len(points)
+    e_cnt = n + sum(len(ps) + 1 for ps in on_diag.values())
+    return len(points), e_cnt - v_cnt + 1
+
+
+def _lattice_triangle_stats(tri):
+    """격자 삼각형의 (내부 격자점, 둘레 격자점, 넓이×2)를 좌표 순회로 직접 센다.
+    pick 검산용 — 픽의 정리를 쓰지 않는 독립 경로(내부는 부호 판정, 둘레는 gcd)."""
+    (x1, y1), (x2, y2), (x3, y3) = tri
+    area2 = abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1))
+    boundary = sum(gcd(abs(qx - px), abs(qy - py)) for (px, py), (qx, qy) in zip(tri, tri[1:] + tri[:1]))
+    inner = 0
+    for px in range(min(x1, x2, x3), max(x1, x2, x3) + 1):
+        for py in range(min(y1, y2, y3), max(y1, y2, y3) + 1):
+            s1 = (x2 - x1) * (py - y1) - (y2 - y1) * (px - x1)
+            s2 = (x3 - x2) * (py - y2) - (y3 - y2) * (px - x2)
+            s3 = (x1 - x3) * (py - y3) - (y1 - y3) * (px - x3)
+            if (s1 > 0 and s2 > 0 and s3 > 0) or (s1 < 0 and s2 < 0 and s3 < 0):
+                inner += 1
+    return inner, boundary, area2
+
 
 # ── 12. 격자 최단 경로 (난4, 도형과측정) ─────────────────────────────────────
 def gen_grid():
     for w, h in [(3, 2), (3, 3), (4, 2)]:
         ans = comb(w + h, w)
+
+        # 검산: 오른쪽/위 이동을 실제로 전부 걸어 보는 완전열거(DFS)와 대조
+        def _walk(x, y):
+            if (x, y) == (w, h):
+                return 1
+            return (_walk(x + 1, y) if x < w else 0) + (_walk(x, y + 1) if y < h else 0)
+
+        assert _walk(0, 0) == ans, f"grid 검산실패: {w}x{h}"
         add(
             "grid", "SHAPE_MEASUREMENT", 4, ["최단 경로", "체계적으로 세기"],
             f"가로 {w}칸, 세로 {h}칸의 바둑판 모양 길이 있어요. 왼쪽 아래에서 오른쪽 위까지 가장 짧게 가는 길은 모두 몇 가지일까요?",
@@ -33,6 +100,9 @@ def gen_grid():
 def gen_border():
     for side in [7, 8, 12, 15]:
         ans = 4 * side - 4
+        # 검산: side×side 칸을 전부 훑어 테두리 칸만 세는 셀 단위 완전열거와 대조
+        edge_cnt = sum(1 for x in range(side) for y in range(side) if x in (0, side - 1) or y in (0, side - 1))
+        assert edge_cnt == ans, f"border 검산실패: side={side}"
         add(
             "border", "SHAPE_MEASUREMENT", 3, ["테두리 세기", "꼭짓점 중복"],
             f"바둑돌을 그림처럼 속이 빈 정사각형 모양으로 한 변에 {side}개씩 놓으려고 해요. 바둑돌은 모두 몇 개 필요할까요?",
@@ -57,6 +127,11 @@ def gen_border():
 def gen_mirror():
     for actual in [2, 4, 5, 7]:
         mirror = 12 - actual
+        # 검산: 좌우 반전을 각도로 시뮬레이션 — 실제 시침각을 12(위) 축 기준으로 반사하면
+        # 거울 속 시각(mirror시)이 그대로 나와야 한다
+        m_ang = (-30 * actual) % 360
+        assert m_ang % 30 == 0 and (m_ang // 30 or 12) == mirror, f"mirror 검산실패: actual={actual}"
+        assert mirror != actual, f"mirror 검산실패: 거울상과 실제가 같음(actual={actual})"
         add(
             "mirror", "SHAPE_MEASUREMENT", 3, ["거울 사고", "대칭"],
             f"그림은 거울에 비친 벽시계 모습이에요({mirror}시 정각처럼 보여요). 실제 시각은 몇 시일까요?",
@@ -212,6 +287,13 @@ def gen_clock_angle():
 def gen_rectangle_count():
     for w, h in [(2, 2), (3, 2), (3, 3), (4, 2)]:
         ans = comb(w + 1, 2) * comb(h + 1, 2)
+        # 검산: 세로선 2개·가로선 2개의 모든 조합을 실제로 나열해 세는 완전열거와 대조
+        rect_cnt = sum(
+            1
+            for x1 in range(w + 1) for x2 in range(x1 + 1, w + 1)
+            for y1 in range(h + 1) for y2 in range(y1 + 1, h + 1)
+        )
+        assert rect_cnt == ans, f"rectcount 검산실패: {w}x{h}"
         add(
             "rectcount", "SHAPE_MEASUREMENT", 4, ["직사각형 세기", "체계적으로 세기"],
             f"가로 {w}칸, 세로 {h}칸으로 나뉜 직사각형 격자가 있어요. 이 격자 안에서 찾을 수 있는 크고 작은 직사각형은 모두 몇 개일까요?",
@@ -260,6 +342,9 @@ def gen_polygon_angle():
 def gen_polygon_diagonals():
     for n in [5, 6, 8, 10]:
         ans = n * (n - 3) // 2
+        # 검산: 꼭짓점 쌍을 전부 나열하고 변(이웃 쌍)만 뺀 완전열거와 대조
+        diag_cnt = sum(1 for i in range(n) for j in range(i + 1, n) if (j - i) not in (1, n - 1))
+        assert diag_cnt == ans, f"polydiag 검산실패: n={n}"
         add(
             "polydiag", "SHAPE_MEASUREMENT", 5, ["대각선", "중복 없이 세기"],
             f"정{n}각형에 그을 수 있는 대각선은 모두 몇 개일까요?",
@@ -285,6 +370,11 @@ def gen_clock_minutes():
         hour_pos = 30 * h + m // 2
         diff = abs(hour_pos - 6 * m)
         ans = min(diff, 360 - diff)
+        # 검산: 두 바늘의 속도(시침 0.5도/분·분침 6도/분)로 사이각을 독립 시뮬레이션
+        assert m % 2 == 0, f"clockmin 검산실패: 홀수 분({m})은 시침각이 정수가 아님"
+        sim = abs(((h % 12) * 30 + m * 0.5) - m * 6.0)
+        sim = min(sim, 360.0 - sim)
+        assert abs(sim - ans) < 1e-9 and 0 <= ans <= 180, f"clockmin 검산실패: {h}시 {m}분"
         add(
             "clockmin", "SHAPE_MEASUREMENT", 5, ["각도", "시침의 이동"],
             f"{h}시 {m}분에 시침과 분침이 이루는 작은 쪽 각도는 몇 도일까요?",
@@ -331,9 +421,19 @@ def gen_rect_area_max():
 
 # ── 47. 직육면체 겉넓이 (난6, 도형과측정) ───────────────────────────────────
 def gen_cube_surface():
+    from itertools import product
+
     for a, b, c in [(2, 3, 4), (3, 3, 3), (2, 2, 5), (1, 3, 4)]:
         ans = 2 * (a * b + b * c + a * c)
         volume = a * b * c
+        # 검산: 단위정육면체 좌표를 전부 돌며 바깥에 노출된 면을 직접 세는 열거와 대조
+        exposed = sum(
+            1
+            for x, y, z in product(range(a), range(b), range(c))
+            for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+            if not (0 <= x + dx < a and 0 <= y + dy < b and 0 <= z + dz < c)
+        )
+        assert exposed == ans, f"cubesurf 검산실패: {a}x{b}x{c}"
         add(
             "cubesurf", "SHAPE_MEASUREMENT", 6, ["겉넓이", "마주 보는 세 쌍"],
             f"1cm짜리 작은 정육면체를 빈틈없이 쌓아 가로 {a}칸, 세로 {b}칸, 높이 {c}칸인 직육면체를 만들었어요. 이 직육면체의 겉넓이는 몇 ㎠일까요?",
@@ -585,6 +685,11 @@ def gen_shape_count():
             lines = k + 2                       # 밑변으로 가는 선(양옆 2 + 내부 k)
             ans = lines * (lines - 1) // 2       # 선 2개를 고를 때마다 삼각형 1개
             small = k + 1                        # 가장 작은 삼각형 개수
+            # 검산: 밑변으로 가는 선 2개 조합을 실제로 전부 나열해 세고(완전열거),
+            # 최소 삼각형 수(이웃한 선 쌍)도 함께 대조
+            pairs = [(i, j) for i in range(lines) for j in range(i + 1, lines)]
+            assert len(pairs) == ans, f"{fam} 검산실패: k={k}"
+            assert sum(1 for i, j in pairs if j == i + 1) == small, f"{fam} 검산실패(최소 삼각형): k={k}"
             # trianglefan(난4)·trianglefanx(난6) 둘 다 영어 뱅크에 넣는다(문항 구조가 같아 같은 영어 dict 재사용).
             en_fan = {
                 "statement": "How many triangles can you find in the picture? (count larger triangles made of several small ones too)",
@@ -828,6 +933,10 @@ def gen_square_area():
     for side in [6, 8, 5, 9]:
         perim = side * 4
         area = side * side
+        # 검산: 둘레→한 변 나눗셈이 정확한지 확인하고, 넓이를 셀 단위 마스크로 재계산
+        assert perim % 4 == 0, f"sqarea 검산실패: 둘레 {perim}이 4의 배수가 아님"
+        cells = {(x, y) for x in range(perim // 4) for y in range(perim // 4)}
+        assert len(cells) == area, f"sqarea 검산실패: side={side}"
         add(
             "sqarea", "SHAPE_MEASUREMENT", 3, ["정사각형", "둘레와 넓이"],
             f"둘레가 {perim}cm인 정사각형이 있어요. 이 정사각형의 넓이는 몇 ㎠일까요?",
@@ -873,6 +982,13 @@ def gen_similar_area_ratio():
 def gen_diagonal_cells():
     for m, n in [(6, 4), (5, 3), (8, 6), (4, 2)]:
         ans = m + n - gcd(m, n)
+        # 검산: 대각선의 매개변수 t 구간을 정수 산술(공통분모 m·n)로 비교해
+        # 지나는 칸을 완전열거 — 칸 (i,j)를 지남 ⇔ 열린 구간 (i·n,(i+1)·n)∩(j·m,(j+1)·m) ≠ ∅
+        cell_cnt = sum(
+            1 for i in range(m) for j in range(n)
+            if max(i * n, j * m) < min((i + 1) * n, (j + 1) * m)
+        )
+        assert cell_cnt == ans, f"diagcells 검산실패: {m}x{n}"
         add(
             "diagcells", "SHAPE_MEASUREMENT", 7, ["격자", "최대공약수"],
             f"가로 {m}칸, 세로 {n}칸인 직사각형 모눈이 있어요. 한 꼭짓점에서 대각선 반대편 꼭짓점까지 곧게 선을 그으면, 이 선이 지나가는 모눈 칸은 모두 몇 칸일까요?",
@@ -896,6 +1012,9 @@ def gen_diagonal_cells():
 def gen_lcm_square():
     for w, h in [(6, 4), (8, 12), (9, 6), (10, 15)]:
         lcm = w * h // gcd(w, h)
+        # 검산: 1부터 차례로 훑어 두 변 모두로 나누어떨어지는 가장 작은 수를 직접 찾아 대조
+        smallest = next(s for s in range(1, w * h + 1) if s % w == 0 and s % h == 0)
+        assert smallest == lcm, f"lcmsquare 검산실패: {w}x{h}"
         add(
             "lcmsquare", "SHAPE_MEASUREMENT", 5, ["최소공배수", "정사각형 만들기"],
             f"가로 {w}cm, 세로 {h}cm인 직사각형 타일을 빈틈없이 이어 붙여 '정사각형'을 만들려고 해요. 만들 수 있는 '가장 작은' 정사각형의 한 변은 몇 cm일까요?",
@@ -948,6 +1067,9 @@ def gen_grid_area_hard():
 def gen_squares_in_grid():
     for k in [2, 3, 4, 5]:
         ans = k * (k + 1) * (2 * k + 1) // 6
+        # 검산: 크기 s×s 정사각형이 놓일 왼쪽 위 자리를 전부 나열해 세는 완전열거와 대조
+        sq_cnt = sum(1 for s in range(1, k + 1) for x in range(k - s + 1) for y in range(k - s + 1))
+        assert sq_cnt == ans, f"gridsquares 검산실패: k={k}"
         add(
             "gridsquares", "SHAPE_MEASUREMENT", 6, ["세기", "제곱수 합"],
             f"{k}×{k} 크기의 모눈종이(작은 정사각형 {k * k}개)가 있어요. 이 안에서 찾을 수 있는 크기가 다른 모든 '정사각형'(1×1, 2×2, …)은 모두 몇 개일까요?",
@@ -969,10 +1091,18 @@ def gen_squares_in_grid():
 
 def gen_painted_cube_faces():
     # 겉면을 칠한 n×n×n 정육면체를 단위정육면체로 자를 때, 정확히 두 면만 칠해진 개수 = 모서리 12개 × (n-2). (도형과측정 난8)
+    from itertools import product
+
     for n in [4, 5, 3, 6]:
         two = 12 * (n - 2)
         three = 8               # 꼭짓점(세 면)
         one = 6 * (n - 2) ** 2  # 면 안쪽(한 면)
+        # 검산: n³개 좌표를 전부 돌며 극단 좌표(0, n−1) 개수 = 칠해진 면 수로 직접 분류
+        by_faces = {kk: 0 for kk in range(4)}
+        for x, y, z in product(range(n), repeat=3):
+            by_faces[sum(1 for v in (x, y, z) if v in (0, n - 1))] += 1
+        assert by_faces[2] == two and by_faces[3] == three and by_faces[1] == one, f"paintcube 검산실패: n={n}"
+        assert sum(by_faces.values()) == n ** 3, f"paintcube 검산실패(전체 조각 수): n={n}"
         add(
             "paintcube", "SHAPE_MEASUREMENT", 8, ["공간 감각", "위치로 나누어 세기"],
             f"겉면을 모두 빨갛게 칠한 {n}×{n}×{n} 정육면체를 1×1×1 작은 정육면체 {n ** 3}개로 잘랐어요. "
@@ -1004,6 +1134,9 @@ def gen_rectdiag():
     for a, b in [(3, 4), (6, 8), (5, 12), (8, 15)]:
         sq = a * a + b * b
         ans = int(sq ** 0.5)
+        # 검산: int(√)의 절단 오류 방지 — 제곱 복원 + 삼각부등식으로 빗변 범위 확인
+        assert ans * ans == sq, f"rectdiag 검산실패: {a}x{b}는 완전제곱 빗변이 아님"
+        assert max(a, b) < ans < a + b, f"rectdiag 검산실패(삼각부등식): {a}x{b}"
         add(
             "rectdiag", "SHAPE_MEASUREMENT", 4, ["피타고라스", "대각선"],
             f"가로 {a}cm, 세로 {b}cm인 직사각형의 대각선(맞은편 꼭짓점을 잇는 선)의 길이는 몇 cm일까요?",
@@ -1029,6 +1162,13 @@ def gen_foldcut():
     for folds, h in [(1, 1), (1, 2), (1, 3), (2, 1)]:
         layers = 2 ** folds
         ans = h * layers
+        # 검산: 띠를 2^folds 조각으로 보고 반 접기를 실제로 시뮬레이션 —
+        # 겹친 채 뚫으면 서로 다른 조각(위치)에 겹친 장수만큼 구멍이 나야 한다
+        strip = [[i] for i in range(2 ** folds)]
+        for _ in range(folds):
+            strip = [strip[i] + strip[len(strip) - 1 - i][::-1] for i in range(len(strip) // 2)]
+        assert len(strip) == 1 and len(set(strip[0])) == len(strip[0]), f"foldcut 검산실패: folds={folds}"
+        assert h * len(strip[0]) == ans, f"foldcut 검산실패: folds={folds}, h={h}"
         add(
             "foldcut", "SHAPE_MEASUREMENT", 1, ["대칭", "겹쳐서 세기"],
             f"색종이를 반으로 {folds}번 접은 다음, 겹친 채로 구멍을 {h}개 뚫었어요. 종이를 다시 펼치면 구멍은 모두 몇 개일까요?",
@@ -1059,6 +1199,12 @@ def gen_euler():
     # 난이도 재조정(난9→5, 2026-07 d9 감사): V·F를 주고 공식 대입 뺄셈 1회 — pick(d5) 동류.
     for v, f in [(12, 20), (8, 6), (6, 8), (20, 12)]:
         ans = v + f - 2
+        # 검산: (V,F)에 해당하는 실제 정다면체 구조(한 면의 변 수·꼭짓점 차수)로
+        # 모서리를 면 쪽(F×변÷2)·꼭짓점 쪽(V×차수÷2) 두 경로에서 독립 재계산
+        solids = {(12, 20): (3, 5), (8, 6): (4, 3), (6, 8): (3, 4), (20, 12): (5, 3)}
+        assert (v, f) in solids, f"euler 검산실패: ({v},{f}) 다면체 구조 미등록"
+        face_sides, vert_deg = solids[(v, f)]
+        assert f * face_sides // 2 == ans and v * vert_deg // 2 == ans, f"euler 검산실패: V={v}, F={f}"
         add(
             "euler", "SHAPE_MEASUREMENT", 5, ["오일러 공식", "다면체"],
             f"어떤 볼록 다면체의 꼭짓점이 {v}개, 면이 {f}개예요. 이 다면체의 모서리는 모두 몇 개일까요?",
@@ -1086,6 +1232,8 @@ def gen_conevolume():
     # 적용형 — '스스로 발견'이 없어 경시급 부적격.
     for base, h in [(12, 5), (9, 4), (18, 7), (6, 10)]:
         ans = base * h // 3
+        # 검산: ÷3이 정확히 떨어지는 파라미터인지(절단 오류 방지) 곱으로 복원해 확인
+        assert (base * h) % 3 == 0 and ans * 3 == base * h and ans > 0, f"conevolume 검산실패: base={base}, h={h}"
         add(
             "conevolume", "SHAPE_MEASUREMENT", 3, ["뿔의 부피", "기둥의 3분의 1"],
             f"밑면의 넓이가 {base}cm², 높이가 {h}cm인 뿔(각뿔·원뿔)의 부피는 몇 cm³일까요?",
@@ -1111,6 +1259,11 @@ def gen_diagregions():
         diag = n * (n - 3) // 2
         cross = comb(n, 4)
         ans = 1 + diag + cross
+        # 검산: 일반 위치 볼록 n각형(포물선 위 점)에서 분수 연산 선분 교차로
+        # 교점·영역 수를 실제 재산출 — 공식이 아닌 진짜 기하 계산과 대조
+        real_cross, real_regions = _convex_diag_geometry(n)
+        assert real_cross == cross, f"diagregions 검산실패(교점): n={n}"
+        assert real_regions == ans, f"diagregions 검산실패(영역): n={n}"
         add(
             "diagregions", "SHAPE_MEASUREMENT", 10, ["오일러 공식", "영역 세기"],
             f"볼록 {n}각형의 대각선을 모두 그었어요. 어느 세 대각선도 내부의 한 점에서 만나지 않는다면, 대각선들이 "
@@ -1143,6 +1296,9 @@ def gen_dist3d():
     for x, y, z in [(2, 3, 6), (1, 2, 2), (2, 6, 9), (6, 6, 7)]:
         sq = x * x + y * y + z * z
         ans = int(sq ** 0.5)
+        # 검산: int(√)의 절단 오류 방지 — 제곱 복원 + 최대 좌표와 좌표 합 사이 범위 확인
+        assert ans * ans == sq, f"dist3d 검산실패: ({x},{y},{z})는 완전제곱 거리가 아님"
+        assert max(x, y, z) < ans < x + y + z, f"dist3d 검산실패(범위): ({x},{y},{z})"
         add(
             "dist3d", "SHAPE_MEASUREMENT", 4, ["공간 좌표", "피타고라스"],
             f"공간에서 점 (0, 0, 0)부터 점 ({x}, {y}, {z})까지의 거리는 얼마일까요?",
@@ -1167,8 +1323,18 @@ def gen_dist3d():
 
 def gen_boxsurface():
     # 직육면체 겉넓이 = 2(ab+bc+ca). (도형과측정 난6)
+    from itertools import product
+
     for a, b, c in [(3, 4, 5), (2, 3, 4), (5, 5, 2), (1, 4, 6)]:
         ans = 2 * (a * b + b * c + c * a)
+        # 검산: 단위정육면체 좌표를 전부 돌며 바깥에 노출된 면을 직접 세는 열거와 대조
+        exposed = sum(
+            1
+            for x, y, z in product(range(a), range(b), range(c))
+            for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+            if not (0 <= x + dx < a and 0 <= y + dy < b and 0 <= z + dz < c)
+        )
+        assert exposed == ans, f"boxsurface 검산실패: {a}x{b}x{c}"
         add(
             "boxsurface", "SHAPE_MEASUREMENT", 6, ["겉넓이", "면 세기"],
             f"가로 {a}cm, 세로 {b}cm, 높이 {c}cm인 직육면체의 겉넓이는 몇 cm²일까요?",
@@ -1196,6 +1362,11 @@ def gen_symaxis():
     for n in [3, 4, 5, 6]:
         ans = n
         name = {3: "정삼각형", 4: "정사각형", 5: "정오각형", 6: "정육각형"}[n]
+        # 검산: 원 위 정n각형(꼭짓점 위치 2k, 단위 π/n)의 후보 반사축 2n개를 전부 돌며
+        # 반사 p→(ax−p)가 꼭짓점 집합을 보존하는 축만 실제로 세는 완전열거와 대조
+        vset = {(2 * k) % (2 * n) for k in range(n)}
+        axis_cnt = sum(1 for ax in range(2 * n) if all((ax - p) % (2 * n) in vset for p in vset))
+        assert axis_cnt == ans, f"symaxis 검산실패: n={n}"
         add(
             "symaxis", "SHAPE_MEASUREMENT", 3, ["선대칭", "대칭축"],
             f"{name}은 선대칭 도형이에요. 접었을 때 완전히 겹치게 하는 대칭축은 모두 몇 개일까요?",
@@ -1222,6 +1393,10 @@ def gen_rectperim():
     # 직사각형 둘레 = 2×(가로+세로). 측정. (도형과측정 난4)
     for a, b in [(7, 4), (9, 5), (6, 6), (8, 3)]:
         ans = 2 * (a + b)
+        # 검산: 네 꼭짓점 좌표를 실제로 한 바퀴 걸으며 변 길이를 더하는 경로 합과 대조
+        corners = [(0, 0), (a, 0), (a, b), (0, b)]
+        walk = sum(abs(x2 - x1) + abs(y2 - y1) for (x1, y1), (x2, y2) in zip(corners, corners[1:] + corners[:1]))
+        assert walk == ans, f"rectperim 검산실패: {a}x{b}"
         add(
             "rectperim", "SHAPE_MEASUREMENT", 4, ["둘레", "측정"],
             f"가로 {a}cm, 세로 {b}cm인 직사각형이 있어요. 이 직사각형의 둘레는 몇 cm일까요?",
@@ -1248,6 +1423,9 @@ def gen_interiorangle():
     for n in [5, 6, 8, 10]:
         ans = (n - 2) * 180 // n
         total = (n - 2) * 180
+        # 검산: 외각 경로(한 내각 = 180 − 360/n)로 독립 재계산 + 나눗셈 정확성 확인
+        assert total % n == 0 and 360 % n == 0, f"interiorangle 검산실패: n={n} 각도가 정수가 아님"
+        assert ans == 180 - 360 // n, f"interiorangle 검산실패: n={n}"
         add(
             "interiorangle", "SHAPE_MEASUREMENT", 4, ["다각형 내각", "각도"],
             f"정{n}각형의 한 내각의 크기는 몇 도일까요? (모든 각이 같아요)",
@@ -1273,6 +1451,12 @@ def gen_prismparts():
     # 각기둥의 모서리 수 = 밑면 변수 × 3. (도형과측정 난4)
     for n in [5, 6, 4, 8]:
         ans = 3 * n
+        # 검산: 꼭짓점 (i, 층)으로 각기둥 그래프를 실제로 만들어 모서리를 집합으로 세고,
+        # V−E+F=2(오일러 공식)로 교차 확인
+        edge_set = {frozenset(((i, lv), ((i + 1) % n, lv))) for lv in (0, 1) for i in range(n)}
+        edge_set |= {frozenset(((i, 0), (i, 1))) for i in range(n)}
+        assert len(edge_set) == ans, f"prismparts 검산실패: n={n}"
+        assert 2 * n - len(edge_set) + (n + 2) == 2, f"prismparts 검산실패(오일러): n={n}"
         add(
             "prismparts", "SHAPE_MEASUREMENT", 4, ["입체도형", "모서리 세기"],
             f"밑면이 {n}각형인 각기둥이 있어요. 이 각기둥의 모서리는 모두 몇 개일까요?",
@@ -1297,8 +1481,21 @@ def gen_prismparts():
 
 def gen_triangleangle():
     # 삼각형 세 각의 합은 180° — 두 각으로 나머지 구하기. (도형과측정 난4)
+    import math
+
     for a, b in [(50, 70), (40, 65), (90, 35), (72, 53)]:
         ans = 180 - a - b
+        # 검산: 밑변 (0,0)-(1,0) 위에 각 a·b로 두 반직선을 실제로 작도해 교점 C를 구하고,
+        # C에서 잰 각이 답과 일치하는지 좌표 기하로 독립 확인
+        assert 0 < ans < 180, f"triangleangle 검산실패: {a}도+{b}도로는 삼각형 불가"
+        ra, rb = math.radians(a), math.radians(b)
+        da, db = (math.cos(ra), math.sin(ra)), (-math.cos(rb), math.sin(rb))
+        t = db[1] / (da[0] * db[1] - da[1] * db[0])
+        cx, cy = t * da[0], t * da[1]
+        va, vb = (-cx, -cy), (1 - cx, -cy)
+        cosc = (va[0] * vb[0] + va[1] * vb[1]) / (math.hypot(*va) * math.hypot(*vb))
+        measured = math.degrees(math.acos(max(-1.0, min(1.0, cosc))))
+        assert abs(measured - ans) < 1e-6, f"triangleangle 검산실패: {a}도·{b}도"
         add(
             "triangleangle", "SHAPE_MEASUREMENT", 4, ["삼각형 내각", "각도"],
             f"삼각형의 세 각 중 두 각이 각각 {a}도와 {b}도예요. 나머지 한 각은 몇 도일까요?",
@@ -1322,6 +1519,14 @@ def gen_spacediag():
     for a, b, c in [(2, 3, 4), (3, 4, 5), (2, 4, 6), (4, 6, 8)]:
         ans = a + b + c - gcd(a, b) - gcd(b, c) - gcd(c, a) + gcd(gcd(a, b), c)
         naive = a + b + c
+        # 검산: 단위정육면체 (i,j,k)를 전부 돌며 대각선의 t 구간(공통분모 abc 정수 산술)이
+        # 그 칸 내부를 실제로 지나는지 완전열거로 대조 — 포함배제 공식과 독립인 경로
+        pass_cnt = sum(
+            1
+            for i in range(a) for j in range(b) for k in range(c)
+            if max(i * b * c, j * a * c, k * a * b) < min((i + 1) * b * c, (j + 1) * a * c, (k + 1) * a * b)
+        )
+        assert pass_cnt == ans, f"spacediag 검산실패: {a}x{b}x{c}"
         add(
             "spacediag", "SHAPE_MEASUREMENT", 9, ["포함배제", "공간 대각선"],
             f"작은 정육면체 {a * b * c}개를 가로 {a}칸·세로 {b}칸·높이 {c}칸으로 빈틈없이 쌓아 직육면체를 만들었어요. "
@@ -1354,6 +1559,13 @@ def gen_polyhedron():
     for name, faces, sides in [("정십이면체", 12, 5), ("정이십면체", 20, 3), ("정팔면체", 8, 3), ("정사면체", 4, 3)]:
         edges = faces * sides // 2
         verts = edges - faces + 2
+        # 검산: 실제 정다면체의 꼭짓점 수·꼭짓점 차수로 모서리·꼭짓점을 독립 재계산
+        # (모서리 = V×차수÷2 — 면 쪽 세기와 다른 경로)
+        vdata = {"정십이면체": (20, 3), "정이십면체": (12, 5), "정팔면체": (6, 4), "정사면체": (4, 3)}
+        assert name in vdata, f"polyhedron 검산실패: {name} 구조 미등록"
+        vk, dk = vdata[name]
+        assert (faces * sides) % 2 == 0, f"polyhedron 검산실패: {name} 변 총수가 홀수"
+        assert edges == vk * dk // 2 and verts == vk, f"polyhedron 검산실패: {name}"
         name_en = {"정십이면체": "regular dodecahedron", "정이십면체": "regular icosahedron", "정팔면체": "regular octahedron", "정사면체": "regular tetrahedron"}[name]
         add(
             "polyhedron", "SHAPE_MEASUREMENT", 8, ["공간 도형", "모서리는 두 면이 공유"],
@@ -1385,8 +1597,18 @@ def gen_pick():
     # 픽의 정리: 격자 다각형 넓이 = 내부 격자점 + 둘레 격자점÷2 − 1. (도형과측정 난5)
     # 난이도 재조정(난10→5, 2026-07 d10 감사): I·B를 문제가 주고 공식 한 줄 대입 —
     # recur(적용형, d5)와 동일 계급. 점 세기부터 시키는 발견형으로 개편하면 승급 여지.
+    # 검산 증인: (내부, 둘레) 격자점 수를 실제로 실현하는 격자 삼각형 — 점을 직접 세어 확인
+    witness = {(4, 6): ((0, 0), (4, 2), (2, 4)), (5, 8): ((0, 0), (4, 0), (2, 4)),
+               (0, 4): ((0, 0), (2, 0), (1, 1)), (6, 10): ((0, 0), (5, 0), (0, 4))}
     for inner, boundary in [(4, 6), (5, 8), (0, 4), (6, 10)]:
         ans = inner + boundary // 2 - 1
+        # 검산: 증인 삼각형의 내부/둘레 격자점을 좌표 순회로 직접 세고,
+        # 신발끈 넓이가 공식 값과 일치하는지 독립 확인(픽의 정리 실증)
+        assert boundary % 2 == 0, f"pick 검산실패: 둘레 점 수가 홀수({boundary})"
+        assert (inner, boundary) in witness, f"pick 검산실패: ({inner},{boundary}) 증인 다각형 미등록"
+        wi, wb, warea2 = _lattice_triangle_stats(witness[(inner, boundary)])
+        assert (wi, wb) == (inner, boundary), f"pick 검산실패: 증인 격자점 ({wi},{wb})≠({inner},{boundary})"
+        assert warea2 == 2 * ans, f"pick 검산실패: 증인 넓이 {warea2}/2 ≠ {ans}"
         add(
             "pick", "SHAPE_MEASUREMENT", 5, ["픽의 정리", "격자점으로 넓이"],
             f"모눈종이의 격자점을 꼭짓점으로 하는 다각형이 있어요. 다각형 '내부'에 있는 격자점이 {inner}개, "
@@ -1418,6 +1640,10 @@ def gen_diagcross():
     for n in [6, 7, 8, 5]:
         ans = comb(n, 4)
         diags = n * (n - 3) // 2
+        # 검산: 일반 위치 볼록 n각형(포물선 위 점)에서 대각선 쌍의 교점을 분수 연산
+        # 선분 교차로 실제 전부 계산해 세는 완전열거와 대조 — C(n,4) 공식과 독립인 경로
+        real_cross, _ = _convex_diag_geometry(n)
+        assert real_cross == ans, f"diagcross 검산실패: n={n}"
         add(
             "diagcross", "SHAPE_MEASUREMENT", 9, ["조합으로 세기", "대각선 교점"],
             f"볼록 {n}각형의 대각선을 모두 그었어요. 어느 세 대각선도 내부의 한 점에서 겹쳐 만나지 않는다면, "
