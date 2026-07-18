@@ -26,6 +26,17 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # 문제은행 결정성 게이트 — 재생성 산출이 커밋본과 바이트 동일해야 한다(0-diff).
+      # 파이프라인(생성기)과 데이터(JSON)가 어긋난 채 머지되는 것을 차단하고,
+      # checks.py 품질 게이트(중복정의·한/영 대칭·난이도 제약)도 함께 강제된다.
+      - name: Problem bank determinism & quality gate
+        run: |
+          python3 tools/problemgen/generate.py
+          git diff --exit-code \
+            app/src/main/assets/problems_generated.json \
+            app/src/main/assets/problems_generated_en.json \
+            tools/problemgen/method_codes.json
+
       - name: Check formatting
         run: ./gradlew spotlessCheck
 
