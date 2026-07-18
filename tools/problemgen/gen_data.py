@@ -1646,3 +1646,517 @@ def gen_partition():
                 "detail": "The number of ways to break a natural number n into a sum of naturals ignoring order is called the 'partition number p(n)'. Unlike compositions, which distinguish order (2^(n−1) ways), count them by placing the largest part first so nothing is missed. With no neat closed formula, systematic listing is the key — a classic of number theory and combinatorics.",
             },
         )
+
+
+# ── 139. 논리 소거 격자 — 누가 무엇을 좋아할까 (난3, 자료와가능성) ────────────────
+def gen_logic_grid():
+    # 발견형 자기검증: 정답 인물과 정답 항목의 짝은 어느 단서에도 직접 나오지 않는다 — 부정 단서
+    # 두 개의 '결합'(소거)으로 셋째 인물이 먼저 확정되어야 나머지가 도미노로 풀린다(기준1 통과).
+    # 긍정 단서가 하나도 없어 단순 조회로는 한 칸도 못 채운다(기준2 통과 — 입문 사고력).
+    from itertools import permutations
+    # (사람3, 항목3 ko, 항목3 en, 주제 ko, 주제 en, i, j, x, y)
+    # 단서: 사람i≠항목x · 사람j≠항목x · 사람j≠항목y → 남은 사람k=항목x, 사람j=항목z, 사람i=항목y.
+    scenarios = [
+        (["민준", "서연", "지호"], ["사과", "귤", "배"], ["apples", "tangerines", "pears"], "과일", "fruit", 0, 1, 0, 1),
+        (["하은", "도윤", "예린"], ["강아지", "고양이", "앵무새"], ["dogs", "cats", "parrots"], "동물", "animal", 0, 2, 1, 0),
+        (["시우", "지아", "민준"], ["축구", "수영", "야구"], ["soccer", "swimming", "baseball"], "운동", "sport", 1, 2, 2, 0),
+        (["서연", "지호", "하은"], ["빨간색", "파란색", "초록색"], ["red", "blue", "green"], "색깔", "color", 1, 2, 1, 0),
+    ]
+    for people, items, items_en, topic, topic_en, i, j, x, y in scenarios:
+        k = 3 - i - j  # 항목 x의 주인(소거로 확정되는 사람)
+        z = 3 - x - y  # 사람 j의 항목
+        # 검산: 배정(순열) 완전열거 — 세 단서를 만족하는 배정이 정확히 1개이고 그 배정이 의도와 일치
+        sols = [pm for pm in permutations(range(3)) if pm[i] != x and pm[j] != x and pm[j] != y]
+        assert len(sols) == 1 and sols[0][i] == y and sols[0][k] == x and sols[0][j] == z, "logicgrid 검산 실패"
+        final = {people[i]: items[y], people[j]: items[z], people[k]: items[x]}
+        final_txt = ", ".join(f"{p}-{it}" for p, it in ((people[0], final[people[0]]), (people[1], final[people[1]]), (people[2], final[people[2]])))
+        add(
+            "logicgrid", "DATA_POSSIBILITY", 3, ["논리 소거", "단서 결합"],
+            f"{people[0]}, {people[1]}, {people[2]} 세 사람이 좋아하는 {topic}{_eun(topic)} {items[0]}·{items[1]}·{items[2]} 중 하나씩이고, 서로 달라요. "
+            f"{people[i]}{_eun(people[i])} {items[x]}{_eul(items[x])} 좋아하지 않아요. {people[j]}도 {items[x]}{_eul(items[x])} 좋아하지 않아요. "
+            f"{people[j]}{_eun(people[j])} {items[y]}도 좋아하지 않아요. {items[y]}{_eul(items[y])} 좋아하는 사람은 누구일까요?",
+            people[i], [people[k], people[j], "알 수 없어요"],
+            f"표를 그려 아닌 칸부터 지워요. {people[i]}{_gwa(people[i])} {people[j]} 둘 다 {items[x]}{_eul(items[x])} 좋아하지 않으니, "
+            f"{items[x]}{_eun(items[x])} 남은 {people[k]}의 것이에요. 이제 {people[j]}{_eun(people[j])} {items[x]}도 {items[y]}도 아니니 "
+            f"{items[z]}{_eul(items[z])} 좋아하고, 마지막 남은 {items[y]}{_iga(items[y])} {people[i]}의 것이에요. 답은 {people[i]}{_copula(people[i])}.",
+            [(people[k], f"두 부정 단서를 결합하면 {people[k]}{_eun(people[k])} {items[x]}{_eul(items[x])} 좋아하는 사람으로 먼저 확정돼요. {items[y]}의 주인은 될 수 없어요."),
+             (people[j], f"단서에 {people[j]}{_eun(people[j])} {items[y]}{_eul(items[y])} 좋아하지 않는다고 바로 나와 있어요. 단서를 끝까지 읽어요."),
+             ("알 수 없어요", "단서 하나만 보면 모르지만, 세 단서를 한 표에 함께 표시하면 답이 하나로 정해져요.")],
+            detail=f"'아니다'라는 단서도 훌륭한 정보예요. 사람×{topic} 표를 그리고 아닌 칸에 ×를 치면, 한 항목에 ×가 두 개 모이는 순간 남은 칸이 저절로 ○가 돼요(소거). "
+            f"이 문제의 열쇠는 {items[x]} — 두 사람이 모두 아니라고 했으니 {people[k]}{_euro(people[k])} 확정되고, 그다음부터는 도미노처럼 풀려요. "
+            f"되돌아보기: 완성한 표({final_txt})를 세 단서에 다시 대 보면 모두 들어맞아요.",
+            en={
+                "concepts": ["logical elimination", "combining clues"],
+                "statement": f"Three children A, B, and C each like a different {topic_en} among {items_en[0]}, {items_en[1]}, and {items_en[2]}. "
+                f"{'ABC'[i]} does not like {items_en[x]}. {'ABC'[j]} does not like {items_en[x]} either. "
+                f"{'ABC'[j]} does not like {items_en[y]} either. Who likes {items_en[y]}?",
+                "answer": "ABC"[i],
+                "distractors": ["ABC"[k], "ABC"[j], "It cannot be determined"],
+                "explanation": f"Draw a grid and cross out what each child does NOT like. Both {'ABC'[i]} and {'ABC'[j]} rule out {items_en[x]}, "
+                f"so {items_en[x]} must belong to the remaining child, {'ABC'[k]}. Now {'ABC'[j]} likes neither {items_en[x]} nor {items_en[y]}, "
+                f"so {'ABC'[j]} likes {items_en[z]}, and the last one left, {items_en[y]}, belongs to {'ABC'[i]}. The answer is {'ABC'[i]}.",
+                "mistakes": [("ABC"[k], f"Combining the two negative clues pins {'ABC'[k]} down as the one who likes {items_en[x]} — so {'ABC'[k]} cannot be the owner of {items_en[y]}."),
+                             ("ABC"[j], f"A clue says outright that {'ABC'[j]} does not like {items_en[y]}. Read the clues to the end."),
+                             ("It cannot be determined", "One clue alone is not enough, but marking all three clues on one grid pins the answer down to a single child.")],
+                "detail": f"A 'not' clue is great information too. Draw a children-by-{topic_en} grid and put × where something is ruled out: the moment one item collects two ×'s, "
+                f"the remaining cell becomes ○ by itself (elimination). The key here is {items_en[x]} — two children both ruled it out, so it must be {'ABC'[k]}'s, "
+                f"and the rest falls like dominoes. Looking back: check the finished grid against all three clues and every one fits.",
+            },
+        )
+
+
+# ── 140. 반드시 뽑히려면 — 최악의 경우 설계 (난3, 자료와가능성) ───────────────────
+def gen_sure_pick():
+    # 발견형 자기검증: '가장 운 나쁜 순서를 스스로 설계한다'는 전략이 문제문에 없고(기준1 통과),
+    # 특정 색 보장은 운 좋은 나열로 우회 불가 — 다른 색이 전부 먼저 나오는 적대 순서를 상상해야 답이
+    # 확정된다(기준2 통과). 비둘기집(pigeon d5, '아무 색이든 같은 짝')과 구조가 다르다:
+    # 목표가 '정해진 색 k개'라 답이 (다른 색 전부)+k로, 색 가짓수가 아니라 나머지 개수가 지배한다.
+    from itertools import combinations
+    color_en = {"빨간": "red", "파란": "blue", "노란": "yellow", "초록": "green", "보라": "purple"}
+    for colors, target, k in [
+        ([("빨간", 4), ("파란", 5), ("노란", 3)], "빨간", 1),
+        ([("빨간", 3), ("파란", 5), ("노란", 4)], "빨간", 2),
+        ([("초록", 5), ("보라", 4)], "보라", 2),
+        ([("빨간", 6), ("파란", 4), ("노란", 2)], "노란", 1),
+    ]:
+        total = sum(c for _, c in colors)
+        tcnt = dict(colors)[target]
+        others = total - tcnt
+        ans = others + k
+        assert k <= tcnt and len(colors) + 1 != k and ans not in (k, len(colors) + 1, total), "surepick 파라미터 오류"
+        # 검산: 꺼내는 조합 완전열거 — (ans−1)개에는 목표 색이 k개 미만인 조합이 존재하고,
+        # ans개면 어느 조합이든 k개 이상임을 공 하나하나 수준에서 확인(공식과 독립인 길).
+        balls = [name for name, c in colors for _ in range(c)]
+        assert any(sum(1 for idx in pick if balls[idx] == target) < k for pick in combinations(range(total), ans - 1)), "surepick 검산 실패: 최악 반례 없음"
+        assert all(sum(1 for idx in pick if balls[idx] == target) >= k for pick in combinations(range(total), ans)), "surepick 검산 실패: 보장 미달"
+        desc = ", ".join(f"{name} 구슬 {c}개" for name, c in colors)
+        others_desc = ", ".join(f"{name} {c}개" for name, c in colors if name != target)
+        desc_en = ", ".join(_en_plural(c, f"{color_en[name]} marble") for name, c in colors)
+        others_en = ", ".join(_en_plural(c, color_en[name]) for name, c in colors if name != target)
+        add(
+            "surepick", "DATA_POSSIBILITY", 3, ["최악의 경우", "반드시 보장"],
+            f"주머니에 {desc}가 들어 있어요. 안을 보지 않고 구슬을 한 개씩 꺼내요. 꺼낸 구슬 중에 {target} 구슬이 반드시 {k}개 있으려면, 최소 몇 개를 꺼내야 할까요?",
+            f"{ans}개", [f"{k}개", f"{len(colors) + 1}개", f"{total}개"],
+            f"'반드시'가 나오면 가장 운이 나쁜 경우를 내가 직접 만들어 봐요. 최악이면 {target} 구슬이 아닌 구슬({others_desc} — 모두 {others}개)만 계속 나올 수 있어요. "
+            f"하지만 {others}개가 다 나온 다음부터는 주머니에 {target} 구슬뿐이에요. 그래서 {others}+{k}={ans}개를 꺼내면 어떤 순서로 나와도 {target} 구슬이 {k}개 이상 들어 있어요.",
+            [(f"{k}개", f"운이 좋으면 {k}개 만에 나올 수도 있지만, '반드시'는 가장 운이 나쁜 순서에서도 되어야 해요."),
+             (f"{len(colors) + 1}개", f"색깔 수보다 1개 많이 꺼내는 건 '아무 색이든 같은 색 두 개'를 보장하는 방법이에요. 정해진 색({target} 구슬)을 원할 때는 다른 색이 전부 먼저 나오는 최악을 생각해요."),
+             (f"{total}개", f"전부 꺼내면 당연히 되지만 '최소'가 아니에요. {target} 구슬이 아닌 구슬은 {others}개뿐이라 {others}+{k}={ans}개면 충분해요.")],
+            detail=f"핵심은 '운이 가장 나쁜 시나리오'를 스스로 설계하는 거예요 — 보장은 행운이 아니라 최악의 경우에서 증명돼요. 주의할 점: 답은 {target} 구슬이 몇 개인지({tcnt}개)가 아니라 "
+            f"다른 색이 몇 개인지({others}개)로 정해져요. 목표 색이 많아도 다른 색이 많으면 더 여러 번 꺼내야 해요. 되돌아보기: {ans - 1}개만 꺼내면? 다른 색 {others}개에 {target} 구슬 {k - 1}개일 수 있어 "
+            f"아직 {k}개가 보장되지 않아요. 일반화하면 필요한 수 = (다른 색 전부) + (원하는 개수)예요.",
+            en={
+                "concepts": ["worst case", "guaranteed outcome"],
+                "statement": f"A bag holds {desc_en}. You draw marbles one at a time without looking inside. "
+                f"What is the smallest number of marbles you must draw to be certain that you have at least {_en_plural(k, color_en[target] + ' marble')}?",
+                "answer": _en_plural(ans, "marble"),
+                "distractors": [_en_plural(k, "marble"), _en_plural(len(colors) + 1, "marble"), _en_plural(total, "marble")],
+                "explanation": f"When you see 'certain', build the unluckiest case yourself. At worst, only non-{color_en[target]} marbles ({others_en} — {others} in all) keep coming out. "
+                f"But once those {others} are gone, only {color_en[target]} marbles remain in the bag. So drawing {others}+{k}={ans} marbles guarantees at least {k} {color_en[target]} marble(s) in any order.",
+                "mistakes": [(_en_plural(k, "marble"), f"With luck it could take only {k}, but 'certain' means it must work even in the unluckiest order."),
+                             (_en_plural(len(colors) + 1, "marble"), f"Drawing one more than the number of colors guarantees 'some matching pair of ANY color'. To get a specific color ({color_en[target]}), imagine all the other colors coming out first."),
+                             (_en_plural(total, "marble"), f"Drawing everything works, of course, but it isn't the minimum. There are only {others} non-{color_en[target]} marbles, so {others}+{k}={ans} draws are enough.")],
+                "detail": f"The heart of this problem is designing the worst-case scenario yourself — a guarantee is proved in the worst case, not by luck. Note that the answer is set not by how many {color_en[target]} marbles there are ({tcnt}), "
+                f"but by how many marbles of OTHER colors there are ({others}). Looking back: with only {ans - 1} draws you could have all {others} other marbles and just {k - 1} {color_en[target]} — not yet guaranteed. In general: draws needed = (all the others) + (how many you want).",
+            },
+        )
+
+
+# ── 141. 어느 놀이가 유리할까 — 가능성의 비율 비교 (난5, 자료와가능성) ─────────────
+def gen_fair_game():
+    # 발견형 자기검증: 비교 방법(통분·공통 표)이 문제문에 없고(기준1 통과), '이기는 경우의 개수'
+    # 비교라는 자연스러운 지름길이 네 벌 모두에서 함정이 되도록 두 놀이의 표본공간 크기를
+    # 일부러 어긋나게 설계했다(기준2 통과 — 개수 우회가 오답으로 유도됨).
+    from itertools import product
+    die = list(range(1, 7))
+    coin2 = [c for c in product("HT", repeat=2)]
+    coin3 = [c for c in product("HT", repeat=3)]
+    coin1 = ["H", "T"]
+    tie_txt, unk_txt = "두 사람이 이길 가능성은 똑같아요", "누가 유리한지 알 수 없어요"
+    scenarios = [
+        (("민준", "서연"),
+         "주사위 한 개를 굴려 6의 약수(1, 2, 3, 6)가 나오면", "rolls one die and wins if it shows a divisor of 6 (1, 2, 3, or 6)",
+         die, lambda o: 6 % o == 0,
+         "동전 두 개를 던져 적어도 한 개가 앞면이면", "tosses two coins and wins if at least one coin shows heads",
+         coin2, lambda o: "H" in o, "B", "A", 4, 3),
+        (("지호", "하은"),
+         "주사위 한 개를 굴려 짝수가 나오면", "rolls one die and wins if it shows an even number",
+         die, lambda o: o % 2 == 0,
+         "동전 두 개를 던져 두 동전이 서로 다른 면이 나오면", "tosses two coins and wins if the two coins show different faces",
+         coin2, lambda o: o[0] != o[1], "T", "A", 3, 2),
+        (("도윤", "예린"),
+         "동전 세 개를 던져 세 개가 모두 같은 면이 나오면", "tosses three coins and wins if all three show the same face",
+         coin3, lambda o: len(set(o)) == 1,
+         "주사위 한 개를 굴려 5 이상이 나오면", "rolls one die and wins if it shows 5 or more",
+         die, lambda o: o >= 5, "B", "T", 2, 2),
+        (("시우", "지아"),
+         "동전 한 개를 던져 앞면이 나오면", "tosses one coin and wins if it shows heads",
+         coin1, lambda o: o == "H",
+         "주사위 한 개를 굴려 2 이하가 나오면", "rolls one die and wins if it shows 2 or less",
+         die, lambda o: o <= 2, "A", "B", 1, 2)]
+    for (na, nb), da, da_en, sa, pa, db, db_en, sb, pb, expected, trap, fav_a, fav_b in scenarios:
+        size_a, size_b = len(sa), len(sb)
+        assert sum(1 for o in sa if pa(o)) == fav_a and sum(1 for o in sb if pb(o)) == fav_b, "fairgame 파라미터 오류"
+        common = size_a * size_b
+        # 검산: 두 놀이를 '한 판씩 같이 벌인' 공통 표본공간(곱집합)을 통째로 나열해 칸 수로 직접 비교
+        # — 분수 통분이라는 정답 경로와 달리 짝 (a, b)를 하나하나 세는 독립 경로.
+        ca = sum(1 for a in sa for b in sb if pa(a))
+        cb = sum(1 for a in sa for b in sb if pb(b))
+        assert {"A": ca > cb, "B": cb > ca, "T": ca == cb}[expected], "fairgame 검산 실패: 공통 표 비교 불일치"
+        assert ca == fav_a * size_b and cb == fav_b * size_a, "fairgame 검산 실패: 곱집합 세기"
+        answer = {"A": na, "B": nb, "T": tie_txt}[expected]
+        trap_choice = {"A": na, "B": nb, "T": tie_txt}[trap]
+        conclusion = {"A": f"{na}의 가능성이 더 높아요", "B": f"{nb}의 가능성이 더 높아요", "T": "두 사람이 똑같아요"}[expected]
+        wrongs = [c for c in [na, nb, tie_txt, unk_txt] if c != answer]
+        mist = [(trap_choice, f"이기는 경우의 개수({fav_a}가지 대 {fav_b}가지)만 비교했어요. 두 놀이는 전체 경우 수({size_a}가지와 {size_b}가지)가 달라서, 개수가 아니라 전체에서 차지하는 비율로 비교해야 해요."),
+                (unk_txt, "알 수 없지 않아요. 두 놀이의 경우를 각각 모두 나열하고 분수로 나타내면 정확히 비교할 수 있어요.")]
+        for w in wrongs:
+            if w != trap_choice and w != unk_txt:
+                mist.append((w, f"{na}의 가능성은 {fav_a}/{size_a}, {nb}의 가능성은 {fav_b}/{size_b} — 통분하면 {ca}/{common} 대 {cb}/{common}이에요. 다시 비교해 보세요."))
+        en_choice = {"A": "A", "B": "B", "T": "They are equally likely to win"}
+        en_unk = "It cannot be determined"
+        en_wrongs = [c for c in ["A", "B", en_choice["T"], en_unk] if c != en_choice[expected]]
+        en_mist = [(en_choice[trap], f"You compared only the number of winning outcomes ({fav_a} vs {fav_b}). The two games have different total outcomes ({size_a} and {size_b}), so you must compare the fractions, not the counts."),
+                   (en_unk, "It can be determined: list every outcome of each game and write the chances as fractions to compare them exactly.")]
+        for w in en_wrongs:
+            if w != en_choice[trap] and w != en_unk:
+                en_mist.append((w, f"A's chance is {fav_a}/{size_a} and B's is {fav_b}/{size_b} — over a common denominator that's {ca}/{common} vs {cb}/{common}. Compare again."))
+        add(
+            "fairgame", "DATA_POSSIBILITY", 5, ["가능성 비교", "공정한 놀이"],
+            f"{na}{_gwa(na)} {nb}{_iga(nb)} 각자 다른 놀이를 한 번씩 해요. {na}{_eun(na)} {da} 이기고, {nb}{_eun(nb)} {db} 이겨요. 누가 이길 가능성이 더 높을까요?",
+            answer, wrongs,
+            f"두 놀이의 경우를 각각 모두 나열해요. {na}{_eun(na)} 전체 {size_a}가지 중 {fav_a}가지에서 이겨요({fav_a}/{size_a}). {nb}{_eun(nb)} 전체 {size_b}가지 중 {fav_b}가지에서 이겨요({fav_b}/{size_b}). "
+            f"분모가 달라 개수로는 비교할 수 없으니 통분해요: {ca}/{common} 대 {cb}/{common} — {conclusion}.",
+            mist,
+            detail=f"이길 가능성은 '이기는 경우의 개수'가 아니라 '전체에서 차지하는 비율'이에요. 판의 크기가 다른 두 놀이는 분모를 맞춰야 비교돼요. 두 놀이의 결과를 짝지은 {size_a}×{size_b}={common}칸 표를 그리면 "
+            f"{na}{_iga(na)} 이기는 칸 {ca}개, {nb}{_iga(nb)} 이기는 칸 {cb}개로 한눈에 보여요 — 통분이 바로 이 표예요. 되돌아보기: 나열한 경우 수({fav_a}/{size_a}, {fav_b}/{size_b})를 빠짐없이 다시 세어 확인하세요. "
+            f"일반화: 어떤 두 놀이든 공통 표(통분)로 비교할 수 있어요.",
+            en={
+                "concepts": ["comparing chances", "fair game"],
+                "statement": f"A and B each play their own game of chance once. A {da_en}, and B {db_en}. Who is more likely to win?",
+                "answer": en_choice[expected],
+                "distractors": en_wrongs,
+                "explanation": f"List every outcome of each game. A wins in {fav_a} of {size_a} outcomes ({fav_a}/{size_a}); B wins in {fav_b} of {size_b} outcomes ({fav_b}/{size_b}). "
+                f"The denominators differ, so raw counts can't be compared — put them over a common denominator: {ca}/{common} vs {cb}/{common}. "
+                + {"A": "A is more likely to win.", "B": "B is more likely to win.", "T": "They are equally likely."}[expected],
+                "mistakes": en_mist,
+                "detail": f"A winning chance is not 'how many winning outcomes' but 'what fraction of all outcomes'. Games with different-sized boards need a common denominator. Pairing the two games' results in a {size_a}×{size_b}={common}-cell table shows "
+                f"{ca} cells where A wins and {cb} where B wins at a glance — that table IS the common denominator. Looking back: recount the listed outcomes ({fav_a}/{size_a}, {fav_b}/{size_b}) to make sure nothing is missed. Any two games can be compared this way.",
+            },
+        )
+
+
+# ── 142. 찢어진 리그전 결과표 — 승수 합의 불변량 (난5, 자료와가능성) ───────────────
+def gen_winsum():
+    # 발견형 자기검증: '모든 팀의 승수 합 = 전체 경기 수'라는 불변량이 문제문에 없고(기준1 통과),
+    # 개별 대진 결과가 하나도 주어지지 않아 경기 나열·조회로는 우회 불가 — 보존량 발견이 유일한
+    # 통로다(기준2 통과). league(d3)는 경기 수 '세기'로 끝나지만, 여기선 그 수가 숨은 보존량으로 쓰인다.
+    from itertools import combinations, product
+    scenarios = [
+        (["독수리", "호랑이", "돌고래", "늑대", "부엉이"], [3, 1, 2, 3]),
+        (["사자", "여우", "곰", "매", "거북"], [4, 2, 0, 1]),
+        (["토끼", "치타", "판다", "수달", "참새", "고래"], [4, 3, 1, 2, 1]),
+        (["백조", "물개", "까치", "다람쥐", "순록"], [3, 2, 4, 1]),
+    ]
+    for names, known in scenarios:
+        n = len(names)
+        games = n * (n - 1) // 2
+        ans = games - sum(known)
+        losses = n - 1 - ans
+        assert 0 <= ans <= n - 1 and len({ans, ans + 1, losses}) == 3, "winsum 파라미터 오류"
+        # 검산: 전체 대진 결과 2^C(n,2)가지 완전열거 — 알려진 승수와 맞는 결과가 실제로 존재하고
+        # (표가 실현 가능하고), 그 모든 결과에서 마지막 팀의 승수가 한 값뿐임을 직접 확인.
+        pairs = list(combinations(range(n), 2))
+        found = set()
+        for bits in product((0, 1), repeat=len(pairs)):
+            wins = [0] * n
+            for (a, b), t in zip(pairs, bits):
+                wins[a if t else b] += 1
+            if wins[: n - 1] == known:
+                found.add(wins[-1])
+        assert found == {ans}, "winsum 검산 실패"
+        last = names[-1]
+        known_desc = ", ".join(f"{nm} {w}승 {n - 1 - w}패" for nm, w in zip(names, known))
+        ks = sum(known)
+        lsum = sum(n - 1 - w for w in known)
+        last_en = "ABCDEF"[n - 1]
+        known_en = ", ".join(f"Team {'ABCDEF'[t]}: {w} wins, {n - 1 - w} losses" for t, w in enumerate(known))
+        add(
+            "winsum", "DATA_POSSIBILITY", 5, ["리그전 결과표", "승수 합 불변량"],
+            f"{n}개 팀({'·'.join(names)})이 서로 한 번씩 겨루는 리그전을 마쳤고, 비긴 경기는 없어요. 그런데 결과표에서 {last} 팀 줄이 찢어져 보이지 않아요. "
+            f"남은 기록은 {known_desc}예요. {last} 팀은 몇 승을 했을까요?",
+            f"{ans}승", ["알 수 없어요", f"{ans + 1}승", f"{losses}승"],
+            f"비기는 경기가 없으니 한 경기가 끝날 때마다 꼭 '1승'이 하나씩 생겨요. 그래서 경기 내용과 상관없이 모든 팀의 승수를 더하면 전체 경기 수와 같아요. "
+            f"{n}개 팀이 서로 한 번씩이면 경기는 {n}×({n}−1)÷2={games}경기이고, 보이는 {n - 1}개 팀의 승수 합이 {ks}승이니 {last} 팀은 {games}−{ks}={ans}승이에요.",
+            [("알 수 없어요", "경기 하나하나의 결과를 몰라도 돼요. 경기마다 승이 꼭 1씩 생기니 '모든 팀의 승수 합 = 전체 경기 수'라는 숨은 규칙이 답을 하나로 정해요."),
+             (f"{ans + 1}승", f"전체 경기 수가 한 끗 어긋났어요. {n}개 팀이 서로 한 번씩이면 {n}×({n}−1)÷2={games}경기 — 같은 경기를 두 번 세거나 빠뜨리지 않았는지 확인하세요."),
+             (f"{losses}승", f"승과 패가 뒤바뀌었어요. {last} 팀은 {n - 1}경기를 했으니 {ans}승이면 {losses}패 — 물음은 승수예요.")],
+            detail=f"표가 찢어져도 복원할 수 있는 건 '어떤 순서로 어떤 결과가 나왔든 변하지 않는 양'이 있기 때문이에요. 승의 총합은 경기마다 정확히 1씩 늘어나 언제나 경기 수와 같아요 — 이렇게 과정과 무관하게 "
+            f"고정되는 양을 불변량이라고 해요. 되돌아보기: 패로도 검산할 수 있어요. 패의 총합도 {games}{_iga(games)} 되어야 하는데, 보이는 팀의 패 합 {lsum}에 {last} 팀의 {losses}패를 더하면 정확히 {games}{_iga(games)} 돼요. "
+            f"일반화: 무승부가 있는 리그라면 승만으로는 안 되고 '승 + 무÷2'의 합 같은 새 불변량이 필요해요.",
+            en={
+                "concepts": ["round-robin table", "win-loss invariant"],
+                "statement": f"{n} teams (A through {last_en}) finished a round-robin league in which every pair of teams played exactly once, and no game ended in a draw. Team {last_en}'s row of the results table is torn off. "
+                f"The remaining records are: {known_en}. How many games did Team {last_en} win?",
+                "answer": _en_plural(ans, "win"),
+                "distractors": ["It cannot be determined", _en_plural(ans + 1, "win"), _en_plural(losses, "win")],
+                "explanation": f"With no draws, every game that finishes produces exactly one 'win'. So no matter how the games went, all the teams' wins add up to the total number of games. "
+                f"With {n} teams each playing each other once, that's {n}×({n}−1)÷2={games} games; the visible {n - 1} teams have {ks} wins in all, so Team {last_en} won {games}−{ks}={ans}.",
+                "mistakes": [("It cannot be determined", "You don't need each game's result. Every game creates exactly one win, so the hidden rule 'sum of all wins = number of games' pins the answer down."),
+                             (_en_plural(ans + 1, "win"), f"The total game count slipped by one. {n} teams each playing each other once gives {n}×({n}−1)÷2={games} games — check you didn't double-count or drop a game."),
+                             (_en_plural(losses, "win"), f"Wins and losses got swapped. Team {last_en} played {n - 1} games, so {ans} wins means {losses} losses — the question asks for wins.")],
+                "detail": f"The torn table can be restored because there is a quantity that never changes no matter how the games went: the total of wins grows by exactly 1 per game, so it always equals the number of games — such a quantity is called an invariant. "
+                f"Looking back: you can double-check with losses too. The losses must also total {games}: the visible teams' {lsum} losses plus Team {last_en}'s {losses} losses is exactly {games}. "
+                f"Generalizing: in a league that allows draws, wins alone aren't conserved — you'd need a new invariant like the total of 'wins + draws÷2'.",
+            },
+        )
+
+
+# ── 143. 중단된 시합의 공정한 상금 나누기 — 미래의 경우 세기 (난7, 자료와가능성) ────
+def gen_fair_split():
+    # 발견형 자기검증: 분배 기준(우승 가능성 비례)은 문제문에 있지만 그 가능성을 '구하는 방법' —
+    # 길이가 서로 다른 미래들을 같은 길이로 마저 진행한다고 상상해 동등하게 세는 전략 — 은 스스로
+    # 발견해야 한다(기준1 통과). 남은 판 수가 두 사람에게 달라 단순 나열은 가능성이 다른 갈래를
+    # 뒤섞기 쉽고, 두 판 더 필요한 (3,1,0)벌은 나열 우회가 사실상 불가하다(기준2 통과).
+    from fractions import Fraction
+    from itertools import product
+    for (na, nb), goal, a, b, prize in [
+        (("민준", "서연"), 3, 2, 1, 1200),
+        (("지호", "하은"), 3, 2, 0, 1200),
+        (("도윤", "예린"), 4, 3, 2, 1500),
+        (("시우", "지아"), 3, 1, 0, 1600),
+    ]:
+        need_a, need_b = goal - a, goal - b
+        length = need_a + need_b - 1  # 이만큼이면 반드시 승부가 난다
+        tot = 2 ** length
+        cnt = sum(1 for seq in product((0, 1), repeat=length) if sum(seq) >= need_a)
+        assert prize * cnt % tot == 0, "fairsplit 파라미터 오류: 금액이 나누어떨어지지 않음"
+        ans = prize * cnt // tot
+        # 검산: 고정 길이 세기(정답 경로)와 독립으로, '이긴 사람이 나오면 즉시 멈추는' 실제 시합
+        # 나무를 분수 확률로 재귀 계산해 몫이 일치하는지 확인.
+        def _chance(x, y):
+            if x == 0:
+                return Fraction(1)
+            if y == 0:
+                return Fraction(0)
+            return (_chance(x - 1, y) + _chance(x, y - 1)) / 2
+        assert _chance(need_a, need_b) * prize == ans, "fairsplit 검산 실패: 게임나무 확률 불일치"
+        prop = prize if b == 0 else prize * a // (a + b)
+        wrongs = [f"{prop}원", f"{prize // 2}원", f"{prize - ans}원"]
+        assert len({ans, prop, prize // 2, prize - ans}) == 4, "fairsplit 파라미터 오류: 보기 중복"
+        prop_mis = (f"{prize}원", f"{na}{_iga(na)} 앞서고 있어도 시합은 아직 끝나지 않았어요. {nb}{_iga(nb)} 남은 판을 내리 이겨 역전할 가능성({tot}가지 중 {tot - cnt}가지)이 있는 만큼은 {nb}의 몫이에요.") if b == 0 else \
+            (f"{prop}원", f"지금까지의 승수 {a}:{b}에 비례해 나눈 값이에요. 상금은 '이미 이긴 판 수'가 아니라 '남은 시합에서 우승할 가능성'에 비례해야 해요 — 뒤집힐 가능성까지 세어야 공정해요.")
+        prop_mis_en = (f"{prize} won", f"Even though A is ahead, the match is not over. B could still win every remaining round ({tot - cnt} of the {tot} futures) — that much belongs to B.") if b == 0 else \
+            (f"{prop} won", f"That splits by the current score {a}:{b}. The prize should follow each player's chance of winning the rest of the match — you must count the comeback futures too.")
+        add(
+            "fairsplit", "DATA_POSSIBILITY", 7, ["공정한 분배", "앞으로의 경우 세기"],
+            f"{na}{_gwa(na)} {nb}{_iga(nb)} 구슬치기 시합을 해요. 한 판마다 두 사람이 이길 가능성은 똑같고, 먼저 {goal}판을 이기는 사람이 상금 {prize}원을 모두 갖기로 했어요. "
+            f"그런데 {na}{_iga(na)} {a}판, {nb}{_iga(nb)} {b}판을 이긴 상태에서 시합이 중단되었고 다시 열 수 없게 되었어요. "
+            f"두 사람은 '시합을 계속했다면 우승했을 가능성'에 비례해 상금을 나누기로 했어요. {na}{_iga(na)} 받을 금액은 얼마일까요?",
+            f"{ans}원", wrongs,
+            f"남은 시합을 상상해요. {na}{_eun(na)} {need_a}판, {nb}{_eun(nb)} {need_b}판만 더 이기면 우승이니, 앞으로 {length}판이면 반드시 승부가 나요. "
+            f"이 {length}판을 (승부가 나더라도) 끝까지 다 한다고 가정하면 매 판 2갈래씩 모두 {tot}가지 미래가 똑같은 가능성으로 일어나요. "
+            f"{na}{_iga(na)} 우승하는 미래는 {length}판 중 {need_a}판 이상 이기는 경우로 {cnt}가지예요({need_a}판을 못 채우면 남은 판을 {nb}{_iga(nb)} 다 가져가 {need_b}판이 되니까요). "
+            f"그래서 {na}의 몫은 {prize}×{cnt}/{tot}={ans}원이에요.",
+            [prop_mis,
+             (f"{prize // 2}원", f"반반으로 나누면 {na}{_iga(na)} 이미 쌓아 둔 우세({a}승 대 {b}승)를 없는 셈 치는 거예요."),
+             (f"{prize - ans}원", f"그건 {nb}의 몫이에요. 남은 미래 {tot}가지 중 {na}{_iga(na)} 우승하는 경우가 {cnt}가지로 더 많아요.")],
+            detail=f"일찍 끝나는 미래(다음 한 판으로 끝)와 오래 가는 미래는 길이가 달라, 그대로 나열해 세면 가능성이 서로 다른 갈래를 같은 한 가지로 세게 돼요. 그래서 '승부가 나도 {length}판을 마저 한다'고 상상하는 것이 "
+            f"열쇠예요 — 우승자는 바뀌지 않으면서 모든 갈래가 똑같은 가능성이 되거든요. 되돌아보기: 두 사람 몫을 더하면 {ans}+{prize - ans}={prize}원으로 상금 전체와 딱 맞아요. "
+            f"이 '중단된 시합' 문제는 1654년 파스칼과 페르마가 편지를 주고받으며 풀었던, 확률이라는 수학이 태어난 바로 그 문제예요.",
+            en={
+                "concepts": ["fair division", "counting future outcomes"],
+                "statement": f"A and B are playing a marble match. In each round the two are equally likely to win, and the first to win {goal} rounds takes the whole prize of {prize} won. "
+                f"But the match was interrupted — with A having won {a} rounds and B {b} — and can never be resumed. "
+                f"They agree to split the prize in proportion to each player's chance of winning had the match continued. How much should A receive?",
+                "answer": f"{ans} won",
+                "distractors": [f"{prop} won", f"{prize // 2} won", f"{prize - ans} won"],
+                "explanation": f"Imagine the remaining rounds. A needs {need_a} more wins and B needs {need_b}, so {length} more rounds always settle it. "
+                f"Pretend those {length} rounds are all played out (even after someone clinches): each round branches in 2, giving {tot} equally likely futures. "
+                f"A becomes champion in the futures where A wins at least {need_a} of the {length} rounds — {cnt} of them (if A falls short, B takes enough rounds to reach {need_b}). "
+                f"So A's share is {prize}×{cnt}/{tot}={ans} won.",
+                "mistakes": [prop_mis_en,
+                             (f"{prize // 2} won", f"Splitting half-and-half ignores the lead A has already built ({a} wins to {b})."),
+                             (f"{prize - ans} won", f"That is B's share. Of the {tot} remaining futures, A wins in {cnt} — the majority.")],
+                "detail": f"A future that ends early (one more round) and a long future have different lengths, so listing them as-is mixes branches of different likelihood. The key is to imagine playing all {length} rounds even after the match is decided — "
+                f"the champion never changes, and every branch becomes equally likely. Looking back: the two shares add to {ans}+{prize - ans}={prize} won, exactly the whole prize. "
+                f"This 'interrupted match' is the very problem Pascal and Fermat solved in their 1654 letters — the birth of probability.",
+            },
+        )
+
+
+# ── 144. 지그재그 배열 세기 — 봉우리·골짜기 교대 (난8, 자료와가능성) ───────────────
+def gen_zigzag():
+    # 발견형 자기검증: 세기 전략이 문제문에 없고(기준1 통과), n≥6은 손 나열(720가지 이상)이
+    # 불가능해 '최댓값은 봉우리에만 선다 → 양옆이 같은 꼴의 작은 문제'라는 구조 분해 발견이
+    # 필수다(기준2 통과 — n=5가 진입 문항). CEILING_SPECS 3.10 명세 구현.
+    from itertools import permutations
+    expected = {5: 16, 6: 61, 7: 272, 8: 1385}
+    for n in [5, 6, 7, 8]:
+        # 검산: n! 순열 완전열거 필터 — 명세의 검산 완료 표(16·61·272·1385)와 독립 대조
+        cnt = sum(1 for p in permutations(range(1, n + 1)) if all((p[i] < p[i + 1]) == (i % 2 == 0) for i in range(n - 1)))
+        assert cnt == expected[n], "zigzag 검산 실패"
+        ans = expected[n]
+        half = factorial(n) // 2
+        pw = 2 ** (n - 2)
+        add(
+            "zigzag", "DATA_POSSIBILITY", 8, ["교대 배열", "체계적 세기"],
+            f"1부터 {n}까지의 수를 한 번씩 모두 써서 한 줄로 배열해요. 이웃한 수끼리 반드시 '작다, 크다, 작다, 크다, …'를 번갈아 만족해야 해요"
+            f"(첫째 수 < 둘째 수 > 셋째 수 < 넷째 수 …). 이런 배열은 모두 몇 가지일까요?",
+            f"{ans}가지", [f"{factorial(n)}가지", f"{half}가지", f"{pw}가지"],
+            f"작은 수로 직접 실험해요: 3개면 132, 231의 2가지, 4개면 5가지예요. 나열하다 보면 규칙이 보여요 — 가장 큰 수 {n}{_eun(n)} 양옆보다 커야 하므로 "
+            f"반드시 '봉우리'(둘째, 넷째, … 자리)에만 설 수 있어요. {n}{_eul(n)} 어느 봉우리에 놓을지 정하면 나머지 수들이 그 양옆에서 다시 같은 꼴의 작은 지그재그 문제로 "
+            f"갈라져요. 작은 답을 차곡차곡 조립해 올라가면 {n}개일 때는 모두 {ans}가지예요.",
+            [(f"{factorial(n)}가지", "조건 없이 전부 센 값이에요. '작다-크다' 교대 조건으로 걸러야 해요."),
+             (f"{half}가지", "절반쯤 될 거라는 어림이에요. 조건은 자리마다 겹쳐 작동해서 훨씬 강하게 걸러요."),
+             (f"{pw}가지", "자리마다 독립적으로 2가지씩 고를 수 있다고 본 어림이에요. 이미 쓴 수는 다시 못 쓰니 독립이 아니에요.")],
+            detail=f"가장 큰 수는 반드시 봉우리에 서고, 그 수를 기준으로 배열이 두 개의 독립한 지그재그로 갈라져요 — 큰 문제를 같은 모양의 작은 문제로 쪼개는 눈이 이 문제의 심장이에요. "
+            f"되돌아보기: 4개짜리를 직접 나열하면 1324, 1423, 2314, 2413, 3412의 5가지 — 조립 논리와 정확히 맞아요. "
+            f"일반화: '크다-작다'로 시작하는 배열은 몇 가지일까요? 배열을 통째로 뒤집으면 1:1로 짝지어지니 똑같이 {ans}가지예요.",
+            en={
+                "concepts": ["alternating arrangement", "systematic counting"],
+                "statement": f"Arrange the numbers 1 to {n} in a row, each used once, so that they strictly alternate 'up, down, up, down, …' "
+                f"(1st < 2nd > 3rd < 4th …). How many such arrangements are there?",
+                "answer": _en_plural(ans, "arrangement"),
+                "distractors": [_en_plural(factorial(n), "arrangement"), _en_plural(half, "arrangement"), _en_plural(pw, "arrangement")],
+                "explanation": f"Experiment small: with 3 numbers there are 2 (132, 231), with 4 there are 5. A rule emerges — the largest number {n} must be bigger than both neighbors, "
+                f"so it can only stand on a 'peak' (2nd, 4th, … position). Once you fix which peak {n} takes, the remaining numbers split into two smaller zigzag problems of the same kind "
+                f"on either side. Assembling the small answers upward gives {ans} arrangements for {n} numbers.",
+                "mistakes": [(_en_plural(factorial(n), "arrangement"), "That counts everything with no condition. You must filter by the alternating 'up-down' condition."),
+                             (_en_plural(half, "arrangement"), "That's a guess that about half survive. The conditions overlap position by position and filter far more strongly."),
+                             (_en_plural(pw, "arrangement"), "That assumes an independent 2-way choice at each position. Numbers already used can't be reused, so the choices aren't independent.")],
+                "detail": f"The largest number must stand on a peak, and it splits the arrangement into two independent zigzags — seeing how to break a big problem into same-shaped smaller ones is the heart of this problem. "
+                f"Looking back: listing the 4-number case by hand gives exactly 1324, 1423, 2314, 2413, 3412 — five, matching the assembly logic. "
+                f"Generalizing: how many arrangements start 'down, up, …'? Reversing each arrangement pairs them 1:1, so it's the same {ans}.",
+            },
+        )
+
+
+# ── 145. 자기 지시 진술 — 거짓말쟁이는 몇 명일까 (난9, 자료와가능성) ───────────────
+def gen_liarcount():
+    # 발견형 자기검증: '거짓말쟁이 수 L을 통째로 가정하고 일치 조건을 세운다'는 전략이 문제문에
+    # 없고(기준1 통과), 무작정 배정을 나열하면 2^n가지라 체계적 발견 없이는 확신에 도달할 수
+    # 없다(기준2 통과). atleast형은 n 짝수만 사용(홀수는 해 없음 — 아래 assert가 지킨다).
+    # CEILING_SPECS 3.9 명세 구현.
+    from itertools import product
+    for kind, n, expected, mid in [("exact", 5, 4, 3), ("exact", 6, 5, 3), ("atleast", 6, 3, 2), ("atleast", 8, 4, 3)]:
+        assert kind == "exact" or n % 2 == 0, "liarcount 파라미터 오류: atleast형은 n 짝수만"
+        # 검산: 2^n 배정 완전열거 — 모순 없는 배정이 정확히 1개이고 그 거짓말쟁이 수가 기대값과 일치
+        sols, assign = [], None
+        for bits in product((0, 1), repeat=n):  # 1 = 거짓말쟁이
+            liars = sum(bits)
+            if all(((liars == i) if kind == "exact" else (liars >= i)) == (bits[i - 1] == 0) for i in range(1, n + 1)):
+                sols.append(liars)
+                assign = bits
+        assert len(sols) == 1 and sols[0] == expected, "liarcount 검산 실패"
+        ans = sols[0]
+        honest = [i for i in range(1, n + 1) if assign[i - 1] == 0]
+        honest_txt = "·".join(f"{i}번" for i in honest)
+        if kind == "exact":
+            claim = f'i번 사람: "우리 {n}명 중 거짓말쟁이는 정확히 i명이다."'
+            claim_en = '"Exactly i of us are liars"'
+            step3 = (f"서로 다른 수를 말했으니 참말은 많아야 1명이에요. 전원 거짓(L={n})이면 '{n}명'이라고 말한 {n}번의 말이 참이 되어 모순이니, "
+                     f"정직한 사람은 딱 1명이고 거짓말쟁이는 {n - 1}명 — 참말은 '{n - 1}명'을 말한 {honest_txt}뿐이에요. 그래서 {ans}명이에요.")
+            step3_en = (f"They all claim different numbers, so at most 1 statement is true. If everyone lied (L={n}), person {n}'s claim of '{n}' would become true — a contradiction. "
+                        f"So exactly 1 person is honest and {n - 1} are liars — the only true statement is person {n - 1}'s '{n - 1}'. The answer is {ans}.")
+            mis0 = ("서로 다른 수를 말했으니 동시에 모두 참일 수는 없어요. 전원 정직은 첫 문장부터 모순이에요.",
+                    "They all claim different numbers, so the statements can't all be true at once. Everyone honest breaks down at the very first sentence.")
+            misn = (f"전원이 거짓말쟁이라면 '{n}명이 거짓말쟁이'라고 말한 {n}번의 말이 참이 되어 모순이에요.",
+                    f"If everyone were a liar, person {n}'s claim that '{n} of us are liars' would be true — a contradiction.")
+            look = (f"되돌아보기: {honest_txt}만 정직인 배정을 1번부터 {n}번까지 다시 읽으며 모순이 없는지 확인해요. 일반화: 진술을 '적어도 i명'으로 바꾸면 답이 절반({n}÷2)으로 내려가는데, "
+                    f"인원이 홀수면 아예 답이 없어요 — 왜 그런지 생각해 보세요.")
+            look_en = (f"Looking back: reread persons 1 through {n} under the assignment where only person {honest[0]} is honest and check there is no contradiction. Generalizing: with 'at least i' statements the answer drops to half, "
+                       f"and with an odd number of people there is no answer at all — think about why.")
+        else:
+            claim = f'i번 사람: "우리 {n}명 중 거짓말쟁이는 적어도 i명이다."'
+            claim_en = '"At least i of us are liars"'
+            step3 = (f"'적어도 i명'은 i가 작을수록 참이 되기 쉬워요. 거짓말쟁이가 L명이라면 1번부터 L번까지의 말이 참, 그 뒤는 거짓이에요. 참말한 사람(정직)의 수는 {n}−L이어야 하니 "
+                     f"L = {n}−L, 즉 L = {ans}명 — 앞 절반({honest_txt})이 정직, 뒤 절반이 거짓말쟁이일 때만 아귀가 맞아요.")
+            step3_en = (f"'At least i' is easier to be true the smaller i is. If there are L liars, the statements of persons 1 through L are true and the rest are false. The number of true speakers (honest people) must be {n}−L, "
+                        f"so L = {n}−L, that is L = {ans} — it only fits when the front half (persons 1–{ans}) are honest and the back half are liars.")
+            mis0 = (f"전원이 정직하다면 '적어도 {n}명이 거짓말쟁이'라는 {n}번의 말도 참이어야 하는데, 거짓말쟁이가 0명이라 모순이에요.",
+                    f"If everyone were honest, person {n}'s claim 'at least {n} of us are liars' would also have to be true — but there would be 0 liars, a contradiction.")
+            misn = ("전원이 거짓말쟁이라면 '적어도 1명이 거짓말쟁이'라고 한 1번의 말이 참이 되어 모순이에요.",
+                    "If everyone were a liar, person 1's claim 'at least 1 of us is a liar' would be true — a contradiction.")
+            look = (f"되돌아보기: 1번~{ans}번 정직, {ans + 1}번~{n}번 거짓인 배정을 처음부터 재검증해요. 일반화: 인원이 홀수면 '참말한 수 = 정직한 수'가 절반으로 떨어지지 않아 "
+                    f"모순 없는 배정이 아예 없어요 — 이 수수께끼는 짝수 인원에서만 성립해요.")
+            look_en = (f"Looking back: verify the assignment (persons 1–{ans} honest, {ans + 1}–{n} liars) from the start. Generalizing: with an odd number of people, 'true statements = honest people' can't split in half, "
+                       f"so no consistent assignment exists — this riddle only works with an even count.")
+        add(
+            "liarcount", "DATA_POSSIBILITY", 9, ["자기 지시 논리", "모순 없는 배정"],
+            f"{n}명이 한 줄로 서 있어요. 각 사람은 언제나 진실만 말하거나 언제나 거짓만 말해요. 1번부터 {n}번까지 차례로 이렇게 말했어요 — {claim} "
+            f"(1번은 1명, 2번은 2명, … {n}번은 {n}명이라고 말한 거예요.) 거짓말쟁이는 실제로 몇 명일까요?",
+            f"{ans}명", [f"{n}명", "0명", f"{mid}명"],
+            f"'누가' 거짓말쟁이인지 대신 '몇 명'인지를 통째로 가정해요. 거짓말쟁이 수를 L이라 하면 각 사람 말의 참/거짓이 자동으로 정해지고, "
+            f"'참말한 사람 수 = 정직한 사람 수({n}−L)'라는 일치 조건이 L을 골라내요. {step3}",
+            [(f"{n}명", misn[0]),
+             ("0명", mis0[0]),
+             (f"{mid}명", f"{mid}명으로 가정하고 각 사람의 말을 하나씩 참/거짓 판정해 보세요. 어딘가에서 '정직한 사람이 거짓을 말함' 같은 모순이 나와요.")],
+            detail=f"이 문제의 묘미는 진술이 거짓말쟁이 '수' 자체를 가리키는 자기 지시 구조예요. 사람별로 따지면 얽혀서 풀리지 않지만, 수 L을 가정하는 순간 "
+            f"모든 진술의 참/거짓이 한꺼번에 결정돼요 — 가정 하나로 전체를 판정하는 힘이에요. {look}",
+            en={
+                "concepts": ["self-referential logic", "consistent assignment"],
+                "statement": f"{n} people stand in a row. Each one always tells the truth or always lies. From person 1 to person {n}, each says: {claim_en} "
+                f"(person i says the number i — person 1 says 1, person 2 says 2, and so on). How many of them are actually liars?",
+                "answer": _en_plural(ans, "liar"),
+                "distractors": [_en_plural(n, "liar"), _en_plural(0, "liar"), _en_plural(mid, "liar")],
+                "explanation": f"Instead of asking 'who' lies, assume 'how many' all at once. If there are L liars, the truth of every statement is decided automatically, "
+                f"and the matching condition 'number of true speakers = number of honest people ({n}−L)' singles out L. {step3_en}",
+                "mistakes": [(_en_plural(n, "liar"), misn[1]),
+                             (_en_plural(0, "liar"), mis0[1]),
+                             (_en_plural(mid, "liar"), f"Assume {mid} liars and judge each statement true or false one by one. Somewhere you'll hit a contradiction like 'an honest person telling a lie'.")],
+                "detail": f"The charm of this problem is its self-reference: the statements point at the very number of liars. Person-by-person reasoning tangles up, but the moment you assume the number L, "
+                f"the truth of every statement is decided at once — one assumption judges the whole row. {look_en}",
+            },
+        )
+
+
+# ── 146. 파스칼 삼각형 줄의 홀수 개수 — 홀짝 자기닮음 (난10, 자료와가능성) ──────────
+def gen_pascalodd():
+    # 발견형 자기검증: 패턴 규칙이 문제문에 없고 색칠 실험→자기닮음 발견이 유일한 통로이며(기준1
+    # 통과), 100번째 줄은 직접 구성이 불가능한 크기다(기준2 통과 — n=16이 진입 문항, 그마저 답
+    # '2개'가 직관을 배신한다). CEILING_SPECS 3.8 명세 구현.
+    for n, expected in [(16, 2), (15, 16), (100, 8), (63, 64)]:
+        # 검산: 덧셈으로 줄을 직접 구성해 홀수를 세고(이항계수 공식을 쓰지 않는 길),
+        # 독립 공식 2^(이진법 1의 개수)와 교차 대조.
+        row = [1]
+        for _ in range(n):
+            row = [1] + [p + q for p, q in zip(row, row[1:])] + [1]
+        odd = sum(1 for v in row if v % 2 == 1)
+        bits = bin(n).count("1")
+        assert odd == expected and odd == 2 ** bits and len(row) == n + 1, "pascalodd 검산 실패"
+        ans = expected
+        d1 = n if ans == n + 1 else n + 1  # 항 수·줄 번호 혼동(전부 홀수인 줄에서는 n으로)
+        d2 = (n + 1) // 2
+        binstr = bin(n)[2:]
+        add(
+            "pascalodd", "DATA_POSSIBILITY", 10, ["파스칼 삼각형", "홀짝 패턴"],
+            f"수 삼각형을 만들어요. 맨 위 0번째 줄에는 1 하나만 있어요. 그 아래 줄부터는 양 끝에 1을 쓰고, 나머지 자리는 바로 위의 두 수를 더해 써요(파스칼 삼각형). "
+            f"{n}번째 줄에 있는 {n + 1}개의 수 가운데 홀수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{d1}개", f"{d2}개", f"{bits}개"],
+            f"처음 몇 줄을 직접 만들어 홀수 자리만 색칠해 봐요. 줄마다 홀수 개수를 세면 1, 2, 2, 4, 2, 4, 4, 8, 2, …로 언제나 '2를 몇 번 곱한 수'만 나와요. "
+            f"언제 두 배가 되는지 줄 번호를 2씩 묶어(이진법으로) 적어 보면, 기록에 1이 하나 늘 때마다 홀수 개수가 정확히 두 배가 돼요. "
+            f"{n}{_eul(n)} 이진법으로 쓰면 {binstr}(2) — 1이 {bits}개이니, 홀수는 2를 {bits}번 곱한 {ans}개예요.",
+            [(f"{d1}개", "몇 '개'인지와 몇 '번째 줄'인지를 혼동했어요. 줄을 몇 개 그려 홀짝만 표시해 보세요."),
+             (f"{d2}개", "홀짝이 반반일 거라는 어림이에요. 실제로는 훨씬 치우쳐요 — 홀수 개수는 항상 2를 몇 번 곱한 수예요."),
+             (f"{bits}개", "그 수는 '2를 곱하는 횟수'예요. 답은 2를 그만큼 거듭 곱한 값이에요.")],
+            detail=f"홀수 자리만 남기면 삼각형이 자기 자신을 닮은 세 조각으로 계속 갈라져요(시에르핀스키 삼각형) — 윗부분의 복사본 두 개가 아래 양쪽에 다시 나타나서, "
+            f"줄 번호의 이진법 기록에 1이 하나 늘 때마다 홀수 자리가 정확히 두 배가 되기 때문이에요. 되돌아보기: 15번째 줄을 홀짝만으로 직접 만들어 보세요"
+            f"(홀+홀=짝, 홀+짝=홀 규칙만 쓰면 금방이에요) — 정말 16개 전부가 홀수예요. 일반화: 홀수가 딱 2개뿐인 줄은? 2, 4, 8, 16, … 처럼 2를 거듭 곱한 번호의 줄이에요.",
+            en={
+                "concepts": ["Pascal's triangle", "parity pattern"],
+                "statement": f"Build a number triangle: row 0 at the top is a single 1. In each row below, write 1 at both ends, and fill every other spot with the sum of the two numbers just above it (Pascal's triangle). "
+                f"Among the {n + 1} numbers in row {n}, how many are odd?",
+                "answer": _en_plural(ans, "odd number"),
+                "distractors": [_en_plural(d1, "odd number"), _en_plural(d2, "odd number"), _en_plural(bits, "odd number")],
+                "explanation": f"Build the first several rows and color only the odd entries. Counting odds per row gives 1, 2, 2, 4, 2, 4, 4, 8, 2, … — always a power of 2. "
+                f"To see when it doubles, write the row number in base 2: each extra 1 in that record exactly doubles the count of odd entries. "
+                f"{n} in binary is {binstr}, which has {bits} ones — so the count of odd entries is 2 multiplied {bits} times: {ans}.",
+                "mistakes": [(_en_plural(d1, "odd number"), "You mixed up 'how many entries' with 'which row'. Draw a few rows and mark only odd/even."),
+                             (_en_plural(d2, "odd number"), "That guesses odd and even split about half-and-half. In reality it's far more lopsided — the count of odds is always a power of 2."),
+                             (_en_plural(bits, "odd number"), "That number is 'how many times to multiply by 2'. The answer is 2 multiplied that many times.")],
+                "detail": f"Keep only the odd entries and the triangle keeps splitting into three self-similar copies of itself (the Sierpinski triangle) — two copies of the top part reappear at the bottom left and right, "
+                f"which is why each extra 1 in the row number's binary record exactly doubles the odd entries. Looking back: build row 15 using only parity (odd+odd=even, odd+even=odd — it's quick) and see that all 16 entries really are odd. "
+                f"Generalizing: which rows have exactly 2 odd entries? Rows 2, 4, 8, 16, … — the powers of 2.",
+            },
+        )
