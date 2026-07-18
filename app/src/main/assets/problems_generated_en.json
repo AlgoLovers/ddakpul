@@ -4458,7 +4458,7 @@
     "sum of a sequence",
     "finding a hidden relationship"
    ],
-   "statement": "What is the value of 1³ + 2³ + 3³ + … + 3³? (cube each number and add them)",
+   "statement": "What is the value of 1³ + 2³ + 3³? (cube each number and add them)",
    "choices": [
     "36",
     "27",
@@ -26025,7 +26025,7 @@
     "counting triangles",
     "counting by direction"
    ],
-   "statement": "A big equilateral triangle of side 4 is divided completely into 16 unit triangles (rows of 1, 3, 5, …, 7 from the top). How many equilateral triangles of all sizes can be found in this figure? (Count the upside-down ones too.)",
+   "statement": "A big equilateral triangle of side 4 is divided completely into 16 unit triangles (rows of 1, 3, 5, …, 7 from the top). How many equilateral triangles of all sizes can be found in this divided triangle? (Count the upside-down ones too.)",
    "choices": [
     "40 triangles",
     "27 triangles",
@@ -26061,7 +26061,7 @@
     "counting triangles",
     "counting by direction"
    ],
-   "statement": "A big equilateral triangle of side 5 is divided completely into 25 unit triangles (rows of 1, 3, 5, …, 9 from the top). How many equilateral triangles of all sizes can be found in this figure? (Count the upside-down ones too.)",
+   "statement": "A big equilateral triangle of side 5 is divided completely into 25 unit triangles (rows of 1, 3, 5, …, 9 from the top). How many equilateral triangles of all sizes can be found in this divided triangle? (Count the upside-down ones too.)",
    "choices": [
     "48 triangles",
     "25 triangles",
@@ -26097,7 +26097,7 @@
     "counting triangles",
     "counting by direction"
    ],
-   "statement": "A big equilateral triangle of side 6 is divided completely into 36 unit triangles (rows of 1, 3, 5, …, 11 from the top). How many equilateral triangles of all sizes can be found in this figure? (Count the upside-down ones too.)",
+   "statement": "A big equilateral triangle of side 6 is divided completely into 36 unit triangles (rows of 1, 3, 5, …, 11 from the top). How many equilateral triangles of all sizes can be found in this divided triangle? (Count the upside-down ones too.)",
    "choices": [
     "56 triangles",
     "112 triangles",
@@ -26133,7 +26133,7 @@
     "counting triangles",
     "counting by direction"
    ],
-   "statement": "A big equilateral triangle of side 7 is divided completely into 49 unit triangles (rows of 1, 3, 5, …, 13 from the top). How many equilateral triangles of all sizes can be found in this figure? (Count the upside-down ones too.)",
+   "statement": "A big equilateral triangle of side 7 is divided completely into 49 unit triangles (rows of 1, 3, 5, …, 13 from the top). How many equilateral triangles of all sizes can be found in this divided triangle? (Count the upside-down ones too.)",
    "choices": [
     "118 triangles",
     "49 triangles",
@@ -27141,7 +27141,7 @@
     "logical elimination",
     "combining clues"
    ],
-   "statement": "Three children A, B, and C each like a different fruit among apples, tangerines, and pears. A does not like apples. B does not like apples either. B does not like tangerines either. Who likes tangerines?",
+   "statement": "Three children A, B, and C each like a different fruit among apples, tangerines, and pears. Neither A nor B likes apples. B does not like tangerines either. Who likes tangerines?",
    "choices": [
     "B",
     "A",
@@ -27177,7 +27177,7 @@
     "logical elimination",
     "combining clues"
    ],
-   "statement": "Three children A, B, and C each like a different animal among dogs, cats, and parrots. A does not like cats. C does not like cats either. C does not like dogs either. Who likes dogs?",
+   "statement": "Three children A, B, and C each like a different animal among dogs, cats, and parrots. Neither A nor C likes cats. C does not like dogs either. Who likes dogs?",
    "choices": [
     "C",
     "B",
@@ -27213,7 +27213,7 @@
     "logical elimination",
     "combining clues"
    ],
-   "statement": "Three children A, B, and C each like a different sport among soccer, swimming, and baseball. B does not like baseball. C does not like baseball either. C does not like soccer either. Who likes soccer?",
+   "statement": "Three children A, B, and C each like a different sport among soccer, swimming, and baseball. Neither B nor C likes baseball. C does not like soccer either. Who likes soccer?",
    "choices": [
     "It cannot be determined",
     "B",
@@ -27249,7 +27249,7 @@
     "logical elimination",
     "combining clues"
    ],
-   "statement": "Three children A, B, and C each like a different color among red, blue, and green. B does not like blue. C does not like blue either. C does not like red either. Who likes red?",
+   "statement": "Three children A, B, and C each like a different color among red, blue, and green. Neither B nor C likes blue. C does not like red either. Who likes red?",
    "choices": [
     "C",
     "B",

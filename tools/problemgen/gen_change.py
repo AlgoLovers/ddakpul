@@ -1614,9 +1614,11 @@ def gen_cubesum():
         for i in range(1, n + 1):
             total += i * i * i
         assert total == ans, f"cubesum 검산 실패: {total} != {ans}"
+        # n=3이면 "…+3³" 생략 기호가 마지막 항과 겹치는 퇴화 표기가 되므로 전체를 풀어쓴다.
+        expr = "1³ + 2³ + 3³" if n == 3 else f"1³ + 2³ + 3³ + … + {n}³"
         add(
             "cubesum", "CHANGE_RELATION", 4, ["수열의 합", "숨은 관계 발견"],
-            f"1³ + 2³ + 3³ + … + {n}³ 의 값은 얼마일까요? (각 수를 세제곱해서 더해요)",
+            f"{expr} 의 값은 얼마일까요? (각 수를 세제곱해서 더해요)",
             str(ans), [str(c) for c in _pick_distractors(ans, [sq_sum, tri, n ** 3, ans - tri])],
             f"놀랍게도 세제곱의 합은 '1부터 그 수까지의 합(삼각수)'을 제곱한 것과 같아요. "
             f"1+2+…+{n} = {tri}이고, 그 제곱 {tri}² = {ans}이에요.",
@@ -1625,7 +1627,7 @@ def gen_cubesum():
             detail="1³+2³+…+n³ = (1+2+…+n)² = (n(n+1)/2)²이에요. 세제곱을 하나씩 더한 값이 '합을 통째로 제곱한 값'과 같다는 "
             "아름다운 관계로, 그림(정사각형을 계단식으로 쌓기)으로도 증명돼요. 겉보기 다른 두 양의 숨은 관계를 발견하는 문제예요.",
             en={
-                "statement": f"What is the value of 1³ + 2³ + 3³ + … + {n}³? (cube each number and add them)",
+                "statement": f"What is the value of {expr}? (cube each number and add them)",
                 "answer": str(ans),
                 "distractors": [str(c) for c in _pick_distractors(ans, [sq_sum, tri, n ** 3, ans - tri])],
                 "explanation": f"Amazingly, the sum of the cubes equals the square of '1 plus 2 up to that number (the triangular number)'. "

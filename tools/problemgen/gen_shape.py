@@ -1864,7 +1864,7 @@ def gen_tricount():
         add(
             "tricount", "SHAPE_MEASUREMENT", 10, ["삼각형 세기", "방향 나눠 세기"],
             f"한 변의 길이가 {n}인 큰 정삼각형을, 한 변의 길이가 1인 작은 정삼각형 {n * n}개로 빈틈없이 나눴어요"
-            f"(맨 윗줄부터 1개, 3개, 5개, …, {2 * n - 1}개 순서로 놓여요). 이 그림 속에서 찾을 수 있는 크고 작은 "
+            f"(맨 윗줄부터 1개, 3개, 5개, …, {2 * n - 1}개 순서로 놓여요). 이렇게 나눈 도형에서 찾을 수 있는 크고 작은 "
             f"정삼각형은 모두 몇 개일까요? (거꾸로 선 정삼각형도 빠짐없이 세요)",
             f"{ans}개", [f"{up}개", f"{n * n}개", f"{2 * up}개"],
             f"변 1·2·3짜리로 직접 실험하면 1개, 5개, 13개 — 바로 선 △와 거꾸로 선 ▽를 나눠 크기별로 세는 전략이 "
@@ -1881,7 +1881,7 @@ def gen_tricount():
                 "concepts": ["counting triangles", "counting by direction"],
                 "statement": f"A big equilateral triangle of side {n} is divided completely into {n * n} unit triangles "
                              f"(rows of 1, 3, 5, …, {2 * n - 1} from the top). How many equilateral triangles of all sizes "
-                             f"can be found in this figure? (Count the upside-down ones too.)",
+                             f"can be found in this divided triangle? (Count the upside-down ones too.)",
                 "answer": _en_plural(ans, "triangle"),
                 "distractors": [_en_plural(up, "triangle"), _en_plural(n * n, "triangle"), _en_plural(2 * up, "triangle")],
                 "explanation": f"Experimenting with sides 1, 2, 3 gives 1, 5, 13 — which reveals the strategy: split into "

@@ -1672,8 +1672,8 @@ def gen_logic_grid():
         final_txt = ", ".join(f"{p}-{it}" for p, it in ((people[0], final[people[0]]), (people[1], final[people[1]]), (people[2], final[people[2]])))
         add(
             "logicgrid", "DATA_POSSIBILITY", 3, ["논리 소거", "단서 결합"],
-            f"{people[0]}, {people[1]}, {people[2]} 세 사람이 좋아하는 {topic}{_eun(topic)} {items[0]}·{items[1]}·{items[2]} 중 하나씩이고, 서로 달라요. "
-            f"{people[i]}{_eun(people[i])} {items[x]}{_eul(items[x])} 좋아하지 않아요. {people[j]}도 {items[x]}{_eul(items[x])} 좋아하지 않아요. "
+            f"{people[0]}·{people[1]}·{people[2]}{_eun(people[2])} {items[0]}·{items[1]}·{items[2]}{_eul(items[2])} 서로 다르게 하나씩 좋아해요. "
+            f"{people[i]}{_gwa(people[i])} {people[j]}{_eun(people[j])} 둘 다 {items[x]}{_eul(items[x])} 좋아하지 않아요. "
             f"{people[j]}{_eun(people[j])} {items[y]}도 좋아하지 않아요. {items[y]}{_eul(items[y])} 좋아하는 사람은 누구일까요?",
             people[i], [people[k], people[j], "알 수 없어요"],
             f"표를 그려 아닌 칸부터 지워요. {people[i]}{_gwa(people[i])} {people[j]} 둘 다 {items[x]}{_eul(items[x])} 좋아하지 않으니, "
@@ -1688,7 +1688,7 @@ def gen_logic_grid():
             en={
                 "concepts": ["logical elimination", "combining clues"],
                 "statement": f"Three children A, B, and C each like a different {topic_en} among {items_en[0]}, {items_en[1]}, and {items_en[2]}. "
-                f"{'ABC'[i]} does not like {items_en[x]}. {'ABC'[j]} does not like {items_en[x]} either. "
+                f"Neither {'ABC'[i]} nor {'ABC'[j]} likes {items_en[x]}. "
                 f"{'ABC'[j]} does not like {items_en[y]} either. Who likes {items_en[y]}?",
                 "answer": "ABC"[i],
                 "distractors": ["ABC"[k], "ABC"[j], "It cannot be determined"],
