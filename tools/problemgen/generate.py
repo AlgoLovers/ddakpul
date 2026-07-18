@@ -16,6 +16,7 @@ import re
 from math import comb, factorial, gcd
 from pathlib import Path
 
+from codes import ensure_registry, inject_codes  # 계층 코드(AA-BB-CC-DD-SS) 자동 주입
 from concept_en import CONCEPT_EN  # 개념 태그 한→영 사전(리포트 노출용)
 
 OUT = Path(__file__).resolve().parents[2] / "app/src/main/assets/problems_generated.json"
@@ -6080,6 +6081,16 @@ problems = [p for p in problems if p["id"] not in blocked]
 problems_en = [p for p in problems_en if p["id"] not in blocked]
 if blocked:
     print(f"블록리스트 제외: {before - len(problems)}문항 (등록 {len(blocked)}건)")
+
+# ── 계층 코드(AA-BB-CC-DD-SS) 주입 — 재생성 시 code 필드를 항상 재구축한다(codes.py) ──
+# method_codes.json을 안정 레지스트리로: 기존 방법 코드는 불변, 신규 family만 추가.
+registry, new_methods, unmatched = ensure_registry(problems + problems_en)
+if new_methods:
+    print(f"신규 방법 코드 배정 {len(new_methods)}건: " + ", ".join(f"{k}={v}" for k, v in new_methods))
+if unmatched:
+    print(f"⚠️  미분류(99) family {len(unmatched)}건 — taxonomy.py 키워드 보강 필요: {unmatched}")
+inject_codes(problems, registry)
+inject_codes(problems_en, registry)
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(json.dumps({"version": 1, "problems": problems}, ensure_ascii=False, indent=1), encoding="utf-8")

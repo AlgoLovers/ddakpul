@@ -14,4 +14,8 @@ paths:
   판별과 상세 절차는 `/gen-problems` 스킬, 검수는 `problem-auditor` 에이전트.
 - figure 파라미터를 바꾸면 `preview_figures.py`로 PNG를 뽑아 눈으로 검증한다
   (앱 렌더러·PDF가 같은 수학을 공유하므로 미리보기 = 검증).
-- assets JSON 교체는 기존 설치에 자동 재시딩되지 않는다 — 시딩/DB 버전 정책 확인.
+- **계층 코드는 `generate.py`가 `codes.py`로 자동 주입**한다(재생성해도 code 안 사라짐).
+  `method_codes.json`은 안정 레지스트리 — 기존 방법 코드 불변, 신규 family만 append.
+  JSON을 손으로 고칠 땐 `difficulty`·`groupId`·`code`(DD·SS 세그먼트)를 함께 맞춰야 한다.
+- assets JSON 교체는 기존 설치에 자동 재시딩되지 않는다 — 내용이 바뀌면
+  `AssetProblemSource.CONTENT_VERSION`을 +1(문항 수 불변이어도). 문제 id는 유지해 학습 기록 보존.

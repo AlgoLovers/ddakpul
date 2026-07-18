@@ -21,10 +21,14 @@ description: 문제은행 생성·검증·검수 파이프라인. 문제 추가/
    PNG를 뽑아 Read로 눈 검증(그림-문제-정답 일치). 앱 렌더러(ProblemFigureView)와
    PDF(drawFigure)가 같은 수학을 쓰므로 미리보기가 곧 검증이다.
 4. **생성 실행**: `python3 tools/problemgen/generate.py` → ko/en JSON 두 파일 갱신 확인.
+   계층 코드(AA-BB-CC-DD-SS)는 `codes.py`가 **자동 주입**한다(재실행해도 코드 안 사라짐).
+   `method_codes.json`은 안정 레지스트리 — 기존 방법 코드는 불변, 신규 family만 append.
+   콘솔에 `⚠️ 미분류(99)`가 뜨면 `taxonomy.py`의 유형 키워드를 보강한다(코드 99 = 리뷰 신호).
 5. **검수 (필수)**: `problem-auditor` 서브에이전트에 신규/변경 그룹을 넘겨 감사받는다.
    치명 위반(사고력 원칙·이중언어)이 있으면 앱에 넣지 않는다.
-6. **앱 반영**: assets 교체만으로는 기존 설치에 재시딩 안 됨 — 콘텐츠 버전/DB 마이그레이션
-   정책 확인(data/local 시딩 코드). 에뮬 확인은 `pm clear` 후.
+6. **앱 반영**: assets 교체만으로는 기존 설치에 재시딩 안 됨 — 문항 수가 그대로여도
+   내용(난이도·풀이 등)이 바뀌면 `AssetProblemSource.CONTENT_VERSION`을 +1 해야 기존 설치가
+   재시딩된다(문제 id 불변 → 학습 기록 유지). 에뮬 확인은 `pm clear` 후.
 7. 단위 테스트(`testDebugUnitTest`) → /wrap-up으로 커밋.
 
 ## 경험칙
