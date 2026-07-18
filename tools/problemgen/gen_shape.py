@@ -1675,3 +1675,535 @@ def gen_diagcross():
                 "detail": "In a convex polygon (when no three diagonals meet at one point) each interior intersection point corresponds one-to-one with a choice of 4 vertices — because those four points make a quadrilateral with exactly one crossing of its two diagonals. So the number of points = C(n,4). A classic problem of turning a geometric count into a combination.",
             },
         )
+
+
+# ═══ 2026-07 천장 보충(CEILING_SPECS §3.6·3.7·3.B1) + 신규 슬롯 3(d7·d6·d5) ═══
+# 전부 파일 끝 append — 기존 코드 무수정. 헬퍼는 순수 결정론 계산만, rng를 절대 소비하지 않는다.
+
+
+def _tri_lattice_triangles(n):
+    """변 n 삼각 격자의 격자선 정삼각형을 '꼭짓점 3개 조합 완전열거'로 센다(△, ▽ 분리).
+    tricount 검산용 — 크기별 행 합산 공식과 완전히 독립인 경로. 격자 계량 d²=dc²−dc·dr+dr²(정수)로
+    등변을 판정하고, 세 변이 모두 격자선 방향(dc=0·dr=0·dc=dr)인 것만 남긴다."""
+    from itertools import combinations
+
+    pts = [(r, c) for r in range(n + 1) for c in range(r + 1)]
+
+    def d2(a, b):
+        dr, dc = b[0] - a[0], b[1] - a[1]
+        return dc * dc - dc * dr + dr * dr
+
+    def grid_dir(a, b):
+        dr, dc = b[0] - a[0], b[1] - a[1]
+        return dc == 0 or dr == 0 or dc == dr
+
+    up = down = 0
+    for a, b, c in combinations(pts, 3):
+        if not (d2(a, b) == d2(b, c) == d2(a, c) and grid_dir(a, b) and grid_dir(b, c) and grid_dir(a, c)):
+            continue
+        rows = sorted((a[0], b[0], c[0]))
+        if rows[0] == rows[1]:      # 수평 변이 위 → 꼭짓점이 아래 = ▽
+            down += 1
+        else:                       # 수평 변이 아래 → 꼭짓점이 위 = △
+            up += 1
+    return up, down
+
+
+def _billiard_bounces(p, q):
+    """p×q 당구대 45° 반사 시뮬레이션 — 1스텝 1튕김을 hit 플래그로 보장(코너 도달 시 종료).
+    billiard 검산용 — 약분 공식(p/g+q/g−2)과 독립인 걸음 단위 완전 시뮬레이션."""
+    x = y = 0
+    dx = dy = 1
+    bounces = 0
+    corners = {(0, 0), (p, 0), (0, q), (p, q)}
+    for _ in range(4 * p * q + 10):
+        x += dx
+        y += dy
+        if (x, y) in corners:
+            return bounces, (x, y)
+        hit = False
+        if x in (0, p):
+            dx = -dx
+            hit = True
+        if y in (0, q):
+            dy = -dy
+            hit = True
+        if hit:
+            bounces += 1
+    raise AssertionError(f"billiard 시뮬 발산: {p}x{q}")
+
+
+def _lattice_polygon_stats(pts):
+    """단순 격자 다각형의 (넓이×2, 내부 격자점, 둘레 격자점)을 좌표 완전열거로 직접 센다.
+    pickfig 검산용 — 단순성(비자기교차) 확인 + 신발끈 + 반직선 내부판정 + gcd 둘레점의
+    네 경로를 상호 대조하고, 픽의 정리(A2=2I+B−2)로 삼중 검산한다."""
+    from fractions import Fraction
+
+    n = len(pts)
+    assert len(set(pts)) == n, "꼭짓점 중복"
+    es = list(zip(pts, pts[1:] + pts[:1]))
+    for i in range(n):
+        for j in range(i + 1, n):
+            if j == (i + 1) % n or i == (j + 1) % n:
+                continue  # 이웃 변은 꼭짓점만 공유
+            assert _seg_intersection(*es[i], *es[j]) is None, f"변 교차: {i},{j}"
+    area2 = abs(sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in es))
+    b_gcd = sum(gcd(abs(x2 - x1), abs(y2 - y1)) for (x1, y1), (x2, y2) in es)
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    inner = b_enum = 0
+    for px in range(min(xs), max(xs) + 1):
+        for py in range(min(ys), max(ys) + 1):
+            on_edge = any(
+                (x2 - x1) * (py - y1) == (y2 - y1) * (px - x1)
+                and min(x1, x2) <= px <= max(x1, x2) and min(y1, y2) <= py <= max(y1, y2)
+                for (x1, y1), (x2, y2) in es
+            )
+            if on_edge:
+                b_enum += 1
+                continue
+            crossings = 0
+            for (x1, y1), (x2, y2) in es:
+                if (y1 > py) != (y2 > py):
+                    xint = Fraction(x1) + Fraction(py - y1, y2 - y1) * (x2 - x1)
+                    if px < xint:
+                        crossings += 1
+            inner += crossings % 2
+    assert b_enum == b_gcd, f"둘레점 두 경로 불일치: {b_enum}≠{b_gcd}"
+    assert area2 == 2 * inner + b_gcd - 2, f"픽 검산 실패: A2={area2} I={inner} B={b_gcd}"
+    return area2, inner, b_gcd
+
+
+def _views_max_cubes(front, side):
+    """앞(열별)·옆(줄별) 실루엣이 정확히 일치하는 모든 쌓기 배치를 완전열거해 최대 개수를 찾는다.
+    cubeviews 검산용 — 칸별 min(앞,옆) 규칙과 독립인 전수조사(배치 존재성도 함께 확인)."""
+    from itertools import product
+
+    w, d = len(front), len(side)
+    max_h = max(max(front), max(side))
+    best, feasible = -1, 0
+    for hs in product(range(max_h + 1), repeat=w * d):
+        grid = [hs[r * w:(r + 1) * w] for r in range(d)]
+        if all(max(grid[r][c] for r in range(d)) == front[c] for c in range(w)) and \
+           all(max(grid[r]) == side[r] for r in range(d)):
+            feasible += 1
+            best = max(best, sum(hs))
+    assert feasible > 0, f"cubeviews 실현 불가능한 실루엣: {front}/{side}"
+    return best
+
+
+def _stair_polygon(heights):
+    """계단 폴리오미노(열 높이 비증가)의 꼭짓점 목록(화면좌표 y-아래)을 만든다. 그림·검산 공용."""
+    w, h = len(heights), max(heights)
+    pts = []
+    x = 0
+    while x < w:
+        run_h = heights[x]
+        x2 = x
+        while x2 < w and heights[x2] == run_h:
+            x2 += 1
+        pts += [(x, h - run_h), (x2, h - run_h)]
+        x = x2
+    pts += [(w, h), (0, h)]
+    return pts
+
+
+def _stair_cell_stats(heights):
+    """계단 폴리오미노의 (둘레, 넓이)를 셀 단위 완전열거로 직접 센다 — 이웃 없는 변만 둘레.
+    stairperim 검산용 — 2(W+H) 통찰·다각형 좌표와 완전히 독립인 경로."""
+    w, h = len(heights), max(heights)
+    cells = {(x, y) for x in range(w) for y in range(h - heights[x], h)}
+    perim = sum(
+        1
+        for (x, y) in cells
+        for nb in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1))
+        if nb not in cells
+    )
+    return perim, len(cells)
+
+
+def _fold_cut_pieces(folds, cuts):
+    """테이프를 반으로 folds번 접고 cuts번 자르는 과정을 겹 단위로 실제 시뮬레이션한다.
+    foldpieces 검산용 — 각 겹의 (원좌표 원점, 방향)을 추적해 펼친 테이프의 잘린 점을 전부
+    모아 '서로 다른 점 수 + 1'로 조각을 센다. c·2^k+1 규칙과 독립인 경로(정수 산술)."""
+    total = (2 ** folds) * (cuts + 1)
+    layers = [(0, 1)]                  # (원좌표 원점 o, 방향 d): 접힌 위치 p → 원좌표 o + d·p
+    ell = total
+    for _ in range(folds):
+        layers = [(o, d) for o, d in layers] + [(o + d * ell, -d) for o, d in layers]
+        ell //= 2
+    assert len(layers) == 2 ** folds
+    points = set()
+    for t in range(1, cuts + 1):       # 접힌 길이 ell = cuts+1 → t=1..cuts는 내부·서로 다른 위치
+        for o, d in layers:
+            pt = o + d * t
+            assert 0 < pt < total, "잘린 점이 테이프 밖"
+            points.add(pt)
+    return len(points) + 1
+
+
+# ── 141. 삼각 격자의 정삼각형 총수 (난10, 도형과측정) — CEILING_SPECS §3.6 ─────────
+# 발견형 자기검증: 방향(△/▽)×크기 이중 분류 전략이 문제문에 없고(기준1), n≥5는 그림 손 세기가
+# 반드시 빠뜨리는 규모라 구조 발견이 필수다(기준2 — n=4가 진입 문항). 삼각 격자 렌더러가 없어
+# 서술 출제(줄별 개수 명시로 보완) — TRI_GRID 렌더러 신설은 별도 슬라이스.
+def gen_tricount():
+    def tno(m):  # m번째 삼각수
+        return m * (m + 1) // 2
+
+    for n in [4, 5, 6, 7]:
+        ups = [tno(n - k + 1) for k in range(1, n + 1)]            # △: 크기 1..n
+        downs = [tno(n - 2 * k + 1) for k in range(1, n // 2 + 1)]  # ▽: 크기 k는 n≥2k일 때만
+        up, down = sum(ups), sum(downs)
+        ans = up + down
+        # 검산: 격자점 3개 조합 완전열거(독립 경로) + 폐형식 ⌊n(n+2)(2n+1)/8⌋ 삼중 대조
+        enum_up, enum_down = _tri_lattice_triangles(n)
+        assert (enum_up, enum_down) == (up, down), f"tricount 검산실패: n={n} ({enum_up},{enum_down})≠({up},{down})"
+        assert ans == n * (n + 2) * (2 * n + 1) // 8, f"tricount 검산실패(폐형식): n={n}"
+        ups_str = "+".join(str(u) for u in ups)
+        downs_str = "+".join(str(dv) for dv in downs)
+        add(
+            "tricount", "SHAPE_MEASUREMENT", 10, ["삼각형 세기", "방향 나눠 세기"],
+            f"한 변의 길이가 {n}인 큰 정삼각형을, 한 변의 길이가 1인 작은 정삼각형 {n * n}개로 빈틈없이 나눴어요"
+            f"(맨 윗줄부터 1개, 3개, 5개, …, {2 * n - 1}개 순서로 놓여요). 이 그림 속에서 찾을 수 있는 크고 작은 "
+            f"정삼각형은 모두 몇 개일까요? (거꾸로 선 정삼각형도 빠짐없이 세요)",
+            f"{ans}개", [f"{up}개", f"{n * n}개", f"{2 * up}개"],
+            f"변 1·2·3짜리로 직접 실험하면 1개, 5개, 13개 — 바로 선 △와 거꾸로 선 ▽를 나눠 크기별로 세는 전략이 "
+            f"보여요. △는 크기 1부터 {n}까지 {ups_str}={up}개. ▽는 크기 k짜리가 전체 변이 2k 이상일 때만 있어 "
+            f"훨씬 빨리 줄어요: {downs_str}={down}개. 더하면 {up}+{down}={ans}개예요.",
+            [(f"{up}개", "거꾸로 선(▽) 정삼각형을 빠뜨렸어요. 방향을 나눠 따로 세야 해요."),
+             (f"{n * n}개", "크기 1짜리만 셌어요. 크기 2, 3, …의 큰 정삼각형도 숨어 있어요."),
+             (f"{2 * up}개", "역방향(▽)이 정방향(△)과 개수가 같다고 가정했어요. 역방향은 크기가 커질수록 훨씬 빨리 줄어들어요(크기 k는 변이 2k 이상일 때만 존재).")],
+            detail=f"▽의 꼭짓점은 아래로 향해 공간을 두 배로 잡아먹어요 — 크기 k짜리 ▽는 전체 변이 2k 이상이어야 "
+            f"존재해서, 규칙이 △와 ▽ 두 갈래로 갈라지는 것이 이 문제의 심장이에요. n=2로 검산해 보세요(△4+▽1=5개). "
+            f"변이 10이어도 크기별 표가 그대로 확장돼요. 사실 이 총수에는 n(n+2)(2n+1)÷8의 몫이라는 폐형식도 "
+            f"있지만, 두 갈래 표를 스스로 만드는 눈이 핵심이랍니다.",
+            en={
+                "concepts": ["counting triangles", "counting by direction"],
+                "statement": f"A big equilateral triangle of side {n} is divided completely into {n * n} unit triangles "
+                             f"(rows of 1, 3, 5, …, {2 * n - 1} from the top). How many equilateral triangles of all sizes "
+                             f"can be found in this figure? (Count the upside-down ones too.)",
+                "answer": _en_plural(ans, "triangle"),
+                "distractors": [_en_plural(up, "triangle"), _en_plural(n * n, "triangle"), _en_plural(2 * up, "triangle")],
+                "explanation": f"Experimenting with sides 1, 2, 3 gives 1, 5, 13 — which reveals the strategy: split into "
+                               f"upright △ and upside-down ▽, and count by size. △: sizes 1 to {n} give {ups_str}={up}. "
+                               f"▽ of size k exists only when the whole side is at least 2k, so they shrink much faster: "
+                               f"{downs_str}={down}. Adding, {up}+{down}={ans}.",
+                "mistakes": [(_en_plural(up, "triangle"), "You missed the upside-down (▽) triangles. Split by direction and count them separately."),
+                             (_en_plural(n * n, "triangle"), "You counted only the size-1 triangles. Bigger ones of size 2, 3, … are hiding too."),
+                             (_en_plural(2 * up, "triangle"), "You assumed ▽ come in the same number as △. The ▽ shrink much faster as size grows (size k exists only when the side is at least 2k).")],
+                "detail": f"A ▽'s apex points down and eats up twice the room — a size-k ▽ needs the whole side to be at "
+                          f"least 2k, so the rule splits into two branches for △ and ▽, and that split is the heart of this "
+                          f"problem. Check with n=2 (△4+▽1=5). Even with side 10 the size-by-size table extends unchanged. "
+                          f"There is in fact a closed form, the quotient of n(n+2)(2n+1)÷8, but building the two-branch "
+                          f"table yourself is the real skill.",
+            },
+        )
+
+
+# ── 142. 당구대 45° 반사 (난8, 도형과측정) — CEILING_SPECS §3.7 ──────────────────
+# 발견형 자기검증: 반사 규칙만 주어지고 세는 방법·약분 구조는 스스로 발견해야 하며(기준1),
+# (15,8)·(12,9)는 손으로 끝까지 그리기 어렵게 골라 작은-사례 실험→규칙 발견을 강제한다(기준2 — (5,3)이 진입 문항).
+# 그림(GRID)은 판 모양 참고용 — 렌더러가 반사 경로는 그리지 않는다(감사 시 인지).
+def gen_billiard():
+    corner_ko = {"RU": "오른쪽 위", "LU": "왼쪽 위", "RD": "오른쪽 아래"}
+    corner_en = {"RU": "top-right", "LU": "top-left", "RD": "bottom-right"}
+    for p, q, corner, d3, mis3, mis3_en in [
+        (5, 3, "RU", 15, "가로×세로(전체 칸 수)를 곱했어요. 튕김은 곱이 아니라 두 방향의 리듬이 구석에서 처음 만날 때까지의 벽 접촉 수예요.",
+         "You multiplied width×height (the total cells). Bounces aren't a product — they are the wall contacts before the two rhythms first meet at a corner."),
+        (7, 4, "LU", 28, "가로×세로(전체 칸 수)를 곱했어요. 튕김은 곱이 아니라 두 방향의 리듬이 구석에서 처음 만날 때까지의 벽 접촉 수예요.",
+         "You multiplied width×height (the total cells). Bounces aren't a product — they are the wall contacts before the two rhythms first meet at a corner."),
+        (12, 9, "RD", 19, "가로·세로가 공약수를 가지면 공은 판을 다 훑기 전에 구석에 도착해요. 12×9는 4×3 판을 3배 확대한 것 — 최대공약수로 나눈 모양이 진짜 경로를 결정해요.",
+         "When the width and height share a common factor, the ball reaches a corner before sweeping the whole table. 12×9 is a 4×3 table scaled by 3 — the shape divided by the gcd decides the real path."),
+        (15, 8, "LU", 120, "가로×세로(전체 칸 수)를 곱했어요. 튕김은 곱이 아니라 두 방향의 리듬이 구석에서 처음 만날 때까지의 벽 접촉 수예요.",
+         "You multiplied width×height (the total cells). Bounces aren't a product — they are the wall contacts before the two rhythms first meet at a corner."),
+    ]:
+        g = gcd(p, q)
+        lcm = p * q // g
+        ans = p // g + q // g - 2
+        # 검산: 걸음 단위 반사 시뮬레이션(독립 경로)으로 튕김 수·도착 구석을 모두 대조
+        sim_b, (cx, cy) = _billiard_bounces(p, q)
+        sim_corner = {(p, q): "RU", (0, q): "LU", (p, 0): "RD"}[(cx, cy)]
+        assert sim_b == ans, f"billiard 검산실패: {p}x{q} 시뮬 {sim_b} ≠ {ans}"
+        assert sim_corner == corner, f"billiard 검산실패(구석): {p}x{q} {sim_corner} ≠ {corner}"
+        add(
+            "billiard", "SHAPE_MEASUREMENT", 8, ["반사 경로", "최소공배수 주기"],
+            f"가로 {p}칸, 세로 {q}칸인 직사각형 당구대의 왼쪽 아래 구석에서 공을 대각선 45°로 쳤어요. 공은 벽에 "
+            f"닿을 때마다 같은 각도로 튕기고, 네 구석 중 어느 한 곳에 도착하면 멈춰요. 공이 멈출 때까지 벽에서 "
+            f"튕기는 횟수는 모두 몇 번일까요? (구석에 도착하는 것은 튕기는 횟수에 넣지 않아요)",
+            f"{ans}번", [f"{p + q}번", f"{p + q - g}번", f"{d3}번"],
+            f"2×1, 3×2 같은 작은 판을 그려 실험하면 규칙이 보여요. 공은 대각선으로 1칸씩 가므로 가로로 {p}칸 갈 "
+            f"때마다 좌우 벽에, 세로로 {q}칸 갈 때마다 위아래 벽에 닿아요. 두 리듬이 처음으로 동시에 벽에 닿는 "
+            f"곳이 구석 — 최소공배수 {lcm}걸음째예요. 그때까지 좌우 벽 {lcm // p}−1={lcm // p - 1}번, 위아래 벽 "
+            f"{lcm // q}−1={lcm // q - 1}번, 합해서 {ans}번 튕겨요.",
+            [(f"{p + q}번", "출발과 도착 구석까지 튕김으로 세면 2번이 더해져요. 구석은 튕기는 게 아니라 멈추는 곳이에요."),
+             (f"{p + q - g}번", "대각선이 '지나는 칸 수' 문제와 혼동했어요. 여기서는 벽에 닿는 횟수를 세요."),
+             (f"{d3}번", mis3)],
+            figure={"type": "GRID", "params": {"w": p, "h": q}},
+            detail=f"공이 멈추는 구석도 예측할 수 있어요: {lcm}÷{p}={lcm // p}이 홀수면 오른쪽·짝수면 왼쪽, "
+            f"{lcm}÷{q}={lcm // q}이 홀수면 위·짝수면 아래 — 이번엔 {corner_ko[corner]} 구석이에요. 판을 "
+            f"최대공약수로 약분한 {p // g}×{q // g} 모양이 경로의 원형이라, 12×9처럼 큰 판이 5번 만에 끝나기도 "
+            f"해요. 벽에서 꺾지 않고 판을 거울처럼 이어 붙여 펼치면 공은 곧게 가는 대각선 하나가 되는데, 이 눈으로 "
+            f"보면 튕김 = 그 대각선이 넘는 안쪽 격자선의 수랍니다.",
+            en={
+                "concepts": ["reflection paths", "least common multiple cycles"],
+                "statement": f"A ball is shot at 45° from the bottom-left corner of a {p}-by-{q} rectangular billiard "
+                             f"table. It bounces off each wall at the same angle and stops when it reaches any of the "
+                             f"four corners. How many times does it bounce off the walls before stopping? (Arriving at "
+                             f"a corner does not count as a bounce.)",
+                "answer": _en_plural(ans, "bounce"),
+                "distractors": [_en_plural(p + q, "bounce"), _en_plural(p + q - g, "bounce"), _en_plural(d3, "bounce")],
+                "explanation": f"Drawing small tables like 2×1 and 3×2 reveals the rule. The ball moves one cell "
+                               f"diagonally per step, so it meets a left/right wall every {p} cells across and a "
+                               f"top/bottom wall every {q} cells up. The first time the two rhythms touch walls at "
+                               f"the same moment is a corner — at the least common multiple, step {lcm}. Until then it "
+                               f"bounces {lcm // p}−1={lcm // p - 1} times off the side walls and {lcm // q}−1={lcm // q - 1} "
+                               f"times off the top/bottom, {ans} bounces in all.",
+                "mistakes": [(_en_plural(p + q, "bounce"), "Counting the start and finish corners as bounces adds 2. A corner is where it stops, not a bounce."),
+                             (_en_plural(p + q - g, "bounce"), "You confused this with the 'how many cells does a diagonal cross' problem. Here you count wall contacts."),
+                             (_en_plural(d3, "bounce"), mis3_en)],
+                "detail": f"You can even predict the finishing corner: {lcm}÷{p}={lcm // p} odd means right, even means "
+                          f"left; {lcm}÷{q}={lcm // q} odd means top, even means bottom — this time it is the "
+                          f"{corner_en[corner]} corner. The table reduced by the gcd, {p // g}×{q // g}, is the true "
+                          f"shape of the path, which is why a big 12×9 table can finish in just 5 bounces. And if you "
+                          f"unfold the table like mirrors instead of bending at walls, the ball becomes one straight "
+                          f"diagonal — seen that way, bounces = the interior grid lines that diagonal crosses.",
+            },
+        )
+
+
+# ── 143. 오목 격자 다각형의 넓이 (난8, 도형과측정) — CEILING_SPECS §3.B1, 그림 필수 ──
+# 발견형 자기검증: 옛 pick(d5)과 달리 내부점·둘레점을 주지 않고 그림만 준다 — 관계식은 물론
+# '점을 센다'는 발상 자체를 스스로 세워야 하고(기준1), 오목 6~8꼭짓점이라 단순 분해는 조각 7~9개의
+# 오답 유도 지뢰밭이다(기준2 — 분해 정공법도 막혀 있진 않아 낮은 문턱 유지).
+def gen_pickfig():
+    def half(a2):
+        return str(a2 // 2) if a2 % 2 == 0 else f"{a2 // 2}.5"
+
+    for pts, d3 in [
+        ([(1, 0), (4, 2), (3, 2), (6, 5), (2, 6), (3, 4), (0, 3)], 15),   # 번개
+        ([(0, 5), (3, 0), (6, 5), (3, 3), (4, 6), (2, 6), (3, 5)], 13),   # 화살깃
+        ([(0, 0), (5, 1), (3, 3), (6, 5), (1, 6), (2, 3)], 16),           # 갈고리
+        ([(0, 4), (2, 0), (3, 3), (5, 0), (6, 4), (4, 3), (3, 6), (2, 3)], 13),  # 톱니
+    ]:
+        # 검산: 단순성 + 신발끈 + 내부점 반직선 판정 + 둘레점 gcd/열거 이중 + 픽 정리 삼중 대조
+        area2, inner, boundary = _lattice_polygon_stats(pts)
+        ans_s = half(area2)
+        assert ans_s not in (half(area2 + 2), str(inner + boundary), str(d3)), f"pickfig 보기 충돌: {pts}"
+        add(
+            "pickfig", "SHAPE_MEASUREMENT", 8, ["격자점과 넓이", "관계 발견"],
+            "모눈종이 위에 색칠한 다각형이 있어요(꼭짓점은 모두 격자점이에요). 이 다각형의 넓이는 몇 ㎠일까요? "
+            "(모눈 한 칸은 1㎠예요)",
+            f"{ans_s}㎠", [f"{half(area2 + 2)}㎠", f"{inner + boundary}㎠", f"{d3}㎠"],
+            f"정공법은 도형을 감싼 직사각형에서 바깥 조각을 하나씩 빼는 것 — 오목한 모양이라 조각이 많아 실수하기 "
+            f"쉬워요. 지름길이 있어요: 1×1 정사각형, 1×2 직사각형, 반쪽 직각삼각형 같은 아주 작은 격자 도형들로 "
+            f"(넓이, 안쪽 점, 둘레 위 점) 표를 만들어 보면 '넓이 = 안쪽 점 + 둘레 점÷2 − 1'이라는 관계가 떠올라요. "
+            f"이 그림은 안쪽 점 {inner}개, 둘레 점 {boundary}개니까 {inner}+{boundary}÷2−1={ans_s}㎠예요.",
+            [(f"{half(area2 + 2)}㎠", "격자점으로 넓이를 어림하다 마지막 보정(−1)을 빠뜨렸어요. 작은 직사각형으로 실험해 관계식을 완성하세요."),
+             (f"{inner + boundary}㎠", "다각형에 걸친 격자점 개수 자체는 넓이가 아니에요. 둘레의 점은 절반만 넓이에 기여해요."),
+             (f"{d3}㎠", "경계에 걸린 반 칸들을 대충 반올림했어요. 반 칸끼리 짝을 지어 정확히 세거나, 격자점 관계를 이용하세요.")],
+            figure=_grid_fig(pts),
+            detail=f"안쪽 격자점 하나는 제 둘레의 한 칸어치 넓이를 온전히 대표하지만, 둘레 위의 점은 절반만 도형 "
+            f"안쪽이에요. 그리고 다각형을 한 바퀴 도는 동안 딱 한 칸어치(−1)가 겹쳐 빠져요 — 그래서 넓이 = 안쪽 점 "
+            f"+ 둘레 점÷2 − 1(픽의 정리라 불러요). 분해해서 빼는 정공법과 점 세기, 두 길의 답이 같은지 확인하는 "
+            f"이중 검산이 이 문제의 진짜 학습 목표예요. 아무 격자 다각형이나 그려 관계식이 또 맞는지 실험해 보세요.",
+            en={
+                "concepts": ["lattice points and area", "discovering a relationship"],
+                "statement": "A polygon is shaded on grid paper (every vertex is on a lattice point). What is its area "
+                             "in cm²? (Each grid cell is 1 cm².)",
+                "answer": f"{ans_s}cm²",
+                "distractors": [f"{half(area2 + 2)}cm²", f"{inner + boundary}cm²", f"{d3}cm²"],
+                "explanation": f"The direct route is to box the shape in a rectangle and subtract the outside pieces — "
+                               f"but the shape is concave, so the pieces are many and mistakes are easy. There is a "
+                               f"shortcut: make a table of (area, inside points, boundary points) for tiny grid shapes "
+                               f"like a 1×1 square, a 1×2 rectangle, and half-square right triangles, and the relation "
+                               f"'area = inside points + boundary points÷2 − 1' emerges. This figure has {inner} inside "
+                               f"points and {boundary} boundary points, so {inner}+{boundary}÷2−1={ans_s}cm².",
+                "mistakes": [(f"{half(area2 + 2)}cm²", "You estimated the area from lattice points but dropped the final correction (−1). Experiment with small rectangles to complete the relation."),
+                             (f"{inner + boundary}cm²", "The raw number of lattice points touching the polygon is not its area. Boundary points contribute only half each."),
+                             (f"{d3}cm²", "You roughly rounded the half-cells along the boundary. Pair up the half-cells exactly, or use the lattice-point relation.")],
+                "detail": "Each inside lattice point fully represents one cell's worth of area around it, while a "
+                          "boundary point is only half inside the shape. And going once around the polygon, exactly one "
+                          "cell's worth (−1) drops out from the overlap — hence area = inside + boundary÷2 − 1 (known "
+                          "as Pick's theorem). The real learning goal is the double check: decompose-and-subtract "
+                          "versus point counting, and confirming the two roads agree. Draw any lattice polygon and test "
+                          "whether the relation holds again.",
+            },
+        )
+
+
+# ── 144. 앞·옆 실루엣으로 최대 쌓기나무 (난7, 도형과측정) — 신규 슬롯(시점·투영 추론) ──
+# 발견형 자기검증: '각 칸의 상한 = min(앞모습, 옆모습)' 규칙이 문제문에 없고(기준1), 배치를 손으로
+# 나열하는 우회는 4^6~4^9가지라 불가능해 칸별 상한의 발견이 필수다(기준2).
+def gen_cubeviews():
+    for front, side in [
+        ([3, 2, 3], [3, 1]),
+        ([2, 3, 1], [1, 3]),
+        ([3, 1, 2], [2, 3, 1]),
+        ([3, 2], [2, 3, 2]),
+    ]:
+        w, d = len(front), len(side)
+        max_h = max(front)
+        assert max(front) == max(side), f"cubeviews 실루엣 모순: {front}/{side}"
+        ans = sum(min(fc, sr) for fc in front for sr in side)
+        # 검산: 실루엣이 정확히 일치하는 모든 배치를 전수조사(독립 경로)한 최대와 대조
+        assert _views_max_cubes(front, side) == ans, f"cubeviews 검산실패: {front}/{side}"
+        d1 = sum(front) + sum(side)                      # 보이는 칸 수 합
+        d2 = d * sum(front)                              # 옆모습 무시, 모든 줄을 앞모습대로
+        d3 = w * d * max_h                               # 전 칸을 최고 높이로
+        assert len({ans, d1, d2, d3}) == 4, f"cubeviews 보기 충돌: {front}/{side}"
+        f_str = ", ".join(f"{v}층" for v in front)
+        s_str = ", ".join(f"{v}층" for v in side)
+        row_sums = ["+".join(str(min(fc, sr)) for fc in front) for sr in side]
+        sum_str = "(" + ")+(".join(row_sums) + ")"
+        f_en = ", ".join(str(v) for v in front)
+        s_en = ", ".join(str(v) for v in side)
+        add(
+            "cubeviews", "SHAPE_MEASUREMENT", 7, ["쌓기나무", "시점 추론"],
+            f"쌓기나무를 가로 {w}칸, 세로 {d}칸인 직사각형 바닥판 위에 쌓아요. 칸마다 높이는 달라도 되고, 하나도 "
+            f"놓지 않는 칸이 있어도 돼요. 다 쌓은 뒤 앞에서 보면 왼쪽부터 차례로 {f_str}으로 보이고, 오른쪽 옆에서 "
+            f"보면 앞쪽부터 차례로 {s_str}으로 보여요. 이렇게 보이도록 쌓을 때 쌓기나무를 '가장 많이' 쓰면 몇 개일까요?",
+            f"{ans}개", [f"{d1}개", f"{d2}개", f"{d3}개"],
+            f"칸 하나하나에 상한이 숨어 있어요. 어떤 칸의 기둥이 그 세로줄의 앞모습 높이보다 높으면 앞에서 튀어나와 "
+            f"보이고, 그 가로줄의 옆모습 높이보다 높으면 옆에서 튀어나와 보여요. 그래서 각 칸은 두 실루엣 높이 중 "
+            f"'작은 쪽'까지만 쌓을 수 있어요. 모든 칸을 그 상한까지 꽉 채워도 두 모습은 그대로예요 — 채운 개수는 "
+            f"{sum_str}={ans}개예요.",
+            [(f"{d1}개", "앞·옆에서 '보이는' 칸 수를 더한 값이에요. 보이는 건 실루엣일 뿐, 그 뒤로 여러 기둥이 겹쳐 숨어 있어요."),
+             (f"{d2}개", "옆에서 본 모양을 무시하고 모든 줄을 앞모습대로 채웠어요. 그러면 옆모습이 조건과 달라져요."),
+             (f"{d3}개", "모든 칸을 가장 높은 층수로 채우면 앞·옆 실루엣이 조건보다 높이 솟아 보여요. 칸마다 상한이 달라요.")],
+            detail=f"실루엣은 '그 줄에서 가장 높은 기둥'만 보여 줘요 — 여러 기둥이 한 그림자에 숨는 거죠. 그래서 "
+            f"보이는 모습이 같아도 개수는 여러 가지일 수 있고, 최대는 칸마다 min(앞모습, 옆모습)을 쌓은 배치예요. "
+            f"반대로 '가장 적게' 쓰는 배치를 찾는 것도 좋은 도전이에요 — 기둥 하나가 앞·옆 실루엣을 동시에 책임지게 "
+            f"겹쳐 보세요. 위에서 본 판에 칸별 상한을 적어 놓으면 3차원 문제가 2차원 표로 내려온답니다.",
+            en={
+                "concepts": ["stacking blocks", "reasoning from views"],
+                "statement": f"You stack unit cubes on a rectangular base {w} columns wide and {d} rows deep. Each cell "
+                             f"may hold a column of any height, and some cells may stay empty. Seen from the front, the "
+                             f"silhouette shows heights {f_en} from left to right; seen from the right side, it shows "
+                             f"heights {s_en} from front to back. What is the greatest number of cubes you could have used?",
+                "answer": _en_plural(ans, "cube"),
+                "distractors": [_en_plural(d1, "cube"), _en_plural(d2, "cube"), _en_plural(d3, "cube")],
+                "explanation": f"A hidden ceiling sits on every cell. If a cell's column rose above its file's front-view "
+                               f"height it would stick out from the front, and above its row's side-view height it would "
+                               f"stick out from the side. So each cell can hold at most the 'smaller' of the two "
+                               f"silhouette heights. Filling every cell right up to that ceiling still matches both "
+                               f"views — and that filling uses {sum_str}={ans} cubes.",
+                "mistakes": [(_en_plural(d1, "cube"), "That adds the squares 'visible' from the front and side. A silhouette is only an outline — several columns hide behind it."),
+                             (_en_plural(d2, "cube"), "You ignored the side view and filled every row like the front view. Then the side view would no longer match."),
+                             (_en_plural(d3, "cube"), "Filling every cell to the tallest height would make the front and side silhouettes rise higher than given. Each cell has its own ceiling.")],
+                "detail": "A silhouette shows only 'the tallest column in that line' — many columns hide in one shadow. "
+                          "So the same views can come from many different counts, and the maximum is the arrangement "
+                          "with min(front, side) on every cell. Finding the 'fewest' cubes is a great follow-up "
+                          "challenge — overlap the duties so one column serves the front and side silhouettes at once. "
+                          "Writing each cell's ceiling on the top view turns a 3-D problem into a 2-D table.",
+            },
+        )
+
+
+# ── 145. 계단 도형의 둘레 (난6, 도형과측정) — 신규 슬롯(변 밀어 붙이기 발견), 그림 필수 ──
+# 발견형 자기검증: '가로 변은 위로, 세로 변은 오른쪽으로 밀면 직사각형'이라는 통찰이 문제문에 없고(기준1),
+# 턱 6~8개짜리 도형은 낱개 변 세기(20~30개)가 실수를 강하게 유발해 통찰 경로가 압도적으로 유리하다(기준2).
+def gen_stairperim():
+    for heights in [
+        [5, 4, 4, 2, 2, 1],
+        [6, 4, 4, 3, 3, 1, 1],
+        [6, 6, 5, 5, 3, 3, 2, 1],
+        [5, 4, 4, 3, 2, 2, 1],
+    ]:
+        w, h = len(heights), max(heights)
+        assert all(a >= b for a, b in zip(heights, heights[1:])) and heights[-1] >= 1, f"stairperim 비계단: {heights}"
+        ans = 2 * (w + h)
+        pts = _stair_polygon(heights)
+        # 검산: 셀 단위 완전열거(이웃 없는 변 수)로 둘레를 직접 세고, 다각형 넓이·둘레와 삼중 대조
+        cell_perim, cell_area = _stair_cell_stats(heights)
+        walk = sum(abs(x2 - x1) + abs(y2 - y1) for (x1, y1), (x2, y2) in zip(pts, pts[1:] + pts[:1]))
+        assert cell_perim == walk == ans, f"stairperim 검산실패: {heights} ({cell_perim},{walk})≠{ans}"
+        assert cell_area == sum(heights) == _shoelace2(pts) // 2, f"stairperim 넓이 불일치: {heights}"
+        area = cell_area
+        assert len({ans, area, ans - 2, ans + 4}) == 4, f"stairperim 보기 충돌: {heights}"
+        add(
+            "stairperim", "SHAPE_MEASUREMENT", 6, ["둘레", "변 밀어 붙이기"],
+            "모눈종이에 계단 모양 도형을 색칠했어요(그림). 이 도형의 둘레는 몇 cm일까요? (모눈 한 칸의 한 변은 1cm예요)",
+            f"{ans}cm", [f"{area}cm", f"{ans - 2}cm", f"{ans + 4}cm"],
+            f"턱이 많아 변을 하나씩 세다 보면 꼭 빠뜨려요. 계단의 가로 변들을 모두 위로 밀어 올리고, 세로 변들을 "
+            f"모두 오른쪽으로 밀어 보세요 — 정확히 도형을 둘러싼 가로 {w}칸, 세로 {h}칸 직사각형의 둘레가 돼요. "
+            f"그래서 둘레는 ({w}+{h})×2={ans}cm예요.",
+            [(f"{area}cm", "색칠한 칸의 수(넓이)를 세었어요. 둘레는 도형을 두르는 바깥 변의 길이예요."),
+             (f"{ans - 2}cm", "계단 턱의 짧은 변을 빠뜨렸어요. 턱마다 가로·세로 변이 하나씩 꼭 있어요."),
+             (f"{ans + 4}cm", "턱이 많으니 둘러싼 직사각형보다 길 거라 짐작했어요. 가로 변을 위로·세로 변을 오른쪽으로 밀어 붙이면 정확히 직사각형 둘레와 같아져요.")],
+            figure=_grid_fig(pts),
+            detail=f"계단처럼 '안으로 파인 곳 없이 한 방향으로만 내려가는' 도형은 턱이 몇 개든 둘레가 둘러싼 "
+            f"직사각형과 똑같아요. 하지만 ㄷ자처럼 파인 곳이 있으면 밀어 붙일 때 변이 겹쳐 둘레가 더 길어져요 — "
+            f"어떤 도형이 '밀어 붙이기'가 되는지 직접 그려 실험해 보세요. 그리고 이 도형의 넓이는 {area}㎠로 계단 "
+            f"모양마다 달라지지만 둘레는 그대로예요. 넓이와 둘레가 따로 논다는 것, 그것도 이 문제의 발견이랍니다.",
+            en={
+                "concepts": ["perimeter", "sliding edges"],
+                "statement": "A staircase-shaped figure is shaded on grid paper (see the picture). What is the "
+                             "perimeter of this figure, in cm? (Each side of a grid cell is 1 cm.)",
+                "answer": f"{ans}cm",
+                "distractors": [f"{area}cm", f"{ans - 2}cm", f"{ans + 4}cm"],
+                "explanation": f"With so many steps, counting the sides one by one always drops a few. Instead, slide "
+                               f"every horizontal edge of the staircase up and every vertical edge to the right — they "
+                               f"become exactly the surrounding rectangle, {w} cells wide and {h} cells tall. So the "
+                               f"perimeter is ({w}+{h})×2={ans}cm.",
+                "mistakes": [(f"{area}cm", "You counted the shaded cells (the area). The perimeter is the length of the outer edges wrapping the shape."),
+                             (f"{ans - 2}cm", "You dropped one of the short step edges. Every step has exactly one horizontal and one vertical edge."),
+                             (f"{ans + 4}cm", "You guessed the many steps make it longer than the surrounding rectangle. Slide the horizontal edges up and the vertical edges right — it matches the rectangle exactly.")],
+                "detail": f"A shape that, like a staircase, only ever descends in one direction with no inward dents "
+                          f"has the same perimeter as its surrounding rectangle, no matter how many steps. But a shape "
+                          f"with a dent, like a U, gains perimeter because edges overlap when you slide them — draw "
+                          f"your own shapes and test which ones 'slide'. Also, this figure's area is {area}cm² and "
+                          f"changes with each staircase, while the perimeter stays put. Area and perimeter living "
+                          f"separate lives — that too is this problem's discovery.",
+            },
+        )
+
+
+# ── 146. 접어 자른 테이프의 조각 수 (난5, 도형과측정) — 신규 슬롯(접기/자르기 결과 추론) ──
+# 발견형 자기검증: 조각 수 규칙이 문제문에 없어 '겹×자르기 = 잘린 점, 조각 = 잘린 점+1'의 두 겹
+# 구조를 스스로 세워야 하고(기준1), 3번 접어 2번 자르는 경우는 머릿속 낱장 추적이 17조각 규모라
+# 실수 없이는 비현실적이라 구조 발견 경로가 압도적으로 유리하다(기준2 — (2,1)이 진입 문항).
+def gen_foldpieces():
+    for folds, cuts in [(2, 1), (3, 1), (2, 2), (3, 2)]:
+        layers = 2 ** folds
+        ans = cuts * layers + 1
+        # 검산: 겹의 (원점, 방향)을 추적하는 접기 시뮬레이션(독립 경로)으로 잘린 점을 전부 모아 대조
+        assert _fold_cut_pieces(folds, cuts) == ans, f"foldpieces 검산실패: k={folds}, c={cuts}"
+        assert len({ans, cuts * layers, cuts + 1, (cuts + 1) * layers}) == 4, f"foldpieces 보기 충돌: {folds},{cuts}"
+        add(
+            "foldpieces", "SHAPE_MEASUREMENT", 5, ["접어 자르기", "겹과 조각"],
+            f"폭이 좁고 긴 종이 테이프를 반으로 {folds}번 접었어요. 접힌 채로 가위로 테이프의 폭 방향을 따라 곧게 "
+            f"{cuts}번 잘랐어요(서로 다른 곳을, 양 끝이나 접힌 자리가 아닌 곳에서요). 종이를 모두 펼치면 몇 조각으로 "
+            f"나뉘어 있을까요?",
+            f"{ans}조각", [f"{cuts * layers}조각", f"{cuts + 1}조각", f"{(cuts + 1) * layers}조각"],
+            f"반으로 {folds}번 접으면 테이프가 {layers}겹으로 포개져요. 가위질 한 번은 {layers}겹을 동시에 지나므로, "
+            f"펼친 테이프에는 잘린 곳이 {cuts}×{layers}={cuts * layers}군데 생겨요. 긴 테이프는 잘린 곳이 1군데면 "
+            f"2조각, 2군데면 3조각 — 조각은 언제나 잘린 곳보다 1 많아요. 그래서 {cuts * layers}+1={ans}조각이에요.",
+            [(f"{cuts * layers}조각", "잘린 곳의 개수까지는 맞게 셌는데, 조각 수는 잘린 곳보다 1 많아요(선 하나가 종이를 2조각으로 나누듯이요)."),
+             (f"{cuts + 1}조각", f"접힌 겹을 잊었어요. 가위질 한 번이 {layers}겹을 동시에 자르니, 펼치면 잘린 곳이 {layers}배로 늘어나요."),
+             (f"{(cuts + 1) * layers}조각", f"겹마다 {cuts + 1}조각이 된다고 곱했어요. 하지만 접힌 자리는 잘리지 않아 이웃한 겹끼리 이어져 있어요 — 펼치면 하나로 연결된 조각이 많아요.")],
+            detail=f"두 규칙의 합작이에요: ① 접을 때마다 겹이 2배(접기 {folds}번 → {layers}겹) ② 조각 수 = 잘린 곳 "
+            f"+ 1(울타리 기둥과 칸의 관계). 헷갈리면 접기 1번·자르기 1번부터 실제로 해 보세요 — 2겹이라 잘린 곳 "
+            f"2군데, 3조각이 나와요. 펼친 종이의 산·골 접힌 자국을 관찰하면 접힌 자리가 왜 조각들을 이어 주는지, "
+            f"'겹×자르기'가 왜 곱셈이고 마지막에 왜 +1인지가 한눈에 보인답니다.",
+            en={
+                "concepts": ["folding and cutting", "layers and pieces"],
+                "statement": f"You fold a long, narrow paper tape in half {folds} times. Still folded, you make "
+                             f"{cuts} straight scissor cut(s) across its width (at different places, away from the ends "
+                             f"and the folds). When you unfold the tape completely, how many pieces is it in?",
+                "answer": _en_plural(ans, "piece"),
+                "distractors": [_en_plural(cuts * layers, "piece"), _en_plural(cuts + 1, "piece"), _en_plural((cuts + 1) * layers, "piece")],
+                "explanation": f"Folding in half {folds} times stacks the tape into {layers} layers. One scissor cut "
+                               f"passes through all {layers} layers at once, so the unfolded tape has "
+                               f"{cuts}×{layers}={cuts * layers} cut places. A long tape with 1 cut place is 2 pieces, "
+                               f"with 2 places 3 pieces — pieces are always one more than cut places. So "
+                               f"{cuts * layers}+1={ans} pieces.",
+                "mistakes": [(_en_plural(cuts * layers, "piece"), "You counted the cut places correctly, but the pieces number one more than the cuts (just as one snip turns paper into 2 pieces)."),
+                             (_en_plural(cuts + 1, "piece"), f"You forgot the folded layers. One snip cuts {layers} layers at once, so unfolding multiplies the cut places by {layers}."),
+                             (_en_plural((cuts + 1) * layers, "piece"), f"You multiplied as if each layer became {cuts + 1} separate pieces. But the folds are not cut — neighboring layers stay joined there, so many pieces unfold into one connected strip.")],
+                "detail": f"Two rules work together: ① each fold doubles the layers ({folds} folds → {layers} layers), "
+                          f"② pieces = cut places + 1 (the fence-post relation). If it feels slippery, actually try one "
+                          f"fold and one cut — 2 layers give 2 cut places and 3 pieces. Watching the mountain-and-valley "
+                          f"creases on the unfolded strip shows why folds keep pieces joined, why 'layers × cuts' is a "
+                          f"multiplication, and why the +1 comes last.",
+            },
+        )
