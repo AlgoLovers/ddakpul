@@ -200,6 +200,10 @@ def gen_dice_sum():
         unordered = sum(1 for a in range(1, 7) for b in range(a, 7) if a + b == k)
         ex_a = max(1, k - 6)
         ex_b = k - ex_a
+        # 검산: 완전열거(cnt)를 닫힌 공식(6−|k−7|)·비순서 세기와 교차 확인
+        assert cnt == 6 - abs(k - 7), "dicesum 검산 실패: 합 경우 수가 공식과 불일치"
+        assert unordered * 2 - (1 if k % 2 == 0 and 1 <= k // 2 <= 6 else 0) == cnt, "dicesum 검산 실패: 순서 유무 세기 불일치"
+        assert 1 <= ex_a <= 6 and 1 <= ex_b <= 6 and ex_a + ex_b == k, "dicesum 검산 실패: 예시 짝"
         add(
             "dicesum", "DATA_POSSIBILITY", 3, ["경우의 수", "순서 구별하기"],
             f"주사위 2개를 동시에 던져요. 나온 두 눈의 합이 {k}{_iga(k)} 되는 경우는 모두 몇 가지일까요? (두 주사위를 구별해요)",
@@ -334,6 +338,9 @@ def gen_coin_combinations():
 def gen_number_split():
     for total in [5, 6, 7, 8]:
         ans = total // 2  # 두 접시 구분 안 함, 각 1개 이상
+        # 검산: 가르기 완전열거 — 순서 없는 (a, total−a) 짝을 실제로 나열해 세기
+        chk_cnt = sum(1 for a in range(1, total) if a <= total - a)
+        assert chk_cnt == ans, "numsplit 검산 실패"
         add(
             "numsplit", "DATA_POSSIBILITY", 1, ["경우의 수", "가르기"],
             f"구슬 {total}개를 두 접시에 나눠 담으려고 해요. 접시마다 적어도 1개는 담고, 두 접시는 구분하지 않아요(1개·{total - 1}개와 {total - 1}개·1개는 같은 방법). 나누는 방법은 모두 몇 가지일까요?",
@@ -357,6 +364,10 @@ def gen_number_split():
 
 # ── 62. 키 순서 추론 (난2, 자료와가능성) — 흩어진 비교를 한 줄로 ────────────────
 def gen_height_order():
+    # 검산: 키 배정 완전열거 — 힌트 3개(p1>p2, p0>p1, p2>p3)를 만족하는 배정은 유일하고 p0가 1등
+    from itertools import permutations
+    valid = [h for h in permutations(range(4)) if h[1] > h[2] and h[0] > h[1] and h[2] > h[3]]
+    assert len(valid) == 1 and valid[0][0] == max(valid[0]), "htorder 검산 실패"
     for four in [rng.sample(NAMES, 4) for _ in range(3)]:
         p0, p1, p2, p3 = four  # 숨은 순서: p0 > p1 > p2 > p3
         # 힌트는 자연 순서가 아니게 섞어 제시(가운데→위→아래) — 이어 붙여야 풀림
@@ -386,6 +397,10 @@ def gen_pigeonhole():
     for names in [["빨강", "파랑", "노랑"], ["검정", "흰색"], ["빨강", "파랑", "노랑", "초록"], ["빨강", "노랑", "초록"]]:
         colors = len(names)
         ans = colors + 1
+        # 검산: 뽑기 결과 완전열거 — colors짝은 전부 다른 색이 가능(최악 반례), ans짝은 어떤 경우에도 같은 색 짝 존재
+        from itertools import product
+        assert any(len(set(pick)) == colors for pick in product(range(colors), repeat=colors)), "pigeon 검산 실패: 최악 반례 없음"
+        assert all(len(set(pick)) < len(pick) for pick in product(range(colors), repeat=ans)), "pigeon 검산 실패: 중복 미보장"
         colortxt = "·".join(names)
         colortxt_en = ", ".join({"빨강": "red", "파랑": "blue", "노랑": "yellow", "초록": "green", "검정": "black", "흰색": "white"}[x] for x in names)
         add(
@@ -411,6 +426,9 @@ def gen_missing_score():
     for subjects, avg, known in [(4, 85, [80, 90, 88]), (5, 80, [75, 82, 78, 90]), (4, 90, [92, 88, 95]), (3, 70, [65, 72])]:
         total = subjects * avg
         missing = total - sum(known)
+        # 검산: 0~100점 전 후보 완전탐색 — 평균을 딱 맞추는 나머지 점수는 유일
+        sols = [x for x in range(0, 101) if sum(known) + x == subjects * avg]
+        assert len(known) == subjects - 1 and sols == [missing], "missscore 검산 실패"
         add(
             "missscore", "DATA_POSSIBILITY", 3, ["평균", "합으로 역산"],
             f"{subjects}과목 시험의 평균이 {avg}점이에요. {len(known)}과목 점수는 {', '.join(map(str, known))}점이에요. 나머지 한 과목은 몇 점일까요?",
@@ -456,6 +474,9 @@ def gen_set_both():
 def gen_handshake():
     for n in [5, 6, 8, 10]:
         ans = n * (n - 1) // 2
+        # 검산: 두 사람 짝 완전열거
+        from itertools import combinations
+        assert sum(1 for _ in combinations(range(n), 2)) == ans, "handshake 검산 실패"
         add(
             "handshake", "DATA_POSSIBILITY", 5, ["경우의 수", "두 번 세고 나누기"],
             f"{n}명이 모여 서로 한 번씩 빠짐없이 악수를 해요. 악수는 모두 몇 번 일어날까요?",
@@ -478,6 +499,14 @@ def gen_handshake():
 def gen_tournament():
     for n in [8, 16, 32, 10]:
         ans = n - 1
+        # 검산: 경기 시뮬레이션 — 두 명이 겨뤄 패자만 탈락, 우승자 혼자 남을 때까지 실제로 세기
+        alive = list(range(n))
+        games = 0
+        while len(alive) > 1:
+            winner, _loser = alive.pop(), alive.pop()  # 한 경기 = 탈락 1명
+            alive.append(winner)
+            games += 1
+        assert games == ans and len(alive) == 1, "tourney 검산 실패"
         add(
             "tourney", "DATA_POSSIBILITY", 5, ["토너먼트", "사라지는 양 세기"],
             f"{n}명이 토너먼트(진 사람은 바로 탈락)로 경기해서 우승자 한 명을 가려요. 우승자가 정해질 때까지 경기는 모두 몇 번 열릴까요?",
@@ -500,6 +529,9 @@ def gen_tournament():
 def gen_permutation():
     for n, ctx in [(4, "책"), (5, "인형"), (6, "색연필"), (4, "컵")]:
         ans = factorial(n)
+        # 검산: 줄 세우기 완전열거
+        from itertools import permutations
+        assert sum(1 for _ in permutations(range(n))) == ans, "perm 검산 실패"
         ctx_en = {"책": "book", "인형": "doll", "색연필": "colored pencil", "컵": "cup"}[ctx]
         add(
             "perm", "DATA_POSSIBILITY", 5, ["경우의 수", "순서 정하기"],
@@ -547,6 +579,9 @@ def gen_weighted_average():
 def gen_coin_flips():
     for n in [3, 4, 5, 6]:
         ans = 2 ** n
+        # 검산: 앞뒤 수열 완전열거
+        from itertools import product
+        assert sum(1 for _ in product("HT", repeat=n)) == ans, "coinflip 검산 실패"
         add(
             "coinflip", "DATA_POSSIBILITY", 4, ["경우의 수", "곱의 원리"],
             f"동전 하나를 {n}번 던져요. 나올 수 있는 앞뒤 결과(예: 앞-뒤-앞…)는 모두 몇 가지일까요?",
@@ -570,6 +605,9 @@ def gen_dice_product():
     for target in [12, 6, 8, 24]:
         pairs = [(a, b) for a in range(1, 7) for b in range(1, 7) if a * b == target]
         cnt = len(pairs)
+        # 검산: 약수 짝 특성화와 교차 확인 — a는 target의 약수, 짝 b=target/a도 1~6
+        assert cnt == sum(1 for d in range(1, 7) if target % d == 0 and 1 <= target // d <= 6), "diceprod 검산 실패"
+        assert all(a * b == target and 1 <= a <= 6 and 1 <= b <= 6 for a, b in pairs), "diceprod 검산 실패: 짝 오류"
         add(
             "diceprod", "DATA_POSSIBILITY", 5, ["경우의 수", "곱"],
             f"주사위 두 개를 던져 나온 두 눈을 곱했더니 {target}이 됐어요. 이렇게 될 수 있는 경우(첫째 주사위, 둘째 주사위)는 모두 몇 가지일까요?",
@@ -593,6 +631,9 @@ def gen_average_needed():
     for done, cur_avg, target_avg in [(3, 80, 85), (4, 75, 80), (2, 90, 88), (4, 82, 85)]:
         n = done + 1
         needed = n * target_avg - done * cur_avg
+        # 검산: 0~150점 전 후보 완전탐색 — 목표 평균을 딱 맞추는 다음 점수는 유일
+        sols = [x for x in range(0, 151) if done * cur_avg + x == n * target_avg]
+        assert sols == [needed], "avgneed 검산 실패"
         add(
             "avgneed", "DATA_POSSIBILITY", 4, ["평균", "총합 사고"],
             f"지금까지 {done}과목 시험을 봐서 평균이 {cur_avg}점이에요. 한 과목을 더 봐서 {n}과목 평균을 {target_avg}점으로 만들려면, 다음 과목에서 몇 점을 받아야 할까요?",
@@ -615,6 +656,9 @@ def gen_average_needed():
 def gen_gift_exchange():
     for n in [4, 5, 6, 8]:
         ans = n * (n - 1)
+        # 검산: (주는 사람, 받는 사람) 방향 있는 짝 완전열거
+        from itertools import permutations
+        assert sum(1 for _ in permutations(range(n), 2)) == ans, "gift 검산 실패"
         add(
             "gift", "DATA_POSSIBILITY", 5, ["경우의 수", "순서 있는 짝"],
             f"{n}명이 서로에게 선물을 하나씩 보내요(자기 자신에겐 안 보내요). 오가는 선물은 모두 몇 개일까요?",
@@ -635,8 +679,24 @@ def gen_gift_exchange():
 
 # ── 109. 하노이탑 = 점화식 (난7, 자료와가능성) ──────────────────────────────
 def gen_hanoi():
+    def _sim(k, src, aux, dst, pegs, log):
+        """원반 k개를 src→dst로 옮기는 표준 해법을 실제로 실행하며 규칙 위반을 검사한다."""
+        if k == 0:
+            return
+        _sim(k - 1, src, dst, aux, pegs, log)
+        disk = pegs[src].pop()
+        assert not pegs[dst] or pegs[dst][-1] > disk, "hanoi 검산 실패: 큰 원반 위 이동"
+        pegs[dst].append(disk)
+        log.append(disk)
+        _sim(k - 1, aux, src, dst, pegs, log)
+
     for n in [3, 4, 5, 6]:
         ans = 2 ** n - 1
+        # 검산: 실제 재귀 시뮬레이션 — 규칙을 지키며 전부 옮겨졌고 이동 수가 ans와 일치
+        pegs = {0: list(range(n, 0, -1)), 1: [], 2: []}
+        log = []
+        _sim(n, 0, 1, 2, pegs, log)
+        assert pegs[2] == list(range(n, 0, -1)) and not pegs[0] and not pegs[1] and len(log) == ans, "hanoi 검산 실패"
         add(
             "hanoi", "DATA_POSSIBILITY", 7, ["점화식", "최소 이동"],
             f"하노이탑: 크기가 다른 원반 {n}개가 기둥에 큰 것부터 쌓여 있어요. 한 번에 한 개씩, 큰 원반을 작은 원반 위에 놓지 않으면서 전부 옆 기둥으로 옮기려면 '최소' 몇 번 움직여야 할까요?",
@@ -659,6 +719,9 @@ def gen_hanoi():
 def gen_handshake_reverse():
     for n in [10, 6, 8, 12]:
         total = n * (n - 1) // 2
+        # 검산: 인원 수 전 후보 탐색 — 악수가 total번이 되는 m은 유일
+        sols = [m for m in range(2, 100) if m * (m - 1) // 2 == total]
+        assert sols == [n], "handrev 검산 실패"
         add(
             "handrev", "DATA_POSSIBILITY", 6, ["역산", "경우의 수"],
             f"어떤 모임에서 사람들이 서로 한 번씩 빠짐없이 악수했더니 악수가 모두 {total}번 일어났어요. 이 모임에는 몇 명이 있었을까요?",
@@ -683,6 +746,9 @@ def gen_median():
         s = sorted(nums)
         n = len(s)
         ans = s[n // 2]
+        # 검산: 정렬에 기대지 않는 위치 확인 — ans보다 작은 값·큰 값이 정확히 절반씩
+        assert n % 2 == 1 and len(set(nums)) == n, "median 검산 실패: 전제(홀수 개·서로 다름)"
+        assert ans in nums and sum(1 for v in nums if v < ans) == n // 2 and sum(1 for v in nums if v > ans) == n // 2, "median 검산 실패"
         add(
             "median", "DATA_POSSIBILITY", 4, ["중앙값", "정렬"],
             f"다음 수들의 '중앙값'(크기 순으로 늘어놓았을 때 한가운데 오는 수)을 구하세요: {', '.join(map(str, nums))}.",
@@ -709,6 +775,12 @@ def gen_collatz():
         while x != 1:
             x = x // 2 if x % 2 == 0 else 3 * x + 1
             steps += 1
+        # 검산: 수열을 처음부터 다시 생성 — 정확히 steps번째에 '처음으로' 1 도달
+        chk_seq = [n]
+        while chk_seq[-1] != 1:
+            assert len(chk_seq) <= 500, "collatz 검산 실패: 수렴 안 함"
+            chk_seq.append(chk_seq[-1] // 2 if chk_seq[-1] % 2 == 0 else 3 * chk_seq[-1] + 1)
+        assert len(chk_seq) - 1 == steps and 1 not in chk_seq[:-1], "collatz 검산 실패"
         add(
             "collatz", "DATA_POSSIBILITY", 6, ["규칙 따라가기", "콜라츠"],
             f"어떤 수에 규칙을 반복해요: 짝수면 2로 나누고, 홀수면 3을 곱한 뒤 1을 더해요. {n}에서 시작하면 '1'이 될 때까지 규칙을 몇 번 적용해야 할까요?",
@@ -737,6 +809,10 @@ def gen_tribonacci_stairs():
                 if i - step >= 0:
                     ways[i] += ways[i - step]
         ans = ways[n]
+        # 검산: 걸음 수열 완전열거 — 합이 n이 되는 1·2·3 수열을 실제로 나열해 세기
+        from itertools import product
+        chk_cnt = sum(1 for k in range(1, n + 1) for seq in product((1, 2, 3), repeat=k) if sum(seq) == n)
+        assert chk_cnt == ans, "tribstairs 검산 실패"
         add(
             "tribstairs", "DATA_POSSIBILITY", 6, ["경우 나누어 세기", "점화식"],
             f"한 번에 1칸, 2칸, 또는 3칸씩 오를 수 있는 {n}칸 계단이 있어요. 오르는 서로 다른 방법은 모두 몇 가지일까요?",
@@ -759,6 +835,12 @@ def gen_tribonacci_stairs():
 def gen_toggle_lights():
     for n in [10, 25, 16, 36]:
         ans = int(n ** 0.5)
+        # 검산: 전구 상태 실제 토글 시뮬레이션
+        bulbs = [False] * (n + 1)
+        for person in range(1, n + 1):
+            for pos in range(person, n + 1, person):
+                bulbs[pos] = not bulbs[pos]
+        assert sum(bulbs[1:]) == ans, "lights 검산 실패"
         add(
             "lights", "DATA_POSSIBILITY", 7, ["약수의 개수", "제곱수"],
             f"{n}개의 전구가 일렬로 있고 모두 꺼져 있어요. 1번 사람은 1의 배수 자리(전부), 2번 사람은 2의 배수 자리, … {n}번 사람은 {n}의 배수 자리 전구의 스위치를 눌러요(켜져 있으면 끄고, 꺼져 있으면 켜요). 모두 지나간 뒤 '켜져 있는' 전구는 몇 개일까요?",
@@ -781,6 +863,9 @@ def gen_toggle_lights():
 def gen_position_count():
     for front, back in [(4, 3), (3, 5), (6, 2), (2, 4)]:
         ans = front + back - 1
+        # 검산: 줄 길이 전 후보 탐색 — 앞에서 front번째이면서 뒤에서 back번째일 수 있는 인원은 유일
+        sols = [tot for tot in range(1, 30) if any(p == front and tot - p + 1 == back for p in range(1, tot + 1))]
+        assert sols == [ans], "position 검산 실패"
         add(
             "position", "DATA_POSSIBILITY", 2, ["위치 사고", "간격"],
             f"아이들이 한 줄로 서 있어요. 민수는 앞에서 {front}번째이고, 동시에 뒤에서 {back}번째예요. 줄에 서 있는 아이는 모두 몇 명일까요?",
@@ -808,6 +893,9 @@ def gen_choose_two():
     for names in [["딸기", "포도", "귤"], ["빨강", "파랑", "노랑", "초록"], ["가", "나", "다", "라", "마"], ["사과", "배", "감", "밤"]]:
         n = len(names)
         ans = n * (n - 1) // 2
+        # 검산: 두 개 고르기 완전열거
+        from itertools import combinations
+        assert sum(1 for _ in combinations(names, 2)) == ans, "choose2 검산 실패"
         add(
             "choose2", "DATA_POSSIBILITY", 1, ["조합", "순서 무관"],
             f"서로 다른 {n}가지({', '.join(names)}) 중에서 2가지를 고르려고 해요. 고르는 순서는 상관없어요({names[0]}·{names[1]} = {names[1]}·{names[0]}). 고르는 방법은 모두 몇 가지일까요?",
@@ -841,6 +929,9 @@ def gen_data_read():
     for topic, data in surveys:
         s = sorted(data, key=lambda x: -x[1])
         second = s[1][0]
+        # 검산: 정렬에 기대지 않는 재확인 — 표 수는 모두 다르고, second보다 많은 항목은 정확히 1개
+        assert len({v for _, v in data}) == len(data), "dataread 검산 실패: 표 수 동률"
+        assert sum(1 for _, v in data if v > dict(data)[second]) == 1, "dataread 검산 실패"
         add(
             "dataread", "DATA_POSSIBILITY", 1, ["자료 해석", "순서 비교"],
             f"우리 반 친구들에게 {topic}{_eul(topic)} 물었어요. {', '.join(f'{k} {v}명' for k, v in data)}. 두 번째로 많이 나온 것은 무엇일까요?",
@@ -868,6 +959,10 @@ def gen_stars_bars():
     for total_items, kids in [(5, 3), (6, 3), (7, 3), (4, 2)]:
         ans = comb(total_items + kids - 1, kids - 1)
         wrong_no_zero = comb(total_items - 1, kids - 1) if total_items >= kids else 0  # 각자 1개 이상일 때(흔한 혼동)
+        # 검산: 분배 완전열거 — 아이별로 받는 개수 튜플을 실제로 나열해 세기
+        from itertools import product
+        chk_cnt = sum(1 for dist in product(range(total_items + 1), repeat=kids) if sum(dist) == total_items)
+        assert chk_cnt == ans, "starsbars 검산 실패"
         add(
             "starsbars", "DATA_POSSIBILITY", 8, ["중복조합", "같은 것 나누기"],
             f"똑같은 사탕 {total_items}개를 {kids}명의 아이에게 남김없이 나눠 줘요. 한 개도 못 받는 아이가 있어도 돼요. "
@@ -900,6 +995,9 @@ def gen_league():
     # 리그전(서로 한 번씩) 경기 수 = C(n,2). 중복(A-B=B-A)을 빼는 세기. (자료와가능성 난3)
     for n in [4, 5, 6, 7]:
         ans = n * (n - 1) // 2
+        # 검산: 두 팀 짝 완전열거
+        from itertools import combinations
+        assert sum(1 for _ in combinations(range(n), 2)) == ans, "league 검산 실패"
         add(
             "league", "DATA_POSSIBILITY", 3, ["경우의 수", "중복 빼기"],
             f"{n}개 팀이 서로 한 번씩 경기를 해요. 모두 몇 경기를 하게 될까요?",
@@ -928,6 +1026,10 @@ def gen_twodigit():
     for cards in [[1, 2, 3, 4], [2, 3, 5], [1, 3, 5, 7], [4, 6, 8]]:
         n = len(cards)
         ans = n * (n - 1)
+        # 검산: 두 자리 수를 실제로 만들어 '서로 다른' 것만 세기
+        from itertools import permutations
+        made = {10 * a + b for a, b in permutations(cards, 2)}
+        assert len(made) == ans and all(10 <= v <= 99 for v in made), "twodigit 검산 실패"
         card_str = ", ".join(map(str, cards))
         add(
             "twodigit", "DATA_POSSIBILITY", 3, ["경우의 수", "자리별로 세기"],
@@ -959,6 +1061,9 @@ def gen_tablediff():
     for a, b, c, d in [(3, 5, 2, 6), (4, 7, 1, 5), (8, 3, 6, 2), (5, 9, 4, 7)]:
         vals = [a, b, c, d]
         ans = max(vals) - min(vals)
+        # 검산: 두 날 짝 전부에서 차이의 최댓값을 직접 세기
+        from itertools import combinations
+        assert max(abs(x - y) for x, y in combinations(vals, 2)) == ans, "tablediff 검산 실패"
         add(
             "tablediff", "DATA_POSSIBILITY", 3, ["자료 읽기", "최댓값·최솟값"],
             f"월·화·수·목요일에 읽은 책이 각각 {a}권, {b}권, {c}권, {d}권이에요. 가장 많이 읽은 날과 가장 적게 읽은 날의 "
@@ -988,6 +1093,9 @@ def gen_electpair():
     # 반장·부반장 뽑기 = 순서 있는 2명 뽑기 nP2 = n(n−1). (자료와가능성 난4)
     for n in [4, 5, 6, 8]:
         ans = n * (n - 1)
+        # 검산: (반장, 부반장) 순서 있는 짝 완전열거
+        from itertools import permutations
+        assert sum(1 for _ in permutations(range(n), 2)) == ans, "electpair 검산 실패"
         add(
             "electpair", "DATA_POSSIBILITY", 4, ["경우의 수", "순서 있는 뽑기"],
             f"{n}명 중에서 반장 1명과 부반장 1명을 뽑아요. 한 사람이 둘 다 할 수는 없어요. 뽑는 방법은 모두 몇 가지일까요?",
@@ -1014,6 +1122,14 @@ def gen_knockout():
     # 토너먼트(지면 탈락) 우승까지 경기 수 = 참가자 − 1 (경기마다 한 명 탈락). (자료와가능성 난2)
     for n in [8, 4, 16, 6]:
         ans = n - 1
+        # 검산: 경기 시뮬레이션 — 두 명이 겨뤄 패자만 탈락, 우승자 혼자 남을 때까지 실제로 세기
+        alive = list(range(n))
+        games = 0
+        while len(alive) > 1:
+            winner, _loser = alive.pop(), alive.pop()  # 한 경기 = 탈락 1명
+            alive.append(winner)
+            games += 1
+        assert games == ans and len(alive) == 1, "knockout 검산 실패"
         add(
             "knockout", "DATA_POSSIBILITY", 2, ["거꾸로 생각하기", "탈락으로 세기"],
             f"{n}명이 토너먼트로 우승자를 가려요. 한 번 지면 바로 탈락할 때, 우승자가 정해질 때까지 모두 몇 경기를 "
@@ -1046,6 +1162,11 @@ def gen_atleastprob():
     for n in [4, 3, 5, 2]:
         whole = 2 ** n
         ans = f"{whole - 1}/{whole}"
+        # 검산: 표본공간 2^n 전수 나열 — '적어도 하나 앞면'의 분자·분모를 직접 세기
+        from itertools import product
+        space = list(product("HT", repeat=n))
+        fav = sum(1 for o in space if "H" in o)
+        assert len(space) == whole and fav == whole - 1 and gcd(fav, whole) == 1, "atleastprob 검산 실패"
         add(
             "atleastprob", "DATA_POSSIBILITY", 6, ["여사건", "적어도"],
             f"공정한 동전 {n}개를 동시에 던져요. 적어도 한 개는 앞면이 나올 확률은 얼마일까요?",
@@ -1072,6 +1193,10 @@ def gen_setpartition():
     for n in [4, 5, 3, 6]:
         ans = 2 ** (n - 1) - 1
         whole = 2 ** n
+        # 검산: 소속 배정 완전열거 — 비지 않은 이분할을 세고, 이름 없는 중복(2배)을 나눔
+        from itertools import product
+        chk_cnt = sum(1 for assign in product((0, 1), repeat=n) if 0 < sum(assign) < n)
+        assert chk_cnt % 2 == 0 and chk_cnt // 2 == ans, "setpartition 검산 실패"
         add(
             "setpartition", "DATA_POSSIBILITY", 10, ["집합 나누기", "여집합 중복"],
             f"서로 다른 {n}명을 비어 있지 않은 두 모둠으로 나눠요. 두 모둠을 구별하지 않을 때(A·B 이름 없음), "
@@ -1098,6 +1223,9 @@ def gen_barchart():
     for vals in [[3, 5, 2, 6], [4, 7, 3, 8], [6, 2, 9, 5], [5, 10, 7, 4]]:
         ordered = sorted(vals, reverse=True)
         ans = ordered[1]
+        # 검산: 정렬에 기대지 않는 재확인 — 막대 값은 모두 다르고 ans보다 큰 막대는 정확히 1개
+        assert len(set(vals)) == len(vals), "barchart 검산 실패: 막대 동률"
+        assert ans in vals and sum(1 for v in vals if v > ans) == 1, "barchart 검산 실패"
         add(
             "barchart", "DATA_POSSIBILITY", 3, ["자료 읽기", "크기 순 비교"],
             "아래 그래프는 가·나·다·라 네 반이 모은 화분 수예요. 둘째로 많이 모은 반은 화분을 몇 개 모았을까요?",
@@ -1126,6 +1254,9 @@ def gen_chartavg():
     for vals in [[4, 6, 8, 10], [3, 5, 9, 7], [8, 4, 6, 10], [5, 11, 7, 9]]:
         total = sum(vals)
         ans = total // len(vals)
+        # 검산: 평균의 정수성 + 편차 합 0 — 평균에서 벗어난 만큼의 합은 정확히 0이어야 함
+        assert total % len(vals) == 0, "chartavg 검산 실패: 평균이 정수가 아님"
+        assert sum(v - ans for v in vals) == 0, "chartavg 검산 실패"
         add(
             "chartavg", "DATA_POSSIBILITY", 5, ["자료 읽기", "평균"],
             "아래 그래프는 가·나·다·라 네 모둠이 캔 감자 수예요. 네 모둠이 캔 감자의 평균은 몇 개일까요?",
@@ -1153,6 +1284,14 @@ def gen_necklace():
     for n in [4, 5, 6, 7]:
         circ = factorial(n - 1)
         ans = circ // 2
+        # 검산: 순열 완전열거 — 회전·뒤집기 동치류의 대표(최소 튜플)를 모아 세기
+        from itertools import permutations
+        reps = set()
+        for p in permutations(range(n)):
+            variants = [p[r:] + p[:r] for r in range(n)]
+            variants += [v[::-1] for v in variants]
+            reps.add(min(variants))
+        assert len(reps) == ans, "necklace 검산 실패"
         add(
             "necklace", "DATA_POSSIBILITY", 8, ["염주순열", "회전·대칭 겹침"],
             f"서로 다른 구슬 {n}개를 실에 꿰어 목걸이를 만들어요. 돌리거나 뒤집어서 같아지는 것은 한 가지로 볼 때, "
@@ -1181,6 +1320,9 @@ def gen_passcode():
     # 반복 허용 비밀번호 경우의 수 = (숫자 종류)^(자리 수). (자료와가능성 난6)
     for base, dig in [(10, 3), (2, 5), (6, 3), (3, 4)]:
         ans = base ** dig
+        # 검산: 비밀번호 완전열거
+        from itertools import product
+        assert sum(1 for _ in product(range(base), repeat=dig)) == ans, "passcode 검산 실패"
         add(
             "passcode", "DATA_POSSIBILITY", 6, ["곱의 법칙", "반복 허용"],
             f"0부터 {base - 1}까지 {base}가지 숫자로 {dig}자리 비밀번호를 만들어요. 같은 숫자를 여러 번 써도 될 때, "
@@ -1207,6 +1349,9 @@ def gen_avgbasic():
     for vals in [[4, 6, 8, 10], [2, 4, 9, 5], [10, 20, 30, 40], [3, 7, 8, 6]]:
         total = sum(vals)
         ans = total // len(vals)
+        # 검산: 평균의 정수성 + 편차 합 0 — 평균에서 벗어난 만큼의 합은 정확히 0이어야 함
+        assert total % len(vals) == 0, "avgbasic 검산 실패: 평균이 정수가 아님"
+        assert sum(v - ans for v in vals) == 0, "avgbasic 검산 실패"
         vs = ", ".join(str(v) for v in vals)
         add(
             "avgbasic", "DATA_POSSIBILITY", 4, ["평균", "합 나누기"],
@@ -1232,6 +1377,9 @@ def gen_lineup():
     # n명을 한 줄로 세우는 방법 = n!. (자료와가능성 난4)
     for n in [3, 4, 5, 6]:
         ans = factorial(n)
+        # 검산: 줄 세우기 완전열거
+        from itertools import permutations
+        assert sum(1 for _ in permutations(range(n))) == ans, "lineup 검산 실패"
         add(
             "lineup", "DATA_POSSIBILITY", 4, ["경우의 수", "순서 세기"],
             f"서로 다른 {n}명이 한 줄로 서는 방법은 모두 몇 가지일까요?",
@@ -1258,6 +1406,10 @@ def gen_mode():
         ans = max(set(vals), key=vals.count)
         vs = ", ".join(str(v) for v in vals)
         second = sorted(set(vals), key=vals.count)[-2]
+        # 검산: 등장 횟수 직접 대조 — ans가 최다 등장이고 최다는 유일
+        top = max(vals.count(v) for v in set(vals))
+        assert vals.count(ans) == top, "mode 검산 실패"
+        assert sum(1 for v in set(vals) if vals.count(v) == top) == 1, "mode 검산 실패: 최빈값 동률"
         add(
             "mode", "DATA_POSSIBILITY", 4, ["최빈값", "자료 정리"],
             f"자료 {vs} 가 있어요. 가장 많이 나온 수(최빈값)는 무엇일까요?",
@@ -1285,6 +1437,11 @@ def gen_simpleprob():
     for r, b in [(3, 2), (2, 4), (4, 6), (5, 3)]:
         total = r + b
         ans = _frac(r, total)
+        # 검산: 표본공간(공 하나하나) 전수 나열 + 기약분수 교차곱 확인
+        balls = ["빨강"] * r + ["파랑"] * b
+        fav = sum(1 for ball in balls if ball == "빨강")
+        num, den = map(int, ans.split("/"))
+        assert len(balls) == total and fav * den == num * total and gcd(num, den) == 1, "simpleprob 검산 실패"
         cands = [_frac(b, total), f"{r}/{b}", _frac(r + 1, total), _frac(r, total + 1)]
         distract = []
         for c in cands:
@@ -1319,6 +1476,10 @@ def gen_derange():
     for n in [4, 5, 6, 3]:
         ans = d[n]
         allperm = factorial(n)
+        # 검산: 순열 완전열거 — 제자리가 하나도 없는 순열을 직접 세기
+        from itertools import permutations
+        chk_cnt = sum(1 for p in permutations(range(n)) if all(p[i] != i for i in range(n)))
+        assert chk_cnt == ans, "derange 검산 실패"
         add(
             "derange", "DATA_POSSIBILITY", 9, ["교란순열", "포함배제"],
             f"{n}명이 각자 자기 이름표를 하나씩 갖고 있다가, 전부 걷어 섞은 뒤 다시 한 개씩 나눠 가졌어요. "
@@ -1357,6 +1518,10 @@ def gen_multiperm():
         ans = factorial(total)
         for _, c in colors:
             ans //= factorial(c)
+        # 검산: 구슬 배열 완전열거 — 같은 색을 같은 기호로 두고 '서로 다른' 배열만 세기
+        from itertools import permutations
+        beads = [name for name, c in colors for _ in range(c)]
+        assert len(set(permutations(beads))) == ans, "multiperm 검산 실패"
         desc = ", ".join(f"{name} 구슬 {c}개" for name, c in colors)
         denom = "×".join(f"{c}!" for _, c in colors)
         color_en = {"빨강": "red", "파랑": "blue", "노랑": "yellow"}
@@ -1390,6 +1555,19 @@ def gen_catalan():
     for n in [3, 4, 5, 2]:
         whole = comb(2 * n, n)
         ans = whole // (n + 1)
+        # 검산: 괄호열 완전열거 — 접두사에서 닫힘이 앞서지 않는 배열을 직접 세기
+        from itertools import product
+        chk_cnt = 0
+        for seq in product((1, -1), repeat=2 * n):
+            run = 0
+            for step in seq:
+                run += step
+                if run < 0:
+                    break
+            else:
+                if run == 0:
+                    chk_cnt += 1
+        assert chk_cnt == ans, "catalan 검산 실패"
         add(
             "catalan", "DATA_POSSIBILITY", 10, ["카탈란 수", "올바른 배열 세기"],
             f"여는 괄호 '(' {n}개와 닫는 괄호 ')' {n}개, 모두 {2 * n}개를 한 줄로 놓아요. 왼쪽에서부터 어느 자리까지 세어도 "
@@ -1423,6 +1601,17 @@ def gen_partition():
     for n in [5, 6, 7, 4]:
         ans = part(n, n)
         ordered = 2 ** (n - 1)  # 순서를 구별하면(합성) 2^(n-1) — 흔한 혼동
+        # 검산: 합성(순서 구별) 완전열거 후 정렬 대표로 접기 — 분할 수·합성 수를 함께 확인
+        from itertools import combinations
+        seen = set()
+        comp_cnt = 0
+        for r2 in range(n):
+            for cuts in combinations(range(1, n), r2):
+                bounds = (0,) + cuts + (n,)
+                seen.add(tuple(sorted(bounds[i + 1] - bounds[i] for i in range(len(bounds) - 1))))
+                comp_cnt += 1
+        assert comp_cnt == ordered, "partition 검산 실패: 합성 수"
+        assert len(seen) == ans, "partition 검산 실패"
         add(
             "partition", "DATA_POSSIBILITY", 9, ["자연수의 분할", "순서 무시 세기"],
             f"{n}{_eul(str(n))} 1 이상의 자연수의 합으로 나타내는 방법은 모두 몇 가지일까요? "
