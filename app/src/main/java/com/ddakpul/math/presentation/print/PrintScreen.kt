@@ -6,6 +6,8 @@ import android.print.PrintManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -107,6 +109,7 @@ fun PrintScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PrintOptionsBody(
     uiState: PrintUiState,
@@ -160,20 +163,18 @@ private fun PrintOptionsBody(
         }
 
         SectionCard(title = stringResource(R.string.print_area_label)) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            // 칩 개수(전체 + 4영역)와 라벨 길이가 로케일마다 달라 한 줄에 안 들어가므로,
+            // 가로 스크롤 대신 FlowRow로 자연스럽게 줄바꿈해 어떤 폭에서도 모두 보이게 한다.
+            FlowRow(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 FilterChip(
                     selected = uiState.area == null,
                     onClick = { onAreaChange(null) },
                     label = { Text(stringResource(R.string.print_area_all)) },
                 )
-            }
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
                 MathArea.entries.forEach { area ->
                     FilterChip(
                         selected = uiState.area == area,
@@ -193,6 +194,7 @@ private fun PrintOptionsBody(
                 text = stringResource(R.string.print_include_answers),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f).padding(end = 12.dp),
             )
             Switch(
                 checked = uiState.includeAnswers,

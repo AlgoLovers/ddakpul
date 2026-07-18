@@ -42,6 +42,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -531,7 +532,10 @@ private fun AvgTimeBars(avgByDifficulty: Map<Int, Int>) {
                 Text(
                     text = stringResource(R.string.report_avgtime_level, level),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.width(60.dp),
+                    maxLines = 1,
+                    // 큰 글씨 접근성(fontScale↑)에서 "난이도 10"이 60dp를 넘겨 두 줄로 깨지지 않게
+                    // 최소폭만 두고 필요하면 늘어나게 한다(고정폭이면 wrap, 여기선 라벨이 온전).
+                    modifier = Modifier.widthIn(min = 60.dp),
                 )
                 Box(
                     modifier =
@@ -599,6 +603,9 @@ private fun AreaBreakdown(areaStats: List<AreaStat>) {
                         text = stringResource(area.labelRes()),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
                     )
                     Text(
                         text =
@@ -609,6 +616,7 @@ private fun AreaBreakdown(areaStats: List<AreaStat>) {
                             },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(start = 8.dp),
                     )
                 }
                 Box(
@@ -748,13 +756,19 @@ private fun ConceptRow(concept: ConceptStat) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
+                modifier = Modifier.weight(1f),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                // 개념명이 길면(영어 태그는 30자↑) 통계를 밀어내 글자 단위로 깨지므로,
+                // 이름은 남는 폭 안에서 말줄임하고 배지·통계는 항상 온전히 보이게 한다.
                 Text(
                     text = concept.concept,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f, fill = false),
                 )
                 MasteryChip(masteryStageOf(concept.solved, concept.accuracy))
             }
@@ -767,6 +781,7 @@ private fun ConceptRow(concept: ConceptStat) {
                     ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
         LinearProgressIndicator(

@@ -231,12 +231,17 @@ private fun ReadAloudButton(
                 maxLines = 1,
             )
         }
-        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지).
+        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지). 단, 엔진명이 매우 긴 기기
+        // (예: "Speech Recognition & Synthesis from Google")에선 이 줄이 도구 영역을 넓혀
+        // 좌측 영역/난이도 라벨을 삼키므로, 폭을 상한하고 한 줄로 말줄임한다.
         if (speaker.engineLabel.isNotBlank()) {
             Text(
                 text = stringResource(R.string.solve_reading_with, speaker.engineLabel),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.widthIn(max = 140.dp),
             )
         }
     }
