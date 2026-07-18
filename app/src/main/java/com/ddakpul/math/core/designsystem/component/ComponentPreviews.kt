@@ -27,8 +27,8 @@ private fun DesignSystemPreview() {
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    StatTile(label = "푼 문제", value = "13문제", icon = "📚", modifier = Modifier.weight(1f))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    StatTile(label = "푼 문제", value = "306", icon = "📚", modifier = Modifier.weight(1f))
                     StatTile(label = "정답률", value = "85%", icon = "🎯", modifier = Modifier.weight(1f))
                     StatTile(label = "현재 난이도", value = "Lv.9", icon = "🏆", modifier = Modifier.weight(1f))
                 }

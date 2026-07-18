@@ -19,7 +19,7 @@
     <string name="home_stat_solved">푼 문제</string>
     <string name="home_stat_accuracy">정답률</string>
     <string name="home_stat_difficulty">현재 난이도</string>
-    <string name="home_unit_count">%1$d문제</string>
+    <string name="home_unit_count">%1$d</string>
     <string name="home_unit_percent">%1$d%%</string>
     <string name="home_unit_level">Lv.%1$d</string>
 
