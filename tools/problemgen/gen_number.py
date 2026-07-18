@@ -1178,7 +1178,9 @@ def gen_makesquare():
 
 
 def gen_sigma():
-    # 진약수의 합(자기 제외). 완전수·부족수·과잉수 판별의 기초. (수와연산 난10)
+    # 진약수의 합(자기 제외). 완전수·부족수·과잉수 판별의 기초. (수와연산 난4)
+    # 난이도 재조정(난10→4, 2026-07 d10 감사): 작은 수(12~28) 약수 나열·덧셈의
+    # 약한 열거 — 비자명 정리 없음.
     for n in [28, 12, 24, 18]:
         divisors = [d for d in range(1, n) if n % d == 0]
         ans = sum(divisors)
@@ -1186,7 +1188,7 @@ def gen_sigma():
         note = " (자기 자신과 같아 '완전수'예요)" if ans == n else ""
         note_en = " (it equals the number itself, so it's a 'perfect number')" if ans == n else ""
         add(
-            "sigma", "NUMBER_OPERATION", 10, ["약수", "진약수의 합"],
+            "sigma", "NUMBER_OPERATION", 4, ["약수", "진약수의 합"],
             f"{n}의 진약수(자기 자신 {n}{_eul(str(n))} 뺀 약수)를 모두 더하면 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [ans + n, ans - 1, ans + 1, n])],
             f"{n}의 진약수는 {div_str}이에요. 모두 더하면 {ans}예요{note}.",

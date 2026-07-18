@@ -4122,10 +4122,10 @@
   },
   {
    "id": "gen-sigma-1",
-   "code": "10-02-11-10-01",
+   "code": "10-02-11-04-01",
    "area": "NUMBER_OPERATION",
-   "difficulty": 10,
-   "groupId": "g-gen-sigma-10",
+   "difficulty": 4,
+   "groupId": "g-gen-sigma-4",
    "concepts": [
     "약수",
     "진약수의 합"
@@ -4150,10 +4150,10 @@
   },
   {
    "id": "gen-sigma-2",
-   "code": "10-02-11-10-02",
+   "code": "10-02-11-04-02",
    "area": "NUMBER_OPERATION",
-   "difficulty": 10,
-   "groupId": "g-gen-sigma-10",
+   "difficulty": 4,
+   "groupId": "g-gen-sigma-4",
    "concepts": [
     "약수",
     "진약수의 합"
@@ -4178,10 +4178,10 @@
   },
   {
    "id": "gen-sigma-3",
-   "code": "10-02-11-10-03",
+   "code": "10-02-11-04-03",
    "area": "NUMBER_OPERATION",
-   "difficulty": 10,
-   "groupId": "g-gen-sigma-10",
+   "difficulty": 4,
+   "groupId": "g-gen-sigma-4",
    "concepts": [
     "약수",
     "진약수의 합"
@@ -4206,10 +4206,10 @@
   },
   {
    "id": "gen-sigma-4",
-   "code": "10-02-11-10-04",
+   "code": "10-02-11-04-04",
    "area": "NUMBER_OPERATION",
-   "difficulty": 10,
-   "groupId": "g-gen-sigma-10",
+   "difficulty": 4,
+   "groupId": "g-gen-sigma-4",
    "concepts": [
     "약수",
     "진약수의 합"
@@ -4362,10 +4362,10 @@
   },
   {
    "id": "gen-conevolume-1",
-   "code": "30-04-01-10-01",
+   "code": "30-04-01-03-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-conevolume-10",
+   "difficulty": 3,
+   "groupId": "g-gen-conevolume-3",
    "concepts": [
     "뿔의 부피",
     "기둥의 3분의 1"
@@ -4390,10 +4390,10 @@
   },
   {
    "id": "gen-conevolume-2",
-   "code": "30-04-01-10-02",
+   "code": "30-04-01-03-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-conevolume-10",
+   "difficulty": 3,
+   "groupId": "g-gen-conevolume-3",
    "concepts": [
     "뿔의 부피",
     "기둥의 3분의 1"
@@ -4418,10 +4418,10 @@
   },
   {
    "id": "gen-conevolume-3",
-   "code": "30-04-01-10-03",
+   "code": "30-04-01-03-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-conevolume-10",
+   "difficulty": 3,
+   "groupId": "g-gen-conevolume-3",
    "concepts": [
     "뿔의 부피",
     "기둥의 3분의 1"
@@ -4446,10 +4446,10 @@
   },
   {
    "id": "gen-conevolume-4",
-   "code": "30-04-01-10-04",
+   "code": "30-04-01-03-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-conevolume-10",
+   "difficulty": 3,
+   "groupId": "g-gen-conevolume-3",
    "concepts": [
     "뿔의 부피",
     "기둥의 3분의 1"
@@ -4698,10 +4698,10 @@
   },
   {
    "id": "gen-cubesum-1",
-   "code": "20-02-03-10-01",
+   "code": "20-02-03-04-01",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-cubesum-10",
+   "difficulty": 4,
+   "groupId": "g-gen-cubesum-4",
    "concepts": [
     "수열의 합",
     "숨은 관계 발견"
@@ -4730,10 +4730,10 @@
   },
   {
    "id": "gen-cubesum-2",
-   "code": "20-02-03-10-02",
+   "code": "20-02-03-04-02",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-cubesum-10",
+   "difficulty": 4,
+   "groupId": "g-gen-cubesum-4",
    "concepts": [
     "수열의 합",
     "숨은 관계 발견"
@@ -4762,10 +4762,10 @@
   },
   {
    "id": "gen-cubesum-3",
-   "code": "20-02-03-10-03",
+   "code": "20-02-03-04-03",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-cubesum-10",
+   "difficulty": 4,
+   "groupId": "g-gen-cubesum-4",
    "concepts": [
     "수열의 합",
     "숨은 관계 발견"
@@ -4794,10 +4794,10 @@
   },
   {
    "id": "gen-cubesum-4",
-   "code": "20-02-03-10-04",
+   "code": "20-02-03-04-04",
    "area": "CHANGE_RELATION",
-   "difficulty": 10,
-   "groupId": "g-gen-cubesum-10",
+   "difficulty": 4,
+   "groupId": "g-gen-cubesum-4",
    "concepts": [
     "수열의 합",
     "숨은 관계 발견"
@@ -4826,10 +4826,10 @@
   },
   {
    "id": "gen-pick-1",
-   "code": "30-01-15-10-01",
+   "code": "30-01-15-05-01",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-pick-10",
+   "difficulty": 5,
+   "groupId": "g-gen-pick-5",
    "concepts": [
     "픽의 정리",
     "격자점으로 넓이"
@@ -4858,10 +4858,10 @@
   },
   {
    "id": "gen-pick-2",
-   "code": "30-01-15-10-02",
+   "code": "30-01-15-05-02",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-pick-10",
+   "difficulty": 5,
+   "groupId": "g-gen-pick-5",
    "concepts": [
     "픽의 정리",
     "격자점으로 넓이"
@@ -4890,10 +4890,10 @@
   },
   {
    "id": "gen-pick-3",
-   "code": "30-01-15-10-03",
+   "code": "30-01-15-05-03",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-pick-10",
+   "difficulty": 5,
+   "groupId": "g-gen-pick-5",
    "concepts": [
     "픽의 정리",
     "격자점으로 넓이"
@@ -4922,10 +4922,10 @@
   },
   {
    "id": "gen-pick-4",
-   "code": "30-01-15-10-04",
+   "code": "30-01-15-05-04",
    "area": "SHAPE_MEASUREMENT",
-   "difficulty": 10,
-   "groupId": "g-gen-pick-10",
+   "difficulty": 5,
+   "groupId": "g-gen-pick-5",
    "concepts": [
     "픽의 정리",
     "격자점으로 넓이"

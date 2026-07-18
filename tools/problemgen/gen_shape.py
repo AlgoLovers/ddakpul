@@ -1080,11 +1080,13 @@ def gen_euler():
 
 
 def gen_conevolume():
-    # 뿔의 부피 = 밑넓이 × 높이 ÷ 3 (같은 밑면·높이 기둥의 1/3). (도형과측정 난10)
+    # 뿔의 부피 = 밑넓이 × 높이 ÷ 3 (같은 밑면·높이 기둥의 1/3). (도형과측정 난3)
+    # 난이도 재조정(난10→3, 2026-07 d10 감사): 공식을 문제에 명시하고 곱1·나눗1만 하는
+    # 적용형 — '스스로 발견'이 없어 경시급 부적격.
     for base, h in [(12, 5), (9, 4), (18, 7), (6, 10)]:
         ans = base * h // 3
         add(
-            "conevolume", "SHAPE_MEASUREMENT", 10, ["뿔의 부피", "기둥의 3분의 1"],
+            "conevolume", "SHAPE_MEASUREMENT", 3, ["뿔의 부피", "기둥의 3분의 1"],
             f"밑면의 넓이가 {base}cm², 높이가 {h}cm인 뿔(각뿔·원뿔)의 부피는 몇 cm³일까요?",
             f"{ans}cm³", [f"{c}cm³" for c in _pick_distractors(ans, [base * h, base * h // 2, ans + 2, ans - 2])],
             f"뿔의 부피는 밑면과 높이가 같은 기둥의 딱 3분의 1이에요. 밑넓이 × 높이 ÷ 3 = {base} × {h} ÷ 3 = {ans}cm³예요.",
@@ -1376,11 +1378,13 @@ def gen_polyhedron():
 
 
 def gen_pick():
-    # 픽의 정리: 격자 다각형 넓이 = 내부 격자점 + 둘레 격자점÷2 − 1. (도형과측정 난10)
+    # 픽의 정리: 격자 다각형 넓이 = 내부 격자점 + 둘레 격자점÷2 − 1. (도형과측정 난5)
+    # 난이도 재조정(난10→5, 2026-07 d10 감사): I·B를 문제가 주고 공식 한 줄 대입 —
+    # recur(적용형, d5)와 동일 계급. 점 세기부터 시키는 발견형으로 개편하면 승급 여지.
     for inner, boundary in [(4, 6), (5, 8), (0, 4), (6, 10)]:
         ans = inner + boundary // 2 - 1
         add(
-            "pick", "SHAPE_MEASUREMENT", 10, ["픽의 정리", "격자점으로 넓이"],
+            "pick", "SHAPE_MEASUREMENT", 5, ["픽의 정리", "격자점으로 넓이"],
             f"모눈종이의 격자점을 꼭짓점으로 하는 다각형이 있어요. 다각형 '내부'에 있는 격자점이 {inner}개, "
             f"'둘레(변)' 위에 있는 격자점이 {boundary}개예요. 이 다각형의 넓이는 얼마일까요? (모눈 한 칸 넓이는 1)",
             str(ans), [str(c) for c in _pick_distractors(ans, [inner + boundary, inner + boundary // 2, ans + 1, ans + 2])],
