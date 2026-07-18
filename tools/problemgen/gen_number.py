@@ -1474,3 +1474,426 @@ def gen_crt3():
                 "detail": "When the remainders on division by several pairwise-coprime numbers are all fixed, exactly one number satisfying every condition exists in each period of 'the product of the divisors' (the Chinese Remainder Theorem). Narrowing condition by condition, you can find the smallest answer by hand. It's a system of simultaneous equations in the world of remainders.",
             },
         )
+
+
+# ══ 천장 보충(2026-07, CEILING_SPECS §3.4·§3.5) + 중층 발견형 4종 신설 ══════════
+# 아래 6 family는 전부 결정적 파라미터(rng 소비 없음) · 독립 브루트포스 검산 ·
+# en= 짝(concepts 포함) 규약을 지킨다. GENERATORS 등록은 상위 세션이 말미 append로.
+
+
+def gen_ternweight():
+    # 양팔 저울과 추 1·3·9·27g — 물건 쪽에 놓을 추 찾기(균형 삼진법). (수와연산 난10)
+    # CEILING_SPECS §3.4 구현. 발견형 근거: '물건 쪽 추=빼기' 전략은 힌트로만 스치고 어떤 추를
+    # 어느 쪽에 놓는지는 온전히 탐색·발견해야 하며, 한쪽 접시 조합 나열로는 도달 불가능한 답이다.
+    from itertools import product
+
+    def choice_ko(ws):
+        return f"{ws[0]}g 하나만" if len(ws) == 1 else prose_ko(ws)
+
+    def prose_ko(ws):
+        if len(ws) == 1:
+            return f"{ws[0]}g"
+        if len(ws) == 2:
+            return f"{ws[0]}g과 {ws[1]}g"
+        return ", ".join(f"{w}g" for w in ws)
+
+    def choice_en(ws):
+        return f"only the {ws[0]}g weight" if len(ws) == 1 else prose_en(ws)
+
+    def prose_en(ws):
+        if len(ws) == 1:
+            return f"the {ws[0]}g weight"
+        if len(ws) == 2:
+            return f"{ws[0]}g and {ws[1]}g"
+        return ", ".join(f"{w}g" for w in ws[:-1]) + f", and {ws[-1]}g"
+
+    weights = (1, 3, 9, 27)
+    none_ko = "없음(추를 물건 쪽에 안 놓아도 됨)"
+    none_en = "none (no weight needs to go on the object's side)"
+    for target, exp_obj, exp_opp, near_miss in [
+        (5, (1, 3), (9,), (3,)),
+        (14, (1, 3, 9), (27,), (3, 9)),
+        (16, (3, 9), (1, 27), (9,)),
+        (22, (9,), (1, 3, 27), (3, 9)),
+    ]:
+        # 독립 검산: 3⁴ 전수조사 — 균형 삼진법 표현의 유일성(−1=물건 쪽, +1=반대쪽, 0=안 씀)
+        sols = [e for e in product([-1, 0, 1], repeat=4) if sum(ei * wi for ei, wi in zip(e, weights)) == target]
+        assert len(sols) == 1, f"ternweight 표현 유일성 실패 N={target}"
+        obj = tuple(w for e, w in zip(sols[0], weights) if e == -1)
+        opp = tuple(w for e, w in zip(sols[0], weights) if e == 1)
+        assert obj == exp_obj and opp == exp_opp, f"ternweight 스펙 불일치 N={target}: {obj}/{opp}"
+        assert target + sum(obj) == sum(opp), f"ternweight 균형식 실패 N={target}"
+        # 오답3('없음')의 근거 검산: 한쪽 접시 조합만으로는 target을 만들 수 없다
+        assert all(sum(c * w for c, w in zip(bits, weights)) != target for bits in product([0, 1], repeat=4)), \
+            f"ternweight 한쪽 접시로 가능 N={target}"
+        obj_s, opp_s = sum(obj), sum(opp)
+        add(
+            "ternweight", "NUMBER_OPERATION", 10, ["삼진법 저울", "양쪽 접시 전략"],
+            f"1g, 3g, 9g, 27g짜리 추가 하나씩 있어요. 양팔 저울의 두 접시 어느 쪽에든 추를 놓을 수 있어요 — "
+            f"물건이 있는 접시에 추를 함께 놓아도 돼요. {target}g짜리 물건의 무게를 정확히 재려면, "
+            f"물건과 같은 접시에 올려야 하는 추는 무엇일까요?",
+            choice_ko(obj), [choice_ko(opp), choice_ko(near_miss), none_ko],
+            f"① 추를 물건 반대쪽에만 놓아 보면 1, 3, 4(=1+3), 9, 10, 12, 13, 27, … 어떤 조합으로도 {target}g은 안 만들어져요. "
+            f"② 발상의 전환 — 물건과 '같은' 접시에 놓은 추는 그만큼 무게를 빼는 셈이에요. "
+            f"③ 반대쪽 접시에 {prose_ko(opp)}(합 {opp_s}g)을 올리면 물건 쪽이 {opp_s}−{target}={obj_s}g 모자라죠 — "
+            f"그만큼을 물건 쪽 추 {prose_ko(obj)}(합 {obj_s}g)로 채워요. "
+            f"④ 균형 검산: 물건 {target}g+{obj_s}g={opp_s}g — 양쪽이 똑같아요.",
+            [(choice_ko(opp), "그 추들은 물건 '반대쪽' 접시에 놓는 거예요. 물건 쪽에 놓는 추는 무게를 '빼는' 역할을 해요."),
+             (choice_ko(near_miss), "균형식을 세워 검산하세요. '물건+같은 쪽 추'와 '반대쪽 추'의 합이 정확히 같아야 해요."),
+             (none_ko, f"추를 한쪽 접시에만 놓는 방법으로는 {target}g을 만들 수 없어요. 물건 쪽에도 추를 놓으면 '빼기'가 가능해져요.")],
+            detail="추 하나마다 '반대쪽(더하기)/안 씀/물건 쪽(빼기)' 세 상태가 있어요. 1, 3, 9, 27은 이 세 상태의 조합으로 "
+            "1g부터 40g까지 모든 무게를, 그것도 꼭 한 가지 방법으로 잴 수 있는 특별한 추예요 — 저울에 숨은 삼진법이죠. "
+            "2g=3−1, 5g=9−3−1, 40g=27+9+3+1처럼 몇 개 더 실험해 보세요. 추를 한쪽에만 놓을 수 있다면 1, 2, 4, 8(이진법)이 같은 역할을 해요.",
+            en={
+                "concepts": ["Balanced ternary weights", "Two-pan strategy"],
+                "statement": f"You have one weight each of 1g, 3g, 9g, and 27g. On a balance scale you may put weights on either pan — "
+                             f"even on the same pan as the object. To weigh a {target}g object exactly, which weights must go on the same pan as the object?",
+                "answer": choice_en(obj),
+                "distractors": [choice_en(opp), choice_en(near_miss), none_en],
+                "explanation": f"① Try weights only on the pan opposite the object: 1, 3, 4 (=1+3), 9, 10, 12, 13, 27, … — no combination makes {target}g. "
+                               f"② The key discovery: a weight on the SAME pan as the object effectively subtracts its weight. "
+                               f"③ Put {prose_en(opp)} (total {opp_s}g) on the opposite pan; the object's side is {opp_s}−{target}={obj_s}g short, "
+                               f"so fill that with {prose_en(obj)} (total {obj_s}g) next to the object. "
+                               f"④ Balance check: object {target}g + {obj_s}g = {opp_s}g — both sides equal.",
+                "mistakes": [(choice_en(opp), "Those weights go on the pan OPPOSITE the object. Weights on the object's pan act as subtraction."),
+                             (choice_en(near_miss), "Set up the balance equation to check: object + same-side weights must exactly equal the opposite-side weights."),
+                             (none_en, f"No one-pan combination of these weights makes {target}g. Putting weights on the object's side unlocks 'subtraction'.")],
+                "detail": "Each weight has three states — opposite pan (add), unused, or the object's pan (subtract). With 1, 3, 9, and 27, these three states weigh "
+                          "every value from 1g to 40g, each in exactly one way: base three hiding inside a balance scale. Try a few more: 2g=3−1, 5g=9−3−1, "
+                          "40g=27+9+3+1. If weights could go on one pan only, 1, 2, 4, 8 (base two) would play this role.",
+            },
+        )
+
+
+def gen_threediv():
+    # 약수가 정확히 3개인 수의 개수 — '소수의 제곱' 특성 역발견. (수와연산 난9)
+    # CEILING_SPECS §3.5 구현. 발견형 근거: '소수의 제곱' 특성이 문제문에 없어 작은 사례에서
+    # 귀납해야 하고, L≥200이면 전수 나열이 비현실적이라 특성 발견 없이는 셀 수 없다.
+    from math import isqrt
+    for limit, exp_ans, exp_sq, exp_mix in [(100, 4, 10, 6), (200, 6, 14, 9), (500, 8, 22, 12), (1000, 11, 31, 15)]:
+        # 독립 검산 1: 체로 1..L 모든 수의 약수 개수를 전수 계산
+        cnt = [0] * (limit + 1)
+        for d in range(1, limit + 1):
+            for m in range(d, limit + 1, d):
+                cnt[m] += 1
+        hits = [v for v in range(1, limit + 1) if cnt[v] == 3]
+        ans = len(hits)
+        # 독립 검산 2: '소수의 제곱' 특성으로 재계산 — 두 경로 일치 + 스펙 값 일치
+        primes = [p for p in range(2, isqrt(limit) + 1) if all(p % q for q in range(2, p))]
+        assert hits == [p * p for p in primes] and ans == exp_ans, f"threediv 검산 불일치 L={limit}"
+        squares = isqrt(limit)  # 오답1: 제곱수 전부
+        mix = ans + sum(1 for p in primes if p ** 3 <= limit)  # 오답2: 소수의 세제곱 혼입
+        assert (squares, mix) == (exp_sq, exp_mix), f"threediv 오답 검산 불일치 L={limit}"
+        plist = ", ".join(map(str, primes))
+        sqlist = ", ".join(str(p * p) for p in primes)
+        p_last = primes[-1]
+        add(
+            "threediv", "NUMBER_OPERATION", 9, ["약수의 개수", "소수의 제곱"],
+            f"1부터 {limit}까지의 자연수 중에서 약수가 '정확히 3개'인 수는 모두 몇 개일까요?",
+            f"{ans}개", [f"{squares}개", f"{mix}개", f"{ans - 1}개"],
+            f"① 약수가 3개뿐인 수를 작은 것부터 실험으로 모아 봐요 — 4(1, 2, 4), 9(1, 3, 9), 25(1, 5, 25)… "
+            f"② 공통점 발견: 모두 '소수의 제곱'이에요. 약수 개수가 홀수이려면 약수가 짝을 못 이루는 제곱수여야 하고, "
+            f"그중 딱 3개(1, □, □²)가 되려면 1과 자기 자신 사이의 약수가 소수 하나뿐이어야 하거든요. "
+            f"③ 이제 제곱이 {limit} 이하인 소수를 빠짐없이 세요: {plist} — 제곱하면 {sqlist}. 모두 {ans}개예요.",
+            [(f"{squares}개", "제곱수라고 다 약수가 3개인 건 아니에요. 36의 약수는 9개죠. '소수'의 제곱만 정확히 3개예요."),
+             (f"{mix}개", "소수의 세제곱(8, 27, …)은 약수가 4개(1, □, □², □³)예요. 3개가 아니에요."),
+             (f"{ans - 1}개", f"경계 근처를 빠뜨렸어요 — {p_last}²={p_last * p_last}도 {limit} 이하라 세야 해요. "
+                              f"제곱이 {limit}{_eul(limit)} 넘지 않는 소수를 끝까지 확인하세요.")],
+            detail="찾은 수들의 약수를 직접 나열해 3개인지 검산해 보세요(예: 49→1, 7, 49). 일반화 — 약수가 정확히 5개인 수는 "
+            "소수의 네제곱(16, 81, 625, …)이에요. 약수 개수는 소인수의 지수에 1을 더해 곱한 값이라, '개수 조건'에서 수의 "
+            "생김새를 거꾸로 알아낼 수 있어요 — 개수를 세던 divcount의 정방향 계산을 뒤집은 눈이에요.",
+            en={
+                "concepts": ["Number of divisors", "Square of a prime"],
+                "statement": f"Among the natural numbers from 1 to {limit}, how many have exactly 3 divisors?",
+                "answer": _en_plural(ans, "number"),
+                "distractors": [_en_plural(squares, "number"), _en_plural(mix, "number"), _en_plural(ans - 1, "number")],
+                "explanation": f"① Collect numbers with exactly 3 divisors by experimenting from the smallest — 4 (1, 2, 4), 9 (1, 3, 9), 25 (1, 5, 25)… "
+                               f"② Spot what they share: each is the square of a prime. An odd divisor count forces a perfect square (divisors normally pair up), "
+                               f"and exactly 3 divisors (1, p, p²) means the only divisor between 1 and the number is a single prime p. "
+                               f"③ So count every prime whose square is at most {limit}: {plist} — squaring gives {sqlist}. That's {ans} numbers.",
+                "mistakes": [(_en_plural(squares, "number"), "Not every perfect square has 3 divisors — 36 has 9 of them. Only squares of PRIMES have exactly 3."),
+                             (_en_plural(mix, "number"), "A prime cubed (8, 27, …) has 4 divisors (1, p, p², p³), not 3."),
+                             (_en_plural(ans - 1, "number"), f"You missed the boundary — {p_last}²={p_last * p_last} is still at most {limit}. "
+                                                             f"Count primes whose squares stay within {limit} to the very end.")],
+                "detail": "Check by listing the divisors of each number you found (e.g., 49→1, 7, 49). Generalize — numbers with exactly 5 divisors are fourth powers "
+                          "of primes (16, 81, 625, …). The divisor count is the product of (exponent+1) over the prime factorization, so a count condition reveals "
+                          "the shape of a number in reverse — the divisor-counting you know, turned inside out.",
+            },
+        )
+
+
+def gen_consecways():
+    # 연속한 자연수 두 개 이상의 합으로 나타내는 방법의 수. (수와연산 난7)
+    # 발견형 근거: 개수(k)별 분류·중단 조건(1+2+…+k>N)·홀짝 두 갈래 구조를 statement가 주지
+    # 않고, 무작정 나열로는 '빠짐없음'(특히 64의 0가지)을 확신할 수 없어 구조 발견이 필수다.
+    def run_str(a, b):
+        return "+".join(str(x) for x in range(a, b + 1)) if b - a + 1 <= 4 else f"{a}+{a + 1}+…+{b}"
+
+    for total, exp_ways, d_div, d_miss, d_odd in [
+        (45, 5, 6, 4, 3),
+        (81, 4, 5, 3, 2),
+        (105, 7, 8, 6, 3),
+        (64, 0, 7, 1, 2),
+    ]:
+        # 독립 검산 1: (시작, 길이) 완전탐색으로 모든 표현을 실제 수집
+        ways = []
+        for a in range(1, total):
+            s, b = 0, a
+            while s < total:
+                s += b
+                b += 1
+            if s == total and b - a >= 2:
+                ways.append((a, b - 1))
+        # 독립 검산 2: 홀수 약수 공식과 대조 (방법 수 = 1 아닌 홀수 약수 개수)
+        odd_divs = [d for d in range(3, total + 1, 2) if total % d == 0]
+        assert len(ways) == exp_ways == len(odd_divs), f"consecways 검산 불일치 N={total}"
+        assert d_div == sum(1 for d in range(1, total + 1) if total % d == 0), f"consecways 약수 오답 불일치 N={total}"
+        kmax = 1
+        while (kmax + 1) * (kmax + 2) // 2 <= total:
+            kmax += 1
+        if total != 64:
+            assert d_odd == sum(1 for a, b in ways if (b - a + 1) % 2 == 1), f"consecways 홀수형 오답 불일치 N={total}"
+            even_ex = next(run_str(a, b) for a, b in ways if (b - a + 1) % 2 == 0)
+            chain = f"{total} = " + " = ".join(run_str(a, b) for a, b in ways)
+            expl = (f"① '개수'를 기준으로 나눠 조사해요. 연속한 k개의 합은 (첫 수)×k+(0+1+…+(k−1))이니, "
+                    f"{total}에서 0+1+…+(k−1)을 뺀 값이 k로 나누어떨어지면 성공이에요. "
+                    f"② k=2, 3, …를 차례로 확인하되 1+2+…+k가 {total}{_eul(total)} 넘으면 멈춰요 — 마지막 후보는 k={kmax}예요. "
+                    f"③ 성공한 표현: {chain} — 모두 {exp_ways}가지예요.")
+            expl_en = (f"① Sort the search by 'how many terms'. A sum of k consecutive numbers is (first term)×k+(0+1+…+(k−1)), "
+                       f"so subtract 0+1+…+(k−1) from {total} and check whether k divides what remains. "
+                       f"② Try k=2, 3, … in turn, stopping once 1+2+…+k exceeds {total} — the last candidate is k={kmax}. "
+                       f"③ The hits: {chain} — {exp_ways} ways in all.")
+            answer_ko, answer_en = f"{exp_ways}가지", _en_plural(exp_ways, "way")
+            mist = [(f"{d_div}가지", f"{total}의 약수 {d_div}개마다 방법이 하나씩 있다고 본 셈이에요. 방법과 짝을 이루는 건 1이 아닌 '홀수' 약수뿐이에요."),
+                    (f"{d_miss}가지", f"한 가지를 빠뜨렸어요. 개수를 2개, 3개, …로 늘려 가며 1+2+…+개수가 {total}{_eul(total)} 넘을 때까지 빠짐없이 확인하세요."),
+                    (f"{d_odd}가지", f"개수가 홀수인 경우(가운데 수가 딱 있는 경우)만 셌어요. {even_ex}처럼 개수가 짝수인 경우도 있어요.")]
+            mist_en = [(_en_plural(d_div, "way"), f"That counts one way per divisor of {total} ({d_div} of them). Only the ODD divisors other than 1 pair up with a way."),
+                       (_en_plural(d_miss, "way"), f"You missed one. Raise the term count 2, 3, … and check every case until 1+2+…+(count) exceeds {total}."),
+                       (_en_plural(d_odd, "way"), f"You counted only odd-length runs (the ones with an exact middle term). Even-length runs like {even_ex} exist too.")]
+            det = (f"방법의 수는 '1이 아닌 홀수 약수의 개수'와 정확히 같아요 — {total}의 1 아닌 홀수 약수는 "
+                   f"{', '.join(map(str, odd_divs))}로 {exp_ways}개죠. 홀수 k개의 합은 '가운데 수×k'라 홀수 약수 k와 짝이 되고, "
+                   f"짝수 k개의 합도 '(가운데 두 수의 합)×(k÷2)'에서 홀수 인수가 나와요. 그래서 홀수 약수가 1뿐인 2의 거듭제곱"
+                   f"(2, 4, 8, 16, …)만 연속 합으로 나타낼 수 없는 특별한 수예요. 15=7+8=4+5+6=1+2+3+4+5로 규칙을 한 번 더 검산해 보세요.")
+            det_en = (f"The number of ways exactly equals the count of odd divisors of {total} other than 1 — for {total} they are "
+                      f"{', '.join(map(str, odd_divs))}, giving {exp_ways}. An odd-length run is 'middle term × k', pairing with the odd divisor k, "
+                      f"and an even-length run gives an odd factor through '(sum of the middle two)×(k÷2)'. That's why powers of two (2, 4, 8, 16, …), "
+                      f"whose only odd divisor is 1, are the only numbers that can't be written this way. Re-check the rule on 15=7+8=4+5+6=1+2+3+4+5.")
+        else:
+            expl = (f"① '개수'를 기준으로 나눠 조사해요. 연속한 k개의 합은 (첫 수)×k+(0+1+…+(k−1))이에요. "
+                    f"② k=2부터 {kmax}까지(1+2+…+{kmax}={kmax * (kmax + 1) // 2}가 마지막 후보) 하나씩 확인하면 전부 어긋나요 — "
+                    f"두 개짜리만 봐도 31+32=63, 32+33=65로 64를 건너뛰죠. "
+                    f"③ 우연이 아니에요. 홀수 k개의 합은 '가운데 수×k'라 홀수 약수 k가 필요하고, 짝수 k개의 합은 "
+                    f"'(가운데 두 수의 합)×(k÷2)'인데 가운데 두 수의 합이 홀수라 역시 홀수 약수가 필요해요. "
+                    f"64=2×2×2×2×2×2에는 1 말고 홀수 약수가 없어서 단 한 가지도 없어요 — 0가지예요.")
+            expl_en = (f"① Sort the search by 'how many terms': a sum of k consecutive numbers is (first term)×k+(0+1+…+(k−1)). "
+                       f"② Checking k=2 through {kmax} (1+2+…+{kmax}={kmax * (kmax + 1) // 2} is the last candidate) fails every time — "
+                       f"with two terms alone, 31+32=63 and 32+33=65 skip right past 64. "
+                       f"③ It's no accident. An odd-length run is 'middle term × k', needing an odd divisor k, and an even-length run is "
+                       f"'(sum of the middle two)×(k÷2)' where the middle two sum to an odd number — again an odd factor is needed. "
+                       f"Since 64=2×2×2×2×2×2 has no odd divisor except 1, there is not a single way — 0 ways.")
+            answer_ko, answer_en = "0가지(불가능)", "0 ways (impossible)"
+            mist = [(f"{d_div}가지", "64의 약수 7개(1, 2, 4, …, 64)마다 방법이 있다고 본 셈이에요. 방법을 만드는 건 1이 아닌 '홀수' 약수뿐인데, 64에는 그런 약수가 없어요."),
+                    (f"{d_miss}가지", "31+32=63, 32+33=65 — 어느 연속한 두 수의 합도 64가 되지 않아요. 연속한 두 수의 합은 언제나 홀수거든요."),
+                    (f"{d_odd}가지", "예시의 9처럼 두어 가지쯤 있으리라는 어림이에요. 2의 거듭제곱은 연속 합으로 나타낼 수 없는 특별한 수예요.")]
+            mist_en = [(_en_plural(d_div, "way"), "That counts one way per divisor of 64 (1, 2, 4, …, 64 — 7 of them). Only odd divisors other than 1 make ways, and 64 has none."),
+                       (_en_plural(d_miss, "way"), "31+32=63 and 32+33=65 — no two consecutive numbers sum to 64. The sum of two consecutive numbers is always odd."),
+                       (_en_plural(d_odd, "way"), "A guess that a couple of ways should exist, like for 9. Powers of two are the special numbers with no such representation.")]
+            det = ("방법의 수는 '1이 아닌 홀수 약수의 개수'와 정확히 같아요 — 64는 그런 약수가 없어 0가지죠. 홀수 k개의 합은 "
+                   "'가운데 수×k'라 홀수 약수 k와 짝이 되고, 짝수 k개의 합도 '(가운데 두 수의 합)×(k÷2)'에서 홀수 인수가 나와요. "
+                   "그래서 2의 거듭제곱(2, 4, 8, 16, 32, 64, …)만 연속 합으로 나타낼 수 없어요. 15=7+8=4+5+6=1+2+3+4+5(홀수 약수 3, 5, 15)로 "
+                   "규칙을 검산해 보세요.")
+            det_en = ("The number of ways exactly equals the count of odd divisors other than 1 — 64 has none, hence 0 ways. An odd-length run is "
+                      "'middle term × k', pairing with the odd divisor k, and an even-length run gives an odd factor through '(sum of the middle two)×(k÷2)'. "
+                      "So the powers of two (2, 4, 8, 16, 32, 64, …) are the only numbers that can't be written this way. Check the rule on "
+                      "15=7+8=4+5+6=1+2+3+4+5 (odd divisors 3, 5, 15).")
+        add(
+            "consecways", "NUMBER_OPERATION", 7, ["연속수의 합", "홀수 약수"],
+            f"{total}{_eul(total)} 연속한 자연수 두 개 이상의 합으로 나타내려고 해요. 예를 들어 9는 4+5, 2+3+4의 "
+            f"두 가지 방법으로 나타낼 수 있어요. {total}{_eun(total)} 모두 몇 가지 방법으로 나타낼 수 있을까요?",
+            answer_ko, [m[0] for m in mist],
+            expl, mist, detail=det,
+            en={
+                "concepts": ["Sums of consecutive numbers", "Odd divisors"],
+                "statement": f"You want to write {total} as a sum of two or more consecutive natural numbers. For example, 9 can be "
+                             f"written in exactly two ways: 4+5 and 2+3+4. In how many different ways can {total} be written like this?",
+                "answer": answer_en,
+                "distractors": [m[0] for m in mist_en],
+                "explanation": expl_en,
+                "mistakes": mist_en,
+                "detail": det_en,
+            },
+        )
+
+
+def gen_permsum():
+    # 숫자 카드 네 장으로 만드는 네 자리 수 24개 '전부'의 합 — 자리별 대칭 세기. (수와연산 난7)
+    # 발견형 근거: '각 숫자가 각 자리에 똑같이 6번씩 나타난다'는 대칭 전략을 statement가 주지
+    # 않고, 24개를 직접 나열해 더하는 우회는 오래 걸리고 실수를 부르는 함정이다.
+    from itertools import permutations
+    for digits in [(1, 3, 5, 7), (2, 4, 6, 8), (1, 2, 3, 4), (3, 5, 7, 9)]:
+        # 독립 검산 1: 24개 완전열거 합
+        nums = sorted(int("".join(map(str, p))) for p in permutations(digits))
+        total = sum(nums)
+        ds = sum(digits)
+        # 독립 검산 2·3: 대칭 공식·짝짓기 공식과 삼중 대조
+        assert len(nums) == len(set(nums)) == 24 and total == ds * 6 * 1111, f"permsum 검산 불일치 {digits}"
+        pair = nums[0] + nums[-1]
+        assert total == pair * 12, f"permsum 짝짓기 검산 불일치 {digits}"
+        d0, d1, d2, d3 = digits
+        ds6 = ds * 6
+        pairdig = digits[0] + digits[-1]
+        cardtxt = ", ".join(map(str, digits))
+        add(
+            "permsum", "NUMBER_OPERATION", 7, ["자리값", "대칭으로 묶어 세기"],
+            f"숫자 카드 {cardtxt}가 한 장씩 있어요. 네 장을 모두 한 번씩 써서 만들 수 있는 네 자리 수는 24개예요. "
+            f"이 24개의 수를 '전부' 더하면 얼마일까요?",
+            str(total), [str(ds * 1111), str(total // 2), str(total * 2)],
+            f"① 24개를 하나하나 더하는 대신 '자리별'로 묶어 세요. ② 천의 자리에 {d0}{_iga(d0)} 오는 수는 남은 세 장을 "
+            f"늘어놓는 3×2×1=6개예요 — 어느 숫자든, 어느 자리든 꼭 6번씩 나타나요. ③ 그래서 네 자리 각각의 숫자 합은 "
+            f"({d0}+{d1}+{d2}+{d3})×6={ds6}으로 같고, 전체 합은 {ds6}×1000+{ds6}×100+{ds6}×10+{ds6}×1={ds6}×1111={total}이에요.",
+            [(str(ds * 1111), "각 숫자가 각 자리에 '한 번씩'만 온다고 셌어요. 남은 세 장을 배열하는 3×2×1=6가지 각각에서 오니까 여섯 번씩이에요."),
+             (str(total // 2), "각 자리 등장 횟수를 6번이 아니라 3번으로 셌어요. '남은 카드 3장'이 아니라 3장의 '배열 수'(6가지)만큼 나타나요."),
+             (str(total * 2), f"가장 큰 수와 가장 작은 수처럼 합이 {pair}인 짝은 24÷2=12쌍이에요. 24쌍으로 세면 모든 수를 두 번씩 더한 셈이에요.")],
+            detail=f"지름길 검산 — 가장 작은 {nums[0]}{_gwa(nums[0])} 가장 큰 {nums[-1]}처럼 '자리마다 합이 {pairdig}'인 두 수를 짝지으면 "
+            f"24개가 합 {pair}인 12쌍으로 정확히 갈라져요: {pair}×12={total}. 전혀 다른 두 경로가 같은 값을 주면 답을 믿을 수 있죠. "
+            f"이 '대칭으로 묶기'는 1부터 100까지 더한 가우스의 방법과 같은 눈이에요.",
+            en={
+                "concepts": ["Place value", "Counting by symmetry"],
+                "statement": f"You have one card each of the digits {cardtxt}. Using all four cards once each, you can make 24 different "
+                             f"four-digit numbers. What is the sum of ALL 24 of these numbers?",
+                "answer": str(total),
+                "distractors": [str(ds * 1111), str(total // 2), str(total * 2)],
+                "explanation": f"① Instead of adding all 24 numbers one by one, count by place. ② The numbers with {d0} in the thousands place "
+                               f"are the 3×2×1=6 arrangements of the other three cards — every digit lands in every place exactly 6 times. "
+                               f"③ So each of the four places has digit total ({d0}+{d1}+{d2}+{d3})×6={ds6}, and the grand total is "
+                               f"{ds6}×1000+{ds6}×100+{ds6}×10+{ds6}×1={ds6}×1111={total}.",
+                "mistakes": [(str(ds * 1111), "You counted each digit landing in each place only once. It comes from all 3×2×1=6 arrangements of the remaining three cards — six times."),
+                             (str(total // 2), "You counted 3 appearances per place instead of 6. It's not the '3 remaining cards' but the 6 ways to ARRANGE those 3 cards."),
+                             (str(total * 2), f"Pairs like the smallest and largest sum to {pair}, but 24 numbers form 24÷2=12 pairs. Multiplying by 24 counts every number twice.")],
+                "detail": f"Shortcut check — pair numbers whose digits sum to {pairdig} in every place, like the smallest {nums[0]} and the largest {nums[-1]}: "
+                          f"the 24 numbers split into exactly 12 pairs, each summing to {pair}, and {pair}×12={total}. Two completely different routes giving "
+                          f"the same value is how you learn to trust an answer. This 'pair up by symmetry' is the same eye as Gauss's trick for 1+…+100.",
+            },
+        )
+
+
+def gen_magiccenter():
+    # 3×3 마방진의 한가운데 칸 — 가운데를 지나는 네 줄 겹쳐 세기로 '가운데=평균' 강제성 발견. (수와연산 난6)
+    # 발견형 근거: 배치 규칙도 '가운데=평균'도 statement에 없고(기준1), 시행착오 완성은 느린 데다
+    # 완성해도 '반드시 그 수여야 하는' 근거를 주지 못한다 — 가로1·세로1·대각2 네 줄을 겹쳐 세는
+    # 논법 발견이 결정적 경로다(기준2, josephus 선례). 수제 d5 '한 줄의 합' 문항의 발견형 윗층.
+    from itertools import permutations
+    losu = (2, 7, 6, 9, 5, 1, 4, 3, 8)  # 로 슈 방진 — 해설 검산용 완성 예시(등차 9수에 평행이동·배율)
+    for nums, desc_ko, desc_en in [
+        (tuple(range(1, 10)), "1부터 9까지의 수 아홉 개", "the numbers 1 through 9"),
+        (tuple(range(3, 12)), "3부터 11까지의 수 아홉 개", "the numbers 3 through 11"),
+        (tuple(range(2, 19, 2)), "2, 4, 6, …, 18의 짝수 아홉 개", "the nine even numbers 2, 4, 6, …, 18"),
+        (tuple(range(7, 16)), "7부터 15까지의 수 아홉 개", "the numbers 7 through 15"),
+    ]:
+        total = sum(nums)
+        line = total // 3
+        assert line * 3 == total, f"magiccenter 줄합 실패 {nums}"
+        # 독립 검산 1: 9! 전수조사 — 마방진은 정확히 8개(회전·반사)뿐이고 가운데는 한 값으로 강제된다
+        centers, magic_cnt = set(), 0
+        for p in permutations(nums):
+            if p[0] + p[1] + p[2] != line or p[3] + p[4] + p[5] != line or p[6] + p[7] + p[8] != line:
+                continue
+            if p[0] + p[3] + p[6] != line or p[1] + p[4] + p[7] != line or p[2] + p[5] + p[8] != line:
+                continue
+            if p[0] + p[4] + p[8] != line or p[2] + p[4] + p[6] != line:
+                continue
+            centers.add(p[4])
+            magic_cnt += 1
+        assert magic_cnt == 8 and len(centers) == 1, f"magiccenter 전수조사 실패 {nums}"
+        mid = centers.pop()
+        # 독립 검산 2: 겹쳐 세기 공식(4×줄합=전체합+3×가운데)·중앙값과 대조
+        assert 4 * line == total + 3 * mid and mid == sorted(nums)[4], f"magiccenter 공식 불일치 {nums}"
+        # 해설의 완성 예시(로 슈의 등차 이미지)도 실제 마방진인지 검산
+        step = nums[1] - nums[0]
+        grid = [nums[0] + (v - 1) * step for v in losu]
+        assert sorted(grid) == list(nums) and grid[4] == mid
+        for i in range(3):
+            assert sum(grid[3 * i:3 * i + 3]) == line and grid[i] + grid[i + 3] + grid[i + 6] == line
+        assert grid[0] + grid[4] + grid[8] == line and grid[2] + grid[4] + grid[6] == line
+        rows = f"[{grid[0]} {grid[1]} {grid[2]}] [{grid[3]} {grid[4]} {grid[5]}] [{grid[6]} {grid[7]} {grid[8]}]"
+        add(
+            "magiccenter", "NUMBER_OPERATION", 6, ["마방진", "겹쳐 세기"],
+            f"{desc_ko}를 한 번씩 모두 써서 3×3 표의 아홉 칸을 채우려고 해요. 가로 세 줄, 세로 세 줄, 대각선 두 줄의 합이 "
+            f"전부 같아야 해요(마방진). 이때 '한가운데 칸'에 반드시 들어가야 하는 수는 무엇일까요?",
+            str(mid), [str(line), str(max(nums)), str(min(nums))],
+            f"① 아홉 수의 합은 {total}이고, 가로 세 줄이 아홉 칸을 정확히 나눠 가지니 한 줄의 합은 {total}÷3={line}이에요. "
+            f"② 한가운데 칸을 지나는 줄을 세어 봐요 — 가로 1줄, 세로 1줄, 대각선 2줄, 모두 4줄이에요(이렇게 많은 줄에 걸리는 칸은 가운데뿐이죠). "
+            f"③ 이 네 줄을 전부 더하면 {line}×4={4 * line}인데, 여기엔 아홉 수 전체({total})에 가운데 수만 세 번 '더' 들어 있어요. "
+            f"④ 그래서 가운데 수는 ({4 * line}−{total})÷3={mid} — 아홉 수의 한가운데 값(평균)이에요.",
+            [(str(line), f"{line}{_eun(line)} 한 '줄'의 합이에요({total}÷3). 문제가 물은 건 한가운데 '칸'에 들어갈 수예요."),
+             (str(max(nums)), "가장 큰 수는 한가운데에 못 와요. 가운데 칸은 네 줄에 동시에 쓰이는 자리라, 크기가 한가운데인 수(평균)여야 네 줄을 모두 맞출 수 있어요."),
+             (str(min(nums)), "가장 작은 수도 마찬가지예요 — 가운데 칸은 가로·세로·대각선 네 줄에 모두 포함되는 특별한 자리라 아홉 수의 평균이 와야 해요.")],
+            detail=f"'가운데 칸만 4줄에 걸린다'는 관찰이 심장이에요(모서리 칸은 3줄, 변의 가운데 칸은 2줄). 완성 예시로 검산해 보세요: "
+            f"{rows} — 여덟 줄의 합이 전부 {line}이에요. 일반화 — 아홉 수가 같은 간격으로 커지기만 하면 가운데엔 언제나 "
+            f"'다섯 번째 수(평균)'가 와요. 같은 겹쳐 세기 논법으로 네 모서리에는 어떤 수들이 올 수 있는지도 탐구해 보세요.",
+            en={
+                "concepts": ["Magic square", "Overlap counting"],
+                "statement": f"You want to fill the nine cells of a 3×3 grid with {desc_en}, each used exactly once, so that the three rows, "
+                             f"the three columns, and both diagonals all have the same sum (a magic square). What number MUST go in the very center cell?",
+                "answer": str(mid),
+                "distractors": [str(line), str(max(nums)), str(min(nums))],
+                "explanation": f"① The nine numbers sum to {total}, and the three rows split the nine cells exactly, so each line sums to {total}÷3={line}. "
+                               f"② Count the lines through the center cell — 1 row, 1 column, 2 diagonals: 4 lines (no other cell lies on that many). "
+                               f"③ Adding those four lines gives {line}×4={4 * line}, which contains all nine numbers ({total}) plus the center counted 3 extra times. "
+                               f"④ So the center is ({4 * line}−{total})÷3={mid} — the middle value (the average) of the nine numbers.",
+                "mistakes": [(str(line), f"{line} is the sum of one LINE ({total}÷3). The question asks for the number in the center CELL."),
+                             (str(max(nums)), "The largest number can't sit in the center. The center cell serves four lines at once, so it must be the middle-sized number (the average)."),
+                             (str(min(nums)), "Same for the smallest — the center cell belongs to four lines (row, column, both diagonals), so the average of the nine numbers must go there.")],
+                "detail": f"The heart of it: only the center lies on 4 lines (corners lie on 3, edge-centers on 2). Check with a finished example: "
+                          f"{rows} — all eight lines sum to {line}. Generalize — whenever the nine numbers grow by equal steps, the center is always "
+                          f"the fifth (average) value. With the same overlap-counting argument, explore which numbers can occupy the four corners.",
+            },
+        )
+
+
+def gen_repunit():
+    # 1을 이어 쓴 수의 제곱 — 자릿수 합이 정확히 n². (수와연산 난5)
+    # 발견형 근거: 계산 방법을 statement가 주지 않고, 1이 6~8개인 수의 직접 곱셈은 실수 없이는
+    # 비현실적이라 11×11=121, 111×111=12321 작은 사례에서 피라미드 패턴을 발견해야 한다(n=5가 진입 문항).
+    for n in [5, 6, 7, 8]:
+        rep = int("1" * n)
+        # 독립 검산: 실제 큰 수 곱셈으로 자릿수 합·회문 구조·자리 개수를 모두 확인
+        sq = rep * rep
+        dsum = sum(int(c) for c in str(sq))
+        updown = "".join(str(k) for k in range(1, n + 1)) + "".join(str(k) for k in range(n - 1, 0, -1))
+        assert str(sq) == updown and dsum == n * n and len(str(sq)) == 2 * n - 1, f"repunit 검산 불일치 n={n}"
+        add(
+            "repunit", "NUMBER_OPERATION", 5, ["곱셈 패턴", "작은 사례로 규칙 찾기"],
+            f"1을 {n}개 이어 쓴 수 {rep}{_eul(rep)} 자기 자신과 곱해요({rep}×{rep}). "
+            f"그 결과의 각 자리 숫자를 모두 더하면 얼마일까요?",
+            str(dsum), [str(n * (n + 1) // 2), str(2 * n - 1), str(n)],
+            f"① 작은 사례부터 실험해요: 11×11=121, 111×111=12321, 1111×1111=1234321. "
+            f"② 패턴 발견 — 1이 n개면 결과는 1부터 n까지 올라갔다가 다시 1로 내려오는 수예요. 그래서 {rep}×{rep}={sq}. "
+            f"③ 왜 그럴까요? 세로셈으로 보면 {rep}{_eul(rep)} 한 칸씩 밀며 {n}번 더하는 셈이라, 가운데 자리엔 1이 {n}개, "
+            f"양옆으로 갈수록 하나씩 적게 겹쳐요(1이 9개까지는 받아올림이 없어요). "
+            f"④ 자릿수 합은 (1+2+…+{n - 1})을 두 번 더하고 꼭대기 {n}{_eul(n)} 더한 {n * (n - 1)}+{n}={dsum} — 신기하게도 {n}×{n}이에요.",
+            [(str(n * (n + 1) // 2), f"올라가는 쪽 1+2+…+{n}만 더했어요. 꼭대기 {n}{_eul(n)} 지나 다시 1까지 '내려오는' 쪽도 더해야 해요."),
+             (str(2 * n - 1), f"그건 결과의 자리 '개수'({2 * n - 1}자리)예요. 문제는 자리 숫자들의 '합'을 물었어요."),
+             (str(n), f"그건 곱하기 전 수({rep})의 자릿수 합이에요. 제곱한 결과의 자릿수 합을 구해야 해요.")],
+            detail=f"이 피라미드 패턴은 1이 9개일 때(111111111×111111111=12345678987654321)까지 이어지고, 10개부터는 받아올림이 생겨 "
+            f"무너져요 — 규칙을 발견하면 '어디까지 통하는지'도 꼭 따져 보세요. 자릿수 합이 {n}×{n}인 건 겹침 횟수가 1, 2, …, {n}, …, 2, 1로 "
+            f"늘었다 줄기 때문인데, 홀수를 차례로 더하면 제곱수가 되는 규칙(1+3+5+…)과 형제 같은 구조랍니다.",
+            en={
+                "concepts": ["Multiplication patterns", "Patterns from small cases"],
+                "statement": f"Take {rep}, the number written with {n} ones in a row, and multiply it by itself ({rep}×{rep}). "
+                             f"What is the sum of all the digits of the result?",
+                "answer": str(dsum),
+                "distractors": [str(n * (n + 1) // 2), str(2 * n - 1), str(n)],
+                "explanation": f"① Experiment small: 11×11=121, 111×111=12321, 1111×1111=1234321. "
+                               f"② The pattern — with n ones, the product climbs 1, 2, …, n and steps back down to 1. So {rep}×{rep}={sq}. "
+                               f"③ Why: in column multiplication you add {rep} shifted over {n} times, so the middle column stacks {n} ones and "
+                               f"each column outward stacks one fewer (no carrying up to nine ones). "
+                               f"④ The digit sum is (1+2+…+{n - 1}) twice plus the peak {n}: {n * (n - 1)}+{n}={dsum} — amazingly, exactly {n}×{n}.",
+                "mistakes": [(str(n * (n + 1) // 2), f"You added only the climb 1+2+…+{n}. The digits come back down past the peak {n} to 1 — add the way down too."),
+                             (str(2 * n - 1), f"That's the NUMBER of digits ({2 * n - 1} digits). The question asks for the SUM of the digits."),
+                             (str(n), f"That's the digit sum of {rep} before squaring. You need the digit sum of the square.")],
+                "detail": f"The pyramid pattern survives up to nine ones (111111111×111111111=12345678987654321) and breaks at ten, when carrying begins — "
+                          f"after finding a rule, always ask how far it holds. The digit sum being {n}×{n} comes from the overlap counts rising and falling "
+                          f"1, 2, …, {n}, …, 2, 1 — a sibling of the rule that adding odd numbers in order (1+3+5+…) builds perfect squares.",
+            },
+        )
