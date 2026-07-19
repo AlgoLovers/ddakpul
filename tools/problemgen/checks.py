@@ -8,21 +8,31 @@
   4. 난이도 순서 제약(difficulty_constraints.json) 위반
      — 예: '규칙을 받아 적용만'(recur)은 '규칙을 스스로 발견'(hanoi·tribstairs)보다 낮아야 한다
 
+  5. 사실상 중복 유형(개념·정답·문장이 모두 유사) — 다양성의 반대말. 대량 저작 시 최대 위험.
+     의도된 형제(난이도 사다리 등)는 한 축이 반드시 낮으므로 통과, duplicate_allowlist.json로 예외.
+
 보고(비치명, 콘솔):
-  5. 정답 숫자가 해설에 안 보이는 문항(해설-정답 불일치 의심)
-  6. 독립 검산(assert/기각) 없는 제너레이터 목록 — 솔버 검증 100% 커버리지가 목표
-  7. 영역×난이도 커버리지 매트릭스(빈 슬롯·얇은 슬롯 조준용)
+  6. 정답 숫자가 해설에 안 보이는 문항(해설-정답 불일치 의심)
+  7. 독립 검산(assert/기각) 없는 제너레이터 목록 — 솔버 검증 100% 커버리지가 목표
+  8. 영역×난이도 문항 수 + 유형 다양성 지도(서로 다른 유형이 얇은 칸 조준용)
+  9. 중복 주의 유형쌍(같은 개념+유사 문장 — 형제면 정상, 창궐하면 검토)
 """
 import ast
 import json
 import re
 from collections import defaultdict
+from difflib import SequenceMatcher
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PIPELINE_FILES = ["core.py", "gen_number.py", "gen_change.py", "gen_shape.py", "gen_data.py", "build.py"]
 AREA_ORDER = ["NUMBER_OPERATION", "CHANGE_RELATION", "SHAPE_MEASUREMENT", "DATA_POSSIBILITY"]
 _GID = re.compile(r"g-gen-(.+)-(\d+)$")
+
+# 유형 중복 임계 — 현재 227유형의 최고 유사쌍(cubestack↔cubemid: 개념1.0·정답0.33·문장0.86,
+# 의도된 사다리)을 통과시키도록 보정. 진짜 중복은 세 축이 동시에 높다(오늘 지운 boxsurface=cubesurf 등).
+DUP_CONCEPT, DUP_ANSWER, DUP_SKEL = 0.99, 0.50, 0.85  # 셋 다 넘으면 치명
+WATCH_CONCEPT, WATCH_SKEL = 0.99, 0.80  # 같은 개념+유사 문장 = 보고(사람 검토)
 
 
 def _digits(s):
@@ -120,11 +130,91 @@ def _report_coverage(problems):
         print(f"    {area[:12]:12} {row}" + (f"  ← 얇음: {','.join(thin)}" if thin else ""))
 
 
+def _skeleton(s):
+    """문장에서 숫자를 지워 '유형 골격'만 남긴다(파라미터 변형끼리는 같은 골격)."""
+    return re.sub(r"\s+", " ", re.sub(r"\d+", "N", s)).strip()
+
+
+def _jaccard(a, b):
+    return len(a & b) / len(a | b) if (a | b) else 0.0
+
+
+def _family_sigs(problems):
+    """유형(family)별 지문: 정답값 집합·개념 태그 집합·대표 문장 골격."""
+    sig = {}
+    for p in problems:
+        f = _GID.match(p["groupId"]).group(1)
+        d = sig.setdefault(f, {"area": p["area"], "ans": set(), "concepts": set(), "skel": None})
+        ans = p["choices"][p["answerIndex"]]
+        d["ans"].add(_digits(ans) or ans)
+        d["concepts"].update(p.get("concepts", []))
+        if d["skel"] is None:
+            d["skel"] = _skeleton(p["statement"])
+    return sig
+
+
+def _pairwise(problems):
+    """같은 영역 유형쌍의 (정답겹침, 개념겹침, 문장유사) — 한 번만 계산해 게이트·보고가 공유."""
+    sig = list(_family_sigs(problems).items())
+    out = []
+    for i in range(len(sig)):
+        fa, da = sig[i]
+        for j in range(i + 1, len(sig)):
+            fb, db = sig[j]
+            if da["area"] != db["area"]:
+                continue
+            ao = _jaccard(da["ans"], db["ans"])
+            co = _jaccard(da["concepts"], db["concepts"])
+            sk = SequenceMatcher(None, da["skel"] or "", db["skel"] or "").ratio()
+            out.append((fa, fb, ao, co, sk))
+    return out
+
+
+def _check_duplicates(pairs):
+    """치명: 개념·정답·문장이 모두 유사한 유형쌍(사실상 같은 문제를 두 번 만든 것)."""
+    allow = set()
+    ap = HERE / "duplicate_allowlist.json"
+    if ap.exists():
+        allow = {tuple(sorted(x)) for x in json.load(open(ap, encoding="utf-8")).get("pairs", [])}
+    dups = [
+        (fa, fb, ao, co, sk)
+        for fa, fb, ao, co, sk in pairs
+        if co >= DUP_CONCEPT and ao >= DUP_ANSWER and sk >= DUP_SKEL and tuple(sorted((fa, fb))) not in allow
+    ]
+    assert not dups, "[게이트5] 사실상 중복 유형:\n" + "\n".join(
+        f"  {fa} ↔ {fb} (정답 {ao:.0%}·개념 {co:.0%}·문장 {sk:.0%})" for fa, fb, ao, co, sk in dups
+    ) + "\n  → 한쪽을 blocklist.txt로 제거하거나, 의도된 형제면 duplicate_allowlist.json의 pairs에 등록"
+
+
+def _report_diversity(problems, pairs):
+    cell = defaultdict(set)
+    for p in problems:
+        cell[(p["area"], p["difficulty"])].add(_GID.match(p["groupId"]).group(1))
+    total_types = len({_GID.match(p["groupId"]).group(1) for p in problems})
+    print(f"  보고8b · 유형 다양성 지도 (영역×난이도 = 서로 다른 유형 수 · 총 {total_types}유형):")
+    print("          " + " ".join(f"d{d:<3}" for d in range(1, 11)))
+    for area in AREA_ORDER:
+        row = " ".join(f"{len(cell[(area, d)]):<4}" for d in range(1, 11))
+        thin = [f"d{d}" for d in range(1, 11) if 0 < len(cell[(area, d)]) <= 2]
+        print(f"    {area[:12]:12} {row}" + (f"  ← 유형 얇음: {','.join(thin)}" if thin else ""))
+    watch = sorted(
+        ((fa, fb, sk) for fa, fb, ao, co, sk in pairs if co >= WATCH_CONCEPT and sk >= WATCH_SKEL),
+        key=lambda x: -x[2],
+    )
+    if watch:
+        print(f"  보고9 · 중복 주의 유형쌍 {len(watch)}건(같은 개념+유사 문장 — 형제 사다리면 정상):")
+        for fa, fb, sk in watch[:8]:
+            print(f"          {fa} ↔ {fb} (문장 {sk:.0%})")
+
+
 def run_checks(problems, problems_en, generators):
     gen_src = _check_defs([g.__name__ for g in generators])
     _check_parity(problems, problems_en)
     _check_constraints(problems)
-    print("품질 게이트 통과 (중복정의·등록정합·한/영대칭·난이도제약)")
+    pairs = _pairwise(problems)  # 유형쌍 유사도 1회 계산 → 게이트·보고 공유
+    _check_duplicates(pairs)
+    print("품질 게이트 통과 (중복정의·등록정합·한/영대칭·난이도제약·유형중복)")
     _report_explanation(problems)
     _report_verification(gen_src)
     _report_coverage(problems)
+    _report_diversity(problems, pairs)
