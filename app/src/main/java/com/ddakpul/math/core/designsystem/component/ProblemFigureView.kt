@@ -204,8 +204,8 @@ private fun DrawScope.drawCubeNet(
     top: Float,
     side: Float,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
     val query = figure.params["query"] ?: -1
     val hs = figure.heights
     if (hs.size != 18) return
@@ -236,7 +236,7 @@ private fun DrawScope.drawTriangleFan(
     top: Float,
     side: Float,
 ) {
-    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 24)
     val apex = Offset(left + side / 2f, top + side * 0.06f)
     val baseY = top + side * 0.94f
     val blX = left + side * 0.06f
@@ -264,9 +264,9 @@ private fun DrawScope.drawGridPolygon(
     top: Float,
     side: Float,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
-    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 24)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 24)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 24)
     val pts = figure.heights
     if (pts.size != n * 2) return
     val cell = min(side / cols, side / rows)
@@ -342,8 +342,8 @@ private fun DrawScope.drawCubeStack(
     top: Float,
     side: Float,
 ) {
-    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
-    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 12)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 12)
     val heights = figure.heights
     if (heights.size != w * d) return
     val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
@@ -369,7 +369,7 @@ private fun DrawScope.drawPolygon(
     top: Float,
     side: Float,
 ) {
-    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 24)
     val center = Offset(left + side / 2f, top + side / 2f)
     val radius = side * 0.42f
     val pts =
@@ -458,8 +458,10 @@ private fun DrawScope.drawGrid(
     top: Float,
     side: Float,
 ) {
-    val w = (figure.params["w"] ?: 3).coerceIn(1, 8)
-    val h = (figure.params["h"] ?: 3).coerceIn(1, 8)
+    // cell이 side에 맞춰 자동 축소되므로 큰 격자도 안전 — 상한을 넉넉히 둔다.
+    // (당구대 12×9·15×8, gcdtile 10×4 등을 8로 자르면 정사각형처럼 왜곡됐다. 파이썬 미리보기엔 clamp 없음.)
+    val w = (figure.params["w"] ?: 3).coerceIn(1, 30)
+    val h = (figure.params["h"] ?: 3).coerceIn(1, 30)
     val cell = min(side / w, side / h)
     val gridLeft = left + (side - cell * w) / 2f
     val gridTop = top + (side - cell * h) / 2f

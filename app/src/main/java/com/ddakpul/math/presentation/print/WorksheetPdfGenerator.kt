@@ -428,8 +428,8 @@ private fun drawPdfCubeNet(
     ink: Paint,
     fill: Paint,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
     val query = figure.params["query"] ?: -1
     val hs = figure.heights
     if (hs.size != 18) return
@@ -462,7 +462,7 @@ private fun drawPdfTriangleFan(
     size: Float,
     ink: Paint,
 ) {
-    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 24)
     val apexX = centerX
     val apexY = top + size * 0.06f
     val baseY = top + size * 0.94f
@@ -487,9 +487,9 @@ private fun drawPdfGridPolygon(
     size: Float,
     ink: Paint,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
-    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 24)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 24)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 24)
     val pts = figure.heights
     if (pts.size != n * 2) return
     val cell = min(size / cols, size / rows)
@@ -533,7 +533,7 @@ private fun drawPdfPolygon(
     size: Float,
     ink: Paint,
 ) {
-    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 24)
     val cy = top + size / 2f
     val radius = size * 0.42f
     val xs = FloatArray(n)
@@ -617,8 +617,8 @@ private fun drawPdfCubeStack(
     top: Float,
     size: Float,
 ) {
-    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
-    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 12)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 12)
     val heights = figure.heights
     if (heights.size != w * d) return
     val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
@@ -713,8 +713,9 @@ private fun drawPdfGrid(
     ink: Paint,
     fill: Paint,
 ) {
-    val w = (figure.params["w"] ?: 3).coerceIn(1, 8)
-    val h = (figure.params["h"] ?: 3).coerceIn(1, 8)
+    // cell이 size에 맞춰 자동 축소되므로 큰 격자도 안전 — 상한을 넉넉히 둔다(앱 렌더러와 동일).
+    val w = (figure.params["w"] ?: 3).coerceIn(1, 30)
+    val h = (figure.params["h"] ?: 3).coerceIn(1, 30)
     val cell = min(size / w, size / h)
     val gl = centerX - cell * w / 2f
     val gt = top + (size - cell * h) / 2f
