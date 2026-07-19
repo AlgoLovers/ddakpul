@@ -1,5 +1,6 @@
 package com.ddakpul.math.presentation.solve
 
+import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Monetization
@@ -7,6 +8,7 @@ import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.model.SolutionVideo
+import com.ddakpul.math.domain.usecase.DissectionValidation
 
 /** 문제 풀이 화면의 진행 단계. */
 enum class SolvePhase { LOADING, SOLVING, GRADED, EMPTY }
@@ -34,7 +36,14 @@ data class SolveUiState(
     val todayTimeSpentSec: Int = 0,
     /** 현재 문제의 방법에 준비된 해설 영상(있을 때만 '동영상 풀이 보기' 노출). */
     val solutionVideo: SolutionVideo? = null,
+    /** 등분 퍼즐 풀이 상태 — 칸→조각 배정, 선택한 조각색, 채점 결과(4지선다면 무의미). */
+    val dissectionAssignment: Map<Cell, Int> = emptyMap(),
+    val dissectionPiece: Int = 0,
+    val dissectionResult: DissectionValidation? = null,
 ) {
+    /** 구성형(격자 등분) 문제 여부 — 화면·채점 분기용. */
+    val isDissection: Boolean get() = problem?.isDissection == true
+
     val canSubmit: Boolean get() = phase == SolvePhase.SOLVING && selectedIndex != null
 
     /** 복습 문제 여부 — 화면에 배지로 표시한다. */

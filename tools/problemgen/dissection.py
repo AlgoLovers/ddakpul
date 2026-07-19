@@ -134,7 +134,7 @@ def _add_symbol_puzzles(problems, counts):
                         "groupId": gid,
                         "pieceCount": k,
                         "cells": [[r, c] for r, c in cells],
-                        "symbols": [[r, c, perm[cells.index((r, c))]] for r, c in cells],
+                        "symbols": [{"r": r, "c": c, "sym": perm[cells.index((r, c))]} for r, c in cells],
                     })
                     picked += 1
                     break

@@ -64,6 +64,13 @@ fun SolveScreen(
         onSubmit = viewModel::submit,
         onNext = viewModel::loadNext,
         onExclude = viewModel::excludeCurrent,
+        dissection =
+            DissectionCallbacks(
+                onTap = viewModel::tapDissectionCell,
+                onSelectPiece = viewModel::selectDissectionPiece,
+                onClear = viewModel::clearDissection,
+                onSubmit = viewModel::submitDissection,
+            ),
         onGoHome = onGoHome,
         onUpgrade = onUpgrade,
         onReportAnswer = { result -> shareAnswerReport(context, result) },
@@ -101,6 +108,7 @@ private fun SolveContent(
     onSubmit: () -> Unit,
     onNext: () -> Unit,
     onExclude: () -> Unit,
+    dissection: DissectionCallbacks,
     onGoHome: () -> Unit,
     onUpgrade: () -> Unit,
     onReportAnswer: (GradingResult) -> Unit,
@@ -132,34 +140,52 @@ private fun SolveContent(
 
             SolvePhase.SOLVING -> {
                 // 태블릿에서 한 줄이 지나치게 길어지지 않도록 콘텐츠 폭을 제한한다.
-                SolvingBody(
-                    uiState = uiState,
-                    onSelect = onSelect,
-                    onSubmit = onSubmit,
-                    onExcludeRequest = { showExcludeDialog = true },
-                    onUpgrade = onUpgrade,
-                    onScratchpad = { showScratchpad = true },
-                    modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
-                )
+                if (uiState.isDissection) {
+                    DissectionSolveBody(
+                        uiState = uiState,
+                        callbacks = dissection,
+                        onNext = onNext,
+                        modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                    )
+                } else {
+                    SolvingBody(
+                        uiState = uiState,
+                        onSelect = onSelect,
+                        onSubmit = onSubmit,
+                        onExcludeRequest = { showExcludeDialog = true },
+                        onUpgrade = onUpgrade,
+                        onScratchpad = { showScratchpad = true },
+                        modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                    )
+                }
             }
 
             SolvePhase.GRADED -> {
-                uiState.result?.let { result ->
-                    ResultView(
-                        result = result,
-                        showExplanation = uiState.showExplanation,
-                        sessionStreak = uiState.sessionStreak,
-                        softCutSuggested = uiState.softCutSuggested,
-                        isPremium = uiState.isPremium,
-                        solutionVideo = uiState.solutionVideo,
+                if (uiState.isDissection) {
+                    DissectionSolveBody(
+                        uiState = uiState,
+                        callbacks = dissection,
                         onNext = onNext,
-                        onFinishToday = onGoHome,
-                        onExcludeRequest = { showExcludeDialog = true },
-                        onReportAnswer = { onReportAnswer(result) },
-                        onUpgrade = onUpgrade,
-                        onWatchVideo = onWatchVideo,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
+                } else {
+                    uiState.result?.let { result ->
+                        ResultView(
+                            result = result,
+                            showExplanation = uiState.showExplanation,
+                            sessionStreak = uiState.sessionStreak,
+                            softCutSuggested = uiState.softCutSuggested,
+                            isPremium = uiState.isPremium,
+                            solutionVideo = uiState.solutionVideo,
+                            onNext = onNext,
+                            onFinishToday = onGoHome,
+                            onExcludeRequest = { showExcludeDialog = true },
+                            onReportAnswer = { onReportAnswer(result) },
+                            onUpgrade = onUpgrade,
+                            onWatchVideo = onWatchVideo,
+                            modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                        )
+                    }
                 }
             }
         }
