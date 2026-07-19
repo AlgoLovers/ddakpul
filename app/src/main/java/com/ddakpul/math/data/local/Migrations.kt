@@ -92,6 +92,15 @@ val MIGRATION_7_8 =
         }
     }
 
+val MIGRATION_9_10 =
+    object : Migration(9, 10) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE problem ADD COLUMN dissectionJson TEXT")
+            // 등분 퍼즐은 시드에만 있으므로 비워서 최신 콘텐츠로 강제 재시딩(학습 기록 테이블은 유지).
+            db.execSQL("DELETE FROM problem")
+        }
+    }
+
 val MIGRATION_8_9 =
     object : Migration(8, 9) {
         override fun migrate(db: SupportSQLiteDatabase) {

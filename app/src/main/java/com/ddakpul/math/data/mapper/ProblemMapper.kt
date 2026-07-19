@@ -2,6 +2,8 @@ package com.ddakpul.math.data.mapper
 
 import com.ddakpul.math.data.local.entity.ProblemEntity
 import com.ddakpul.math.domain.model.Answer
+import com.ddakpul.math.domain.model.Cell
+import com.ddakpul.math.domain.model.DissectionPuzzle
 import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Mistake
@@ -26,6 +28,35 @@ data class FigureDto(
     val params: Map<String, Int> = emptyMap(),
     val heights: List<Int> = emptyList(),
 )
+
+/** 격자 등분 퍼즐 직렬화 DTO — Room JSON 컬럼용. cells=[r,c] 쌍, symbols=[r,c,sym] 삼중. */
+@Serializable
+data class DissectionDto(
+    val cells: List<List<Int>>,
+    val pieceCount: Int,
+    val symbols: List<SymbolDto> = emptyList(),
+) {
+    @Serializable
+    data class SymbolDto(
+        val r: Int,
+        val c: Int,
+        val sym: String,
+    )
+}
+
+internal fun DissectionDto.toDomain(): DissectionPuzzle =
+    DissectionPuzzle(
+        cells = cells.map { Cell(it[0], it[1]) },
+        pieceCount = pieceCount,
+        symbols = symbols.takeIf { it.isNotEmpty() }?.associate { Cell(it.r, it.c) to it.sym },
+    )
+
+private fun DissectionPuzzle.toDto(): DissectionDto =
+    DissectionDto(
+        cells = cells.map { listOf(it.row, it.col) },
+        pieceCount = pieceCount,
+        symbols = symbols.orEmpty().map { (cell, sym) -> DissectionDto.SymbolDto(cell.row, cell.col, sym) },
+    )
 
 private val json = Json { ignoreUnknownKeys = true }
 private val stringListSerializer = ListSerializer(String.serializer())
@@ -53,6 +84,7 @@ fun ProblemEntity.toDomain(): Problem =
         figure = figureJson?.let { json.decodeFromString(FigureDto.serializer(), it).toDomain() },
         detailedExplanation = detailedExplanation,
         code = code,
+        dissection = dissectionJson?.let { json.decodeFromString(DissectionDto.serializer(), it).toDomain() },
     )
 
 fun Problem.toEntity(): ProblemEntity =
@@ -74,4 +106,5 @@ fun Problem.toEntity(): ProblemEntity =
         figureJson = figure?.let { json.encodeToString(FigureDto.serializer(), it.toDto()) },
         detailedExplanation = detailedExplanation,
         code = code,
+        dissectionJson = dissection?.let { json.encodeToString(DissectionDto.serializer(), it.toDto()) },
     )

@@ -11,6 +11,7 @@ import com.ddakpul.math.data.local.MIGRATION_5_6
 import com.ddakpul.math.data.local.MIGRATION_6_7
 import com.ddakpul.math.data.local.MIGRATION_7_8
 import com.ddakpul.math.data.local.MIGRATION_8_9
+import com.ddakpul.math.data.local.MIGRATION_9_10
 import com.ddakpul.math.data.local.dao.AttemptDao
 import com.ddakpul.math.data.local.dao.ExcludedProblemDao
 import com.ddakpul.math.data.local.dao.LearnerProgressDao
@@ -43,6 +44,7 @@ object DatabaseModule {
                 MIGRATION_6_7,
                 MIGRATION_7_8,
                 MIGRATION_8_9,
+                MIGRATION_9_10,
             ).build()
 
     @Provides
