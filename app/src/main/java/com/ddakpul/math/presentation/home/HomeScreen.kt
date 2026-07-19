@@ -50,6 +50,7 @@ import kotlin.math.roundToInt
 @Composable
 fun HomeScreen(
     onStartLearning: () -> Unit,
+    onOpenPuzzle: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -59,6 +60,7 @@ fun HomeScreen(
         dailyGoal = uiState.dailyGoal,
         launchFreeUntilMillis = uiState.launchFreeUntilMillis,
         onStartLearning = onStartLearning,
+        onOpenPuzzle = onOpenPuzzle,
         modifier = modifier,
     )
 }
@@ -69,6 +71,7 @@ private fun HomeContent(
     dailyGoal: Int,
     launchFreeUntilMillis: Long,
     onStartLearning: () -> Unit,
+    onOpenPuzzle: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -156,6 +159,42 @@ private fun HomeContent(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 8.dp),
+            )
+        }
+
+        PuzzleEntryCard(
+            onClick = onOpenPuzzle,
+            modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
+        )
+    }
+}
+
+/** 공간 퍼즐 미리보기 진입 카드 — 새 모달리티(격자 등분) 파일럿. */
+@Composable
+private fun PuzzleEntryCard(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.puzzle_home_card),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                text = stringResource(R.string.puzzle_home_card_desc),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

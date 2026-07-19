@@ -390,4 +390,19 @@
     <string name="video_downloading">Downloading video… %1$d%%</string>
     <string name="video_download_failed">Couldn\'t download the video. Please check your internet connection.</string>
     <string name="video_retry">Retry</string>
+    <!-- Spatial dissection puzzle pilot -->
+    <string name="puzzle_title">Spatial Puzzles</string>
+    <string name="puzzle_home_card">🧩 Spatial Puzzles · Preview</string>
+    <string name="puzzle_home_card_desc">Divide a shape into identical pieces</string>
+    <string name="puzzle_progress">%1$d / %2$d</string>
+    <string name="puzzle_clear">Clear</string>
+    <string name="puzzle_check">Check</string>
+    <string name="puzzle_next">Next puzzle</string>
+    <string name="puzzle_correct">Correct! Congruent pieces complete 🎉</string>
+    <string name="puzzle_err_incomplete">Some cells are not filled in yet.</string>
+    <string name="puzzle_err_count">Please match the number of pieces.</string>
+    <string name="puzzle_err_size">The pieces have different numbers of cells.</string>
+    <string name="puzzle_err_disconnected">Each piece must be one connected block.</string>
+    <string name="puzzle_err_congruent">The pieces are not the same shape (they must match after rotating or flipping).</string>
+    <string name="puzzle_err_symbol">Each piece must contain one ●, one ▲, and one ■.</string>
 </resources>

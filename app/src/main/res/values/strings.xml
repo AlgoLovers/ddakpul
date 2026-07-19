@@ -391,4 +391,19 @@
     <string name="video_downloading">해설 영상 받는 중… %1$d%%</string>
     <string name="video_download_failed">영상을 받지 못했어요. 인터넷 연결을 확인해 주세요.</string>
     <string name="video_retry">다시 시도</string>
+    <!-- 공간 퍼즐(격자 등분) 파일럿 -->
+    <string name="puzzle_title">공간 퍼즐</string>
+    <string name="puzzle_home_card">🧩 공간 퍼즐 · 미리보기</string>
+    <string name="puzzle_home_card_desc">도형을 똑같은 모양으로 나눠 보세요</string>
+    <string name="puzzle_progress">%1$d / %2$d</string>
+    <string name="puzzle_clear">지우기</string>
+    <string name="puzzle_check">확인</string>
+    <string name="puzzle_next">다음 퍼즐</string>
+    <string name="puzzle_correct">정답! 합동 등분 완성 🎉</string>
+    <string name="puzzle_err_incomplete">아직 안 칠한 칸이 있어요.</string>
+    <string name="puzzle_err_count">조각 수를 맞춰 주세요.</string>
+    <string name="puzzle_err_size">조각들의 칸 수가 서로 달라요.</string>
+    <string name="puzzle_err_disconnected">각 조각은 한 덩어리로 이어져야 해요.</string>
+    <string name="puzzle_err_congruent">조각들의 모양이 서로 똑같지 않아요(돌리거나 뒤집어서 같아야 해요).</string>
+    <string name="puzzle_err_symbol">각 조각에 ●·▲·■가 하나씩 들어가야 해요.</string>
 </resources>

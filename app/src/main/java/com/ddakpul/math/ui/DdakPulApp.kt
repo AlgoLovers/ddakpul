@@ -37,6 +37,7 @@ import com.ddakpul.math.presentation.home.HomeScreen
 import com.ddakpul.math.presentation.paywall.PaywallScreen
 import com.ddakpul.math.presentation.print.PrintScreen
 import com.ddakpul.math.presentation.privacy.PrivacyScreen
+import com.ddakpul.math.presentation.puzzle.DissectionPuzzleScreen
 import com.ddakpul.math.presentation.report.ReportScreen
 import com.ddakpul.math.presentation.settings.SettingsScreen
 import com.ddakpul.math.presentation.solve.SolveScreen
@@ -57,6 +58,7 @@ private enum class DdakPulDestination(
 private const val PRINT_ROUTE = "print"
 private const val PAYWALL_ROUTE = "paywall"
 private const val PRIVACY_ROUTE = "privacy"
+private const val PUZZLE_ROUTE = "puzzle"
 private const val VIDEO_PLAYER_ROUTE = "videoplayer"
 private const val ARG_METHOD = "method"
 private const val ARG_TITLE = "title"
@@ -97,7 +99,13 @@ private fun AppNavHost(
         modifier = modifier,
     ) {
         composable(DdakPulDestination.HOME.route) {
-            HomeScreen(onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) })
+            HomeScreen(
+                onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) },
+                onOpenPuzzle = { navController.navigate(PUZZLE_ROUTE) },
+            )
+        }
+        composable(PUZZLE_ROUTE) {
+            DissectionPuzzleScreen(onBack = { navController.popBackStack() })
         }
         composable(DdakPulDestination.SOLVE.route) {
             SolveScreen(
