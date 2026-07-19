@@ -72,8 +72,10 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
+        // 태블릿(>560dp)에서 폭 제한된 카드들이 왼쪽으로 쏠리지 않도록 가운데 정렬
+        // (문제풀이 화면 Box(TopCenter)와 동일). 폰(<560dp)에선 카드가 전체 폭이라 영향 없음.
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
-        horizontalAlignment = Alignment.Start,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         // 헤더: 타이틀·인사(왼쪽) + 마스코트(오른쪽). 마스코트는 임시 스마일(실제 딱풀이는 출시 후).
