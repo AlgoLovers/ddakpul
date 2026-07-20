@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.settings
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.BuildExclusionReportUseCase
@@ -123,6 +124,5 @@ class SettingsViewModel
 
         private companion object {
             const val STOP_TIMEOUT_MILLIS = 5_000L
-            const val MILLIS_PER_DAY = 86_400_000L
         }
     }

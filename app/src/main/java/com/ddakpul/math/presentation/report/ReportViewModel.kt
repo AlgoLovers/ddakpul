@@ -2,6 +2,7 @@ package com.ddakpul.math.presentation.report
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
@@ -211,7 +212,6 @@ class ReportViewModel
 
         private companion object {
             const val STOP_TIMEOUT_MILLIS = 5_000L
-            const val MILLIS_PER_DAY = 86_400_000L
             const val WINDOW_DAYS = 14L
             const val DAYS_PER_WEEK = 7L
 

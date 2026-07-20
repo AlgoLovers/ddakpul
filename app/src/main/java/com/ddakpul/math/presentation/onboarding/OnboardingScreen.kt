@@ -38,8 +38,6 @@ import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.SessionGoals
 
-/** 하루 목표 선택지(설정 화면과 동일). */
-private val GOAL_OPTIONS = listOf(5, 10, 15)
 private const val STEP_COUNT = 3
 
 // 온보딩 시작 난이도 선택지 → 실제 난이도 값
@@ -160,7 +158,7 @@ private fun GoalStep(
 ) {
     StepHeader(R.string.onboarding_goal_title, R.string.onboarding_goal_subtitle)
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        GOAL_OPTIONS.forEach { goal ->
+        SessionGoals.GOAL_OPTIONS.forEach { goal ->
             FilterChip(
                 selected = selected == goal,
                 onClick = { onSelect(goal) },

@@ -1,5 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.ConceptStat

@@ -147,7 +147,7 @@ class ReportPdfGenerator(
             val stat = stats.areaStats.firstOrNull { it.area == area }
             val solved = stat?.solved ?: 0
             val correct = stat?.correct ?: 0
-            val acc = if (solved == 0) 0f else correct.toFloat() / solved
+            val acc = stat?.accuracy ?: 0f
             val label = texts.areaLabels[area] ?: area.name
             canvas.drawText(label, MARGIN.toFloat(), y + bodyPaint.textSize, bodyPaint)
             val barTop = y + 3f

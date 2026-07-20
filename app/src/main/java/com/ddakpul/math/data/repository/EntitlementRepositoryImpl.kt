@@ -1,5 +1,6 @@
 package com.ddakpul.math.data.repository
 
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.data.local.dao.LearnerProgressDao
 import com.ddakpul.math.data.local.entity.LearnerProgressEntity
 import com.ddakpul.math.domain.model.Difficulty
@@ -31,9 +32,5 @@ class EntitlementRepositoryImpl
             progressDao.upsert(
                 (current ?: LearnerProgressEntity(currentDifficulty = Difficulty.DEFAULT)).copy(premiumUntilMillis = newUntil),
             )
-        }
-
-        private companion object {
-            const val MILLIS_PER_DAY = 24L * 60 * 60 * 1000
         }
     }

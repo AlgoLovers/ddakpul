@@ -8,6 +8,7 @@ import android.graphics.pdf.PdfDocument
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import com.ddakpul.math.core.designsystem.component.dicePips
 import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
@@ -406,18 +407,6 @@ private fun drawPdfMatchstick(
     }
 }
 
-/** 주사위 눈(1~6) 위치를 면 내부 비율 좌표(0~1)로. */
-private fun pdfPips(v: Int): List<Pair<Float, Float>> =
-    when (v) {
-        1 -> listOf(0.5f to 0.5f)
-        2 -> listOf(0.3f to 0.3f, 0.7f to 0.7f)
-        3 -> listOf(0.28f to 0.28f, 0.5f to 0.5f, 0.72f to 0.72f)
-        4 -> listOf(0.3f to 0.3f, 0.7f to 0.3f, 0.3f to 0.7f, 0.7f to 0.7f)
-        5 -> listOf(0.28f to 0.28f, 0.72f to 0.28f, 0.5f to 0.5f, 0.28f to 0.72f, 0.72f to 0.72f)
-        6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
-        else -> emptyList()
-    }
-
 /** 정육면체(주사위) 전개도 — 흑백 인쇄용: 격자에 면·눈을 찍고 색칠 면은 회색으로 강조. */
 private fun drawPdfCubeNet(
     canvas: Canvas,
@@ -449,7 +438,7 @@ private fun drawPdfCubeNet(
         val v = hs[i * 3 + 2]
         if (v == query) canvas.drawRect(x, y, x + cell, y + cell, shade)
         canvas.drawRect(x, y, x + cell, y + cell, ink)
-        for ((fx, fy) in pdfPips(v)) canvas.drawCircle(x + fx * cell, y + fy * cell, pipR, fill)
+        for ((fx, fy) in dicePips(v)) canvas.drawCircle(x + fx * cell, y + fy * cell, pipR, fill)
     }
 }
 

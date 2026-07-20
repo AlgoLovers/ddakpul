@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.domain.model.Entitlement
 import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.PremiumPass
@@ -35,7 +36,6 @@ import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import kotlin.math.ceil
 
-private const val MILLIS_PER_DAY = 86_400_000L
 private val CONTENT_MAX_WIDTH = 480.dp
 
 /** 이용권(페이월) 화면 — 무료/유료 경계에서 유료 가치를 보여주고 이용권을 활성화한다. */
