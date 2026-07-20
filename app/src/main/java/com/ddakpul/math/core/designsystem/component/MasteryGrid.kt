@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ddakpul.math.core.common.toPercentInt
 import kotlin.math.roundToInt
 
 /**
@@ -113,7 +114,7 @@ private fun MasteryCell(
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             Text(
-                text = entry.accuracy?.let { "${(it * 100).roundToInt()}%" } ?: "-",
+                text = entry.accuracy?.let { "${it.toPercentInt()}%" } ?: "-",
                 style = MaterialTheme.typography.labelSmall,
             )
         }

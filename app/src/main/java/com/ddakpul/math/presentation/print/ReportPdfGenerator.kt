@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.pdf.PdfDocument
 import android.text.TextPaint
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import kotlin.math.roundToInt
@@ -156,7 +157,7 @@ class ReportPdfGenerator(
             if (solved > 0) {
                 canvas.drawRoundRect(RectF(barX, barTop, barX + barWidth * acc, barBottom), 4f, 4f, barFgPaint)
             }
-            val stextValue = if (solved == 0) "-" else "${(acc * 100).roundToInt()}% ($correct/$solved)"
+            val stextValue = if (solved == 0) "-" else "${acc.toPercentInt()}% ($correct/$solved)"
             canvas.drawText(stextValue, barX + barWidth + 8f, y + bodyPaint.textSize, labelPaint)
             y += 24f
         }
@@ -178,7 +179,7 @@ class ReportPdfGenerator(
             return y + 26f
         }
         weak.forEach { c ->
-            val line = "• ${c.concept} — ${(c.accuracy * 100).roundToInt()}% (${c.correct}/${c.solved})"
+            val line = "• ${c.concept} — ${c.accuracy.toPercentInt()}% (${c.correct}/${c.solved})"
             canvas.drawText(ellipsize(line, CONTENT_WIDTH.toFloat(), bodyPaint), MARGIN.toFloat(), y + bodyPaint.textSize, bodyPaint)
             y += 20f
         }

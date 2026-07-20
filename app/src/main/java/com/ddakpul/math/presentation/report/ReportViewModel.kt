@@ -3,6 +3,7 @@ package com.ddakpul.math.presentation.report
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.MILLIS_PER_DAY
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
@@ -168,7 +169,7 @@ class ReportViewModel
                 val recent = stats.recentAccuracy
                 val previous = stats.previousAccuracy
                 if (recent != null && previous != null) {
-                    val delta = ((recent - previous) * 100).roundToInt()
+                    val delta = (recent - previous).toPercentInt()
                     when {
                         delta >= TREND_DELTA_THRESHOLD -> add(ReportInsight.AccuracyUp(delta))
                         delta <= -TREND_DELTA_THRESHOLD -> add(ReportInsight.AccuracyDown(-delta))
@@ -177,11 +178,11 @@ class ReportViewModel
 
                 stats.errorRecoveryRate
                     ?.takeIf { it > 0f }
-                    ?.let { add(ReportInsight.ErrorRecovery((it * 100).roundToInt())) }
+                    ?.let { add(ReportInsight.ErrorRecovery(it.toPercentInt())) }
 
                 stats.conceptStats
                     .firstOrNull { it.solved >= MIN_SOLVED_FOR_CONCEPT && it.accuracy < WEAK_ACCURACY }
-                    ?.let { add(ReportInsight.WeakConcept(it.concept, (it.accuracy * 100).roundToInt())) }
+                    ?.let { add(ReportInsight.WeakConcept(it.concept, it.accuracy.toPercentInt())) }
             }
 
         private fun buildWeeklySummary(stats: LearningStats): WeeklySummary {
@@ -194,7 +195,7 @@ class ReportViewModel
             val recent = stats.recentAccuracy
             val previous = stats.previousAccuracy
             val delta =
-                if (recent != null && previous != null) ((recent - previous) * 100).roundToInt() else null
+                if (recent != null && previous != null) (recent - previous).toPercentInt() else null
 
             return WeeklySummary(
                 solved = solved,

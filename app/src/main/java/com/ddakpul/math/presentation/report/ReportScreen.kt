@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.BarEntry
 import com.ddakpul.math.core.designsystem.component.LevelTrack
 import com.ddakpul.math.core.designsystem.component.MasteryChip
@@ -249,7 +250,7 @@ private fun rememberReportTexts(stats: LearningStats): ReportTexts {
     // 오답 해소율이 실제로 있을 때만 격려 문구를 넣는다(0%인데 "잘 되고 있어요"는 모순).
     val recoveryLine =
         stats.errorRecoveryRate?.takeIf { it > 0f }?.let {
-            stringResource(R.string.report_export_recovery, (it * 100).roundToInt())
+            stringResource(R.string.report_export_recovery, it.toPercentInt())
         }
     return ReportTexts(
         title = stringResource(R.string.report_export_title),
@@ -257,7 +258,7 @@ private fun rememberReportTexts(stats: LearningStats): ReportTexts {
         summary =
             listOf(
                 stringResource(R.string.report_total_solved) to stringResource(R.string.home_unit_count, stats.totalSolved),
-                stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, stats.accuracy.toPercentInt()),
                 stringResource(R.string.report_current_level) to stringResource(R.string.home_unit_level, stats.currentDifficulty),
                 stringResource(R.string.report_streak) to stringResource(R.string.report_unit_days, stats.streakDays),
             ),
@@ -479,7 +480,7 @@ private fun KeyStatTiles(stats: LearningStats) {
             StatTile(
                 icon = "🎯",
                 label = stringResource(R.string.report_accuracy),
-                value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                value = stringResource(R.string.home_unit_percent, stats.accuracy.toPercentInt()),
                 caption = accuracyDeltaCaption(stats),
                 modifier = Modifier.weight(1f),
             )
@@ -508,7 +509,7 @@ private fun KeyStatTiles(stats: LearningStats) {
 private fun accuracyDeltaCaption(stats: LearningStats): String? {
     val recent = stats.recentAccuracy ?: return null
     val previous = stats.previousAccuracy ?: return null
-    val delta = ((recent - previous) * 100).roundToInt()
+    val delta = (recent - previous).toPercentInt()
     return when {
         delta > 0 -> stringResource(R.string.report_caption_delta_up, delta)
         delta < 0 -> stringResource(R.string.report_caption_delta_down, -delta)
@@ -612,7 +613,7 @@ private fun AreaBreakdown(areaStats: List<AreaStat>) {
                             if (solved == 0) {
                                 stringResource(R.string.report_area_none)
                             } else {
-                                stringResource(R.string.report_area_stat, solved, (accuracy * 100).roundToInt())
+                                stringResource(R.string.report_area_stat, solved, accuracy.toPercentInt())
                             },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -777,7 +778,7 @@ private fun ConceptRow(concept: ConceptStat) {
                     stringResource(
                         R.string.report_concept_stat,
                         concept.solved,
-                        (concept.accuracy * 100).roundToInt(),
+                        concept.accuracy.toPercentInt(),
                     ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

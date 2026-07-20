@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.Difficulty
@@ -119,7 +120,7 @@ private fun HomeContent(
         )
 
         val solved = stats?.totalSolved ?: 0
-        val accuracyPercent = ((stats?.accuracy ?: 0f) * 100).roundToInt()
+        val accuracyPercent = (stats?.accuracy ?: 0f).toPercentInt()
         val level = stats?.currentDifficulty ?: Difficulty.DEFAULT
         val tileColor = MaterialTheme.colorScheme.surfaceContainerHigh
         Row(
