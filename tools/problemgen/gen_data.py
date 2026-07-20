@@ -2160,3 +2160,62 @@ def gen_pascalodd():
                 f"Generalizing: which rows have exactly 2 odd entries? Rows 2, 4, 8, 16, … — the powers of 2.",
             },
         )
+
+
+def gen_numberbaseball():
+    # 숫자야구 — 스트라이크/볼 힌트로 비밀번호 추리(경우의 수 소거). (자료와가능성 난5)
+    # 발견형: 공식 없음. 정답 유일성은 1~9 세 자리 순열 504개 전수 브루트포스로 독립 검산.
+    from itertools import permutations
+
+    codes = ["".join(p) for p in permutations("123456789", 3)]
+
+    def fbk(secret, guess):
+        s = sum(a == b for a, b in zip(secret, guess))
+        b = sum(1 for i, g in enumerate(guess) if g in secret and g != secret[i])
+        return s, b
+
+    for secret, guesses in [("385", ["123", "135", "285"]),
+                            ("627", ["123", "456", "672"]),
+                            ("941", ["123", "246", "934"]),
+                            ("264", ["123", "246", "174"])]:
+        clues = [(g, *fbk(secret, g)) for g in guesses]
+        sols = [c for c in codes if all(fbk(c, g) == (s, b) for g, s, b in clues)]
+        assert sols == [secret], f"numberbaseball 유일해 아님 {secret}: {sols}"
+        near = [c for c in codes if c != secret and sum(fbk(c, g) == (s, b) for g, s, b in clues) == 2]
+        assert len(near) >= 3, f"numberbaseball 오답 부족 {secret}"
+        distr = near[:3]
+        clue_txt = " / ".join(f"{g} → {s}S {b}B" for g, s, b in clues)
+        add(
+            "numberbaseball", "DATA_POSSIBILITY", 5, ["논리 추리", "경우의 수 소거"],
+            f"1부터 9까지 중 서로 다른 숫자 3개로 만든 비밀번호가 있어요. 한 번 대 볼 때마다 힌트를 받아요 — "
+            f"숫자도 자리도 맞으면 스트라이크(S), 숫자는 비밀번호에 있지만 자리가 다르면 볼(B)이에요. 세 번 추측한 "
+            f"결과가 이래요:  {clue_txt}.  비밀번호는 무엇일까요?",
+            secret, distr,
+            f"① 공식이 아니라 후보를 하나씩 지워 가는 '경우의 수 소거'예요. ② 각 힌트에서 (스트라이크+볼)은 '그 추측의 세 "
+            f"숫자 중 비밀번호에 들어있는 개수'예요 — 스트라이크는 자리까지 맞은 것, 볼은 숫자만 맞고 자리는 틀린 것, "
+            f"둘 다 0이면 그 세 숫자는 전혀 없어요. ③ 세 힌트가 알려주는 '들어있는 숫자·맞는 자리'를 겹쳐 후보를 좁히면 "
+            f"{secret} 하나만 세 힌트를 모두 만족해요. 힌트 하나만 어긋나는 그럴듯한 수가 여럿이라, 끝까지 세 힌트를 '동시에' 따져야 해요.",
+            [(distr[0], f"{distr[0]}{_eun(distr[0])} 세 힌트 중 둘만 맞아요 — 한 힌트에서 스트라이크·볼 수가 어긋나요. 정답은 세 힌트를 모두 만족해야 해요."),
+             (distr[1], "힌트를 따로따로 보면 그럴듯하지만, 세 힌트를 '동시에' 만족하진 않아요 — 한 힌트가 어긋나요. 후보를 세 힌트에 다 대 보세요."),
+             (distr[2], "정답과 비슷해 헷갈리지만 한 힌트에서 틀려요 — 아닌 것을 지워 세 힌트를 전부 통과하는 하나만 남기세요.")],
+            detail=f"검산: {secret}{_eul(secret)} 세 추측과 각각 대 보면 힌트가 정확히 일치하고, 1~9로 만든 세 자리 수 504개 중 세 힌트를 "
+            f"모두 만족하는 수는 {secret} 하나뿐이에요. 숫자야구의 핵심은 '한 힌트로 후보를 좁히고 다음 힌트로 또 좁히는' 소거 — 정답을 "
+            f"찍는 게 아니라 아닌 것을 지워 남기는 사고예요.",
+            en={
+                "concepts": ["Logical deduction", "Elimination of cases"],
+                "statement": f"There is a secret code of 3 different digits from 1 to 9. Each guess gives hints — a Strike (S) when a digit is right AND in the right "
+                             f"place, a Ball (B) when the digit is in the code but in the wrong place. Three guesses gave:  {clue_txt}.  What is the code?",
+                "answer": secret,
+                "distractors": distr,
+                "explanation": f"① Not a formula — you erase candidates one by one. ② In each hint, (Strikes+Balls) is 'how many of that guess's three digits are in the "
+                               f"code' — a Strike is right-place, a Ball is right-digit-wrong-place, and both being 0 means those three digits are absent. "
+                               f"③ Overlapping what the three hints reveal (which digits are in, which places are fixed) narrows it until only {secret} fits all three. "
+                               f"Many numbers fit two hints but break one, so you must satisfy all three at once, to the end.",
+                "mistakes": [(distr[0], f"{distr[0]} fits only two of the three hints — its strikes/balls disagree on one. The answer must satisfy every hint."),
+                             (distr[1], "Each hint alone looks plausible, but it doesn't satisfy all three at once — one hint breaks. Test each candidate against every hint."),
+                             (distr[2], "It looks close to the answer but breaks one hint — erase what can't be, and keep the single number that passes all three.")],
+                "detail": f"Check: testing {secret} against each guess reproduces the hints exactly, and among all 504 three-digit numbers from 1–9 it is the only one that "
+                          f"fits all three hints. The heart of the game is elimination — narrow with one hint, narrow again with the next; you don't guess the answer, you "
+                          f"erase what it cannot be.",
+            },
+        )

@@ -58,7 +58,7 @@ TYPES = {
         ("03", "조합·나누어 세기", ["조합", "choose", "handshake", "악수", "handrev", "league", "numsplit", "starsbars", "중복조합", "partition", "분할", "setpartition", "stairs", "tribstairs", "계단"]),
         ("04", "평균·자료 읽기", ["평균", "avgbasic", "avgchg", "avgneed", "wavg", "chartavg", "missscore", "median", "중앙값", "mode", "최빈값", "자료", "dataread", "barchart", "tablediff", "chart"]),
         ("05", "확률", ["확률", "simpleprob", "atleastprob", "여사건", "derange", "교란", "fairgame", "가능성 비교", "fairsplit", "공정한 분배"]),
-        ("06", "논리·전략·불변량", ["truthone", "진실", "pigeon", "비둘기집", "parity", "불변량", "balance", "저울", "knockout", "tourney", "토너먼트", "hanoi", "하노이", "collatz", "lights", "catalan", "setboth", "포함배제", "logicgrid", "논리 소거", "surepick", "최악의 경우", "liarcount", "자기 지시", "pascalodd", "홀짝 패턴"]),
+        ("06", "논리·전략·불변량", ["truthone", "진실", "pigeon", "비둘기집", "parity", "불변량", "balance", "저울", "knockout", "tourney", "토너먼트", "hanoi", "하노이", "collatz", "lights", "catalan", "setboth", "포함배제", "logicgrid", "논리 소거", "surepick", "최악의 경우", "liarcount", "자기 지시", "pascalodd", "홀짝 패턴", "numberbaseball", "숫자야구", "논리 추리", "경우의 수 소거"]),
     ],
 }
 

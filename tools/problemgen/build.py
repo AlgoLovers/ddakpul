@@ -104,6 +104,8 @@ GENERATORS = [
     gen_waterjug,
     # v6.2 확충(2026-07) — 변화와관계 난6 유형 다양성: 개구리 자리바꾸기(규칙 발견 N(N+2))
     gen_leapfrog,
+    # v6.3 확충(2026-07) — 자료와가능성 난5 유형 다양성: 숫자야구(스트라이크·볼 논리 소거)
+    gen_numberbaseball,
 ]
 
 for g in GENERATORS:

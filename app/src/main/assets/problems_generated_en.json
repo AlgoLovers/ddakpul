@@ -28606,6 +28606,150 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "Why is 'jumps=N², slides=2N' always true? To end up on opposite sides, every pair of one-yours-one-theirs frogs must cross exactly once, so jumps are always N², and shifting each group over by one costs 2N slides. So the answer is always N(N+2). Build the rule from small cases and attach the 'why', and even a large N is instant — no counting needed."
+  },
+  {
+   "id": "gen-numberbaseball-1",
+   "code": "40-06-17-05-01",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-numberbaseball-5",
+   "concepts": [
+    "Logical deduction",
+    "Elimination of cases"
+   ],
+   "statement": "There is a secret code of 3 different digits from 1 to 9. Each guess gives hints — a Strike (S) when a digit is right AND in the right place, a Ball (B) when the digit is in the code but in the wrong place. Three guesses gave:  123 → 0S 1B / 135 → 1S 1B / 285 → 2S 0B.  What is the code?",
+   "choices": [
+    "215",
+    "245",
+    "385",
+    "265"
+   ],
+   "answerIndex": 2,
+   "explanation": "① Not a formula — you erase candidates one by one. ② In each hint, (Strikes+Balls) is 'how many of that guess's three digits are in the code' — a Strike is right-place, a Ball is right-digit-wrong-place, and both being 0 means those three digits are absent. ③ Overlapping what the three hints reveal (which digits are in, which places are fixed) narrows it until only 385 fits all three. Many numbers fit two hints but break one, so you must satisfy all three at once, to the end.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "215 fits only two of the three hints — its strikes/balls disagree on one. The answer must satisfy every hint."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "Each hint alone looks plausible, but it doesn't satisfy all three at once — one hint breaks. Test each candidate against every hint."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "It looks close to the answer but breaks one hint — erase what can't be, and keep the single number that passes all three."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Check: testing 385 against each guess reproduces the hints exactly, and among all 504 three-digit numbers from 1–9 it is the only one that fits all three hints. The heart of the game is elimination — narrow with one hint, narrow again with the next; you don't guess the answer, you erase what it cannot be."
+  },
+  {
+   "id": "gen-numberbaseball-2",
+   "code": "40-06-17-05-02",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-numberbaseball-5",
+   "concepts": [
+    "Logical deduction",
+    "Elimination of cases"
+   ],
+   "statement": "There is a secret code of 3 different digits from 1 to 9. Each guess gives hints — a Strike (S) when a digit is right AND in the right place, a Ball (B) when the digit is in the code but in the wrong place. Three guesses gave:  123 → 1S 0B / 456 → 0S 1B / 672 → 1S 2B.  What is the code?",
+   "choices": [
+    "147",
+    "148",
+    "627",
+    "149"
+   ],
+   "answerIndex": 2,
+   "explanation": "① Not a formula — you erase candidates one by one. ② In each hint, (Strikes+Balls) is 'how many of that guess's three digits are in the code' — a Strike is right-place, a Ball is right-digit-wrong-place, and both being 0 means those three digits are absent. ③ Overlapping what the three hints reveal (which digits are in, which places are fixed) narrows it until only 627 fits all three. Many numbers fit two hints but break one, so you must satisfy all three at once, to the end.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "147 fits only two of the three hints — its strikes/balls disagree on one. The answer must satisfy every hint."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "Each hint alone looks plausible, but it doesn't satisfy all three at once — one hint breaks. Test each candidate against every hint."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "It looks close to the answer but breaks one hint — erase what can't be, and keep the single number that passes all three."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Check: testing 627 against each guess reproduces the hints exactly, and among all 504 three-digit numbers from 1–9 it is the only one that fits all three hints. The heart of the game is elimination — narrow with one hint, narrow again with the next; you don't guess the answer, you erase what it cannot be."
+  },
+  {
+   "id": "gen-numberbaseball-3",
+   "code": "40-06-17-05-03",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-numberbaseball-5",
+   "concepts": [
+    "Logical deduction",
+    "Elimination of cases"
+   ],
+   "statement": "There is a secret code of 3 different digits from 1 to 9. Each guess gives hints — a Strike (S) when a digit is right AND in the right place, a Ball (B) when the digit is in the code but in the wrong place. Three guesses gave:  123 → 0S 1B / 246 → 1S 0B / 934 → 1S 1B.  What is the code?",
+   "choices": [
+    "239",
+    "941",
+    "257",
+    "258"
+   ],
+   "answerIndex": 1,
+   "explanation": "① Not a formula — you erase candidates one by one. ② In each hint, (Strikes+Balls) is 'how many of that guess's three digits are in the code' — a Strike is right-place, a Ball is right-digit-wrong-place, and both being 0 means those three digits are absent. ③ Overlapping what the three hints reveal (which digits are in, which places are fixed) narrows it until only 941 fits all three. Many numbers fit two hints but break one, so you must satisfy all three at once, to the end.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "239 fits only two of the three hints — its strikes/balls disagree on one. The answer must satisfy every hint."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "Each hint alone looks plausible, but it doesn't satisfy all three at once — one hint breaks. Test each candidate against every hint."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "It looks close to the answer but breaks one hint — erase what can't be, and keep the single number that passes all three."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Check: testing 941 against each guess reproduces the hints exactly, and among all 504 three-digit numbers from 1–9 it is the only one that fits all three hints. The heart of the game is elimination — narrow with one hint, narrow again with the next; you don't guess the answer, you erase what it cannot be."
+  },
+  {
+   "id": "gen-numberbaseball-4",
+   "code": "40-06-17-05-04",
+   "area": "DATA_POSSIBILITY",
+   "difficulty": 5,
+   "groupId": "g-gen-numberbaseball-5",
+   "concepts": [
+    "Logical deduction",
+    "Elimination of cases"
+   ],
+   "statement": "There is a secret code of 3 different digits from 1 to 9. Each guess gives hints — a Strike (S) when a digit is right AND in the right place, a Ball (B) when the digit is in the code but in the wrong place. Three guesses gave:  123 → 0S 1B / 246 → 1S 2B / 174 → 1S 0B.  What is the code?",
+   "choices": [
+    "276",
+    "254",
+    "264",
+    "275"
+   ],
+   "answerIndex": 2,
+   "explanation": "① Not a formula — you erase candidates one by one. ② In each hint, (Strikes+Balls) is 'how many of that guess's three digits are in the code' — a Strike is right-place, a Ball is right-digit-wrong-place, and both being 0 means those three digits are absent. ③ Overlapping what the three hints reveal (which digits are in, which places are fixed) narrows it until only 264 fits all three. Many numbers fit two hints but break one, so you must satisfy all three at once, to the end.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "254 fits only two of the three hints — its strikes/balls disagree on one. The answer must satisfy every hint."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "Each hint alone looks plausible, but it doesn't satisfy all three at once — one hint breaks. Test each candidate against every hint."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "It looks close to the answer but breaks one hint — erase what can't be, and keep the single number that passes all three."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Check: testing 264 against each guess reproduces the hints exactly, and among all 504 three-digit numbers from 1–9 it is the only one that fits all three hints. The heart of the game is elimination — narrow with one hint, narrow again with the next; you don't guess the answer, you erase what it cannot be."
   }
  ]
 }
