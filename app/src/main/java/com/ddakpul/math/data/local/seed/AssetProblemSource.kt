@@ -76,8 +76,9 @@ class AssetProblemSource
              * 문제은행 '내용' 버전. 문항 수가 그대로여도 기존 문제의 난이도·풀이·코드 등이 바뀌면
              * 이 값을 올린다 → 기존 설치가 다음 실행 때 재시딩된다.
              * v2: 점화식 4형제(gen-recur-1~4) 난이도 10→5 재조정. v3: 격자 등분 퍼즐 편입.
+             * v4: 물 붓기 퍼즐(gen-waterjug, 변화와관계 난9) 5문항 신규 — CHANGE d9 유형 다양성 보강.
              */
-            const val CONTENT_VERSION = 3
+            const val CONTENT_VERSION = 4
             private const val PREF = "ddakpul_seed"
             private const val KEY_SEEDED_LANG = "seeded_lang"
             private const val KEY_SEEDED_VERSION = "seeded_content_version"

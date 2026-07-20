@@ -100,6 +100,8 @@ GENERATORS = [
     gen_tricount, gen_billiard, gen_pickfig, gen_cubeviews, gen_stairperim, gen_foldpieces,
     # 자료와가능성: 논리소거·최악보장·공정놀이·승수불변량·공정분배·교대배열·자기지시·파스칼홀짝
     gen_logic_grid, gen_sure_pick, gen_fair_game, gen_winsum, gen_fair_split, gen_zigzag, gen_liarcount, gen_pascalodd,
+    # v6.1 확충(2026-07) — 변화와관계 난9 유형 다양성: 물 붓기 퍼즐(상태공간 BFS·최소 동작)
+    gen_waterjug,
 ]
 
 for g in GENERATORS:

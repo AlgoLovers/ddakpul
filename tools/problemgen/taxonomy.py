@@ -39,7 +39,7 @@ TYPES = {
         ("03", "비·비례·농도", ["비례", "비", "unitprice", "recipe", "ratio", "농도", "concn", "mixture", "gear", "톱니", "seesaw", "시소", "반비례", "dblsale", "할인", "subst", "치환", "단위 바꾸기"]),
         ("04", "속력·따라잡기", ["속력", "meet", "만남", "candle", "따라잡기", "frog", "train", "기차", "roundtrip", "평균 속력", "거속시"]),
         ("05", "시간·간격·달력", ["시간", "timedur", "log", "간격", "tree", "간격 문제", "calweek", "달력", "dow", "요일", "clockstrike", "clockgain", "cups", "lcmbus", "주기"]),
-        ("06", "일·전략·나이", ["work", "일의 양", "tank", "일률", "age", "나이", "sumdiff", "합과 차", "transfer", "주고받기", "josephus", "nim", "필승", "배수 남기기", "diophantine", "부정방정식", "trans", "이행성", "순서 추론", "stampfrob", "우표", "mergecandy", "불변량", "pyramidmax", "기여 횟수"]),
+        ("06", "일·전략·나이", ["work", "일의 양", "tank", "일률", "age", "나이", "sumdiff", "합과 차", "transfer", "주고받기", "josephus", "nim", "필승", "배수 남기기", "diophantine", "부정방정식", "trans", "이행성", "순서 추론", "stampfrob", "우표", "mergecandy", "불변량", "pyramidmax", "기여 횟수", "waterjug", "물통", "상태 탐색", "최소 조작"]),
     ],
     "SHAPE_MEASUREMENT": [
         ("01", "넓이(모눈·둘러싸기)", ["넓이", "gridtilt", "둘러싸기", "gridhard", "gridtri", "gridpara", "gridtrap", "grid", "모눈", "sqarea", "areamax", "pick", "픽의", "simarea", "닮음"]),

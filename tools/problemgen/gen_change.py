@@ -2090,3 +2090,106 @@ def gen_funcinv():
                 f"Check back: confirm the rule fits all three shown pairs, and that putting in {ans} really gives {out}.",
             },
         )
+
+
+def gen_waterjug():
+    # 눈금 없는 두 물통으로 목표량 만들기 — 상태공간 BFS 최소 동작 수. (변화와관계 난9)
+    # 발견형: 공식 없음. 채우기·비우기·옮기기를 조합해 최단 경로를 손으로 찾아야 하고,
+    # 목표가 만들어질 조건(두 용량 gcd의 배수)도 작은 실험에서 귀납해야 한다.
+    from collections import deque
+    from math import gcd
+
+    act_ko = {"fillA": "A 가득 채우기", "fillB": "B 가득 채우기", "emptyA": "A 비우기",
+              "emptyB": "B 비우기", "AtoB": "A→B로 옮기기", "BtoA": "B→A로 옮기기"}
+    act_en = {"fillA": "fill A", "fillB": "fill B", "emptyA": "empty A",
+              "emptyB": "empty B", "AtoB": "pour A→B", "BtoA": "pour B→A"}
+
+    def solve(a, b, t):
+        # 상태 (x,y). BFS로 최소 동작 수와 한 최단 경로(동작 코드열)를 반환한다.
+        prev, act = {(0, 0): None}, {(0, 0): None}
+        dq = deque([(0, 0)])
+        while dq:
+            x, y = dq.popleft()
+            if x == t or y == t:
+                path, s = [], (x, y)
+                while act[s] is not None:
+                    path.append(act[s])
+                    s = prev[s]
+                return len(path), list(reversed(path))
+            pab, pba = min(x, b - y), min(y, a - x)
+            for ns, code in [((a, y), "fillA"), ((x, b), "fillB"), ((0, y), "emptyA"),
+                             ((x, 0), "emptyB"), ((x - pab, y + pab), "AtoB"), ((x + pba, y - pba), "BtoA")]:
+                if ns not in prev:
+                    prev[ns], act[ns] = (x, y), code
+                    dq.append(ns)
+        return None, None
+
+    def one_way(a, b, t):
+        # 큰 통 채워 작은 통에 붓기만 반복하는 유효하지만 보통 더 긴 해 — 오답용.
+        x, y, steps, seen = 0, 0, 0, set()
+        while x != t and y != t:
+            if (x, y) in seen:
+                return None
+            seen.add((x, y))
+            if x == 0:
+                x = a
+            elif y == b:
+                y = 0
+            else:
+                p = min(x, b - y)
+                x, y = x - p, y + p
+            steps += 1
+        return steps
+
+    for a, b, t in [(5, 3, 4), (7, 4, 5), (7, 5, 6), (9, 5, 7), (10, 6, 8)]:
+        assert t % gcd(a, b) == 0 and 0 < t <= max(a, b), f"waterjug 도달불가 {a},{b},{t}"
+        ans, path = solve(a, b, t)
+        assert ans is not None and ans > 0, f"waterjug BFS 실패 {a},{b},{t}"
+        alt = one_way(a, b, t)
+        seq_ko = " → ".join(act_ko[c] for c in path)
+        seq_en = " → ".join(act_en[c] for c in path)
+        cand, cand_en, mistakes, mistakes_en = [], [], [], []
+        if alt and alt > ans:
+            cand.append(f"{alt}번")
+            cand_en.append(_en_plural(alt, "move"))
+            mistakes.append((f"{alt}번", "큰 통을 채워 작은 통에 붓기만 반복해도 목표엔 닿지만 동작이 더 많이 들어요. 반대 방향도 시도해 최소를 찾으세요."))
+            mistakes_en.append((_en_plural(alt, "move"), "Only ever filling the big jug and pouring into the small one does reach the goal, but with more moves. Try the other direction too and keep the shorter."))
+        cand += [f"{ans + 1}번", f"{max(1, ans - 1)}번", f"{ans + 2}번"]
+        cand_en += [_en_plural(ans + 1, "move"), _en_plural(max(1, ans - 1), "move"), _en_plural(ans + 2, "move")]
+        mistakes += [(f"{ans + 1}번", "동작을 한 번 더 세었어요 — 경로를 하나씩 다시 짚어 세어 보세요."),
+                     (f"{max(1, ans - 1)}번", "목표량이 완성되는 마지막 동작까지 빠짐없이 세야 해요."),
+                     (f"{ans + 2}번", "동작을 두 번 더 세었어요 — '가득 채우기'와 '옮기기'를 겹쳐 세지 않았는지 처음부터 다시 세어 보세요.")]
+        mistakes_en += [(_en_plural(ans + 1, "move"), "You counted one move too many — retrace the path move by move."),
+                        (_en_plural(max(1, ans - 1), "move"), "Count every move through the one that finishes the target amount."),
+                        (_en_plural(ans + 2, "move"), "You counted two moves too many — recount from the start, without double-counting a fill and a pour.")]
+        add(
+            "waterjug", "CHANGE_RELATION", 9, ["상태 탐색", "최소 조작"],
+            f"눈금이 없는 {a}L짜리 물통 A와 {b}L짜리 물통 B가 있어요. 할 수 있는 동작은 세 가지예요 — "
+            f"한 물통을 수도로 가득 채우기, 한 물통을 완전히 비우기, 한 물통의 물을 다른 물통으로 옮기기"
+            f"(받는 쪽이 가득 차거나 주는 쪽이 빌 때까지). 동작을 각각 1번으로 셀 때, 어느 한 물통에 물이 "
+            f"정확히 {t}L 담기게 하려면 최소 몇 번의 동작이 필요할까요?",
+            f"{ans}번", cand,
+            f"① 공식이 없어요 — 채우기·비우기·옮기기를 조합해 손으로 상태를 따라가며 최단 길을 찾아야 해요. "
+            f"② 각 순간을 (A에 든 양, B에 든 양)으로 적고, 세 동작으로 갈 수 있는 다음 상태를 뻗어 나가요. "
+            f"③ 가장 빠른 길은 {ans}번이에요: {seq_ko}. 한 방향으로만 붓다 보면 돌아가니 두 방향을 다 시도해 짧은 쪽을 고르세요.",
+            mistakes,
+            detail=f"두 물통으로 만들 수 있는 물의 양은 '두 용량의 최대공약수(gcd)의 배수'뿐이에요 — {a}{_gwa(a)} {b}의 "
+            f"최대공약수가 {gcd(a, b)}이에요. 그래서 {gcd(a, b)}의 배수인 {t}L도 만들 수 있죠. 이 조건은 작은 실험에서 스스로 "
+            f"발견할 수 있어요. 하지만 '최소 횟수'는 규칙이 아니라 탐색으로만 나와요 — 목표가 같아도 물통 크기가 바뀌면 최단 경로가 확 달라지거든요.",
+            en={
+                "concepts": ["State-space search", "Fewest operations"],
+                "statement": f"You have two unmarked jugs: jug A holds {a} L and jug B holds {b} L. You may do three things — "
+                             f"fill a jug to the top from the tap, empty a jug completely, or pour from one jug into the other "
+                             f"(until the receiving jug is full or the pouring jug is empty). Counting each action as one move, "
+                             f"what is the fewest moves to get exactly {t} L in one of the jugs?",
+                "answer": _en_plural(ans, "move"),
+                "distractors": cand_en,
+                "explanation": f"① There's no formula — you combine fill, empty, and pour, tracking the state by hand to find the shortest route. "
+                               f"② Write each moment as (amount in A, amount in B) and branch out to the states reachable by the three actions. "
+                               f"③ The quickest route is {ans} moves: {seq_en}. Pouring in only one direction takes a detour, so try both and keep the shorter.",
+                "mistakes": mistakes_en,
+                "detail": f"The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd({a}, {b})={gcd(a, b)}, "
+                          f"so {t} L (a multiple of {gcd(a, b)}) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only "
+                          f"from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely.",
+            },
+        )

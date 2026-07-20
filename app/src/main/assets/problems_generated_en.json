@@ -28282,6 +28282,186 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "Keep only the odd entries and the triangle keeps splitting into three self-similar copies of itself (the Sierpinski triangle) — two copies of the top part reappear at the bottom left and right, which is why each extra 1 in the row number's binary record exactly doubles the odd entries. Looking back: build row 15 using only parity (odd+odd=even, odd+even=odd — it's quick) and see that all 16 entries really are odd. Generalizing: which rows have exactly 2 odd entries? Rows 2, 4, 8, 16, … — the powers of 2."
+  },
+  {
+   "id": "gen-waterjug-1",
+   "code": "20-06-12-09-01",
+   "area": "CHANGE_RELATION",
+   "difficulty": 9,
+   "groupId": "g-gen-waterjug-9",
+   "concepts": [
+    "State-space search",
+    "Fewest operations"
+   ],
+   "statement": "You have two unmarked jugs: jug A holds 5 L and jug B holds 3 L. You may do three things — fill a jug to the top from the tap, empty a jug completely, or pour from one jug into the other (until the receiving jug is full or the pouring jug is empty). Counting each action as one move, what is the fewest moves to get exactly 4 L in one of the jugs?",
+   "choices": [
+    "6 moves",
+    "8 moves",
+    "7 moves",
+    "5 moves"
+   ],
+   "answerIndex": 0,
+   "explanation": "① There's no formula — you combine fill, empty, and pour, tracking the state by hand to find the shortest route. ② Write each moment as (amount in A, amount in B) and branch out to the states reachable by the three actions. ③ The quickest route is 6 moves: fill A → pour A→B → empty B → pour A→B → fill A → pour A→B. Pouring in only one direction takes a detour, so try both and keep the shorter.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted one move too many — retrace the path move by move."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "Count every move through the one that finishes the target amount."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted two moves too many — recount from the start, without double-counting a fill and a pour."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd(5, 3)=1, so 4 L (a multiple of 1) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely."
+  },
+  {
+   "id": "gen-waterjug-2",
+   "code": "20-06-12-09-02",
+   "area": "CHANGE_RELATION",
+   "difficulty": 9,
+   "groupId": "g-gen-waterjug-9",
+   "concepts": [
+    "State-space search",
+    "Fewest operations"
+   ],
+   "statement": "You have two unmarked jugs: jug A holds 7 L and jug B holds 4 L. You may do three things — fill a jug to the top from the tap, empty a jug completely, or pour from one jug into the other (until the receiving jug is full or the pouring jug is empty). Counting each action as one move, what is the fewest moves to get exactly 5 L in one of the jugs?",
+   "choices": [
+    "12 moves",
+    "9 moves",
+    "7 moves",
+    "8 moves"
+   ],
+   "answerIndex": 3,
+   "explanation": "① There's no formula — you combine fill, empty, and pour, tracking the state by hand to find the shortest route. ② Write each moment as (amount in A, amount in B) and branch out to the states reachable by the three actions. ③ The quickest route is 8 moves: fill B → pour B→A → fill B → pour B→A → empty A → pour B→A → fill B → pour B→A. Pouring in only one direction takes a detour, so try both and keep the shorter.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "Only ever filling the big jug and pouring into the small one does reach the goal, but with more moves. Try the other direction too and keep the shorter."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted one move too many — retrace the path move by move."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "Count every move through the one that finishes the target amount."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd(7, 4)=1, so 5 L (a multiple of 1) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely."
+  },
+  {
+   "id": "gen-waterjug-3",
+   "code": "20-06-12-09-03",
+   "area": "CHANGE_RELATION",
+   "difficulty": 9,
+   "groupId": "g-gen-waterjug-9",
+   "concepts": [
+    "State-space search",
+    "Fewest operations"
+   ],
+   "statement": "You have two unmarked jugs: jug A holds 7 L and jug B holds 5 L. You may do three things — fill a jug to the top from the tap, empty a jug completely, or pour from one jug into the other (until the receiving jug is full or the pouring jug is empty). Counting each action as one move, what is the fewest moves to get exactly 6 L in one of the jugs?",
+   "choices": [
+    "11 moves",
+    "12 moves",
+    "10 moves",
+    "9 moves"
+   ],
+   "answerIndex": 2,
+   "explanation": "① There's no formula — you combine fill, empty, and pour, tracking the state by hand to find the shortest route. ② Write each moment as (amount in A, amount in B) and branch out to the states reachable by the three actions. ③ The quickest route is 10 moves: fill A → pour A→B → empty B → pour A→B → fill A → pour A→B → empty B → pour A→B → fill A → pour A→B. Pouring in only one direction takes a detour, so try both and keep the shorter.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You counted one move too many — retrace the path move by move."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "Count every move through the one that finishes the target amount."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted two moves too many — recount from the start, without double-counting a fill and a pour."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd(7, 5)=1, so 6 L (a multiple of 1) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely."
+  },
+  {
+   "id": "gen-waterjug-4",
+   "code": "20-06-12-09-04",
+   "area": "CHANGE_RELATION",
+   "difficulty": 9,
+   "groupId": "g-gen-waterjug-9",
+   "concepts": [
+    "State-space search",
+    "Fewest operations"
+   ],
+   "statement": "You have two unmarked jugs: jug A holds 9 L and jug B holds 5 L. You may do three things — fill a jug to the top from the tap, empty a jug completely, or pour from one jug into the other (until the receiving jug is full or the pouring jug is empty). Counting each action as one move, what is the fewest moves to get exactly 7 L in one of the jugs?",
+   "choices": [
+    "11 moves",
+    "14 moves",
+    "13 moves",
+    "12 moves"
+   ],
+   "answerIndex": 3,
+   "explanation": "① There's no formula — you combine fill, empty, and pour, tracking the state by hand to find the shortest route. ② Write each moment as (amount in A, amount in B) and branch out to the states reachable by the three actions. ③ The quickest route is 12 moves: fill A → pour A→B → empty B → pour A→B → fill A → pour A→B → empty B → pour A→B → empty B → pour A→B → fill A → pour A→B. Pouring in only one direction takes a detour, so try both and keep the shorter.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted one move too many — retrace the path move by move."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "Count every move through the one that finishes the target amount."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted two moves too many — recount from the start, without double-counting a fill and a pour."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd(9, 5)=1, so 7 L (a multiple of 1) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely."
+  },
+  {
+   "id": "gen-waterjug-5",
+   "code": "20-06-12-09-05",
+   "area": "CHANGE_RELATION",
+   "difficulty": 9,
+   "groupId": "g-gen-waterjug-9",
+   "concepts": [
+    "State-space search",
+    "Fewest operations"
+   ],
+   "statement": "You have two unmarked jugs: jug A holds 10 L and jug B holds 6 L. You may do three things — fill a jug to the top from the tap, empty a jug completely, or pour from one jug into the other (until the receiving jug is full or the pouring jug is empty). Counting each action as one move, what is the fewest moves to get exactly 8 L in one of the jugs?",
+   "choices": [
+    "6 moves",
+    "8 moves",
+    "7 moves",
+    "5 moves"
+   ],
+   "answerIndex": 0,
+   "explanation": "① There's no formula — you combine fill, empty, and pour, tracking the state by hand to find the shortest route. ② Write each moment as (amount in A, amount in B) and branch out to the states reachable by the three actions. ③ The quickest route is 6 moves: fill A → pour A→B → empty B → pour A→B → fill A → pour A→B. Pouring in only one direction takes a detour, so try both and keep the shorter.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "You counted one move too many — retrace the path move by move."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "Count every move through the one that finishes the target amount."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted two moves too many — recount from the start, without double-counting a fill and a pour."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd(10, 6)=2, so 8 L (a multiple of 2) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely."
   }
  ]
 }
