@@ -102,6 +102,8 @@ GENERATORS = [
     gen_logic_grid, gen_sure_pick, gen_fair_game, gen_winsum, gen_fair_split, gen_zigzag, gen_liarcount, gen_pascalodd,
     # v6.1 확충(2026-07) — 변화와관계 난9 유형 다양성: 물 붓기 퍼즐(상태공간 BFS·최소 동작)
     gen_waterjug,
+    # v6.2 확충(2026-07) — 변화와관계 난6 유형 다양성: 개구리 자리바꾸기(규칙 발견 N(N+2))
+    gen_leapfrog,
 ]
 
 for g in GENERATORS:

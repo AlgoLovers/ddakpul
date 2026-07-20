@@ -28462,6 +28462,150 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "The only amounts two jugs can make are multiples of the greatest common divisor of their sizes — gcd(10, 6)=2, so 8 L (a multiple of 2) is reachable. That condition you can discover from small experiments. But the FEWEST moves comes only from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely."
+  },
+  {
+   "id": "gen-leapfrog-1",
+   "code": "20-01-17-06-01",
+   "area": "CHANGE_RELATION",
+   "difficulty": 6,
+   "groupId": "g-gen-leapfrog-6",
+   "concepts": [
+    "Finding a rule",
+    "Swapping places"
+   ],
+   "statement": "In a row of cells, the left side has 2 green frogs and the right side has 2 yellow frogs, with one empty cell in the middle. A frog can move two ways — ① slide one step into the adjacent empty cell, or ② jump over exactly one frog of the other colour into the empty cell just beyond it. Green frogs move only right, yellow only left. What is the fewest moves for the two groups to completely swap sides (all green on the right, all yellow on the left)?",
+   "choices": [
+    "6 moves",
+    "4 moves",
+    "9 moves",
+    "8 moves"
+   ],
+   "answerIndex": 3,
+   "explanation": "① Don't memorise a formula — work small cases by hand: one each takes 3, two each takes 8, three each takes 15. ② Look at 3, 8, 15, … — they are 1×3, 2×4, 3×5…, that is N×(N+2). ③ Why: each of your frogs must jump over each of the 2 opposite frogs exactly once, so jumps = 2×2=4, and the slides in between total 2×2=4. Adding gives 4+4=8.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted only the jumps (2×2=4). The 4 slides between jumps are moves too."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "You took the slides as 2 — but BOTH groups slide, so it is 2×2=4."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "You read the rule as (N+1)². But 3=1×3, 8=2×4, 15=3×5, so it is N×(N+2), not (N+1)² (they differ by just 1, easy to mix up)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Why is 'jumps=N², slides=2N' always true? To end up on opposite sides, every pair of one-yours-one-theirs frogs must cross exactly once, so jumps are always N², and shifting each group over by one costs 2N slides. So the answer is always N(N+2). Build the rule from small cases and attach the 'why', and even a large N is instant — no counting needed."
+  },
+  {
+   "id": "gen-leapfrog-2",
+   "code": "20-01-17-06-02",
+   "area": "CHANGE_RELATION",
+   "difficulty": 6,
+   "groupId": "g-gen-leapfrog-6",
+   "concepts": [
+    "Finding a rule",
+    "Swapping places"
+   ],
+   "statement": "In a row of cells, the left side has 3 green frogs and the right side has 3 yellow frogs, with one empty cell in the middle. A frog can move two ways — ① slide one step into the adjacent empty cell, or ② jump over exactly one frog of the other colour into the empty cell just beyond it. Green frogs move only right, yellow only left. What is the fewest moves for the two groups to completely swap sides (all green on the right, all yellow on the left)?",
+   "choices": [
+    "9 moves",
+    "12 moves",
+    "15 moves",
+    "16 moves"
+   ],
+   "answerIndex": 2,
+   "explanation": "① Don't memorise a formula — work small cases by hand: one each takes 3, two each takes 8, three each takes 15. ② Look at 3, 8, 15, … — they are 1×3, 2×4, 3×5…, that is N×(N+2). ③ Why: each of your frogs must jump over each of the 3 opposite frogs exactly once, so jumps = 3×3=9, and the slides in between total 2×3=6. Adding gives 9+6=15.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You counted only the jumps (3×3=9). The 6 slides between jumps are moves too."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You took the slides as 3 — but BOTH groups slide, so it is 2×3=6."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "You read the rule as (N+1)². But 3=1×3, 8=2×4, 15=3×5, so it is N×(N+2), not (N+1)² (they differ by just 1, easy to mix up)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Why is 'jumps=N², slides=2N' always true? To end up on opposite sides, every pair of one-yours-one-theirs frogs must cross exactly once, so jumps are always N², and shifting each group over by one costs 2N slides. So the answer is always N(N+2). Build the rule from small cases and attach the 'why', and even a large N is instant — no counting needed."
+  },
+  {
+   "id": "gen-leapfrog-3",
+   "code": "20-01-17-06-03",
+   "area": "CHANGE_RELATION",
+   "difficulty": 6,
+   "groupId": "g-gen-leapfrog-6",
+   "concepts": [
+    "Finding a rule",
+    "Swapping places"
+   ],
+   "statement": "In a row of cells, the left side has 4 green frogs and the right side has 4 yellow frogs, with one empty cell in the middle. A frog can move two ways — ① slide one step into the adjacent empty cell, or ② jump over exactly one frog of the other colour into the empty cell just beyond it. Green frogs move only right, yellow only left. What is the fewest moves for the two groups to completely swap sides (all green on the right, all yellow on the left)?",
+   "choices": [
+    "16 moves",
+    "20 moves",
+    "25 moves",
+    "24 moves"
+   ],
+   "answerIndex": 3,
+   "explanation": "① Don't memorise a formula — work small cases by hand: one each takes 3, two each takes 8, three each takes 15. ② Look at 3, 8, 15, … — they are 1×3, 2×4, 3×5…, that is N×(N+2). ③ Why: each of your frogs must jump over each of the 4 opposite frogs exactly once, so jumps = 4×4=16, and the slides in between total 2×4=8. Adding gives 16+8=24.",
+   "mistakes": [
+    {
+     "choiceIndex": 0,
+     "misconception": "You counted only the jumps (4×4=16). The 8 slides between jumps are moves too."
+    },
+    {
+     "choiceIndex": 1,
+     "misconception": "You took the slides as 4 — but BOTH groups slide, so it is 2×4=8."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "You read the rule as (N+1)². But 3=1×3, 8=2×4, 15=3×5, so it is N×(N+2), not (N+1)² (they differ by just 1, easy to mix up)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Why is 'jumps=N², slides=2N' always true? To end up on opposite sides, every pair of one-yours-one-theirs frogs must cross exactly once, so jumps are always N², and shifting each group over by one costs 2N slides. So the answer is always N(N+2). Build the rule from small cases and attach the 'why', and even a large N is instant — no counting needed."
+  },
+  {
+   "id": "gen-leapfrog-4",
+   "code": "20-01-17-06-04",
+   "area": "CHANGE_RELATION",
+   "difficulty": 6,
+   "groupId": "g-gen-leapfrog-6",
+   "concepts": [
+    "Finding a rule",
+    "Swapping places"
+   ],
+   "statement": "In a row of cells, the left side has 5 green frogs and the right side has 5 yellow frogs, with one empty cell in the middle. A frog can move two ways — ① slide one step into the adjacent empty cell, or ② jump over exactly one frog of the other colour into the empty cell just beyond it. Green frogs move only right, yellow only left. What is the fewest moves for the two groups to completely swap sides (all green on the right, all yellow on the left)?",
+   "choices": [
+    "30 moves",
+    "25 moves",
+    "36 moves",
+    "35 moves"
+   ],
+   "answerIndex": 3,
+   "explanation": "① Don't memorise a formula — work small cases by hand: one each takes 3, two each takes 8, three each takes 15. ② Look at 3, 8, 15, … — they are 1×3, 2×4, 3×5…, that is N×(N+2). ③ Why: each of your frogs must jump over each of the 5 opposite frogs exactly once, so jumps = 5×5=25, and the slides in between total 2×5=10. Adding gives 25+10=35.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "You counted only the jumps (5×5=25). The 10 slides between jumps are moves too."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "You took the slides as 5 — but BOTH groups slide, so it is 2×5=10."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "You read the rule as (N+1)². But 3=1×3, 8=2×4, 15=3×5, so it is N×(N+2), not (N+1)² (they differ by just 1, easy to mix up)."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Why is 'jumps=N², slides=2N' always true? To end up on opposite sides, every pair of one-yours-one-theirs frogs must cross exactly once, so jumps are always N², and shifting each group over by one costs 2N slides. So the answer is always N(N+2). Build the rule from small cases and attach the 'why', and even a large N is instant — no counting needed."
   }
  ]
 }

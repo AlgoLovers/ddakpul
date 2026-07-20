@@ -2193,3 +2193,75 @@ def gen_waterjug():
                           f"from searching, not a formula — with the same target, changing the jug sizes changes the shortest route completely.",
             },
         )
+
+
+def gen_leapfrog():
+    # 개구리 자리바꾸기 — 최소 이동 수 = n(n+2)를 작은 사례에서 발견. (변화와관계 난6)
+    # 발견형: 공식 없이 N=1,2,3을 손으로 해 3,8,15를 얻고 규칙 N×(N+2)를 귀납해야 한다.
+    # 정답은 BFS 브루트포스로 독립 검산(슬라이드/점프 규칙을 그대로 시뮬).
+    from collections import deque
+
+    def solve(n):
+        start = tuple(["L"] * n + ["_"] + ["R"] * n)
+        goal = tuple(["R"] * n + ["_"] + ["L"] * n)
+        dq, seen = deque([(start, 0)]), {start}
+        while dq:
+            s, d = dq.popleft()
+            if s == goal:
+                return d
+            i = s.index("_")
+            for j, who in [(i - 1, "L"), (i - 2, "L"), (i + 1, "R"), (i + 2, "R")]:
+                if 0 <= j < len(s) and s[j] == who:
+                    if abs(i - j) == 2 and s[(i + j) // 2] in ("_", who):
+                        continue  # 사이 칸이 비었거나 같은 색이면 점프 불가(다른 색만 뛰어넘음)
+                    ns = list(s)
+                    ns[i], ns[j] = ns[j], "_"
+                    ns = tuple(ns)
+                    if ns not in seen:
+                        seen.add(ns)
+                        dq.append((ns, d + 1))
+        return None
+
+    for n in [2, 3, 4, 5]:
+        ans = solve(n)
+        assert ans == n * n + 2 * n, f"leapfrog BFS 불일치 n={n}: {ans}"
+        d_jump = n * n          # 오답: 뛰어넘기만 셈(미끄러지기 2N 빠뜨림)
+        d_slide1 = n * n + n    # 오답: 미끄러지기를 N번(2N 아님)으로 셈
+        d_p1 = (n + 1) * (n + 1)  # 오답: 규칙을 (N+1)²로 오인 (=정답+1)
+        add(
+            "leapfrog", "CHANGE_RELATION", 6, ["규칙 발견", "자리 바꾸기"],
+            f"한 줄로 놓인 칸에 왼쪽엔 초록 개구리 {n}마리, 오른쪽엔 노랑 개구리 {n}마리가 있고 가운데 한 칸이 비어 있어요. "
+            f"개구리는 두 가지로 움직여요 — ① 바로 앞 빈칸으로 한 칸 미끄러지기, ② 바로 앞의 다른 색 개구리 한 마리를 "
+            f"뛰어넘어 그 너머 빈칸으로 가기. 초록은 오른쪽으로만, 노랑은 왼쪽으로만 가요. 두 무리가 자리를 완전히 "
+            f"맞바꾸려면(초록이 모두 오른쪽, 노랑이 모두 왼쪽) 최소 몇 번 움직여야 할까요?",
+            f"{ans}번", [f"{d_jump}번", f"{d_slide1}번", f"{d_p1}번"],
+            f"① 공식을 외우지 말고 작은 경우부터 손으로 해봐요 — 한 마리씩이면 3번, 두 마리씩이면 8번, 세 마리씩이면 15번이에요. "
+            f"② 3, 8, 15, …를 뜯어보면 1×3, 2×4, 3×5… 곧 N×(N+2)예요. "
+            f"③ 왜냐면 내 편 개구리는 상대 {n}마리를 각각 한 번씩 '뛰어넘어야' 하니 뛰어넘기가 {n}×{n}={n * n}번, 그 사이 "
+            f"'미끄러지기'가 양쪽 합쳐 2×{n}={2 * n}번이라, 더하면 {n * n}+{2 * n}={ans}번이에요.",
+            [(f"{d_jump}번", f"상대를 '뛰어넘는' 횟수({n}×{n}={n * n}번)만 셌어요. 뛰어넘기 사이사이 '미끄러지기' {2 * n}번도 엄연한 움직임이에요."),
+             (f"{d_slide1}번", f"미끄러지기를 {n}번으로 봤어요 — 초록·노랑 두 무리가 각각 미끄러져야 해서 2×{n}={2 * n}번이에요."),
+             (f"{d_p1}번", "규칙을 (N+1)²로 잘못 읽었어요. 3=1×3, 8=2×4, 15=3×5라 (N+1)²가 아니라 N×(N+2)예요(딱 1 차이라 헷갈리기 쉬워요).")],
+            detail=f"'뛰어넘기={n}², 미끄러지기=2×{n}'는 왜 항상 그럴까요 — 서로 반대편으로 가려면 내 편·상대편 개구리 쌍마다 정확히 "
+            f"한 번씩 '엇갈림(뛰어넘기)'이 일어나야 해서 뛰어넘기는 늘 N²번, 무리가 통째로 한 칸씩 밀리는 데 드는 게 미끄러지기 2N번이에요. "
+            f"그래서 답은 언제나 N(N+2). 작은 사례로 규칙을 세우고 '왜 그런지'까지 붙이면 큰 N도 세지 않고 바로 알 수 있어요.",
+            en={
+                "concepts": ["Finding a rule", "Swapping places"],
+                "statement": f"In a row of cells, the left side has {n} green frogs and the right side has {n} yellow frogs, with one empty cell in the middle. "
+                             f"A frog can move two ways — ① slide one step into the adjacent empty cell, or ② jump over exactly one frog of the other colour "
+                             f"into the empty cell just beyond it. Green frogs move only right, yellow only left. What is the fewest moves for the two groups to "
+                             f"completely swap sides (all green on the right, all yellow on the left)?",
+                "answer": _en_plural(ans, "move"),
+                "distractors": [_en_plural(d_jump, "move"), _en_plural(d_slide1, "move"), _en_plural(d_p1, "move")],
+                "explanation": f"① Don't memorise a formula — work small cases by hand: one each takes 3, two each takes 8, three each takes 15. "
+                               f"② Look at 3, 8, 15, … — they are 1×3, 2×4, 3×5…, that is N×(N+2). "
+                               f"③ Why: each of your frogs must jump over each of the {n} opposite frogs exactly once, so jumps = {n}×{n}={n * n}, and the "
+                               f"slides in between total 2×{n}={2 * n}. Adding gives {n * n}+{2 * n}={ans}.",
+                "mistakes": [(_en_plural(d_jump, "move"), f"You counted only the jumps ({n}×{n}={n * n}). The {2 * n} slides between jumps are moves too."),
+                             (_en_plural(d_slide1, "move"), f"You took the slides as {n} — but BOTH groups slide, so it is 2×{n}={2 * n}."),
+                             (_en_plural(d_p1, "move"), "You read the rule as (N+1)². But 3=1×3, 8=2×4, 15=3×5, so it is N×(N+2), not (N+1)² (they differ by just 1, easy to mix up).")],
+                "detail": f"Why is 'jumps=N², slides=2N' always true? To end up on opposite sides, every pair of one-yours-one-theirs frogs must cross exactly once, "
+                          f"so jumps are always N², and shifting each group over by one costs 2N slides. So the answer is always N(N+2). Build the rule from small "
+                          f"cases and attach the 'why', and even a large N is instant — no counting needed.",
+            },
+        )

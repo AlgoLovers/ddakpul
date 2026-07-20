@@ -34,7 +34,7 @@ TYPES = {
         ("07", "경로·전략", ["lattice", "최단 경로", "weigh", "3분할", "저울"]),
     ],
     "CHANGE_RELATION": [
-        ("01", "규칙·수열 찾기", ["규칙 찾기", "일정하게", "seq", "계차", "pattern", "반복 규칙", "cycle", "반복 주기", "geoseq", "등비 규칙", "fib", "피보나치", "squarenum", "사각수", "trinum", "삼각수", "numline", "digitpos", "자릿수 블록", "funcinv", "대응 규칙"]),
+        ("01", "규칙·수열 찾기", ["규칙 찾기", "규칙 발견", "일정하게", "seq", "계차", "pattern", "반복 규칙", "cycle", "반복 주기", "geoseq", "등비 규칙", "fib", "피보나치", "squarenum", "사각수", "trinum", "삼각수", "numline", "digitpos", "자릿수 블록", "funcinv", "대응 규칙", "leapfrog", "자리 바꾸기"]),
         ("02", "등차·등비수열", ["등차", "등비", "arithnth", "arithsum", "geonth", "geosum", "n번째", "수열의 합", "quadseq", "prodsum", "cubesum", "recur", "점화식", "compose", "fibsum", "pow2", "2배씩"]),
         ("03", "비·비례·농도", ["비례", "비", "unitprice", "recipe", "ratio", "농도", "concn", "mixture", "gear", "톱니", "seesaw", "시소", "반비례", "dblsale", "할인", "subst", "치환", "단위 바꾸기"]),
         ("04", "속력·따라잡기", ["속력", "meet", "만남", "candle", "따라잡기", "frog", "train", "기차", "roundtrip", "평균 속력", "거속시"]),
