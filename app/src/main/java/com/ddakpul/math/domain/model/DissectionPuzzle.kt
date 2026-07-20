@@ -24,7 +24,4 @@ data class DissectionPuzzle(
         require(pieceCount in 2..cells.size) { "조각 수는 2..칸수" }
         require(cells.size % pieceCount == 0) { "칸수가 조각 수로 나누어떨어져야 함" }
     }
-
-    /** 각 조각의 칸 수. */
-    val pieceSize: Int get() = cells.size / pieceCount
 }

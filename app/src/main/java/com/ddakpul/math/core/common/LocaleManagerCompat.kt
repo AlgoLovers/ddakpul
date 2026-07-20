@@ -24,7 +24,6 @@ object LocaleManagerCompat {
     /** 지원 언어 태그. UI 토글이 고르는 값이자, 재시딩이 비교하는 값이다. */
     const val KOREAN = "ko"
     const val ENGLISH = "en"
-    val SUPPORTED = listOf(KOREAN, ENGLISH)
 
     private fun prefs(context: Context) = context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
 

@@ -11,8 +11,6 @@
     <string name="home_greeting">Ready for today\'s just-right problems?</string>
     <string name="home_start">Start learning</string>
     <string name="home_goal_title">Today\'s goal</string>
-    <string name="home_goal_progress">%1$d / %2$d problems</string>
-    <string name="home_goal_done">Today\'s goal done! 🎉</string>
     <string name="home_streak">🔥 %1$d-day streak</string>
     <string name="home_streak_best">Best: %1$d days</string>
     <string name="home_streak_start">Solve one problem today to start a streak</string>
@@ -30,13 +28,10 @@
     <string name="solve_read_aloud">🔊 Read aloud</string>
     <string name="solve_scratchpad">✏️ Scratchpad</string>
     <string name="scratch_title">Scratchpad — work it out by hand</string>
-    <string name="scratch_close">Close</string>
     <string name="scratch_eraser">Eraser</string>
     <string name="scratch_undo">Undo</string>
     <string name="scratch_clear">Clear all</string>
     <string name="solve_submit">Check answer</string>
-    <string name="solve_choice_prefix">%1$s.</string>
-    <string name="solve_loading">Loading a problem…</string>
     <string name="solve_empty">No problems available right now.</string>
     <string name="solve_exclude_button">Something\'s off with this one</string>
     <string name="solve_exclude_dialog_title">Stop showing this problem?</string>
@@ -103,7 +98,6 @@
     <string name="paywall_pass_1y_badge">Best value</string>
     <string name="paywall_activate">Start a Pass</string>
     <string name="paywall_no_autorenew">No auto-renewal. When it ends, it just stops. No ads, no nudges to pay more.</string>
-    <string name="paywall_test_note">(For now this activates instantly for testing — real store billing is coming)</string>
     <string name="paywall_coming_soon">Passes are not on sale yet. For now, everything is free — no payment needed.</string>
 
     <!-- Grown-up check (blocks kids before purchase/reset) -->
@@ -326,8 +320,6 @@
     <!-- Settings · high-quality neural voice (runtime download) -->
     <string name="tts_supertonic_name">High-quality voice (Supertonic)</string>
     <string name="tts_error_download_failed">Download failed</string>
-    <string name="tts_error_no_abi">Couldn\'t find a supported device type</string>
-    <string name="tts_error_no_lib">No voice library for this device (%1$s)</string>
     <string name="tts_error_save_failed">Couldn\'t save: %1$s</string>
     <string name="settings_neural_desc">A neural voice that sounds more natural. Download about %1$dMB once and use it offline.</string>
     <string name="settings_neural_download">Download (about %1$dMB)</string>
