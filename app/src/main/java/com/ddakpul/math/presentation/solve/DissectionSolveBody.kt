@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.presentation.puzzle.DissectionBoard
+import com.ddakpul.math.presentation.puzzle.DissectionControls
+import com.ddakpul.math.presentation.puzzle.DissectionResultText
 import com.ddakpul.math.presentation.puzzle.PiecePalette
 import com.ddakpul.math.presentation.puzzle.dissectionHint
 
@@ -49,10 +51,7 @@ fun DissectionSolveBody(
         PiecePalette(puzzle.pieceCount, uiState.dissectionPiece, callbacks.onSelectPiece)
 
         if (!graded) {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedButton(onClick = callbacks.onClear) { Text(stringResource(R.string.puzzle_clear)) }
-                Button(onClick = callbacks.onSubmit) { Text(stringResource(R.string.puzzle_check)) }
-            }
+            DissectionControls(onClear = callbacks.onClear, onCheck = callbacks.onSubmit)
             // 미완성 힌트(풀이 중, 시도 기록 없음)
             uiState.dissectionResult?.takeIf { !it.isValid }?.let {
                 Text(
@@ -62,14 +61,7 @@ fun DissectionSolveBody(
                 )
             }
         } else {
-            val result = uiState.dissectionResult
-            val (msg, color) =
-                if (result?.isValid == true) {
-                    stringResource(R.string.puzzle_correct) to MaterialTheme.colorScheme.secondary
-                } else {
-                    dissectionHint(result?.error) to MaterialTheme.colorScheme.error
-                }
-            Text(text = msg, color = color, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+            DissectionResultText(uiState.dissectionResult)
             Button(onClick = onNext) { Text(stringResource(R.string.puzzle_next)) }
         }
     }

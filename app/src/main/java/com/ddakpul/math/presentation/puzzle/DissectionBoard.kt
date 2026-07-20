@@ -10,18 +10,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.DissectionPuzzle
 import com.ddakpul.math.domain.usecase.DissectionError
+import com.ddakpul.math.domain.usecase.DissectionValidation
 
 /** 조각 색 팔레트(퍼즐 말). 게임 말 색이라 디자인 토큰과 별개로 고정(라이트·다크 공통). */
 val PIECE_COLORS: List<Color> =
@@ -54,6 +58,30 @@ fun dissectionHint(error: DissectionError?): String =
             null -> R.string.puzzle_err_incomplete
         },
     )
+
+/** 지우기·확인 버튼 줄 — 등분 퍼즐 두 진입점(본 풀이·파일럿) 공용. */
+@Composable
+fun DissectionControls(
+    onClear: () -> Unit,
+    onCheck: () -> Unit,
+) {
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        OutlinedButton(onClick = onClear) { Text(stringResource(R.string.puzzle_clear)) }
+        Button(onClick = onCheck) { Text(stringResource(R.string.puzzle_check)) }
+    }
+}
+
+/** 검증 결과 메시지(정답=secondary / 오답·미완성 힌트=error) — 두 진입점 공용. '다음' 버튼은 호출부가 조건대로. */
+@Composable
+fun DissectionResultText(result: DissectionValidation?) {
+    val (msg, color) =
+        if (result?.isValid == true) {
+            stringResource(R.string.puzzle_correct) to MaterialTheme.colorScheme.secondary
+        } else {
+            dissectionHint(result?.error) to MaterialTheme.colorScheme.error
+        }
+    Text(text = msg, color = color, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+}
 
 /** 격자 탭 입력판 — 영역 칸만 그리고, 탭하면 선택한 조각 색으로 칠한다(공용). */
 @Composable

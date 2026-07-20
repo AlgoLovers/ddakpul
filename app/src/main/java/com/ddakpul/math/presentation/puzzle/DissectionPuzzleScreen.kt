@@ -68,19 +68,10 @@ fun DissectionPuzzleScreen(
         DissectionBoard(puzzle = state.pilot.puzzle, assignment = state.assignment, onTap = viewModel::tapCell)
         PiecePalette(state.pilot.puzzle.pieceCount, state.selectedPiece, viewModel::selectPiece)
 
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            OutlinedButton(onClick = viewModel::clear) { Text(stringResource(R.string.puzzle_clear)) }
-            Button(onClick = viewModel::check) { Text(stringResource(R.string.puzzle_check)) }
-        }
+        DissectionControls(onClear = viewModel::clear, onCheck = viewModel::check)
 
         state.result?.let { result ->
-            val (msg, color) =
-                if (result.isValid) {
-                    stringResource(R.string.puzzle_correct) to MaterialTheme.colorScheme.secondary
-                } else {
-                    dissectionHint(result.error) to MaterialTheme.colorScheme.error
-                }
-            Text(text = msg, color = color, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+            DissectionResultText(result)
             if (result.isValid) {
                 Button(onClick = viewModel::next) { Text(stringResource(R.string.puzzle_next)) }
             }
