@@ -160,12 +160,7 @@ private fun PremiumCard(
     onOpenPaywall: () -> Unit,
 ) {
     val launchFree = !isPremium && launchFreeUntilMillis > 0L
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_premium_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_premium_title)) {
         Text(
             text =
                 when {
@@ -196,12 +191,7 @@ private fun PremiumCard(
 private fun LanguageCard() {
     val context = LocalContext.current
     val current = LocaleManagerCompat.currentLang(context)
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_language_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_language_title)) {
         Text(
             text = stringResource(R.string.settings_language_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -224,12 +214,7 @@ private fun LanguageCard() {
 
 @Composable
 private fun PrivacyCard(onOpenPrivacy: () -> Unit) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_privacy_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_privacy_title)) {
         Text(
             text = stringResource(R.string.settings_privacy_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -246,12 +231,7 @@ private fun DailyGoalCard(
     dailyGoal: Int,
     onSelect: (Int) -> Unit,
 ) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_goal_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_goal_title)) {
         Text(
             text = stringResource(R.string.settings_goal_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -280,12 +260,7 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
     val downloadState by viewModel.ttsDownloadState.collectAsStateWithLifecycle()
     val sizeMb = (model.totalBytes / 1024 / 1024).toInt()
 
-    SettingsCard {
-        Text(
-            text = stringResource(model.displayNameRes),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(model.displayNameRes)) {
         Text(
             text = stringResource(R.string.settings_neural_desc, sizeMb),
             style = MaterialTheme.typography.bodyMedium,
@@ -348,12 +323,7 @@ private fun TtsCard(
     // 미리 듣기용 — 선택이 바뀌면 새 엔진/속도로 즉시 다시 붙는다(SpeechSettings flow 구독).
     val speaker = rememberSpeaker()
 
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_tts_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_tts_title)) {
         Text(
             text = stringResource(R.string.settings_tts_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -494,12 +464,7 @@ private fun FeedbackExportCard(
     excludedCount: Int,
     onShare: () -> Unit,
 ) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_feedback_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_feedback_title)) {
         Text(
             text = stringResource(R.string.settings_feedback_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -521,12 +486,7 @@ private fun FeedbackExportCard(
 
 @Composable
 private fun ResetCard(onResetRequest: () -> Unit) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_reset),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_reset)) {
         Text(
             text = stringResource(R.string.settings_reset_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -540,7 +500,10 @@ private fun ResetCard(onResetRequest: () -> Unit) {
 
 /** 설정 화면 공통 카드 틀 — 제목·설명·액션을 세로로 담는다. */
 @Composable
-private fun SettingsCard(content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit) {
+private fun SettingsCard(
+    title: String,
+    content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit,
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
@@ -548,8 +511,10 @@ private fun SettingsCard(content: @Composable androidx.compose.foundation.layout
         Column(
             modifier = Modifier.fillMaxWidth().padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            content = content,
-        )
+        ) {
+            Text(text = title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            content()
+        }
     }
 }
 
