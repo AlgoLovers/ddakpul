@@ -289,7 +289,10 @@ private data class IsoView(
         gx: Float,
         gy: Float,
         gz: Float,
-    ) = Offset(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+    ): Offset {
+        val (x, y) = isoProject(ox, oy, hw, hh, ch, gx, gy, gz)
+        return Offset(x, y)
+    }
 }
 
 private fun DrawScope.drawIsoFace(

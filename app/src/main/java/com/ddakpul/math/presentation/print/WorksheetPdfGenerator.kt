@@ -9,6 +9,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import com.ddakpul.math.core.designsystem.component.dicePips
+import com.ddakpul.math.core.designsystem.component.isoProject
 import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
@@ -566,7 +567,10 @@ private class PdfIso(
         gx: Float,
         gy: Float,
         gz: Float,
-    ) = floatArrayOf(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+    ): FloatArray {
+        val (x, y) = isoProject(ox, oy, hw, hh, ch, gx, gy, gz)
+        return floatArrayOf(x, y)
+    }
 }
 
 private fun drawPdfIsoFace(

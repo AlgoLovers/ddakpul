@@ -15,3 +15,18 @@ internal fun dicePips(v: Int): List<Pair<Float, Float>> =
         6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
         else -> emptyList()
     }
+
+/**
+ * 등각(2:1) 투영: 쌓기나무 격자 좌표 (gx,gy,gz)를 화면 좌표 (x,y)로.
+ * 화면(IsoView)·PDF(PdfIso) 렌더러가 글자까지 같은 식을 쓰던 것을 공용화.
+ */
+fun isoProject(
+    ox: Float,
+    oy: Float,
+    hw: Float,
+    hh: Float,
+    ch: Float,
+    gx: Float,
+    gy: Float,
+    gz: Float,
+): Pair<Float, Float> = (ox + (gx - gy) * hw) to (oy + (gx + gy) * hh - gz * ch)
