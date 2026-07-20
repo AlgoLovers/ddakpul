@@ -2207,3 +2207,67 @@ def gen_foldpieces():
                           f"multiplication, and why the +1 comes last.",
             },
         )
+
+
+def gen_diceroll():
+    # 주사위 굴리기 — 경로를 따라 굴린 뒤 윗면 눈 맞히기(공간 회전 추적). (도형과측정 난6)
+    # 발견형: 공식 없음. 굴릴 때마다 면이 어떻게 도는지 손으로 추적해야 한다. 정답은 시뮬레이터로 검산.
+    dir_ko = {"R": "오른쪽", "L": "왼쪽", "F": "앞", "B": "뒤"}
+    dir_en = {"R": "right", "L": "left", "F": "forward", "B": "back"}
+
+    def roll(st, d):
+        top, front, right = st  # front=앞(관찰자 쪽), right=오른쪽. 마주 보는 면 합=7.
+        if d == "R":
+            return (7 - right, front, top)
+        if d == "L":
+            return (right, front, 7 - top)
+        if d == "F":
+            return (7 - front, top, right)
+        return (front, 7 - top, right)  # B(뒤)
+
+    for path in ["RFFR", "RFRB", "FRBR", "RRFR"]:
+        st, tops = (1, 2, 3), []
+        for d in path:
+            st = roll(st, d)
+            tops.append(st[0])
+        top, front, right = st
+        distr = [7 - top, front, right]  # 바닥·앞·오른쪽 면 — 가장 흔한 혼동
+        assert len({top, *distr}) == 4, f"diceroll 보기 중복 {path}"
+        path_ko = "·".join(dir_ko[d] for d in path)
+        path_en = ", ".join(dir_en[d] for d in path)
+        trace = "→".join(str(t) for t in tops)
+        add(
+            "diceroll", "SHAPE_MEASUREMENT", 6, ["공간 회전", "주사위 굴리기"],
+            f"바닥에 주사위가 놓여 있어요. 지금 윗면이 1, 나를 향한 앞면이 2, 오른쪽 면이 3이에요(주사위는 마주 보는 "
+            f"두 면의 눈의 합이 항상 7이에요). 이 주사위를 미끄러뜨리지 않고 90°씩 '{path_ko}' 순서로 굴렸어요 "
+            f"(어느 방향으로 '굴린다'는 건 그쪽 면이 바닥으로 내려가게 90° 넘긴다는 뜻이에요). 다 굴린 뒤 윗면의 눈은 몇일까요?",
+            f"{top}", [f"{v}" for v in distr],
+            f"① 공식이 아니라 굴릴 때마다 어느 면이 위로 오는지 손으로 따라가야 해요(머릿속으로 굴리거나 실제 주사위로). "
+            f"② 오른쪽으로 굴리면 윗면이 오른쪽 면 자리로, 앞으로 굴리면 윗면이 앞면 자리로 가요. 마주 보는 면의 합이 7이라 "
+            f"한 면을 알면 반대 면도 바로 나와요. ③ '{path_ko}'을 차례로 따라가면 윗면이 {trace}로 바뀌어, 마지막엔 {top}이 "
+            f"위로 와요. 자주 나오는 오답 {7 - top}은 바로 그때의 '바닥' 면이라 헷갈리기 쉬워요.",
+            [(f"{7 - top}", f"그건 다 굴린 뒤의 '바닥' 면이에요(윗면 {top}의 반대라 합이 7). 묻는 건 윗면이에요."),
+             (f"{front}", "그건 마지막에 '앞면'으로 온 눈이에요. 위·앞·옆을 섞지 말고 '윗면'만 좇으세요."),
+             (f"{right}", "그건 마지막에 '오른쪽 면'으로 온 눈이에요. 굴릴 때마다 윗면이 어디로 가는지만 따라가세요.")],
+            detail=f"실제 주사위 하나로 '{path_ko}' 굴려 보면 윗면이 {trace}로 변하는 걸 눈으로 확인할 수 있어요. 핵심은 '한 번 "
+            f"굴릴 때 윗면·바닥과 굴린 방향의 두 옆면, 이 네 면만 자리를 도는 회전(나머지 두 면은 축이라 그대로)'이라는 규칙을 "
+            f"스스로 알아채는 거예요. 방향을 바꿔 굴리면 축이 바뀌어 결과가 완전히 달라져요.",
+            en={
+                "concepts": ["Spatial rotation", "Rolling a die"],
+                "statement": f"A die sits on the floor. Right now the top face is 1, the front face (toward you) is 2, and the right face is 3 (on a die, opposite "
+                             f"faces always add to 7). Without sliding it, you tip the die 90° at a time in the order '{path_en}' (rolling in a direction means tipping "
+                             f"it 90° so the face on that side goes down to the bottom). After all the rolls, what number is on top?",
+                "answer": f"{top}",
+                "distractors": [f"{v}" for v in distr],
+                "explanation": f"① Not a formula — track which face comes up after each roll by hand (imagine it, or roll a real die). ② Rolling right sends the top face "
+                               f"to the right-face spot; rolling forward sends it to the front-face spot. Opposite faces sum to 7, so one face gives its opposite. "
+                               f"③ Following '{path_en}' step by step, the top changes {trace}, ending with {top} on top. A common wrong answer, {7 - top}, is exactly the "
+                               f"BOTTOM face then — easy to confuse with the top.",
+                "mistakes": [(f"{7 - top}", f"That is the BOTTOM face after the rolls (opposite the top {top}, summing to 7). The question asks for the TOP."),
+                             (f"{front}", "That is the number that ended up on the FRONT. Don't mix up top/front/side — follow only the top face."),
+                             (f"{right}", "That is the number that ended up on the RIGHT face. Track only where the top face goes with each roll.")],
+                "detail": f"Roll a real die along '{path_en}' and watch the top change {trace}. The key is noticing the rule yourself: one roll rotates only four faces "
+                          f"(top, bottom, and the two sides in the roll direction) while the other two stay as the axis. Change direction and the axis changes, so the "
+                          f"outcome changes completely.",
+            },
+        )

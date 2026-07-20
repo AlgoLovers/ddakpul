@@ -46,7 +46,7 @@ TYPES = {
         ("02", "둘레·측정", ["둘레", "rectperim", "border", "테두리", "match", "성냥", "tri", "변 공유"]),
         ("03", "각도", ["각도", "clockang", "clockmin", "polyang", "interiorangle", "polyext", "외각", "triangleangle", "내각"]),
         ("04", "입체·겉넓이·부피", ["겉넓이", "boxsurface", "cubesurf", "부피", "conevolume", "prismparts", "입체", "polyhedron", "다면체", "euler", "오일러", "cubenet", "전개도", "dist3d", "공간 좌표"]),
-        ("05", "쌓기나무·공간지각", ["쌓기나무", "cube", "cubetiny", "cubestack", "cubemid", "cubestackeasy", "paintcube", "spacediag", "공간 대각선", "diagcells"]),
+        ("05", "쌓기나무·공간지각", ["쌓기나무", "cube", "cubetiny", "cubestack", "cubemid", "cubestackeasy", "paintcube", "spacediag", "공간 대각선", "diagcells", "diceroll", "주사위 굴리기", "공간 회전"]),
         ("06", "도형 개수 세기", ["개수", "rectcount", "trianglefan", "trianglefanx", "gridsquares", "polydiag", "대각선", "diagcross", "diagregions", "gcdtile", "lcmsquare", "gcdtile"]),
         ("07", "대칭·거울", ["대칭", "foldcut", "symaxis", "mirror", "거울", "gridtiny", "grideasy", "gridrect", "foldpieces", "접어 자르기"]),
         # tricount는 02의 "tri" 부분일치에 먼저 걸려 오분류되므로 method_codes.json에 30-06-07로 사전 배정됨.

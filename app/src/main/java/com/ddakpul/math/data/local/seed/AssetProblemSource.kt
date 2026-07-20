@@ -76,9 +76,9 @@ class AssetProblemSource
              * 문제은행 '내용' 버전. 문항 수가 그대로여도 기존 문제의 난이도·풀이·코드 등이 바뀌면
              * 이 값을 올린다 → 기존 설치가 다음 실행 때 재시딩된다.
              * v2: 점화식 4형제(gen-recur-1~4) 난이도 10→5 재조정. v3: 격자 등분 퍼즐 편입.
-             * v4: 신규 유형 3종 — 물 붓기 퍼즐(gen-waterjug 변화 난9) 5문항 + 개구리 자리바꾸기
-             *     (gen-leapfrog 변화 난6) 4문항 + 숫자야구(gen-numberbaseball 자료 난5) 4문항.
-             *     유형 다양성 보강(CHANGE d9·d6, DATA d5).
+             * v4: 신규 유형 4종 — 물 붓기 퍼즐(gen-waterjug 변화 난9) 5문항 + 개구리 자리바꾸기
+             *     (gen-leapfrog 변화 난6) 4 + 숫자야구(gen-numberbaseball 자료 난5) 4 +
+             *     주사위 굴리기(gen-diceroll 도형 난6) 4. 유형 다양성 보강(CHANGE d9·d6, DATA d5, SHAPE d6).
              */
             const val CONTENT_VERSION = 4
             private const val PREF = "ddakpul_seed"

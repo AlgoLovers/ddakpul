@@ -28750,6 +28750,150 @@
    ],
    "source": "generated:v1(template+brute-force-verified)",
    "detailedExplanation": "Check: testing 264 against each guess reproduces the hints exactly, and among all 504 three-digit numbers from 1–9 it is the only one that fits all three hints. The heart of the game is elimination — narrow with one hint, narrow again with the next; you don't guess the answer, you erase what it cannot be."
+  },
+  {
+   "id": "gen-diceroll-1",
+   "code": "30-05-10-06-01",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-diceroll-6",
+   "concepts": [
+    "Spatial rotation",
+    "Rolling a die"
+   ],
+   "statement": "A die sits on the floor. Right now the top face is 1, the front face (toward you) is 2, and the right face is 3 (on a die, opposite faces always add to 7). Without sliding it, you tip the die 90° at a time in the order 'right, forward, forward, right' (rolling in a direction means tipping it 90° so the face on that side goes down to the bottom). After all the rolls, what number is on top?",
+   "choices": [
+    "3",
+    "6",
+    "1",
+    "5"
+   ],
+   "answerIndex": 1,
+   "explanation": "① Not a formula — track which face comes up after each roll by hand (imagine it, or roll a real die). ② Rolling right sends the top face to the right-face spot; rolling forward sends it to the front-face spot. Opposite faces sum to 7, so one face gives its opposite. ③ Following 'right, forward, forward, right' step by step, the top changes 4→5→3→6, ending with 6 on top. A common wrong answer, 1, is exactly the BOTTOM face then — easy to confuse with the top.",
+   "mistakes": [
+    {
+     "choiceIndex": 2,
+     "misconception": "That is the BOTTOM face after the rolls (opposite the top 6, summing to 7). The question asks for the TOP."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "That is the number that ended up on the FRONT. Don't mix up top/front/side — follow only the top face."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "That is the number that ended up on the RIGHT face. Track only where the top face goes with each roll."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Roll a real die along 'right, forward, forward, right' and watch the top change 4→5→3→6. The key is noticing the rule yourself: one roll rotates only four faces (top, bottom, and the two sides in the roll direction) while the other two stay as the axis. Change direction and the axis changes, so the outcome changes completely."
+  },
+  {
+   "id": "gen-diceroll-2",
+   "code": "30-05-10-06-02",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-diceroll-6",
+   "concepts": [
+    "Spatial rotation",
+    "Rolling a die"
+   ],
+   "statement": "A die sits on the floor. Right now the top face is 1, the front face (toward you) is 2, and the right face is 3 (on a die, opposite faces always add to 7). Without sliding it, you tip the die 90° at a time in the order 'right, forward, right, back' (rolling in a direction means tipping it 90° so the face on that side goes down to the bottom). After all the rolls, what number is on top?",
+   "choices": [
+    "4",
+    "3",
+    "5",
+    "1"
+   ],
+   "answerIndex": 0,
+   "explanation": "① Not a formula — track which face comes up after each roll by hand (imagine it, or roll a real die). ② Rolling right sends the top face to the right-face spot; rolling forward sends it to the front-face spot. Opposite faces sum to 7, so one face gives its opposite. ③ Following 'right, forward, right, back' step by step, the top changes 4→5→6→4, ending with 4 on top. A common wrong answer, 3, is exactly the BOTTOM face then — easy to confuse with the top.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That is the BOTTOM face after the rolls (opposite the top 4, summing to 7). The question asks for the TOP."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "That is the number that ended up on the FRONT. Don't mix up top/front/side — follow only the top face."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "That is the number that ended up on the RIGHT face. Track only where the top face goes with each roll."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Roll a real die along 'right, forward, right, back' and watch the top change 4→5→6→4. The key is noticing the rule yourself: one roll rotates only four faces (top, bottom, and the two sides in the roll direction) while the other two stay as the axis. Change direction and the axis changes, so the outcome changes completely."
+  },
+  {
+   "id": "gen-diceroll-3",
+   "code": "30-05-10-06-03",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-diceroll-6",
+   "concepts": [
+    "Spatial rotation",
+    "Rolling a die"
+   ],
+   "statement": "A die sits on the floor. Right now the top face is 1, the front face (toward you) is 2, and the right face is 3 (on a die, opposite faces always add to 7). Without sliding it, you tip the die 90° at a time in the order 'forward, right, back, right' (rolling in a direction means tipping it 90° so the face on that side goes down to the bottom). After all the rolls, what number is on top?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "5"
+   ],
+   "answerIndex": 1,
+   "explanation": "① Not a formula — track which face comes up after each roll by hand (imagine it, or roll a real die). ② Rolling right sends the top face to the right-face spot; rolling forward sends it to the front-face spot. Opposite faces sum to 7, so one face gives its opposite. ③ Following 'forward, right, back, right' step by step, the top changes 5→4→1→2, ending with 2 on top. A common wrong answer, 5, is exactly the BOTTOM face then — easy to confuse with the top.",
+   "mistakes": [
+    {
+     "choiceIndex": 3,
+     "misconception": "That is the BOTTOM face after the rolls (opposite the top 2, summing to 7). The question asks for the TOP."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "That is the number that ended up on the FRONT. Don't mix up top/front/side — follow only the top face."
+    },
+    {
+     "choiceIndex": 0,
+     "misconception": "That is the number that ended up on the RIGHT face. Track only where the top face goes with each roll."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Roll a real die along 'forward, right, back, right' and watch the top change 5→4→1→2. The key is noticing the rule yourself: one roll rotates only four faces (top, bottom, and the two sides in the roll direction) while the other two stay as the axis. Change direction and the axis changes, so the outcome changes completely."
+  },
+  {
+   "id": "gen-diceroll-4",
+   "code": "30-05-10-06-04",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-gen-diceroll-6",
+   "concepts": [
+    "Spatial rotation",
+    "Rolling a die"
+   ],
+   "statement": "A die sits on the floor. Right now the top face is 1, the front face (toward you) is 2, and the right face is 3 (on a die, opposite faces always add to 7). Without sliding it, you tip the die 90° at a time in the order 'right, right, forward, right' (rolling in a direction means tipping it 90° so the face on that side goes down to the bottom). After all the rolls, what number is on top?",
+   "choices": [
+    "3",
+    "4",
+    "6",
+    "5"
+   ],
+   "answerIndex": 0,
+   "explanation": "① Not a formula — track which face comes up after each roll by hand (imagine it, or roll a real die). ② Rolling right sends the top face to the right-face spot; rolling forward sends it to the front-face spot. Opposite faces sum to 7, so one face gives its opposite. ③ Following 'right, right, forward, right' step by step, the top changes 4→6→5→3, ending with 3 on top. A common wrong answer, 4, is exactly the BOTTOM face then — easy to confuse with the top.",
+   "mistakes": [
+    {
+     "choiceIndex": 1,
+     "misconception": "That is the BOTTOM face after the rolls (opposite the top 3, summing to 7). The question asks for the TOP."
+    },
+    {
+     "choiceIndex": 2,
+     "misconception": "That is the number that ended up on the FRONT. Don't mix up top/front/side — follow only the top face."
+    },
+    {
+     "choiceIndex": 3,
+     "misconception": "That is the number that ended up on the RIGHT face. Track only where the top face goes with each roll."
+    }
+   ],
+   "source": "generated:v1(template+brute-force-verified)",
+   "detailedExplanation": "Roll a real die along 'right, right, forward, right' and watch the top change 4→6→5→3. The key is noticing the rule yourself: one roll rotates only four faces (top, bottom, and the two sides in the roll direction) while the other two stay as the axis. Change direction and the axis changes, so the outcome changes completely."
   }
  ]
 }
