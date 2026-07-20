@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.common.MILLIS_PER_DAY
+import com.ddakpul.math.core.designsystem.component.NoticeCard
 import com.ddakpul.math.domain.model.Entitlement
 import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.PremiumPass
@@ -123,27 +124,11 @@ fun PaywallScreen(
 /** 출시 기념 무료 기간 안내 — 지금은 결제하지 않아도 다 열려 있음을 정직하게 알린다. */
 @Composable
 private fun LaunchFreeNoteCard(untilMillis: Long) {
-    Card(
+    NoticeCard(
+        title = stringResource(R.string.paywall_launch_free_title),
+        body = stringResource(R.string.paywall_launch_free_desc, launchFreeDeadlineText(untilMillis)),
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.paywall_launch_free_title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-            Text(
-                text = stringResource(R.string.paywall_launch_free_desc, launchFreeDeadlineText(untilMillis)),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-        }
-    }
+    )
 }
 
 @Composable
@@ -152,29 +137,12 @@ private fun ActiveStatusCard(
     now: Long,
 ) {
     val daysLeft = ceil((entitlement.premiumUntilMillis - now).toDouble() / MILLIS_PER_DAY).toInt().coerceAtLeast(0)
-    Card(
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            ),
+    NoticeCard(
+        title = stringResource(R.string.paywall_active_status, daysLeft),
+        body = stringResource(R.string.paywall_active_extend),
         modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.paywall_active_status, daysLeft),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(R.string.paywall_active_extend),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
-    }
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+    )
 }
 
 @Composable

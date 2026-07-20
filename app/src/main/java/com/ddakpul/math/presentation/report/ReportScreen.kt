@@ -56,6 +56,7 @@ import com.ddakpul.math.core.designsystem.component.MasteryStage
 import com.ddakpul.math.core.designsystem.component.MatrixEntry
 import com.ddakpul.math.core.designsystem.component.MiniBarChart
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
+import com.ddakpul.math.core.designsystem.component.ProgressBar
 import com.ddakpul.math.core.designsystem.component.SectionCard
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
@@ -538,23 +539,13 @@ private fun AvgTimeBars(avgByDifficulty: Map<Int, Int>) {
                     // 최소폭만 두고 필요하면 늘어나게 한다(고정폭이면 wrap, 여기선 라벨이 온전).
                     modifier = Modifier.widthIn(min = 60.dp),
                 )
-                Box(
-                    modifier =
-                        Modifier
-                            .weight(1f)
-                            .height(14.dp)
-                            .clip(RoundedCornerShape(7.dp))
-                            .background(barBg),
-                ) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth(sec.toFloat() / maxSec)
-                                .height(14.dp)
-                                .clip(RoundedCornerShape(7.dp))
-                                .background(barFg),
-                    )
-                }
+                ProgressBar(
+                    fraction = sec.toFloat() / maxSec,
+                    color = barFg,
+                    trackColor = barBg,
+                    height = 14.dp,
+                    modifier = Modifier.weight(1f),
+                )
                 Text(
                     text = durationText(sec),
                     style = MaterialTheme.typography.bodyMedium,
@@ -620,25 +611,12 @@ private fun AreaBreakdown(areaStats: List<AreaStat>) {
                         modifier = Modifier.padding(start = 8.dp),
                     )
                 }
-                Box(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(12.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(barBg),
-                ) {
-                    if (solved > 0 && accuracy > 0f) {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth(accuracy)
-                                    .height(12.dp)
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .background(barFg),
-                        )
-                    }
-                }
+                ProgressBar(
+                    fraction = accuracy,
+                    color = barFg,
+                    trackColor = barBg,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         }
     }

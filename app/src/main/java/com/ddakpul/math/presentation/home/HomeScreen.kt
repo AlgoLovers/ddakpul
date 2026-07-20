@@ -42,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
+import com.ddakpul.math.core.designsystem.component.NoticeCard
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
@@ -207,28 +208,12 @@ private fun LaunchFreeBanner(
     untilMillis: Long,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    NoticeCard(
+        title = stringResource(R.string.home_launch_free_title, launchFreeDeadlineText(untilMillis)),
+        body = stringResource(R.string.home_launch_free_desc),
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.home_launch_free_title, launchFreeDeadlineText(untilMillis)),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-            Text(
-                text = stringResource(R.string.home_launch_free_desc),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-        }
-    }
+    )
 }
 
 /**

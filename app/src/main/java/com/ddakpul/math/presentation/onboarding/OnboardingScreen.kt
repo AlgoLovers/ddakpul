@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
+import com.ddakpul.math.core.designsystem.component.IconTextRow
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.SessionGoals
 
@@ -123,32 +124,10 @@ private fun IntroStep() {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     Spacer(Modifier.size(8.dp))
-    ValueRow("🧩", R.string.onboarding_value1_title, R.string.onboarding_value1_body)
-    ValueRow("🛡️", R.string.onboarding_value2_title, R.string.onboarding_value2_body)
-    ValueRow("🌱", R.string.onboarding_value3_title, R.string.onboarding_value3_body)
-}
-
-@Composable
-private fun ValueRow(
-    emoji: String,
-    titleRes: Int,
-    bodyRes: Int,
-) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(text = emoji, style = MaterialTheme.typography.headlineSmall)
-        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(
-                text = stringResource(titleRes),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(bodyRes),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
+    val emojiStyle = MaterialTheme.typography.headlineSmall
+    IconTextRow("🧩", R.string.onboarding_value1_title, R.string.onboarding_value1_body, emojiStyle = emojiStyle)
+    IconTextRow("🛡️", R.string.onboarding_value2_title, R.string.onboarding_value2_body, emojiStyle = emojiStyle)
+    IconTextRow("🌱", R.string.onboarding_value3_title, R.string.onboarding_value3_body, emojiStyle = emojiStyle)
 }
 
 @Composable
