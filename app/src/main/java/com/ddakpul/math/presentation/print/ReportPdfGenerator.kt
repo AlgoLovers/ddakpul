@@ -238,11 +238,11 @@ class ReportPdfGenerator(
     }
 
     companion object {
-        // A4 (포인트, 72dpi)
-        private const val PAGE_WIDTH = 595
-        private const val PAGE_HEIGHT = 842
-        private const val MARGIN = 40
-        private const val CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
+        // A4 지면 규격은 A4Page(워크시트 PDF와 공유).
+        private const val PAGE_WIDTH = A4Page.WIDTH
+        private const val PAGE_HEIGHT = A4Page.HEIGHT
+        private const val MARGIN = A4Page.MARGIN
+        private const val CONTENT_WIDTH = A4Page.CONTENT_WIDTH
         private const val MIN_CONCEPT_SOLVED = 2
         private const val MAX_WEAK = 3
         private const val MAX_MISTAKES = 6

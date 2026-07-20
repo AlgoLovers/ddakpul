@@ -30,11 +30,11 @@ data class WorksheetTexts(
     val barLabels: List<String>,
 )
 
-// A4 (포인트, 72dpi)
-private const val PAGE_WIDTH = 595
-private const val PAGE_HEIGHT = 842
-private const val MARGIN = 40
-private const val CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
+// A4 지면 규격은 A4Page(리포트 PDF와 공유)에서. 워크시트 전용 여백값만 아래에 둔다.
+private const val PAGE_WIDTH = A4Page.WIDTH
+private const val PAGE_HEIGHT = A4Page.HEIGHT
+private const val MARGIN = A4Page.MARGIN
+private const val CONTENT_WIDTH = A4Page.CONTENT_WIDTH
 private const val FOOTER_SPACE = 30
 private const val SOLUTION_BOX_HEIGHT = 74
 private const val BLOCK_SPACING = 18

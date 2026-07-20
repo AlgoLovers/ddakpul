@@ -4,6 +4,7 @@ import com.ddakpul.math.domain.model.AbilityRating
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.ProblemGroup
+import com.ddakpul.math.domain.model.problemsById
 import javax.inject.Inject
 
 /**
@@ -36,7 +37,7 @@ internal fun computeAbilityRatings(
     attempts: List<Attempt>,
     groups: List<ProblemGroup>,
 ): Map<MathArea, AbilityRating> {
-    val problemsById = groups.flatMap { it.problems }.associateBy { it.id }
+    val problemsById = groups.problemsById()
     val ratings =
         MathArea.entries.associateWithTo(mutableMapOf()) {
             AbilityRating(rating = EloLite.INITIAL_ABILITY_RATING, attemptCount = 0)
