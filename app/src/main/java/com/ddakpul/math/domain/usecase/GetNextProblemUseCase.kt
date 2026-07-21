@@ -2,9 +2,8 @@ package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.core.common.AppError
 import com.ddakpul.math.core.common.AppResult
-import com.ddakpul.math.domain.model.Monetization
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.Recommendation
-import com.ddakpul.math.domain.repository.EntitlementRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import javax.inject.Inject
 
@@ -21,7 +20,6 @@ class GetNextProblemUseCase
     constructor(
         private val getActiveGroups: GetActiveProblemGroupsUseCase,
         private val learnerRepository: LearnerRepository,
-        private val entitlementRepository: EntitlementRepository,
         private val recommend: RecommendNextProblemUseCase,
         private val computeReviewQueue: ComputeReviewQueueUseCase,
     ) {
@@ -33,13 +31,13 @@ class GetNextProblemUseCase
             val allGroups = getActiveGroups()
             if (allGroups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
-            // 무료 사용자는 난이도 상한까지만 — 문제은행 자체를 걸러 상한 위 문제는 나오지 않게 한다.
-            val premium = entitlementRepository.getEntitlement().hasFullAccess(nowMillis)
+            // '상위 난이도 열기'가 꺼져 있으면 기본 상한까지만 — 문제은행 자체를 걸러 상한 위 문제는 안 나오게.
+            val unlockAll = learnerRepository.getUnlockAllLevels()
             val groups =
-                if (premium) {
+                if (unlockAll) {
                     allGroups
                 } else {
-                    allGroups.filter { it.difficulty <= Monetization.FREE_MAX_DIFFICULTY }
+                    allGroups.filter { it.difficulty <= Difficulty.DEFAULT_OPEN_MAX }
                 }
             if (groups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
@@ -59,20 +57,19 @@ class GetNextProblemUseCase
                     todaySolved = todaySolved,
                 ) ?: return AppResult.Failure(AppError.NoProblemAvailable)
 
-            // 무료인데 추천 난이도가 상한을 넘겼다면(= 상위 단계 준비 완료) 페이월을 권하고, 난이도는 상한으로 고정한다.
-            val premiumSuggested = !premium && recommendation.targetDifficulty > Monetization.FREE_MAX_DIFFICULTY
+            // '상위 난이도 열기'가 꺼져 있으면 추천 난이도를 기본 상한으로 고정한다(그 위 문제는 애초에 걸러졌다).
             val effectiveDifficulty =
-                if (premium) {
+                if (unlockAll) {
                     recommendation.targetDifficulty
                 } else {
-                    minOf(recommendation.targetDifficulty, Monetization.FREE_MAX_DIFFICULTY)
+                    minOf(recommendation.targetDifficulty, Difficulty.DEFAULT_OPEN_MAX)
                 }
 
             if (effectiveDifficulty != state.currentDifficulty) {
                 learnerRepository.setCurrentDifficulty(effectiveDifficulty)
             }
             return AppResult.Success(
-                recommendation.copy(targetDifficulty = effectiveDifficulty, premiumSuggested = premiumSuggested),
+                recommendation.copy(targetDifficulty = effectiveDifficulty),
             )
         }
     }

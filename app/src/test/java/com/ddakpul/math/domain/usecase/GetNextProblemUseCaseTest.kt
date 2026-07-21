@@ -2,11 +2,10 @@ package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.core.common.AppError
 import com.ddakpul.math.core.common.AppResult
-import com.ddakpul.math.data.FakeEntitlementRepository
 import com.ddakpul.math.data.FakeLearnerRepository
 import com.ddakpul.math.data.FakeProblemFeedbackRepository
 import com.ddakpul.math.data.FakeProblemRepository
-import com.ddakpul.math.domain.model.Monetization
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.standardGroups
@@ -19,11 +18,9 @@ class GetNextProblemUseCaseTest {
         learner: FakeLearnerRepository,
         problems: FakeProblemRepository = FakeProblemRepository(standardGroups()),
         feedback: FakeProblemFeedbackRepository = FakeProblemFeedbackRepository(),
-        entitlement: FakeEntitlementRepository = FakeEntitlementRepository(),
     ) = GetNextProblemUseCase(
         getActiveGroups = GetActiveProblemGroupsUseCase(problems, feedback),
         learnerRepository = learner,
-        entitlementRepository = entitlement,
         recommend = RecommendNextProblemUseCase(),
         computeReviewQueue = ComputeReviewQueueUseCase(),
     )
@@ -129,89 +126,42 @@ class GetNextProblemUseCaseTest {
         }
 
     @Test
-    fun freeUser_isCappedAtFreeMaxDifficulty_andSuggestsPremium() =
+    fun lockedLevels_areCappedAtDefaultOpenMax() =
         runTest {
-            val learner = FakeLearnerRepository(initialDifficulty = 3)
-            // 난이도 3에서 2연속 정답 → 추천기는 4로 올리려 한다.
-            learner.recordAttempt(attempt("d3-1", true))
-            learner.recordAttempt(attempt("d3-2", true))
+            // '상위 난이도 열기' 꺼짐(기본) + 상한에서 2연속 정답 → 추천기는 상한+1로 올리려 한다.
+            val learner = FakeLearnerRepository(initialDifficulty = Difficulty.DEFAULT_OPEN_MAX)
+            learner.recordAttempt(attempt("d${Difficulty.DEFAULT_OPEN_MAX}-1", true))
+            learner.recordAttempt(attempt("d${Difficulty.DEFAULT_OPEN_MAX}-2", true))
 
-            val result =
-                useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
-                    todaySolved = 0,
-                    zoneOffsetMillis = 0L,
-                    // 출시 기념 무료 기간이 지난 시점 — 진짜 무료(게이트 적용) 동작을 검증.
-                    nowMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS,
-                )
+            val result = useCase(learner)(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
 
             val rec = (result as AppResult.Success).data
-            // 무료는 난이도 상한으로 고정되고, 승급 대신 페이월을 권한다.
-            assertThat(rec.targetDifficulty).isEqualTo(Monetization.FREE_MAX_DIFFICULTY)
-            assertThat(rec.premiumSuggested).isTrue()
-            assertThat(rec.problem.difficulty).isAtMost(Monetization.FREE_MAX_DIFFICULTY)
+            // 상한 위로 승급하지 않고 기본 상한에 고정되며, 상한 위 문제는 애초에 나오지 않는다.
+            assertThat(rec.targetDifficulty).isEqualTo(Difficulty.DEFAULT_OPEN_MAX)
+            assertThat(rec.problem.difficulty).isAtMost(Difficulty.DEFAULT_OPEN_MAX)
             // 상한에 그대로 머무르므로 난이도 저장은 일어나지 않는다.
             assertThat(learner.setDifficultyCallCount).isEqualTo(0)
         }
 
     @Test
-    fun freeUser_duringLaunchPromo_getsFullAccessAndPromotes() =
+    fun unlockAllLevels_promotesPastDefaultOpenMax() =
         runTest {
-            val learner = FakeLearnerRepository(initialDifficulty = 3)
-            learner.recordAttempt(attempt("d3-1", true))
-            learner.recordAttempt(attempt("d3-2", true))
-
-            // 무료 사용자라도 출시 기념 무료 기간(마감 직전) 동안엔 상한 없이 승급한다.
-            val result =
-                useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
-                    todaySolved = 0,
-                    zoneOffsetMillis = 0L,
-                    nowMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS - 1L,
+            // '상위 난이도 열기' 켜짐 + 상한에서 2연속 정답 → 상한 위로 승급한다.
+            val learner =
+                FakeLearnerRepository(
+                    initialDifficulty = Difficulty.DEFAULT_OPEN_MAX,
+                    unlockAllLevels = true,
                 )
+            learner.recordAttempt(attempt("d${Difficulty.DEFAULT_OPEN_MAX}-1", true))
+            learner.recordAttempt(attempt("d${Difficulty.DEFAULT_OPEN_MAX}-2", true))
+
+            val result = useCase(learner)(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
 
             val rec = (result as AppResult.Success).data
-            assertThat(rec.targetDifficulty).isEqualTo(4)
-            assertThat(rec.premiumSuggested).isFalse()
-        }
-
-    @Test
-    fun premiumUser_promotesPastFreeCap() =
-        runTest {
-            val learner = FakeLearnerRepository(initialDifficulty = 3)
-            learner.recordAttempt(attempt("d3-1", true))
-            learner.recordAttempt(attempt("d3-2", true))
-
-            val result =
-                useCase(learner, entitlement = FakeEntitlementRepository(premium = true))(
-                    todaySolved = 0,
-                    zoneOffsetMillis = 0L,
-                    nowMillis = 0L,
-                )
-
-            val rec = (result as AppResult.Success).data
-            assertThat(rec.targetDifficulty).isEqualTo(4)
-            assertThat(rec.premiumSuggested).isFalse()
-            assertThat(learner.currentDifficulty).isEqualTo(4)
-        }
-
-    @Test
-    fun freeUser_belowCap_isNotSuggestedPremium() =
-        runTest {
-            val learner = FakeLearnerRepository(initialDifficulty = 2)
-            // 혼조(맞았다 틀렸다) → 난이도 2 유지, 상한 아래.
-            learner.recordAttempt(attempt("d2-1", true))
-            learner.recordAttempt(attempt("d2-2", false))
-
-            val result =
-                useCase(learner, entitlement = FakeEntitlementRepository(premium = false))(
-                    todaySolved = 0,
-                    zoneOffsetMillis = 0L,
-                    // 출시 기념 무료 기간이 지난 시점 — 진짜 무료(게이트 적용) 동작을 검증.
-                    nowMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS,
-                )
-
-            val rec = (result as AppResult.Success).data
-            assertThat(rec.premiumSuggested).isFalse()
-            assertThat(rec.problem.difficulty).isAtMost(Monetization.FREE_MAX_DIFFICULTY)
+            val promoted = Difficulty.DEFAULT_OPEN_MAX + 1
+            assertThat(rec.targetDifficulty).isEqualTo(promoted)
+            assertThat(learner.currentDifficulty).isEqualTo(promoted)
+            assertThat(learner.setDifficultyCallCount).isEqualTo(1)
         }
 
     private companion object {

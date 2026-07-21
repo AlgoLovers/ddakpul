@@ -26,6 +26,13 @@ interface LearnerRepository {
 
     suspend fun setDailyGoal(goal: Int)
 
-    /** 모든 풀이 기록과 난이도를 초기화한다(하루 목표는 유지). */
+    /** 상위 난이도(기본 상한 위) 열기 설정 — 켜면 모든 난이도가 추천에 나온다. */
+    fun observeUnlockAllLevels(): Flow<Boolean>
+
+    suspend fun getUnlockAllLevels(): Boolean
+
+    suspend fun setUnlockAllLevels(enabled: Boolean)
+
+    /** 모든 풀이 기록과 난이도를 초기화한다(하루 목표·난이도 열기 설정은 유지). */
     suspend fun resetProgress()
 }

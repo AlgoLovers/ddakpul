@@ -27,3 +27,8 @@ keystore.properties
 
 # Claude Code 워크트리 (병렬 세션 격리)
 .claude/worktrees/
+# Claude 서브에이전트 로컬 메모리 (세션 산출물, 버전관리 제외)
+.claude/agent-memory/
+
+# IntelliJ/Android Studio 프로젝트 파일 전체 (기존 개별 항목 대체)
+/.idea/

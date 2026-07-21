@@ -23,6 +23,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -45,7 +47,6 @@ import com.ddakpul.math.core.common.LocaleManagerCompat
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.SpeechSettings
-import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.common.tts.DownloadState
 import com.ddakpul.math.presentation.common.tts.TtsModel
@@ -53,7 +54,6 @@ import com.ddakpul.math.presentation.common.tts.TtsModels
 
 @Composable
 fun SettingsScreen(
-    onOpenPaywall: () -> Unit,
     onOpenPrivacy: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
@@ -89,13 +89,8 @@ fun SettingsScreen(
         // 언어 — 앱 안에서 바로 한국어 ⇄ English. 문제 콘텐츠까지 바꾸려 앱을 재시작한다.
         LanguageCard()
 
-        // 이용권 — 무료 상한 위 상위 난이도와 전체 리포트를 여는 진입점. 현재 상태(무료/이용중)도 보여준다.
-        PremiumCard(
-            isPremium = uiState.isPremium,
-            daysLeft = uiState.premiumDaysLeft,
-            launchFreeUntilMillis = uiState.launchFreeUntilMillis,
-            onOpenPaywall = onOpenPaywall,
-        )
+        // 상위 난이도 열기 — 기본은 난이도 4단계까지, 켜면 5단계 이상 상위 문제도 추천에 나온다.
+        UnlockLevelsCard(unlocked = uiState.unlockAllLevels, onToggle = viewModel::setUnlockAllLevels)
 
         // 하루 목표 — 아이가 스스로 정한다(자율성, SDT).
         DailyGoalCard(dailyGoal = uiState.dailyGoal, onSelect = viewModel::setDailyGoal)
@@ -152,32 +147,25 @@ fun SettingsScreen(
     }
 }
 
+/** 상위 난이도(기본 상한 위, 5~) 열기 스위치 — 기본은 꺼짐(4단계까지). */
 @Composable
-private fun PremiumCard(
-    isPremium: Boolean,
-    daysLeft: Int,
-    launchFreeUntilMillis: Long,
-    onOpenPaywall: () -> Unit,
+private fun UnlockLevelsCard(
+    unlocked: Boolean,
+    onToggle: (Boolean) -> Unit,
 ) {
-    val launchFree = !isPremium && launchFreeUntilMillis > 0L
-    SettingsCard(title = stringResource(R.string.settings_premium_title)) {
-        Text(
-            text =
-                when {
-                    isPremium -> stringResource(R.string.settings_premium_active, daysLeft)
-                    launchFree -> stringResource(R.string.settings_launch_free, launchFreeDeadlineText(launchFreeUntilMillis))
-                    else -> stringResource(R.string.settings_premium_desc)
-                },
-            style = MaterialTheme.typography.bodyMedium,
-            color =
-                when {
-                    isPremium -> MaterialTheme.colorScheme.primary
-                    launchFree -> MaterialTheme.colorScheme.tertiary
-                    else -> MaterialTheme.colorScheme.onSurfaceVariant
-                },
-        )
-        OutlinedButton(onClick = onOpenPaywall) {
-            Text(stringResource(if (isPremium) R.string.settings_premium_manage else R.string.settings_premium_open))
+    SettingsCard(title = stringResource(R.string.settings_unlock_levels_title)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.settings_unlock_levels_desc),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f).padding(end = 12.dp),
+            )
+            Switch(checked = unlocked, onCheckedChange = onToggle)
         }
     }
 }

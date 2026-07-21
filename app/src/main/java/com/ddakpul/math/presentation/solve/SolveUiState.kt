@@ -3,7 +3,6 @@ package com.ddakpul.math.presentation.solve
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.domain.model.MathArea
-import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.model.SessionGoals
@@ -23,10 +22,6 @@ data class SolveUiState(
     val result: GradingResult? = null,
     val showExplanation: Boolean = false,
     val reason: RecommendationReason? = null,
-    /** 무료 상한을 넘어 승급하려는 순간 — 페이월 배너를 띄운다(막지는 않음). */
-    val premiumSuggested: Boolean = false,
-    /** 프리미엄 이용권 보유 여부 — 무료 상한 안내 노출에 쓴다. */
-    val isPremium: Boolean = false,
     /** 오늘 푼 문제 수 — 오늘의 목표 진행바에 쓴다. */
     val todaySolved: Int = 0,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
@@ -48,13 +43,6 @@ data class SolveUiState(
 
     /** 복습 문제 여부 — 화면에 배지로 표시한다. */
     val isReview: Boolean get() = reason == RecommendationReason.REVIEW
-
-    /**
-     * 무료 사용자가 무료 상한 난이도에 도달했을 때의 상시 안내(승급 순간 배너와 별개).
-     * 왜 난이도가 안 올라가는지 알려주는 게 목적이다.
-     */
-    val showFreeCapHint: Boolean
-        get() = phase == SolvePhase.SOLVING && !isPremium && !premiumSuggested && difficulty >= Monetization.FREE_MAX_DIFFICULTY
 
     /**
      * 세션 소프트 컷 — 목표를 채웠거나 집중 한계(20분)를 넘겼으면 부드러운 종료를 제안한다.

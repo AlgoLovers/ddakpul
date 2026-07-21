@@ -11,7 +11,6 @@ import com.ddakpul.math.domain.usecase.DissectionValidation
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
-import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import com.ddakpul.math.domain.usecase.SubmitDissectionUseCase
@@ -39,7 +38,6 @@ class SolveViewModel
         private val solutionVideoRepository: SolutionVideoRepository,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
-        observeEntitlement: ObserveEntitlementUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
         val uiState: StateFlow<SolveUiState> = _uiState.asStateFlow()
@@ -65,11 +63,6 @@ class SolveViewModel
             viewModelScope.launch {
                 observeDailyGoal().collect { goal ->
                     _uiState.update { it.copy(dailyGoal = goal) }
-                }
-            }
-            viewModelScope.launch {
-                observeEntitlement().collect { entitlement ->
-                    _uiState.update { it.copy(isPremium = entitlement.hasFullAccess(System.currentTimeMillis())) }
                 }
             }
         }
@@ -100,7 +93,6 @@ class SolveViewModel
                                 result = null,
                                 showExplanation = recommendation.showExplanation,
                                 reason = recommendation.reason,
-                                premiumSuggested = recommendation.premiumSuggested,
                                 solutionVideo = video,
                                 dissectionAssignment = emptyMap(),
                                 dissectionPiece = 0,

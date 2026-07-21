@@ -97,7 +97,6 @@ private val exportDateFormatter = DateTimeFormatter.ofPattern("yyyy. M. d.")
 @Composable
 fun ReportScreen(
     onPrintClick: () -> Unit,
-    onOpenPaywall: () -> Unit,
     onStartSolving: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
@@ -127,9 +126,7 @@ fun ReportScreen(
         weeklySummary = uiState.weeklySummary,
         masteryGrid = uiState.masteryGrid,
         nextStep = uiState.nextStep,
-        isPremium = uiState.isPremium,
         onPrintClick = onPrintClick,
-        onOpenPaywall = onOpenPaywall,
         onStartSolving = onStartSolving,
         modifier = modifier,
     )
@@ -143,9 +140,7 @@ private fun ReportContent(
     weeklySummary: WeeklySummary?,
     masteryGrid: List<MasteryCellUi>,
     nextStep: NextStep?,
-    isPremium: Boolean,
     onPrintClick: () -> Unit,
-    onOpenPaywall: () -> Unit,
     onStartSolving: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -211,12 +206,8 @@ private fun ReportContent(
                 MistakeNoteSection(mistakes = stats.recentMistakes)
             }
 
-            // 심화 분석(차트·숙달 지도)은 이용권 전용. 무료는 요약까지 보고 여기서 페이월로 안내.
-            if (isPremium) {
-                PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
-            } else {
-                PremiumLockedCard(onOpenPaywall = onOpenPaywall)
-            }
+            // 심화 분석(정답률 추이·성장 곡선·개념별 숙달·난이도별 숙달 지도).
+            PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
 
             SectionCard(title = stringResource(R.string.report_parent_tips_title), icon = "🧑‍🏫") {
                 stringArrayResource(R.array.parent_tips).forEach { tip ->
@@ -347,21 +338,6 @@ private fun PremiumAnalyticsSections(
         }
         SectionCard(title = stringResource(R.string.report_matrix_title), icon = "🗺️") {
             MasteryMap(masteryGrid = masteryGrid, currentDifficulty = stats.currentDifficulty)
-        }
-    }
-}
-
-/** 무료 사용자에게 심화 리포트가 이용권 전용임을 알리고 페이월로 안내하는 카드. */
-@Composable
-private fun PremiumLockedCard(onOpenPaywall: () -> Unit) {
-    SectionCard(title = stringResource(R.string.report_premium_locked_title)) {
-        Text(
-            text = stringResource(R.string.report_premium_locked_desc),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        FilledTonalButton(onClick = onOpenPaywall) {
-            Text(stringResource(R.string.report_premium_cta))
         }
     }
 }

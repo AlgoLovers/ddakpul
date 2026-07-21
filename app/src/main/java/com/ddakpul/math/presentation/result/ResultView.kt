@@ -50,13 +50,11 @@ fun ResultView(
     showExplanation: Boolean,
     sessionStreak: Int,
     softCutSuggested: Boolean,
-    isPremium: Boolean,
     solutionVideo: SolutionVideo?,
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
     onExcludeRequest: () -> Unit,
     onReportAnswer: () -> Unit,
-    onUpgrade: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -121,8 +119,8 @@ fun ResultView(
         // 1차 풀이 — 오답이면 바로 펼쳐 교정 학습을 돕고, 정답이면 '풀이 보기'로 원할 때 펼친다.
         ExplanationSection(result = result)
 
-        // 2차(심화) 풀이 — 이용권 전용. 무료는 잠긴 티저로 안내.
-        DetailedExplanationSection(result = result, isPremium = isPremium, onUpgrade = onUpgrade)
+        // 2차(심화) 풀이 — 준비된 문제면 함께 보여준다.
+        DetailedExplanationSection(result = result)
 
         if (showExplanation) {
             Text(
@@ -217,61 +215,28 @@ private fun ExplanationSection(result: GradingResult) {
     }
 }
 
-/** 2차(심화) 풀이. 이용권 회원은 '심화 풀이 보기'로 펼치고, 무료 회원은 잠긴 티저 + 이용권 유도. */
+/** 2차(심화) 풀이 — 준비된 문제면 '심화 풀이 보기'로 펼친다. */
 @Composable
-private fun DetailedExplanationSection(
-    result: GradingResult,
-    isPremium: Boolean,
-    onUpgrade: () -> Unit,
-) {
+private fun DetailedExplanationSection(result: GradingResult) {
     val detailed = result.detailedExplanation ?: return
     val colors = MaterialTheme.colorScheme
-    if (isPremium) {
-        var expanded by remember(result) { mutableStateOf(false) }
-        if (expanded) {
-            FeedbackCard(
-                icon = Icons.Filled.Lightbulb,
-                container = colors.primaryContainer,
-                content = colors.onPrimaryContainer,
-                label = stringResource(R.string.result_detailed_label),
-                body = detailed,
-            )
-        } else {
-            OutlinedButton(onClick = { expanded = true }) {
-                Icon(
-                    imageVector = Icons.Filled.Lightbulb,
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 8.dp),
-                )
-                Text(stringResource(R.string.result_detailed_show))
-            }
-        }
+    var expanded by remember(result) { mutableStateOf(false) }
+    if (expanded) {
+        FeedbackCard(
+            icon = Icons.Filled.Lightbulb,
+            container = colors.primaryContainer,
+            content = colors.onPrimaryContainer,
+            label = stringResource(R.string.result_detailed_label),
+            body = detailed,
+        )
     } else {
-        Card(
-            colors =
-                CardDefaults.cardColors(
-                    containerColor = colors.primaryContainer,
-                    contentColor = colors.onPrimaryContainer,
-                ),
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.result_detailed_locked_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = stringResource(R.string.result_detailed_locked_body),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                OutlinedButton(onClick = onUpgrade) {
-                    Text(stringResource(R.string.result_detailed_cta))
-                }
-            }
+        OutlinedButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Filled.Lightbulb,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 8.dp),
+            )
+            Text(stringResource(R.string.result_detailed_show))
         }
     }
 }

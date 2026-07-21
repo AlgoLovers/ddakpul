@@ -3,6 +3,7 @@ package com.ddakpul.math.core.di
 import android.content.Context
 import androidx.room.Room
 import com.ddakpul.math.data.local.DdakPulDatabase
+import com.ddakpul.math.data.local.MIGRATION_10_11
 import com.ddakpul.math.data.local.MIGRATION_1_2
 import com.ddakpul.math.data.local.MIGRATION_2_3
 import com.ddakpul.math.data.local.MIGRATION_3_4
@@ -45,6 +46,7 @@ object DatabaseModule {
                 MIGRATION_7_8,
                 MIGRATION_8_9,
                 MIGRATION_9_10,
+                MIGRATION_10_11,
             ).build()
 
     @Provides

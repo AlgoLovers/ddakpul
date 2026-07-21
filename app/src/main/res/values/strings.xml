@@ -48,9 +48,6 @@
     <string name="result_show_explanation">풀이 보기</string>
     <string name="result_detailed_label">🔍 심화 풀이</string>
     <string name="result_detailed_show">심화 풀이 보기</string>
-    <string name="result_detailed_locked_title">🔍 심화 풀이는 이용권으로</string>
-    <string name="result_detailed_locked_body">이 문제의 더 깊은 개념·다른 풀이법을 이용권에서 볼 수 있어요.</string>
-    <string name="result_detailed_cta">이용권 보기</string>
     <string name="report_answer_button">정답이 이상해요</string>
     <string name="report_answer_feedback">[딱풀 정답 문의]\n문제ID: %1$s\n문제: %2$s\n보기: %3$s\n앱 정답: %4$s\n내가 고른 답: %5$s\n\n(내 생각을 여기 적어 보내 주세요)</string>
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
@@ -85,20 +82,6 @@
     <string name="onboarding_start">시작하기</string>
 
     <!-- 이용권 (수익화 / 페이월) -->
-    <string name="paywall_title">딱풀 이용권</string>
-    <string name="paywall_close">닫기</string>
-    <string name="paywall_active_status">이용권 이용 중 · %1$d일 남음</string>
-    <string name="paywall_active_extend">이용권을 더 구매하면 남은 기간에 이어져요.</string>
-    <string name="paywall_benefits_title">이용권으로 열려요</string>
-    <string name="paywall_benefit1">상위 난이도 도전 문제 (사고력의 정수)</string>
-    <string name="paywall_benefit2">전체 성장 리포트와 난이도별 숙달 지도</string>
-    <string name="paywall_benefit3">잊을 때쯤 다시 꺼내주는 간격 복습</string>
-    <string name="paywall_pass_6m_title">6개월 이용권</string>
-    <string name="paywall_pass_1y_title">1년 이용권</string>
-    <string name="paywall_pass_1y_badge">가장 이득</string>
-    <string name="paywall_activate">이용권 시작하기</string>
-    <string name="paywall_no_autorenew">자동 갱신 없어요. 기간이 끝나면 그냥 멈춰요. 광고도, 추가 결제 유도도 없어요.</string>
-    <string name="paywall_coming_soon">정식 이용권 판매는 준비 중이에요. 지금은 결제 없이 모든 기능을 쓸 수 있어요.</string>
 
     <!-- 부모 확인 게이트(구매·초기화 전 어린이 차단) -->
     <string name="parent_gate_title">부모님 확인</string>
@@ -107,25 +90,9 @@
     <string name="parent_gate_cancel">취소</string>
 
     <!-- 출시 기념 전면 무료 프로모션 -->
-    <string name="home_launch_free_title">🎉 출시 기념 · %1$s까지 전체 무료</string>
-    <string name="home_launch_free_desc">지금은 상위 난이도와 전체 리포트까지 모두 무료예요. 마감일 이후에는 이용권이 필요해요.</string>
-    <string name="settings_launch_free">출시 기념 무료 · %1$s까지 전부 열려 있어요 (이후 이용권 필요)</string>
-    <string name="paywall_launch_free_title">지금은 출시 기념 무료 기간이에요</string>
-    <string name="paywall_launch_free_desc">%1$s까지는 결제 없이 모든 기능이 열려 있어요. 마감 이후를 위해 미리 준비하고 싶을 때만 아래 이용권을 선택하세요.</string>
 
-    <string name="settings_premium_title">이용권</string>
-    <string name="settings_premium_desc">상위 난이도와 전체 리포트를 여는 이용권이에요.</string>
-    <string name="settings_premium_open">이용권 보기</string>
-    <string name="settings_premium_active">이용 중 · %1$d일 남음</string>
-    <string name="settings_premium_manage">이용권 연장하기</string>
 
-    <string name="solve_premium_banner">🎉 3단계를 잘 풀고 있어요! 난이도 4 이상은 이용권으로 열려요.</string>
-    <string name="solve_premium_cta">이용권 보기</string>
-    <string name="solve_free_cap_hint">무료는 난이도 3까지예요 · 이용권으로 상위 난이도 열기 ›</string>
 
-    <string name="report_premium_locked_title">더 자세한 분석은 이용권으로</string>
-    <string name="report_premium_locked_desc">정답률 추이·난이도 성장 곡선·개념별 숙달도·난이도별 숙달 지도는 이용권에서 볼 수 있어요.</string>
-    <string name="report_premium_cta">이용권 보기</string>
 
     <!-- 개인정보 · 데이터 안전 -->
     <string name="privacy_title">개인정보 · 데이터 안전</string>
@@ -286,6 +253,8 @@
 
     <!-- 설정 -->
     <string name="settings_title">설정</string>
+    <string name="settings_unlock_levels_title">상위 난이도 열기</string>
+    <string name="settings_unlock_levels_desc">기본은 난이도 4단계까지예요. 켜면 5단계 이상 상위 문제도 나와요.</string>
     <!-- 설정 · 언어(앱 내 전환) -->
     <string name="settings_language_title">언어 / Language</string>
     <string name="settings_language_desc">앱 언어를 바꿔요. 문제 콘텐츠도 함께 바뀌며, 적용을 위해 앱이 다시 시작돼요.</string>
@@ -384,10 +353,6 @@
     <string name="video_download_failed">영상을 받지 못했어요. 인터넷 연결을 확인해 주세요.</string>
     <string name="video_retry">다시 시도</string>
     <!-- 공간 퍼즐(격자 등분) 파일럿 -->
-    <string name="puzzle_title">공간 퍼즐</string>
-    <string name="puzzle_home_card">🧩 공간 퍼즐 · 미리보기</string>
-    <string name="puzzle_home_card_desc">도형을 똑같은 모양으로 나눠 보세요</string>
-    <string name="puzzle_progress">%1$d / %2$d</string>
     <string name="puzzle_clear">지우기</string>
     <string name="puzzle_check">확인</string>
     <string name="puzzle_next">다음 퍼즐</string>

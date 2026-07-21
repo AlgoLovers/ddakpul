@@ -10,12 +10,12 @@ import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.ComputeNextStepUseCase
-import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import java.util.TimeZone
 import javax.inject.Inject
@@ -89,8 +89,6 @@ data class ReportUiState(
     val masteryGrid: List<MasteryCellUi> = emptyList(),
     /** '다음 한 걸음' — 통계를 실행 가능한 코칭으로. */
     val nextStep: NextStep? = null,
-    /** 프리미엄이면 심화 분석(차트·숙달 지도)까지 보여주고, 무료면 요약까지만. */
-    val isPremium: Boolean = false,
 )
 
 @HiltViewModel
@@ -98,17 +96,13 @@ class ReportViewModel
     @Inject
     constructor(
         observeStats: ObserveLearningStatsUseCase,
-        observeEntitlement: ObserveEntitlementUseCase,
         private val computeNextStep: ComputeNextStepUseCase,
     ) : ViewModel() {
         val uiState: StateFlow<ReportUiState> =
-            combine(
-                observeStats(
-                    zoneOffsetMillis = zoneOffsetMillis(),
-                    nowMillis = { System.currentTimeMillis() },
-                ),
-                observeEntitlement(),
-            ) { stats, entitlement ->
+            observeStats(
+                zoneOffsetMillis = zoneOffsetMillis(),
+                nowMillis = { System.currentTimeMillis() },
+            ).map { stats ->
                 ReportUiState(
                     stats = stats,
                     isLoading = false,
@@ -117,7 +111,6 @@ class ReportViewModel
                     weeklySummary = buildWeeklySummary(stats),
                     masteryGrid = buildMasteryGrid(stats),
                     nextStep = computeNextStep(stats),
-                    isPremium = entitlement.hasFullAccess(System.currentTimeMillis()),
                 )
             }.stateIn(
                 scope = viewModelScope,

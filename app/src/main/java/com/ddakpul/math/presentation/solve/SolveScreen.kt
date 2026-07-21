@@ -51,7 +51,6 @@ import com.ddakpul.math.presentation.result.ResultView
 @Composable
 fun SolveScreen(
     onGoHome: () -> Unit,
-    onUpgrade: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SolveViewModel = hiltViewModel(),
@@ -72,7 +71,6 @@ fun SolveScreen(
                 onSubmit = viewModel::submitDissection,
             ),
         onGoHome = onGoHome,
-        onUpgrade = onUpgrade,
         onReportAnswer = { result -> shareAnswerReport(context, result) },
         onWatchVideo = onWatchVideo,
         modifier = modifier,
@@ -110,7 +108,6 @@ private fun SolveContent(
     onExclude: () -> Unit,
     dissection: DissectionCallbacks,
     onGoHome: () -> Unit,
-    onUpgrade: () -> Unit,
     onReportAnswer: (GradingResult) -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
@@ -153,7 +150,6 @@ private fun SolveContent(
                         onSelect = onSelect,
                         onSubmit = onSubmit,
                         onExcludeRequest = { showExcludeDialog = true },
-                        onUpgrade = onUpgrade,
                         onScratchpad = { showScratchpad = true },
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
@@ -175,13 +171,11 @@ private fun SolveContent(
                             showExplanation = uiState.showExplanation,
                             sessionStreak = uiState.sessionStreak,
                             softCutSuggested = uiState.softCutSuggested,
-                            isPremium = uiState.isPremium,
                             solutionVideo = uiState.solutionVideo,
                             onNext = onNext,
                             onFinishToday = onGoHome,
                             onExcludeRequest = { showExcludeDialog = true },
                             onReportAnswer = { onReportAnswer(result) },
-                            onUpgrade = onUpgrade,
                             onWatchVideo = onWatchVideo,
                             modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                         )
@@ -327,7 +321,6 @@ private fun SolvingBody(
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
     onExcludeRequest: () -> Unit,
-    onUpgrade: () -> Unit,
     onScratchpad: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -339,16 +332,6 @@ private fun SolvingBody(
     ) {
         // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다.
         TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
-
-        // 무료 상한을 넘어 승급 준비가 됐으면 이용권을 권한다(계속 풀 수는 있다).
-        if (uiState.premiumSuggested) {
-            PremiumBanner(onUpgrade = onUpgrade)
-        }
-
-        // 무료 상한 난이도에 머물 때 — 왜 더 안 올라가는지 상시 안내(헷갈림 방지).
-        if (uiState.showFreeCapHint) {
-            FreeCapHint(onUpgrade = onUpgrade)
-        }
 
         uiState.area?.let { area ->
             ProblemHeaderRow(
@@ -426,47 +409,6 @@ private fun TodayProgressHeader(
         LinearProgressIndicator(
             progress = { (todaySolved.toFloat() / dailyGoal).coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth(),
-        )
-    }
-}
-
-/** 무료 상한을 넘어 승급 준비가 됐을 때의 이용권 배너 — 막지 않고 권유만 한다. */
-@Composable
-private fun PremiumBanner(onUpgrade: () -> Unit) {
-    Card(
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            ),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.solve_premium_banner),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-            )
-            Button(onClick = onUpgrade) {
-                Text(stringResource(R.string.solve_premium_cta))
-            }
-        }
-    }
-}
-
-/** 무료 상한 난이도에서 늘 보이는 저강도 안내 — 왜 난이도가 안 올라가는지 알려주고 페이월로 안내. */
-@Composable
-private fun FreeCapHint(onUpgrade: () -> Unit) {
-    TextButton(
-        onClick = onUpgrade,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = stringResource(R.string.solve_free_cap_hint),
-            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

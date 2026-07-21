@@ -62,6 +62,18 @@ class LearnerRepositoryImpl
             )
         }
 
+        override fun observeUnlockAllLevels(): Flow<Boolean> = progressDao.observe().map { it?.unlockAllLevels ?: false }
+
+        override suspend fun getUnlockAllLevels(): Boolean = progressDao.get()?.unlockAllLevels ?: false
+
+        override suspend fun setUnlockAllLevels(enabled: Boolean) {
+            val current = progressDao.get()
+            progressDao.upsert(
+                current?.copy(unlockAllLevels = enabled)
+                    ?: LearnerProgressEntity(currentDifficulty = Difficulty.DEFAULT, unlockAllLevels = enabled),
+            )
+        }
+
         override suspend fun resetProgress() {
             attemptDao.deleteAll()
             // 하루 목표는 학습 기록이 아니라 아이의 선택이므로 유지하고, 난이도만 처음으로.
