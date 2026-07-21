@@ -76,6 +76,11 @@ app/src/main/java/com/ddakpul/math/
   키스토어는 절대 포함 금지).
 - **커밋 금지**: `keystore.properties`, `*.keystore`(업로드 키 — 잃으면 업데이트 불가), `.aab`/`.apk`.
   권한 deny로도 막혀 있음. 백업은 사람이 관리(구글 드라이브, 2026-07 완료).
+- **큰 빌드 파일(.aab/.apk)은 텔레그램 첨부로 보내지 않는다.** 텔레그램 봇 파일 한계는 **50MB**이고,
+  49.7MB AAB를 전송하려다 업로드가 물려 상주 세션이 5시간 먹통 된 전례가 있다(2026-07-21).
+  대신 **GitHub 릴리스에 올려 다운로드 링크로 전달**한다:
+  `gh release create <tag> app/build/outputs/bundle/release/app-release.aab#ddakpul-<version>.aab --title "<제목>" --notes "<메모>" --prerelease`
+  (이후 갱신은 `gh release upload <tag> <file> --clobber`). 링크만 텔레그램으로 보낸다.
 
 ## 작업 방식
 
