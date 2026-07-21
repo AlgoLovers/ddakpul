@@ -10,21 +10,31 @@ description: 문제은행 생성·검증·검수 파이프라인. 문제 추가/
 
 ## 절차
 
-1. **슬롯 파악**: `app/src/main/assets/problems_generated.json`에서 영역×난이도 분포를 세어
-   비거나 얇은 슬롯을 정한다.
-2. **템플릿 작성/수정**: `tools/problemgen/generate.py`에 파라미터 템플릿 추가.
-   - 정답은 반드시 **브루트포스 솔버로 검증** — 템플릿마다 독립 검증 함수를 짝으로 작성.
+1. **슬롯 파악**: 생성 실행 시 콘솔의 `보고7 · 영역×난이도 커버리지` 매트릭스가 비거나
+   얇은 슬롯을 바로 보여준다(checks.py). 그 슬롯을 채운다.
+2. **템플릿 작성/수정**: 영역별 제너레이터 파일에 추가 —
+   `gen_number.py`(수와연산) · `gen_change.py`(변화와관계) · `gen_shape.py`(도형과측정) ·
+   `gen_data.py`(자료와가능성). 공용 인프라(add·rng·헬퍼)는 `core.py`, 실행 순서는
+   `build.py`의 GENERATORS 리스트(**끝에 추가만, 재배치 금지** — rng 재현성).
+   - 정답은 반드시 **브루트포스 솔버로 검증** — 템플릿마다 독립 검증(assert/기각)을 짝으로.
+     검산 없는 제너레이터는 콘솔 `보고6`에 잡힌다(현재 백로그 136개, 목표 0).
    - **이중언어 불변식**: 모든 문장 생성에 `en=` kwarg 짝, 랜덤 분기는 `rng_en` 규약
      (한/영이 같은 난수열을 쓰게) — 이걸 깨면 한/영 정답이 어긋난다.
    - `blocklist.txt`의 id는 영구 제외 — 생성 결과에 되살아나면 버그.
+   - 난이도 배치 원칙: **'공식·규칙을 받아 적용만' < '규칙을 스스로 발견'**. 순서 제약은
+     `difficulty_constraints.json`에 기계 검증으로 박는다(게이트4).
 3. **도형 문제**: figure params를 쓰는 문제는 `tools/problemgen/preview_figures.py`로
    PNG를 뽑아 Read로 눈 검증(그림-문제-정답 일치). 앱 렌더러(ProblemFigureView)와
    PDF(drawFigure)가 같은 수학을 쓰므로 미리보기가 곧 검증이다.
 4. **생성 실행**: `python3 tools/problemgen/generate.py` → ko/en JSON 두 파일 갱신 확인.
+   계층 코드(AA-BB-CC-DD-SS)는 `codes.py`가 **자동 주입**한다(재실행해도 코드 안 사라짐).
+   `method_codes.json`은 안정 레지스트리 — 기존 방법 코드는 불변, 신규 family만 append.
+   콘솔에 `⚠️ 미분류(99)`가 뜨면 `taxonomy.py`의 유형 키워드를 보강한다(코드 99 = 리뷰 신호).
 5. **검수 (필수)**: `problem-auditor` 서브에이전트에 신규/변경 그룹을 넘겨 감사받는다.
    치명 위반(사고력 원칙·이중언어)이 있으면 앱에 넣지 않는다.
-6. **앱 반영**: assets 교체만으로는 기존 설치에 재시딩 안 됨 — 콘텐츠 버전/DB 마이그레이션
-   정책 확인(data/local 시딩 코드). 에뮬 확인은 `pm clear` 후.
+6. **앱 반영**: assets 교체만으로는 기존 설치에 재시딩 안 됨 — 문항 수가 그대로여도
+   내용(난이도·풀이 등)이 바뀌면 `AssetProblemSource.CONTENT_VERSION`을 +1 해야 기존 설치가
+   재시딩된다(문제 id 불변 → 학습 기록 유지). 에뮬 확인은 `pm clear` 후.
 7. 단위 테스트(`testDebugUnitTest`) → /wrap-up으로 커밋.
 
 ## 경험칙

@@ -2,18 +2,20 @@ package com.ddakpul.math.presentation.report
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.ComputeNextStepUseCase
-import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import java.util.TimeZone
 import javax.inject.Inject
@@ -87,8 +89,6 @@ data class ReportUiState(
     val masteryGrid: List<MasteryCellUi> = emptyList(),
     /** '다음 한 걸음' — 통계를 실행 가능한 코칭으로. */
     val nextStep: NextStep? = null,
-    /** 프리미엄이면 심화 분석(차트·숙달 지도)까지 보여주고, 무료면 요약까지만. */
-    val isPremium: Boolean = false,
 )
 
 @HiltViewModel
@@ -96,17 +96,13 @@ class ReportViewModel
     @Inject
     constructor(
         observeStats: ObserveLearningStatsUseCase,
-        observeEntitlement: ObserveEntitlementUseCase,
         private val computeNextStep: ComputeNextStepUseCase,
     ) : ViewModel() {
         val uiState: StateFlow<ReportUiState> =
-            combine(
-                observeStats(
-                    zoneOffsetMillis = zoneOffsetMillis(),
-                    nowMillis = { System.currentTimeMillis() },
-                ),
-                observeEntitlement(),
-            ) { stats, entitlement ->
+            observeStats(
+                zoneOffsetMillis = zoneOffsetMillis(),
+                nowMillis = { System.currentTimeMillis() },
+            ).map { stats ->
                 ReportUiState(
                     stats = stats,
                     isLoading = false,
@@ -115,7 +111,6 @@ class ReportViewModel
                     weeklySummary = buildWeeklySummary(stats),
                     masteryGrid = buildMasteryGrid(stats),
                     nextStep = computeNextStep(stats),
-                    isPremium = entitlement.hasFullAccess(System.currentTimeMillis()),
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -167,7 +162,7 @@ class ReportViewModel
                 val recent = stats.recentAccuracy
                 val previous = stats.previousAccuracy
                 if (recent != null && previous != null) {
-                    val delta = ((recent - previous) * 100).roundToInt()
+                    val delta = (recent - previous).toPercentInt()
                     when {
                         delta >= TREND_DELTA_THRESHOLD -> add(ReportInsight.AccuracyUp(delta))
                         delta <= -TREND_DELTA_THRESHOLD -> add(ReportInsight.AccuracyDown(-delta))
@@ -176,11 +171,11 @@ class ReportViewModel
 
                 stats.errorRecoveryRate
                     ?.takeIf { it > 0f }
-                    ?.let { add(ReportInsight.ErrorRecovery((it * 100).roundToInt())) }
+                    ?.let { add(ReportInsight.ErrorRecovery(it.toPercentInt())) }
 
                 stats.conceptStats
                     .firstOrNull { it.solved >= MIN_SOLVED_FOR_CONCEPT && it.accuracy < WEAK_ACCURACY }
-                    ?.let { add(ReportInsight.WeakConcept(it.concept, (it.accuracy * 100).roundToInt())) }
+                    ?.let { add(ReportInsight.WeakConcept(it.concept, it.accuracy.toPercentInt())) }
             }
 
         private fun buildWeeklySummary(stats: LearningStats): WeeklySummary {
@@ -193,7 +188,7 @@ class ReportViewModel
             val recent = stats.recentAccuracy
             val previous = stats.previousAccuracy
             val delta =
-                if (recent != null && previous != null) ((recent - previous) * 100).roundToInt() else null
+                if (recent != null && previous != null) (recent - previous).toPercentInt() else null
 
             return WeeklySummary(
                 solved = solved,
@@ -211,7 +206,6 @@ class ReportViewModel
 
         private companion object {
             const val STOP_TIMEOUT_MILLIS = 5_000L
-            const val MILLIS_PER_DAY = 86_400_000L
             const val WINDOW_DAYS = 14L
             const val DAYS_PER_WEEK = 7L
 

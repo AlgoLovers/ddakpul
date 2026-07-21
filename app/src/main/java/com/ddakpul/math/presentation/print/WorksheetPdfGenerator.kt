@@ -8,6 +8,8 @@ import android.graphics.pdf.PdfDocument
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import com.ddakpul.math.core.designsystem.component.dicePips
+import com.ddakpul.math.core.designsystem.component.isoProject
 import com.ddakpul.math.domain.model.FigureType
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
@@ -29,11 +31,11 @@ data class WorksheetTexts(
     val barLabels: List<String>,
 )
 
-// A4 (포인트, 72dpi)
-private const val PAGE_WIDTH = 595
-private const val PAGE_HEIGHT = 842
-private const val MARGIN = 40
-private const val CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
+// A4 지면 규격은 A4Page(리포트 PDF와 공유)에서. 워크시트 전용 여백값만 아래에 둔다.
+private const val PAGE_WIDTH = A4Page.WIDTH
+private const val PAGE_HEIGHT = A4Page.HEIGHT
+private const val MARGIN = A4Page.MARGIN
+private const val CONTENT_WIDTH = A4Page.CONTENT_WIDTH
 private const val FOOTER_SPACE = 30
 private const val SOLUTION_BOX_HEIGHT = 74
 private const val BLOCK_SPACING = 18
@@ -406,18 +408,6 @@ private fun drawPdfMatchstick(
     }
 }
 
-/** 주사위 눈(1~6) 위치를 면 내부 비율 좌표(0~1)로. */
-private fun pdfPips(v: Int): List<Pair<Float, Float>> =
-    when (v) {
-        1 -> listOf(0.5f to 0.5f)
-        2 -> listOf(0.3f to 0.3f, 0.7f to 0.7f)
-        3 -> listOf(0.28f to 0.28f, 0.5f to 0.5f, 0.72f to 0.72f)
-        4 -> listOf(0.3f to 0.3f, 0.7f to 0.3f, 0.3f to 0.7f, 0.7f to 0.7f)
-        5 -> listOf(0.28f to 0.28f, 0.72f to 0.28f, 0.5f to 0.5f, 0.28f to 0.72f, 0.72f to 0.72f)
-        6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
-        else -> emptyList()
-    }
-
 /** 정육면체(주사위) 전개도 — 흑백 인쇄용: 격자에 면·눈을 찍고 색칠 면은 회색으로 강조. */
 private fun drawPdfCubeNet(
     canvas: Canvas,
@@ -428,8 +418,8 @@ private fun drawPdfCubeNet(
     ink: Paint,
     fill: Paint,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
     val query = figure.params["query"] ?: -1
     val hs = figure.heights
     if (hs.size != 18) return
@@ -449,7 +439,7 @@ private fun drawPdfCubeNet(
         val v = hs[i * 3 + 2]
         if (v == query) canvas.drawRect(x, y, x + cell, y + cell, shade)
         canvas.drawRect(x, y, x + cell, y + cell, ink)
-        for ((fx, fy) in pdfPips(v)) canvas.drawCircle(x + fx * cell, y + fy * cell, pipR, fill)
+        for ((fx, fy) in dicePips(v)) canvas.drawCircle(x + fx * cell, y + fy * cell, pipR, fill)
     }
 }
 
@@ -462,7 +452,7 @@ private fun drawPdfTriangleFan(
     size: Float,
     ink: Paint,
 ) {
-    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 24)
     val apexX = centerX
     val apexY = top + size * 0.06f
     val baseY = top + size * 0.94f
@@ -487,9 +477,9 @@ private fun drawPdfGridPolygon(
     size: Float,
     ink: Paint,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
-    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 24)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 24)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 24)
     val pts = figure.heights
     if (pts.size != n * 2) return
     val cell = min(size / cols, size / rows)
@@ -533,7 +523,7 @@ private fun drawPdfPolygon(
     size: Float,
     ink: Paint,
 ) {
-    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 24)
     val cy = top + size / 2f
     val radius = size * 0.42f
     val xs = FloatArray(n)
@@ -577,7 +567,10 @@ private class PdfIso(
         gx: Float,
         gy: Float,
         gz: Float,
-    ) = floatArrayOf(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+    ): FloatArray {
+        val (x, y) = isoProject(ox, oy, hw, hh, ch, gx, gy, gz)
+        return floatArrayOf(x, y)
+    }
 }
 
 private fun drawPdfIsoFace(
@@ -617,8 +610,8 @@ private fun drawPdfCubeStack(
     top: Float,
     size: Float,
 ) {
-    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
-    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 12)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 12)
     val heights = figure.heights
     if (heights.size != w * d) return
     val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
@@ -713,8 +706,9 @@ private fun drawPdfGrid(
     ink: Paint,
     fill: Paint,
 ) {
-    val w = (figure.params["w"] ?: 3).coerceIn(1, 8)
-    val h = (figure.params["h"] ?: 3).coerceIn(1, 8)
+    // cell이 size에 맞춰 자동 축소되므로 큰 격자도 안전 — 상한을 넉넉히 둔다(앱 렌더러와 동일).
+    val w = (figure.params["w"] ?: 3).coerceIn(1, 30)
+    val h = (figure.params["h"] ?: 3).coerceIn(1, 30)
     val cell = min(size / w, size / h)
     val gl = centerX - cell * w / 2f
     val gt = top + (size - cell * h) / 2f

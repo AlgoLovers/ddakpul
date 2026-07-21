@@ -1,6 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
-internal const val MILLIS_PER_DAY = 86_400_000L
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 
 /**
  * 로컬 자정 기준 경과 일수. 타임존 오프셋을 더한 뒤 하루(ms)로 나누므로

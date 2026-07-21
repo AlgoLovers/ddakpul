@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
+import com.ddakpul.math.core.designsystem.component.IconTextRow
 
 private val CONTENT_MAX_WIDTH = 560.dp
 
@@ -58,38 +59,15 @@ fun PrivacyScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            PrivacyItem("🔒", R.string.privacy_item1_title, R.string.privacy_item1_body)
-            PrivacyItem("📱", R.string.privacy_item2_title, R.string.privacy_item2_body)
-            PrivacyItem("🚫", R.string.privacy_item3_title, R.string.privacy_item3_body)
-            PrivacyItem("🙂", R.string.privacy_item4_title, R.string.privacy_item4_body)
-            PrivacyItem("✈️", R.string.privacy_item5_title, R.string.privacy_item5_body)
+            IconTextRow("🔒", R.string.privacy_item1_title, R.string.privacy_item1_body)
+            IconTextRow("📱", R.string.privacy_item2_title, R.string.privacy_item2_body)
+            IconTextRow("🚫", R.string.privacy_item3_title, R.string.privacy_item3_body)
+            IconTextRow("🙂", R.string.privacy_item4_title, R.string.privacy_item4_body)
+            IconTextRow("✈️", R.string.privacy_item5_title, R.string.privacy_item5_body)
 
             Text(
                 text = stringResource(R.string.privacy_footer),
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Composable
-private fun PrivacyItem(
-    emoji: String,
-    titleRes: Int,
-    bodyRes: Int,
-) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(text = emoji, style = MaterialTheme.typography.titleLarge)
-        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(
-                text = stringResource(titleRes),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(bodyRes),
-                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

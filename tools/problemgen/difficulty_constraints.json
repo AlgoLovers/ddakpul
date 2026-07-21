@@ -1,0 +1,26 @@
+{
+ "_설명": "family 간 난이도 순서 제약 [낮아야 하는 쪽, 높아야 하는 쪽]. checks.py 게이트4가 검증한다.",
+ "_원칙": "'규칙·공식을 받아서 적용만' < '규칙을 스스로 발견'. 2026-07 리뷰 사례: recur(점화식 적용, d10→5 강등)는 hanoi(점화식 발견, d7)·tribstairs(점화식 세우기, d6)보다 반드시 낮다.",
+ "constraints": [
+  ["recur", "tribstairs"],
+  ["recur", "hanoi"],
+  ["compose", "tribstairs"],
+  ["compose", "hanoi"],
+  ["consec", "consecways"],
+  ["cards", "permsum"],
+  ["divcount", "threediv"],
+  ["weigh", "ternweight"],
+  ["balance", "ternweight"],
+  ["diophantine", "stampfrob"],
+  ["parity", "mergecandy"],
+  ["cubesum", "cubesumfar"],
+  ["lcmbus", "seqcommon"],
+  ["pyramid", "pyramidmax"],
+  ["iorule", "funcinv"],
+  ["truthone", "liarcount"],
+  ["league", "winsum"],
+  ["simpleprob", "fairgame"],
+  ["surepick", "pigeon"],
+  ["fairgame", "fairsplit"]
+ ]
+}

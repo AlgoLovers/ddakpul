@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.domain.model.Attempt
+import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.repository.SolutionVideoRepository
+import com.ddakpul.math.domain.usecase.DissectionError
+import com.ddakpul.math.domain.usecase.DissectionValidation
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
-import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
+import com.ddakpul.math.domain.usecase.SubmitDissectionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,11 +33,11 @@ class SolveViewModel
     constructor(
         private val getNextProblem: GetNextProblemUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
+        private val submitDissection: SubmitDissectionUseCase,
         private val excludeProblem: ExcludeProblemUseCase,
         private val solutionVideoRepository: SolutionVideoRepository,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
-        observeEntitlement: ObserveEntitlementUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
         val uiState: StateFlow<SolveUiState> = _uiState.asStateFlow()
@@ -60,11 +63,6 @@ class SolveViewModel
             viewModelScope.launch {
                 observeDailyGoal().collect { goal ->
                     _uiState.update { it.copy(dailyGoal = goal) }
-                }
-            }
-            viewModelScope.launch {
-                observeEntitlement().collect { entitlement ->
-                    _uiState.update { it.copy(isPremium = entitlement.hasFullAccess(System.currentTimeMillis())) }
                 }
             }
         }
@@ -95,8 +93,10 @@ class SolveViewModel
                                 result = null,
                                 showExplanation = recommendation.showExplanation,
                                 reason = recommendation.reason,
-                                premiumSuggested = recommendation.premiumSuggested,
                                 solutionVideo = video,
+                                dissectionAssignment = emptyMap(),
+                                dissectionPiece = 0,
+                                dissectionResult = null,
                             )
                         }
                     }
@@ -153,6 +153,63 @@ class SolveViewModel
                         phase = SolvePhase.GRADED,
                         result = gradingResult,
                         sessionStreak = if (gradingResult.isCorrect) it.sessionStreak + 1 else 0,
+                    )
+                }
+            }
+        }
+
+        // ── 등분 퍼즐(구성형) 조작·채점 ──
+        fun selectDissectionPiece(pieceId: Int) {
+            if (_uiState.value.phase != SolvePhase.SOLVING) return
+            _uiState.update { it.copy(dissectionPiece = pieceId) }
+        }
+
+        /** 칸을 탭 — 선택한 조각으로 칠하고, 같은 조각을 다시 탭하면 지운다(토글). */
+        fun tapDissectionCell(cell: Cell) {
+            if (_uiState.value.phase != SolvePhase.SOLVING) return
+            _uiState.update { s ->
+                val next =
+                    if (s.dissectionAssignment[cell] == s.dissectionPiece) {
+                        s.dissectionAssignment - cell
+                    } else {
+                        s.dissectionAssignment + (cell to s.dissectionPiece)
+                    }
+                s.copy(dissectionAssignment = next)
+            }
+        }
+
+        fun clearDissection() {
+            if (_uiState.value.phase != SolvePhase.SOLVING) return
+            _uiState.update { it.copy(dissectionAssignment = emptyMap()) }
+        }
+
+        fun submitDissection() {
+            val current = _uiState.value
+            val puzzle = current.problem?.dissection ?: return
+            if (current.phase != SolvePhase.SOLVING) return
+            // 미완성(칸을 다 안 채움)은 실제 답이 아니므로 시도 기록 없이 힌트만 — 계속 풀 수 있게 SOLVING 유지.
+            if (current.dissectionAssignment.keys != puzzle.cells.toSet()) {
+                _uiState.update { it.copy(dissectionResult = DissectionValidation(false, DissectionError.INCOMPLETE)) }
+                return
+            }
+            val problem = current.problem
+            viewModelScope.launch {
+                val elapsedSec =
+                    ((System.currentTimeMillis() - questionStartMillis) / MILLIS_PER_SECOND)
+                        .toInt()
+                        .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+                val validation =
+                    submitDissection(
+                        problem = problem,
+                        assignment = current.dissectionAssignment,
+                        timeSpentSec = elapsedSec,
+                        timestamp = System.currentTimeMillis(),
+                    )
+                _uiState.update {
+                    it.copy(
+                        phase = SolvePhase.GRADED,
+                        dissectionResult = validation,
+                        sessionStreak = if (validation.isValid) it.sessionStreak + 1 else 0,
                     )
                 }
             }

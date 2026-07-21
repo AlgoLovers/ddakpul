@@ -12,7 +12,9 @@ data class LearnerProgressEntity(
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
     /** 첫 실행 온보딩(소개·하루 목표·시작 난이도)을 마쳤는지. */
     val onboardingComplete: Boolean = false,
-    /** 프리미엄 이용권 만료 시각(epoch millis). 0이면 무료. */
+    /** 상위 난이도(기본 상한 위, 5~)를 열지 여부 — 설정 스위치. false면 [Difficulty.DEFAULT_OPEN_MAX]까지만. */
+    val unlockAllLevels: Boolean = false,
+    /** (미사용) 옛 이용권 만료 시각 컬럼 — DB 스키마 유지용. 유료화 재도입 시 재사용. */
     val premiumUntilMillis: Long = 0L,
 ) {
     companion object {

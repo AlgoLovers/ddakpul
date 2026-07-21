@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.pdf.PdfDocument
 import android.text.TextPaint
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import kotlin.math.roundToInt
@@ -147,7 +148,7 @@ class ReportPdfGenerator(
             val stat = stats.areaStats.firstOrNull { it.area == area }
             val solved = stat?.solved ?: 0
             val correct = stat?.correct ?: 0
-            val acc = if (solved == 0) 0f else correct.toFloat() / solved
+            val acc = stat?.accuracy ?: 0f
             val label = texts.areaLabels[area] ?: area.name
             canvas.drawText(label, MARGIN.toFloat(), y + bodyPaint.textSize, bodyPaint)
             val barTop = y + 3f
@@ -156,7 +157,7 @@ class ReportPdfGenerator(
             if (solved > 0) {
                 canvas.drawRoundRect(RectF(barX, barTop, barX + barWidth * acc, barBottom), 4f, 4f, barFgPaint)
             }
-            val stextValue = if (solved == 0) "-" else "${(acc * 100).roundToInt()}% ($correct/$solved)"
+            val stextValue = if (solved == 0) "-" else "${acc.toPercentInt()}% ($correct/$solved)"
             canvas.drawText(stextValue, barX + barWidth + 8f, y + bodyPaint.textSize, labelPaint)
             y += 24f
         }
@@ -178,7 +179,7 @@ class ReportPdfGenerator(
             return y + 26f
         }
         weak.forEach { c ->
-            val line = "• ${c.concept} — ${(c.accuracy * 100).roundToInt()}% (${c.correct}/${c.solved})"
+            val line = "• ${c.concept} — ${c.accuracy.toPercentInt()}% (${c.correct}/${c.solved})"
             canvas.drawText(ellipsize(line, CONTENT_WIDTH.toFloat(), bodyPaint), MARGIN.toFloat(), y + bodyPaint.textSize, bodyPaint)
             y += 20f
         }
@@ -238,11 +239,11 @@ class ReportPdfGenerator(
     }
 
     companion object {
-        // A4 (포인트, 72dpi)
-        private const val PAGE_WIDTH = 595
-        private const val PAGE_HEIGHT = 842
-        private const val MARGIN = 40
-        private const val CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
+        // A4 지면 규격은 A4Page(워크시트 PDF와 공유).
+        private const val PAGE_WIDTH = A4Page.WIDTH
+        private const val PAGE_HEIGHT = A4Page.HEIGHT
+        private const val MARGIN = A4Page.MARGIN
+        private const val CONTENT_WIDTH = A4Page.CONTENT_WIDTH
         private const val MIN_CONCEPT_SOLVED = 2
         private const val MAX_WEAK = 3
         private const val MAX_MISTAKES = 6

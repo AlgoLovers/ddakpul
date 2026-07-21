@@ -18,6 +18,4 @@ data class Recommendation(
     val targetDifficulty: Int,
     val reason: RecommendationReason,
     val showExplanation: Boolean,
-    /** 무료 사용자가 무료 상한을 넘어 승급하려는 순간 — 페이월을 권할 지점(막지는 않음). */
-    val premiumSuggested: Boolean = false,
 )

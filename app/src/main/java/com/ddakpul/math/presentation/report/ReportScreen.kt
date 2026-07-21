@@ -42,10 +42,12 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
+import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.BarEntry
 import com.ddakpul.math.core.designsystem.component.LevelTrack
 import com.ddakpul.math.core.designsystem.component.MasteryChip
@@ -54,6 +56,7 @@ import com.ddakpul.math.core.designsystem.component.MasteryStage
 import com.ddakpul.math.core.designsystem.component.MatrixEntry
 import com.ddakpul.math.core.designsystem.component.MiniBarChart
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
+import com.ddakpul.math.core.designsystem.component.ProgressBar
 import com.ddakpul.math.core.designsystem.component.SectionCard
 import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
@@ -94,7 +97,6 @@ private val exportDateFormatter = DateTimeFormatter.ofPattern("yyyy. M. d.")
 @Composable
 fun ReportScreen(
     onPrintClick: () -> Unit,
-    onOpenPaywall: () -> Unit,
     onStartSolving: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
@@ -124,9 +126,7 @@ fun ReportScreen(
         weeklySummary = uiState.weeklySummary,
         masteryGrid = uiState.masteryGrid,
         nextStep = uiState.nextStep,
-        isPremium = uiState.isPremium,
         onPrintClick = onPrintClick,
-        onOpenPaywall = onOpenPaywall,
         onStartSolving = onStartSolving,
         modifier = modifier,
     )
@@ -140,9 +140,7 @@ private fun ReportContent(
     weeklySummary: WeeklySummary?,
     masteryGrid: List<MasteryCellUi>,
     nextStep: NextStep?,
-    isPremium: Boolean,
     onPrintClick: () -> Unit,
-    onOpenPaywall: () -> Unit,
     onStartSolving: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -208,12 +206,8 @@ private fun ReportContent(
                 MistakeNoteSection(mistakes = stats.recentMistakes)
             }
 
-            // 심화 분석(차트·숙달 지도)은 이용권 전용. 무료는 요약까지 보고 여기서 페이월로 안내.
-            if (isPremium) {
-                PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
-            } else {
-                PremiumLockedCard(onOpenPaywall = onOpenPaywall)
-            }
+            // 심화 분석(정답률 추이·성장 곡선·개념별 숙달·난이도별 숙달 지도).
+            PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
 
             SectionCard(title = stringResource(R.string.report_parent_tips_title), icon = "🧑‍🏫") {
                 stringArrayResource(R.array.parent_tips).forEach { tip ->
@@ -248,7 +242,7 @@ private fun rememberReportTexts(stats: LearningStats): ReportTexts {
     // 오답 해소율이 실제로 있을 때만 격려 문구를 넣는다(0%인데 "잘 되고 있어요"는 모순).
     val recoveryLine =
         stats.errorRecoveryRate?.takeIf { it > 0f }?.let {
-            stringResource(R.string.report_export_recovery, (it * 100).roundToInt())
+            stringResource(R.string.report_export_recovery, it.toPercentInt())
         }
     return ReportTexts(
         title = stringResource(R.string.report_export_title),
@@ -256,7 +250,7 @@ private fun rememberReportTexts(stats: LearningStats): ReportTexts {
         summary =
             listOf(
                 stringResource(R.string.report_total_solved) to stringResource(R.string.home_unit_count, stats.totalSolved),
-                stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, stats.accuracy.toPercentInt()),
                 stringResource(R.string.report_current_level) to stringResource(R.string.home_unit_level, stats.currentDifficulty),
                 stringResource(R.string.report_streak) to stringResource(R.string.report_unit_days, stats.streakDays),
             ),
@@ -344,21 +338,6 @@ private fun PremiumAnalyticsSections(
         }
         SectionCard(title = stringResource(R.string.report_matrix_title), icon = "🗺️") {
             MasteryMap(masteryGrid = masteryGrid, currentDifficulty = stats.currentDifficulty)
-        }
-    }
-}
-
-/** 무료 사용자에게 심화 리포트가 이용권 전용임을 알리고 페이월로 안내하는 카드. */
-@Composable
-private fun PremiumLockedCard(onOpenPaywall: () -> Unit) {
-    SectionCard(title = stringResource(R.string.report_premium_locked_title)) {
-        Text(
-            text = stringResource(R.string.report_premium_locked_desc),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        FilledTonalButton(onClick = onOpenPaywall) {
-            Text(stringResource(R.string.report_premium_cta))
         }
     }
 }
@@ -478,7 +457,7 @@ private fun KeyStatTiles(stats: LearningStats) {
             StatTile(
                 icon = "🎯",
                 label = stringResource(R.string.report_accuracy),
-                value = stringResource(R.string.home_unit_percent, (stats.accuracy * 100).roundToInt()),
+                value = stringResource(R.string.home_unit_percent, stats.accuracy.toPercentInt()),
                 caption = accuracyDeltaCaption(stats),
                 modifier = Modifier.weight(1f),
             )
@@ -507,7 +486,7 @@ private fun KeyStatTiles(stats: LearningStats) {
 private fun accuracyDeltaCaption(stats: LearningStats): String? {
     val recent = stats.recentAccuracy ?: return null
     val previous = stats.previousAccuracy ?: return null
-    val delta = ((recent - previous) * 100).roundToInt()
+    val delta = (recent - previous).toPercentInt()
     return when {
         delta > 0 -> stringResource(R.string.report_caption_delta_up, delta)
         delta < 0 -> stringResource(R.string.report_caption_delta_down, -delta)
@@ -531,25 +510,18 @@ private fun AvgTimeBars(avgByDifficulty: Map<Int, Int>) {
                 Text(
                     text = stringResource(R.string.report_avgtime_level, level),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.width(60.dp),
+                    maxLines = 1,
+                    // 큰 글씨 접근성(fontScale↑)에서 "난이도 10"이 60dp를 넘겨 두 줄로 깨지지 않게
+                    // 최소폭만 두고 필요하면 늘어나게 한다(고정폭이면 wrap, 여기선 라벨이 온전).
+                    modifier = Modifier.widthIn(min = 60.dp),
                 )
-                Box(
-                    modifier =
-                        Modifier
-                            .weight(1f)
-                            .height(14.dp)
-                            .clip(RoundedCornerShape(7.dp))
-                            .background(barBg),
-                ) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth(sec.toFloat() / maxSec)
-                                .height(14.dp)
-                                .clip(RoundedCornerShape(7.dp))
-                                .background(barFg),
-                    )
-                }
+                ProgressBar(
+                    fraction = sec.toFloat() / maxSec,
+                    color = barFg,
+                    trackColor = barBg,
+                    height = 14.dp,
+                    modifier = Modifier.weight(1f),
+                )
                 Text(
                     text = durationText(sec),
                     style = MaterialTheme.typography.bodyMedium,
@@ -599,37 +571,28 @@ private fun AreaBreakdown(areaStats: List<AreaStat>) {
                         text = stringResource(area.labelRes()),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
                     )
                     Text(
                         text =
                             if (solved == 0) {
                                 stringResource(R.string.report_area_none)
                             } else {
-                                stringResource(R.string.report_area_stat, solved, (accuracy * 100).roundToInt())
+                                stringResource(R.string.report_area_stat, solved, accuracy.toPercentInt())
                             },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(start = 8.dp),
                     )
                 }
-                Box(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(12.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(barBg),
-                ) {
-                    if (solved > 0 && accuracy > 0f) {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth(accuracy)
-                                    .height(12.dp)
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .background(barFg),
-                        )
-                    }
-                }
+                ProgressBar(
+                    fraction = accuracy,
+                    color = barFg,
+                    trackColor = barBg,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         }
     }
@@ -748,13 +711,19 @@ private fun ConceptRow(concept: ConceptStat) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
+                modifier = Modifier.weight(1f),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                // 개념명이 길면(영어 태그는 30자↑) 통계를 밀어내 글자 단위로 깨지므로,
+                // 이름은 남는 폭 안에서 말줄임하고 배지·통계는 항상 온전히 보이게 한다.
                 Text(
                     text = concept.concept,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f, fill = false),
                 )
                 MasteryChip(masteryStageOf(concept.solved, concept.accuracy))
             }
@@ -763,10 +732,11 @@ private fun ConceptRow(concept: ConceptStat) {
                     stringResource(
                         R.string.report_concept_stat,
                         concept.solved,
-                        (concept.accuracy * 100).roundToInt(),
+                        concept.accuracy.toPercentInt(),
                     ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
         LinearProgressIndicator(

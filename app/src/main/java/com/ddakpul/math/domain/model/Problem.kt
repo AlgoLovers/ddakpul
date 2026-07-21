@@ -37,7 +37,15 @@ data class Problem(
      * 앞 8자(AA-BB-CC = [methodCode])가 '풀이 방법' 단위 — 동영상 해설이 이 단위로 붙는다.
      */
     val code: String? = null,
+    /**
+     * 격자 등분 퍼즐(구성형 문제)이면 여기에 도형이 담긴다. null이면 일반 4지선다.
+     * 4지선다와 채점 방식이 달라([ValidateDissectionUseCase]), 이게 있으면 [choices]는 비어 있다.
+     */
+    val dissection: DissectionPuzzle? = null,
 ) {
+    /** 구성형(격자 등분) 문제 여부 — 화면·채점 분기용. */
+    val isDissection: Boolean get() = dissection != null
+
     /** 동영상 해설이 붙는 '방법' 단위 코드(AA-BB-CC). 코드가 없으면 null. */
     val methodCode: String? get() = code?.takeIf { it.length >= METHOD_CODE_LEN }?.substring(0, METHOD_CODE_LEN)
 

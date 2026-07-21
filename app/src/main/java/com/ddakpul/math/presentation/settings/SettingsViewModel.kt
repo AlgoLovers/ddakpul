@@ -3,14 +3,14 @@ package com.ddakpul.math.presentation.settings
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.BuildExclusionReportUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
-import com.ddakpul.math.domain.usecase.ObserveEntitlementUseCase
 import com.ddakpul.math.domain.usecase.ObserveExcludedCountUseCase
+import com.ddakpul.math.domain.usecase.ObserveUnlockAllLevelsUseCase
 import com.ddakpul.math.domain.usecase.ResetProgressUseCase
 import com.ddakpul.math.domain.usecase.SetDailyGoalUseCase
+import com.ddakpul.math.domain.usecase.SetUnlockAllLevelsUseCase
 import com.ddakpul.math.presentation.common.SpeechSettings
 import com.ddakpul.math.presentation.common.tts.DownloadState
 import com.ddakpul.math.presentation.common.tts.TtsModel
@@ -26,17 +26,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.ceil
 
 data class SettingsUiState(
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
     /** "별로예요"로 제외한 문제 수 — 내보내기 버튼의 라벨·활성화에 쓴다. */
     val excludedCount: Int = 0,
-    /** 프리미엄 이용권 보유 여부와 남은 일수 — 이용권 카드 상태 표시. */
-    val isPremium: Boolean = false,
-    val premiumDaysLeft: Int = 0,
-    /** 출시 기념 무료 마감 시각(구매 안 했고 프로모션 중일 때 > 0). */
-    val launchFreeUntilMillis: Long = 0L,
+    /** 상위 난이도(기본 상한 위) 열기 스위치 상태. */
+    val unlockAllLevels: Boolean = false,
 )
 
 @HiltViewModel
@@ -45,8 +41,9 @@ class SettingsViewModel
     constructor(
         observeDailyGoal: ObserveDailyGoalUseCase,
         observeExcludedCount: ObserveExcludedCountUseCase,
-        observeEntitlement: ObserveEntitlementUseCase,
+        observeUnlockAllLevels: ObserveUnlockAllLevelsUseCase,
         private val setDailyGoal: SetDailyGoalUseCase,
+        private val setUnlockAllLevels: SetUnlockAllLevelsUseCase,
         private val resetProgress: ResetProgressUseCase,
         private val buildExclusionReport: BuildExclusionReportUseCase,
         private val ttsModelManager: TtsModelManager,
@@ -85,15 +82,11 @@ class SettingsViewModel
         }
 
         val uiState: StateFlow<SettingsUiState> =
-            combine(observeDailyGoal(), observeExcludedCount(), observeEntitlement()) { goal, excluded, entitlement ->
-                val now = System.currentTimeMillis()
-                val premium = entitlement.isPremium(now)
+            combine(observeDailyGoal(), observeExcludedCount(), observeUnlockAllLevels()) { goal, excluded, unlockAll ->
                 SettingsUiState(
                     dailyGoal = goal,
                     excludedCount = excluded,
-                    isPremium = premium,
-                    premiumDaysLeft = if (premium) ceil((entitlement.premiumUntilMillis - now).toDouble() / MILLIS_PER_DAY).toInt() else 0,
-                    launchFreeUntilMillis = Monetization.LAUNCH_FREE_UNTIL_MILLIS.takeIf { Monetization.isLaunchFree(now) } ?: 0L,
+                    unlockAllLevels = unlockAll,
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -107,6 +100,10 @@ class SettingsViewModel
 
         fun setDailyGoal(goal: Int) {
             viewModelScope.launch { setDailyGoal.invoke(goal) }
+        }
+
+        fun setUnlockAllLevels(enabled: Boolean) {
+            viewModelScope.launch { setUnlockAllLevels.invoke(enabled) }
         }
 
         fun resetProgress() {
@@ -123,6 +120,5 @@ class SettingsViewModel
 
         private companion object {
             const val STOP_TIMEOUT_MILLIS = 5_000L
-            const val MILLIS_PER_DAY = 86_400_000L
         }
     }

@@ -23,6 +23,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -45,7 +47,6 @@ import com.ddakpul.math.core.common.LocaleManagerCompat
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.presentation.common.ParentGateDialog
 import com.ddakpul.math.presentation.common.SpeechSettings
-import com.ddakpul.math.presentation.common.launchFreeDeadlineText
 import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.common.tts.DownloadState
 import com.ddakpul.math.presentation.common.tts.TtsModel
@@ -53,7 +54,6 @@ import com.ddakpul.math.presentation.common.tts.TtsModels
 
 @Composable
 fun SettingsScreen(
-    onOpenPaywall: () -> Unit,
     onOpenPrivacy: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
@@ -89,13 +89,8 @@ fun SettingsScreen(
         // 언어 — 앱 안에서 바로 한국어 ⇄ English. 문제 콘텐츠까지 바꾸려 앱을 재시작한다.
         LanguageCard()
 
-        // 이용권 — 무료 상한 위 상위 난이도와 전체 리포트를 여는 진입점. 현재 상태(무료/이용중)도 보여준다.
-        PremiumCard(
-            isPremium = uiState.isPremium,
-            daysLeft = uiState.premiumDaysLeft,
-            launchFreeUntilMillis = uiState.launchFreeUntilMillis,
-            onOpenPaywall = onOpenPaywall,
-        )
+        // 상위 난이도 열기 — 기본은 난이도 4단계까지, 켜면 5단계 이상 상위 문제도 추천에 나온다.
+        UnlockLevelsCard(unlocked = uiState.unlockAllLevels, onToggle = viewModel::setUnlockAllLevels)
 
         // 하루 목표 — 아이가 스스로 정한다(자율성, SDT).
         DailyGoalCard(dailyGoal = uiState.dailyGoal, onSelect = viewModel::setDailyGoal)
@@ -152,37 +147,25 @@ fun SettingsScreen(
     }
 }
 
+/** 상위 난이도(기본 상한 위, 5~) 열기 스위치 — 기본은 꺼짐(4단계까지). */
 @Composable
-private fun PremiumCard(
-    isPremium: Boolean,
-    daysLeft: Int,
-    launchFreeUntilMillis: Long,
-    onOpenPaywall: () -> Unit,
+private fun UnlockLevelsCard(
+    unlocked: Boolean,
+    onToggle: (Boolean) -> Unit,
 ) {
-    val launchFree = !isPremium && launchFreeUntilMillis > 0L
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_premium_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
-        Text(
-            text =
-                when {
-                    isPremium -> stringResource(R.string.settings_premium_active, daysLeft)
-                    launchFree -> stringResource(R.string.settings_launch_free, launchFreeDeadlineText(launchFreeUntilMillis))
-                    else -> stringResource(R.string.settings_premium_desc)
-                },
-            style = MaterialTheme.typography.bodyMedium,
-            color =
-                when {
-                    isPremium -> MaterialTheme.colorScheme.primary
-                    launchFree -> MaterialTheme.colorScheme.tertiary
-                    else -> MaterialTheme.colorScheme.onSurfaceVariant
-                },
-        )
-        OutlinedButton(onClick = onOpenPaywall) {
-            Text(stringResource(if (isPremium) R.string.settings_premium_manage else R.string.settings_premium_open))
+    SettingsCard(title = stringResource(R.string.settings_unlock_levels_title)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.settings_unlock_levels_desc),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f).padding(end = 12.dp),
+            )
+            Switch(checked = unlocked, onCheckedChange = onToggle)
         }
     }
 }
@@ -196,12 +179,7 @@ private fun PremiumCard(
 private fun LanguageCard() {
     val context = LocalContext.current
     val current = LocaleManagerCompat.currentLang(context)
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_language_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_language_title)) {
         Text(
             text = stringResource(R.string.settings_language_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -224,12 +202,7 @@ private fun LanguageCard() {
 
 @Composable
 private fun PrivacyCard(onOpenPrivacy: () -> Unit) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_privacy_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_privacy_title)) {
         Text(
             text = stringResource(R.string.settings_privacy_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -246,12 +219,7 @@ private fun DailyGoalCard(
     dailyGoal: Int,
     onSelect: (Int) -> Unit,
 ) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_goal_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_goal_title)) {
         Text(
             text = stringResource(R.string.settings_goal_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -280,12 +248,7 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
     val downloadState by viewModel.ttsDownloadState.collectAsStateWithLifecycle()
     val sizeMb = (model.totalBytes / 1024 / 1024).toInt()
 
-    SettingsCard {
-        Text(
-            text = stringResource(model.displayNameRes),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(model.displayNameRes)) {
         Text(
             text = stringResource(R.string.settings_neural_desc, sizeMb),
             style = MaterialTheme.typography.bodyMedium,
@@ -348,12 +311,7 @@ private fun TtsCard(
     // 미리 듣기용 — 선택이 바뀌면 새 엔진/속도로 즉시 다시 붙는다(SpeechSettings flow 구독).
     val speaker = rememberSpeaker()
 
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_tts_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_tts_title)) {
         Text(
             text = stringResource(R.string.settings_tts_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -494,12 +452,7 @@ private fun FeedbackExportCard(
     excludedCount: Int,
     onShare: () -> Unit,
 ) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_feedback_title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_feedback_title)) {
         Text(
             text = stringResource(R.string.settings_feedback_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -521,12 +474,7 @@ private fun FeedbackExportCard(
 
 @Composable
 private fun ResetCard(onResetRequest: () -> Unit) {
-    SettingsCard {
-        Text(
-            text = stringResource(R.string.settings_reset),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    SettingsCard(title = stringResource(R.string.settings_reset)) {
         Text(
             text = stringResource(R.string.settings_reset_desc),
             style = MaterialTheme.typography.bodyMedium,
@@ -540,7 +488,10 @@ private fun ResetCard(onResetRequest: () -> Unit) {
 
 /** 설정 화면 공통 카드 틀 — 제목·설명·액션을 세로로 담는다. */
 @Composable
-private fun SettingsCard(content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit) {
+private fun SettingsCard(
+    title: String,
+    content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit,
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
@@ -548,8 +499,10 @@ private fun SettingsCard(content: @Composable androidx.compose.foundation.layout
         Column(
             modifier = Modifier.fillMaxWidth().padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            content = content,
-        )
+        ) {
+            Text(text = title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            content()
+        }
     }
 }
 

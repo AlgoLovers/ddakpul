@@ -11,8 +11,6 @@
     <string name="home_greeting">Ready for today\'s just-right problems?</string>
     <string name="home_start">Start learning</string>
     <string name="home_goal_title">Today\'s goal</string>
-    <string name="home_goal_progress">%1$d / %2$d problems</string>
-    <string name="home_goal_done">Today\'s goal done! 🎉</string>
     <string name="home_streak">🔥 %1$d-day streak</string>
     <string name="home_streak_best">Best: %1$d days</string>
     <string name="home_streak_start">Solve one problem today to start a streak</string>
@@ -30,13 +28,10 @@
     <string name="solve_read_aloud">🔊 Read aloud</string>
     <string name="solve_scratchpad">✏️ Scratchpad</string>
     <string name="scratch_title">Scratchpad — work it out by hand</string>
-    <string name="scratch_close">Close</string>
     <string name="scratch_eraser">Eraser</string>
     <string name="scratch_undo">Undo</string>
     <string name="scratch_clear">Clear all</string>
     <string name="solve_submit">Check answer</string>
-    <string name="solve_choice_prefix">%1$s.</string>
-    <string name="solve_loading">Loading a problem…</string>
     <string name="solve_empty">No problems available right now.</string>
     <string name="solve_exclude_button">Something\'s off with this one</string>
     <string name="solve_exclude_dialog_title">Stop showing this problem?</string>
@@ -53,9 +48,6 @@
     <string name="result_show_explanation">Show solution</string>
     <string name="result_detailed_label">🔍 Deeper dive</string>
     <string name="result_detailed_show">Show the deeper dive</string>
-    <string name="result_detailed_locked_title">🔍 Deeper dive with a Pass</string>
-    <string name="result_detailed_locked_body">See the deeper concepts and other ways to solve this problem with a Pass.</string>
-    <string name="result_detailed_cta">See Passes</string>
     <string name="report_answer_button">This answer looks wrong</string>
     <string name="report_answer_feedback">[DdakPul answer question]\nProblem ID: %1$s\nProblem: %2$s\nChoices: %3$s\nApp\'s answer: %4$s\nYour answer: %5$s\n\n(Write what you think and send it to us)</string>
     <string name="result_mistake_label">Could this have been the slip?</string>
@@ -90,21 +82,6 @@
     <string name="onboarding_start">Get started</string>
 
     <!-- Pass (monetization / paywall) -->
-    <string name="paywall_title">DdakPul Pass</string>
-    <string name="paywall_close">Close</string>
-    <string name="paywall_active_status">Pass active · %1$d days left</string>
-    <string name="paywall_active_extend">Buy another Pass and it adds to your remaining time.</string>
-    <string name="paywall_benefits_title">A Pass unlocks</string>
-    <string name="paywall_benefit1">Higher-level challenge problems (the heart of reasoning)</string>
-    <string name="paywall_benefit2">The full growth report and mastery map by level</string>
-    <string name="paywall_benefit3">Spaced review that resurfaces problems right before you forget</string>
-    <string name="paywall_pass_6m_title">6-month Pass</string>
-    <string name="paywall_pass_1y_title">1-year Pass</string>
-    <string name="paywall_pass_1y_badge">Best value</string>
-    <string name="paywall_activate">Start a Pass</string>
-    <string name="paywall_no_autorenew">No auto-renewal. When it ends, it just stops. No ads, no nudges to pay more.</string>
-    <string name="paywall_test_note">(For now this activates instantly for testing — real store billing is coming)</string>
-    <string name="paywall_coming_soon">Passes are not on sale yet. For now, everything is free — no payment needed.</string>
 
     <!-- Grown-up check (blocks kids before purchase/reset) -->
     <string name="parent_gate_title">Grown-up check</string>
@@ -113,25 +90,9 @@
     <string name="parent_gate_cancel">Cancel</string>
 
     <!-- Launch promo: everything free -->
-    <string name="home_launch_free_title">🎉 Launch offer · Everything free until %1$s</string>
-    <string name="home_launch_free_desc">Right now, higher levels and the full report are all free. After the deadline, a Pass is needed.</string>
-    <string name="settings_launch_free">Launch offer · Everything is open until %1$s (a Pass is needed after that)</string>
-    <string name="paywall_launch_free_title">It\'s the free launch period right now</string>
-    <string name="paywall_launch_free_desc">Every feature is open with no payment until %1$s. Pick a Pass below only if you want to get ready for after the deadline.</string>
 
-    <string name="settings_premium_title">Pass</string>
-    <string name="settings_premium_desc">A Pass unlocks higher levels and the full report.</string>
-    <string name="settings_premium_open">See Passes</string>
-    <string name="settings_premium_active">Active · %1$d days left</string>
-    <string name="settings_premium_manage">Extend Pass</string>
 
-    <string name="solve_premium_banner">🎉 You\'re doing great at Level 3! Level 4 and up open with a Pass.</string>
-    <string name="solve_premium_cta">See Passes</string>
-    <string name="solve_free_cap_hint">Free goes up to Level 3 · Unlock higher levels with a Pass ›</string>
 
-    <string name="report_premium_locked_title">More detail with a Pass</string>
-    <string name="report_premium_locked_desc">The accuracy trend, level-growth curve, mastery by concept, and mastery map by level are available with a Pass.</string>
-    <string name="report_premium_cta">See Passes</string>
 
     <!-- Privacy · data safety -->
     <string name="privacy_title">Privacy · Data safety</string>
@@ -292,6 +253,8 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+    <string name="settings_unlock_levels_title">Open higher levels</string>
+    <string name="settings_unlock_levels_desc">By default, levels go up to 4. Turn on to include level 5 and above.</string>
     <!-- Settings · Language (in-app switch) -->
     <string name="settings_language_title">Language / 언어</string>
     <string name="settings_language_desc">Change the app language. Problem content switches too, and the app restarts to apply it.</string>
@@ -326,8 +289,6 @@
     <!-- Settings · high-quality neural voice (runtime download) -->
     <string name="tts_supertonic_name">High-quality voice (Supertonic)</string>
     <string name="tts_error_download_failed">Download failed</string>
-    <string name="tts_error_no_abi">Couldn\'t find a supported device type</string>
-    <string name="tts_error_no_lib">No voice library for this device (%1$s)</string>
     <string name="tts_error_save_failed">Couldn\'t save: %1$s</string>
     <string name="settings_neural_desc">A neural voice that sounds more natural. Download about %1$dMB once and use it offline.</string>
     <string name="settings_neural_download">Download (about %1$dMB)</string>
@@ -390,4 +351,15 @@
     <string name="video_downloading">Downloading video… %1$d%%</string>
     <string name="video_download_failed">Couldn\'t download the video. Please check your internet connection.</string>
     <string name="video_retry">Retry</string>
+    <!-- Spatial dissection puzzle pilot -->
+    <string name="puzzle_clear">Clear</string>
+    <string name="puzzle_check">Check</string>
+    <string name="puzzle_next">Next puzzle</string>
+    <string name="puzzle_correct">Correct! Congruent pieces complete 🎉</string>
+    <string name="puzzle_err_incomplete">Some cells are not filled in yet.</string>
+    <string name="puzzle_err_count">Please match the number of pieces.</string>
+    <string name="puzzle_err_size">The pieces have different numbers of cells.</string>
+    <string name="puzzle_err_disconnected">Each piece must be one connected block.</string>
+    <string name="puzzle_err_congruent">The pieces are not the same shape (they must match after rotating or flipping).</string>
+    <string name="puzzle_err_symbol">Each piece must contain one ●, one ▲, and one ■.</string>
 </resources>

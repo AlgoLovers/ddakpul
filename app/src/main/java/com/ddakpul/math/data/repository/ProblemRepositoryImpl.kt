@@ -31,16 +31,29 @@ class ProblemRepositoryImpl
         private suspend fun ensureSeeded() {
             val all = ProblemCatalog.problems + assetProblemSource.problems
             val lang = assetProblemSource.langTag
-            // 문항 수가 같아도 언어가 바뀌었으면(앱 내 언어 토글) 문제은행 텍스트를 새로 시딩한다.
-            // 문제 id는 언어와 무관하게 동일해 학습 기록(시도·진도)은 그대로 유지된다.
-            if (problemDao.count() == all.size && assetProblemSource.seededLang == lang) return
+            val version = AssetProblemSource.CONTENT_VERSION
+            // 문항 수가 같아도 (1) 언어가 바뀌었거나(앱 내 언어 토글) (2) 내용 버전이 올랐으면
+            // (기존 문제의 난이도·풀이 등 수정) 문제은행을 새로 시딩한다.
+            // 문제 id는 언어·버전과 무관하게 동일해 학습 기록(시도·진도)은 그대로 유지된다.
+            if (isSeeded(all.size, lang, version)) return
             seedMutex.withLock {
                 // 락을 기다리는 사이 다른 코루틴이 이미 시딩했을 수 있으니 다시 확인한다.
-                if (problemDao.count() == all.size && assetProblemSource.seededLang == lang) return
+                if (isSeeded(all.size, lang, version)) return
                 problemDao.replaceAll(all.map { it.toEntity() })
                 assetProblemSource.seededLang = lang
+                assetProblemSource.seededContentVersion = version
             }
         }
+
+        /** 이미 현재 문항 수·언어·내용 버전으로 시딩돼 있으면 true(재시딩 불필요). */
+        private suspend fun isSeeded(
+            expectedCount: Int,
+            lang: String,
+            version: Int,
+        ): Boolean =
+            problemDao.count() == expectedCount &&
+                assetProblemSource.seededLang == lang &&
+                assetProblemSource.seededContentVersion == version
 
         override suspend fun getAllGroups(): List<ProblemGroup> {
             ensureSeeded()

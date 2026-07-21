@@ -1,2 +1,43 @@
 # 큐레이션 블록리스트 — 한 줄에 문제 id 하나.
 # GitHub에서 검수 이슈의 체크 항목이 여기로 반영되며, 재생성 때마다 영구 제외된다.
+# 2026-07-18 d8 감사: dist3d = 피타고라스(초등 범위 밖 정리) 의존 — rectdiag 제거 선례와 동일 원칙위반
+gen-dist3d-1
+gen-dist3d-2
+gen-dist3d-3
+gen-dist3d-4
+# 2026-07-18 d6 감사: cubesurf = boxsurface와 동일 개념(직육면체 겉넓이) 중복
+gen-cubesurf-1
+gen-cubesurf-2
+gen-cubesurf-3
+gen-cubesurf-4
+# 2026-07-18 d1~5 스캔: rectdiag = 피타고라스(초등 범위 밖 정리) 요구 — 제거 선례 확정 family가 파일에 잔존해 있었음
+gen-rectdiag-1
+gen-rectdiag-2
+gen-rectdiag-3
+gen-rectdiag-4
+# 2026-07-18 d1~5 스캔: 사실상 완전 중복 6쌍 — 한쪽 제거(가역). 흡수처: polyang→interiorangle,
+# gift→electpair, perm→lineup, tourney→knockout, divsum→sigma, compose→recur
+gen-polyang-1
+gen-polyang-2
+gen-polyang-3
+gen-polyang-4
+gen-gift-1
+gen-gift-2
+gen-gift-3
+gen-gift-4
+gen-perm-1
+gen-perm-2
+gen-perm-3
+gen-perm-4
+gen-tourney-1
+gen-tourney-2
+gen-tourney-3
+gen-tourney-4
+gen-divsum-1
+gen-divsum-2
+gen-divsum-3
+gen-divsum-4
+gen-compose-1
+gen-compose-2
+gen-compose-3
+gen-compose-4

@@ -1,5 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
+import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.ConceptStat
@@ -9,6 +10,7 @@ import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.MatrixCell
 import com.ddakpul.math.domain.model.Problem
+import com.ddakpul.math.domain.model.problemsById
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +36,7 @@ class ObserveLearningStatsUseCase
         ): Flow<LearningStats> =
             flow {
                 val problemsById =
-                    problemRepository.getAllGroups().flatMap { it.problems }.associateBy { it.id }
+                    problemRepository.getAllGroups().problemsById()
                 emitAll(
                     learnerRepository.observeAttempts().map { attempts ->
                         buildLearningStats(

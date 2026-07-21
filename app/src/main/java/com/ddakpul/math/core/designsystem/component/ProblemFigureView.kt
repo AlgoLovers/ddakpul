@@ -183,18 +183,6 @@ private fun DrawScope.drawMatchstick(
     }
 }
 
-/** 주사위 눈(1~6) 위치를 면 내부 비율 좌표(0~1)로. */
-private fun pipsFor(v: Int): List<Pair<Float, Float>> =
-    when (v) {
-        1 -> listOf(0.5f to 0.5f)
-        2 -> listOf(0.3f to 0.3f, 0.7f to 0.7f)
-        3 -> listOf(0.28f to 0.28f, 0.5f to 0.5f, 0.72f to 0.72f)
-        4 -> listOf(0.3f to 0.3f, 0.7f to 0.3f, 0.3f to 0.7f, 0.7f to 0.7f)
-        5 -> listOf(0.28f to 0.28f, 0.72f to 0.28f, 0.5f to 0.5f, 0.28f to 0.72f, 0.72f to 0.72f)
-        6 -> listOf(0.3f to 0.28f, 0.3f to 0.5f, 0.3f to 0.72f, 0.7f to 0.28f, 0.7f to 0.5f, 0.7f to 0.72f)
-        else -> emptyList()
-    }
-
 /** 정육면체(주사위) 전개도 — 6개 면을 격자에 그리고 눈을 찍는다. 색칠 면(query)은 강조. */
 private fun DrawScope.drawCubeNet(
     figure: ProblemFigure,
@@ -204,8 +192,8 @@ private fun DrawScope.drawCubeNet(
     top: Float,
     side: Float,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 6)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 6)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
     val query = figure.params["query"] ?: -1
     val hs = figure.heights
     if (hs.size != 18) return
@@ -221,7 +209,7 @@ private fun DrawScope.drawCubeNet(
             drawRect(accent.copy(alpha = 0.35f), topLeft = Offset(x, y), size = Size(cell, cell))
         }
         drawRect(ink, topLeft = Offset(x, y), size = Size(cell, cell), style = Stroke(width = 3f))
-        for ((fx, fy) in pipsFor(v)) {
+        for ((fx, fy) in dicePips(v)) {
             drawCircle(ink, radius = pipR, center = Offset(x + fx * cell, y + fy * cell))
         }
     }
@@ -236,7 +224,7 @@ private fun DrawScope.drawTriangleFan(
     top: Float,
     side: Float,
 ) {
-    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 10)
+    val k = (figure.params["cevians"] ?: 2).coerceIn(1, 24)
     val apex = Offset(left + side / 2f, top + side * 0.06f)
     val baseY = top + side * 0.94f
     val blX = left + side * 0.06f
@@ -264,9 +252,9 @@ private fun DrawScope.drawGridPolygon(
     top: Float,
     side: Float,
 ) {
-    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 12)
-    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 12)
-    val n = (figure.params["n"] ?: 3).coerceIn(3, 12)
+    val cols = (figure.params["cols"] ?: 4).coerceIn(1, 24)
+    val rows = (figure.params["rows"] ?: 4).coerceIn(1, 24)
+    val n = (figure.params["n"] ?: 3).coerceIn(3, 24)
     val pts = figure.heights
     if (pts.size != n * 2) return
     val cell = min(side / cols, side / rows)
@@ -301,7 +289,10 @@ private data class IsoView(
         gx: Float,
         gy: Float,
         gz: Float,
-    ) = Offset(ox + (gx - gy) * hw, oy + (gx + gy) * hh - gz * ch)
+    ): Offset {
+        val (x, y) = isoProject(ox, oy, hw, hh, ch, gx, gy, gz)
+        return Offset(x, y)
+    }
 }
 
 private fun DrawScope.drawIsoFace(
@@ -342,8 +333,8 @@ private fun DrawScope.drawCubeStack(
     top: Float,
     side: Float,
 ) {
-    val w = (figure.params["w"] ?: 1).coerceIn(1, 6)
-    val d = (figure.params["d"] ?: 1).coerceIn(1, 6)
+    val w = (figure.params["w"] ?: 1).coerceIn(1, 12)
+    val d = (figure.params["d"] ?: 1).coerceIn(1, 12)
     val heights = figure.heights
     if (heights.size != w * d) return
     val maxH = (heights.maxOrNull() ?: 1).coerceAtLeast(1)
@@ -369,7 +360,7 @@ private fun DrawScope.drawPolygon(
     top: Float,
     side: Float,
 ) {
-    val n = (figure.params["n"] ?: 5).coerceIn(3, 12)
+    val n = (figure.params["n"] ?: 5).coerceIn(3, 24)
     val center = Offset(left + side / 2f, top + side / 2f)
     val radius = side * 0.42f
     val pts =
@@ -458,8 +449,10 @@ private fun DrawScope.drawGrid(
     top: Float,
     side: Float,
 ) {
-    val w = (figure.params["w"] ?: 3).coerceIn(1, 8)
-    val h = (figure.params["h"] ?: 3).coerceIn(1, 8)
+    // cell이 side에 맞춰 자동 축소되므로 큰 격자도 안전 — 상한을 넉넉히 둔다.
+    // (당구대 12×9·15×8, gcdtile 10×4 등을 8로 자르면 정사각형처럼 왜곡됐다. 파이썬 미리보기엔 clamp 없음.)
+    val w = (figure.params["w"] ?: 3).coerceIn(1, 30)
+    val h = (figure.params["h"] ?: 3).coerceIn(1, 30)
     val cell = min(side / w, side / h)
     val gridLeft = left + (side - cell * w) / 2f
     val gridTop = top + (side - cell * h) / 2f

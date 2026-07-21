@@ -7,6 +7,7 @@ import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
 import com.ddakpul.math.domain.model.Recommendation
 import com.ddakpul.math.domain.model.RecommendationReason
+import com.ddakpul.math.domain.model.problemsById
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.random.Random
@@ -58,7 +59,7 @@ class RecommendNextProblemUseCase
             todaySolved: Int = 0,
         ): Recommendation? {
             if (groups.isEmpty()) return null
-            val problemsById = groups.flatMap { it.problems }.associateBy { it.id }
+            val problemsById = groups.problemsById()
             val decision = decideDifficulty(state, problemsById)
 
             if (decision.reason != RecommendationReason.REMEDIATION) {

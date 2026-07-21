@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 /**
  * 라벨 + 큰 값 한 쌍을 보여주는 통계 타일(홈·리포트 공용).
  * [icon]은 값 위 이모지, [caption]은 라벨 아래 보조 수치(둘 다 선택).
- * [iconTint]를 주면 아이콘을 파스텔 원형 배지 안에 담아 생기를 준다(밝은 디자인).
+ * [iconTint]를 주면 아이콘을 파스텔 원형 배지 안에 담아 생기를 준다.
+ * 배지 없이(=iconTint null) 이모지만 두면 목업의 담백한 카드 스타일이 된다.
+ * [containerColor]로 카드 배경을 조절한다(기본=흰 카드, 옅은 회색 카드도 지정 가능).
  */
 @Composable
 fun StatTile(
@@ -33,11 +35,12 @@ fun StatTile(
     icon: String? = null,
     caption: String? = null,
     iconTint: Color? = null,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
     ) {
         Column(
@@ -57,7 +60,7 @@ fun StatTile(
                         Text(text = icon, style = MaterialTheme.typography.titleMedium)
                     }
                 } else {
-                    Text(text = icon, style = MaterialTheme.typography.titleMedium)
+                    Text(text = icon, style = MaterialTheme.typography.headlineSmall)
                 }
             }
             Text(
@@ -65,6 +68,8 @@ fun StatTile(
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
+                maxLines = 1,
+                softWrap = false,
             )
             Text(
                 text = label,

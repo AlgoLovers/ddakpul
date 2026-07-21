@@ -30,3 +30,4 @@ complexity:
   TooManyFunctions:
     thresholdInFiles: 25
     thresholdInClasses: 25
+    thresholdInInterfaces: 25 # Repository 인터페이스가 학습자 상태 오퍼레이션을 모은다

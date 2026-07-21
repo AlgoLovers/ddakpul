@@ -51,7 +51,6 @@ import com.ddakpul.math.presentation.result.ResultView
 @Composable
 fun SolveScreen(
     onGoHome: () -> Unit,
-    onUpgrade: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SolveViewModel = hiltViewModel(),
@@ -64,8 +63,14 @@ fun SolveScreen(
         onSubmit = viewModel::submit,
         onNext = viewModel::loadNext,
         onExclude = viewModel::excludeCurrent,
+        dissection =
+            DissectionCallbacks(
+                onTap = viewModel::tapDissectionCell,
+                onSelectPiece = viewModel::selectDissectionPiece,
+                onClear = viewModel::clearDissection,
+                onSubmit = viewModel::submitDissection,
+            ),
         onGoHome = onGoHome,
-        onUpgrade = onUpgrade,
         onReportAnswer = { result -> shareAnswerReport(context, result) },
         onWatchVideo = onWatchVideo,
         modifier = modifier,
@@ -101,8 +106,8 @@ private fun SolveContent(
     onSubmit: () -> Unit,
     onNext: () -> Unit,
     onExclude: () -> Unit,
+    dissection: DissectionCallbacks,
     onGoHome: () -> Unit,
-    onUpgrade: () -> Unit,
     onReportAnswer: (GradingResult) -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
@@ -132,34 +137,49 @@ private fun SolveContent(
 
             SolvePhase.SOLVING -> {
                 // 태블릿에서 한 줄이 지나치게 길어지지 않도록 콘텐츠 폭을 제한한다.
-                SolvingBody(
-                    uiState = uiState,
-                    onSelect = onSelect,
-                    onSubmit = onSubmit,
-                    onExcludeRequest = { showExcludeDialog = true },
-                    onUpgrade = onUpgrade,
-                    onScratchpad = { showScratchpad = true },
-                    modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
-                )
+                if (uiState.isDissection) {
+                    DissectionSolveBody(
+                        uiState = uiState,
+                        callbacks = dissection,
+                        onNext = onNext,
+                        modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                    )
+                } else {
+                    SolvingBody(
+                        uiState = uiState,
+                        onSelect = onSelect,
+                        onSubmit = onSubmit,
+                        onExcludeRequest = { showExcludeDialog = true },
+                        onScratchpad = { showScratchpad = true },
+                        modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                    )
+                }
             }
 
             SolvePhase.GRADED -> {
-                uiState.result?.let { result ->
-                    ResultView(
-                        result = result,
-                        showExplanation = uiState.showExplanation,
-                        sessionStreak = uiState.sessionStreak,
-                        softCutSuggested = uiState.softCutSuggested,
-                        isPremium = uiState.isPremium,
-                        solutionVideo = uiState.solutionVideo,
+                if (uiState.isDissection) {
+                    DissectionSolveBody(
+                        uiState = uiState,
+                        callbacks = dissection,
                         onNext = onNext,
-                        onFinishToday = onGoHome,
-                        onExcludeRequest = { showExcludeDialog = true },
-                        onReportAnswer = { onReportAnswer(result) },
-                        onUpgrade = onUpgrade,
-                        onWatchVideo = onWatchVideo,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
+                } else {
+                    uiState.result?.let { result ->
+                        ResultView(
+                            result = result,
+                            showExplanation = uiState.showExplanation,
+                            sessionStreak = uiState.sessionStreak,
+                            softCutSuggested = uiState.softCutSuggested,
+                            solutionVideo = uiState.solutionVideo,
+                            onNext = onNext,
+                            onFinishToday = onGoHome,
+                            onExcludeRequest = { showExcludeDialog = true },
+                            onReportAnswer = { onReportAnswer(result) },
+                            onWatchVideo = onWatchVideo,
+                            modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                        )
+                    }
                 }
             }
         }
@@ -231,12 +251,17 @@ private fun ReadAloudButton(
                 maxLines = 1,
             )
         }
-        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지).
+        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지). 단, 엔진명이 매우 긴 기기
+        // (예: "Speech Recognition & Synthesis from Google")에선 이 줄이 도구 영역을 넓혀
+        // 좌측 영역/난이도 라벨을 삼키므로, 폭을 상한하고 한 줄로 말줄임한다.
         if (speaker.engineLabel.isNotBlank()) {
             Text(
                 text = stringResource(R.string.solve_reading_with, speaker.engineLabel),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.widthIn(max = 140.dp),
             )
         }
     }
@@ -296,7 +321,6 @@ private fun SolvingBody(
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
     onExcludeRequest: () -> Unit,
-    onUpgrade: () -> Unit,
     onScratchpad: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -308,16 +332,6 @@ private fun SolvingBody(
     ) {
         // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다.
         TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
-
-        // 무료 상한을 넘어 승급 준비가 됐으면 이용권을 권한다(계속 풀 수는 있다).
-        if (uiState.premiumSuggested) {
-            PremiumBanner(onUpgrade = onUpgrade)
-        }
-
-        // 무료 상한 난이도에 머물 때 — 왜 더 안 올라가는지 상시 안내(헷갈림 방지).
-        if (uiState.showFreeCapHint) {
-            FreeCapHint(onUpgrade = onUpgrade)
-        }
 
         uiState.area?.let { area ->
             ProblemHeaderRow(
@@ -395,47 +409,6 @@ private fun TodayProgressHeader(
         LinearProgressIndicator(
             progress = { (todaySolved.toFloat() / dailyGoal).coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth(),
-        )
-    }
-}
-
-/** 무료 상한을 넘어 승급 준비가 됐을 때의 이용권 배너 — 막지 않고 권유만 한다. */
-@Composable
-private fun PremiumBanner(onUpgrade: () -> Unit) {
-    Card(
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            ),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.solve_premium_banner),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-            )
-            Button(onClick = onUpgrade) {
-                Text(stringResource(R.string.solve_premium_cta))
-            }
-        }
-    }
-}
-
-/** 무료 상한 난이도에서 늘 보이는 저강도 안내 — 왜 난이도가 안 올라가는지 알려주고 페이월로 안내. */
-@Composable
-private fun FreeCapHint(onUpgrade: () -> Unit) {
-    TextButton(
-        onClick = onUpgrade,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = stringResource(R.string.solve_free_cap_hint),
-            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

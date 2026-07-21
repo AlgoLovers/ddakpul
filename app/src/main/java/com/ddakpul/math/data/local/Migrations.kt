@@ -92,6 +92,23 @@ val MIGRATION_7_8 =
         }
     }
 
+val MIGRATION_9_10 =
+    object : Migration(9, 10) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE problem ADD COLUMN dissectionJson TEXT")
+            // 등분 퍼즐은 시드에만 있으므로 비워서 최신 콘텐츠로 강제 재시딩(학습 기록 테이블은 유지).
+            db.execSQL("DELETE FROM problem")
+        }
+    }
+
+/** v10 → v11: 상위 난이도 열기 설정(unlockAllLevels) 컬럼 추가 — 옛 이용권 게이트를 대체하는 순수 사용자 설정. */
+val MIGRATION_10_11 =
+    object : Migration(10, 11) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE learner_progress ADD COLUMN unlockAllLevels INTEGER NOT NULL DEFAULT 0")
+        }
+    }
+
 val MIGRATION_8_9 =
     object : Migration(8, 9) {
         override fun migrate(db: SupportSQLiteDatabase) {

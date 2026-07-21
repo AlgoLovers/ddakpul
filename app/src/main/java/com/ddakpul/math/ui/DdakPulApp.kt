@@ -34,7 +34,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ddakpul.math.R
 import com.ddakpul.math.presentation.home.HomeScreen
-import com.ddakpul.math.presentation.paywall.PaywallScreen
 import com.ddakpul.math.presentation.print.PrintScreen
 import com.ddakpul.math.presentation.privacy.PrivacyScreen
 import com.ddakpul.math.presentation.report.ReportScreen
@@ -55,7 +54,6 @@ private enum class DdakPulDestination(
 
 /** 탭이 아닌 보조 화면 라우트. */
 private const val PRINT_ROUTE = "print"
-private const val PAYWALL_ROUTE = "paywall"
 private const val PRIVACY_ROUTE = "privacy"
 private const val VIDEO_PLAYER_ROUTE = "videoplayer"
 private const val ARG_METHOD = "method"
@@ -97,30 +95,28 @@ private fun AppNavHost(
         modifier = modifier,
     ) {
         composable(DdakPulDestination.HOME.route) {
-            HomeScreen(onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) })
+            HomeScreen(
+                onStartLearning = { navController.switchTab(DdakPulDestination.SOLVE.route) },
+            )
         }
         composable(DdakPulDestination.SOLVE.route) {
             SolveScreen(
                 onGoHome = { navController.switchTab(DdakPulDestination.HOME.route) },
-                onUpgrade = { navController.navigate(PAYWALL_ROUTE) },
                 onWatchVideo = { video -> navController.navigateToVideo(video.methodCode, video.title) },
             )
         }
         composable(DdakPulDestination.REPORT.route) {
             ReportScreen(
                 onPrintClick = { navController.navigate(PRINT_ROUTE) },
-                onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) },
                 onStartSolving = { navController.switchTab(DdakPulDestination.SOLVE.route) },
             )
         }
         composable(DdakPulDestination.SETTINGS.route) {
             SettingsScreen(
-                onOpenPaywall = { navController.navigate(PAYWALL_ROUTE) },
                 onOpenPrivacy = { navController.navigate(PRIVACY_ROUTE) },
             )
         }
         composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
-        composable(PAYWALL_ROUTE) { PaywallScreen(onClose = { navController.popBackStack() }) }
         composable(PRIVACY_ROUTE) { PrivacyScreen(onBack = { navController.popBackStack() }) }
         composable(
             route = "$VIDEO_PLAYER_ROUTE?$ARG_METHOD={$ARG_METHOD}&$ARG_TITLE={$ARG_TITLE}",

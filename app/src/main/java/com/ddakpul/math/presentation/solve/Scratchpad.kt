@@ -12,8 +12,9 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -72,6 +73,7 @@ fun rememberScratchStrokes(problemId: String): SnapshotStateList<ScratchStroke> 
  * 별도 Dialog 창이 아니라 본문 위 오버레이라, 태블릿 작업표시줄/네비게이션 바 인셋을 앱 창과 똑같이
  * 존중한다(Dialog 창은 인셋을 전달하지 않아 하단 도구모음이 가려지는 문제가 있었다).
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ScratchpadOverlay(
     statement: String,
@@ -96,29 +98,41 @@ fun ScratchpadOverlay(
                 ScratchCanvas(strokes = strokes, tool = tool, penColor = penColor, modifier = Modifier.fillMaxSize())
             }
 
-            Row(
+            // 색 팔레트와 도구 버튼을 각각 한 덩어리로 두고, 폭이 좁거나(소형 폰) 라벨이 긴
+            // 로케일(영어)에서 도구 그룹이 둘째 줄로 내려가게 FlowRow로 감싼다. 예전엔 Spacer(weight)
+            // 하나로 오른쪽에 붙였는데, 넘칠 때 마지막 버튼("전체 지우기")이 화면 밖으로 잘렸다.
+            FlowRow(
                 modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                InkColors.forEach { c ->
-                    val selected = tool == ScratchTool.PEN && penColor == c
-                    Box(
-                        modifier =
-                            Modifier
-                                .size(if (selected) 40.dp else 32.dp)
-                                .background(c, CircleShape)
-                                .then(if (selected) Modifier.border(3.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
-                                .clickable {
-                                    tool = ScratchTool.PEN
-                                    penColor = c
-                                },
-                    )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    InkColors.forEach { c ->
+                        val selected = tool == ScratchTool.PEN && penColor == c
+                        Box(
+                            modifier =
+                                Modifier
+                                    .size(if (selected) 40.dp else 32.dp)
+                                    .background(c, CircleShape)
+                                    .then(if (selected) Modifier.border(3.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
+                                    .clickable {
+                                        tool = ScratchTool.PEN
+                                        penColor = c
+                                    },
+                        )
+                    }
                 }
-                Spacer(Modifier.weight(1f))
-                ToolButton(R.string.scratch_eraser, tool == ScratchTool.ERASER) { tool = ScratchTool.ERASER }
-                ToolButton(R.string.scratch_undo, false) { strokes.removeLastOrNull() }
-                ToolButton(R.string.scratch_clear, false) { strokes.clear() }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ToolButton(R.string.scratch_eraser, tool == ScratchTool.ERASER) { tool = ScratchTool.ERASER }
+                    ToolButton(R.string.scratch_undo, false) { strokes.removeLastOrNull() }
+                    ToolButton(R.string.scratch_clear, false) { strokes.clear() }
+                }
             }
         }
     }

@@ -10,9 +10,4 @@ sealed interface AppError {
 
     /** 규칙상 조건에 맞는 다음 문제를 찾지 못한 상태. */
     data object NoProblemAvailable : AppError
-
-    /** 그 밖의 예기치 못한 실패. */
-    data class Unexpected(
-        val cause: Throwable? = null,
-    ) : AppError
 }

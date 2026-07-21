@@ -1,12 +1,13 @@
 package com.ddakpul.math.presentation.solve
 
+import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.domain.model.MathArea
-import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.model.SolutionVideo
+import com.ddakpul.math.domain.usecase.DissectionValidation
 
 /** 문제 풀이 화면의 진행 단계. */
 enum class SolvePhase { LOADING, SOLVING, GRADED, EMPTY }
@@ -21,10 +22,6 @@ data class SolveUiState(
     val result: GradingResult? = null,
     val showExplanation: Boolean = false,
     val reason: RecommendationReason? = null,
-    /** 무료 상한을 넘어 승급하려는 순간 — 페이월 배너를 띄운다(막지는 않음). */
-    val premiumSuggested: Boolean = false,
-    /** 프리미엄 이용권 보유 여부 — 무료 상한 안내 노출에 쓴다. */
-    val isPremium: Boolean = false,
     /** 오늘 푼 문제 수 — 오늘의 목표 진행바에 쓴다. */
     val todaySolved: Int = 0,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
@@ -34,18 +31,18 @@ data class SolveUiState(
     val todayTimeSpentSec: Int = 0,
     /** 현재 문제의 방법에 준비된 해설 영상(있을 때만 '동영상 풀이 보기' 노출). */
     val solutionVideo: SolutionVideo? = null,
+    /** 등분 퍼즐 풀이 상태 — 칸→조각 배정, 선택한 조각색, 채점 결과(4지선다면 무의미). */
+    val dissectionAssignment: Map<Cell, Int> = emptyMap(),
+    val dissectionPiece: Int = 0,
+    val dissectionResult: DissectionValidation? = null,
 ) {
+    /** 구성형(격자 등분) 문제 여부 — 화면·채점 분기용. */
+    val isDissection: Boolean get() = problem?.isDissection == true
+
     val canSubmit: Boolean get() = phase == SolvePhase.SOLVING && selectedIndex != null
 
     /** 복습 문제 여부 — 화면에 배지로 표시한다. */
     val isReview: Boolean get() = reason == RecommendationReason.REVIEW
-
-    /**
-     * 무료 사용자가 무료 상한 난이도에 도달했을 때의 상시 안내(승급 순간 배너와 별개).
-     * 왜 난이도가 안 올라가는지 알려주는 게 목적이다.
-     */
-    val showFreeCapHint: Boolean
-        get() = phase == SolvePhase.SOLVING && !isPremium && !premiumSuggested && difficulty >= Monetization.FREE_MAX_DIFFICULTY
 
     /**
      * 세션 소프트 컷 — 목표를 채웠거나 집중 한계(20분)를 넘겼으면 부드러운 종료를 제안한다.

@@ -11,3 +11,6 @@ data class ProblemGroup(
     val conceptTags: List<String>,
     val problems: List<Problem>,
 )
+
+/** 그룹들의 모든 문제를 id로 색인 — 추천·통계·능력추정이 공유하는 관용구. */
+fun List<ProblemGroup>.problemsById(): Map<String, Problem> = flatMap { it.problems }.associateBy { it.id }

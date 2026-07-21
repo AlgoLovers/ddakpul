@@ -3,7 +3,6 @@ package com.ddakpul.math.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.domain.model.LearningStats
-import com.ddakpul.math.domain.model.Monetization
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
@@ -18,8 +17,6 @@ import javax.inject.Inject
 data class HomeUiState(
     val stats: LearningStats? = null,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
-    /** 출시 기념 무료 마감 시각. 0이면 프로모션 아님(배너 숨김). */
-    val launchFreeUntilMillis: Long = 0L,
 )
 
 @HiltViewModel
@@ -40,9 +37,6 @@ class HomeViewModel
                 HomeUiState(
                     stats = stats,
                     dailyGoal = goal,
-                    launchFreeUntilMillis =
-                        Monetization.LAUNCH_FREE_UNTIL_MILLIS
-                            .takeIf { Monetization.isLaunchFree(System.currentTimeMillis()) } ?: 0L,
                 )
             }.stateIn(
                 scope = viewModelScope,

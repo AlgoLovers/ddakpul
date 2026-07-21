@@ -1,0 +1,3236 @@
+{
+ "version": 1,
+ "problems": [
+  {
+   "id": "dissect-2-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-dissect-2",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "dissect-2-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-dissect-2",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "id": "dissect-2-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 2,
+   "groupId": "g-dissect-2",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-10",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-11",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-12",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-5",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-6",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-7",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-8",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "dissect-3-9",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 3,
+   "groupId": "g-dissect-3",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-10",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-11",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-12",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-5",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     5,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-6",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-7",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-8",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "dissect-4-9",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 4,
+   "groupId": "g-dissect-4",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "dissect-5-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-dissect-5",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "dissect-5-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-dissect-5",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "dissect-5-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-dissect-5",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "dissect-5-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-dissect-5",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-5-5",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-dissect-5",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-5-6",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 5,
+   "groupId": "g-dissect-5",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-10",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-6-11",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-6-12",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-6-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     6
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-5",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-6",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "dissect-6-7",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "sym": "S"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-6-8",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-6-9",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 6,
+   "groupId": "g-dissect-6",
+   "pieceCount": 2,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-7-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 7,
+   "groupId": "g-dissect-7",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "sym": "S"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "S"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "sym": "T"
+    },
+    {
+     "r": 0,
+     "c": 8,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-7-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 7,
+   "groupId": "g-dissect-7",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-7-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 7,
+   "groupId": "g-dissect-7",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-7-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 7,
+   "groupId": "g-dissect-7",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-7-5",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 7,
+   "groupId": "g-dissect-7",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-7-6",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 7,
+   "groupId": "g-dissect-7",
+   "pieceCount": 3,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-8-1",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 8,
+   "groupId": "g-dissect-8",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     6
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 6,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 7,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 8,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 9,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-8-2",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 8,
+   "groupId": "g-dissect-8",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "sym": "S"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "sym": "T"
+    },
+    {
+     "r": 2,
+     "c": 7,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-8-3",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 8,
+   "groupId": "g-dissect-8",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 1,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-8-4",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 8,
+   "groupId": "g-dissect-8",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-8-5",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 8,
+   "groupId": "g-dissect-8",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "sym": "S"
+    }
+   ]
+  },
+  {
+   "id": "dissect-8-6",
+   "area": "SHAPE_MEASUREMENT",
+   "difficulty": 8,
+   "groupId": "g-dissect-8",
+   "pieceCount": 4,
+   "cells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ]
+   ],
+   "symbols": [
+    {
+     "r": 0,
+     "c": 0,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "sym": "O"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "sym": "O"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "sym": "S"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "sym": "T"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "sym": "S"
+    }
+   ]
+  }
+ ]
+}

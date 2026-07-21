@@ -19,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ddakpul.math.core.common.toPercentInt
 import kotlin.math.roundToInt
 
 /**
@@ -39,7 +41,9 @@ fun MasteryMatrix(
     require(cells.size == rowLabels.size * columnLabels.size) {
         "cells.size(${cells.size})는 rowLabels(${rowLabels.size}) * columnLabels(${columnLabels.size})와 같아야 한다"
     }
-    val rowLabelWidth = 88.dp
+    // 영역명이 긴 로케일(영어 "Patterns & Relationships")도 40dp 셀 높이 안에서 두 줄로
+    // 들어가도록 폭을 조금 넉넉히. 넘치면 아래가 잘리므로 라벨엔 maxLines=2+말줄임을 건다.
+    val rowLabelWidth = 100.dp
     val cellSize = 40.dp
     val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
     val rows = cells.chunked(columnLabels.size)
@@ -50,7 +54,13 @@ fun MasteryMatrix(
             Box(modifier = Modifier.height(cellSize).width(rowLabelWidth))
             rowLabels.forEach { rowLabel ->
                 Box(modifier = Modifier.height(cellSize).width(rowLabelWidth), contentAlignment = Alignment.CenterStart) {
-                    Text(text = rowLabel, style = MaterialTheme.typography.labelSmall, color = labelColor)
+                    Text(
+                        text = rowLabel,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = labelColor,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 }
             }
         }
@@ -104,7 +114,7 @@ private fun MasteryCell(
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             Text(
-                text = entry.accuracy?.let { "${(it * 100).roundToInt()}%" } ?: "-",
+                text = entry.accuracy?.let { "${it.toPercentInt()}%" } ?: "-",
                 style = MaterialTheme.typography.labelSmall,
             )
         }
