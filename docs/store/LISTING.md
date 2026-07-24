@@ -103,8 +103,10 @@ Thinking starts with one problem a day. Try DdakPul.
 ## 그래픽 자산
 - `icon-512.png` — 현행 아이콘(전구+체크). 개선 컨셉: `marketing/icon-conceptA.png`(밝게), `icon-conceptB.png`(전구+퍼즐, todo 오인 제거). ⚠️ 아이콘 최종본은 디자이너/이미지툴 폴리시 권장.
 - `feature-1024x500.png` — 현행 피처그래픽. 개선안: `marketing/feature.png`(도형 모티프+캐치프레이즈).
-- `screenshots/phone/` (1080×1920), `screenshots/tablet/` (1280×800) — 원본 캡처. 마케팅 캡션판: `marketing/ss1~ss5.png`.
-- ⚠️ `screenshots/phone/01-home.png`는 **삭제된 유료화 배너("10/31까지 무료·이용권")**가 남은 구버전 → 재캡처 필요(`/emu-qa`).
+- `screenshots/phone/` (1080×1920), `screenshots/tablet/` (1280×800) — 원본 캡처.
+- 마케팅 캡션판: **폰** `marketing/ss1~ss5.png` / **태블릿(가로)** `marketing/tab1~tab3.png` (생성기 `gen_tablet_assets.py`).
+  - 태블릿 1: 사고력 문제(각뿔 부피) / 2: 성장 리포트 / 3: 신뢰 슬라이드. 7인치·10인치 슬롯에 공용 가능.
+- ⚠️ `screenshots/*/01-home.png`(폰·태블릿 모두)는 **삭제된 유료화 배너("10/31까지 무료·이용권")**가 남은 구버전 → 재캡처 필요(`/emu-qa`). 홈 컷을 넣으려면 재캡처 필수.
 
 ## 등록 시 체크
 - [ ] 제목/아이콘/이미지에 "무료·광고없음·1위·할인·이모지" 없는지 전수 점검(반려 방지)
