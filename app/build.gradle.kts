@@ -93,8 +93,8 @@ android {
         applicationId = "com.ddakpul.math"
         minSdk = 26
         targetSdk = 36
-        versionCode = 10
-        versionName = "0.3.8"
+        versionCode = 11
+        versionName = "0.3.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -123,6 +123,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            // Play Console '네이티브 디버그 심볼 없음' 경고 해소 — .so 심볼을 AAB에 포함(크래시 분석용).
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
             // 업로드 키가 있으면 그것으로, 없으면(CI) 디버그 키로 서명해 빌드는 항상 통과.
             signingConfig =
                 if (hasUploadKey) {
