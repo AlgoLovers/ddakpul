@@ -1,7 +1,5 @@
 package com.ddakpul.math.presentation.solve
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,7 +39,6 @@ import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.ChoiceOption
 import com.ddakpul.math.core.designsystem.component.ChoiceState
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
-import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.domain.model.SolutionVideo
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.common.rememberSpeaker
@@ -56,7 +52,6 @@ fun SolveScreen(
     viewModel: SolveViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
     SolveContent(
         uiState = uiState,
         onSelect = viewModel::selectChoice,
@@ -71,32 +66,9 @@ fun SolveScreen(
                 onSubmit = viewModel::submitDissection,
             ),
         onGoHome = onGoHome,
-        onReportAnswer = { result -> shareAnswerReport(context, result) },
         onWatchVideo = onWatchVideo,
         modifier = modifier,
     )
-}
-
-/** '정답이 이상해요' — 문제 정보를 채운 쪽지를 공유 시트로 띄운다(개발자에게 전달, 무서버). */
-private fun shareAnswerReport(
-    context: Context,
-    result: GradingResult,
-) {
-    val text =
-        context.getString(
-            R.string.report_answer_feedback,
-            result.problem.id,
-            result.problem.statement,
-            result.problem.choices.joinToString(" / "),
-            result.problem.choices[result.correctIndex],
-            result.problem.choices[result.selectedIndex],
-        )
-    val sendIntent =
-        Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
-    context.startActivity(Intent.createChooser(sendIntent, null))
 }
 
 @Composable
@@ -108,7 +80,6 @@ private fun SolveContent(
     onExclude: () -> Unit,
     dissection: DissectionCallbacks,
     onGoHome: () -> Unit,
-    onReportAnswer: (GradingResult) -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -175,7 +146,6 @@ private fun SolveContent(
                             onNext = onNext,
                             onFinishToday = onGoHome,
                             onExcludeRequest = { showExcludeDialog = true },
-                            onReportAnswer = { onReportAnswer(result) },
                             onWatchVideo = onWatchVideo,
                             modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                         )
