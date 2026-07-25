@@ -93,8 +93,8 @@ android {
         applicationId = "com.ddakpul.math"
         minSdk = 26
         targetSdk = 36
-        versionCode = 12
-        versionName = "0.3.10"
+        versionCode = 13
+        versionName = "0.3.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -118,12 +118,15 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8: 코드 축소·난독화·최적화. keep 규칙은 proguard-rules.pro(직렬화 DTO·sherpa JNI 경계).
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            // Play Console '네이티브 디버그 심볼 없음' 경고 해소 — .so 심볼을 AAB에 포함(크래시 분석용).
+            // .so에 심볼이 있으면 AAB에 포함(크래시 분석용). 단 현재 native는 전부 서드파티 prebuilt
+            // (sherpa-onnx TTS)라 이미 stripped → 실질 효과 없음. 심볼 포함 lib 추가 대비해 남겨둔다.
             ndk {
                 debugSymbolLevel = "FULL"
             }
