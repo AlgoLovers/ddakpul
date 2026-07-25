@@ -76,6 +76,12 @@ val keystoreProps =
     }
 val hasUploadKey = keystorePropsFile.exists()
 
+// 버전은 version.properties 한 곳에서만 관리한다(여기 하드코딩 금지). 상세: docs/RELEASE.md.
+val versionProps =
+    Properties().apply {
+        rootProject.file("version.properties").inputStream().use { load(it) }
+    }
+
 android {
     namespace = "com.ddakpul.math"
     compileSdk = 36
@@ -93,8 +99,8 @@ android {
         applicationId = "com.ddakpul.math"
         minSdk = 26
         targetSdk = 36
-        versionCode = 13
-        versionName = "0.3.11"
+        versionCode = versionProps.getProperty("VERSION_CODE").trim().toInt()
+        versionName = versionProps.getProperty("VERSION_NAME").trim()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
