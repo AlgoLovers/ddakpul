@@ -21,6 +21,7 @@ class SubmitAnswerUseCase
             selectedIndex: Int,
             timeSpentSec: Int,
             timestamp: Long,
+            reviewMode: Boolean = false,
         ): GradingResult {
             val result = grade(problem, selectedIndex)
             learnerRepository.recordAttempt(
@@ -29,6 +30,7 @@ class SubmitAnswerUseCase
                     isCorrect = result.isCorrect,
                     timeSpentSec = timeSpentSec,
                     timestamp = timestamp,
+                    reviewMode = reviewMode,
                 ),
             )
             return result

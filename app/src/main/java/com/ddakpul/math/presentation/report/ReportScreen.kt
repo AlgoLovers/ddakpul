@@ -98,6 +98,7 @@ private val exportDateFormatter = DateTimeFormatter.ofPattern("yyyy. M. d.")
 fun ReportScreen(
     onPrintClick: () -> Unit,
     onStartSolving: () -> Unit,
+    onOpenReviewNote: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReportViewModel = hiltViewModel(),
 ) {
@@ -128,6 +129,7 @@ fun ReportScreen(
         nextStep = uiState.nextStep,
         onPrintClick = onPrintClick,
         onStartSolving = onStartSolving,
+        onOpenReviewNote = onOpenReviewNote,
         modifier = modifier,
     )
 }
@@ -142,6 +144,7 @@ private fun ReportContent(
     nextStep: NextStep?,
     onPrintClick: () -> Unit,
     onStartSolving: () -> Unit,
+    onOpenReviewNote: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -203,7 +206,7 @@ private fun ReportContent(
 
             // 오답 노트 — 최근 틀린 문제 + 풀이. 무료 포함 모두에게(오답 복습은 학습의 핵심).
             if (stats.recentMistakes.isNotEmpty()) {
-                MistakeNoteSection(mistakes = stats.recentMistakes)
+                MistakeNoteSection(mistakes = stats.recentMistakes, onOpenReviewNote = onOpenReviewNote)
             }
 
             // 심화 분석(정답률 추이·성장 곡선·개념별 숙달·난이도별 숙달 지도).
@@ -663,7 +666,10 @@ private fun ReportInsight.toText(): String =
 private fun DayCell.dateLabel(): String = LocalDate.ofEpochDay(epochDay).format(dayFormatter)
 
 @Composable
-private fun MistakeNoteSection(mistakes: List<Problem>) {
+private fun MistakeNoteSection(
+    mistakes: List<Problem>,
+    onOpenReviewNote: () -> Unit,
+) {
     SectionCard(title = stringResource(R.string.report_mistakes_title), icon = "✏️") {
         Text(
             text = stringResource(R.string.report_mistakes_desc),
@@ -673,6 +679,10 @@ private fun MistakeNoteSection(mistakes: List<Problem>) {
         mistakes.forEachIndexed { index, problem ->
             if (index > 0) HorizontalDivider()
             MistakeItem(problem)
+        }
+        // 전체 오답 노트로 — 여기(리포트)엔 최근 일부만 보이고, 다시 풀기는 오답 노트 화면에서.
+        FilledTonalButton(onClick = onOpenReviewNote, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.review_open))
         }
     }
 }

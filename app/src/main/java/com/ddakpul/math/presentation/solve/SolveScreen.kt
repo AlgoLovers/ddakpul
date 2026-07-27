@@ -49,6 +49,7 @@ fun SolveScreen(
     onGoHome: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
+    onExitReview: (() -> Unit)? = null,
     viewModel: SolveViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -67,6 +68,7 @@ fun SolveScreen(
             ),
         onGoHome = onGoHome,
         onWatchVideo = onWatchVideo,
+        onExitReview = onExitReview,
         modifier = modifier,
     )
 }
@@ -81,8 +83,11 @@ private fun SolveContent(
     dissection: DissectionCallbacks,
     onGoHome: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
+    onExitReview: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
+    // 복습 모드에선 '다음 문제'(추천 흐름) 대신 오답 노트로 되돌아간다.
+    val onPrimaryAdvance: () -> Unit = if (uiState.reviewMode) onExitReview ?: onNext else onNext
     var showExcludeDialog by remember { mutableStateOf(false) }
     // 연습장은 본문 폭 제한과 무관하게 콘텐츠 영역 전체를 덮어야 해, 상태를 여기(fillMaxSize Box)로 올려 오버레이로 띄운다.
     var showScratchpad by remember { mutableStateOf(false) }
@@ -112,7 +117,8 @@ private fun SolveContent(
                     DissectionSolveBody(
                         uiState = uiState,
                         callbacks = dissection,
-                        onNext = onNext,
+                        onNext = onPrimaryAdvance,
+                        reviewMode = uiState.reviewMode,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 } else {
@@ -122,6 +128,7 @@ private fun SolveContent(
                         onSubmit = onSubmit,
                         onExcludeRequest = { showExcludeDialog = true },
                         onScratchpad = { showScratchpad = true },
+                        reviewMode = uiState.reviewMode,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 }
@@ -132,7 +139,8 @@ private fun SolveContent(
                     DissectionSolveBody(
                         uiState = uiState,
                         callbacks = dissection,
-                        onNext = onNext,
+                        onNext = onPrimaryAdvance,
+                        reviewMode = uiState.reviewMode,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 } else {
@@ -143,10 +151,11 @@ private fun SolveContent(
                             sessionStreak = uiState.sessionStreak,
                             softCutSuggested = uiState.softCutSuggested,
                             solutionVideo = uiState.solutionVideo,
-                            onNext = onNext,
+                            onNext = onPrimaryAdvance,
                             onFinishToday = onGoHome,
                             onExcludeRequest = { showExcludeDialog = true },
                             onWatchVideo = onWatchVideo,
+                            reviewMode = uiState.reviewMode,
                             modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                         )
                     }
@@ -292,6 +301,7 @@ private fun SolvingBody(
     onSubmit: () -> Unit,
     onExcludeRequest: () -> Unit,
     onScratchpad: () -> Unit,
+    reviewMode: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val problem = uiState.problem ?: return
@@ -300,8 +310,10 @@ private fun SolvingBody(
         modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다.
-        TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
+        // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다. 복습(오답 노트)엔 오늘 목표가 무의미해 감춘다.
+        if (!reviewMode) {
+            TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
+        }
 
         uiState.area?.let { area ->
             ProblemHeaderRow(
@@ -352,15 +364,18 @@ private fun SolvingBody(
         }
 
         // 문제 자체가 이상하거나 별로일 때의 탈출구 — 눈에 덜 띄게 맨 아래 작은 버튼으로 둔다.
-        TextButton(
-            onClick = onExcludeRequest,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-        ) {
-            Text(
-                text = stringResource(R.string.solve_exclude_button),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        // 복습 모드(오답 노트)에선 '별로예요'가 흐름을 깨므로 감춘다.
+        if (!reviewMode) {
+            TextButton(
+                onClick = onExcludeRequest,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = stringResource(R.string.solve_exclude_button),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }

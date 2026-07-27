@@ -117,3 +117,14 @@ val MIGRATION_8_9 =
             db.execSQL("DELETE FROM problem")
         }
     }
+
+/**
+ * v11 → v12: 시도에 복습(reviewMode) 플래그 추가 — 오답 노트에서 다시 푼 시도를 표시해
+ * 추천 입력에서 걸러낸다(학습 기록 attempt 테이블은 유지, 기존 시도는 모두 일반 시도=0).
+ */
+val MIGRATION_11_12 =
+    object : Migration(11, 12) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE attempt ADD COLUMN reviewMode INTEGER NOT NULL DEFAULT 0")
+        }
+    }

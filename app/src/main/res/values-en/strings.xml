@@ -158,6 +158,15 @@
     <string name="report_insights_title">This week\'s insights</string>
     <string name="report_mistakes_title">Mistake notes · recently missed</string>
     <string name="report_mistakes_desc">Recently missed problems. Revisiting the solutions turns misses into skill.</string>
+    <!-- Mistake Notebook screen -->
+    <string name="review_open">Open Mistake Notebook</string>
+    <string name="review_title">Mistake Notebook</string>
+    <string name="review_subtitle">Sorted by most recently missed. Tap a problem to try it again.</string>
+    <string name="review_empty">No mistakes yet.\nProblems you miss will collect here.</string>
+    <string name="review_count">%1$d problems</string>
+    <string name="review_wrong_count">Missed %1$d times</string>
+    <string name="review_back">Back to notebook</string>
+    <string name="review_back_cd">Back</string>
     <string name="insight_goal_done">✅ Today\'s goal is done. Keeping to a goal you set yourself is the best habit!</string>
     <string name="insight_streak">🔥 %1$d-day streak. Consistency is building real skill.</string>
     <string name="insight_accuracy_up">📈 Accuracy is up %1$d%%p from last week. What you\'re doing is working!</string>
