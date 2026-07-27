@@ -1,6 +1,7 @@
 package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.domain.model.Difficulty
+import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.group
@@ -265,5 +266,69 @@ class RecommendNextProblemUseCaseTest {
             )
 
         assertThat(result!!.reason).isEqualTo(RecommendationReason.START)
+    }
+
+    // ── 규칙5 (개정): 같은 문제 하루 중복 금지 + 영역 균형 ────────────────────────
+
+    @Test
+    fun rule5_excludesProblemsAlreadySolvedToday() {
+        val groups =
+            listOf(group(difficulty = 3, problems = listOf(problem("q1", 3), problem("q2", 3), problem("q3", 3))))
+        // 기록 없음(START)이라 난이도/재도전 분기 없이 선택 로직만 탄다. 오늘 q1·q2는 이미 냈다.
+        val result =
+            recommend(
+                state(currentDifficulty = 3),
+                groups,
+                seededRandom,
+                todayProblemIds = listOf("q1", "q2"),
+            )
+
+        assertThat(result!!.problem.id).isEqualTo("q3")
+    }
+
+    @Test
+    fun rule5_wholeGroupSolvedToday_stillReturnsBestEffort() {
+        val groups = listOf(group(difficulty = 3, problems = listOf(problem("q1", 3), problem("q2", 3))))
+        val result =
+            recommend(
+                state(currentDifficulty = 3),
+                groups,
+                seededRandom,
+                todayProblemIds = listOf("q1", "q2"),
+            )
+
+        // 그룹을 오늘 다 냈어도 막다른 길(null) 대신 하나를 낸다 — 문제은행이 얇을 때의 best-effort.
+        assertThat(result).isNotNull()
+        assertThat(result!!.problem.id).isAnyOf("q1", "q2")
+    }
+
+    @Test
+    fun rule5_balancesAcrossAreas_prefersLeastServedAreaToday() {
+        val groups =
+            listOf(
+                group(
+                    difficulty = 3,
+                    id = "g-num",
+                    area = MathArea.NUMBER_OPERATION,
+                    problems = (1..3).map { problem("num$it", 3, area = MathArea.NUMBER_OPERATION, groupId = "g-num") },
+                ),
+                group(
+                    difficulty = 3,
+                    id = "g-geo",
+                    area = MathArea.SHAPE_MEASUREMENT,
+                    problems = (1..3).map { problem("geo$it", 3, area = MathArea.SHAPE_MEASUREMENT, groupId = "g-geo") },
+                ),
+            )
+        // 오늘 수와연산을 2번, 도형을 0번 냈다 → 적게 낸 도형 영역에서 나와야 한다.
+        val result =
+            recommend(
+                state(currentDifficulty = 3),
+                groups,
+                seededRandom,
+                todayProblemIds = listOf("num1", "num2"),
+            )
+
+        assertThat(result!!.group.area).isEqualTo(MathArea.SHAPE_MEASUREMENT)
+        assertThat(result.problem.id).startsWith("geo")
     }
 }
