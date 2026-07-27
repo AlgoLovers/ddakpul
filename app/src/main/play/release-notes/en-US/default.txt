@@ -1,1 +1,3 @@
-Thinking math worth grabbing a scratchpad for. Instead of drills, you solve puzzles and reasoning problems — and the app recommends your next just-right problem based on how you do. Completely free, no ads, works fully offline on your device. Plus a growth report for parents.
+What's new
+• Mistake Notebook: every problem you miss, gathered in one place and sorted by most recent. Tap to retry it — and it leaves the list once you get it right.
+• Smarter problem picks: no repeating the same problem within a day, and the four areas (number, shape, patterns, data) now come up more evenly.
