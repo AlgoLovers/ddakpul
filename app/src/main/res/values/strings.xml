@@ -158,6 +158,15 @@
     <string name="report_insights_title">이번 주 인사이트</string>
     <string name="report_mistakes_title">오답 노트 · 최근 틀린 문제</string>
     <string name="report_mistakes_desc">최근 틀린 문제예요. 풀이를 다시 보며 짚어 보면 오답이 실력이 돼요.</string>
+    <!-- 오답 노트 화면 -->
+    <string name="review_open">오답 노트 열기</string>
+    <string name="review_title">오답 노트</string>
+    <string name="review_subtitle">최근에 틀린 순서예요. 문제를 눌러 다시 풀어보세요.</string>
+    <string name="review_empty">아직 오답이 없어요.\n문제를 풀다 틀리면 여기에 모여요.</string>
+    <string name="review_count">총 %1$d문제</string>
+    <string name="review_wrong_count">%1$d번 틀림</string>
+    <string name="review_back">오답 노트로 돌아가기</string>
+    <string name="review_back_cd">뒤로</string>
     <string name="insight_goal_done">✅ 오늘 목표를 달성했어요. 스스로 정한 양을 지킨 게 최고의 습관이에요!</string>
     <string name="insight_streak">🔥 %1$d일 연속 학습 중이에요. 꾸준함이 실력을 만들고 있어요.</string>
     <string name="insight_accuracy_up">📈 정답률이 지난주보다 %1$d%%p 올랐어요. 지금 방식이 효과가 있어요!</string>

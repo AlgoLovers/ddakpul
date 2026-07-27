@@ -42,19 +42,27 @@ class GetNextProblemUseCase
             if (groups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
             val state = learnerRepository.getLearnerState()
+            val allAttempts = learnerRepository.getAllAttempts()
             val reviewQueue =
                 computeReviewQueue(
-                    attempts = learnerRepository.getAllAttempts(),
+                    attempts = allAttempts,
                     groups = groups,
                     zoneOffsetMillis = zoneOffsetMillis,
                     nowMillis = nowMillis,
                 )
+            // 오늘(로컬 자정 기준) 이미 낸 문제들 — 같은 문제 하루 중복 방지 + 영역 균형의 입력.
+            val today = epochDay(nowMillis, zoneOffsetMillis)
+            val todayProblemIds =
+                allAttempts
+                    .filter { epochDay(it.timestamp, zoneOffsetMillis) == today }
+                    .map { it.problemId }
             val recommendation =
                 recommend(
                     state = state,
                     groups = groups,
                     reviewDueGroupIds = reviewQueue,
                     todaySolved = todaySolved,
+                    todayProblemIds = todayProblemIds,
                 ) ?: return AppResult.Failure(AppError.NoProblemAvailable)
 
             // '상위 난이도 열기'가 꺼져 있으면 추천 난이도를 기본 상한으로 고정한다(그 위 문제는 애초에 걸러졌다).

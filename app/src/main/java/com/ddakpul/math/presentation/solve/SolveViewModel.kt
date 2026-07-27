@@ -1,15 +1,18 @@
 package com.ddakpul.math.presentation.solve
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Cell
+import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.repository.SolutionVideoRepository
 import com.ddakpul.math.domain.usecase.DissectionError
 import com.ddakpul.math.domain.usecase.DissectionValidation
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
+import com.ddakpul.math.domain.usecase.GetProblemByIdUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
@@ -32,20 +35,29 @@ class SolveViewModel
     @Inject
     constructor(
         private val getNextProblem: GetNextProblemUseCase,
+        private val getProblemById: GetProblemByIdUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
         private val submitDissection: SubmitDissectionUseCase,
         private val excludeProblem: ExcludeProblemUseCase,
         private val solutionVideoRepository: SolutionVideoRepository,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
+        savedStateHandle: SavedStateHandle,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
         val uiState: StateFlow<SolveUiState> = _uiState.asStateFlow()
 
         private var questionStartMillis: Long = 0L
 
+        /** 오답 노트에서 넘어온 복습 대상 문제 id(있으면 이 문제 하나만 다시 푼다). */
+        private val reviewProblemId: String? = savedStateHandle[ARG_REVIEW_PROBLEM_ID]
+
         init {
-            loadNext()
+            if (reviewProblemId != null) {
+                loadReview(reviewProblemId)
+            } else {
+                loadNext()
+            }
             // 오늘 푼 문제 수는 기록이 쌓일 때마다 자동 갱신된다(시도 저장 → Flow 재계산).
             viewModelScope.launch {
                 observeStats(
@@ -109,6 +121,40 @@ class SolveViewModel
         }
 
         /**
+         * 오답 노트에서 넘어온 특정 문제 하나를 복습 모드로 연다 — 추천을 거치지 않고 그 문제를 그대로.
+         * 재풀이 기록은 복습 시도(reviewMode)로 남겨 추천 난이도에 영향을 주지 않는다.
+         */
+        private fun loadReview(problemId: String) {
+            _uiState.update { it.copy(phase = SolvePhase.LOADING, selectedIndex = null, result = null) }
+            viewModelScope.launch {
+                val problem = getProblemById(problemId)
+                if (problem == null) {
+                    _uiState.update { it.copy(phase = SolvePhase.EMPTY) }
+                    return@launch
+                }
+                questionStartMillis = System.currentTimeMillis()
+                val video = solutionVideoRepository.videoForMethod(problem.methodCode)
+                _uiState.update { current ->
+                    current.copy(
+                        phase = SolvePhase.SOLVING,
+                        reviewMode = true,
+                        problem = problem,
+                        area = problem.area,
+                        difficulty = problem.difficulty,
+                        selectedIndex = null,
+                        result = null,
+                        showExplanation = false,
+                        reason = RecommendationReason.REVIEW,
+                        solutionVideo = video,
+                        dissectionAssignment = emptyMap(),
+                        dissectionPiece = 0,
+                        dissectionResult = null,
+                    )
+                }
+            }
+        }
+
+        /**
          * 지금 화면의 문제를 "별로예요"로 제외하고 다음 문제로 넘어간다.
          * 풀이 중이든 채점 후든 동작은 같다 — 제외한 문제는 다시 나오지 않는다.
          */
@@ -147,6 +193,7 @@ class SolveViewModel
                         selectedIndex = selected,
                         timeSpentSec = elapsedSec,
                         timestamp = System.currentTimeMillis(),
+                        reviewMode = current.reviewMode,
                     )
                 _uiState.update {
                     it.copy(
@@ -204,6 +251,7 @@ class SolveViewModel
                         assignment = current.dissectionAssignment,
                         timeSpentSec = elapsedSec,
                         timestamp = System.currentTimeMillis(),
+                        reviewMode = current.reviewMode,
                     )
                 _uiState.update {
                     it.copy(
@@ -215,7 +263,10 @@ class SolveViewModel
             }
         }
 
-        private companion object {
+        companion object {
             const val MILLIS_PER_SECOND = 1000L
+
+            /** 오답 노트 → 복습 라우트가 넘겨주는 문제 id 인자 키. */
+            const val ARG_REVIEW_PROBLEM_ID = "reviewProblemId"
         }
     }

@@ -6,6 +6,11 @@ data class Attempt(
     val isCorrect: Boolean,
     val timeSpentSec: Int,
     val timestamp: Long,
+    /**
+     * 오답 노트에서 다시 푼 '복습' 시도인지. 복습 재풀이는 추천 규칙(연속 정답·오답 스트릭)의
+     * 입력에서 제외해 난이도 승급/강등을 흔들지 않는다 — 통계·오답 노트에는 그대로 반영된다.
+     */
+    val reviewMode: Boolean = false,
 ) {
     companion object {
         /**

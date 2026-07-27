@@ -22,6 +22,8 @@ data class SolveUiState(
     val result: GradingResult? = null,
     val showExplanation: Boolean = false,
     val reason: RecommendationReason? = null,
+    /** 오답 노트에서 특정 문제를 다시 푸는 복습 모드. 오늘 진행·제외 버튼을 숨기고 '다음' 대신 '오답 노트로'를 보인다. */
+    val reviewMode: Boolean = false,
     /** 오늘 푼 문제 수 — 오늘의 목표 진행바에 쓴다. */
     val todaySolved: Int = 0,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,

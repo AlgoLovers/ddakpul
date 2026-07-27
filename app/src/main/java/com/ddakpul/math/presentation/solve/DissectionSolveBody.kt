@@ -33,6 +33,7 @@ fun DissectionSolveBody(
     callbacks: DissectionCallbacks,
     onNext: () -> Unit,
     modifier: Modifier = Modifier,
+    reviewMode: Boolean = false,
 ) {
     val problem = uiState.problem ?: return
     val puzzle = problem.dissection ?: return
@@ -62,7 +63,9 @@ fun DissectionSolveBody(
             }
         } else {
             DissectionResultText(uiState.dissectionResult)
-            Button(onClick = onNext) { Text(stringResource(R.string.puzzle_next)) }
+            Button(onClick = onNext) {
+                Text(stringResource(if (reviewMode) R.string.review_back else R.string.puzzle_next))
+            }
         }
     }
 }

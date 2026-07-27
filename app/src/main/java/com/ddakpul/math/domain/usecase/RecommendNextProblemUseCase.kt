@@ -3,6 +3,7 @@ package com.ddakpul.math.domain.usecase
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearnerState
+import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
 import com.ddakpul.math.domain.model.Recommendation
@@ -45,8 +46,10 @@ object RecommendationRules {
  * 6. 규칙3(혼조): 그 외 → 같은 난이도 유지. 단, 규칙7: 직전 한 문제만 틀렸으면 같은
  *    그룹의 다른 문제를 재도전으로 낸다([RecommendationReason.RETRY]) — 교정 직후 성공 경험.
  *
- * 결정된 난이도의 그룹을 고르고(규칙6: 없으면 가장 가까운 난이도로 폴백), 그 안에서
- * 최근에 풀지 않은 문제를 랜덤으로 낸다(규칙5). [random]을 주입해 테스트에서 결정적으로 만든다.
+ * 결정된 난이도의 그룹을 고르고(규칙6: 없으면 가장 가까운 난이도로 폴백), 그 안에서 문제를 낸다(규칙5).
+ * 규칙5는 두 가지를 지킨다: (a) **같은 문제 하루 중복 금지**([todayProblemIds]에 있는 문제 제외, 하드),
+ * (b) **영역 균형** — 그날 가장 적게 낸 영역을 우선해 4영역을 고르게(소프트). 문제은행이 그 난이도·영역에서
+ * 바닥나면 어쩔 수 없이 재출제한다(best-effort). [random]을 주입해 테스트에서 결정적으로 만든다.
  */
 class RecommendNextProblemUseCase
     @Inject
@@ -57,18 +60,27 @@ class RecommendNextProblemUseCase
             random: Random = Random.Default,
             reviewDueGroupIds: List<String> = emptyList(),
             todaySolved: Int = 0,
+            todayProblemIds: List<String> = emptyList(),
         ): Recommendation? {
             if (groups.isEmpty()) return null
             val problemsById = groups.problemsById()
+            // 같은 문제 하루 중복 금지(하드): 오늘 이미 낸 문제는 후보에서 뺀다.
+            val solvedToday = todayProblemIds.toSet()
+            // 영역 균형(소프트): 오늘 영역별 출제 횟수 — 가장 적게 낸 영역을 우선한다.
+            val areaLoadToday =
+                todayProblemIds
+                    .mapNotNull { problemsById[it]?.area }
+                    .groupingBy { it }
+                    .eachCount()
             val decision = decideDifficulty(state, problemsById)
 
             if (decision.reason != RecommendationReason.REMEDIATION) {
-                recommendReview(state, groups, reviewDueGroupIds, todaySolved, random)
+                recommendReview(state, groups, reviewDueGroupIds, todaySolved, solvedToday, random)
                     ?.let { return it }
             }
 
             if (decision.reason == RecommendationReason.STAY) {
-                recommendRetry(state, groups, decision.difficulty, random)
+                recommendRetry(state, groups, decision.difficulty, solvedToday, random)
                     ?.let { return it }
             }
 
@@ -77,8 +89,10 @@ class RecommendNextProblemUseCase
                 state.recentAttempts.lastOrNull()?.let { last ->
                     groups.firstOrNull { group -> group.problems.any { it.id == last.problemId } }?.id
                 }
-            val group = selectGroup(groups, decision.difficulty, random, lastGroupId) ?: return null
-            val problem = selectProblem(group, state.recentAttempts, random) ?: return null
+            val group =
+                selectGroup(groups, decision.difficulty, random, lastGroupId, solvedToday, areaLoadToday)
+                    ?: return null
+            val problem = selectProblem(group, state.recentAttempts, solvedToday, random) ?: return null
             return Recommendation(
                 problem = problem,
                 group = group,
@@ -94,6 +108,7 @@ class RecommendNextProblemUseCase
             groups: List<ProblemGroup>,
             reviewDueGroupIds: List<String>,
             todaySolved: Int,
+            solvedToday: Set<String>,
             random: Random,
         ): Recommendation? {
             val slotEvery = RecommendationRules.REVIEW_SLOT_EVERY
@@ -105,7 +120,7 @@ class RecommendNextProblemUseCase
                 reviewDueGroupIds.firstNotNullOfOrNull { id ->
                     groupsById[id]?.takeIf { it.problems.isNotEmpty() }
                 } ?: return null
-            val problem = selectProblem(reviewGroup, state.recentAttempts, random) ?: return null
+            val problem = selectProblem(reviewGroup, state.recentAttempts, solvedToday, random) ?: return null
             return Recommendation(
                 problem = problem,
                 group = reviewGroup,
@@ -120,6 +135,7 @@ class RecommendNextProblemUseCase
             state: LearnerState,
             groups: List<ProblemGroup>,
             targetDifficulty: Int,
+            solvedToday: Set<String>,
             random: Random,
         ): Recommendation? {
             val last = state.recentAttempts.lastOrNull() ?: return null
@@ -129,7 +145,7 @@ class RecommendNextProblemUseCase
                     ?: return null
             if (lastGroup.difficulty != targetDifficulty || lastGroup.problems.size < 2) return null
 
-            val problem = selectProblem(lastGroup, state.recentAttempts, random) ?: return null
+            val problem = selectProblem(lastGroup, state.recentAttempts, solvedToday, random) ?: return null
             // 방금 틀린 바로 그 문제를 다시 내는 건 재도전이 아니라 반복이다 — 그 경우 일반 흐름으로.
             if (problem.id == last.problemId) return null
             return Recommendation(
@@ -180,35 +196,49 @@ class RecommendNextProblemUseCase
         }
 
         // 규칙6: 목표 난이도 그룹을 고르되, 해당 난이도가 비어 있으면 난이도 차가 가장 작은 그룹으로 폴백.
+        // 규칙5(영역 균형): 후보 중 '오늘 아직 안 푼 문제가 남은' 그룹을 우선(하루 중복 방지)하고,
+        // 그 안에서 '오늘 가장 적게 낸 영역'을 골라 4영역이 고르게 돌게 한다.
         // [lastGroupId]와 같은 그룹은 다른 후보가 있으면 제외해 같은 유형이 연달아 나오지 않게 한다.
         private fun selectGroup(
             groups: List<ProblemGroup>,
             difficulty: Int,
             random: Random,
             lastGroupId: String?,
+            solvedToday: Set<String>,
+            areaLoadToday: Map<MathArea, Int>,
         ): ProblemGroup? {
             val nonEmpty = groups.filter { it.problems.isNotEmpty() }
             if (nonEmpty.isEmpty()) return null
             val exact = nonEmpty.filter { it.difficulty == difficulty }
-            val pool =
+            val atDifficulty =
                 exact.ifEmpty {
                     val nearestDelta = nonEmpty.minOf { abs(it.difficulty - difficulty) }
                     nonEmpty.filter { abs(it.difficulty - difficulty) == nearestDelta }
                 }
-            val varied = pool.filterNot { it.id == lastGroupId }
-            return varied.ifEmpty { pool }.random(random)
+            // 하루 중복 방지: 오늘 안 낸 문제가 남은 그룹만. 다 소진됐으면(best-effort) 전체에서.
+            val fresh = atDifficulty.filter { group -> group.problems.any { it.id !in solvedToday } }
+            val eligible = fresh.ifEmpty { atDifficulty }
+            // 영역 균형: 오늘 가장 적게 낸 영역의 그룹을 우선한다.
+            val minLoad = eligible.minOf { areaLoadToday[it.area] ?: 0 }
+            val balanced = eligible.filter { (areaLoadToday[it.area] ?: 0) == minLoad }
+            val varied = balanced.filterNot { it.id == lastGroupId }
+            return varied.ifEmpty { balanced }.random(random)
         }
 
-        // 규칙5: 그룹 내 최근에 풀지 않은 문제 중 랜덤. 모두 최근에 풀었다면 그룹 전체에서 랜덤.
+        // 규칙5: 오늘 이미 낸 문제는 빼고(하루 중복 금지), 그중 최근에 풀지 않은 문제를 우선해 랜덤.
+        // 오늘 그 그룹을 다 냈으면(best-effort) 그룹 전체에서 낸다.
         private fun selectProblem(
             group: ProblemGroup,
             recentAttempts: List<Attempt>,
+            solvedToday: Set<String>,
             random: Random,
         ): Problem? {
             if (group.problems.isEmpty()) return null
+            val notToday = group.problems.filterNot { it.id in solvedToday }
+            val dayPool = notToday.ifEmpty { group.problems }
             val solvedRecently = recentAttempts.mapTo(mutableSetOf()) { it.problemId }
-            val unsolved = group.problems.filter { it.id !in solvedRecently }
-            val pool = unsolved.ifEmpty { group.problems }
+            val fresh = dayPool.filterNot { it.id in solvedRecently }
+            val pool = fresh.ifEmpty { dayPool }
             return pool.random(random)
         }
     }

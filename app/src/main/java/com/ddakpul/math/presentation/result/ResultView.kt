@@ -56,6 +56,7 @@ fun ResultView(
     onExcludeRequest: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
+    reviewMode: Boolean = false,
 ) {
     val colors = MaterialTheme.colorScheme
     Column(
@@ -130,8 +131,8 @@ fun ResultView(
             )
         }
 
-        // 세션 소프트 컷 — 목표 달성/집중 한계 도달 시 부드러운 종료 제안(강제 아님).
-        if (softCutSuggested) {
+        // 세션 소프트 컷 — 목표 달성/집중 한계 도달 시 부드러운 종료 제안(강제 아님). 복습 모드엔 무의미해 감춘다.
+        if (softCutSuggested && !reviewMode) {
             SoftCutCard(onFinishToday = onFinishToday)
         }
 
@@ -140,22 +141,25 @@ fun ResultView(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = stringResource(R.string.result_next),
+                text = stringResource(if (reviewMode) R.string.review_back else R.string.result_next),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 6.dp),
             )
         }
 
         // 문제 자체가 이상하거나 별로일 때의 탈출구 — 눈에 덜 띄게 맨 아래 작은 버튼으로 둔다.
-        TextButton(
-            onClick = onExcludeRequest,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-        ) {
-            Text(
-                text = stringResource(R.string.solve_exclude_button),
-                style = MaterialTheme.typography.bodySmall,
-                color = colors.onSurfaceVariant,
-            )
+        // 복습 모드(오답 노트)에선 감춘다.
+        if (!reviewMode) {
+            TextButton(
+                onClick = onExcludeRequest,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = stringResource(R.string.solve_exclude_button),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.onSurfaceVariant,
+                )
+            }
         }
     }
 }

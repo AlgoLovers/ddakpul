@@ -22,6 +22,7 @@ class SubmitDissectionUseCase
             assignment: Map<Cell, Int>,
             timeSpentSec: Int,
             timestamp: Long,
+            reviewMode: Boolean = false,
         ): DissectionValidation {
             val puzzle =
                 problem.dissection
@@ -33,6 +34,7 @@ class SubmitDissectionUseCase
                     isCorrect = result.isValid,
                     timeSpentSec = timeSpentSec,
                     timestamp = timestamp,
+                    reviewMode = reviewMode,
                 ),
             )
             return result
