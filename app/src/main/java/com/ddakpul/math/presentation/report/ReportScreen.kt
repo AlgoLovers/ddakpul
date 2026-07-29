@@ -62,10 +62,6 @@ import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
 import com.ddakpul.math.core.designsystem.component.TrendLineChart
 import com.ddakpul.math.core.designsystem.component.masteryStageOf
-import com.ddakpul.math.core.designsystem.theme.AreaChange
-import com.ddakpul.math.core.designsystem.theme.AreaData
-import com.ddakpul.math.core.designsystem.theme.AreaNumber
-import com.ddakpul.math.core.designsystem.theme.AreaShape
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.ConceptStat
 import com.ddakpul.math.domain.model.Difficulty
@@ -73,6 +69,7 @@ import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.Problem
+import com.ddakpul.math.presentation.common.areaColor
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.print.ReportPdfGenerator
 import com.ddakpul.math.presentation.print.ReportTexts
@@ -544,15 +541,6 @@ private fun durationText(sec: Int): String =
         stringResource(R.string.report_avgtime_sec, sec)
     }
 
-/** 4개 영역을 고정 색으로 구분(밝은 디자인 · 알록달록하되 절제). */
-private fun areaColor(area: MathArea) =
-    when (area) {
-        MathArea.NUMBER_OPERATION -> AreaNumber
-        MathArea.CHANGE_RELATION -> AreaChange
-        MathArea.SHAPE_MEASUREMENT -> AreaShape
-        MathArea.DATA_POSSIBILITY -> AreaData
-    }
-
 /** 네 영역별 성취 — 어디가 강하고 어디를 보강할지 한눈에(기본 지표). 시도 없는 영역은 빈 막대로. */
 @Composable
 private fun AreaBreakdown(areaStats: List<AreaStat>) {
@@ -563,7 +551,7 @@ private fun AreaBreakdown(areaStats: List<AreaStat>) {
             val stat = byArea[area]
             val solved = stat?.solved ?: 0
             val accuracy = stat?.accuracy ?: 0f
-            val barFg = areaColor(area)
+            val barFg = area.areaColor()
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
