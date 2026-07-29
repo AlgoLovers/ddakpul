@@ -199,6 +199,8 @@ class SolveViewModel
                     it.copy(
                         phase = SolvePhase.GRADED,
                         result = gradingResult,
+                        retryLikely =
+                            !gradingResult.isCorrect && it.sessionStreak >= 1 && !it.reviewMode,
                         sessionStreak = if (gradingResult.isCorrect) it.sessionStreak + 1 else 0,
                     )
                 }

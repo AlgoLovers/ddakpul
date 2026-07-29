@@ -47,19 +47,23 @@
 
     <!-- 결과 -->
     <string name="result_correct">정답이에요! 🎉</string>
-    <string name="result_wrong">아쉬워요, 다시 볼까요?</string>
-    <string name="result_your_answer">내가 고른 답: %1$s</string>
+    <string name="result_grow_title">여기서 한 뼘 자라요</string>
+    <string name="result_answer_label">정답</string>
+    <string name="result_my_answer_label">내가 고른 답</string>
     <string name="result_correct_answer">정답: %1$s</string>
-    <string name="result_explanation_label">풀이</string>
-    <string name="result_show_explanation">풀이 보기</string>
-    <string name="result_detailed_label">🔍 심화 풀이</string>
-    <string name="result_detailed_show">심화 풀이 보기</string>
+    <string name="result_streak_pill">🔥 %1$d연속 정답</string>
+    <string name="result_tab_explanation">풀이</string>
+    <string name="result_tab_detailed">심화</string>
+    <string name="result_tab_video">영상 ▶</string>
+    <string name="result_finish">마치기</string>
+    <string name="result_retry_cta">비슷한 문제 한 번 더</string>
+    <string name="result_retry_sub">같은 방법, 다른 숫자로 확인해요</string>
+    <string name="solve_show_result">결과 보기</string>
     <string name="result_mistake_label">이런 실수를 한 건 아닐까요?</string>
     <string name="result_remediation_hint">기초 개념부터 차근차근 다시 풀어봐요.</string>
     <string name="result_next">다음 문제</string>
     <string name="result_softcut_title">오늘은 여기까지도 충분해요 🌙</string>
     <string name="result_softcut_body">열심히 한 만큼 쉬는 것도 공부예요. 더 풀고 싶으면 물론 계속해도 좋아요!</string>
-    <string name="result_softcut_stop">오늘은 여기까지</string>
 
     <!-- 온보딩 (첫 실행) -->
     <string name="onboarding_welcome_title">딱풀에 오신 걸 환영해요</string>

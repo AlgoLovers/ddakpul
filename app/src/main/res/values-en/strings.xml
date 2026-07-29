@@ -47,19 +47,23 @@
 
     <!-- Result -->
     <string name="result_correct">Correct! 🎉</string>
-    <string name="result_wrong">So close — want another look?</string>
-    <string name="result_your_answer">Your answer: %1$s</string>
     <string name="result_correct_answer">Answer: %1$s</string>
-    <string name="result_explanation_label">Solution</string>
-    <string name="result_show_explanation">Show solution</string>
-    <string name="result_detailed_label">🔍 Deeper dive</string>
-    <string name="result_detailed_show">Show the deeper dive</string>
+    <string name="result_grow_title">This is where you grow</string>
+    <string name="result_answer_label">Answer</string>
+    <string name="result_my_answer_label">My answer</string>
+    <string name="result_streak_pill">🔥 %1$d in a row</string>
+    <string name="result_tab_explanation">Solution</string>
+    <string name="result_tab_detailed">Deeper</string>
+    <string name="result_tab_video">Video ▶</string>
+    <string name="result_finish">Finish</string>
+    <string name="result_retry_cta">One more like this</string>
+    <string name="result_retry_sub">Same idea, different numbers</string>
+    <string name="solve_show_result">See result</string>
     <string name="result_mistake_label">Could this have been the slip?</string>
     <string name="result_remediation_hint">Let\'s rebuild from the basics, one step at a time.</string>
     <string name="result_next">Next problem</string>
     <string name="result_softcut_title">This is plenty for today 🌙</string>
     <string name="result_softcut_body">Resting after hard work is part of learning. But if you want more, keep going!</string>
-    <string name="result_softcut_stop">Done for today</string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Welcome to DdakPul</string>
