@@ -26,11 +26,13 @@
     <string name="home_unit_level">Lv.%1$d</string>
 
     <!-- Solving -->
-    <string name="solve_today_progress">Today %1$d / %2$d</string>
     <string name="solve_area_label">%1$s · Level %2$d</string>
     <string name="solve_review_badge">🔁 Review</string>
-    <string name="solve_read_aloud">🔊 Read aloud</string>
-    <string name="solve_scratchpad">✏️ Scratchpad</string>
+    <string name="solve_nth_problem">Problem %1$d</string>
+    <string name="solve_tool_read">Read</string>
+    <string name="solve_tool_stop">Stop</string>
+    <string name="solve_tool_scratchpad">Notes</string>
+    <string name="solve_more_cd">More</string>
     <string name="scratch_title">Scratchpad — work it out by hand</string>
     <string name="scratch_eraser">Eraser</string>
     <string name="scratch_undo">Undo</string>
@@ -294,7 +296,6 @@
     <string name="settings_tts_sample">DdakPul will read thinking problems in this voice.</string>
 
     <!-- Read problem aloud -->
-    <string name="solve_read_stop">⏹ Stop</string>
     <string name="solve_reading_with">%1$s</string>
 
     <!-- Settings · high-quality neural voice (runtime download) -->

@@ -45,6 +45,7 @@ import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.core.designsystem.component.MasteryChip
 import com.ddakpul.math.core.designsystem.component.ProgressBar
+import com.ddakpul.math.core.designsystem.component.ProgressDots
 import com.ddakpul.math.core.designsystem.component.masteryStageOf
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.Difficulty
@@ -217,35 +218,7 @@ private fun TodayGoalHeroCard(
                 Spacer(Modifier.width(16.dp))
                 GoalRing(solved = todaySolved, goal = goal)
             }
-            GoalSegments(solved = todaySolved, goal = goal)
-        }
-    }
-}
-
-/** 목표 칸 점 진행 — 목표 수만큼 칸을 놓고 푼 만큼 채운다(셀 수 있는 근접 목표). */
-@Composable
-private fun GoalSegments(
-    solved: Int,
-    goal: Int,
-    modifier: Modifier = Modifier,
-) {
-    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-        repeat(goal) { index ->
-            val filled = index < solved
-            Box(
-                modifier =
-                    Modifier
-                        .weight(1f)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(
-                            if (filled) {
-                                MaterialTheme.colorScheme.secondary
-                            } else {
-                                MaterialTheme.colorScheme.outlineVariant
-                            },
-                        ),
-            )
+            ProgressDots(solved = todaySolved, total = goal, modifier = Modifier.fillMaxWidth())
         }
     }
 }

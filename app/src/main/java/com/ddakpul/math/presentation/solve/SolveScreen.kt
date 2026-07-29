@@ -1,22 +1,35 @@
 package com.ddakpul.math.presentation.solve
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -31,15 +44,19 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
 import com.ddakpul.math.core.designsystem.component.ChoiceOption
 import com.ddakpul.math.core.designsystem.component.ChoiceState
+import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.core.designsystem.component.ProblemFigureView
+import com.ddakpul.math.core.designsystem.component.ProgressDots
+import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.SolutionVideo
+import com.ddakpul.math.presentation.common.SpeakerController
+import com.ddakpul.math.presentation.common.areaColor
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.common.rememberSpeaker
 import com.ddakpul.math.presentation.result.ResultView
@@ -211,89 +228,11 @@ private fun ExcludeConfirmDialog(
     )
 }
 
-/** 읽어주기 버튼 + "지금 이 음성으로 읽어요" 표시. 재생 중 다시 누르면 정지(토글). */
-@Composable
-private fun ReadAloudButton(
-    speaker: com.ddakpul.math.presentation.common.SpeakerController,
-    text: String,
-) {
-    Column(horizontalAlignment = Alignment.End) {
-        TextButton(onClick = { speaker.toggle(text) }) {
-            Text(
-                text =
-                    if (speaker.isSpeaking) {
-                        stringResource(R.string.solve_read_stop)
-                    } else {
-                        stringResource(R.string.solve_read_aloud)
-                    },
-                softWrap = false,
-                maxLines = 1,
-            )
-        }
-        // 어떤 음성으로 읽는지 항상 보여준다(사용자 혼동 방지). 단, 엔진명이 매우 긴 기기
-        // (예: "Speech Recognition & Synthesis from Google")에선 이 줄이 도구 영역을 넓혀
-        // 좌측 영역/난이도 라벨을 삼키므로, 폭을 상한하고 한 줄로 말줄임한다.
-        if (speaker.engineLabel.isNotBlank()) {
-            Text(
-                text = stringResource(R.string.solve_reading_with, speaker.engineLabel),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.widthIn(max = 140.dp),
-            )
-        }
-    }
-}
-
-/** 문제 위 정보 줄: (복습 배지)·영역/난이도 + 연습장·읽어주기 도구. */
-@Composable
-private fun ProblemHeaderRow(
-    area: com.ddakpul.math.domain.model.MathArea,
-    difficulty: Int,
-    isReview: Boolean,
-    speaker: com.ddakpul.math.presentation.common.SpeakerController,
-    statement: String,
-    onScratchpad: () -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Row(
-            modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            if (isReview) {
-                Text(
-                    text = stringResource(R.string.solve_review_badge),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Text(
-                text = stringResource(R.string.solve_area_label, stringResource(area.labelRes()), difficulty),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
-        // 연습장(손풀이) + 읽어주기 — 사고력 문제는 끄적이며 풀어야 하고, 글 서툰 아이는 듣게.
-        // 버튼 텍스트가 한 글자씩 세로로 쪼개지지 않게, 버튼 영역은 줄지 않도록(위 라벨이 weight로 흡수).
-        Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Top) {
-            TextButton(onClick = onScratchpad) {
-                Text(stringResource(R.string.solve_scratchpad), softWrap = false, maxLines = 1)
-            }
-            ReadAloudButton(speaker = speaker, text = statement)
-        }
-    }
-}
-
+/**
+ * 문제풀기 리디자인(2026-07 시안) — 한 줄에 몰려 있던 6가지 정보를 3층으로 분리한다:
+ * ① 진행 점 + ⋯ 메뉴 / ② 영역·난이도 칩 / ③ 하단 툴바(연습장·읽어주기·채점).
+ * 채점하기는 스크롤과 무관하게 항상 손 닿는 곳(하단 고정)에 둔다.
+ */
 @Composable
 private fun SolvingBody(
     uiState: SolveUiState,
@@ -306,95 +245,280 @@ private fun SolvingBody(
 ) {
     val problem = uiState.problem ?: return
     val speaker = rememberSpeaker()
-    Column(
-        modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        // 오늘의 목표 진행 — 근접 목표(proximal goal)가 유능감과 흥미를 만든다. 복습(오답 노트)엔 오늘 목표가 무의미해 감춘다.
-        if (!reviewMode) {
-            TodayProgressHeader(todaySolved = uiState.todaySolved, dailyGoal = uiState.dailyGoal)
-        }
-
-        uiState.area?.let { area ->
-            ProblemHeaderRow(
-                area = area,
-                difficulty = uiState.difficulty,
-                isReview = uiState.isReview,
-                speaker = speaker,
-                statement = problem.statement,
-                onScratchpad = onScratchpad,
-            )
-        }
-
-        Card(
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-            modifier = Modifier.fillMaxWidth(),
+    Column(modifier = modifier.fillMaxWidth().fillMaxHeight()) {
+        // ① 진행 점 줄 — 복습(오답 노트)엔 오늘 목표가 무의미해 점을 감춘다.
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(
-                text = problem.statement,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.fillMaxWidth().padding(24.dp),
+            if (!reviewMode) {
+                ProgressDots(
+                    solved = uiState.todaySolved,
+                    total = uiState.dailyGoal,
+                    highlightNext = true,
+                    height = 6.dp,
+                    modifier = Modifier.weight(1f),
+                )
+            } else {
+                Spacer(modifier = Modifier.weight(1f))
+            }
+            SolveMoreMenu(
+                engineLabel = speaker.engineLabel,
+                showExclude = !reviewMode,
+                onExcludeRequest = onExcludeRequest,
             )
-            // 도형 지시서가 있으면 그림으로도 보여준다 — 그림이 문제의 절반이다.
-            problem.figure?.let { figure ->
-                ProblemFigureView(figure = figure, modifier = Modifier.padding(bottom = 16.dp))
+        }
+
+        // ② 메타 칩 줄 — 영역·난이도는 칩으로, 오른쪽엔 오늘 몇 번째 문제인지.
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            uiState.area?.let { AreaChip(area = it) }
+            LevelChip(difficulty = uiState.difficulty)
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text =
+                    if (uiState.isReview || reviewMode) {
+                        stringResource(R.string.solve_review_badge)
+                    } else {
+                        stringResource(R.string.solve_nth_problem, uiState.todaySolved + 1)
+                    },
+                style = MaterialTheme.typography.bodyMedium,
+                color =
+                    if (uiState.isReview || reviewMode) {
+                        MaterialTheme.colorScheme.tertiary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
+                fontWeight = if (uiState.isReview || reviewMode) FontWeight.Bold else null,
+            )
+        }
+
+        // 본문(문제 카드 + 보기)만 스크롤 — 툴바는 아래 고정.
+        Column(
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = problem.statement,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.fillMaxWidth().padding(24.dp),
+                )
+                // 도형 지시서가 있으면 그림으로도 보여준다 — 그림이 문제의 절반이다.
+                problem.figure?.let { figure ->
+                    ProblemFigureView(figure = figure, modifier = Modifier.padding(bottom = 16.dp))
+                }
+            }
+
+            problem.choices.forEachIndexed { index, choice ->
+                ChoiceOption(
+                    index = index,
+                    text = choice,
+                    state = if (uiState.selectedIndex == index) ChoiceState.SELECTED else ChoiceState.DEFAULT,
+                    onClick = { onSelect(index) },
+                    enabled = true,
+                )
             }
         }
 
-        problem.choices.forEachIndexed { index, choice ->
-            ChoiceOption(
-                index = index,
-                text = choice,
-                state = if (uiState.selectedIndex == index) ChoiceState.SELECTED else ChoiceState.DEFAULT,
-                onClick = { onSelect(index) },
-                enabled = true,
+        // ③ 하단 툴바 — 연습장·읽어주기 아이콘 버튼 + 채점하기. 항상 같은 자리에.
+        SolveBottomBar(
+            speaker = speaker,
+            statement = problem.statement,
+            canSubmit = uiState.canSubmit,
+            onScratchpad = onScratchpad,
+            onSubmit = onSubmit,
+        )
+    }
+}
+
+/** ⋯ 메뉴 — '이 문제 별로예요'와 현재 읽어주기 음성 안내를 접어 둔다(본문 초점 유지). */
+@Composable
+private fun SolveMoreMenu(
+    engineLabel: String,
+    showExclude: Boolean,
+    onExcludeRequest: () -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Box {
+        IconButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Filled.MoreHoriz,
+                contentDescription = stringResource(R.string.solve_more_cd),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-
-        Button(
-            onClick = onSubmit,
-            enabled = uiState.canSubmit,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(R.string.solve_submit),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(vertical = 6.dp),
-            )
-        }
-
-        // 문제 자체가 이상하거나 별로일 때의 탈출구 — 눈에 덜 띄게 맨 아래 작은 버튼으로 둔다.
-        // 복습 모드(오답 노트)에선 '별로예요'가 흐름을 깨므로 감춘다.
-        if (!reviewMode) {
-            TextButton(
-                onClick = onExcludeRequest,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            ) {
-                Text(
-                    text = stringResource(R.string.solve_exclude_button),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            if (showExclude) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.solve_exclude_button)) },
+                    onClick = {
+                        expanded = false
+                        onExcludeRequest()
+                    },
+                )
+            }
+            // 어떤 음성으로 읽는지는 여기서 확인(사용자 혼동 방지) — 행동이 아니라 정보라 비활성.
+            if (engineLabel.isNotBlank()) {
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = stringResource(R.string.solve_reading_with, engineLabel),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    },
+                    onClick = {},
+                    enabled = false,
                 )
             }
         }
     }
 }
 
+/** 영역 칩 — 영역 구분색 점 + 이름. 배경은 중립(役 기반), 색은 점에만 아껴 쓴다. */
 @Composable
-private fun TodayProgressHeader(
-    todaySolved: Int,
-    dailyGoal: Int,
+private fun AreaChip(
+    area: MathArea,
+    modifier: Modifier = Modifier,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        shape = CircleShape,
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Box(modifier = Modifier.size(7.dp).background(area.areaColor(), CircleShape))
+            Text(
+                text = stringResource(area.labelRes()),
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+    }
+}
+
+/** 난이도 칩 — primaryContainer 짝으로 라이트/다크 자동 대응. */
+@Composable
+private fun LevelChip(
+    difficulty: Int,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        shape = CircleShape,
+    ) {
         Text(
-            text = stringResource(R.string.solve_today_progress, todaySolved, dailyGoal),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            text = stringResource(R.string.home_unit_level, difficulty),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
         )
-        LinearProgressIndicator(
-            progress = { (todaySolved.toFloat() / dailyGoal).coerceIn(0f, 1f) },
-            modifier = Modifier.fillMaxWidth(),
-        )
+    }
+}
+
+/** 하단 툴바 — 56dp 도구 버튼 2개 + 채점하기. 텍스트 버튼 말줄임 문제를 구조로 없앤다. */
+@Composable
+private fun SolveBottomBar(
+    speaker: SpeakerController,
+    statement: String,
+    canSubmit: Boolean,
+    onScratchpad: () -> Unit,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                SolveToolButton(
+                    emoji = "✏️",
+                    label = stringResource(R.string.solve_tool_scratchpad),
+                    onClick = onScratchpad,
+                )
+                SolveToolButton(
+                    emoji = if (speaker.isSpeaking) "⏹" else "🔊",
+                    label =
+                        stringResource(
+                            if (speaker.isSpeaking) R.string.solve_tool_stop else R.string.solve_tool_read,
+                        ),
+                    onClick = { speaker.toggle(statement) },
+                    active = speaker.isSpeaking,
+                )
+                GradientPrimaryButton(
+                    onClick = onSubmit,
+                    enabled = canSubmit,
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text(
+                        text = stringResource(R.string.solve_submit),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** 56dp 사각 도구 버튼 — 이모지 + 라벨 세로 스택. 재생 중이면 primary로 강조. */
+@Composable
+private fun SolveToolButton(
+    emoji: String,
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    active: Boolean = false,
+) {
+    Surface(
+        onClick = onClick,
+        modifier = modifier.size(56.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor =
+            if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        shape = RoundedCornerShape(18.dp),
+        border =
+            BorderStroke(
+                width = 1.dp,
+                color =
+                    if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
+            ),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(text = emoji, style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+            )
+        }
     }
 }
 
