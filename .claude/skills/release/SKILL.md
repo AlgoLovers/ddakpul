@@ -41,12 +41,15 @@ disable-model-invocation: true
 
 7. **커밋 + 아카이브**
    - `version.properties`·`CHANGELOG.md`·release-notes 변경을 커밋·푸시(`chore(release): vN …`).
-   - `mapping.txt` 압축: `gzip -c app/build/outputs/mapping/release/mapping.txt > mapping-<ver>-vc<code>.txt.gz`.
+   - **자산 파일명에 버전 필수** — 다운로드 파일명이 그대로 노출되므로 업로드 전에 이름을 바꾼다.
+     gh의 `파일#라벨` 문법은 표시용일 뿐 다운로드 파일명을 못 바꾼다(v0.5.0 때 실수 사례):
+     `cp app/build/outputs/bundle/release/app-release.aab ddakpul-v<버전>-release.aab`.
+   - `mapping.txt` 압축: `gzip -c app/build/outputs/mapping/release/mapping.txt > ddakpul-v<버전>-mapping.txt.gz`.
    - GitHub Release 생성(태그 `v<VERSION_NAME>`, 본문=CHANGELOG 섹션):
      ```
      gh release create v<VERSION_NAME> --repo AlgoLovers/ddakpul --target <브랜치> \
        --title "..." --notes "..." \
-       <AAB> <mapping.gz> \
+       ddakpul-v<버전>-release.aab ddakpul-v<버전>-mapping.txt.gz \
        docs/store/icon-512.png docs/store/feature-1024x500.png \
        docs/store/marketing/ss{1..5}.png docs/store/marketing/tab{1..3}.png
      ```

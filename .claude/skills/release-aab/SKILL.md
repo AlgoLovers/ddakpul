@@ -22,7 +22,8 @@ disable-model-invocation: true
    기대값: `7E:FA:C6:D9:6A:C0:BF:37:82:BE:D2:69:1E:65:FD:FF:BE:59:93:17` (CN=DdakPul, OU=AlgoLovers).
    다르면 업로드 금지하고 키스토어 위치부터 확인.
 5. **전달**: `cp app/build/outputs/bundle/release/app-release.aab ~/Desktop/ddakpul-v<버전>-release.aab`
-   후 사용자에게 파일명·크기·버전 보고.
+   후 사용자에게 파일명·크기·버전 보고. GitHub Release에 올릴 때도 **개명한 파일을 업로드**한다
+   (`app-release.aab` 그대로 올리면 다운로드 파일명에 버전이 없다 — `파일#라벨`은 표시용일 뿐).
 
 ## 주의
 

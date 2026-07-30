@@ -80,8 +80,10 @@ app/src/main/java/com/ddakpul/math/
   권한 deny로도 막혀 있음. 백업은 사람이 관리(구글 드라이브, 2026-07 완료).
 - **큰 빌드 파일(.aab/.apk)은 텔레그램 첨부로 보내지 않는다.** 텔레그램 봇 파일 한계는 **50MB**이고,
   49.7MB AAB를 전송하려다 업로드가 물려 상주 세션이 5시간 먹통 된 전례가 있다(2026-07-21).
-  대신 **GitHub 릴리스에 올려 다운로드 링크로 전달**한다:
-  `gh release create <tag> app/build/outputs/bundle/release/app-release.aab#ddakpul-<version>.aab --title "<제목>" --notes "<메모>" --prerelease`
+  대신 **GitHub 릴리스에 올려 다운로드 링크로 전달**한다. **자산 파일명에 반드시 버전을 넣는다**
+  (`ddakpul-v<버전>-release.aab`, `ddakpul-<태그>-debug.apk` 식) — gh의 `파일#라벨` 문법은 표시용일 뿐
+  **다운로드 파일명을 바꾸지 못하므로**, 업로드 전에 `cp`로 파일명을 바꿔서 올린다:
+  `cp app-release.aab ddakpul-v0.5.0-release.aab && gh release create <tag> ddakpul-v0.5.0-release.aab --title "<제목>" --notes "<메모>" --prerelease`
   (이후 갱신은 `gh release upload <tag> <file> --clobber`). 링크만 텔레그램으로 보낸다.
 
 ## 작업 방식
