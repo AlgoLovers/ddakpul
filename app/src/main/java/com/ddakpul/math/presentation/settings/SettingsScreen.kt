@@ -1,6 +1,7 @@
 package com.ddakpul.math.presentation.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.speech.tts.TextToSpeech
@@ -52,6 +53,9 @@ import com.ddakpul.math.presentation.common.tts.DownloadState
 import com.ddakpul.math.presentation.common.tts.TtsModel
 import com.ddakpul.math.presentation.common.tts.TtsModels
 
+/** 제외 문제 피드백 수신 주소 — "제외한 문제 보내기"가 이 주소로 메일을 미리 채워 띄운다. */
+private const val FEEDBACK_EMAIL = "jayden12282125@gmail.com"
+
 @Composable
 fun SettingsScreen(
     onOpenPrivacy: () -> Unit,
@@ -63,16 +67,29 @@ fun SettingsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val pendingShareText by viewModel.pendingShareText.collectAsStateWithLifecycle()
 
-    // 내보내기 텍스트가 준비되면 공유 시트를 띄운다(텔레그램 등 아무 앱으로나 전달 가능).
+    // 내보내기 텍스트가 준비되면 개발자 메일로 미리 채운 메일 작성 화면을 띄운다(수신처 고정 → 한 번에 도착).
+    // 메일 앱이 없는 기기면 일반 공유 시트로 폴백해 어떤 경우에도 전달 경로가 있게 한다. 무서버·사용자 자발 전송.
     val context = LocalContext.current
     LaunchedEffect(pendingShareText) {
         val text = pendingShareText ?: return@LaunchedEffect
-        val sendIntent =
-            Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
+        val subject = context.getString(R.string.feedback_email_subject)
+        val mailIntent =
+            Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:$FEEDBACK_EMAIL")
+                putExtra(Intent.EXTRA_SUBJECT, subject)
                 putExtra(Intent.EXTRA_TEXT, text)
             }
-        context.startActivity(Intent.createChooser(sendIntent, null))
+        val started =
+            runCatching { context.startActivity(mailIntent) }.isSuccess
+        if (!started) {
+            val shareIntent =
+                Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, subject)
+                    putExtra(Intent.EXTRA_TEXT, text)
+                }
+            context.startActivity(Intent.createChooser(shareIntent, null))
+        }
         viewModel.consumeShareText()
     }
 

@@ -29,10 +29,29 @@ import androidx.compose.ui.unit.dp
 fun GradientPrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
     val shape = RoundedCornerShape(28.dp)
+    if (!enabled) {
+        // M3 비활성 규약(컨테이너 12% · 콘텐츠 38%) — 그라데이션·그림자 없이 가라앉는다.
+        Row(
+            modifier =
+                modifier
+                    .clip(shape)
+                    .background(colors.onSurface.copy(alpha = DISABLED_CONTAINER_ALPHA))
+                    .padding(vertical = 16.dp, horizontal = 24.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            CompositionLocalProvider(
+                LocalContentColor provides colors.onSurface.copy(alpha = DISABLED_CONTENT_ALPHA),
+                content = { content() },
+            )
+        }
+        return
+    }
     val top = lerp(colors.primary, Color.White, HIGHLIGHT_FRACTION)
     val bottom = lerp(colors.primary, Color.Black, SHADE_FRACTION)
     Row(
@@ -52,3 +71,5 @@ fun GradientPrimaryButton(
 
 private const val HIGHLIGHT_FRACTION = 0.16f
 private const val SHADE_FRACTION = 0.14f
+private const val DISABLED_CONTAINER_ALPHA = 0.12f
+private const val DISABLED_CONTENT_ALPHA = 0.38f

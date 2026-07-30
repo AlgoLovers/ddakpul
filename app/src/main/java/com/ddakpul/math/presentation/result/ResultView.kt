@@ -1,25 +1,27 @@
 package com.ddakpul.math.presentation.result
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Lightbulb
-import androidx.compose.material.icons.filled.PlayCircle
-import androidx.compose.material.icons.filled.WarningAmber
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,316 +29,491 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ddakpul.math.R
+import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.domain.model.SolutionVideo
 
-/** 이만큼 연속 정답이면 "연속 정답" 칭찬 풀에서 뽑는다. */
+/** 이만큼 연속 정답이면 "연속 정답" 필과 칭찬 풀을 쓴다. */
 private const val STREAK_PRAISE_THRESHOLD = 3
 
 /**
- * 채점 결과 화면. 정답/오답 배너와 과정 칭찬 응원, 내가 고른 답과 정답,
- * (있으면) 오개념 피드백과 해설을 보여준다.
- * [showExplanation]이 true면(정체 감지) 기초부터 다시 하자는 안내를 강조한다.
- * [onExcludeRequest]는 "이 문제 별로예요" — 문제 자체에 대한 피드백 탈출구다.
+ * 채점 결과 시트(2026-07 시안 03/04) — 화면을 갈아끼우지 않고 문제 위에 바텀시트로 올린다.
+ * 방금 푼 문제가 뒤에 남아 맥락이 끊기지 않는다.
+ * 정답: 축하 + 정답 행 + 연속 정답 필. 오답: 실패 배너 대신 중립 성장 프레이밍
+ * (성장 마인드셋 원칙, docs/PEDAGOGY.md) + 내 답/정답 비교 + 오개념 카드.
+ * 풀이/심화/영상은 세그먼트 탭 하나로 접는다.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultView(
+fun ResultSheet(
     result: GradingResult,
     showExplanation: Boolean,
     sessionStreak: Int,
     softCutSuggested: Boolean,
     solutionVideo: SolutionVideo?,
+    retryLikely: Boolean,
+    onDismiss: () -> Unit,
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
-    onExcludeRequest: () -> Unit,
-    onReportAnswer: () -> Unit,
     onWatchVideo: (SolutionVideo) -> Unit,
     modifier: Modifier = Modifier,
+    reviewMode: Boolean = false,
 ) {
-    val colors = MaterialTheme.colorScheme
-    Column(
-        modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        modifier = modifier,
     ) {
-        // 응원 메시지 — 과정(전략·시도)을 짚는 문구 풀에서 상황에 맞게 뽑는다.
-        val praisePool =
+        Column(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 22.dp, end = 22.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            ResultHeader(
+                isCorrect = result.isCorrect,
+                praise = praiseFor(result, sessionStreak, showExplanation),
+            )
+
+            val choices = result.problem.choices
+            val selected = result.selectedIndex
             when {
-                result.isCorrect && sessionStreak >= STREAK_PRAISE_THRESHOLD -> {
-                    stringArrayResource(R.array.praise_streak)
-                }
-
                 result.isCorrect -> {
-                    stringArrayResource(R.array.praise_correct)
+                    CorrectAnswerRow(
+                        answer = choices[result.correctIndex],
+                        sessionStreak = sessionStreak,
+                    )
                 }
 
-                showExplanation -> {
-                    stringArrayResource(R.array.praise_stuck)
+                // "모르겠어요"(무응답) — 고른 답이 없으니 비교 대신 정답만 보여준다.
+                selected == null -> {
+                    CorrectAnswerRow(
+                        answer = choices[result.correctIndex],
+                        sessionStreak = 0,
+                    )
                 }
 
                 else -> {
-                    stringArrayResource(R.array.praise_wrong)
+                    AnswerCompareTiles(
+                        myAnswer = choices[selected],
+                        correctAnswer = choices[result.correctIndex],
+                    )
                 }
             }
-        val praise = remember(result) { praisePool.random() }
 
-        ResultBanner(isCorrect = result.isCorrect, praise = praise)
+            // 오개념 피드백(고른 오답에 맞는 설명이 있을 때)
+            result.mistake?.let { mistake ->
+                MistakeCard(body = mistake.misconception)
+            }
 
-        val choices = result.problem.choices
-        Text(
-            text = stringResource(R.string.result_correct_answer, choices[result.correctIndex]),
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Bold,
-        )
-        if (!result.isCorrect) {
-            Text(
-                text = stringResource(R.string.result_your_answer, choices[result.selectedIndex]),
-                style = MaterialTheme.typography.bodyMedium,
-                color = colors.onSurfaceVariant,
+            ExplanationTabs(result = result, solutionVideo = solutionVideo, onWatchVideo = onWatchVideo)
+
+            if (showExplanation) {
+                Text(
+                    text = stringResource(R.string.result_remediation_hint),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
+            // 세션 소프트 컷 — 목표 달성/집중 한계 도달 시 부드러운 종료 제안(강제 아님). 복습 모드엔 무의미해 감춘다.
+            if (softCutSuggested && !reviewMode) {
+                SoftCutCard()
+            }
+
+            ResultActions(
+                result = result,
+                retryLikely = retryLikely,
+                reviewMode = reviewMode,
+                onNext = onNext,
+                onFinishToday = onFinishToday,
             )
         }
+    }
+}
 
-        // 오개념 피드백(고른 오답에 맞는 설명이 있을 때)
-        result.mistake?.let { mistake ->
-            FeedbackCard(
-                icon = Icons.Filled.WarningAmber,
-                container = colors.tertiaryContainer,
-                content = colors.onTertiaryContainer,
-                label = stringResource(R.string.result_mistake_label),
-                body = mistake.misconception,
-            )
+/** 응원 메시지 — 과정(전략·시도)을 짚는 문구 풀에서 상황에 맞게 뽑는다. */
+@Composable
+private fun praiseFor(
+    result: GradingResult,
+    sessionStreak: Int,
+    showExplanation: Boolean,
+): String {
+    val praisePool =
+        when {
+            result.isCorrect && sessionStreak >= STREAK_PRAISE_THRESHOLD -> {
+                stringArrayResource(R.array.praise_streak)
+            }
+
+            result.isCorrect -> {
+                stringArrayResource(R.array.praise_correct)
+            }
+
+            // "모르겠어요"로 풀이를 본 경우 — 틀림이 아니라 '막혔구나, 같이 보자' 격려 풀을 쓴다.
+            result.selectedIndex == null -> {
+                stringArrayResource(R.array.praise_stuck)
+            }
+
+            showExplanation -> {
+                stringArrayResource(R.array.praise_stuck)
+            }
+
+            else -> {
+                stringArrayResource(R.array.praise_wrong)
+            }
         }
+    return remember(result) { praisePool.random() }
+}
 
-        // 동영상 풀이 — 이 방법에 준비된 해설 영상이 있을 때만. 문자 해설보다 먼저 권한다(직관적).
-        if (solutionVideo != null) {
-            WatchVideoButton(onClick = { onWatchVideo(solutionVideo) })
-        }
-
-        // 1차 풀이 — 오답이면 바로 펼쳐 교정 학습을 돕고, 정답이면 '풀이 보기'로 원할 때 펼친다.
-        ExplanationSection(result = result)
-
-        // 2차(심화) 풀이 — 준비된 문제면 함께 보여준다.
-        DetailedExplanationSection(result = result)
-
-        if (showExplanation) {
+/** 하단 행동 — 마치기(자율 종료)와 다음 문제. 복습 모드는 오답 노트 복귀 하나. */
+@Composable
+private fun ResultActions(
+    result: GradingResult,
+    retryLikely: Boolean,
+    reviewMode: Boolean,
+    onNext: () -> Unit,
+    onFinishToday: () -> Unit,
+) {
+    if (reviewMode) {
+        GradientPrimaryButton(onClick = onNext, modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = stringResource(R.string.result_remediation_hint),
-                style = MaterialTheme.typography.bodyMedium,
-                color = colors.primary,
+                text = stringResource(R.string.review_back),
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
             )
         }
-
-        // 세션 소프트 컷 — 목표 달성/집중 한계 도달 시 부드러운 종료 제안(강제 아님).
-        if (softCutSuggested) {
-            SoftCutCard(onFinishToday = onFinishToday)
-        }
-
-        Button(
-            onClick = onNext,
-            modifier = Modifier.fillMaxWidth(),
+        return
+    }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        OutlinedButton(
+            onClick = onFinishToday,
+            shape = RoundedCornerShape(18.dp),
+            modifier = Modifier.height(56.dp),
         ) {
             Text(
-                text = stringResource(R.string.result_next),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(vertical = 6.dp),
+                text = stringResource(R.string.result_finish),
+                style = MaterialTheme.typography.titleSmall,
             )
         }
+        GradientPrimaryButton(onClick = onNext, modifier = Modifier.weight(1f)) {
+            // 규칙 7(오답 직후 재도전)이 이어질 상황이면 버튼이 스스로 무슨 일이 일어날지 말한다.
+            if (!result.isCorrect && retryLikely) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = stringResource(R.string.result_retry_cta),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = stringResource(R.string.result_retry_sub),
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+            } else {
+                Text(
+                    text = stringResource(R.string.result_next),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+        }
+    }
+}
 
-        // 정답이 이상하다고 느끼면 개발자에게 바로 신고(문제 정보 자동 첨부) — 나도 틀릴 수 있으니.
-        TextButton(
-            onClick = onReportAnswer,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+/**
+ * 결과 헤더 — 정답은 축하, 오답은 "여기서 한 뼘 자라요" 중립 성장 프레이밍.
+ * 코랄 실패 배너는 성장 마인드셋 문구와 모순이라 없앴다.
+ */
+@Composable
+private fun ResultHeader(
+    isCorrect: Boolean,
+    praise: String,
+) {
+    val colors = MaterialTheme.colorScheme
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        Box(
+            modifier =
+                Modifier
+                    .size(56.dp)
+                    .background(
+                        color = if (isCorrect) colors.secondaryContainer else colors.primaryContainer,
+                        shape = CircleShape,
+                    ),
+            contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = stringResource(R.string.report_answer_button),
-                style = MaterialTheme.typography.bodySmall,
-                color = colors.onSurfaceVariant,
+                text = if (isCorrect) "✅" else "🧠",
+                style = MaterialTheme.typography.headlineSmall,
             )
         }
-
-        // 문제 자체가 이상하거나 별로일 때의 탈출구 — 눈에 덜 띄게 맨 아래 작은 버튼으로 둔다.
-        TextButton(
-            onClick = onExcludeRequest,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-        ) {
+        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
             Text(
-                text = stringResource(R.string.solve_exclude_button),
-                style = MaterialTheme.typography.bodySmall,
+                text = stringResource(if (isCorrect) R.string.result_correct else R.string.result_grow_title),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = if (isCorrect) colors.onSecondaryContainer else colors.onSurface,
+            )
+            Text(
+                text = praise,
+                style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
         }
     }
 }
 
-/** '동영상 풀이 보기' 버튼 — 해당 방법에 영상이 준비된 문제에서만 보인다. */
+/** 정답 행 — 정답 값과 (있으면) 연속 정답 필. */
 @Composable
-private fun WatchVideoButton(onClick: () -> Unit) {
-    OutlinedButton(
-        onClick = onClick,
+private fun CorrectAnswerRow(
+    answer: String,
+    sessionStreak: Int,
+) {
+    val colors = MaterialTheme.colorScheme
+    Surface(
+        color = colors.surfaceContainerHigh,
+        shape = RoundedCornerShape(18.dp),
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Icon(
-            imageVector = Icons.Filled.PlayCircle,
-            contentDescription = null,
-            modifier = Modifier.padding(end = 8.dp),
-        )
-        Text(stringResource(R.string.result_watch_video))
-    }
-}
-
-/** 단계별 풀이. 오답이면 바로 펼치고(교정 학습), 정답이면 '풀이 보기'로 접어 둔다. */
-@Composable
-private fun ExplanationSection(result: GradingResult) {
-    val explanation = result.explanation ?: return
-    val colors = MaterialTheme.colorScheme
-    var expanded by remember(result) { mutableStateOf(!result.isCorrect) }
-    if (expanded) {
-        FeedbackCard(
-            icon = Icons.Filled.Lightbulb,
-            container = colors.surfaceContainerHigh,
-            content = colors.onSurface,
-            label = stringResource(R.string.result_explanation_label),
-            body = explanation,
-        )
-    } else {
-        OutlinedButton(onClick = { expanded = true }) {
-            Icon(
-                imageVector = Icons.Filled.Lightbulb,
-                contentDescription = null,
-                modifier = Modifier.padding(end = 8.dp),
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.result_answer_label),
+                style = MaterialTheme.typography.labelLarge,
+                color = colors.onSurfaceVariant,
             )
-            Text(stringResource(R.string.result_show_explanation))
+            Text(
+                text = answer,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = colors.onSurface,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            if (sessionStreak >= STREAK_PRAISE_THRESHOLD) {
+                Surface(
+                    color = colors.secondaryContainer,
+                    contentColor = colors.onSecondaryContainer,
+                    shape = CircleShape,
+                ) {
+                    Text(
+                        text = stringResource(R.string.result_streak_pill, sessionStreak),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 11.dp, vertical = 6.dp),
+                    )
+                }
+            }
         }
     }
 }
 
-/** 2차(심화) 풀이 — 준비된 문제면 '심화 풀이 보기'로 펼친다. */
+/** 오답 비교 — 내 답과 정답을 나란히. 판정이 아니라 차이를 보여주는 게 목적. */
 @Composable
-private fun DetailedExplanationSection(result: GradingResult) {
-    val detailed = result.detailedExplanation ?: return
+private fun AnswerCompareTiles(
+    myAnswer: String,
+    correctAnswer: String,
+) {
     val colors = MaterialTheme.colorScheme
-    var expanded by remember(result) { mutableStateOf(false) }
-    if (expanded) {
-        FeedbackCard(
-            icon = Icons.Filled.Lightbulb,
-            container = colors.primaryContainer,
-            content = colors.onPrimaryContainer,
-            label = stringResource(R.string.result_detailed_label),
-            body = detailed,
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        AnswerTile(
+            label = stringResource(R.string.result_my_answer_label),
+            value = myAnswer,
+            container = colors.errorContainer,
+            content = colors.onErrorContainer,
+            modifier = Modifier.weight(1f),
         )
-    } else {
-        OutlinedButton(onClick = { expanded = true }) {
-            Icon(
-                imageVector = Icons.Filled.Lightbulb,
-                contentDescription = null,
-                modifier = Modifier.padding(end = 8.dp),
-            )
-            Text(stringResource(R.string.result_detailed_show))
-        }
+        AnswerTile(
+            label = stringResource(R.string.result_answer_label),
+            value = correctAnswer,
+            container = colors.secondaryContainer,
+            content = colors.onSecondaryContainer,
+            modifier = Modifier.weight(1f),
+        )
     }
 }
 
 @Composable
-private fun SoftCutCard(onFinishToday: () -> Unit) {
+private fun AnswerTile(
+    label: String,
+    value: String,
+    container: Color,
+    content: Color,
+    modifier: Modifier = Modifier,
+) {
+    Surface(color = container, contentColor = content, shape = RoundedCornerShape(16.dp), modifier = modifier) {
+        Column(
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 13.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+        ) {
+            Text(text = label, style = MaterialTheme.typography.labelMedium)
+            Text(text = value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+/** 오개념 카드 — 고른 오답에 맞는 "이런 실수를 한 건 아닐까요?" 피드백. */
+@Composable
+private fun MistakeCard(body: String) {
     val colors = MaterialTheme.colorScheme
-    Card(
-        colors =
-            CardDefaults.cardColors(
-                containerColor = colors.tertiaryContainer,
-                contentColor = colors.onTertiaryContainer,
-            ),
+    Surface(
+        color = colors.tertiaryContainer,
+        contentColor = colors.onTertiaryContainer,
+        shape = RoundedCornerShape(18.dp),
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.result_mistake_label),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(text = body, style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+private enum class ResultTab { EXPLANATION, DETAILED, VIDEO }
+
+/**
+ * 풀이/심화/영상 세그먼트 탭 — 세로로 쌓이던 버튼 3개를 탭 하나로 접는다.
+ * 영상 탭은 내용이 아니라 행동(플레이어 이동)이라 선택 상태를 바꾸지 않는다.
+ */
+@Composable
+private fun ExplanationTabs(
+    result: GradingResult,
+    solutionVideo: SolutionVideo?,
+    onWatchVideo: (SolutionVideo) -> Unit,
+) {
+    val tabs =
+        buildList {
+            if (result.explanation != null) add(ResultTab.EXPLANATION)
+            if (result.detailedExplanation != null) add(ResultTab.DETAILED)
+            if (solutionVideo != null) add(ResultTab.VIDEO)
+        }
+    if (tabs.isEmpty()) return
+    var selected by remember(result) {
+        mutableStateOf(tabs.firstOrNull { it != ResultTab.VIDEO } ?: ResultTab.VIDEO)
+    }
+    val colors = MaterialTheme.colorScheme
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(colors.background)
+                    .padding(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            tabs.forEach { tab ->
+                ResultTabPill(
+                    tab = tab,
+                    isSelected = tab == selected,
+                    onClick = {
+                        if (tab == ResultTab.VIDEO) {
+                            solutionVideo?.let(onWatchVideo)
+                        } else {
+                            selected = tab
+                        }
+                    },
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+        val body =
+            when (selected) {
+                ResultTab.EXPLANATION -> result.explanation
+                ResultTab.DETAILED -> result.detailedExplanation
+                ResultTab.VIDEO -> null
+            }
+        body?.let {
+            Text(text = it, style = MaterialTheme.typography.bodyLarge, color = colors.onSurface)
+        }
+    }
+}
+
+@Composable
+private fun ResultTabPill(
+    tab: ResultTab,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MaterialTheme.colorScheme
+    Box(
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(11.dp))
+                .background(if (isSelected) colors.surfaceContainerHigh else Color.Transparent)
+                .clickable(onClick = onClick)
+                .padding(vertical = 9.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringResource(tab.labelRes()),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+            color = if (isSelected) colors.onSurface else colors.onSurfaceVariant,
+        )
+    }
+}
+
+private fun ResultTab.labelRes(): Int =
+    when (this) {
+        ResultTab.EXPLANATION -> R.string.result_tab_explanation
+        ResultTab.DETAILED -> R.string.result_tab_detailed
+        ResultTab.VIDEO -> R.string.result_tab_video
+    }
+
+/** 소프트 컷 안내 — 종료는 아래 '마치기' 버튼이 담당하므로 카드는 말만 건넨다. */
+@Composable
+private fun SoftCutCard() {
+    val colors = MaterialTheme.colorScheme
+    Surface(
+        color = colors.tertiaryContainer,
+        contentColor = colors.onTertiaryContainer,
+        shape = RoundedCornerShape(18.dp),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
             Text(
                 text = stringResource(R.string.result_softcut_title),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
             )
             Text(
                 text = stringResource(R.string.result_softcut_body),
                 style = MaterialTheme.typography.bodyMedium,
             )
-            OutlinedButton(onClick = onFinishToday) {
-                Text(stringResource(R.string.result_softcut_stop))
-            }
-        }
-    }
-}
-
-/** 정답/오답 배너 + 과정 칭찬 응원 한 줄. */
-@Composable
-private fun ResultBanner(
-    isCorrect: Boolean,
-    praise: String,
-) {
-    val colors = MaterialTheme.colorScheme
-    Card(
-        colors =
-            CardDefaults.cardColors(
-                containerColor = if (isCorrect) colors.secondaryContainer else colors.errorContainer,
-                contentColor = if (isCorrect) colors.onSecondaryContainer else colors.onErrorContainer,
-            ),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                Icon(
-                    imageVector = if (isCorrect) Icons.Filled.CheckCircle else Icons.Filled.WarningAmber,
-                    contentDescription = null,
-                )
-                Text(
-                    text = stringResource(if (isCorrect) R.string.result_correct else R.string.result_wrong),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Text(
-                text = praise,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-        }
-    }
-}
-
-@Composable
-private fun FeedbackCard(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    container: androidx.compose.ui.graphics.Color,
-    content: androidx.compose.ui.graphics.Color,
-    label: String,
-    body: String,
-) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = container, contentColor = content),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Icon(imageVector = icon, contentDescription = null)
-                Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            }
-            Text(text = body, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

@@ -37,8 +37,10 @@ import com.ddakpul.math.presentation.home.HomeScreen
 import com.ddakpul.math.presentation.print.PrintScreen
 import com.ddakpul.math.presentation.privacy.PrivacyScreen
 import com.ddakpul.math.presentation.report.ReportScreen
+import com.ddakpul.math.presentation.review.ReviewScreen
 import com.ddakpul.math.presentation.settings.SettingsScreen
 import com.ddakpul.math.presentation.solve.SolveScreen
+import com.ddakpul.math.presentation.solve.SolveViewModel
 import com.ddakpul.math.presentation.videoplayer.VideoPlayerScreen
 
 private enum class DdakPulDestination(
@@ -56,6 +58,8 @@ private enum class DdakPulDestination(
 private const val PRINT_ROUTE = "print"
 private const val PRIVACY_ROUTE = "privacy"
 private const val VIDEO_PLAYER_ROUTE = "videoplayer"
+private const val REVIEW_ROUTE = "review"
+private const val REVIEW_SOLVE_ROUTE = "review_solve"
 private const val ARG_METHOD = "method"
 private const val ARG_TITLE = "title"
 
@@ -109,6 +113,7 @@ private fun AppNavHost(
             ReportScreen(
                 onPrintClick = { navController.navigate(PRINT_ROUTE) },
                 onStartSolving = { navController.switchTab(DdakPulDestination.SOLVE.route) },
+                onOpenReviewNote = { navController.navigate(REVIEW_ROUTE) },
             )
         }
         composable(DdakPulDestination.SETTINGS.route) {
@@ -118,6 +123,22 @@ private fun AppNavHost(
         }
         composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
         composable(PRIVACY_ROUTE) { PrivacyScreen(onBack = { navController.popBackStack() }) }
+        composable(REVIEW_ROUTE) {
+            ReviewScreen(
+                onBack = { navController.popBackStack() },
+                onOpenProblem = { problemId -> navController.navigateToReviewSolve(problemId) },
+            )
+        }
+        composable(
+            route = "$REVIEW_SOLVE_ROUTE?${SolveViewModel.ARG_REVIEW_PROBLEM_ID}={${SolveViewModel.ARG_REVIEW_PROBLEM_ID}}",
+            arguments = listOf(navArgument(SolveViewModel.ARG_REVIEW_PROBLEM_ID) { type = NavType.StringType }),
+        ) {
+            SolveScreen(
+                onGoHome = { navController.popBackStack() },
+                onWatchVideo = { video -> navController.navigateToVideo(video.methodCode, video.title) },
+                onExitReview = { navController.popBackStack() },
+            )
+        }
         composable(
             route = "$VIDEO_PLAYER_ROUTE?$ARG_METHOD={$ARG_METHOD}&$ARG_TITLE={$ARG_TITLE}",
             arguments =
@@ -167,6 +188,11 @@ private fun DdakPulNavigationRail(navController: NavHostController) {
 
 @Composable
 private fun NavHostController.currentRoute(): String? = currentBackStackEntryAsState().value?.destination?.route
+
+/** 오답 노트에서 특정 문제를 복습 모드로 연다 — id를 인코딩해 SolveScreen에 넘긴다. */
+private fun NavHostController.navigateToReviewSolve(problemId: String) {
+    navigate("$REVIEW_SOLVE_ROUTE?${SolveViewModel.ARG_REVIEW_PROBLEM_ID}=${Uri.encode(problemId)}")
+}
 
 /** 해설 영상 화면으로 이동 — 방법코드로 찾고, 파일 확보(캐시/다운로드)는 화면이 한다. */
 private fun NavHostController.navigateToVideo(

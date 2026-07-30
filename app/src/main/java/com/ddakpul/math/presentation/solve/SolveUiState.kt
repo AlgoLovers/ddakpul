@@ -22,11 +22,19 @@ data class SolveUiState(
     val result: GradingResult? = null,
     val showExplanation: Boolean = false,
     val reason: RecommendationReason? = null,
+    /** 오답 노트에서 특정 문제를 다시 푸는 복습 모드. 오늘 진행·제외 버튼을 숨기고 '다음' 대신 '오답 노트로'를 보인다. */
+    val reviewMode: Boolean = false,
     /** 오늘 푼 문제 수 — 오늘의 목표 진행바에 쓴다. */
     val todaySolved: Int = 0,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
     /** 이번 세션에서 이어지고 있는 연속 정답 수 — 연속 정답 칭찬의 기준. */
     val sessionStreak: Int = 0,
+    /**
+     * 오답 직후 규칙 7(같은 그룹 다른 문제 재도전)이 이어질 가능성이 높은지 —
+     * 채점 시트의 CTA 문구("비슷한 문제 한 번 더")에 쓴다. 세션 내 직전 정답 뒤 첫 오답일 때만
+     * true(확실한 신호만). 정체 누적 등으로 다른 규칙이 앞설 수 있어 '가능성'이다.
+     */
+    val retryLikely: Boolean = false,
     /** 오늘 풀이에 쓴 총 시간(초). */
     val todayTimeSpentSec: Int = 0,
     /** 현재 문제의 방법에 준비된 해설 영상(있을 때만 '동영상 풀이 보기' 노출). */

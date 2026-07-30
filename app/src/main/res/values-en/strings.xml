@@ -11,27 +11,34 @@
     <string name="home_greeting">Ready for today\'s just-right problems?</string>
     <string name="home_start">Start learning</string>
     <string name="home_goal_title">Today\'s goal</string>
-    <string name="home_streak">🔥 %1$d-day streak</string>
-    <string name="home_streak_best">Best: %1$d days</string>
-    <string name="home_streak_start">Solve one problem today to start a streak</string>
-    <string name="home_stat_solved">Solved</string>
-    <string name="home_stat_accuracy">Accuracy</string>
-    <string name="home_stat_difficulty">Level</string>
+    <string name="home_streak_pill">🔥 Day %1$d</string>
+    <string name="home_goal_of">/ %1$d problems</string>
+    <string name="home_goal_remaining">Solve %1$d more to reach today\'s goal!</string>
+    <string name="home_goal_done">Goal complete — great work today! 🎉</string>
+    <string name="home_cta_continue">Keep going</string>
+    <string name="home_cta_level">Level %1$d</string>
+    <string name="home_review_ready">%1$d problems are ready to review</string>
+    <string name="home_review_go">Review →</string>
+    <string name="home_skill_title">My skill map</string>
+    <string name="home_skill_summary">%1$d solved · %2$d%% correct</string>
     <string name="home_unit_count">%1$d</string>
     <string name="home_unit_percent">%1$d%%</string>
     <string name="home_unit_level">Lv.%1$d</string>
 
     <!-- Solving -->
-    <string name="solve_today_progress">Today %1$d / %2$d</string>
     <string name="solve_area_label">%1$s · Level %2$d</string>
     <string name="solve_review_badge">🔁 Review</string>
-    <string name="solve_read_aloud">🔊 Read aloud</string>
-    <string name="solve_scratchpad">✏️ Scratchpad</string>
+    <string name="solve_nth_problem">Problem %1$d</string>
+    <string name="solve_tool_read">Read</string>
+    <string name="solve_tool_stop">Stop</string>
+    <string name="solve_tool_scratchpad">Notes</string>
+    <string name="solve_more_cd">More</string>
     <string name="scratch_title">Scratchpad — work it out by hand</string>
     <string name="scratch_eraser">Eraser</string>
     <string name="scratch_undo">Undo</string>
     <string name="scratch_clear">Clear all</string>
     <string name="solve_submit">Check answer</string>
+    <string name="solve_giveup">Not sure · see solution</string>
     <string name="solve_empty">No problems available right now.</string>
     <string name="solve_exclude_button">Something\'s off with this one</string>
     <string name="solve_exclude_dialog_title">Stop showing this problem?</string>
@@ -41,21 +48,23 @@
 
     <!-- Result -->
     <string name="result_correct">Correct! 🎉</string>
-    <string name="result_wrong">So close — want another look?</string>
-    <string name="result_your_answer">Your answer: %1$s</string>
     <string name="result_correct_answer">Answer: %1$s</string>
-    <string name="result_explanation_label">Solution</string>
-    <string name="result_show_explanation">Show solution</string>
-    <string name="result_detailed_label">🔍 Deeper dive</string>
-    <string name="result_detailed_show">Show the deeper dive</string>
-    <string name="report_answer_button">This answer looks wrong</string>
-    <string name="report_answer_feedback">[DdakPul answer question]\nProblem ID: %1$s\nProblem: %2$s\nChoices: %3$s\nApp\'s answer: %4$s\nYour answer: %5$s\n\n(Write what you think and send it to us)</string>
+    <string name="result_grow_title">This is where you grow</string>
+    <string name="result_answer_label">Answer</string>
+    <string name="result_my_answer_label">My answer</string>
+    <string name="result_streak_pill">🔥 %1$d in a row</string>
+    <string name="result_tab_explanation">Solution</string>
+    <string name="result_tab_detailed">Deeper</string>
+    <string name="result_tab_video">Video ▶</string>
+    <string name="result_finish">Finish</string>
+    <string name="result_retry_cta">One more like this</string>
+    <string name="result_retry_sub">Same idea, different numbers</string>
+    <string name="solve_show_result">See result</string>
     <string name="result_mistake_label">Could this have been the slip?</string>
     <string name="result_remediation_hint">Let\'s rebuild from the basics, one step at a time.</string>
     <string name="result_next">Next problem</string>
     <string name="result_softcut_title">This is plenty for today 🌙</string>
     <string name="result_softcut_body">Resting after hard work is part of learning. But if you want more, keep going!</string>
-    <string name="result_softcut_stop">Done for today</string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Welcome to DdakPul</string>
@@ -160,6 +169,15 @@
     <string name="report_insights_title">This week\'s insights</string>
     <string name="report_mistakes_title">Mistake notes · recently missed</string>
     <string name="report_mistakes_desc">Recently missed problems. Revisiting the solutions turns misses into skill.</string>
+    <!-- Mistake Notebook screen -->
+    <string name="review_open">Open Mistake Notebook</string>
+    <string name="review_title">Mistake Notebook</string>
+    <string name="review_subtitle">Sorted by most recently missed. Tap a problem to try it again.</string>
+    <string name="review_empty">No mistakes yet.\nProblems you miss will collect here.</string>
+    <string name="review_count">%1$d problems</string>
+    <string name="review_wrong_count">Missed %1$d times</string>
+    <string name="review_back">Back to notebook</string>
+    <string name="review_back_cd">Back</string>
     <string name="insight_goal_done">✅ Today\'s goal is done. Keeping to a goal you set yourself is the best habit!</string>
     <string name="insight_streak">🔥 %1$d-day streak. Consistency is building real skill.</string>
     <string name="insight_accuracy_up">📈 Accuracy is up %1$d%%p from last week. What you\'re doing is working!</string>
@@ -283,7 +301,6 @@
     <string name="settings_tts_sample">DdakPul will read thinking problems in this voice.</string>
 
     <!-- Read problem aloud -->
-    <string name="solve_read_stop">⏹ Stop</string>
     <string name="solve_reading_with">%1$s</string>
 
     <!-- Settings · high-quality neural voice (runtime download) -->
@@ -302,9 +319,10 @@
     <string name="settings_reset_dialog_title">Reset learning records?</string>
     <string name="settings_reset_dialog_body">This can\'t be undone. All solving history will be deleted.</string>
     <string name="settings_feedback_title">Flagged problems</string>
-    <string name="settings_feedback_desc">Send us the list you flagged as \"something\'s off\" (e.g. via Telegram) and we\'ll improve the problem bank in the next update.</string>
+    <string name="settings_feedback_desc">Email us the list you flagged as \"something\'s off\" and we\'ll improve the problem bank in the next update.</string>
     <string name="settings_feedback_share">Send %1$d flagged problems</string>
     <string name="settings_feedback_empty">No flagged problems yet.</string>
+    <string name="feedback_email_subject">DdakPul – flagged problem feedback</string>
     <!-- Flagged-problem export share text (sent to the dev channel) -->
     <string name="feedback_report_title">📋 DdakPul problem feedback — %1$d flagged</string>
     <string name="feedback_entry_header">[%1$s · %2$s · Level %3$d]</string>

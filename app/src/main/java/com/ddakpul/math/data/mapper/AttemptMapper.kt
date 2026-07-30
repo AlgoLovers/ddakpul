@@ -9,6 +9,7 @@ fun AttemptEntity.toDomain(): Attempt =
         isCorrect = isCorrect,
         timeSpentSec = timeSpentSec,
         timestamp = timestamp,
+        reviewMode = reviewMode,
     )
 
 fun Attempt.toEntity(): AttemptEntity =
@@ -17,4 +18,5 @@ fun Attempt.toEntity(): AttemptEntity =
         isCorrect = isCorrect,
         timeSpentSec = timeSpentSec,
         timestamp = timestamp,
+        reviewMode = reviewMode,
     )
