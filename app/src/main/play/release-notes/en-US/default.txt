@@ -1,3 +1,6 @@
 What's new
-• Mistake Notebook: every problem you miss, gathered in one place and sorted by most recent. Tap to retry it — and it leaves the list once you get it right.
-• Smarter problem picks: no repeating the same problem within a day, and the four areas (number, shape, patterns, data) now come up more evenly.
+• A fresh new look. Home shows today's goal at a glance and previews the level of your next problem.
+• Problems due for review now appear right on Home.
+• Results slide up over the problem, so you can read the solution while the problem stays in view.
+• Wrong answers are for learning: instead of a red alert, your answer and the correct one appear side by side.
+• Stuck? Tap "I don't know" to see the solution first — the problem returns later for another try.
