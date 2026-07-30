@@ -86,16 +86,29 @@ fun ResultSheet(
             )
 
             val choices = result.problem.choices
-            if (result.isCorrect) {
-                CorrectAnswerRow(
-                    answer = choices[result.correctIndex],
-                    sessionStreak = sessionStreak,
-                )
-            } else {
-                AnswerCompareTiles(
-                    myAnswer = choices[result.selectedIndex],
-                    correctAnswer = choices[result.correctIndex],
-                )
+            val selected = result.selectedIndex
+            when {
+                result.isCorrect -> {
+                    CorrectAnswerRow(
+                        answer = choices[result.correctIndex],
+                        sessionStreak = sessionStreak,
+                    )
+                }
+
+                // "모르겠어요"(무응답) — 고른 답이 없으니 비교 대신 정답만 보여준다.
+                selected == null -> {
+                    CorrectAnswerRow(
+                        answer = choices[result.correctIndex],
+                        sessionStreak = 0,
+                    )
+                }
+
+                else -> {
+                    AnswerCompareTiles(
+                        myAnswer = choices[selected],
+                        correctAnswer = choices[result.correctIndex],
+                    )
+                }
             }
 
             // 오개념 피드백(고른 오답에 맞는 설명이 있을 때)
@@ -145,6 +158,11 @@ private fun praiseFor(
 
             result.isCorrect -> {
                 stringArrayResource(R.array.praise_correct)
+            }
+
+            // "모르겠어요"로 풀이를 본 경우 — 틀림이 아니라 '막혔구나, 같이 보자' 격려 풀을 쓴다.
+            result.selectedIndex == null -> {
+                stringArrayResource(R.array.praise_stuck)
             }
 
             showExplanation -> {

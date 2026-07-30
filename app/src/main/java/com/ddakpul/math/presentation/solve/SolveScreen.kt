@@ -78,6 +78,7 @@ fun SolveScreen(
         uiState = uiState,
         onSelect = viewModel::selectChoice,
         onSubmit = viewModel::submit,
+        onGiveUp = viewModel::giveUp,
         onNext = viewModel::loadNext,
         onExclude = viewModel::excludeCurrent,
         dissection =
@@ -99,6 +100,7 @@ private fun SolveContent(
     uiState: SolveUiState,
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
+    onGiveUp: () -> Unit,
     onNext: () -> Unit,
     onExclude: () -> Unit,
     dissection: DissectionCallbacks,
@@ -150,6 +152,7 @@ private fun SolveContent(
                         uiState = uiState,
                         onSelect = onSelect,
                         onSubmit = onSubmit,
+                        onGiveUp = onGiveUp,
                         onExcludeRequest = { showExcludeDialog = true },
                         onScratchpad = { showScratchpad = true },
                         reviewMode = uiState.reviewMode,
@@ -236,6 +239,7 @@ private fun SolvingBody(
     uiState: SolveUiState,
     onSelect: (Int) -> Unit,
     onSubmit: () -> Unit,
+    onGiveUp: () -> Unit,
     onExcludeRequest: () -> Unit,
     onScratchpad: () -> Unit,
     reviewMode: Boolean,
@@ -273,6 +277,20 @@ private fun SolvingBody(
                     onClick = { onSelect(index) },
                     enabled = result == null,
                 )
+            }
+            // "모르겠어요 · 풀이 보기" — 낮은 강조 탈출구(보기 아래, 스크롤 끝). 스스로 푸는 힘을 먼저 쓰게
+            // 눈에 덜 띄게 두되, 막힌 아이가 좌절하지 않고 풀이로 배우게 한다(오답 기록 → 오답 노트 → 재학습).
+            if (result == null) {
+                TextButton(
+                    onClick = onGiveUp,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                ) {
+                    Text(
+                        text = stringResource(R.string.solve_giveup),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
 

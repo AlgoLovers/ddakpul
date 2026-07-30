@@ -17,6 +17,7 @@ import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import com.ddakpul.math.domain.usecase.SubmitDissectionUseCase
+import com.ddakpul.math.domain.usecase.SubmitGiveUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,6 +39,7 @@ class SolveViewModel
         private val getProblemById: GetProblemByIdUseCase,
         private val submitAnswer: SubmitAnswerUseCase,
         private val submitDissection: SubmitDissectionUseCase,
+        private val submitGiveUp: SubmitGiveUpUseCase,
         private val excludeProblem: ExcludeProblemUseCase,
         private val solutionVideoRepository: SolutionVideoRepository,
         observeStats: ObserveLearningStatsUseCase,
@@ -202,6 +204,38 @@ class SolveViewModel
                         retryLikely =
                             !gradingResult.isCorrect && it.sessionStreak >= 1 && !it.reviewMode,
                         sessionStreak = if (gradingResult.isCorrect) it.sessionStreak + 1 else 0,
+                    )
+                }
+            }
+        }
+
+        /**
+         * "모르겠어요" — 답을 고르지 않고 풀이를 본다. 오답으로 기록해 난이도가 자연스럽게 내려가고
+         * 오답 노트에 담긴다(다음에 다시 학습). 결과 시트가 정답·풀이와 함께 열린다.
+         */
+        fun giveUp() {
+            val current = _uiState.value
+            val problem = current.problem ?: return
+            if (current.phase != SolvePhase.SOLVING) return
+
+            viewModelScope.launch {
+                val elapsedSec =
+                    ((System.currentTimeMillis() - questionStartMillis) / MILLIS_PER_SECOND)
+                        .toInt()
+                        .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+                val gradingResult =
+                    submitGiveUp(
+                        problem = problem,
+                        timeSpentSec = elapsedSec,
+                        timestamp = System.currentTimeMillis(),
+                        reviewMode = current.reviewMode,
+                    )
+                _uiState.update {
+                    it.copy(
+                        phase = SolvePhase.GRADED,
+                        result = gradingResult,
+                        retryLikely = false,
+                        sessionStreak = 0,
                     )
                 }
             }

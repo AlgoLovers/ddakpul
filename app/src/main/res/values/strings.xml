@@ -38,6 +38,7 @@
     <string name="scratch_undo">되돌리기</string>
     <string name="scratch_clear">전체 지우기</string>
     <string name="solve_submit">채점하기</string>
+    <string name="solve_giveup">모르겠어요 · 풀이 보기</string>
     <string name="solve_empty">풀 수 있는 문제가 없어요.</string>
     <string name="solve_exclude_button">이 문제 별로예요</string>
     <string name="solve_exclude_dialog_title">이 문제를 그만 볼까요?</string>
