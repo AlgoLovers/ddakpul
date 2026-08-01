@@ -32,10 +32,12 @@
 
 ## 현행 팔레트 (역할 → 값)
 
-원전은 `core/designsystem/theme/Color.kt`·`Theme.kt`. 요지:
-- 캔버스: 라이트 `EDEBF7`(라벤더 틴트 — 순백 금지, 눈부심) / 다크 `121318`
-- 카드(surfaceContainer): 라이트 `FCFBFF`(캔버스 위에 뜨는 밝은 카드) / 다크 `25252C`
-- Primary 바이올렛 / Secondary 민트(정답) / Tertiary 앰버(안내·프로모) / Error 레드(오답)
+**원전은 `core/designsystem/theme/Color.kt`·`Theme.kt`다 — 값을 여기 옮겨 적지 않는다**
+(도메인 모델을 CLAUDE.md가 옮겨 적지 않는 것과 같은 이유: 요약이 낡으면 거짓말이 된다.
+실제로 라벤더→뉴트럴 개편 때 이 절의 hex가 한 달간 틀린 채 남았던 전례, 2026-08 감사).
+역할 구조만 요약하면:
+- 캔버스(부드러운 연회색, 순백 아님) + 흰 카드(surfaceContainer) / 다크는 역할 반전
+- Primary 인디고-바이올렛 / Secondary 민트(정답) / Tertiary 앰버(안내) / Error 코랄(오답)
 - 공용 카드 모양: 20dp 라운드 + 1dp 그림자 (StatTile·SectionCard)
 
 ## QA 매트릭스 (UI 변경 시)

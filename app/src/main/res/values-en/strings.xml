@@ -90,18 +90,11 @@
     <string name="onboarding_next">Next</string>
     <string name="onboarding_start">Get started</string>
 
-    <!-- Pass (monetization / paywall) -->
-
     <!-- Grown-up check (blocks kids before purchase/reset) -->
     <string name="parent_gate_title">Grown-up check</string>
     <string name="parent_gate_body">This step is for a grown-up. Please tap the numbers below in order.</string>
     <string name="parent_gate_retry">Wrong order. Please start again from the beginning.</string>
     <string name="parent_gate_cancel">Cancel</string>
-
-    <!-- Launch promo: everything free -->
-
-
-
 
     <!-- Privacy · data safety -->
     <string name="privacy_title">Privacy · Data safety</string>
@@ -364,7 +357,6 @@
     <string name="area_change_relation">Patterns &amp; Relationships</string>
     <string name="area_shape_measurement">Shapes &amp; Measurement</string>
     <string name="area_data_possibility">Data &amp; Probability</string>
-    <string name="result_watch_video">Watch video solution</string>
     <string name="video_player_back">Back</string>
     <string name="video_downloading">Downloading video… %1$d%%</string>
     <string name="video_download_failed">Couldn\'t download the video. Please check your internet connection.</string>

@@ -1,7 +1,7 @@
 # 딱풀 첫 출시 플레이북 — 주의사항 · 준비물 · 시장 팁
 
 > **생애 첫 구글 플레이 출시**를 위한 참고 문서. 2026-07 시장/정책 조사 기반(웹 검색으로 실확인, 항목별 출처).
-> 기계적 콘솔 절차는 [`LAUNCH.md`](./LAUNCH.md), 시장 포지셔닝은 [`COMPETITIVE_POSITIONING.md`](./COMPETITIVE_POSITIONING.md),
+> 릴리스 빌드·아카이브 절차는 [`RELEASE.md`](./RELEASE.md), 시장 포지셔닝은 [`COMPETITIVE_POSITIONING.md`](./COMPETITIVE_POSITIONING.md),
 > 스토어 문구·그래픽은 [`store/LISTING.md`](./store/LISTING.md)가 단일 출처. 이 문서는 그 위에 **"첫 출시 함정 + 팁"**을 얹는다.
 > ⚠️ 정책 수치(테스터 인원·타겟 API·글자수)는 구글이 수시로 바꾼다 — **신청 직전 support.google.com 원문으로 재확인**.
 
@@ -180,7 +180,7 @@
 ---
 
 ## 7. 참고 (⚠️ 갱신 필요)
-- 기존 `LAUNCH.md`의 §0·§3·§6은 **이미 제거된 유료화 코드**(`Monetization.*`·`PremiumPass`·`PaywallViewModel`)를 아직 참조 → 별도 정리 필요.
+- ~~기존 `LAUNCH.md` 정리~~ → 2026-08-01 삭제 완료(유료화 심볼 참조 문서). 콘솔 절차는 이 문서 §1~§3·§6이 단일 출처.
 - 이 문서 수치·글자수·정책은 조사 기준일 **2026-07-23**. 신청 직전 각 `support.google.com` 원문으로 재확인.
 
 ### 주요 출처(공식)

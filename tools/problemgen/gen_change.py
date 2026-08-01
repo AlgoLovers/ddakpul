@@ -207,7 +207,7 @@ def gen_cycle():
             idx = (idx + 1) % k
         assert bead == ans, f"cycle 검산 실패: {bead} != {ans}"
         add(
-            "cycle", "CHANGE_RELATION", 2, ["반복 주기", "나머지 사고"],
+            "cycle", "CHANGE_RELATION", 3, ["반복 주기", "나머지 사고"],
             f"{'·'.join(colors)} 구슬을 이 순서대로 계속 꿰어요. {n}번째 구슬은 무슨 색일까요?",
             f"{ans}색", [f"{wrongs[0]}색", f"{wrongs[1]}색", wrongs[2]],
             f"{k}개가 한 묶음으로 계속 반복되니 {n}을 {k}로 나누는 게 열쇠예요. {n}÷{k}를 하면 몫이 {n // k}이고 나머지가 {n % k}이니, 완전한 묶음 뒤 {n % k if n % k else k}번째 구슬 차례예요. 묶음의 {n % k if n % k else k}번째는 {ans}색이에요.",
@@ -1347,7 +1347,7 @@ def gen_unitprice():
         assert price0 % cnt0 == 0, f"unitprice 검산 실패: {price0}÷{cnt0} 안 떨어짐"
         assert ans * cnt0 == price0 * cnt1, f"unitprice 검산 실패: 교차곱 {ans * cnt0} != {price0 * cnt1}"
         add(
-            "unitprice", "CHANGE_RELATION", 2, ["비례 관계", "한 개 값 구하기"],
+            "unitprice", "CHANGE_RELATION", 4, ["비례 관계", "한 개 값 구하기"],
             f"연필 {cnt0}자루가 {price0}원이에요. 같은 연필 {cnt1}자루는 얼마일까요?",
             f"{ans}원", [f"{c}원" for c in _pick_distractors(ans, [ans + unit, ans - unit, price0 + cnt1 * unit, ans + 2 * unit])],
             f"먼저 한 자루 값을 구해요 — {price0}÷{cnt0}={unit}원. {cnt1}자루는 {unit}×{cnt1}={ans}원이에요.",

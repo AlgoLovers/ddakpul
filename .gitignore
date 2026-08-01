@@ -17,7 +17,6 @@
 .cxx
 local.properties
 .claude/settings.local.json
-.claude/settings.json
 
 # Python
 __pycache__/

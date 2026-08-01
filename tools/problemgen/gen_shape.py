@@ -161,7 +161,7 @@ def gen_matchsticks():
             matches += 3  # 오른쪽에 하나 더 붙이면 왼쪽 변은 공유 → 3개만 추가
         assert matches == 3 * n + 1, "성냥개비 검산 실패"
         add(
-            "match", "SHAPE_MEASUREMENT", 1, ["변 공유", "규칙 찾기"],
+            "match", "SHAPE_MEASUREMENT", 2, ["변 공유", "규칙 찾기"],
             f"성냥개비로 크기가 같은 정사각형을 한 줄로 이어 붙여 {n}개 만들려고 해요. 성냥개비는 모두 몇 개 필요할까요?",
             f"{matches}개", [f"{4 * n}개", f"{3 * n}개", f"{4 * n - 1}개"],
             f"정사각형 1개는 성냥 4개가 필요해요. 오른쪽에 하나씩 더 붙일 때는 왼쪽 변을 이미 쓰고 있어서 3개만 더 있으면 돼요. 그래서 {n}개면 4+3×{n - 1}={matches}개예요.",
@@ -183,29 +183,34 @@ def gen_matchsticks():
 
 # ── 28. 성냥개비 정삼각형 잇기 (난2, 도형과측정) ─────────────────────────────
 def gen_triangles_match():
-    for n in [3, 4, 5, 6]:
+    # d1 배치(2026-08 감사 재배치): 삼각형 수를 3~5로 좁혀 답이 11을 넘지 않게 하고(세기 가능 범위),
+    # 해설은 곱셈식 대신 세기 언어로 쓴다(d1 학습자가 자기 풀이를 확인할 수 있어야 한다 — 감사 §6).
+    for n in [3, 4, 5]:
         matches = 3
         for _ in range(n - 1):
             matches += 2  # 위아래로 번갈아 붙이면 맞닿은 한 변을 공유 → 2개만 추가
         assert matches == 2 * n + 1, "삼각형 성냥 검산 실패"
+        twos = "·".join(["2"] * (n - 1))
         add(
-            "tri", "SHAPE_MEASUREMENT", 2, ["변 공유", "규칙 찾기"],
+            "tri", "SHAPE_MEASUREMENT", 1, ["변 공유", "규칙 찾기"],
             f"성냥개비로 크기가 같은 정삼각형을 한 줄로 이어 붙여 {n}개 만들려고 해요(위아래로 번갈아 붙여요). 성냥개비는 모두 몇 개 필요할까요?",
             f"{matches}개", [f"{3 * n}개", f"{2 * n}개", f"{3 * n - 1}개"],
-            f"정삼각형 1개는 성냥 3개예요. 다음 삼각형을 옆에 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. 그래서 {n}개면 3+2×{n - 1}={matches}개예요.",
+            f"첫 정삼각형은 성냥 3개예요. 다음 삼각형을 붙일 때는 맞닿는 한 변을 이미 쓰고 있어서 2개만 더 있으면 돼요. "
+            f"3개에서 시작해 2개씩 {n - 1}번 더 세면(3, 그리고 {twos}) 모두 {matches}개예요.",
             [(f"{3 * n}개", "삼각형마다 3개씩 세면 이웃끼리 맞닿은 변을 두 번 세게 돼요.")],
             figure={"type": "MATCHSTICK", "params": {"n": n, "tri": 1}},
-            detail=f"정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어 3+2×({n}−1)={matches}개. '붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. 몇 곳이 공유되는지만 세면 끝이에요.",
+            detail=f"정삼각형 1개는 3개지만, 옆에 붙이면 맞닿는 한 변을 함께 써요. 그래서 첫 개는 3개, 다음부터는 2개씩만 늘어요. "
+                   f"'붙는 곳은 한 번만 센다'는 이 생각은 정사각형 잇기·도형 둘레에서 똑같이 쓰여요. (식으로 쓰면 3+2×({n}−1)={matches}이에요.)",
             en={
                 "statement": f"You join {n} equal equilateral triangles in a row with matchsticks (alternating up and down). "
                              f"How many matchsticks do you need in all?",
                 "answer": _en_plural(matches, "matchstick"),
                 "distractors": [_en_plural(3 * n, "matchstick"), _en_plural(2 * n, "matchstick"), _en_plural(3 * n - 1, "matchstick")],
-                "explanation": f"One triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. "
-                               f"So {n} triangles need 3 + 2×{n - 1} = {matches}.",
+                "explanation": f"The first triangle needs 3 matchsticks. Each next triangle shares one touching side, so it needs only 2 more. "
+                               f"Start at 3 and count on 2 a total of {n - 1} times — {matches} in all.",
                 "mistakes": [(_en_plural(3 * n, "matchstick"), "Counting 3 per triangle double-counts the shared sides between neighbors.")],
                 "detail": "One triangle has 3 sides, but joining another shares one touching side. So the first needs 3 and each next adds only "
-                          "2, giving 3+2×(n−1). 'Count a shared part once' also drives joining squares and figure perimeters.",
+                          "2. 'Count a shared part once' also drives joining squares and figure perimeters. (As a formula: 3+2×(n−1).)",
             },
         )
 

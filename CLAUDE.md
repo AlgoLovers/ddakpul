@@ -18,8 +18,8 @@
 4. **Domain 계층에 `android.*` import 금지** — 순수 Kotlin (상세: `.claude/rules/domain-purity.md`).
 5. 의존성 방향: Presentation/Data → Domain. 역방향 금지.
 6. **실행 코드(.so/dex)는 절대 런타임 다운로드 금지**(Play 정책) — 데이터 파일만 허용.
-7. **구매 UI는 `Monetization.BILLING_ENABLED`(현재 false) 뒤에** — 결제 미연동 상태에서
-   가격·활성화 버튼 노출 금지.
+7. **무료 우선(2026-07 선회)** — 유료화 코드는 전면 제거된 상태(e53a1db). 결제 미연동
+   상태에서 가격·구매 유도 UI 노출 금지. 재도입은 다운로드 임계 도달 후 별도 결정으로만.
 
 ## 기술 스택 · 구조
 
@@ -34,12 +34,13 @@ app/src/main/java/com/ddakpul/math/
 ```
 
 도메인 모델(Problem·Attempt·LearnerState 등)은 `domain/model/`이 원전 — 여기 옮겨 적지 않는다.
-문제은행: `ProblemCatalog.kt`(수제) + `assets/problems_generated*.json`(생성·한/영, 총 963+).
+문제은행: `ProblemCatalog.kt`(수제 135) + `assets/problems_generated*.json`(생성·한/영 918) — 총 1,053+.
 
 ## 추천 알고리즘 (그룹 단위 추천, 전부 순수 함수 + 단위 테스트)
 
 1. 연속 2정답 → 난이도 +1 그룹 / 2. 연속 2오답 → −1 그룹 / 3. 혼조 → 같은 난이도 유지
-4. 정체(같은 난이도 N회 오답 누적) → 대표문제 해설 + 선수 개념 그룹으로
+4. 정체(같은 난이도 N회 오답 누적 **+ 직전 시도 오답**) → 대표문제 해설 + 선수 개념 그룹으로.
+   직전을 맞혔으면 회복 중 — 발동하지 않는다(옛 오답이 창에 남아 연속 정답 중 강등되는 사고 방지)
 5. **같은 문제 하루 중복 금지**(오늘 낸 문제 제외, 하드) + 그룹 내 최근에 안 푼 문제 우선 랜덤 ·
    그룹(영역) 선택은 **그날 가장 적게 낸 영역 우선**으로 4영역 균형(소프트). 은행이 얇으면 best-effort.
    / 6. `Difficulty.MIN~MAX`로 clamp
@@ -60,8 +61,10 @@ app/src/main/java/com/ddakpul/math/
 
 ## 하네스 (스킬·에이전트·훅·규칙)
 
-- **스킬** `.claude/skills/`: `/wrap-up`(턴 종료 의식) · `/release-aab`(서명 번들, 사용자 호출 전용) ·
-  `/emu-qa`(에뮬 스샷 QA 루프) · `/gen-problems`(문제 생성 파이프라인). 반복 절차는 여기에 명문화한다.
+- **스킬** `.claude/skills/`: `/wrap-up`(턴 종료 의식) · `/release`(전체 릴리스 오케스트레이션 —
+  버전·CHANGELOG·태그까지, 규칙은 `docs/RELEASE.md`) · `/release-aab`(빌드+서명검증만 하는 하위
+  절차) · `/emu-qa`(에뮬 스샷 QA 루프, 전용 AVD 사용) · `/gen-problems`(문제 생성 파이프라인).
+  반복 절차는 여기에 명문화한다.
 - **에이전트** `.claude/agents/`: `problem-auditor`(문제 콘텐츠 감사, 읽기 전용 — 문제 추가·수정 후 필수) ·
   `pedagogy-researcher`(학습과학 리서치 브리프). ⚠️ 에이전트 모델은 opus/sonnet/haiku만 — **fable 금지**(유료 크레딧).
 - **훅** (`.claude/settings.json` → `tools/claude/hooks/`): SessionStart가 git fetch+동기화 상태 주입,
@@ -80,8 +83,10 @@ app/src/main/java/com/ddakpul/math/
   권한 deny로도 막혀 있음. 백업은 사람이 관리(구글 드라이브, 2026-07 완료).
 - **큰 빌드 파일(.aab/.apk)은 텔레그램 첨부로 보내지 않는다.** 텔레그램 봇 파일 한계는 **50MB**이고,
   49.7MB AAB를 전송하려다 업로드가 물려 상주 세션이 5시간 먹통 된 전례가 있다(2026-07-21).
-  대신 **GitHub 릴리스에 올려 다운로드 링크로 전달**한다:
-  `gh release create <tag> app/build/outputs/bundle/release/app-release.aab#ddakpul-<version>.aab --title "<제목>" --notes "<메모>" --prerelease`
+  대신 **GitHub 릴리스에 올려 다운로드 링크로 전달**한다. **자산 파일명에 반드시 버전을 넣는다**
+  (`ddakpul-v<버전>-release.aab`, `ddakpul-<태그>-debug.apk` 식) — gh의 `파일#라벨` 문법은 표시용일 뿐
+  **다운로드 파일명을 바꾸지 못하므로**, 업로드 전에 `cp`로 파일명을 바꿔서 올린다:
+  `cp app-release.aab ddakpul-v0.5.0-release.aab && gh release create <tag> ddakpul-v0.5.0-release.aab --title "<제목>" --notes "<메모>" --prerelease`
   (이후 갱신은 `gh release upload <tag> <file> --clobber`). 링크만 텔레그램으로 보낸다.
 
 ## 작업 방식
@@ -90,4 +95,7 @@ app/src/main/java/com/ddakpul/math/
 - Domain UseCase는 반드시 단위 테스트 동반 — 특히 추천 규칙 1~8은 규칙별 테스트 필수.
 - UI 변경은 `/emu-qa`로 스크린샷 자가 검증 — **라이트/다크 둘 다**(테마 규칙: `docs/DESIGN.md`).
 - 새 학습 기능은 `pedagogy-researcher`로 근거 조사 후 설계(근거 대장: `docs/PEDAGOGY.md`).
-- 출시·수익화 실무는 `docs/LAUNCH.md`, 방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
+- 출시 실무는 `docs/FIRST_LAUNCH_PLAYBOOK.md`, 릴리스 절차는 `docs/RELEASE.md`,
+  방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
+- ⚠️ `docs/`는 GitHub Pages로 서빙된다 — 공개용은 `privacy.md`·`videos/`·`licenses/`뿐이고
+  나머지는 `docs/_config.yml`의 exclude가 막는다. **새 내부 문서를 추가하면 exclude에도 추가.**

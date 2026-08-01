@@ -21,6 +21,8 @@
   ["league", "winsum"],
   ["simpleprob", "fairgame"],
   ["surepick", "pigeon"],
-  ["fairgame", "fairsplit"]
+  ["fairgame", "fairsplit"],
+  ["tri", "match"],
+  ["pattern", "cycle"]
  ]
 }

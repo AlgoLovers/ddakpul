@@ -12,16 +12,19 @@ Pillow 미리보기가 못 잡는 실제 화면 버그(레이아웃 잘림, 인�
 
 ```
 export PATH="$PATH:$HOME/Library/Android/sdk/emulator:$HOME/Library/Android/sdk/platform-tools"
-nohup emulator -avd Pixel_API_TiramisuPrivacySandbox -no-window -no-audio -no-boot-anim -no-snapshot -gpu host &
+nohup emulator -avd ddakpul_phone -no-window -no-audio -no-boot-anim -no-snapshot -gpu host &
 adb wait-for-device
 adb shell 'while [ "$(getprop sys.boot_completed)" != "1" ]; do sleep 2; done'
 adb shell settings put global window_animation_scale 0   # transition·animator도 0
 ```
 
 - **`-gpu host` 필수** — swiftshader면 screencap이 흰 화면(8KB)만 뱉는다.
-- 폰=`Pixel_API_TiramisuPrivacySandbox`(1080×1920, ~40초), 태블릿=`ddakpul_tablet`(1280×800).
+- 폰=`ddakpul_phone`(1080×1920, 전용), 태블릿=`ddakpul_tablet`(1280×800, 전용).
   `tablet_pc` AVD는 QEMU 행으로 멈춤 — 쓰지 말 것.
-- 에뮬 2대 동시 운용 시 모든 adb에 `-s emulator-5554/5556`.
+  공용 `Pixel_API_TiramisuPrivacySandbox`도 쓰지 말 것 — 다른 프로젝트 세션이 같은 인스턴스를
+  잡아 화면을 빼앗는 충돌 전례(2026-07-30, 체스 앱이 스크린샷에 찍힘).
+- 다른 세션의 에뮬레이터가 함께 떠 있을 수 있다 — **모든 adb에 `-s emulator-<포트>` 필수**,
+  부팅 시 `-port 5560`(폰)/`-port 5562`(태블릿)처럼 포트를 고정하면 안전.
 
 ## 루프
 

@@ -77,6 +77,42 @@ class RecommendNextProblemUseCaseTest {
     }
 
     @Test
+    fun rule4_recoveringStreak_promotesInsteadOfRemediation() {
+        // 오답 3개가 최근 창에 남아 있어도 마지막이 2연속 정답이면 정체가 아니라 회복 — 승급이 이긴다.
+        // ("연속으로 다 맞히는데도 난이도가 떨어져요" 사용자 피드백 재현 방지, 2026-08.)
+        val attempts =
+            listOf(
+                attempt("d3-1", false),
+                attempt("d3-2", false),
+                attempt("d3-3", false),
+                attempt("d3-1", true),
+                attempt("d3-2", true),
+            )
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), standardGroups(), seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.ADVANCED)
+        assertThat(result.targetDifficulty).isEqualTo(4)
+    }
+
+    @Test
+    fun rule4_lastAnswerCorrect_staysWithoutRemediation() {
+        // 누적 오답이 임계(3)에 닿아도 직전 한 문제를 맞혔으면 막힌 상태가 아니다 — 강등하지 않는다.
+        val attempts =
+            listOf(
+                attempt("d3-1", false),
+                attempt("d3-2", false),
+                attempt("d3-3", false),
+                attempt("d3-1", true),
+            )
+
+        val result = recommend(state(currentDifficulty = 3, recentAttempts = attempts), standardGroups(), seededRandom)
+
+        assertThat(result!!.reason).isEqualTo(RecommendationReason.STAY)
+        assertThat(result.targetDifficulty).isEqualTo(3)
+    }
+
+    @Test
     fun rule5_picksProblemNotSolvedRecently() {
         // 난이도 3 그룹에 q1,q2,q3. 최근에 q1,q2를 풀었으므로 q3가 나와야 한다.
         val groups =
