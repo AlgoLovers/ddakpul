@@ -18,8 +18,8 @@
 4. **Domain 계층에 `android.*` import 금지** — 순수 Kotlin (상세: `.claude/rules/domain-purity.md`).
 5. 의존성 방향: Presentation/Data → Domain. 역방향 금지.
 6. **실행 코드(.so/dex)는 절대 런타임 다운로드 금지**(Play 정책) — 데이터 파일만 허용.
-7. **구매 UI는 `Monetization.BILLING_ENABLED`(현재 false) 뒤에** — 결제 미연동 상태에서
-   가격·활성화 버튼 노출 금지.
+7. **무료 우선(2026-07 선회)** — 유료화 코드는 전면 제거된 상태(e53a1db). 결제 미연동
+   상태에서 가격·구매 유도 UI 노출 금지. 재도입은 다운로드 임계 도달 후 별도 결정으로만.
 
 ## 기술 스택 · 구조
 
@@ -34,7 +34,7 @@ app/src/main/java/com/ddakpul/math/
 ```
 
 도메인 모델(Problem·Attempt·LearnerState 등)은 `domain/model/`이 원전 — 여기 옮겨 적지 않는다.
-문제은행: `ProblemCatalog.kt`(수제) + `assets/problems_generated*.json`(생성·한/영, 총 963+).
+문제은행: `ProblemCatalog.kt`(수제 135) + `assets/problems_generated*.json`(생성·한/영 918) — 총 1,053+.
 
 ## 추천 알고리즘 (그룹 단위 추천, 전부 순수 함수 + 단위 테스트)
 
@@ -61,8 +61,10 @@ app/src/main/java/com/ddakpul/math/
 
 ## 하네스 (스킬·에이전트·훅·규칙)
 
-- **스킬** `.claude/skills/`: `/wrap-up`(턴 종료 의식) · `/release-aab`(서명 번들, 사용자 호출 전용) ·
-  `/emu-qa`(에뮬 스샷 QA 루프) · `/gen-problems`(문제 생성 파이프라인). 반복 절차는 여기에 명문화한다.
+- **스킬** `.claude/skills/`: `/wrap-up`(턴 종료 의식) · `/release`(전체 릴리스 오케스트레이션 —
+  버전·CHANGELOG·태그까지, 규칙은 `docs/RELEASE.md`) · `/release-aab`(빌드+서명검증만 하는 하위
+  절차) · `/emu-qa`(에뮬 스샷 QA 루프, 전용 AVD 사용) · `/gen-problems`(문제 생성 파이프라인).
+  반복 절차는 여기에 명문화한다.
 - **에이전트** `.claude/agents/`: `problem-auditor`(문제 콘텐츠 감사, 읽기 전용 — 문제 추가·수정 후 필수) ·
   `pedagogy-researcher`(학습과학 리서치 브리프). ⚠️ 에이전트 모델은 opus/sonnet/haiku만 — **fable 금지**(유료 크레딧).
 - **훅** (`.claude/settings.json` → `tools/claude/hooks/`): SessionStart가 git fetch+동기화 상태 주입,
@@ -93,4 +95,7 @@ app/src/main/java/com/ddakpul/math/
 - Domain UseCase는 반드시 단위 테스트 동반 — 특히 추천 규칙 1~8은 규칙별 테스트 필수.
 - UI 변경은 `/emu-qa`로 스크린샷 자가 검증 — **라이트/다크 둘 다**(테마 규칙: `docs/DESIGN.md`).
 - 새 학습 기능은 `pedagogy-researcher`로 근거 조사 후 설계(근거 대장: `docs/PEDAGOGY.md`).
-- 출시·수익화 실무는 `docs/LAUNCH.md`, 방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
+- 출시 실무는 `docs/FIRST_LAUNCH_PLAYBOOK.md`, 릴리스 절차는 `docs/RELEASE.md`,
+  방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
+- ⚠️ `docs/`는 GitHub Pages로 서빙된다 — 공개용은 `privacy.md`·`videos/`·`licenses/`뿐이고
+  나머지는 `docs/_config.yml`의 exclude가 막는다. **새 내부 문서를 추가하면 exclude에도 추가.**

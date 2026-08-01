@@ -1,0 +1,19 @@
+# GitHub Pages 발행 범위 제한 — docs/는 리포 내부 문서고이고, 공개 서빙이 필요한 것은
+# 개인정보처리방침(privacy)·영상 매니페스트(videos/)·서체 라이선스(licenses/)뿐이다.
+# 내부 전략·가격·경쟁 분석·피드백 문서가 통째로 공개되던 사고(2026-08-01 감사)의 재발 방지.
+# 새 내부 문서를 추가하면 이 exclude에도 추가할 것 (glob 미지원 환경 대비 명시 나열).
+exclude:
+  - "*.md"
+  - COMPETITIVE_POSITIONING.md
+  - CONTENT_ENGINE_STRATEGY.md
+  - CONTENT_SOURCING.md
+  - DESIGN.md
+  - FEEDBACK_LOG.md
+  - FIRST_LAUNCH_PLAYBOOK.md
+  - PEDAGOGY.md
+  - RELEASE.md
+  - ROADMAP.md
+  - audits
+  - store
+include:
+  - privacy.md
