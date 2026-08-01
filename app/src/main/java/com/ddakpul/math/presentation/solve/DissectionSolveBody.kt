@@ -24,7 +24,7 @@ import com.ddakpul.math.presentation.puzzle.PiecePalette
 import com.ddakpul.math.presentation.puzzle.dissectionHint
 
 /**
- * 본 풀이 흐름 안의 등분 퍼즐 화면 — 4지선다 [SolvingBody]/[ResultView]에 대응하는 구성형 경로.
+ * 본 풀이 흐름 안의 등분 퍼즐 화면 — 4지선다 [SolvingBody]/[ResultSheet]에 대응하는 구성형 경로.
  * 격자 탭 입력판 + 조각 팔레트 + (풀이 중) 지우기·확인, (채점 후) 결과 + 다음.
  */
 @Composable

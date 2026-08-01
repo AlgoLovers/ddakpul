@@ -13,16 +13,3 @@ sealed interface AppResult<out T> {
         val error: AppError,
     ) : AppResult<Nothing>
 }
-
-/** 성공이면 값을, 실패면 null을 돌려준다. UI에서 편하게 분기하기 위한 헬퍼. */
-fun <T> AppResult<T>.getOrNull(): T? = (this as? AppResult.Success)?.data
-
-inline fun <T> AppResult<T>.onSuccess(block: (T) -> Unit): AppResult<T> {
-    if (this is AppResult.Success) block(data)
-    return this
-}
-
-inline fun <T> AppResult<T>.onFailure(block: (AppError) -> Unit): AppResult<T> {
-    if (this is AppResult.Failure) block(error)
-    return this
-}

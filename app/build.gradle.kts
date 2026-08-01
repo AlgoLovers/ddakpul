@@ -192,10 +192,8 @@ dependencies {
     // 온디바이스 신경망 TTS(Supertonic)는 sherpa-onnx 1.13.4 Kotlin 바인딩(com.k2fsa.sherpa.onnx.Tts)을
     // 소스로 포함하고, 네이티브 .so는 APK에 넣지 않는다 — 모델과 함께 런타임에 받아 filesDir에서 로드해
     // 기본 APK를 가볍게 유지한다(안 쓰는 사용자엔 부담 0).
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -224,12 +222,6 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)
     testImplementation(libs.truth)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }

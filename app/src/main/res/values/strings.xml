@@ -90,18 +90,11 @@
     <string name="onboarding_next">다음</string>
     <string name="onboarding_start">시작하기</string>
 
-    <!-- 이용권 (수익화 / 페이월) -->
-
     <!-- 부모 확인 게이트(구매·초기화 전 어린이 차단) -->
     <string name="parent_gate_title">부모님 확인</string>
     <string name="parent_gate_body">이 동작은 어른이 진행해요. 다음 숫자를 순서대로 눌러 주세요.</string>
     <string name="parent_gate_retry">순서가 달라요. 처음부터 다시 눌러 주세요.</string>
     <string name="parent_gate_cancel">취소</string>
-
-    <!-- 출시 기념 전면 무료 프로모션 -->
-
-
-
 
     <!-- 개인정보 · 데이터 안전 -->
     <string name="privacy_title">개인정보 · 데이터 안전</string>
@@ -365,7 +358,6 @@
     <string name="area_change_relation">변화와 관계</string>
     <string name="area_shape_measurement">도형과 측정</string>
     <string name="area_data_possibility">자료와 가능성</string>
-    <string name="result_watch_video">동영상 풀이 보기</string>
     <string name="video_player_back">돌아가기</string>
     <string name="video_downloading">해설 영상 받는 중… %1$d%%</string>
     <string name="video_download_failed">영상을 받지 못했어요. 인터넷 연결을 확인해 주세요.</string>
