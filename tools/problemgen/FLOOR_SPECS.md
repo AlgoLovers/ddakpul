@@ -32,6 +32,14 @@ sense1-04→d2) 후 저층 현황:
 - 기존 저층 family와의 '사실상 중복' 주의 — checks.py 게이트5. 특히 cubetiny·gridtiny·dataread·
   trans·pattern·outfit·seq1과 소재가 겹치면 형제 사다리인지 중복인지 먼저 판정.
 
+## 1.5 발굴된 미통합 재고 — 논리 장르 브랜치
+
+2026-08-01 하네스 청소 중 발견: 브랜치 `worktree-agent-ac7f74e9a0e138421`(커밋 d2415a8,
+2026-07-19)에 **논리 장르 6 family 24문항**(shakeparity·waterjug·crosstruth·bridge·domino·
+coinunknown, 자료와가능성)이 완성돼 있으나 증산 캠페인 통합에서 누락됐다. develop의
+gen_data.py에 없음(grep 0). 증산 배치 때 이 브랜치를 먼저 체리픽·게이트 통과시켜 회수할 것
+(GENERATORS 등록·taxonomy·제약은 통합 세션 몫 — 증산 규약 동일).
+
 ## 2. family 후보 총괄표
 
 | # | 키 | 영역 | 난이도 | 한 줄 아이디어 | 검산 방식 |
