@@ -1084,7 +1084,7 @@ def gen_multiple_condition():
         brute = max(x for x in range(1, limit) if x % k == 0)
         assert brute == ans, f"multiple_condition 검산 불일치: {ans} != {brute}"
         add(
-            "multcond", "NUMBER_OPERATION", 1, ["배수", "조건 따지기"],
+            "multcond", "NUMBER_OPERATION", 3, ["배수", "조건 따지기"],
             f"{limit}보다 작은 수 중에서 {k}{_euro(str(k))} 나누어떨어지는(={k}단에 나오는) 가장 큰 수는 얼마일까요?",
             str(ans), [str(ans + k), str(ans - k), str(limit)],
             f"{k}단 수를 크기 순으로 떠올려요: … {ans - k}, {ans}, {ans + k}. 이 중 {limit}보다 작은 가장 큰 수는 {ans}예요({ans + k}{_eun(str(ans + k))} {limit}보다 크거나 같아 안 돼요).",

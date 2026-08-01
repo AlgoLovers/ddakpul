@@ -1364,7 +1364,7 @@ def gen_avgbasic():
         vs = ", ".join(str(v) for v in vals)
         add(
             # 난이도 재조정(4→2, 2026-07 d1~5 스캔): '더해서 나누기' 정의 적용 그 자체.
-            "avgbasic", "DATA_POSSIBILITY", 2, ["평균", "합 나누기"],
+            "avgbasic", "DATA_POSSIBILITY", 4, ["평균", "합 나누기"],
             f"네 번의 점수가 {vs}이에요. 이 점수들의 평균은 얼마일까요?",
             str(ans), [str(c) for c in _pick_distractors(ans, [total, max(vals), ans + 1, ans - 1])],
             f"평균은 모두 더해 개수로 나눠요. {vs}을 더하면 {total}, 4로 나누면 {ans}예요.",

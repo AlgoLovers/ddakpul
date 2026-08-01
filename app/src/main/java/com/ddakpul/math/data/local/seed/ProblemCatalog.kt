@@ -952,18 +952,63 @@ object ProblemCatalog {
             )
             add(
                 mc(
+                    // 2026-08 감사: '5의 배수'는 구구단 전제라 d1(구구단 금지) 위반 → d2로 재배치.
                     id = "sense1-04",
                     area = MathArea.NUMBER_OPERATION,
-                    difficulty = 1,
-                    groupId = "g-num-sense-1",
-                    concepts = listOf("배수", "조건 사고"),
-                    statement = "10보다 크고 20보다 작은 수 중에서 5의 배수는?",
+                    difficulty = 2,
+                    groupId = "g-num-sense-2",
+                    concepts = listOf("뛰어 세기", "조건 사고"),
+                    statement = "10보다 크고 20보다 작은 수 중에서 5씩 뛰어 셀 때 나오는 수는? (5부터 5씩 뛰어 세요)",
                     choices = listOf("10", "15", "20", "25"),
                     answerIndex = 1,
-                    explanation = "5의 배수를 차례로 써 봐요. 5, 10, 15, 20, 25 중에서 10보다 크고 20보다 작은 수는 15뿐이에요. 10과 20은 '보다 크다, 보다 작다'는 조건에 들어가지 않는다는 점을 조심해요. 정답은 15예요.",
+                    explanation = "5부터 5씩 뛰어 세어 봐요: 5, 10, 15, 20, 25. 이 중에서 10보다 크고 20보다 작은 수는 15뿐이에요. 10과 20은 '보다 크다, 보다 작다'는 조건에 들어가지 않는다는 점을 조심해요. 정답은 15예요.",
                     mistakes =
                         listOf(
                             Mistake(0, "10은 '10보다 큰 수'가 아니에요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "sense2-01",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-sense-2",
+                    concepts = listOf("자릿값", "조건 사고"),
+                    statement = "십의 자리 숫자와 일의 자리 숫자를 더하면 5가 되는 두 자리 수 중에서 가장 큰 수는?",
+                    choices = listOf("50", "41", "54", "23"),
+                    answerIndex = 0,
+                    explanation =
+                        "숫자의 합이 5인 두 자리 수를 작은 것부터 빠짐없이 써 봐요: 14, 23, 32, 41, 50. " +
+                            "두 자리 수는 십의 자리가 클수록 커지니, 십의 자리에 5를 몰아준 50이 가장 커요. " +
+                            "검산하면 5+0=5로 조건에 딱 맞아요.",
+                    mistakes =
+                        listOf(
+                            Mistake(1, "일의 자리에 0은 못 쓴다고 생각했나요? 50도 두 자리 수예요 — 5+0=5로 조건에 맞고 41보다 커요."),
+                            Mistake(2, "54는 5+4=9라서 숫자의 합이 5가 아니에요."),
+                            Mistake(3, "나열하다 중간에 멈췄나요? 23 뒤에도 32, 41, 50이 더 있어요."),
+                        ),
+                ),
+            )
+            add(
+                mc(
+                    id = "sense2-02",
+                    area = MathArea.NUMBER_OPERATION,
+                    difficulty = 2,
+                    groupId = "g-num-sense-2",
+                    concepts = listOf("짝 찾기", "빠짐없이 세기"),
+                    statement = "1부터 9까지 숫자 카드가 한 장씩 있어요. 두 장을 골라 합이 10이 되게 하는 방법은 모두 몇 가지일까요?",
+                    choices = listOf("4가지", "5가지", "3가지", "8가지"),
+                    answerIndex = 0,
+                    explanation =
+                        "합이 10이 되는 짝을 작은 수부터 빠짐없이 찾아요: 1+9, 2+8, 3+7, 4+6. " +
+                            "다음 차례는 5+5인데, 5 카드는 한 장뿐이라 두 장을 고를 수 없어요. " +
+                            "그래서 모두 4가지예요. 짝의 작은 쪽 수는 언제나 1, 2, 3, 4 — 이렇게 작은 쪽만 세면 빠뜨리지 않아요.",
+                    mistakes =
+                        listOf(
+                            Mistake(1, "5+5도 세었나요? 5 카드는 한 장뿐이라 두 장을 고를 수 없어요."),
+                            Mistake(2, "한 짝을 빠뜨리지 않았나요? 작은 수부터 1+9, 2+8, 3+7, 4+6까지 차례로 세어 봐요."),
+                            Mistake(3, "(1,9)와 (9,1)처럼 순서를 바꿔 두 번 세었나요? 고른 두 장은 순서가 없어요."),
                         ),
                 ),
             )
