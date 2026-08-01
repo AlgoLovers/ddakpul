@@ -36,8 +36,9 @@ object RecommendationRules {
  *
  * 규칙(우선순위 순):
  * 1. 기록 없음 → 현재 난이도에서 시작([RecommendationReason.START]).
- * 2. 규칙4(정체): 현재 난이도에서 누적 오답 ≥ [RecommendationRules.STAGNATION_WRONG]
- *    → 난이도 −1 + 대표문제 해설 제공([RecommendationReason.REMEDIATION]). 안전망이라 가장 먼저 본다.
+ * 2. 규칙4(정체): 현재 난이도에서 누적 오답 ≥ [RecommendationRules.STAGNATION_WRONG]이고
+ *    **직전 시도가 오답**일 때 → 난이도 −1 + 대표문제 해설 제공([RecommendationReason.REMEDIATION]).
+ *    안전망이라 가장 먼저 본다. 직전을 맞혔다면 회복 중이므로 발동하지 않는다(승급을 막지 않는다).
  * 3. 규칙8(복습): 정체가 아니고 만기 복습 그룹이 있으며 복습 슬롯 차례면
  *    ([todaySolved] % [RecommendationRules.REVIEW_SLOT_EVERY] == 마지막 슬롯) 복습 출제.
  *    난이도는 바꾸지 않는다([RecommendationReason.REVIEW]).
@@ -170,12 +171,15 @@ class RecommendNextProblemUseCase
             val current = Difficulty.clamp(state.currentDifficulty)
             if (attempts.isEmpty()) return Decision(current, RecommendationReason.START)
 
-            // 규칙4(정체): 현재 난이도에서 누적 오답이 임계 이상이면 해설 + 선수 개념(난이도 −1)으로.
+            // 규칙4(정체): 현재 난이도에서 누적 오답이 임계 이상이고 **직전 시도도 오답**이면
+            // 해설 + 선수 개념(난이도 −1)으로. 직전을 맞힌 아이는 막힌 상태가 아니므로 발동하지 않는다 —
+            // 옛 오답이 최근 창에 남아 "연속으로 맞히는데도 강등"되는 사고(사용자 피드백 2026-08)를 막는다.
             val wrongAtCurrent =
                 attempts.count { attempt ->
                     !attempt.isCorrect && problemsById[attempt.problemId]?.difficulty == current
                 }
-            if (wrongAtCurrent >= RecommendationRules.STAGNATION_WRONG) {
+            val lastWasWrong = attempts.last().isCorrect.not()
+            if (lastWasWrong && wrongAtCurrent >= RecommendationRules.STAGNATION_WRONG) {
                 return Decision(Difficulty.clamp(current - 1), RecommendationReason.REMEDIATION)
             }
 
