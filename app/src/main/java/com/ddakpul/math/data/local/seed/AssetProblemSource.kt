@@ -80,7 +80,7 @@ class AssetProblemSource
              *     (gen-leapfrog 변화 난6) 4 + 숫자야구(gen-numberbaseball 자료 난5) 4 +
              *     주사위 굴리기(gen-diceroll 도형 난6) 4. 유형 다양성 보강(CHANGE d9·d6, DATA d5, SHAPE d6).
              */
-            const val CONTENT_VERSION = 5
+            const val CONTENT_VERSION = 6
             private const val PREF = "ddakpul_seed"
             private const val KEY_SEEDED_LANG = "seeded_lang"
             private const val KEY_SEEDED_VERSION = "seeded_content_version"

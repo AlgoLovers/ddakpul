@@ -22,6 +22,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -93,7 +97,11 @@ fun ScratchpadOverlay(
             Box(modifier = Modifier.weight(1f).fillMaxWidth().background(PaperColor, RoundedCornerShape(12.dp))) {
                 // 도형 문제면 그림을 연습장 위쪽에 깔아, 그 위에 보조선을 그으며 풀 수 있게 한다.
                 figure?.let {
-                    ProblemFigureView(figure = it, modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp))
+                    ProblemFigureView(
+                        figure = it,
+                        modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp),
+                        inkOverride = PaperInk,
+                    )
                 }
                 ScratchCanvas(strokes = strokes, tool = tool, penColor = penColor, modifier = Modifier.fillMaxSize())
             }
@@ -112,17 +120,31 @@ fun ScratchpadOverlay(
                 ) {
                     InkColors.forEach { c ->
                         val selected = tool == ScratchTool.PEN && penColor == c
+                        // 색 원 자체는 작아도 터치 영역은 48dp(하드룰 6) — 아이 손가락 기준.
                         Box(
                             modifier =
                                 Modifier
-                                    .size(if (selected) 40.dp else 32.dp)
-                                    .background(c, CircleShape)
-                                    .then(if (selected) Modifier.border(3.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
+                                    .size(48.dp)
                                     .clickable {
                                         tool = ScratchTool.PEN
                                         penColor = c
                                     },
-                        )
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Box(
+                                modifier =
+                                    Modifier
+                                        .size(if (selected) 40.dp else 32.dp)
+                                        .background(c, CircleShape)
+                                        .then(
+                                            if (selected) {
+                                                Modifier.border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
+                                            } else {
+                                                Modifier
+                                            },
+                                        ),
+                            )
+                        }
                     }
                 }
                 Row(
@@ -153,11 +175,13 @@ private fun ScratchHeader(
             )
             Text(text = statement, style = MaterialTheme.typography.bodyMedium)
         }
-        Text(
-            text = "✕",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.clickable(onClick = onDismiss).padding(8.dp),
-        )
+        // 아이콘 버튼으로 — 스크린리더가 버튼으로 읽고, 터치 영역도 48dp를 확보한다.
+        IconButton(onClick = onDismiss) {
+            Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = stringResource(R.string.scratchpad_close),
+            )
+        }
     }
 }
 
@@ -279,5 +303,8 @@ private fun ToolButton(
 private const val PEN_WIDTH = 5f
 private const val ERASER_WIDTH = 42f
 private val PaperColor = Color(0xFFFDFBF5) // 따뜻한 종이색
+
+/** 종이색이 고정이라 그 위 도형 선도 고정 — 다크 테마에서도 대비를 유지한다. */
+private val PaperInk = Color(0xFF222222)
 private val GridColor = Color(0x14000000) // 아주 옅은 모눈
 private val InkColors = listOf(Color(0xFF222222), Color(0xFF2962FF), Color(0xFFD32F2F)) // 검정·파랑·빨강

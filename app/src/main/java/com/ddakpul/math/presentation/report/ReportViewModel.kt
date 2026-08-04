@@ -10,6 +10,7 @@ import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.usecase.ComputeNextStepUseCase
+import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -96,18 +97,22 @@ class ReportViewModel
     @Inject
     constructor(
         observeStats: ObserveLearningStatsUseCase,
+        observeDailyGoal: ObserveDailyGoalUseCase,
         private val computeNextStep: ComputeNextStepUseCase,
     ) : ViewModel() {
         val uiState: StateFlow<ReportUiState> =
-            observeStats(
-                zoneOffsetMillis = zoneOffsetMillis(),
-                nowMillis = { System.currentTimeMillis() },
-            ).map { stats ->
+            combine(
+                observeStats(
+                    zoneOffsetMillis = zoneOffsetMillis(),
+                    nowMillis = { System.currentTimeMillis() },
+                ),
+                observeDailyGoal(),
+            ) { stats, dailyGoal ->
                 ReportUiState(
                     stats = stats,
                     isLoading = false,
                     dayCells = buildDayCells(stats),
-                    insights = buildInsights(stats),
+                    insights = buildInsights(stats, dailyGoal),
                     weeklySummary = buildWeeklySummary(stats),
                     masteryGrid = buildMasteryGrid(stats),
                     nextStep = computeNextStep(stats),
@@ -154,9 +159,14 @@ class ReportViewModel
             }
         }
 
-        private fun buildInsights(stats: LearningStats): List<ReportInsight> =
+        // 목표 달성 판정은 홈·풀이 화면과 같은 '사용자가 고른 목표'를 쓴다 —
+        // 상수 10을 쓰면 목표를 5로 낮춘 아이에게 리포트만 달성이라고 말하지 않는다(2026-08 QA).
+        private fun buildInsights(
+            stats: LearningStats,
+            dailyGoal: Int,
+        ): List<ReportInsight> =
             buildList {
-                if (stats.todaySolved >= SessionGoals.DAILY_GOAL_PROBLEMS) add(ReportInsight.GoalDone)
+                if (stats.todaySolved >= dailyGoal) add(ReportInsight.GoalDone)
                 if (stats.streakDays >= MIN_STREAK_FOR_INSIGHT) add(ReportInsight.Streak(stats.streakDays))
 
                 val recent = stats.recentAccuracy
@@ -193,7 +203,7 @@ class ReportViewModel
             return WeeklySummary(
                 solved = solved,
                 studyDays = lastWeek.count { it.solved > 0 },
-                accuracyPercent = if (solved > 0) correct * 100 / solved else 0,
+                accuracyPercent = if (solved > 0) (correct.toFloat() / solved).toPercentInt() else 0,
                 deltaPercentPoint = delta,
                 weakConcept =
                     stats.conceptStats

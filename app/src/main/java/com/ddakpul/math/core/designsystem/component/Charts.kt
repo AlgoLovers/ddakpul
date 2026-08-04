@@ -186,11 +186,15 @@ fun TrendLineChart(
                 )
             }
 
-            // 데이터 있는 이웃끼리만 선으로 잇는다.
+            // 데이터 있는 '이웃'끼리만 선으로 잇는다 — 빈 날에서 끊어야 없는 데이터를
+            // 가로지르는 선이 생기지 않는다(2026-08 QA: 5일 쉬면 그 구간을 직선이 관통했다).
             var prev: Pair<Int, Float>? = null
             values.forEachIndexed { i, v ->
-                if (v == null) return@forEachIndexed
-                prev?.let { (pi, pv) ->
+                if (v == null) {
+                    prev = null
+                    return@forEachIndexed
+                }
+                prev?.takeIf { (pi, _) -> pi == i - 1 }?.let { (pi, pv) ->
                     drawLine(
                         color = lineColor,
                         start = Offset(x(pi), y(pv)),

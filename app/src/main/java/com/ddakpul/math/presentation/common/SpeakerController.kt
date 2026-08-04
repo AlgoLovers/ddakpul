@@ -81,7 +81,12 @@ fun rememberSpeaker(): SpeakerController {
     val label = savedLabel ?: resolvedDefaultLabel ?: fallbackLabel
 
     // 선택값이 신경망 모델이고 실제로 받아져 있으면 신경망 엔진, 아니면 시스템 TTS.
-    val neuralModel = TtsModels.neuralOf(enginePackage)?.takeIf { it.isDownloaded(context) }
+    // 모델 파일 존재 확인은 디스크 접근이라 매 리컴포지션(보기 탭 등)마다 돌면 안 된다 —
+    // 엔진이 바뀔 때만 다시 본다(2026-08 QA).
+    val neuralModel =
+        remember(enginePackage) {
+            TtsModels.neuralOf(enginePackage)?.takeIf { it.isDownloaded(context) }
+        }
 
     val controller = remember { SpeakerController() }
     // label은 표시용이라 엔진을 새로 붙일 필요 없이 매 recomposition마다 갱신한다(엔진명이 늦게

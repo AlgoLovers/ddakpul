@@ -73,6 +73,9 @@ internal fun selectWorksheetProblems(
     val all =
         groups
             .flatMap { it.problems }
+            // 구성형(등분 퍼즐)은 종이에 옮길 수 없다 — 격자를 그리지 못하고 보기·정답도 없어
+            // 인쇄하면 풀 수 없는 문항이 되고, 정답지 생성은 인덱스 −1로 크래시한다(2026-08 QA).
+            .filterNot { it.isDissection }
             .filter { spec.area == null || it.area == spec.area }
     if (all.isEmpty() || spec.count <= 0) return emptyList()
     val byId = all.associateBy { it.id }

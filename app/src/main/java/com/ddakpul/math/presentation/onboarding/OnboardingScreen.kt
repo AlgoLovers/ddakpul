@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,9 +56,9 @@ fun OnboardingScreen(
     onComplete: (startingDifficulty: Int, dailyGoal: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var step by remember { mutableIntStateOf(0) }
-    var dailyGoal by remember { mutableIntStateOf(SessionGoals.DAILY_GOAL_PROBLEMS) }
-    var startingDifficulty by remember { mutableIntStateOf(Difficulty.DEFAULT) }
+    var step by rememberSaveable { mutableIntStateOf(0) }
+    var dailyGoal by rememberSaveable { mutableIntStateOf(SessionGoals.DAILY_GOAL_PROBLEMS) }
+    var startingDifficulty by rememberSaveable { mutableIntStateOf(Difficulty.DEFAULT) }
 
     Column(
         // edge-to-edge라 시스템 바(상태/네비게이션) 영역을 피해야 하단 '다음' 버튼이 네비게이션 바에 가리지 않는다.

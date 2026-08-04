@@ -17,8 +17,8 @@
     <string name="home_goal_done">Goal complete — great work today! 🎉</string>
     <string name="home_cta_continue">Keep going</string>
     <string name="home_cta_level">Level %1$d</string>
-    <string name="home_review_ready">%1$d problems are ready to review</string>
-    <string name="home_review_go">Review →</string>
+    <string name="home_review_ready">%1$d topics are due for review</string>
+    <string name="home_review_go">Review as you go →</string>
     <string name="home_skill_title">My skill map</string>
     <string name="home_skill_summary">%1$d solved · %2$d%% correct</string>
     <string name="home_unit_count">%1$d</string>
@@ -363,6 +363,7 @@
     <string name="video_retry">Retry</string>
     <!-- Spatial dissection puzzle pilot -->
     <string name="puzzle_clear">Clear</string>
+    <string name="puzzle_piece_label">Piece %1$d</string>
     <string name="puzzle_check">Check</string>
     <string name="puzzle_next">Next puzzle</string>
     <string name="puzzle_correct">Correct! Congruent pieces complete 🎉</string>
@@ -372,4 +373,5 @@
     <string name="puzzle_err_disconnected">Each piece must be one connected block.</string>
     <string name="puzzle_err_congruent">The pieces are not the same shape (they must match after rotating or flipping).</string>
     <string name="puzzle_err_symbol">Each piece must contain one ●, one ▲, and one ■.</string>
+    <string name="scratchpad_close">Close scratchpad</string>
 </resources>

@@ -321,7 +321,7 @@ private fun PremiumAnalyticsSections(
                 )
             }
         }
-        if (stats.avgTimeSecByDifficulty.isNotEmpty()) {
+        if (stats.avgTimeSecByDifficulty.values.any { it > 0 }) {
             SectionCard(
                 title = stringResource(R.string.report_avgtime_title),
                 icon = "⏱️",
@@ -685,12 +685,16 @@ private fun MistakeItem(problem: Problem) {
     ) {
         Text(text = problem.statement, style = MaterialTheme.typography.bodyMedium)
         problem.figure?.let { ProblemFigureView(figure = it, modifier = Modifier.fillMaxWidth()) }
-        Text(
-            text = stringResource(R.string.result_correct_answer, problem.choices[problem.answer.correctChoiceIndex]),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold,
-            color = colors.primary,
-        )
+        // 구성형(등분 퍼즐)은 보기가 없고 correctChoiceIndex가 -1이라 인덱스 접근이 곧 크래시다
+        // (2026-08 QA: 퍼즐을 틀리면 리포트 탭이 영구 크래시). 정답 줄은 4지선다에서만 보여준다.
+        problem.choices.getOrNull(problem.answer.correctChoiceIndex)?.let { answerText ->
+            Text(
+                text = stringResource(R.string.result_correct_answer, answerText),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                color = colors.primary,
+            )
+        }
         problem.explanation?.let {
             Text(text = it, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
         }
@@ -737,8 +741,13 @@ private fun ConceptRow(concept: ConceptStat) {
                 modifier = Modifier.padding(start = 8.dp),
             )
         }
-        LinearProgressIndicator(
-            progress = { concept.accuracy },
+        // 앱 공용 진행바 — M3 기본 LinearProgressIndicator는 트랙이 연녹색이라
+        // 정답률 0%인 개념이 '꽉 찬 초록 막대'로 읽힌다(2026-08 QA).
+        ProgressBar(
+            fraction = concept.accuracy,
+            color = MaterialTheme.colorScheme.primary,
+            trackColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            height = 8.dp,
             modifier = Modifier.fillMaxWidth(),
         )
     }

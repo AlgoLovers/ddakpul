@@ -17,8 +17,8 @@
     <string name="home_goal_done">오늘 목표 달성! 충분히 잘했어요 🎉</string>
     <string name="home_cta_continue">이어서 풀기</string>
     <string name="home_cta_level">난이도 %1$d</string>
-    <string name="home_review_ready">복습할 문제 %1$d개가 준비됐어요</string>
-    <string name="home_review_go">복습 →</string>
+    <string name="home_review_ready">복습할 때가 된 개념이 %1$d개 있어요</string>
+    <string name="home_review_go">문제 풀며 복습 →</string>
     <string name="home_skill_title">내 실력 지도</string>
     <string name="home_skill_summary">전체 %1$d문제 · 정답률 %2$d%%</string>
     <string name="home_unit_count">%1$d</string>
@@ -321,7 +321,7 @@
     <string name="feedback_entry_header">[%1$s · %2$s · 난이도 %3$d]</string>
     <string name="feedback_entry_missing">[%1$s · 문제은행에서 이미 삭제됨]</string>
     <string name="feedback_entry_reason">이유: %1$s</string>
-    <string name="settings_about">딱풀 · 초등 사고력 수학 적응형 학습</string>
+    <string name="settings_about">딱풀 · 사고력 수학 적응형 학습</string>
 
     <!--
         응원 메시지 — 성장 마인드셋 연구(Mueller & Dweck 1998, Gunderson 2013)의 "과정 칭찬" 원칙.
@@ -364,6 +364,7 @@
     <string name="video_retry">다시 시도</string>
     <!-- 공간 퍼즐(격자 등분) 파일럿 -->
     <string name="puzzle_clear">지우기</string>
+    <string name="puzzle_piece_label">%1$d번 조각</string>
     <string name="puzzle_check">확인</string>
     <string name="puzzle_next">다음 퍼즐</string>
     <string name="puzzle_correct">정답! 합동 등분 완성 🎉</string>
@@ -373,4 +374,5 @@
     <string name="puzzle_err_disconnected">각 조각은 한 덩어리로 이어져야 해요.</string>
     <string name="puzzle_err_congruent">조각들의 모양이 서로 똑같지 않아요(돌리거나 뒤집어서 같아야 해요).</string>
     <string name="puzzle_err_symbol">각 조각에 ●·▲·■가 하나씩 들어가야 해요.</string>
+    <string name="scratchpad_close">연습장 닫기</string>
 </resources>
