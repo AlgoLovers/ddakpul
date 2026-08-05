@@ -22,6 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.TimeZone
@@ -51,14 +52,25 @@ class SolveViewModel
 
         private var questionStartMillis: Long = 0L
 
+        /** 이번 화면 세션이 시작된 시각 — 소프트 컷은 '오늘 누적'이 아니라 이 세션 경과로 판단한다. */
+        private val sessionStartMillis: Long = System.currentTimeMillis()
+
+        /** 오늘 푼 수를 한 번이라도 읽었는지 — 첫 추천이 0을 보고 도는 것을 막는 신호. */
+        private val statsLoaded = MutableStateFlow(false)
+
         /** 오답 노트에서 넘어온 복습 대상 문제 id(있으면 이 문제 하나만 다시 푼다). */
         private val reviewProblemId: String? = savedStateHandle[ARG_REVIEW_PROBLEM_ID]
 
         init {
-            if (reviewProblemId != null) {
-                loadReview(reviewProblemId)
-            } else {
-                loadNext()
+            // 오늘 푼 수를 먼저 채운 뒤 첫 문제를 뽑는다 — 순서가 반대면 todaySolved=0으로
+            // 추천이 돌아 복습 슬롯(규칙8: todaySolved % 3 == 2)이 진입 직후엔 절대 안 걸린다(2026-08 QA).
+            viewModelScope.launch {
+                if (reviewProblemId != null) {
+                    loadReview(reviewProblemId)
+                } else {
+                    statsLoaded.first { it }
+                    loadNext()
+                }
             }
             // 오늘 푼 문제 수는 기록이 쌓일 때마다 자동 갱신된다(시도 저장 → Flow 재계산).
             viewModelScope.launch {
@@ -72,6 +84,7 @@ class SolveViewModel
                             todayTimeSpentSec = stats.todayTimeSpentSec,
                         )
                     }
+                    statsLoaded.value = true
                 }
             }
             viewModelScope.launch {
@@ -99,6 +112,7 @@ class SolveViewModel
                         _uiState.update { current ->
                             current.copy(
                                 phase = SolvePhase.SOLVING,
+                                problemOrdinal = current.todaySolved + 1,
                                 problem = recommendation.problem,
                                 area = recommendation.problem.area,
                                 // 복습(REVIEW)은 현재 레벨과 다른 난이도일 수 있으니 문제 자체의 난이도를 보여준다.
@@ -200,6 +214,7 @@ class SolveViewModel
                 _uiState.update {
                     it.copy(
                         phase = SolvePhase.GRADED,
+                        sessionElapsedSec = sessionElapsedSec(),
                         result = gradingResult,
                         retryLikely =
                             !gradingResult.isCorrect && it.sessionStreak >= 1 && !it.reviewMode,
@@ -233,6 +248,7 @@ class SolveViewModel
                 _uiState.update {
                     it.copy(
                         phase = SolvePhase.GRADED,
+                        sessionElapsedSec = sessionElapsedSec(),
                         result = gradingResult,
                         retryLikely = false,
                         sessionStreak = 0,
@@ -257,13 +273,14 @@ class SolveViewModel
                     } else {
                         s.dissectionAssignment + (cell to s.dissectionPiece)
                     }
-                s.copy(dissectionAssignment = next)
+                s.copy(dissectionAssignment = next, dissectionResult = null)
             }
         }
 
         fun clearDissection() {
             if (_uiState.value.phase != SolvePhase.SOLVING) return
-            _uiState.update { it.copy(dissectionAssignment = emptyMap()) }
+            // 힌트도 함께 지운다 — 안 그러면 다 칠한 뒤에도 "아직 안 칠한 칸이 있어요"가 남는다.
+            _uiState.update { it.copy(dissectionAssignment = emptyMap(), dissectionResult = null) }
         }
 
         fun submitDissection() {
@@ -292,12 +309,15 @@ class SolveViewModel
                 _uiState.update {
                     it.copy(
                         phase = SolvePhase.GRADED,
+                        sessionElapsedSec = sessionElapsedSec(),
                         dissectionResult = validation,
                         sessionStreak = if (validation.isValid) it.sessionStreak + 1 else 0,
                     )
                 }
             }
         }
+
+        private fun sessionElapsedSec(): Int = ((System.currentTimeMillis() - sessionStartMillis) / MILLIS_PER_SECOND).toInt().coerceAtLeast(0)
 
         companion object {
             const val MILLIS_PER_SECOND = 1000L

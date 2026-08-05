@@ -70,7 +70,7 @@ def gen_outfits():
     from itertools import product
     for tops, bottoms in [(["빨강", "파랑", "노랑"], ["청바지", "검정바지"]),
                           (["티셔츠", "셔츠"], ["반바지", "긴바지", "치마"]),
-                          (["흰색", "회색"], ["운동화", "구두"]),
+                          (["흰색 티", "회색 티"], ["청바지", "검정치마"]),
                           (["노랑", "초록", "분홍"], ["긴치마", "짧은치마", "바지"])]:
         cnt = sum(1 for _ in product(tops, bottoms))
         n = len(tops) * len(bottoms)

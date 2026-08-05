@@ -1,5 +1,6 @@
 package com.ddakpul.math.data.repository
 
+import com.ddakpul.math.core.common.LocaleManagerCompat
 import com.ddakpul.math.data.local.dao.ProblemDao
 import com.ddakpul.math.data.local.seed.AssetProblemSource
 import com.ddakpul.math.data.local.seed.ProblemCatalog
@@ -29,7 +30,10 @@ class ProblemRepositoryImpl
         private val seedMutex = Mutex()
 
         private suspend fun ensureSeeded() {
-            val all = ProblemCatalog.problems + assetProblemSource.problems
+            // 수제 카탈로그는 한국어 전용이다 — 영어 모드에 섞으면 읽지 못하는 문제가
+            // 12% 확률로 나온다(2026-08 QA). 영어에서는 이중언어인 생성 문항만 낸다.
+            val handMade = if (assetProblemSource.langTag == LocaleManagerCompat.KOREAN) ProblemCatalog.problems else emptyList()
+            val all = handMade + assetProblemSource.problems
             val lang = assetProblemSource.langTag
             val version = AssetProblemSource.CONTENT_VERSION
             // 문항 수가 같아도 (1) 언어가 바뀌었거나(앱 내 언어 토글) (2) 내용 버전이 올랐으면

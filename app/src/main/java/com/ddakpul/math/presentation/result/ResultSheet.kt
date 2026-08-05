@@ -417,9 +417,9 @@ private fun ExplanationTabs(
             if (solutionVideo != null) add(ResultTab.VIDEO)
         }
     if (tabs.isEmpty()) return
-    var selected by remember(result) {
-        mutableStateOf(tabs.firstOrNull { it != ResultTab.VIDEO } ?: ResultTab.VIDEO)
-    }
+    // 영상만 있는 경우엔 '선택된 탭'이 없다 — VIDEO는 본문이 없는 행동 탭이라
+    // 선택 표시만 남고 아무것도 안 보이는 상태가 된다(2026-08 QA).
+    var selected by remember(result) { mutableStateOf(tabs.firstOrNull { it != ResultTab.VIDEO }) }
     val colors = MaterialTheme.colorScheme
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(
@@ -450,7 +450,7 @@ private fun ExplanationTabs(
             when (selected) {
                 ResultTab.EXPLANATION -> result.explanation
                 ResultTab.DETAILED -> result.detailedExplanation
-                ResultTab.VIDEO -> null
+                ResultTab.VIDEO, null -> null
             }
         body?.let {
             Text(text = it, style = MaterialTheme.typography.bodyLarge, color = colors.onSurface)

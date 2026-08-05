@@ -31,8 +31,11 @@ import kotlin.math.sin
 fun ProblemFigureView(
     figure: ProblemFigure,
     modifier: Modifier = Modifier,
+    inkOverride: Color? = null,
 ) {
-    val ink = MaterialTheme.colorScheme.onSurface
+    // 연습장처럼 배경이 테마와 무관하게 고정된 곳(흰 종이)에서는 잉크를 직접 지정한다 —
+    // 다크 테마의 onSurface(거의 흰색)를 그대로 쓰면 흰 종이 위 흰 선이 된다(2026-08 QA).
+    val ink = inkOverride ?: MaterialTheme.colorScheme.onSurface
     val accent = MaterialTheme.colorScheme.primary
     // 쌓기나무 세 면(윗면·오른면·왼면)을 밝기 차로 입체감 있게.
     val cubeFaces =
