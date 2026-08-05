@@ -18,6 +18,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
 /**
@@ -41,7 +45,11 @@ fun GradientPrimaryButton(
                 modifier
                     .clip(shape)
                     .background(colors.onSurface.copy(alpha = DISABLED_CONTAINER_ALPHA))
-                    .padding(vertical = 16.dp, horizontal = 24.dp),
+                    // 비활성도 버튼임을 알려야 스크린리더가 "사용 안 함"으로 안내한다.
+                    .semantics {
+                        role = Role.Button
+                        disabled()
+                    }.padding(vertical = 16.dp, horizontal = 24.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -60,7 +68,7 @@ fun GradientPrimaryButton(
                 .shadow(elevation = 10.dp, shape = shape, spotColor = colors.primary, ambientColor = colors.primary)
                 .clip(shape)
                 .background(Brush.verticalGradient(listOf(top, bottom)))
-                .clickable(onClick = onClick)
+                .clickable(onClick = onClick, role = Role.Button)
                 .padding(vertical = 16.dp, horizontal = 24.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -69,7 +77,8 @@ fun GradientPrimaryButton(
     }
 }
 
-private const val HIGHLIGHT_FRACTION = 0.16f
+// 상단을 너무 밝히면 흰 글자 대비가 3.7:1까지 내려가 본문 기준(4.5:1)에 미달한다.
+private const val HIGHLIGHT_FRACTION = 0.07f
 private const val SHADE_FRACTION = 0.14f
 private const val DISABLED_CONTAINER_ALPHA = 0.12f
 private const val DISABLED_CONTENT_ALPHA = 0.38f

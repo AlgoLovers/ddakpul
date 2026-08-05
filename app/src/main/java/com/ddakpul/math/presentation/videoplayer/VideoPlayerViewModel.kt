@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.domain.repository.SolutionVideoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,24 +44,32 @@ class VideoPlayerViewModel
 
         private var startedFor: String? = null
 
+        /** 진행 중인 로드 — 겹치면 이전 것을 취소한다. */
+        private var loadJob: Job? = null
+
         /** 화면 진입 시 1회 호출. 재시도 버튼도 이걸 다시 부른다. */
         fun load(methodCode: String) {
+            // 죽은 가드였던 startedFor를 실제로 쓴다 — 재시도 연타·회전으로 load가 겹치면
+            // 두 코루틴이 같은 .part 파일에 동시에 써서 손상된 mp4가 영구 캐시된다.
+            if (startedFor == methodCode && loadJob?.isActive == true) return
+            loadJob?.cancel()
             startedFor = methodCode
             _state.value = VideoPlayerState.Loading
-            viewModelScope.launch {
-                val video = repository.videoForMethod(methodCode)
-                if (video == null) {
-                    _state.value = VideoPlayerState.Failed
-                    return@launch
-                }
-                if (!repository.isCached(video)) {
-                    _state.value = VideoPlayerState.Downloading(0, 0)
-                }
-                val path =
-                    repository.ensureLocal(video) { received, total ->
-                        _state.value = VideoPlayerState.Downloading(received, total)
+            loadJob =
+                viewModelScope.launch {
+                    val video = repository.videoForMethod(methodCode)
+                    if (video == null) {
+                        _state.value = VideoPlayerState.Failed
+                        return@launch
                     }
-                _state.value = if (path != null) VideoPlayerState.Ready("file://$path") else VideoPlayerState.Failed
-            }
+                    if (!repository.isCached(video)) {
+                        _state.value = VideoPlayerState.Downloading(0, 0)
+                    }
+                    val path =
+                        repository.ensureLocal(video) { received, total ->
+                            _state.value = VideoPlayerState.Downloading(received, total)
+                        }
+                    _state.value = if (path != null) VideoPlayerState.Ready("file://$path") else VideoPlayerState.Failed
+                }
         }
     }

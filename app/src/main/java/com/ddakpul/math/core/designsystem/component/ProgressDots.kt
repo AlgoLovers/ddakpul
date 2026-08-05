@@ -32,8 +32,11 @@ fun ProgressDots(
             val color =
                 when {
                     index < solved -> colors.secondary
+
                     highlightNext && index == solved -> colors.primary
-                    else -> colors.outlineVariant
+
+                    // outlineVariant는 배경 대비 1.2:1이라 '아직 안 푼 칸'이 안 보인다.
+                    else -> colors.outline
                 }
             Box(
                 modifier =

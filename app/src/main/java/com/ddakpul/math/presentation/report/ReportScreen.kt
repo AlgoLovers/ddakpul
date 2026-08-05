@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -114,6 +115,14 @@ fun ReportScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+            // 빈 화면에서 갈 곳이 없으면 막다른 곳이 된다 - 바로 풀러 갈 수 있게.
+            Button(onClick = onStartSolving) {
+                Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null)
+                Text(
+                    text = stringResource(R.string.report_empty_cta),
+                    modifier = Modifier.padding(start = 6.dp),
+                )
+            }
         }
         return
     }
@@ -252,7 +261,7 @@ private fun rememberReportTexts(stats: LearningStats): ReportTexts {
                 stringResource(R.string.report_total_solved) to stringResource(R.string.home_unit_count, stats.totalSolved),
                 stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, stats.accuracy.toPercentInt()),
                 stringResource(R.string.report_current_level) to stringResource(R.string.home_unit_level, stats.currentDifficulty),
-                stringResource(R.string.report_streak) to stringResource(R.string.report_unit_days, stats.streakDays),
+                stringResource(R.string.report_streak) to pluralStringResource(R.plurals.report_unit_days, stats.streakDays, stats.streakDays),
             ),
         sectionAreaTitle = stringResource(R.string.report_export_section_area),
         sectionWeakTitle = stringResource(R.string.report_export_section_weak),
@@ -466,7 +475,7 @@ private fun KeyStatTiles(stats: LearningStats) {
             StatTile(
                 icon = "🔥",
                 label = stringResource(R.string.report_streak),
-                value = stringResource(R.string.report_unit_days, stats.streakDays),
+                value = pluralStringResource(R.plurals.report_unit_days, stats.streakDays, stats.streakDays),
                 caption = stringResource(R.string.report_caption_best_streak, stats.bestStreakDays),
                 modifier = Modifier.weight(1f),
             )

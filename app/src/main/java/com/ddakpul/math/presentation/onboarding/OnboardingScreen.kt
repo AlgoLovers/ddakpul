@@ -1,5 +1,6 @@
 package com.ddakpul.math.presentation.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -56,7 +57,10 @@ fun OnboardingScreen(
     onComplete: (startingDifficulty: Int, dailyGoal: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // 시스템 뒤로가기가 앱을 종료해 온보딩이 통째로 날아가던 문제 — 단계만 되돌린다.
     var step by rememberSaveable { mutableIntStateOf(0) }
+    // 시스템 뒤로가기가 앱을 끝내 온보딩이 통째로 날아가던 문제 — 첫 단계가 아니면 단계만 되돌린다.
+    BackHandler(enabled = step > 0) { step -= 1 }
     var dailyGoal by rememberSaveable { mutableIntStateOf(SessionGoals.DAILY_GOAL_PROBLEMS) }
     var startingDifficulty by rememberSaveable { mutableIntStateOf(Difficulty.DEFAULT) }
 
