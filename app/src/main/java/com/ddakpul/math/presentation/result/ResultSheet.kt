@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -59,6 +60,7 @@ fun ResultSheet(
     softCutSuggested: Boolean,
     solutionVideo: SolutionVideo?,
     retryLikely: Boolean,
+    goalJustReached: Boolean,
     onDismiss: () -> Unit,
     onNext: () -> Unit,
     onFinishToday: () -> Unit,
@@ -127,6 +129,11 @@ fun ResultSheet(
                 )
             }
 
+            // 하루 목표를 채운 순간은 아이에게 가장 큰 사건인데 아무 표시가 없었다.
+            // 연출은 희소할수록 정보가 된다 — 목표를 막 채운 그 한 번만, 과장 없이 한 줄로.
+            if (goalJustReached && !reviewMode) {
+                GoalReachedCard()
+            }
             // 세션 소프트 컷 — 목표 달성/집중 한계 도달 시 부드러운 종료 제안(강제 아님). 복습 모드엔 무의미해 감춘다.
             if (softCutSuggested && !reviewMode) {
                 SoftCutCard()
@@ -203,7 +210,8 @@ private fun ResultActions(
         OutlinedButton(
             onClick = onFinishToday,
             shape = RoundedCornerShape(18.dp),
-            modifier = Modifier.height(56.dp),
+            // 고정 height는 글자 배율 2.0에서 라벨을 세로로 잘라먹는다.
+            modifier = Modifier.heightIn(min = 56.dp),
         ) {
             Text(
                 text = stringResource(R.string.result_finish),
@@ -472,6 +480,8 @@ private fun ResultTabPill(
                 .clip(RoundedCornerShape(11.dp))
                 .background(if (isSelected) colors.surfaceContainerHigh else Color.Transparent)
                 .clickable(onClick = onClick)
+                // 탭 필도 손가락 타겟 — 9dp 패딩이면 38dp라 하드룰 6(48dp) 미달.
+                .heightIn(min = 48.dp)
                 .padding(vertical = 9.dp),
         contentAlignment = Alignment.Center,
     ) {
@@ -490,6 +500,31 @@ private fun ResultTab.labelRes(): Int =
         ResultTab.DETAILED -> R.string.result_tab_detailed
         ResultTab.VIDEO -> R.string.result_tab_video
     }
+
+/** 오늘 목표를 방금 채웠을 때 한 번만 뜨는 축하 — 수집물·점수 없이 사실만 알린다. */
+@Composable
+private fun GoalReachedCard() {
+    val colors = MaterialTheme.colorScheme
+    Surface(
+        color = colors.secondaryContainer,
+        contentColor = colors.onSecondaryContainer,
+        shape = RoundedCornerShape(18.dp),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(text = "\uD83C\uDF89", style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = stringResource(R.string.result_goal_reached),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+    }
+}
 
 /** 소프트 컷 안내 — 종료는 아래 '마치기' 버튼이 담당하므로 카드는 말만 건넨다. */
 @Composable

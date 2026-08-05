@@ -35,6 +35,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -198,7 +199,7 @@ private fun TodayGoalHeroCard(
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         Text(
-                            text = stringResource(R.string.home_goal_of, goal),
+                            text = pluralStringResource(R.plurals.home_goal_of, goal, goal),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
@@ -334,7 +335,7 @@ private fun ReviewReadyCard(
         ) {
             Text(text = "🔁", style = MaterialTheme.typography.titleMedium)
             Text(
-                text = stringResource(R.string.home_review_ready, count),
+                text = pluralStringResource(R.plurals.home_review_ready, count, count),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.weight(1f),
             )
@@ -373,12 +374,9 @@ private fun SkillMapCard(
                     modifier = Modifier.weight(1f),
                 )
                 Text(
-                    text =
-                        stringResource(
-                            R.string.home_skill_summary,
-                            stats?.totalSolved ?: 0,
-                            (stats?.accuracy ?: 0f).toPercentInt(),
-                        ),
+                    // 아이 홈에는 정답률을 전면에 두지 않는다 — 수행 지향 지표가 성장 마인드셋과
+                    // 충돌한다(docs/CONTENT_ENGINE_STRATEGY 학습자 대시보드 원칙).
+                    text = stringResource(R.string.home_skill_summary, stats?.totalSolved ?: 0),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -415,6 +413,7 @@ private fun SkillMapRow(
             color = stat.area.areaColor(),
             trackColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             height = 8.dp,
+            stateLabel = stringResource(R.string.home_skill_progress_a11y, stat.solved),
             modifier = Modifier.fillMaxWidth(),
         )
     }

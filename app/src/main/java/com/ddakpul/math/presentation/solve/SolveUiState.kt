@@ -40,6 +40,8 @@ data class SolveUiState(
      * true(확실한 신호만). 정체 누적 등으로 다른 규칙이 앞설 수 있어 '가능성'이다.
      */
     val retryLikely: Boolean = false,
+    /** 이번 채점으로 하루 목표를 막 채웠는지 — 축하는 그 한 번만 띄운다. */
+    val goalJustReached: Boolean = false,
     /** 오늘 풀이에 쓴 총 시간(초). 통계 표시용 — 소프트 컷 판정에는 쓰지 않는다. */
     val todayTimeSpentSec: Int = 0,
     /** 이번 화면 세션(앱을 열고 문제풀기에 들어온 뒤) 경과 시간(초). */

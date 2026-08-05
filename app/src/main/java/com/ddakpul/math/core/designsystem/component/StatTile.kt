@@ -68,8 +68,7 @@ fun StatTile(
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
-                maxLines = 1,
-                softWrap = false,
+                maxLines = 2,
             )
             Text(
                 text = label,

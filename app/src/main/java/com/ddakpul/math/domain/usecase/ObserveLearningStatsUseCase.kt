@@ -13,9 +13,12 @@ import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.problemsById
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -49,6 +52,11 @@ class ObserveLearningStatsUseCase
                     },
                 )
             }
+                // 집계는 시도 수에 비례하는 CPU 작업이다(전체를 10회 이상 순회 + 정렬 3회).
+                // 수집자는 대개 viewModelScope(Main)이라 여기서 워커로 옮기지 않으면 UI가 멈춘다.
+                // conflate: 연속 emit이 몰리면 최신 것만 계산하면 된다.
+                .conflate()
+                .flowOn(Dispatchers.Default)
     }
 
 /** 정답률 추이 비교 구간(최근 N일 vs 그 전 N일). */
@@ -123,7 +131,10 @@ internal fun buildLearningStats(
     val studyDays = dailyStats.mapTo(sortedSetOf()) { it.epochDay }
     val (streak, bestStreak) = computeStreaks(studyDays, today)
 
-    val todayAttempts = attempts.filter { epochDay(it.timestamp, zoneOffsetMillis) == today }
+    // 오늘 푼 수는 '새로 푼 문제'만 센다 — 오답 노트 재풀이(reviewMode)까지 세면 같은 문제를
+    // 열 번 다시 푸는 것으로 하루 목표가 채워지고, 복습 슬롯 주기(규칙8)도 그만큼 밀린다.
+    val todayAttempts =
+        attempts.filter { epochDay(it.timestamp, zoneOffsetMillis) == today && !it.reviewMode }
 
     val avgTimeSecByDifficulty =
         attempts

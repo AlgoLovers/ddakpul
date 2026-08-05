@@ -128,3 +128,16 @@ val MIGRATION_11_12 =
             db.execSQL("ALTER TABLE attempt ADD COLUMN reviewMode INTEGER NOT NULL DEFAULT 0")
         }
     }
+
+/** v12 → v13: 시도 테이블 인덱스 추가(추천·통계 조회가 매번 풀스캔이던 문제). */
+val MIGRATION_12_13 =
+    object : Migration(12, 13) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_attempt_timestamp ON attempt(timestamp)")
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_attempt_problemId ON attempt(problemId)")
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS index_attempt_reviewMode_timestamp " +
+                    "ON attempt(reviewMode, timestamp)",
+            )
+        }
+    }

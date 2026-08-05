@@ -1,6 +1,7 @@
 package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.domain.model.Attempt
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
@@ -40,7 +41,12 @@ class BuildWorksheetUseCase
             spec: WorksheetSpec,
             random: Random = Random.Default,
         ): List<Problem> {
-            val groups = getActiveGroups()
+            // 앱에서 안 나오는 난이도가 종이로 나가면 안 된다 — 상위 난이도 잠금을 학습지도 따른다.
+            val unlockAll = learnerRepository.getUnlockAllLevels()
+            val groups =
+                getActiveGroups().let { all ->
+                    if (unlockAll) all else all.filter { it.difficulty <= Difficulty.DEFAULT_OPEN_MAX }
+                }
             val state = learnerRepository.getLearnerState()
             return selectWorksheetProblems(
                 spec = spec,

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -170,6 +171,7 @@ private fun SolveContent(
                                 softCutSuggested = uiState.softCutSuggested,
                                 solutionVideo = uiState.solutionVideo,
                                 retryLikely = uiState.retryLikely,
+                                goalJustReached = uiState.goalJustReached,
                                 onDismiss = { showResultSheet = false },
                                 onNext = onPrimaryAdvance,
                                 onFinishToday = onGoHome,
@@ -461,7 +463,7 @@ private fun GradedBottomBar(
                 OutlinedButton(
                     onClick = onShowResult,
                     shape = RoundedCornerShape(18.dp),
-                    modifier = Modifier.height(56.dp),
+                    modifier = Modifier.heightIn(min = 56.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.solve_show_result),
@@ -488,6 +490,8 @@ private fun SolveMoreMenu(
     onExcludeRequest: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    // 보여줄 항목이 하나도 없으면(복습 모드 퍼즐) 버튼 자체를 감춘다 — 빈 팝업만 뜨던 자리.
+    if (!showExclude && engineLabel.isBlank()) return
     Box {
         IconButton(onClick = { expanded = true }) {
             Icon(
