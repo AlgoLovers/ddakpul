@@ -26,6 +26,11 @@ data class SolveUiState(
     val reviewMode: Boolean = false,
     /** 오늘 푼 문제 수 — 오늘의 목표 진행바에 쓴다. */
     val todaySolved: Int = 0,
+    /**
+     * 지금 화면의 문제가 오늘 몇 번째인지 — 문제를 받은 순간 고정한다.
+     * [todaySolved]로 그리면 채점하는 순간 같은 문제를 보는 채로 번호가 +1 된다(2026-08 QA).
+     */
+    val problemOrdinal: Int = 1,
     val dailyGoal: Int = SessionGoals.DAILY_GOAL_PROBLEMS,
     /** 이번 세션에서 이어지고 있는 연속 정답 수 — 연속 정답 칭찬의 기준. */
     val sessionStreak: Int = 0,
@@ -35,8 +40,12 @@ data class SolveUiState(
      * true(확실한 신호만). 정체 누적 등으로 다른 규칙이 앞설 수 있어 '가능성'이다.
      */
     val retryLikely: Boolean = false,
-    /** 오늘 풀이에 쓴 총 시간(초). */
+    /** 이번 채점으로 하루 목표를 막 채웠는지 — 축하는 그 한 번만 띄운다. */
+    val goalJustReached: Boolean = false,
+    /** 오늘 풀이에 쓴 총 시간(초). 통계 표시용 — 소프트 컷 판정에는 쓰지 않는다. */
     val todayTimeSpentSec: Int = 0,
+    /** 이번 화면 세션(앱을 열고 문제풀기에 들어온 뒤) 경과 시간(초). */
+    val sessionElapsedSec: Int = 0,
     /** 현재 문제의 방법에 준비된 해설 영상(있을 때만 '동영상 풀이 보기' 노출). */
     val solutionVideo: SolutionVideo? = null,
     /** 등분 퍼즐 풀이 상태 — 칸→조각 배정, 선택한 조각색, 채점 결과(4지선다면 무의미). */
@@ -55,7 +64,10 @@ data class SolveUiState(
     /**
      * 세션 소프트 컷 — 목표를 채웠거나 집중 한계(20분)를 넘겼으면 부드러운 종료를 제안한다.
      * 강제 종료가 아니라 제안이다(자율성 존중).
+     *
+     * 시간 기준은 반드시 **이번 세션 경과**다 — '오늘 누적'으로 재면 아침에 20분 푼 아이가
+     * 저녁에 첫 문제를 풀자마자 "오늘은 여기까지"를 보게 된다(2026-08 QA).
      */
     val softCutSuggested: Boolean
-        get() = todaySolved >= dailyGoal || todayTimeSpentSec >= SessionGoals.SESSION_SOFT_CUT_SEC
+        get() = todaySolved >= dailyGoal || sessionElapsedSec >= SessionGoals.SESSION_SOFT_CUT_SEC
 }

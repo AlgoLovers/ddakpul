@@ -12,15 +12,21 @@
     <string name="home_start">Start learning</string>
     <string name="home_goal_title">Today\'s goal</string>
     <string name="home_streak_pill">🔥 Day %1$d</string>
-    <string name="home_goal_of">/ %1$d problems</string>
+    <plurals name="home_goal_of">
+        <item quantity="one">/ %1$d problem</item>
+        <item quantity="other">/ %1$d problems</item>
+    </plurals>
     <string name="home_goal_remaining">Solve %1$d more to reach today\'s goal!</string>
     <string name="home_goal_done">Goal complete — great work today! 🎉</string>
     <string name="home_cta_continue">Keep going</string>
     <string name="home_cta_level">Level %1$d</string>
-    <string name="home_review_ready">%1$d problems are ready to review</string>
-    <string name="home_review_go">Review →</string>
+    <plurals name="home_review_ready">
+        <item quantity="one">%1$d topic is due for review</item>
+        <item quantity="other">%1$d topics are due for review</item>
+    </plurals>
+    <string name="home_review_go">Review as you go →</string>
     <string name="home_skill_title">My skill map</string>
-    <string name="home_skill_summary">%1$d solved · %2$d%% correct</string>
+    <string name="home_skill_summary">%1$d solved so far</string>
     <string name="home_unit_count">%1$d</string>
     <string name="home_unit_percent">%1$d%%</string>
     <string name="home_unit_level">Lv.%1$d</string>
@@ -54,9 +60,9 @@
     <string name="result_my_answer_label">My answer</string>
     <string name="result_streak_pill">🔥 %1$d in a row</string>
     <string name="result_tab_explanation">Solution</string>
-    <string name="result_tab_detailed">Deeper</string>
+    <string name="result_tab_detailed">More detail</string>
     <string name="result_tab_video">Video ▶</string>
-    <string name="result_finish">Finish</string>
+    <string name="result_finish">Done for today</string>
     <string name="result_retry_cta">One more like this</string>
     <string name="result_retry_sub">Same idea, different numbers</string>
     <string name="solve_show_result">See result</string>
@@ -122,7 +128,10 @@
     <string name="report_accuracy">Overall accuracy</string>
     <string name="report_current_level">Current level</string>
     <string name="report_streak">Streak</string>
-    <string name="report_unit_days">%1$d days</string>
+    <plurals name="report_unit_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
     <string name="report_today">Solved today</string>
     <string name="report_empty">No problems solved yet.\nSolve some and your report fills in.</string>
 
@@ -167,8 +176,14 @@
     <string name="review_title">Mistake Notebook</string>
     <string name="review_subtitle">Sorted by most recently missed. Tap a problem to try it again.</string>
     <string name="review_empty">No mistakes yet.\nProblems you miss will collect here.</string>
-    <string name="review_count">%1$d problems</string>
-    <string name="review_wrong_count">Missed %1$d times</string>
+    <plurals name="review_count">
+        <item quantity="one">%1$d problem total</item>
+        <item quantity="other">%1$d problems total</item>
+    </plurals>
+    <plurals name="review_wrong_count">
+        <item quantity="one">Missed %1$d time</item>
+        <item quantity="other">Missed %1$d times</item>
+    </plurals>
     <string name="review_back">Back to notebook</string>
     <string name="review_back_cd">Back</string>
     <string name="insight_goal_done">✅ Today\'s goal is done. Keeping to a goal you set yourself is the best habit!</string>
@@ -199,8 +214,8 @@
     <!-- Mastery stages -->
     <string name="mastery_mastered">Mastered</string>
     <string name="mastery_practicing">Practicing</string>
-    <string name="mastery_weak">Needs work</string>
-    <string name="mastery_not_attempted">Not tried</string>
+    <string name="mastery_weak">Getting there</string>
+    <string name="mastery_not_attempted">Not tried yet</string>
 
     <!-- Report · guide for grown-ups (research-based) -->
     <string name="report_parent_tips_title">Tips for grown-ups</string>
@@ -363,7 +378,8 @@
     <string name="video_retry">Retry</string>
     <!-- Spatial dissection puzzle pilot -->
     <string name="puzzle_clear">Clear</string>
-    <string name="puzzle_check">Check</string>
+    <string name="puzzle_piece_label">Piece %1$d</string>
+    <string name="puzzle_check">Check answer</string>
     <string name="puzzle_next">Next puzzle</string>
     <string name="puzzle_correct">Correct! Congruent pieces complete 🎉</string>
     <string name="puzzle_err_incomplete">Some cells are not filled in yet.</string>
@@ -372,4 +388,12 @@
     <string name="puzzle_err_disconnected">Each piece must be one connected block.</string>
     <string name="puzzle_err_congruent">The pieces are not the same shape (they must match after rotating or flipping).</string>
     <string name="puzzle_err_symbol">Each piece must contain one ●, one ▲, and one ■.</string>
+    <string name="scratchpad_close">Close scratchpad</string>
+    <string name="figure_description">Figure for this problem.</string>
+    <string name="choice_state_correct">Correct answer</string>
+    <string name="choice_state_wrong">Your answer, incorrect</string>
+    <string name="choice_state_selected">Selected</string>
+    <string name="home_skill_progress_a11y">%1$d problems solved</string>
+    <string name="report_empty_cta">Solve your first problem</string>
+    <string name="result_goal_reached">You hit today\'s goal! Nice job sticking with it.</string>
 </resources>

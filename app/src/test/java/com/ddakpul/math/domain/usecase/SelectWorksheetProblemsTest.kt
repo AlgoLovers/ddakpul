@@ -1,5 +1,8 @@
 package com.ddakpul.math.domain.usecase
 
+import com.ddakpul.math.domain.model.Answer
+import com.ddakpul.math.domain.model.Cell
+import com.ddakpul.math.domain.model.DissectionPuzzle
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt
 import com.ddakpul.math.domain.usecase.TestFixtures.group
@@ -148,5 +151,53 @@ class SelectWorksheetProblemsTest {
             )
 
         assertThat(result).hasSize(2)
+    }
+
+    @Test
+    fun excludesDissectionPuzzles() {
+        // 구성형(등분 퍼즐)은 종이에 옮길 수 없고, 정답지 생성이 인덱스 −1로 크래시했다(2026-08 QA).
+        val puzzle =
+            problem("d1", 3).copy(
+                choices = emptyList(),
+                answer = Answer(-1),
+                dissection = DissectionPuzzle(cells = listOf(Cell(0, 0), Cell(0, 1)), pieceCount = 2),
+            )
+        val groups =
+            listOf(
+                group(difficulty = 3, problems = listOf(puzzle, problem("n1", 3)), id = "g-mixed"),
+            )
+
+        val result =
+            selectWorksheetProblems(
+                spec = WorksheetSpec(count = 5, source = WorksheetSource.RECOMMENDED),
+                groups = groups,
+                recentAttempts = emptyList(),
+                currentDifficulty = 3,
+                random = random,
+            )
+
+        assertThat(result.map { it.id }).containsExactly("n1")
+    }
+
+    @Test
+    fun wrongFirst_alsoExcludesDissectionPuzzles() {
+        val puzzle =
+            problem("d1", 3).copy(
+                choices = emptyList(),
+                answer = Answer(-1),
+                dissection = DissectionPuzzle(cells = listOf(Cell(0, 0), Cell(0, 1)), pieceCount = 2),
+            )
+        val groups = listOf(group(difficulty = 3, problems = listOf(puzzle, problem("n1", 3)), id = "g-mixed"))
+
+        val result =
+            selectWorksheetProblems(
+                spec = WorksheetSpec(count = 5, source = WorksheetSource.WRONG_FIRST),
+                groups = groups,
+                recentAttempts = listOf(attempt("d1", false)),
+                currentDifficulty = 3,
+                random = random,
+            )
+
+        assertThat(result.map { it.id }).doesNotContain("d1")
     }
 }

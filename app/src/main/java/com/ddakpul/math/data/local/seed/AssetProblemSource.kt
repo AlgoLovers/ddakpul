@@ -28,7 +28,11 @@ class AssetProblemSource
 
         /** 4지선다 문제은행(ko + 영어 오버레이). */
         private fun multipleChoiceBank(): List<Problem> {
-            val ko = parseAssetProblems(readAsset(FILE_NAME))
+            // 에셋이 깨졌을 때 예외가 lazy 밖으로 나가면 홈·리포트·풀이 전 화면이 영구 크래시한다
+            // (게다가 lazy는 예외를 캐시하지 않아 접근할 때마다 다시 던진다). 빈 은행으로 폴백하면
+            // 화면은 "풀 수 있는 문제가 없어요"로 살아남는다.
+            val ko = runCatching { parseAssetProblems(readAsset(FILE_NAME)) }.getOrDefault(emptyList())
+            if (ko.isEmpty()) return emptyList()
             if (langTag != LocaleManagerCompat.ENGLISH) return ko
             val en = runCatching { parseAssetProblems(readAsset(FILE_NAME_EN)) }.getOrDefault(emptyList())
             if (en.isEmpty()) return ko
@@ -80,7 +84,7 @@ class AssetProblemSource
              *     (gen-leapfrog 변화 난6) 4 + 숫자야구(gen-numberbaseball 자료 난5) 4 +
              *     주사위 굴리기(gen-diceroll 도형 난6) 4. 유형 다양성 보강(CHANGE d9·d6, DATA d5, SHAPE d6).
              */
-            const val CONTENT_VERSION = 5
+            const val CONTENT_VERSION = 6
             private const val PREF = "ddakpul_seed"
             private const val KEY_SEEDED_LANG = "seeded_lang"
             private const val KEY_SEEDED_VERSION = "seeded_content_version"

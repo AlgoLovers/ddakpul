@@ -1,6 +1,7 @@
 package com.ddakpul.math.domain.usecase
 
 import com.ddakpul.math.domain.model.Attempt
+import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
@@ -40,7 +41,12 @@ class BuildWorksheetUseCase
             spec: WorksheetSpec,
             random: Random = Random.Default,
         ): List<Problem> {
-            val groups = getActiveGroups()
+            // 앱에서 안 나오는 난이도가 종이로 나가면 안 된다 — 상위 난이도 잠금을 학습지도 따른다.
+            val unlockAll = learnerRepository.getUnlockAllLevels()
+            val groups =
+                getActiveGroups().let { all ->
+                    if (unlockAll) all else all.filter { it.difficulty <= Difficulty.DEFAULT_OPEN_MAX }
+                }
             val state = learnerRepository.getLearnerState()
             return selectWorksheetProblems(
                 spec = spec,
@@ -73,6 +79,9 @@ internal fun selectWorksheetProblems(
     val all =
         groups
             .flatMap { it.problems }
+            // 구성형(등분 퍼즐)은 종이에 옮길 수 없다 — 격자를 그리지 못하고 보기·정답도 없어
+            // 인쇄하면 풀 수 없는 문항이 되고, 정답지 생성은 인덱스 −1로 크래시한다(2026-08 QA).
+            .filterNot { it.isDissection }
             .filter { spec.area == null || it.area == spec.area }
     if (all.isEmpty() || spec.count <= 0) return emptyList()
     val byId = all.associateBy { it.id }

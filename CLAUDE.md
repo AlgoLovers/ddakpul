@@ -66,7 +66,7 @@ app/src/main/java/com/ddakpul/math/
   절차) · `/emu-qa`(에뮬 스샷 QA 루프, 전용 AVD 사용) · `/gen-problems`(문제 생성 파이프라인).
   반복 절차는 여기에 명문화한다.
 - **에이전트** `.claude/agents/`: `problem-auditor`(문제 콘텐츠 감사, 읽기 전용 — 문제 추가·수정 후 필수) ·
-  `pedagogy-researcher`(학습과학 리서치 브리프). ⚠️ 에이전트 모델은 opus/sonnet/haiku만 — **fable 금지**(유료 크레딧).
+  `pedagogy-researcher`(학습과학 리서치 브리프).
 - **훅** (`.claude/settings.json` → `tools/claude/hooks/`): SessionStart가 git fetch+동기화 상태 주입,
   Stop이 더티 트리를 경고. 훅이 알려주는 상태를 무시하지 말 것.
 - **경로 규칙** `.claude/rules/`: domain-purity(도메인 순수성) · problemgen(솔버 검증·이중언어 불변식).

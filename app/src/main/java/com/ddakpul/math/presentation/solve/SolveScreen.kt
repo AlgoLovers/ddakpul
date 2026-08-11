@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -39,6 +40,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -111,18 +113,16 @@ private fun SolveContent(
 ) {
     // 복습 모드에선 '다음 문제'(추천 흐름) 대신 오답 노트로 되돌아간다.
     val onPrimaryAdvance: () -> Unit = if (uiState.reviewMode) onExitReview ?: onNext else onNext
-    var showExcludeDialog by remember { mutableStateOf(false) }
+    var showExcludeDialog by rememberSaveable { mutableStateOf(false) }
     // 연습장은 본문 폭 제한과 무관하게 콘텐츠 영역 전체를 덮어야 해, 상태를 여기(fillMaxSize Box)로 올려 오버레이로 띄운다.
-    var showScratchpad by remember { mutableStateOf(false) }
+    var showScratchpad by rememberSaveable { mutableStateOf(false) }
     // 채점 시트 — 새 결과가 올 때마다 다시 연다. 내려도 하단 '결과 보기'로 다시 열 수 있다.
-    var showResultSheet by remember(uiState.result) { mutableStateOf(true) }
+    var showResultSheet by rememberSaveable(uiState.result) { mutableStateOf(true) }
+    // 읽어주기 엔진은 화면 단위로 한 번만 만든다 — 문제마다 재생성하면 초기화 전에 누른
+    // 첫 탭이 조용히 무시된다(2026-08 QA: 문제가 뜨자마자 🔊를 누르면 아무 일도 안 일어남).
+    val speaker = rememberSpeaker()
 
-    // 채점 순간 미세 촉각 피드백 — 답이 처리됐다는 확인일 뿐, 정오답에 따른 보상이 아니다
-    // (과정 칭찬·물질 보상 금지 원칙, docs/PEDAGOGY.md). 정답/오답 같은 신호를 준다.
-    val haptics = LocalHapticFeedback.current
-    LaunchedEffect(uiState.result) {
-        if (uiState.result != null) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-    }
+    GradingHaptics(problemId = uiState.problem?.id, graded = uiState.result != null)
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when (uiState.phase) {
@@ -145,6 +145,7 @@ private fun SolveContent(
                         callbacks = dissection,
                         onNext = onPrimaryAdvance,
                         reviewMode = uiState.reviewMode,
+                        onExcludeRequest = { showExcludeDialog = true },
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
                     )
                 } else {
@@ -159,6 +160,7 @@ private fun SolveContent(
                         onShowResult = { showResultSheet = true },
                         onAdvance = onPrimaryAdvance,
                         modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH),
+                        speaker = speaker,
                     )
                     uiState.result?.let { result ->
                         if (uiState.phase == SolvePhase.GRADED && showResultSheet) {
@@ -169,6 +171,7 @@ private fun SolveContent(
                                 softCutSuggested = uiState.softCutSuggested,
                                 solutionVideo = uiState.solutionVideo,
                                 retryLikely = uiState.retryLikely,
+                                goalJustReached = uiState.goalJustReached,
                                 onDismiss = { showResultSheet = false },
                                 onNext = onPrimaryAdvance,
                                 onFinishToday = onGoHome,
@@ -182,12 +185,15 @@ private fun SolveContent(
         }
 
         // 연습장 오버레이 — 문제 풀이 위에 전체 폭으로 덮는다(도형 문제면 그림도 함께).
+        // 획 목록은 오버레이 밖에서 기억한다 — if 블록 안에서 remember하면 닫는 순간
+        // 컴포지션 그룹째 버려져 필기가 사라진다(2026-08 QA).
         uiState.problem?.let { problem ->
+            val strokes = rememberScratchStrokes(problem.id)
             if (showScratchpad) {
                 ScratchpadOverlay(
                     statement = problem.statement,
                     figure = problem.figure,
-                    strokes = rememberScratchStrokes(problem.id),
+                    strokes = strokes,
                     onDismiss = { showScratchpad = false },
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -203,6 +209,28 @@ private fun SolveContent(
             },
             onDismiss = { showExcludeDialog = false },
         )
+    }
+}
+
+/**
+ * 채점 순간 미세 촉각 피드백 — 답이 처리됐다는 확인일 뿐, 정오답에 따른 보상이 아니다
+ * (과정 칭찬·물질 보상 금지 원칙, docs/PEDAGOGY.md).
+ *
+ * 컴포지션이 다시 만들어질 때(영상 보고 복귀·회전)도 LaunchedEffect는 재실행되므로,
+ * 이미 울린 문제를 기억해 두 번 울리지 않게 한다(2026-08 QA).
+ */
+@Composable
+private fun GradingHaptics(
+    problemId: String?,
+    graded: Boolean,
+) {
+    val haptics = LocalHapticFeedback.current
+    var lastHapticProblemId by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(graded, problemId) {
+        if (graded && problemId != null && problemId != lastHapticProblemId) {
+            lastHapticProblemId = problemId
+            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+        }
     }
 }
 
@@ -246,10 +274,10 @@ private fun SolvingBody(
     modifier: Modifier = Modifier,
     onShowResult: (() -> Unit)? = null,
     onAdvance: (() -> Unit)? = null,
+    speaker: SpeakerController,
 ) {
     val problem = uiState.problem ?: return
     val result = uiState.result
-    val speaker = rememberSpeaker()
     Column(modifier = modifier.fillMaxWidth().fillMaxHeight()) {
         SolveProgressRow(
             uiState = uiState,
@@ -316,7 +344,7 @@ private fun SolvingBody(
 
 /** ① 진행 점 줄 — 복습(오답 노트)엔 오늘 목표가 무의미해 점을 감춘다. */
 @Composable
-private fun SolveProgressRow(
+internal fun SolveProgressRow(
     uiState: SolveUiState,
     reviewMode: Boolean,
     engineLabel: String,
@@ -330,7 +358,7 @@ private fun SolveProgressRow(
     ) {
         if (!reviewMode) {
             ProgressDots(
-                solved = uiState.todaySolved,
+                solved = uiState.problemOrdinal - 1,
                 total = uiState.dailyGoal,
                 highlightNext = true,
                 height = 6.dp,
@@ -349,7 +377,7 @@ private fun SolveProgressRow(
 
 /** ② 메타 칩 줄 — 영역·난이도는 칩으로, 오른쪽엔 오늘 몇 번째 문제인지(복습이면 배지). */
 @Composable
-private fun SolveMetaRow(
+internal fun SolveMetaRow(
     uiState: SolveUiState,
     reviewMode: Boolean,
     modifier: Modifier = Modifier,
@@ -368,7 +396,7 @@ private fun SolveMetaRow(
                 if (isReviewLabel) {
                     stringResource(R.string.solve_review_badge)
                 } else {
-                    stringResource(R.string.solve_nth_problem, uiState.todaySolved + 1)
+                    stringResource(R.string.solve_nth_problem, uiState.problemOrdinal)
                 },
             style = MaterialTheme.typography.bodyMedium,
             color =
@@ -435,7 +463,7 @@ private fun GradedBottomBar(
                 OutlinedButton(
                     onClick = onShowResult,
                     shape = RoundedCornerShape(18.dp),
-                    modifier = Modifier.height(56.dp),
+                    modifier = Modifier.heightIn(min = 56.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.solve_show_result),
@@ -462,6 +490,8 @@ private fun SolveMoreMenu(
     onExcludeRequest: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    // 보여줄 항목이 하나도 없으면(복습 모드 퍼즐) 버튼 자체를 감춘다 — 빈 팝업만 뜨던 자리.
+    if (!showExclude && engineLabel.isBlank()) return
     Box {
         IconButton(onClick = { expanded = true }) {
             Icon(

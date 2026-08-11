@@ -14,6 +14,9 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -31,8 +34,13 @@ import kotlin.math.sin
 fun ProblemFigureView(
     figure: ProblemFigure,
     modifier: Modifier = Modifier,
+    inkOverride: Color? = null,
 ) {
-    val ink = MaterialTheme.colorScheme.onSurface
+    // 연습장처럼 배경이 테마와 무관하게 고정된 곳(흰 종이)에서는 잉크를 직접 지정한다 —
+    // 다크 테마의 onSurface(거의 흰색)를 그대로 쓰면 흰 종이 위 흰 선이 된다(2026-08 QA).
+    val ink = inkOverride ?: MaterialTheme.colorScheme.onSurface
+    // 그림이 문제의 절반인데 Canvas라 스크린리더에는 통째로 존재하지 않았다.
+    val figureLabel = stringResource(R.string.figure_description)
     val accent = MaterialTheme.colorScheme.primary
     // 쌓기나무 세 면(윗면·오른면·왼면)을 밝기 차로 입체감 있게.
     val cubeFaces =
@@ -46,7 +54,13 @@ fun ProblemFigureView(
     // 막대그래프 범주 라벨은 언어 따라 바뀐다(한국어 가·나·다 / 영어 A·B·C) — 문제 본문과 일치시키려.
     val barLabels = stringArrayResource(R.array.bar_chart_labels)
 
-    Canvas(modifier = modifier.fillMaxWidth().height(170.dp)) {
+    Canvas(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(170.dp)
+                .semantics { contentDescription = figureLabel },
+    ) {
         val side = min(size.width, size.height) * 0.85f
         val left = (size.width - side) / 2f
         val top = (size.height - side) / 2f

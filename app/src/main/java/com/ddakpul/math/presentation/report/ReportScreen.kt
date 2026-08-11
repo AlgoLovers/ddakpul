@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -114,6 +115,14 @@ fun ReportScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+            // 빈 화면에서 갈 곳이 없으면 막다른 곳이 된다 - 바로 풀러 갈 수 있게.
+            Button(onClick = onStartSolving) {
+                Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null)
+                Text(
+                    text = stringResource(R.string.report_empty_cta),
+                    modifier = Modifier.padding(start = 6.dp),
+                )
+            }
         }
         return
     }
@@ -207,7 +216,7 @@ private fun ReportContent(
             }
 
             // 심화 분석(정답률 추이·성장 곡선·개념별 숙달·난이도별 숙달 지도).
-            PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
+            DeeperAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
 
             SectionCard(title = stringResource(R.string.report_parent_tips_title), icon = "🧑‍🏫") {
                 stringArrayResource(R.array.parent_tips).forEach { tip ->
@@ -252,7 +261,7 @@ private fun rememberReportTexts(stats: LearningStats): ReportTexts {
                 stringResource(R.string.report_total_solved) to stringResource(R.string.home_unit_count, stats.totalSolved),
                 stringResource(R.string.report_accuracy) to stringResource(R.string.home_unit_percent, stats.accuracy.toPercentInt()),
                 stringResource(R.string.report_current_level) to stringResource(R.string.home_unit_level, stats.currentDifficulty),
-                stringResource(R.string.report_streak) to stringResource(R.string.report_unit_days, stats.streakDays),
+                stringResource(R.string.report_streak) to pluralStringResource(R.plurals.report_unit_days, stats.streakDays, stats.streakDays),
             ),
         sectionAreaTitle = stringResource(R.string.report_export_section_area),
         sectionWeakTitle = stringResource(R.string.report_export_section_weak),
@@ -285,9 +294,9 @@ private fun printReport(
     printManager.print(jobName, adapter, attributes)
 }
 
-/** 이용권 전용 심화 분석 — 학습량·정답률 추이·성장 곡선·개념 숙달도·난이도별 숙달 지도. */
+/** 심화 분석(전원 무료) — 학습량·정답률 추이·성장 곡선·개념 숙달도·난이도별 숙달 지도. */
 @Composable
-private fun PremiumAnalyticsSections(
+private fun DeeperAnalyticsSections(
     stats: LearningStats,
     dayCells: List<DayCell>,
     masteryGrid: List<MasteryCellUi>,
@@ -321,7 +330,7 @@ private fun PremiumAnalyticsSections(
                 )
             }
         }
-        if (stats.avgTimeSecByDifficulty.isNotEmpty()) {
+        if (stats.avgTimeSecByDifficulty.values.any { it > 0 }) {
             SectionCard(
                 title = stringResource(R.string.report_avgtime_title),
                 icon = "⏱️",
@@ -466,7 +475,7 @@ private fun KeyStatTiles(stats: LearningStats) {
             StatTile(
                 icon = "🔥",
                 label = stringResource(R.string.report_streak),
-                value = stringResource(R.string.report_unit_days, stats.streakDays),
+                value = pluralStringResource(R.plurals.report_unit_days, stats.streakDays, stats.streakDays),
                 caption = stringResource(R.string.report_caption_best_streak, stats.bestStreakDays),
                 modifier = Modifier.weight(1f),
             )
@@ -685,12 +694,16 @@ private fun MistakeItem(problem: Problem) {
     ) {
         Text(text = problem.statement, style = MaterialTheme.typography.bodyMedium)
         problem.figure?.let { ProblemFigureView(figure = it, modifier = Modifier.fillMaxWidth()) }
-        Text(
-            text = stringResource(R.string.result_correct_answer, problem.choices[problem.answer.correctChoiceIndex]),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold,
-            color = colors.primary,
-        )
+        // 구성형(등분 퍼즐)은 보기가 없고 correctChoiceIndex가 -1이라 인덱스 접근이 곧 크래시다
+        // (2026-08 QA: 퍼즐을 틀리면 리포트 탭이 영구 크래시). 정답 줄은 4지선다에서만 보여준다.
+        problem.choices.getOrNull(problem.answer.correctChoiceIndex)?.let { answerText ->
+            Text(
+                text = stringResource(R.string.result_correct_answer, answerText),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                color = colors.primary,
+            )
+        }
         problem.explanation?.let {
             Text(text = it, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
         }
@@ -737,8 +750,13 @@ private fun ConceptRow(concept: ConceptStat) {
                 modifier = Modifier.padding(start = 8.dp),
             )
         }
-        LinearProgressIndicator(
-            progress = { concept.accuracy },
+        // 앱 공용 진행바 — M3 기본 LinearProgressIndicator는 트랙이 연녹색이라
+        // 정답률 0%인 개념이 '꽉 찬 초록 막대'로 읽힌다(2026-08 QA).
+        ProgressBar(
+            fraction = concept.accuracy,
+            color = MaterialTheme.colorScheme.primary,
+            trackColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            height = 8.dp,
             modifier = Modifier.fillMaxWidth(),
         )
     }

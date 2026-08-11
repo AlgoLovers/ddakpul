@@ -111,14 +111,14 @@ private fun AppNavHost(
         }
         composable(DdakPulDestination.REPORT.route) {
             ReportScreen(
-                onPrintClick = { navController.navigate(PRINT_ROUTE) },
+                onPrintClick = { navController.navigate(PRINT_ROUTE) { launchSingleTop = true } },
                 onStartSolving = { navController.switchTab(DdakPulDestination.SOLVE.route) },
-                onOpenReviewNote = { navController.navigate(REVIEW_ROUTE) },
+                onOpenReviewNote = { navController.navigate(REVIEW_ROUTE) { launchSingleTop = true } },
             )
         }
         composable(DdakPulDestination.SETTINGS.route) {
             SettingsScreen(
-                onOpenPrivacy = { navController.navigate(PRIVACY_ROUTE) },
+                onOpenPrivacy = { navController.navigate(PRIVACY_ROUTE) { launchSingleTop = true } },
             )
         }
         composable(PRINT_ROUTE) { PrintScreen(onBack = { navController.popBackStack() }) }
@@ -191,7 +191,10 @@ private fun NavHostController.currentRoute(): String? = currentBackStackEntryAsS
 
 /** 오답 노트에서 특정 문제를 복습 모드로 연다 — id를 인코딩해 SolveScreen에 넘긴다. */
 private fun NavHostController.navigateToReviewSolve(problemId: String) {
-    navigate("$REVIEW_SOLVE_ROUTE?${SolveViewModel.ARG_REVIEW_PROBLEM_ID}=${Uri.encode(problemId)}")
+    // 연타하면 같은 화면이 두 장 쌓여, 풀고 돌아와도 같은 문제를 한 번 더 만나게 된다.
+    navigate("$REVIEW_SOLVE_ROUTE?${SolveViewModel.ARG_REVIEW_PROBLEM_ID}=${Uri.encode(problemId)}") {
+        launchSingleTop = true
+    }
 }
 
 /** 해설 영상 화면으로 이동 — 방법코드로 찾고, 파일 확보(캐시/다운로드)는 화면이 한다. */
@@ -199,7 +202,9 @@ private fun NavHostController.navigateToVideo(
     methodCode: String,
     title: String,
 ) {
-    navigate("$VIDEO_PLAYER_ROUTE?$ARG_METHOD=${Uri.encode(methodCode)}&$ARG_TITLE=${Uri.encode(title)}")
+    navigate("$VIDEO_PLAYER_ROUTE?$ARG_METHOD=${Uri.encode(methodCode)}&$ARG_TITLE=${Uri.encode(title)}") {
+        launchSingleTop = true
+    }
 }
 
 /** 탭 전환 — 시작 목적지까지 팝업하며 상태를 저장/복원해 탭 간 이동을 자연스럽게 한다. */

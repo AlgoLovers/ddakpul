@@ -16,6 +16,9 @@ val AccentLight = Color(0xFFAFB0FF) // 다크 테마 primary
 val Mint = Color(0xFF12B26E)
 val MintSoft = Color(0xFFDBF6EA)
 val MintDark = Color(0xFF05663F)
+
+/** 민트/앰버/코랄 위에 얹는 잉크. 흰 글자는 2.8~3.8:1로 본문 대비(4.5:1) 미달이라 쓰지 않는다. */
+val OnVividInk = Color(0xFF1A1A1A)
 val MintLight = Color(0xFF6FE0B0)
 
 // ── 안내·프로모(Tertiary) — 앰버 ──

@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -137,7 +138,7 @@ private fun WrongProblemList(
     ) {
         item {
             Text(
-                text = stringResource(R.string.review_count, wrongProblems.size),
+                text = pluralStringResource(R.plurals.review_count, wrongProblems.size, wrongProblems.size),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -196,7 +197,7 @@ private fun WrongProblemCard(
             )
             if (wrong.wrongCount > 1) {
                 Text(
-                    text = stringResource(R.string.review_wrong_count, wrong.wrongCount),
+                    text = pluralStringResource(R.plurals.review_wrong_count, wrong.wrongCount, wrong.wrongCount),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
                 )

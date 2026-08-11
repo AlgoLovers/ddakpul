@@ -251,8 +251,10 @@ class WorksheetPdfGenerator(
         y += 16f
 
         problems.forEachIndexed { index, problem ->
+            // 보기가 없는 문항(구성형)은 정답지에 실을 수 없다 — 인덱스 −1로 크래시하던 자리.
+            val correctText = problem.choices.getOrNull(problem.answer.correctChoiceIndex) ?: return@forEachIndexed
             val answerChar = CIRCLED_ONE + problem.answer.correctChoiceIndex
-            val answerLine = "${index + 1}. $answerChar ${problem.choices[problem.answer.correctChoiceIndex]}"
+            val answerLine = "${index + 1}. $answerChar $correctText"
             val answerLayout = buildLayout(answerLine, numberPaint)
             val explanationLayout = problem.explanation?.let { buildLayout(it, headerPaint, CONTENT_WIDTH - 16) }
             val blockHeight =

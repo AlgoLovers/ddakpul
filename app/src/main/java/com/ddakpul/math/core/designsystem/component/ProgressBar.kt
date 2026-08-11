@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -24,9 +26,24 @@ fun ProgressBar(
     trackColor: Color,
     modifier: Modifier = Modifier,
     height: Dp = 12.dp,
+    /** 스크린리더가 읽을 값 설명. 막대만 있으면 수치가 시각 사용자에게만 전달된다. */
+    stateLabel: String? = null,
 ) {
     val shape = RoundedCornerShape(height / 2)
-    Box(modifier = modifier.height(height).clip(shape).background(trackColor)) {
+    Box(
+        modifier =
+            modifier
+                .height(height)
+                .clip(shape)
+                .background(trackColor)
+                .then(
+                    if (stateLabel != null) {
+                        Modifier.semantics { stateDescription = stateLabel }
+                    } else {
+                        Modifier
+                    },
+                ),
+    ) {
         Box(
             Modifier
                 .fillMaxWidth(fraction.coerceIn(0f, 1f))

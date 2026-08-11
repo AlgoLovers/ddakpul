@@ -76,10 +76,16 @@ private fun replayLeitner(
                 box = 1
                 dueDay = day + REVIEW_INTERVALS_DAYS[box - 1]
             }
-        } else {
-            // 숙달 이후의 모든 접촉은 복습으로 취급 — 성공은 승급, 실패는 처음 박스로.
+        } else if (day >= dueDay) {
+            // 숙달 이후 '만기가 된 뒤의' 접촉만 복습으로 친다. 만기 전 재방문까지 승급으로 세면
+            // 같은 날 한 그룹을 몇 문제 더 푸는 것만으로 1일→30일 박스로 뛰어 간격 반복이
+            // 무력화된다(2026-08 점검). 실패는 처음 박스로.
             box = if (attempt.isCorrect) min(box + 1, REVIEW_INTERVALS_DAYS.size) else 1
             dueDay = day + REVIEW_INTERVALS_DAYS[box - 1]
+        } else if (!attempt.isCorrect) {
+            // 만기 전이라도 틀렸다면 숙달이 깨진 것 — 처음 박스로 돌린다.
+            box = 1
+            dueDay = day + REVIEW_INTERVALS_DAYS[0]
         }
     }
     return if (box == 0) null else LeitnerState(box = box, dueDay = dueDay)

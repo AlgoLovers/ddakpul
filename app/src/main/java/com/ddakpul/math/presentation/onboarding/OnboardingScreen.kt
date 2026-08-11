@@ -1,5 +1,6 @@
 package com.ddakpul.math.presentation.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,9 +57,12 @@ fun OnboardingScreen(
     onComplete: (startingDifficulty: Int, dailyGoal: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var step by remember { mutableIntStateOf(0) }
-    var dailyGoal by remember { mutableIntStateOf(SessionGoals.DAILY_GOAL_PROBLEMS) }
-    var startingDifficulty by remember { mutableIntStateOf(Difficulty.DEFAULT) }
+    // 시스템 뒤로가기가 앱을 종료해 온보딩이 통째로 날아가던 문제 — 단계만 되돌린다.
+    var step by rememberSaveable { mutableIntStateOf(0) }
+    // 시스템 뒤로가기가 앱을 끝내 온보딩이 통째로 날아가던 문제 — 첫 단계가 아니면 단계만 되돌린다.
+    BackHandler(enabled = step > 0) { step -= 1 }
+    var dailyGoal by rememberSaveable { mutableIntStateOf(SessionGoals.DAILY_GOAL_PROBLEMS) }
+    var startingDifficulty by rememberSaveable { mutableIntStateOf(Difficulty.DEFAULT) }
 
     Column(
         // edge-to-edge라 시스템 바(상태/네비게이션) 영역을 피해야 하단 '다음' 버튼이 네비게이션 바에 가리지 않는다.

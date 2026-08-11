@@ -19,9 +19,11 @@ import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import com.ddakpul.math.domain.usecase.SubmitDissectionUseCase
 import com.ddakpul.math.domain.usecase.SubmitGiveUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.TimeZone
@@ -51,14 +53,35 @@ class SolveViewModel
 
         private var questionStartMillis: Long = 0L
 
+        /** 이번 화면 세션이 시작된 시각 — 소프트 컷은 '오늘 누적'이 아니라 이 세션 경과로 판단한다. */
+        private val sessionStartMillis: Long = System.currentTimeMillis()
+
+        /** 오늘 푼 수를 한 번이라도 읽었는지 — 첫 추천이 0을 보고 도는 것을 막는 신호. */
+        private val statsLoaded = MutableStateFlow(false)
+
+        /**
+         * 채점·다음문제 진행 중 플래그. 가드(phase 검사)와 상태 전환 사이에 suspend 구간이 있어,
+         * 연타하면 같은 문제가 두 번 기록되고 통계·난이도 스트릭이 오염된다(되돌릴 수 없다).
+         * 아이가 쓰는 앱이라 연타는 상수로 봐야 한다.
+         */
+        private var submitting = false
+
+        /** 진행 중인 문제 로드 — 연타 시 이전 요청을 취소해 결과가 뒤섞이지 않게 한다. */
+        private var loadJob: Job? = null
+
         /** 오답 노트에서 넘어온 복습 대상 문제 id(있으면 이 문제 하나만 다시 푼다). */
         private val reviewProblemId: String? = savedStateHandle[ARG_REVIEW_PROBLEM_ID]
 
         init {
-            if (reviewProblemId != null) {
-                loadReview(reviewProblemId)
-            } else {
-                loadNext()
+            // 오늘 푼 수를 먼저 채운 뒤 첫 문제를 뽑는다 — 순서가 반대면 todaySolved=0으로
+            // 추천이 돌아 복습 슬롯(규칙8: todaySolved % 3 == 2)이 진입 직후엔 절대 안 걸린다(2026-08 QA).
+            viewModelScope.launch {
+                if (reviewProblemId != null) {
+                    loadReview(reviewProblemId)
+                } else {
+                    statsLoaded.first { it }
+                    loadNext()
+                }
             }
             // 오늘 푼 문제 수는 기록이 쌓일 때마다 자동 갱신된다(시도 저장 → Flow 재계산).
             viewModelScope.launch {
@@ -72,6 +95,7 @@ class SolveViewModel
                             todayTimeSpentSec = stats.todayTimeSpentSec,
                         )
                     }
+                    statsLoaded.value = true
                 }
             }
             viewModelScope.launch {
@@ -82,42 +106,62 @@ class SolveViewModel
         }
 
         fun loadNext() {
+            loadJob?.cancel()
             _uiState.update { it.copy(phase = SolvePhase.LOADING, selectedIndex = null, result = null) }
-            viewModelScope.launch {
-                val now = System.currentTimeMillis()
-                val result =
-                    getNextProblem(
-                        todaySolved = _uiState.value.todaySolved,
-                        zoneOffsetMillis = TimeZone.getDefault().getOffset(now).toLong(),
-                        nowMillis = now,
-                    )
-                when (result) {
-                    is AppResult.Success -> {
-                        val recommendation = result.data
-                        questionStartMillis = System.currentTimeMillis()
-                        val video = solutionVideoRepository.videoForMethod(recommendation.problem.methodCode)
-                        _uiState.update { current ->
-                            current.copy(
-                                phase = SolvePhase.SOLVING,
-                                problem = recommendation.problem,
-                                area = recommendation.problem.area,
-                                // 복습(REVIEW)은 현재 레벨과 다른 난이도일 수 있으니 문제 자체의 난이도를 보여준다.
-                                difficulty = recommendation.problem.difficulty,
-                                selectedIndex = null,
-                                result = null,
-                                showExplanation = recommendation.showExplanation,
-                                reason = recommendation.reason,
-                                solutionVideo = video,
-                                dissectionAssignment = emptyMap(),
-                                dissectionPiece = 0,
-                                dissectionResult = null,
-                            )
+            loadJob =
+                viewModelScope.launch {
+                    val now = System.currentTimeMillis()
+                    val result =
+                        getNextProblem(
+                            todaySolved = _uiState.value.todaySolved,
+                            zoneOffsetMillis = TimeZone.getDefault().getOffset(now).toLong(),
+                            nowMillis = now,
+                        )
+                    when (result) {
+                        is AppResult.Success -> {
+                            val recommendation = result.data
+                            questionStartMillis = System.currentTimeMillis()
+                            _uiState.update { current ->
+                                current.copy(
+                                    phase = SolvePhase.SOLVING,
+                                    problemOrdinal = current.todaySolved + 1,
+                                    problem = recommendation.problem,
+                                    area = recommendation.problem.area,
+                                    // 복습(REVIEW)은 현재 레벨과 다른 난이도일 수 있으니 문제 자체의 난이도를 보여준다.
+                                    difficulty = recommendation.problem.difficulty,
+                                    selectedIndex = null,
+                                    result = null,
+                                    showExplanation = recommendation.showExplanation,
+                                    reason = recommendation.reason,
+                                    solutionVideo = null,
+                                    dissectionAssignment = emptyMap(),
+                                    dissectionPiece = 0,
+                                    dissectionResult = null,
+                                )
+                            }
+                            fillSolutionVideo(recommendation.problem.id, recommendation.problem.methodCode)
+                        }
+
+                        is AppResult.Failure -> {
+                            _uiState.update { it.copy(phase = SolvePhase.EMPTY) }
                         }
                     }
+                }
+        }
 
-                    is AppResult.Failure -> {
-                        _uiState.update { it.copy(phase = SolvePhase.EMPTY) }
-                    }
+        /**
+         * 해설 영상 유무를 문제 표시 뒤에 따로 채운다 — 매니페스트 조회가 네트워크를 타는데
+         * 문제 로드 경로에 두면 연결이 나쁠 때 '다음 문제'가 최대 45초 스피너가 된다.
+         */
+        private fun fillSolutionVideo(
+            problemId: String,
+            methodCode: String?,
+        ) {
+            viewModelScope.launch {
+                if (methodCode == null) return@launch
+                val video = runCatching { solutionVideoRepository.videoForMethod(methodCode) }.getOrNull()
+                if (video != null) {
+                    _uiState.update { if (it.problem?.id == problemId) it.copy(solutionVideo = video) else it }
                 }
             }
         }
@@ -135,7 +179,6 @@ class SolveViewModel
                     return@launch
                 }
                 questionStartMillis = System.currentTimeMillis()
-                val video = solutionVideoRepository.videoForMethod(problem.methodCode)
                 _uiState.update { current ->
                     current.copy(
                         phase = SolvePhase.SOLVING,
@@ -147,12 +190,13 @@ class SolveViewModel
                         result = null,
                         showExplanation = false,
                         reason = RecommendationReason.REVIEW,
-                        solutionVideo = video,
+                        solutionVideo = null,
                         dissectionAssignment = emptyMap(),
                         dissectionPiece = 0,
                         dissectionResult = null,
                     )
                 }
+                fillSolutionVideo(problem.id, problem.methodCode)
             }
         }
 
@@ -180,7 +224,8 @@ class SolveViewModel
             val current = _uiState.value
             val problem = current.problem ?: return
             val selected = current.selectedIndex ?: return
-            if (current.phase != SolvePhase.SOLVING) return
+            if (current.phase != SolvePhase.SOLVING || submitting) return
+            submitting = true
 
             viewModelScope.launch {
                 // 상한 필수: 문제를 열어둔 채 기기가 잠들면(저녁·밤새) 경과 시간이 통째로 기록돼
@@ -200,6 +245,8 @@ class SolveViewModel
                 _uiState.update {
                     it.copy(
                         phase = SolvePhase.GRADED,
+                        sessionElapsedSec = sessionElapsedSec(),
+                        goalJustReached = it.problemOrdinal == it.dailyGoal,
                         result = gradingResult,
                         retryLikely =
                             !gradingResult.isCorrect && it.sessionStreak >= 1 && !it.reviewMode,
@@ -216,7 +263,8 @@ class SolveViewModel
         fun giveUp() {
             val current = _uiState.value
             val problem = current.problem ?: return
-            if (current.phase != SolvePhase.SOLVING) return
+            if (current.phase != SolvePhase.SOLVING || submitting) return
+            submitting = true
 
             viewModelScope.launch {
                 val elapsedSec =
@@ -233,6 +281,8 @@ class SolveViewModel
                 _uiState.update {
                     it.copy(
                         phase = SolvePhase.GRADED,
+                        sessionElapsedSec = sessionElapsedSec(),
+                        goalJustReached = it.problemOrdinal == it.dailyGoal,
                         result = gradingResult,
                         retryLikely = false,
                         sessionStreak = 0,
@@ -257,19 +307,20 @@ class SolveViewModel
                     } else {
                         s.dissectionAssignment + (cell to s.dissectionPiece)
                     }
-                s.copy(dissectionAssignment = next)
+                s.copy(dissectionAssignment = next, dissectionResult = null)
             }
         }
 
         fun clearDissection() {
             if (_uiState.value.phase != SolvePhase.SOLVING) return
-            _uiState.update { it.copy(dissectionAssignment = emptyMap()) }
+            // 힌트도 함께 지운다 — 안 그러면 다 칠한 뒤에도 "아직 안 칠한 칸이 있어요"가 남는다.
+            _uiState.update { it.copy(dissectionAssignment = emptyMap(), dissectionResult = null) }
         }
 
         fun submitDissection() {
             val current = _uiState.value
             val puzzle = current.problem?.dissection ?: return
-            if (current.phase != SolvePhase.SOLVING) return
+            if (current.phase != SolvePhase.SOLVING || submitting) return
             // 미완성(칸을 다 안 채움)은 실제 답이 아니므로 시도 기록 없이 힌트만 — 계속 풀 수 있게 SOLVING 유지.
             if (current.dissectionAssignment.keys != puzzle.cells.toSet()) {
                 _uiState.update { it.copy(dissectionResult = DissectionValidation(false, DissectionError.INCOMPLETE)) }
@@ -292,12 +343,16 @@ class SolveViewModel
                 _uiState.update {
                     it.copy(
                         phase = SolvePhase.GRADED,
+                        sessionElapsedSec = sessionElapsedSec(),
+                        goalJustReached = it.problemOrdinal == it.dailyGoal,
                         dissectionResult = validation,
                         sessionStreak = if (validation.isValid) it.sessionStreak + 1 else 0,
                     )
                 }
             }
         }
+
+        private fun sessionElapsedSec(): Int = ((System.currentTimeMillis() - sessionStartMillis) / MILLIS_PER_SECOND).toInt().coerceAtLeast(0)
 
         companion object {
             const val MILLIS_PER_SECOND = 1000L
