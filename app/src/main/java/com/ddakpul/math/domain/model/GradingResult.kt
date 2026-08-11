@@ -9,6 +9,6 @@ data class GradingResult(
     val isCorrect: Boolean,
     val mistake: Mistake?,
     val explanation: String?,
-    /** 2차(심화) 풀이 — 이용권 전용. 결과 화면이 무료/유료에 맞게 노출한다. */
+    /** 2차(심화) 풀이 — 더 깊은 개념·다른 풀이법. 전원 무료로 노출한다(있는 문제만). */
     val detailedExplanation: String? = null,
 )

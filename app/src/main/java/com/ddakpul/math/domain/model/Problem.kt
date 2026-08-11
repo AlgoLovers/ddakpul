@@ -30,7 +30,7 @@ data class Problem(
     val explanation: String?, // 1차 풀이 — 모든 문제가 보유(콘텐츠 규칙, ProblemCatalogTest가 강제). 무료 공개.
     val commonMistakes: List<Mistake>,
     val figure: ProblemFigure? = null,
-    /** 2차(심화) 풀이 — 더 깊은 개념·다른 풀이법. 이용권 전용. 없는 문제도 있어 nullable. */
+    /** 2차(심화) 풀이 — 더 깊은 개념·다른 풀이법. 전원 무료 제공. 없는 문제도 있어 nullable. */
     val detailedExplanation: String? = null,
     /**
      * 계층 관리 코드 AA-BB-CC-DD-SS (영역·유형·방법·난이도·일련). 없으면 null(구 데이터).

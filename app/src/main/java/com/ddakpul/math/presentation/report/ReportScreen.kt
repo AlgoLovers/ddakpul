@@ -216,7 +216,7 @@ private fun ReportContent(
             }
 
             // 심화 분석(정답률 추이·성장 곡선·개념별 숙달·난이도별 숙달 지도).
-            PremiumAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
+            DeeperAnalyticsSections(stats = stats, dayCells = dayCells, masteryGrid = masteryGrid)
 
             SectionCard(title = stringResource(R.string.report_parent_tips_title), icon = "🧑‍🏫") {
                 stringArrayResource(R.array.parent_tips).forEach { tip ->
@@ -294,9 +294,9 @@ private fun printReport(
     printManager.print(jobName, adapter, attributes)
 }
 
-/** 이용권 전용 심화 분석 — 학습량·정답률 추이·성장 곡선·개념 숙달도·난이도별 숙달 지도. */
+/** 심화 분석(전원 무료) — 학습량·정답률 추이·성장 곡선·개념 숙달도·난이도별 숙달 지도. */
 @Composable
-private fun PremiumAnalyticsSections(
+private fun DeeperAnalyticsSections(
     stats: LearningStats,
     dayCells: List<DayCell>,
     masteryGrid: List<MasteryCellUi>,
