@@ -1,5 +1,6 @@
-What's new
-• A more polished app — we fixed issues across several screens for smoother, more stable use.
-• Retuned the easiest levels so problems fit your skill more closely from the start.
-• Improved layouts so nothing gets cut off on different devices.
-• Accessibility and small details refined for easier reading.
+Ddakpul is here 🎉
+Not calculation drills — thinking math you solve with pencil and paper in about 5 minutes.
+• Auto-picks the right level, from first steps to competition class.
+• Recommendations sharpen as you solve, balancing four math areas.
+• Works fully offline. No ads, no payments.
+• A guardian report shows growth at a glance.
