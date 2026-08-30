@@ -18,6 +18,7 @@ import com.ddakpul.math.domain.usecase.GradeAttemptUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.RecommendNextProblemUseCase
+import com.ddakpul.math.domain.usecase.RecordAttemptUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import com.ddakpul.math.domain.usecase.SubmitDissectionUseCase
 import com.ddakpul.math.domain.usecase.SubmitGiveUpUseCase
@@ -71,9 +72,9 @@ class SolveViewModelTest {
                     computeReviewQueue = ComputeReviewQueueUseCase(),
                 ),
             getProblemById = GetProblemByIdUseCase(problems),
-            submitAnswer = SubmitAnswerUseCase(learner, GradeAttemptUseCase()),
-            submitDissection = SubmitDissectionUseCase(learner, ValidateDissectionUseCase()),
-            submitGiveUp = SubmitGiveUpUseCase(learner),
+            submitAnswer = SubmitAnswerUseCase(RecordAttemptUseCase(learner), GradeAttemptUseCase()),
+            submitDissection = SubmitDissectionUseCase(RecordAttemptUseCase(learner), ValidateDissectionUseCase()),
+            submitGiveUp = SubmitGiveUpUseCase(RecordAttemptUseCase(learner)),
             excludeProblem = ExcludeProblemUseCase(feedback),
             getSolutionVideo = GetSolutionVideoUseCase(FakeSolutionVideoRepository()),
             observeStats = ObserveLearningStatsUseCase(learner, problems),

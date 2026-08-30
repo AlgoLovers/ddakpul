@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.domain.common.AppResult
-import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.time.Clock
@@ -16,6 +15,7 @@ import com.ddakpul.math.domain.usecase.GetProblemByIdUseCase
 import com.ddakpul.math.domain.usecase.GetSolutionVideoUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
+import com.ddakpul.math.domain.usecase.RecordAttemptUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
 import com.ddakpul.math.domain.usecase.SubmitDissectionUseCase
 import com.ddakpul.math.domain.usecase.SubmitGiveUpUseCase
@@ -355,13 +355,13 @@ class SolveViewModel
         }
 
         /**
-         * 이 문항에 쓴 시간(초). 상한 필수 — 문제를 열어둔 채 기기가 잠들면(저녁·밤새) 경과 시간이
-         * 통째로 기록돼 평균 통계를 영구히 왜곡한다. 사고력 문제 기준 30분이면 충분히 관대한 상한.
+         * 이 문항에 쓴 시간(초). 기록 상한(밤새 열어둔 문제 방어)은 [RecordAttemptUseCase]가
+         * 보증하므로 여기서는 순수 경과만 잰다.
          */
         private fun elapsedOnQuestionSec(): Int =
             ((clock.nowMillis() - questionStartMillis) / MILLIS_PER_SECOND)
                 .toInt()
-                .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+                .coerceAtLeast(0)
 
         private fun sessionElapsedSec(): Int = ((clock.nowMillis() - sessionStartMillis) / MILLIS_PER_SECOND).toInt().coerceAtLeast(0)
 

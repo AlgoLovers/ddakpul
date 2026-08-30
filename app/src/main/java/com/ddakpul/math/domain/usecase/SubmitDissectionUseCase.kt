@@ -1,9 +1,7 @@
 package com.ddakpul.math.domain.usecase
 
-import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.Problem
-import com.ddakpul.math.domain.repository.LearnerRepository
 import javax.inject.Inject
 
 /**
@@ -14,7 +12,7 @@ import javax.inject.Inject
 class SubmitDissectionUseCase
     @Inject
     constructor(
-        private val learnerRepository: LearnerRepository,
+        private val recordAttempt: RecordAttemptUseCase,
         private val validate: ValidateDissectionUseCase,
     ) {
         suspend operator fun invoke(
@@ -28,14 +26,12 @@ class SubmitDissectionUseCase
                 problem.dissection
                     ?: return DissectionValidation(false, DissectionError.INCOMPLETE)
             val result = validate(puzzle, assignment)
-            learnerRepository.recordAttempt(
-                Attempt(
-                    problemId = problem.id,
-                    isCorrect = result.isValid,
-                    timeSpentSec = timeSpentSec,
-                    timestamp = timestamp,
-                    reviewMode = reviewMode,
-                ),
+            recordAttempt(
+                problem = problem,
+                isCorrect = result.isValid,
+                timeSpentSec = timeSpentSec,
+                timestamp = timestamp,
+                reviewMode = reviewMode,
             )
             return result
         }

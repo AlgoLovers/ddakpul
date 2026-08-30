@@ -8,7 +8,7 @@ import org.junit.Test
 
 class SubmitGiveUpUseCaseTest {
     private val learner = FakeLearnerRepository()
-    private val submit = SubmitGiveUpUseCase(learner)
+    private val submit = SubmitGiveUpUseCase(RecordAttemptUseCase(learner))
 
     private val problem =
         problem(id = "p-giveup", difficulty = 3, answerIndex = 2, explanation = "이렇게 푼다")
