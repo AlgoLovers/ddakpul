@@ -3,11 +3,12 @@ package com.ddakpul.math.presentation.solve
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ddakpul.math.core.common.AppResult
+import com.ddakpul.math.domain.common.AppResult
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.repository.SolutionVideoRepository
+import com.ddakpul.math.domain.time.Clock
 import com.ddakpul.math.domain.usecase.DissectionError
 import com.ddakpul.math.domain.usecase.DissectionValidation
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
@@ -26,7 +27,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.TimeZone
 import javax.inject.Inject
 
 /**
@@ -46,6 +46,7 @@ class SolveViewModel
         private val solutionVideoRepository: SolutionVideoRepository,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
+        private val clock: Clock,
         savedStateHandle: SavedStateHandle,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(SolveUiState())
@@ -54,7 +55,7 @@ class SolveViewModel
         private var questionStartMillis: Long = 0L
 
         /** 이번 화면 세션이 시작된 시각 — 소프트 컷은 '오늘 누적'이 아니라 이 세션 경과로 판단한다. */
-        private val sessionStartMillis: Long = System.currentTimeMillis()
+        private val sessionStartMillis: Long = clock.nowMillis()
 
         /** 오늘 푼 수를 한 번이라도 읽었는지 — 첫 추천이 0을 보고 도는 것을 막는 신호. */
         private val statsLoaded = MutableStateFlow(false)
@@ -86,8 +87,8 @@ class SolveViewModel
             // 오늘 푼 문제 수는 기록이 쌓일 때마다 자동 갱신된다(시도 저장 → Flow 재계산).
             viewModelScope.launch {
                 observeStats(
-                    zoneOffsetMillis = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong(),
-                    nowMillis = { System.currentTimeMillis() },
+                    zoneOffsetMillis = clock.zoneOffsetMillis(),
+                    nowMillis = clock::nowMillis,
                 ).collect { stats ->
                     _uiState.update {
                         it.copy(
@@ -110,17 +111,17 @@ class SolveViewModel
             _uiState.update { it.copy(phase = SolvePhase.LOADING, selectedIndex = null, result = null) }
             loadJob =
                 viewModelScope.launch {
-                    val now = System.currentTimeMillis()
+                    val now = clock.nowMillis()
                     val result =
                         getNextProblem(
                             todaySolved = _uiState.value.todaySolved,
-                            zoneOffsetMillis = TimeZone.getDefault().getOffset(now).toLong(),
+                            zoneOffsetMillis = clock.zoneOffsetMillis(),
                             nowMillis = now,
                         )
                     when (result) {
                         is AppResult.Success -> {
                             val recommendation = result.data
-                            questionStartMillis = System.currentTimeMillis()
+                            questionStartMillis = clock.nowMillis()
                             _uiState.update { current ->
                                 current.copy(
                                     phase = SolvePhase.SOLVING,
@@ -178,7 +179,7 @@ class SolveViewModel
                     _uiState.update { it.copy(phase = SolvePhase.EMPTY) }
                     return@launch
                 }
-                questionStartMillis = System.currentTimeMillis()
+                questionStartMillis = clock.nowMillis()
                 _uiState.update { current ->
                     current.copy(
                         phase = SolvePhase.SOLVING,
@@ -209,7 +210,7 @@ class SolveViewModel
             viewModelScope.launch {
                 excludeProblem(
                     problemId = problem.id,
-                    timestampMillis = System.currentTimeMillis(),
+                    timestampMillis = clock.nowMillis(),
                 )
                 loadNext()
             }
@@ -228,18 +229,13 @@ class SolveViewModel
             submitting = true
 
             viewModelScope.launch {
-                // 상한 필수: 문제를 열어둔 채 기기가 잠들면(저녁·밤새) 경과 시간이 통째로 기록돼
-                // 평균 통계를 영구히 왜곡한다. 사고력 문제 기준 30분이면 충분히 관대한 상한.
-                val elapsedSec =
-                    ((System.currentTimeMillis() - questionStartMillis) / MILLIS_PER_SECOND)
-                        .toInt()
-                        .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+                val elapsedSec = elapsedOnQuestionSec()
                 val gradingResult =
                     submitAnswer(
                         problem = problem,
                         selectedIndex = selected,
                         timeSpentSec = elapsedSec,
-                        timestamp = System.currentTimeMillis(),
+                        timestamp = clock.nowMillis(),
                         reviewMode = current.reviewMode,
                     )
                 _uiState.update {
@@ -267,15 +263,12 @@ class SolveViewModel
             submitting = true
 
             viewModelScope.launch {
-                val elapsedSec =
-                    ((System.currentTimeMillis() - questionStartMillis) / MILLIS_PER_SECOND)
-                        .toInt()
-                        .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+                val elapsedSec = elapsedOnQuestionSec()
                 val gradingResult =
                     submitGiveUp(
                         problem = problem,
                         timeSpentSec = elapsedSec,
-                        timestamp = System.currentTimeMillis(),
+                        timestamp = clock.nowMillis(),
                         reviewMode = current.reviewMode,
                     )
                 _uiState.update {
@@ -328,16 +321,13 @@ class SolveViewModel
             }
             val problem = current.problem
             viewModelScope.launch {
-                val elapsedSec =
-                    ((System.currentTimeMillis() - questionStartMillis) / MILLIS_PER_SECOND)
-                        .toInt()
-                        .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+                val elapsedSec = elapsedOnQuestionSec()
                 val validation =
                     submitDissection(
                         problem = problem,
                         assignment = current.dissectionAssignment,
                         timeSpentSec = elapsedSec,
-                        timestamp = System.currentTimeMillis(),
+                        timestamp = clock.nowMillis(),
                         reviewMode = current.reviewMode,
                     )
                 _uiState.update {
@@ -352,7 +342,16 @@ class SolveViewModel
             }
         }
 
-        private fun sessionElapsedSec(): Int = ((System.currentTimeMillis() - sessionStartMillis) / MILLIS_PER_SECOND).toInt().coerceAtLeast(0)
+        /**
+         * 이 문항에 쓴 시간(초). 상한 필수 — 문제를 열어둔 채 기기가 잠들면(저녁·밤새) 경과 시간이
+         * 통째로 기록돼 평균 통계를 영구히 왜곡한다. 사고력 문제 기준 30분이면 충분히 관대한 상한.
+         */
+        private fun elapsedOnQuestionSec(): Int =
+            ((clock.nowMillis() - questionStartMillis) / MILLIS_PER_SECOND)
+                .toInt()
+                .coerceIn(0, Attempt.MAX_TIME_SPENT_SEC)
+
+        private fun sessionElapsedSec(): Int = ((clock.nowMillis() - sessionStartMillis) / MILLIS_PER_SECOND).toInt().coerceAtLeast(0)
 
         companion object {
             const val MILLIS_PER_SECOND = 1000L

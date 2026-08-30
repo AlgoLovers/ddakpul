@@ -1,10 +1,10 @@
 package com.ddakpul.math.domain.usecase
 
-import com.ddakpul.math.core.common.AppError
-import com.ddakpul.math.core.common.AppResult
 import com.ddakpul.math.data.FakeLearnerRepository
 import com.ddakpul.math.data.FakeProblemFeedbackRepository
 import com.ddakpul.math.data.FakeProblemRepository
+import com.ddakpul.math.domain.common.AppError
+import com.ddakpul.math.domain.common.AppResult
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.RecommendationReason
 import com.ddakpul.math.domain.usecase.TestFixtures.attempt

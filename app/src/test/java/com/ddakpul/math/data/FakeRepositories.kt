@@ -8,9 +8,11 @@ import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.domain.model.SolutionVideo
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.ProblemFeedbackRepository
 import com.ddakpul.math.domain.repository.ProblemRepository
+import com.ddakpul.math.domain.repository.SolutionVideoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -105,4 +107,16 @@ class FakeLearnerRepository(
     private companion object {
         const val RECENT_WINDOW = 10
     }
+}
+
+/** 해설 영상이 하나도 준비되지 않은 상태 — 풀이 흐름 테스트의 기본값. */
+class FakeSolutionVideoRepository : SolutionVideoRepository {
+    override suspend fun videoForMethod(methodCode: String?): SolutionVideo? = null
+
+    override fun isCached(video: SolutionVideo): Boolean = false
+
+    override suspend fun ensureLocal(
+        video: SolutionVideo,
+        onProgress: (received: Long, total: Long) -> Unit,
+    ): String? = null
 }

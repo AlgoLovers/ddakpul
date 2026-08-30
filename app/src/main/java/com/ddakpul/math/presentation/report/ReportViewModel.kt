@@ -2,13 +2,14 @@ package com.ddakpul.math.presentation.report
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ddakpul.math.core.common.MILLIS_PER_DAY
 import com.ddakpul.math.core.common.toPercentInt
+import com.ddakpul.math.domain.common.MILLIS_PER_DAY
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.domain.time.Clock
 import com.ddakpul.math.domain.usecase.ComputeNextStepUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import java.util.TimeZone
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -99,12 +99,13 @@ class ReportViewModel
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
         private val computeNextStep: ComputeNextStepUseCase,
+        private val clock: Clock,
     ) : ViewModel() {
         val uiState: StateFlow<ReportUiState> =
             combine(
                 observeStats(
-                    zoneOffsetMillis = zoneOffsetMillis(),
-                    nowMillis = { System.currentTimeMillis() },
+                    zoneOffsetMillis = clock.zoneOffsetMillis(),
+                    nowMillis = clock::nowMillis,
                 ),
                 observeDailyGoal(),
             ) { stats, dailyGoal ->
@@ -125,8 +126,7 @@ class ReportViewModel
 
         /** 최근 [WINDOW_DAYS]일을 빈 날 포함해 채운다 — 차트의 x축이 끊기지 않게. */
         private fun buildDayCells(stats: LearningStats): List<DayCell> {
-            val today =
-                Math.floorDiv(System.currentTimeMillis() + zoneOffsetMillis(), MILLIS_PER_DAY)
+            val today = today()
             val byDay = stats.dailyStats.associateBy { it.epochDay }
             return ((today - WINDOW_DAYS + 1)..today).map { day ->
                 val stat = byDay[day]
@@ -189,8 +189,7 @@ class ReportViewModel
             }
 
         private fun buildWeeklySummary(stats: LearningStats): WeeklySummary {
-            val today =
-                Math.floorDiv(System.currentTimeMillis() + zoneOffsetMillis(), MILLIS_PER_DAY)
+            val today = today()
             val lastWeek = stats.dailyStats.filter { it.epochDay > today - DAYS_PER_WEEK }
             val solved = lastWeek.sumOf { it.solved }
             val correct = lastWeek.sumOf { it.correct }
@@ -212,7 +211,8 @@ class ReportViewModel
             )
         }
 
-        private fun zoneOffsetMillis(): Long = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong()
+        /** 로컬 자정 기준 오늘의 epoch day — 최근 N일 창과 주간 요약이 같은 기준을 쓴다. */
+        private fun today(): Long = Math.floorDiv(clock.nowMillis() + clock.zoneOffsetMillis(), MILLIS_PER_DAY)
 
         private companion object {
             const val STOP_TIMEOUT_MILLIS = 5_000L

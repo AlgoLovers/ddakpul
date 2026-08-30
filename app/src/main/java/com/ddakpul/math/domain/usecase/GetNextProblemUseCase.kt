@@ -1,7 +1,7 @@
 package com.ddakpul.math.domain.usecase
 
-import com.ddakpul.math.core.common.AppError
-import com.ddakpul.math.core.common.AppResult
+import com.ddakpul.math.domain.common.AppError
+import com.ddakpul.math.domain.common.AppResult
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.Recommendation
 import com.ddakpul.math.domain.repository.LearnerRepository

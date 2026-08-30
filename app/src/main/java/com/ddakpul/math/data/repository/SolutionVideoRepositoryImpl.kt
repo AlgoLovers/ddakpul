@@ -3,6 +3,7 @@ package com.ddakpul.math.data.repository
 import android.content.Context
 import com.ddakpul.math.domain.model.SolutionVideo
 import com.ddakpul.math.domain.repository.SolutionVideoRepository
+import com.ddakpul.math.domain.time.Clock
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -46,6 +47,7 @@ class SolutionVideoRepositoryImpl
     @Inject
     constructor(
         @ApplicationContext private val context: Context,
+        private val clock: Clock,
     ) : SolutionVideoRepository {
         private val json = Json { ignoreUnknownKeys = true }
         private val manifestMutex = Mutex()
@@ -89,7 +91,7 @@ class SolutionVideoRepositoryImpl
         /** 매니페스트 로드: 메모리(TTL 내) → 원격 갱신 → 로컬 사본 → 내장 시드. */
         private suspend fun loadManifest(): Map<String, SolutionVideo> =
             manifestMutex.withLock {
-                val now = System.currentTimeMillis()
+                val now = clock.nowMillis()
                 cachedManifest?.let { if (now - manifestLoadedAt < MANIFEST_TTL_MILLIS) return it }
                 val remote = withContext(Dispatchers.IO) { fetchRemoteManifest() }
                 val parsed =
