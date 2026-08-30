@@ -1,4 +1,4 @@
-package com.ddakpul.math.core.common
+package com.ddakpul.math.domain.common
 
 import kotlin.math.roundToInt
 

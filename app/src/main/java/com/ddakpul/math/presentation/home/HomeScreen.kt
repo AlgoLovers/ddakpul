@@ -42,12 +42,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
-import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.GradientPrimaryButton
 import com.ddakpul.math.core.designsystem.component.MasteryChip
 import com.ddakpul.math.core.designsystem.component.ProgressBar
 import com.ddakpul.math.core.designsystem.component.ProgressDots
 import com.ddakpul.math.core.designsystem.component.masteryStageOf
+import com.ddakpul.math.domain.common.toPercentInt
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
