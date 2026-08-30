@@ -2,7 +2,6 @@ package com.ddakpul.math.data.repository
 
 import com.ddakpul.math.data.local.dao.AttemptDao
 import com.ddakpul.math.data.local.dao.LearnerProgressDao
-import com.ddakpul.math.data.local.entity.LearnerProgressEntity
 import com.ddakpul.math.data.mapper.toDomain
 import com.ddakpul.math.data.mapper.toEntity
 import com.ddakpul.math.domain.model.Attempt
@@ -39,48 +38,18 @@ class LearnerRepositoryImpl
         }
 
         override suspend fun setCurrentDifficulty(difficulty: Int) {
-            val clamped = Difficulty.clamp(difficulty)
-            // 행 전체를 새로 쓰면 dailyGoal이 기본값으로 덮이므로 읽어서 수정한다.
-            val current = progressDao.get()
-            progressDao.upsert(
-                current?.copy(currentDifficulty = clamped)
-                    ?: LearnerProgressEntity(currentDifficulty = clamped),
-            )
+            progressDao.insertDefaultIfAbsent(Difficulty.DEFAULT, SessionGoals.DAILY_GOAL_PROBLEMS)
+            progressDao.updateCurrentDifficulty(Difficulty.clamp(difficulty))
         }
 
         override fun observeAttempts(): Flow<List<Attempt>> = attemptDao.observeAll().map { entities -> entities.map { it.toDomain() } }
 
         override suspend fun getAllAttempts(): List<Attempt> = attemptDao.getAll().map { it.toDomain() }
 
-        override fun observeDailyGoal(): Flow<Int> = progressDao.observe().map { it?.dailyGoal ?: SessionGoals.DAILY_GOAL_PROBLEMS }
-
-        override suspend fun setDailyGoal(goal: Int) {
-            val current = progressDao.get()
-            progressDao.upsert(
-                current?.copy(dailyGoal = goal)
-                    ?: LearnerProgressEntity(currentDifficulty = Difficulty.DEFAULT, dailyGoal = goal),
-            )
-        }
-
-        override fun observeUnlockAllLevels(): Flow<Boolean> = progressDao.observe().map { it?.unlockAllLevels ?: false }
-
-        override suspend fun getUnlockAllLevels(): Boolean = progressDao.get()?.unlockAllLevels ?: false
-
-        override suspend fun setUnlockAllLevels(enabled: Boolean) {
-            val current = progressDao.get()
-            progressDao.upsert(
-                current?.copy(unlockAllLevels = enabled)
-                    ?: LearnerProgressEntity(currentDifficulty = Difficulty.DEFAULT, unlockAllLevels = enabled),
-            )
-        }
-
         override suspend fun resetProgress() {
             attemptDao.deleteAll()
             // 하루 목표는 학습 기록이 아니라 아이의 선택이므로 유지하고, 난이도만 처음으로.
-            val current = progressDao.get()
-            if (current != null) {
-                progressDao.upsert(current.copy(currentDifficulty = Difficulty.DEFAULT))
-            }
+            progressDao.updateCurrentDifficulty(Difficulty.DEFAULT)
         }
 
         private companion object {

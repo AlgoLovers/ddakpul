@@ -1,5 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
+import com.ddakpul.math.data.FakeLearnerPreferencesRepository
 import com.ddakpul.math.data.FakeLearnerRepository
 import com.ddakpul.math.data.FakeProblemFeedbackRepository
 import com.ddakpul.math.data.FakeProblemRepository
@@ -18,9 +19,11 @@ class GetNextProblemUseCaseTest {
         learner: FakeLearnerRepository,
         problems: FakeProblemRepository = FakeProblemRepository(standardGroups()),
         feedback: FakeProblemFeedbackRepository = FakeProblemFeedbackRepository(),
+        preferences: FakeLearnerPreferencesRepository = FakeLearnerPreferencesRepository(),
     ) = GetNextProblemUseCase(
         getActiveGroups = GetActiveProblemGroupsUseCase(problems, feedback),
         learnerRepository = learner,
+        preferencesRepository = preferences,
         recommend = RecommendNextProblemUseCase(),
         computeReviewQueue = ComputeReviewQueueUseCase(),
     )
@@ -147,15 +150,12 @@ class GetNextProblemUseCaseTest {
     fun unlockAllLevels_promotesPastDefaultOpenMax() =
         runTest {
             // '상위 난이도 열기' 켜짐 + 상한에서 2연속 정답 → 상한 위로 승급한다.
-            val learner =
-                FakeLearnerRepository(
-                    initialDifficulty = Difficulty.DEFAULT_OPEN_MAX,
-                    unlockAllLevels = true,
-                )
+            val learner = FakeLearnerRepository(initialDifficulty = Difficulty.DEFAULT_OPEN_MAX)
+            val preferences = FakeLearnerPreferencesRepository(unlockAllLevels = true)
             learner.recordAttempt(attempt("d${Difficulty.DEFAULT_OPEN_MAX}-1", true))
             learner.recordAttempt(attempt("d${Difficulty.DEFAULT_OPEN_MAX}-2", true))
 
-            val result = useCase(learner)(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
+            val result = useCase(learner, preferences = preferences)(todaySolved = 0, zoneOffsetMillis = 0L, nowMillis = 0L)
 
             val rec = (result as AppResult.Success).data
             val promoted = Difficulty.DEFAULT_OPEN_MAX + 1

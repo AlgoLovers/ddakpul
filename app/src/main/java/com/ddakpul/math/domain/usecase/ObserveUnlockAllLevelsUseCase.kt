@@ -1,6 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
-import com.ddakpul.math.domain.repository.LearnerRepository
+import com.ddakpul.math.domain.repository.LearnerPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ObserveUnlockAllLevelsUseCase
     @Inject
     constructor(
-        private val learnerRepository: LearnerRepository,
+        private val preferencesRepository: LearnerPreferencesRepository,
     ) {
-        operator fun invoke(): Flow<Boolean> = learnerRepository.observeUnlockAllLevels()
+        operator fun invoke(): Flow<Boolean> = preferencesRepository.observeUnlockAllLevels()
     }

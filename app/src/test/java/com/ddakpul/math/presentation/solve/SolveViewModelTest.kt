@@ -1,6 +1,7 @@
 package com.ddakpul.math.presentation.solve
 
 import androidx.lifecycle.SavedStateHandle
+import com.ddakpul.math.data.FakeLearnerPreferencesRepository
 import com.ddakpul.math.data.FakeLearnerRepository
 import com.ddakpul.math.data.FakeProblemFeedbackRepository
 import com.ddakpul.math.data.FakeProblemRepository
@@ -40,12 +41,14 @@ import org.junit.Test
 class SolveViewModelTest {
     private val dispatcher = UnconfinedTestDispatcher()
     private lateinit var learner: FakeLearnerRepository
+    private lateinit var preferences: FakeLearnerPreferencesRepository
     private lateinit var clock: FakeClock
 
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         learner = FakeLearnerRepository()
+        preferences = FakeLearnerPreferencesRepository()
         clock = FakeClock(now = START_MILLIS)
     }
 
@@ -63,6 +66,7 @@ class SolveViewModelTest {
                 GetNextProblemUseCase(
                     getActiveGroups = activeGroups,
                     learnerRepository = learner,
+                    preferencesRepository = preferences,
                     recommend = RecommendNextProblemUseCase(),
                     computeReviewQueue = ComputeReviewQueueUseCase(),
                 ),
@@ -73,7 +77,7 @@ class SolveViewModelTest {
             excludeProblem = ExcludeProblemUseCase(feedback),
             getSolutionVideo = GetSolutionVideoUseCase(FakeSolutionVideoRepository()),
             observeStats = ObserveLearningStatsUseCase(learner, problems),
-            observeDailyGoal = ObserveDailyGoalUseCase(learner),
+            observeDailyGoal = ObserveDailyGoalUseCase(preferences),
             clock = clock,
             savedStateHandle =
                 SavedStateHandle(

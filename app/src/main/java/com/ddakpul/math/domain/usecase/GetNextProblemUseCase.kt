@@ -4,6 +4,7 @@ import com.ddakpul.math.domain.common.AppError
 import com.ddakpul.math.domain.common.AppResult
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.Recommendation
+import com.ddakpul.math.domain.repository.LearnerPreferencesRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import javax.inject.Inject
 
@@ -20,6 +21,7 @@ class GetNextProblemUseCase
     constructor(
         private val getActiveGroups: GetActiveProblemGroupsUseCase,
         private val learnerRepository: LearnerRepository,
+        private val preferencesRepository: LearnerPreferencesRepository,
         private val recommend: RecommendNextProblemUseCase,
         private val computeReviewQueue: ComputeReviewQueueUseCase,
     ) {
@@ -32,7 +34,7 @@ class GetNextProblemUseCase
             if (allGroups.isEmpty()) return AppResult.Failure(AppError.EmptyProblemBank)
 
             // '상위 난이도 열기'가 꺼져 있으면 기본 상한까지만 — 문제은행 자체를 걸러 상한 위 문제는 안 나오게.
-            val unlockAll = learnerRepository.getUnlockAllLevels()
+            val unlockAll = preferencesRepository.getUnlockAllLevels()
             val groups =
                 if (unlockAll) {
                     allGroups

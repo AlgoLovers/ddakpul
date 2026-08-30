@@ -5,6 +5,7 @@ import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.Problem
 import com.ddakpul.math.domain.model.ProblemGroup
+import com.ddakpul.math.domain.repository.LearnerPreferencesRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import javax.inject.Inject
 import kotlin.math.abs
@@ -36,13 +37,14 @@ class BuildWorksheetUseCase
     constructor(
         private val getActiveGroups: GetActiveProblemGroupsUseCase,
         private val learnerRepository: LearnerRepository,
+        private val preferencesRepository: LearnerPreferencesRepository,
     ) {
         suspend operator fun invoke(
             spec: WorksheetSpec,
             random: Random = Random.Default,
         ): List<Problem> {
             // 앱에서 안 나오는 난이도가 종이로 나가면 안 된다 — 상위 난이도 잠금을 학습지도 따른다.
-            val unlockAll = learnerRepository.getUnlockAllLevels()
+            val unlockAll = preferencesRepository.getUnlockAllLevels()
             val groups =
                 getActiveGroups().let { all ->
                     if (unlockAll) all else all.filter { it.difficulty <= Difficulty.DEFAULT_OPEN_MAX }

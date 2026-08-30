@@ -1,10 +1,12 @@
 package com.ddakpul.math.core.di
 
+import com.ddakpul.math.data.repository.LearnerPreferencesRepositoryImpl
 import com.ddakpul.math.data.repository.LearnerRepositoryImpl
 import com.ddakpul.math.data.repository.OnboardingRepositoryImpl
 import com.ddakpul.math.data.repository.ProblemFeedbackRepositoryImpl
 import com.ddakpul.math.data.repository.ProblemRepositoryImpl
 import com.ddakpul.math.data.repository.SolutionVideoRepositoryImpl
+import com.ddakpul.math.domain.repository.LearnerPreferencesRepository
 import com.ddakpul.math.domain.repository.LearnerRepository
 import com.ddakpul.math.domain.repository.OnboardingRepository
 import com.ddakpul.math.domain.repository.ProblemFeedbackRepository
@@ -23,6 +25,9 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindLearnerRepository(impl: LearnerRepositoryImpl): LearnerRepository
+
+    @Binds
+    abstract fun bindLearnerPreferencesRepository(impl: LearnerPreferencesRepositoryImpl): LearnerPreferencesRepository
 
     @Binds
     abstract fun bindOnboardingRepository(impl: OnboardingRepositoryImpl): OnboardingRepository
