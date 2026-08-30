@@ -61,9 +61,12 @@ class SolveViewModel
         private val statsLoaded = MutableStateFlow(false)
 
         /**
-         * 채점·다음문제 진행 중 플래그. 가드(phase 검사)와 상태 전환 사이에 suspend 구간이 있어,
+         * 채점 진행 중 플래그. 가드(phase 검사)와 상태 전환 사이에 suspend 구간이 있어,
          * 연타하면 같은 문제가 두 번 기록되고 통계·난이도 스트릭이 오염된다(되돌릴 수 없다).
          * 아이가 쓰는 앱이라 연타는 상수로 봐야 한다.
+         *
+         * **반드시 채점 코루틴의 `finally`에서 내린다** — 내리지 않으면 첫 제출 이후 이 화면의
+         * 모든 제출이 영구히 막힌다(같은 ViewModel이 다음 문제까지 재사용되므로).
          */
         private var submitting = false
 
@@ -229,25 +232,28 @@ class SolveViewModel
             submitting = true
 
             viewModelScope.launch {
-                val elapsedSec = elapsedOnQuestionSec()
-                val gradingResult =
-                    submitAnswer(
-                        problem = problem,
-                        selectedIndex = selected,
-                        timeSpentSec = elapsedSec,
-                        timestamp = clock.nowMillis(),
-                        reviewMode = current.reviewMode,
-                    )
-                _uiState.update {
-                    it.copy(
-                        phase = SolvePhase.GRADED,
-                        sessionElapsedSec = sessionElapsedSec(),
-                        goalJustReached = it.problemOrdinal == it.dailyGoal,
-                        result = gradingResult,
-                        retryLikely =
-                            !gradingResult.isCorrect && it.sessionStreak >= 1 && !it.reviewMode,
-                        sessionStreak = if (gradingResult.isCorrect) it.sessionStreak + 1 else 0,
-                    )
+                try {
+                    val gradingResult =
+                        submitAnswer(
+                            problem = problem,
+                            selectedIndex = selected,
+                            timeSpentSec = elapsedOnQuestionSec(),
+                            timestamp = clock.nowMillis(),
+                            reviewMode = current.reviewMode,
+                        )
+                    _uiState.update {
+                        it.copy(
+                            phase = SolvePhase.GRADED,
+                            sessionElapsedSec = sessionElapsedSec(),
+                            goalJustReached = it.problemOrdinal == it.dailyGoal,
+                            result = gradingResult,
+                            retryLikely =
+                                !gradingResult.isCorrect && it.sessionStreak >= 1 && !it.reviewMode,
+                            sessionStreak = if (gradingResult.isCorrect) it.sessionStreak + 1 else 0,
+                        )
+                    }
+                } finally {
+                    submitting = false
                 }
             }
         }
@@ -263,23 +269,26 @@ class SolveViewModel
             submitting = true
 
             viewModelScope.launch {
-                val elapsedSec = elapsedOnQuestionSec()
-                val gradingResult =
-                    submitGiveUp(
-                        problem = problem,
-                        timeSpentSec = elapsedSec,
-                        timestamp = clock.nowMillis(),
-                        reviewMode = current.reviewMode,
-                    )
-                _uiState.update {
-                    it.copy(
-                        phase = SolvePhase.GRADED,
-                        sessionElapsedSec = sessionElapsedSec(),
-                        goalJustReached = it.problemOrdinal == it.dailyGoal,
-                        result = gradingResult,
-                        retryLikely = false,
-                        sessionStreak = 0,
-                    )
+                try {
+                    val gradingResult =
+                        submitGiveUp(
+                            problem = problem,
+                            timeSpentSec = elapsedOnQuestionSec(),
+                            timestamp = clock.nowMillis(),
+                            reviewMode = current.reviewMode,
+                        )
+                    _uiState.update {
+                        it.copy(
+                            phase = SolvePhase.GRADED,
+                            sessionElapsedSec = sessionElapsedSec(),
+                            goalJustReached = it.problemOrdinal == it.dailyGoal,
+                            result = gradingResult,
+                            retryLikely = false,
+                            sessionStreak = 0,
+                        )
+                    }
+                } finally {
+                    submitting = false
                 }
             }
         }
@@ -320,24 +329,28 @@ class SolveViewModel
                 return
             }
             val problem = current.problem
+            submitting = true
             viewModelScope.launch {
-                val elapsedSec = elapsedOnQuestionSec()
-                val validation =
-                    submitDissection(
-                        problem = problem,
-                        assignment = current.dissectionAssignment,
-                        timeSpentSec = elapsedSec,
-                        timestamp = clock.nowMillis(),
-                        reviewMode = current.reviewMode,
-                    )
-                _uiState.update {
-                    it.copy(
-                        phase = SolvePhase.GRADED,
-                        sessionElapsedSec = sessionElapsedSec(),
-                        goalJustReached = it.problemOrdinal == it.dailyGoal,
-                        dissectionResult = validation,
-                        sessionStreak = if (validation.isValid) it.sessionStreak + 1 else 0,
-                    )
+                try {
+                    val validation =
+                        submitDissection(
+                            problem = problem,
+                            assignment = current.dissectionAssignment,
+                            timeSpentSec = elapsedOnQuestionSec(),
+                            timestamp = clock.nowMillis(),
+                            reviewMode = current.reviewMode,
+                        )
+                    _uiState.update {
+                        it.copy(
+                            phase = SolvePhase.GRADED,
+                            sessionElapsedSec = sessionElapsedSec(),
+                            goalJustReached = it.problemOrdinal == it.dailyGoal,
+                            dissectionResult = validation,
+                            sessionStreak = if (validation.isValid) it.sessionStreak + 1 else 0,
+                        )
+                    }
+                } finally {
+                    submitting = false
                 }
             }
         }
