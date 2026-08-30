@@ -2,7 +2,8 @@ package com.ddakpul.math.presentation.videoplayer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ddakpul.math.domain.repository.SolutionVideoRepository
+import com.ddakpul.math.domain.usecase.PrepareSolutionVideoUseCase
+import com.ddakpul.math.domain.usecase.VideoPreparation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,14 @@ sealed interface VideoPlayerState {
     data object Failed : VideoPlayerState
 }
 
+/** 확보 진행 상태를 화면이 쓰는 UI 상태로 옮긴다 — 재생기가 요구하는 file:// 스킴은 여기서 붙인다. */
+private fun VideoPreparation.toUiState(): VideoPlayerState =
+    when (this) {
+        is VideoPreparation.Downloading -> VideoPlayerState.Downloading(received, total)
+        is VideoPreparation.Ready -> VideoPlayerState.Ready("file://$filePath")
+        VideoPreparation.Failed -> VideoPlayerState.Failed
+    }
+
 /**
  * 방법코드로 영상을 찾아 로컬 확보(캐시 또는 1회 다운로드) 후 재생 준비 상태를 노출한다.
  * 영상은 버전 파일명으로 캐시되므로 한 번 받으면 오프라인에서도 재생된다.
@@ -37,7 +46,7 @@ sealed interface VideoPlayerState {
 class VideoPlayerViewModel
     @Inject
     constructor(
-        private val repository: SolutionVideoRepository,
+        private val prepareVideo: PrepareSolutionVideoUseCase,
     ) : ViewModel() {
         private val _state = MutableStateFlow<VideoPlayerState>(VideoPlayerState.Loading)
         val state: StateFlow<VideoPlayerState> = _state.asStateFlow()
@@ -57,19 +66,7 @@ class VideoPlayerViewModel
             _state.value = VideoPlayerState.Loading
             loadJob =
                 viewModelScope.launch {
-                    val video = repository.videoForMethod(methodCode)
-                    if (video == null) {
-                        _state.value = VideoPlayerState.Failed
-                        return@launch
-                    }
-                    if (!repository.isCached(video)) {
-                        _state.value = VideoPlayerState.Downloading(0, 0)
-                    }
-                    val path =
-                        repository.ensureLocal(video) { received, total ->
-                            _state.value = VideoPlayerState.Downloading(received, total)
-                        }
-                    _state.value = if (path != null) VideoPlayerState.Ready("file://$path") else VideoPlayerState.Failed
+                    prepareVideo(methodCode).collect { _state.value = it.toUiState() }
                 }
         }
     }

@@ -7,13 +7,13 @@ import com.ddakpul.math.domain.common.AppResult
 import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.Cell
 import com.ddakpul.math.domain.model.RecommendationReason
-import com.ddakpul.math.domain.repository.SolutionVideoRepository
 import com.ddakpul.math.domain.time.Clock
 import com.ddakpul.math.domain.usecase.DissectionError
 import com.ddakpul.math.domain.usecase.DissectionValidation
 import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.GetProblemByIdUseCase
+import com.ddakpul.math.domain.usecase.GetSolutionVideoUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
 import com.ddakpul.math.domain.usecase.SubmitAnswerUseCase
@@ -43,7 +43,7 @@ class SolveViewModel
         private val submitDissection: SubmitDissectionUseCase,
         private val submitGiveUp: SubmitGiveUpUseCase,
         private val excludeProblem: ExcludeProblemUseCase,
-        private val solutionVideoRepository: SolutionVideoRepository,
+        private val getSolutionVideo: GetSolutionVideoUseCase,
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
         private val clock: Clock,
@@ -162,8 +162,7 @@ class SolveViewModel
             methodCode: String?,
         ) {
             viewModelScope.launch {
-                if (methodCode == null) return@launch
-                val video = runCatching { solutionVideoRepository.videoForMethod(methodCode) }.getOrNull()
+                val video = getSolutionVideo(methodCode)
                 if (video != null) {
                     _uiState.update { if (it.problem?.id == problemId) it.copy(solutionVideo = video) else it }
                 }

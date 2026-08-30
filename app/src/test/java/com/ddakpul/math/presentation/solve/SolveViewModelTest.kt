@@ -12,6 +12,7 @@ import com.ddakpul.math.domain.usecase.ExcludeProblemUseCase
 import com.ddakpul.math.domain.usecase.GetActiveProblemGroupsUseCase
 import com.ddakpul.math.domain.usecase.GetNextProblemUseCase
 import com.ddakpul.math.domain.usecase.GetProblemByIdUseCase
+import com.ddakpul.math.domain.usecase.GetSolutionVideoUseCase
 import com.ddakpul.math.domain.usecase.GradeAttemptUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
@@ -70,7 +71,7 @@ class SolveViewModelTest {
             submitDissection = SubmitDissectionUseCase(learner, ValidateDissectionUseCase()),
             submitGiveUp = SubmitGiveUpUseCase(learner),
             excludeProblem = ExcludeProblemUseCase(feedback),
-            solutionVideoRepository = FakeSolutionVideoRepository(),
+            getSolutionVideo = GetSolutionVideoUseCase(FakeSolutionVideoRepository()),
             observeStats = ObserveLearningStatsUseCase(learner, problems),
             observeDailyGoal = ObserveDailyGoalUseCase(learner),
             clock = clock,
