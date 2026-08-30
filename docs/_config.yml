@@ -4,6 +4,7 @@
 # 새 내부 문서를 추가하면 이 exclude에도 추가할 것 (glob 미지원 환경 대비 명시 나열).
 exclude:
   - "*.md"
+  - ARCHITECTURE.md
   - COMPETITIVE_POSITIONING.md
   - CONTENT_ENGINE_STRATEGY.md
   - CONTENT_SOURCING.md

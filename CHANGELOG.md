@@ -8,6 +8,31 @@
 > 두 문서는 독자가 다르다 — 여기는 내가 보는 전체 기술 로그, 저기는 사용자가 보는 요약.
 
 ## [Unreleased]
+### Fixed
+- **첫 제출 뒤 모든 제출이 막히던 버그(치명)** — 연타 방지 플래그를 세운 뒤 내리지 않아,
+  한 세션에서 첫 문제를 채점한 순간부터 두 번째 문제 이후로는 "제출"·"모르겠어요"가
+  동작하지 않았다. v1.0.0(versionCode 17)에 포함되어 출시된 상태였다. 채점 코루틴의
+  `finally`에서 플래그를 내리고, 연타 가드를 읽기만 하고 세우지 않던 구성형(등분) 퍼즐의
+  비대칭도 바로잡았다. 회귀 테스트 7건 추가.
+- **학습 진행 단일 행의 갱신 경합** — 값 하나를 바꿀 때 행 전체를 읽고-고쳐-다시 써서,
+  문제를 넘길 때마다 자동 저장되는 현재 난이도와 사용자가 바꾼 하루 목표가 서로를
+  덮어쓸 수 있었다. 필드별 `UPDATE`로 원자화(스키마 변경 없음).
+
+### Changed
+- **아키텍처 정리(SOLID·클린 아키텍처 점검)** — 동작 변화 없음.
+  - `domain/time/Clock` 도입. `System.currentTimeMillis()`를 직접 부르는 곳은 `SystemClock`
+    하나뿐 — 시간이 얽힌 코드가 테스트 가능해졌다(ViewModel 테스트 0개 → 위 버그를 잡아냄).
+  - `AppResult`·`AppError`·`MILLIS_PER_DAY`·`toPercentInt`를 `core/common` → `domain/common`.
+    domain이 바깥 패키지를 전혀 import하지 않는다.
+  - 리포트 해석 규칙(인사이트 기준·취약 개념 판정선)을 `BuildLearningReportUseCase`로 이동.
+    ReportViewModel 234줄 → 73줄, 해석 규칙 8건을 테스트로 고정.
+  - `LearnerRepository`에서 설정(하루 목표·난이도 열기)을 `LearnerPreferencesRepository`로 분리.
+  - 해설 영상 접근을 UseCase 뒤로(`GetSolutionVideoUseCase`·`PrepareSolutionVideoUseCase`).
+  - 시도 기록을 `RecordAttemptUseCase` 한 입구로 모으고, 기록 시간 상한을 도메인이 보증.
+
+### Added
+- **`ArchitectureRulesTest`** — 계층 경계 6가지를 소스 트리 검사로 강제(추가 의존성 없음).
+- **`docs/ARCHITECTURE.md`** — 계층·경계·Clock·저장소 분할 규약의 원전.
 
 ## [1.0.0] - 2026-08-19 · versionCode 17
 **첫 정식(프로덕션) 출시.** Google Play 프로덕션 액세스 승인으로 폐쇄 테스트(테스터 14명 ×
