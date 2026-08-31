@@ -5,6 +5,7 @@
 exclude:
   - "*.md"
   - ARCHITECTURE.md
+  - aso
   - COMPETITIVE_POSITIONING.md
   - CONTENT_ENGINE_STRATEGY.md
   - CONTENT_SOURCING.md
@@ -15,6 +16,7 @@ exclude:
   - RELEASE.md
   - ROADMAP.md
   - audits
+  - marketing
   - store
 include:
   - privacy.md

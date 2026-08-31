@@ -1,5 +1,9 @@
 # Google Play 스토어 등록 문구 · 그래픽 (단일 출처)
 
+> ⚠️ **2026-08-30**: 검색 유입(ASO) 관점의 재작성안이 [`docs/aso/store-listing.md`](../aso/store-listing.md)에
+> 있다. 이 문서는 **현재 스토어에 올라가 있는 것**을 담고, 재작성안이 적용되면 그 내용으로 갱신한다.
+> 스크린샷 8장 구성은 [`docs/aso/screenshots.md`](../aso/screenshots.md).
+
 > 정직성 원칙: "최고" 주장은 6요소 *조합*의 유일성에 근거(근거 `docs/COMPETITIVE_POSITIONING.md`).
 > 과장·거짓·순위/수상 주장 금지, 아동 대상 결제 유도 금지.
 > 정책 근거: 제목·아이콘엔 "무료/광고없음/1위/할인/이모지" 금지(반려). **본문·스크린샷 캡션엔 "무료·광고 없음" 사실 서술 허용**(Khan Academy Kids 선례).
