@@ -12,7 +12,7 @@ import org.junit.Test
 
 class SubmitDissectionUseCaseTest {
     private val learner = FakeLearnerRepository()
-    private val submit = SubmitDissectionUseCase(learner, ValidateDissectionUseCase())
+    private val submit = SubmitDissectionUseCase(RecordAttemptUseCase(learner), ValidateDissectionUseCase())
 
     private val puzzle =
         DissectionPuzzle(

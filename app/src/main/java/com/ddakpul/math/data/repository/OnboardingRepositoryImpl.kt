@@ -1,8 +1,8 @@
 package com.ddakpul.math.data.repository
 
 import com.ddakpul.math.data.local.dao.LearnerProgressDao
-import com.ddakpul.math.data.local.entity.LearnerProgressEntity
 import com.ddakpul.math.domain.model.Difficulty
+import com.ddakpul.math.domain.model.SessionGoals
 import com.ddakpul.math.domain.repository.OnboardingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,13 +22,10 @@ class OnboardingRepositoryImpl
             startingDifficulty: Int,
             dailyGoal: Int,
         ) {
-            val current = progressDao.get()
-            progressDao.upsert(
-                (current ?: LearnerProgressEntity(currentDifficulty = Difficulty.DEFAULT)).copy(
-                    currentDifficulty = Difficulty.clamp(startingDifficulty),
-                    dailyGoal = dailyGoal,
-                    onboardingComplete = true,
-                ),
+            progressDao.insertDefaultIfAbsent(Difficulty.DEFAULT, SessionGoals.DAILY_GOAL_PROBLEMS)
+            progressDao.completeOnboarding(
+                difficulty = Difficulty.clamp(startingDifficulty),
+                goal = dailyGoal,
             )
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.SessionGoals
+import com.ddakpul.math.domain.time.Clock
 import com.ddakpul.math.domain.usecase.CountDueReviewsUseCase
 import com.ddakpul.math.domain.usecase.ObserveDailyGoalUseCase
 import com.ddakpul.math.domain.usecase.ObserveLearningStatsUseCase
@@ -12,7 +13,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import java.util.TimeZone
 import javax.inject.Inject
 
 data class HomeUiState(
@@ -29,23 +29,24 @@ class HomeViewModel
         observeStats: ObserveLearningStatsUseCase,
         observeDailyGoal: ObserveDailyGoalUseCase,
         countDueReviews: CountDueReviewsUseCase,
+        clock: Clock,
     ) : ViewModel() {
         val uiState: StateFlow<HomeUiState> =
             combine(
                 observeStats(
-                    zoneOffsetMillis = TimeZone.getDefault().getOffset(System.currentTimeMillis()).toLong(),
-                    nowMillis = { System.currentTimeMillis() },
+                    zoneOffsetMillis = clock.zoneOffsetMillis(),
+                    nowMillis = clock::nowMillis,
                 ),
                 observeDailyGoal(),
             ) { stats, goal ->
                 // 시도 기록이 바뀔 때마다 stats가 다시 흐르므로, 복습 만기 수도 같은 타이밍에 재계산된다.
-                val now = System.currentTimeMillis()
+                val now = clock.nowMillis()
                 HomeUiState(
                     stats = stats,
                     dailyGoal = goal,
                     reviewDueCount =
                         countDueReviews(
-                            zoneOffsetMillis = TimeZone.getDefault().getOffset(now).toLong(),
+                            zoneOffsetMillis = clock.zoneOffsetMillis(),
                             nowMillis = now,
                         ),
                 )

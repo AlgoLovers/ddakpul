@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.pdf.PdfDocument
 import android.text.TextPaint
-import com.ddakpul.math.core.common.toPercentInt
+import com.ddakpul.math.domain.common.toPercentInt
 import com.ddakpul.math.domain.model.LearningStats
 import com.ddakpul.math.domain.model.MathArea
 import kotlin.math.roundToInt

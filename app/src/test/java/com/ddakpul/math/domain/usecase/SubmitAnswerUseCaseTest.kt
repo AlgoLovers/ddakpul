@@ -11,7 +11,7 @@ class SubmitAnswerUseCaseTest {
     fun correctAnswer_gradesAndRecordsAttempt() =
         runTest {
             val learner = FakeLearnerRepository()
-            val useCase = SubmitAnswerUseCase(learner, GradeAttemptUseCase())
+            val useCase = SubmitAnswerUseCase(RecordAttemptUseCase(learner), GradeAttemptUseCase())
             val problem = problem(id = "p1", difficulty = 2, answerIndex = 1)
 
             val result =
@@ -36,7 +36,7 @@ class SubmitAnswerUseCaseTest {
     fun wrongAnswer_recordsIncorrectAttempt() =
         runTest {
             val learner = FakeLearnerRepository()
-            val useCase = SubmitAnswerUseCase(learner, GradeAttemptUseCase())
+            val useCase = SubmitAnswerUseCase(RecordAttemptUseCase(learner), GradeAttemptUseCase())
             val problem = problem(id = "p2", difficulty = 2, answerIndex = 0)
 
             val result = useCase(problem, selectedIndex = 3, timeSpentSec = 5, timestamp = 2_000L)

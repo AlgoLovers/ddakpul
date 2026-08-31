@@ -1,9 +1,7 @@
 package com.ddakpul.math.domain.usecase
 
-import com.ddakpul.math.domain.model.Attempt
 import com.ddakpul.math.domain.model.GradingResult
 import com.ddakpul.math.domain.model.Problem
-import com.ddakpul.math.domain.repository.LearnerRepository
 import javax.inject.Inject
 
 /**
@@ -14,7 +12,7 @@ import javax.inject.Inject
 class SubmitGiveUpUseCase
     @Inject
     constructor(
-        private val learnerRepository: LearnerRepository,
+        private val recordAttempt: RecordAttemptUseCase,
     ) {
         suspend operator fun invoke(
             problem: Problem,
@@ -22,14 +20,12 @@ class SubmitGiveUpUseCase
             timestamp: Long,
             reviewMode: Boolean = false,
         ): GradingResult {
-            learnerRepository.recordAttempt(
-                Attempt(
-                    problemId = problem.id,
-                    isCorrect = false,
-                    timeSpentSec = timeSpentSec,
-                    timestamp = timestamp,
-                    reviewMode = reviewMode,
-                ),
+            recordAttempt(
+                problem = problem,
+                isCorrect = false,
+                timeSpentSec = timeSpentSec,
+                timestamp = timestamp,
+                reviewMode = reviewMode,
             )
             return GradingResult(
                 problem = problem,

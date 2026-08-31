@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ddakpul.math.R
-import com.ddakpul.math.core.common.toPercentInt
 import com.ddakpul.math.core.designsystem.component.BarEntry
 import com.ddakpul.math.core.designsystem.component.LevelTrack
 import com.ddakpul.math.core.designsystem.component.MasteryChip
@@ -63,13 +62,18 @@ import com.ddakpul.math.core.designsystem.component.StatTile
 import com.ddakpul.math.core.designsystem.component.StepLineChart
 import com.ddakpul.math.core.designsystem.component.TrendLineChart
 import com.ddakpul.math.core.designsystem.component.masteryStageOf
+import com.ddakpul.math.domain.common.toPercentInt
 import com.ddakpul.math.domain.model.AreaStat
 import com.ddakpul.math.domain.model.ConceptStat
+import com.ddakpul.math.domain.model.DayCell
 import com.ddakpul.math.domain.model.Difficulty
 import com.ddakpul.math.domain.model.LearningStats
+import com.ddakpul.math.domain.model.MasteryCell
 import com.ddakpul.math.domain.model.MathArea
 import com.ddakpul.math.domain.model.NextStep
 import com.ddakpul.math.domain.model.Problem
+import com.ddakpul.math.domain.model.ReportInsight
+import com.ddakpul.math.domain.model.WeeklySummary
 import com.ddakpul.math.presentation.common.areaColor
 import com.ddakpul.math.presentation.common.labelRes
 import com.ddakpul.math.presentation.print.ReportPdfGenerator
@@ -128,10 +132,10 @@ fun ReportScreen(
     }
     ReportContent(
         stats = stats,
-        dayCells = uiState.dayCells,
-        insights = uiState.insights,
-        weeklySummary = uiState.weeklySummary,
-        masteryGrid = uiState.masteryGrid,
+        dayCells = uiState.report.dayCells,
+        insights = uiState.report.insights,
+        weeklySummary = uiState.report.weeklySummary,
+        masteryGrid = uiState.report.masteryGrid,
         nextStep = uiState.nextStep,
         onPrintClick = onPrintClick,
         onStartSolving = onStartSolving,
@@ -146,7 +150,7 @@ private fun ReportContent(
     dayCells: List<DayCell>,
     insights: List<ReportInsight>,
     weeklySummary: WeeklySummary?,
-    masteryGrid: List<MasteryCellUi>,
+    masteryGrid: List<MasteryCell>,
     nextStep: NextStep?,
     onPrintClick: () -> Unit,
     onStartSolving: () -> Unit,
@@ -299,7 +303,7 @@ private fun printReport(
 private fun DeeperAnalyticsSections(
     stats: LearningStats,
     dayCells: List<DayCell>,
-    masteryGrid: List<MasteryCellUi>,
+    masteryGrid: List<MasteryCell>,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         SectionCard(title = stringResource(R.string.report_daily_title), icon = "📊") {
@@ -768,7 +772,7 @@ private fun ConceptRow(concept: ConceptStat) {
  */
 @Composable
 private fun MasteryMap(
-    masteryGrid: List<MasteryCellUi>,
+    masteryGrid: List<MasteryCell>,
     currentDifficulty: Int,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {

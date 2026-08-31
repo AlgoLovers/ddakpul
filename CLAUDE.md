@@ -28,12 +28,14 @@ WindowSizeClass 반응형 · minSdk 26 · JDK 17 · Gradle KTS + Version Catalog
 
 ```
 app/src/main/java/com/ddakpul/math/
-├── core/ (common·designsystem·di)   ├── data/ (local Room·repository·mapper)
-├── domain/ (model·repository IF·usecase — 순수 Kotlin ⭐)
+├── core/ (designsystem·di + common: 프레임워크 유틸)
+├── data/ (local Room·repository·mapper·time)
+├── domain/ (model·repository IF·usecase·common·time — 순수 Kotlin ⭐)
 └── presentation/ (solve·result·report·home·settings·… + ui/DdakPulApp.kt 내비)
 ```
 
 도메인 모델(Problem·Attempt·LearnerState 등)은 `domain/model/`이 원전 — 여기 옮겨 적지 않는다.
+**계층·경계 규약의 원전은 `docs/ARCHITECTURE.md`** — 아래는 매일 걸리는 것만 추린 요약이다.
 문제은행: `ProblemCatalog.kt`(수제 135) + `assets/problems_generated*.json`(생성·한/영 918) — 총 1,053+.
 
 ## 추천 알고리즘 (그룹 단위 추천, 전부 순수 함수 + 단위 테스트)
@@ -55,7 +57,15 @@ app/src/main/java/com/ddakpul/math/
 
 - 불변 우선(`val`), `!!` 금지, 매직값 금지(상수/enum), 생성자 주입만.
 - ViewModel은 UseCase만 호출(Repository 직접 호출 금지). UI State = 단일 불변 객체 + `StateFlow`.
-- Compose에 비즈니스 로직 금지. 성공/실패는 `Result`+`AppError`.
+- Compose에 비즈니스 로직 금지, 상태는 호이스팅(컴포저블에 ViewModel을 통째로 넘기지 않는다).
+  성공/실패는 `AppResult`+`AppError`(둘 다 `domain/common`).
+- **시간은 주입한다** — `System.currentTimeMillis()`·`TimeZone.getDefault()`를 직접 부르는 곳은
+  `data/time/SystemClock` 하나뿐이다. 화면·저장소는 `domain/time/Clock`을 주입받고, UseCase는
+  시각을 파라미터로 받아 순수 함수로 남는다. 테스트는 `FakeClock`으로 시계를 앞으로 돌린다.
+- **도메인 불변식은 도메인이 보증한다** — 예: 시도 시간 상한은 `RecordAttemptUseCase`가 clamp.
+  화면에 맡기면 새 풀이 경로가 생길 때 조용히 빠진다.
+- **계층 규칙은 `ArchitectureRulesTest`가 강제한다**(domain의 프레임워크·바깥 계층 무의존,
+  화면의 data 직접 참조 금지, ViewModel의 저장소 직접 주입 금지, `!!` 금지). 어기면 테스트가 깨진다.
 - Git: `main`(배포, PR+CI로만) / `develop`(통합) / `feature/*`.
   Conventional Commits(`feat|fix|refactor|test|docs|chore(scope): 한국어 요약`), 한 커밋 = 한 논리 변경.
 
@@ -95,7 +105,7 @@ app/src/main/java/com/ddakpul/math/
 - Domain UseCase는 반드시 단위 테스트 동반 — 특히 추천 규칙 1~8은 규칙별 테스트 필수.
 - UI 변경은 `/emu-qa`로 스크린샷 자가 검증 — **라이트/다크 둘 다**(테마 규칙: `docs/DESIGN.md`).
 - 새 학습 기능은 `pedagogy-researcher`로 근거 조사 후 설계(근거 대장: `docs/PEDAGOGY.md`).
-- 출시 실무는 `docs/FIRST_LAUNCH_PLAYBOOK.md`, 릴리스 절차는 `docs/RELEASE.md`,
-  방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
+- 구조·경계 규약은 `docs/ARCHITECTURE.md`, 출시 실무는 `docs/FIRST_LAUNCH_PLAYBOOK.md`,
+  릴리스 절차는 `docs/RELEASE.md`, 방향은 `docs/ROADMAP.md`, 피드백 대장은 `docs/FEEDBACK_LOG.md`.
 - ⚠️ `docs/`는 GitHub Pages로 서빙된다 — 공개용은 `privacy.md`·`videos/`·`licenses/`뿐이고
   나머지는 `docs/_config.yml`의 exclude가 막는다. **새 내부 문서를 추가하면 exclude에도 추가.**

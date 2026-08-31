@@ -57,6 +57,9 @@ import com.ddakpul.math.presentation.common.tts.TtsModels
 /** 제외 문제 피드백 수신 주소 — "제외한 문제 보내기"가 이 주소로 메일을 미리 채워 띄운다. */
 private const val FEEDBACK_EMAIL = "jayden12282125@gmail.com"
 
+/** 다운로드 크기를 MB로 보여줄 때 쓰는 나눗셈 상수. */
+private const val BYTES_PER_MB = 1024 * 1024
+
 @Composable
 fun SettingsScreen(
     onOpenPrivacy: () -> Unit,
@@ -122,7 +125,12 @@ fun SettingsScreen(
         // 고품질 신경망 음성 — 런타임 다운로드(선택). '받기 전'에만 보여 주는 획득용 카드다.
         // 받고 나면 이 카드는 사라지고, 위 '읽어주기 음성' 목록의 칩으로 선택/삭제한다.
         if (!neuralDownloaded) {
-            NeuralVoiceCard(viewModel)
+            val downloadState by viewModel.ttsDownloadState.collectAsStateWithLifecycle()
+            NeuralVoiceCard(
+                model = TtsModels.SUPERTONIC,
+                downloadState = downloadState,
+                onDownload = { viewModel.downloadTtsModel(TtsModels.SUPERTONIC) },
+            )
         }
 
         // 별로였던 문제 내보내기 — 부모가 개발 채널로 보내면 다음 업데이트에 반영된다.
@@ -259,12 +267,16 @@ private fun DailyGoalCard(
  * 고품질 신경망 음성(Supertonic) **획득용** 카드 — 모델(+.so) 다운로드와 진행률만 담당한다.
  * '받기 전'에만 보이고(부모가 `!downloaded`일 때만 렌더), 받고 나면 사라진다. 받은 뒤의 선택·
  * 삭제는 위 [TtsCard]의 칩/삭제 버튼으로 옮겼다 — 같은 음성을 두 군데서 관리하던 중복을 없앴다.
+ *
+ * 다른 카드와 마찬가지로 상태를 밖에서 받는다(ViewModel을 통째로 넘기지 않는다) — 미리보기·재사용 가능.
  */
 @Composable
-private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
-    val model = TtsModels.SUPERTONIC
-    val downloadState by viewModel.ttsDownloadState.collectAsStateWithLifecycle()
-    val sizeMb = (model.totalBytes / 1024 / 1024).toInt()
+private fun NeuralVoiceCard(
+    model: TtsModel,
+    downloadState: DownloadState,
+    onDownload: () -> Unit,
+) {
+    val sizeMb = (model.totalBytes / BYTES_PER_MB).toInt()
 
     SettingsCard(title = stringResource(model.displayNameRes)) {
         Text(
@@ -291,7 +303,7 @@ private fun NeuralVoiceCard(viewModel: SettingsViewModel) {
                     color = MaterialTheme.colorScheme.error,
                 )
             }
-            Button(onClick = { viewModel.downloadTtsModel(model) }) {
+            Button(onClick = onDownload) {
                 Text(stringResource(R.string.settings_neural_download, sizeMb))
             }
         }

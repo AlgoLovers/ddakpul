@@ -1,6 +1,6 @@
 package com.ddakpul.math.domain.usecase
 
-import com.ddakpul.math.domain.repository.LearnerRepository
+import com.ddakpul.math.domain.repository.LearnerPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ObserveDailyGoalUseCase
     @Inject
     constructor(
-        private val learnerRepository: LearnerRepository,
+        private val preferencesRepository: LearnerPreferencesRepository,
     ) {
-        operator fun invoke(): Flow<Int> = learnerRepository.observeDailyGoal()
+        operator fun invoke(): Flow<Int> = preferencesRepository.observeDailyGoal()
     }
