@@ -1,6 +1,7 @@
-Ddakpul is here 🎉
-Not calculation drills — thinking math you solve with pencil and paper in about 5 minutes.
-• Auto-picks the right level, from first steps to competition class.
-• Recommendations sharpen as you solve, balancing four math areas.
-• Works fully offline. No ads, no payments.
-• A guardian report shows growth at a glance.
+Fixed: you can keep solving 🙏
+
+In the last version, "Check answer" and "Not sure" stopped responding from the second problem onward. Sorry for the trouble.
+
+• Solve as many problems in a row as you like.
+• Your daily goal now stays as you set it.
+• Internal cleanup for better stability.
